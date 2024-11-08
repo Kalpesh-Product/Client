@@ -40,7 +40,7 @@ const LoginPage = () => {
       console.log(user.name);
       console.log(user);
     } else {
-      setError("Invalid email or password");
+      setError("Invalid email or passwod");
     }
   };
 
