@@ -61,9 +61,12 @@ const login = async (req, res, next) => {
 
     const accessToken = jwt.sign(
       {
-        sessionId,
-        userId: userExists._id,
-        email: userExists.personalInfo.email,
+        userInfo: {
+          sessionId,
+          userId: userExists._id,
+          role: userExists.role,
+          email: userExists.personalInfo.email,
+        },
       },
       process.env.ACCESS_TOKEN_SECRET,
       { expiresIn: "15m" }
@@ -108,7 +111,7 @@ const login = async (req, res, next) => {
 const logOut = async (req, res, next) => {
   try {
     const cookie = req.cookies;
-    if (!cookie.clientCookie) return res.sendStatus(204);
+    if (!cookie?.clientCookie) return res.sendStatus(204);
 
     const refreshToken = cookie.clientCookie;
     const foundUser = await User.findOne({ refreshToken }).lean().exec();
@@ -211,7 +214,7 @@ const createUser = async (req, res, next) => {
         email,
         mobile,
         gender,
-        dob,
+        dob: new Date(dob),
         country,
         state,
         city,
@@ -227,9 +230,8 @@ const createUser = async (req, res, next) => {
       },
     });
 
-    await newUser.save();
     const userMailOptions = emailTemplates(email, name, password);
-    await mailer.sendMail(userMailOptions);
+    await Promise.all([newUser.save(), mailer.sendMail(userMailOptions)]);
     res.status(201).json({ message: "user created successfully" });
   } catch (error) {
     next(error);

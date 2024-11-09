@@ -12,4 +12,4 @@ const corsConfig = {
   credentials: true,
 };
 
-module.exports = corsConfig;
+module.exports = { corsConfig, allowedOrigins };

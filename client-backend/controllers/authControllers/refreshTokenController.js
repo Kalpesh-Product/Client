@@ -15,13 +15,16 @@ const handleRefreshToken = async (req, res, next) => {
       refreshToken,
       process.env.REFRESH_TOKEN_SECRET,
       async (err, decoded) => {
-        if (err || user.personalInfo.email !== decoded.email) {
+        if (err || user.personalInfo.email !== decoded.userInfo.email) {
           return res.sendStatus(403);
         }
 
         // Check session ID in Redis
         const sessionIdInRedis = await redisClient.get(`session:${user._id}`);
-        if (!sessionIdInRedis || sessionIdInRedis !== decoded.sessionId) {
+        if (
+          !sessionIdInRedis ||
+          sessionIdInRedis !== decoded.userInfo.sessionId
+        ) {
           return res
             .status(403)
             .json({ message: "Session expired. Please log in again." });
@@ -29,19 +32,24 @@ const handleRefreshToken = async (req, res, next) => {
 
         const accessToken = jwt.sign(
           {
-            email: decoded.email,
-            sessionId: decoded.sessionId,
-            userId: user._id,
+            userInfo: {
+              email: decoded.userInfo.email,
+              role: user.role,
+              sessionId: decoded.userInfo.sessionId,
+              userId: user._id,
+            },
           },
           process.env.ACCESS_TOKEN_SECRET,
           { expiresIn: "15m" }
         );
-        
+
+        delete user.refreshToken;
+        delete user.credentials.password;
+        delete user.updatedAt;
 
         res.json({
           accessToken,
-          email: decoded.email,
-          id: user._id,
+          user,
         });
       }
     );

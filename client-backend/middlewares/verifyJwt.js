@@ -9,10 +9,11 @@ const verifyJwt = (req, res, next) => {
     try {
       if (err) return res.sendStatus(403);
       const sessionId = await redisClient.get(`sessionId:${decoded.userId}`);
-      if (sessionId !== decoded.sessionId) {
+      if (sessionId !== decoded.userInfo.sessionId) {
         return res.status(401).json({ message: "session expired" });
       }
-      req.user = decoded.email;
+      req.user = decoded.userInfo.email;
+      req.role = decoded.userInfo.role;
       next();
     } catch (error) {
       next(error);

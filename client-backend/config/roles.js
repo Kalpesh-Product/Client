@@ -4,3 +4,5 @@ const roles = {
   admin: "CA-003",
   employee: "CE-004",
 };
+
+module.exports = roles;
