@@ -4,19 +4,21 @@ const path = require("path");
 const mongoose = require("mongoose");
 require("dotenv").config();
 const cookieParser = require("cookie-parser");
-const corsConfig = require("./config/corsConfig");
+const { corsConfig } = require("./config/corsConfig");
 const connectDb = require("./config/db");
 const errorHandler = require("./middlewares/errorHandler");
 const authRoutes = require("./routes/auth/authRoutes");
 const verifyJwt = require("./middlewares/verifyJwt");
 const redisClient = require("./config/redisClient");
 const departmentRoutes = require("./routes/departmentRoutes");
+const credentials = require("./middlewares/credentials");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
 connectDb(process.env.DB_URL);
 
+app.use(credentials);
 app.use(cors(corsConfig));
 app.use(cookieParser());
 app.use(express.json());

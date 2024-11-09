@@ -61,9 +61,12 @@ const login = async (req, res, next) => {
 
     const accessToken = jwt.sign(
       {
-        sessionId,
-        userId: userExists._id,
-        email: userExists.personalInfo.email,
+        userInfo: {
+          sessionId,
+          userId: userExists._id,
+          role: userExists.role,
+          email: userExists.personalInfo.email,
+        },
       },
       process.env.ACCESS_TOKEN_SECRET,
       { expiresIn: "15m" }
@@ -211,7 +214,7 @@ const createUser = async (req, res, next) => {
         email,
         mobile,
         gender,
-        dob,
+        dob: new Date(dob),
         country,
         state,
         city,
