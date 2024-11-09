@@ -68,7 +68,7 @@ const Sidebar = () => {
     <div
       className={`flex flex-col bg-white text-black ${
         isCollapsed ? "w-20" : "w-64"
-      } transition-width duration-300 `}
+      } transition-width duration-300 border-gray-400 border-[1px]`}
     >
       {/* Collapse button */}
       <div className="sticky top-20">
@@ -86,7 +86,7 @@ const Sidebar = () => {
         </button>
 
         {/* Menu items */}
-        <nav className="flex flex-col  mt-3">
+        <nav className="flex flex-col  mt-3 ">
           {/* Hardcoded DASHBOARD menu item */}
           <Link
             to="/dashboard"

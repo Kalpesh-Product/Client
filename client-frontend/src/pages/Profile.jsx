@@ -79,43 +79,7 @@ const Profile = () => {
     <div class="flex min-h-screen">
       {/* Sidebar */}
       <ClientSidebar/>
-      {/* <div class="w-64 bg-gray-800 text-white flex flex-col">
-        <div class="p-4 text-center font-bold text-2xl border-b border-gray-700">
-          Sidebar
-        </div>
-        <nav class="flex-1 p-4">
-          <ul class="space-y-2">
-            <li>
-              <a
-                href="#"
-                class="flex items-center p-2 text-gray-300 hover:bg-gray-700 hover:text-white rounded-md">
-                <span class="ml-3">Dashboard</span>
-              </a>
-            </li>
-            <li>
-              <a
-                href="#"
-                class="flex items-center p-2 text-gray-300 hover:bg-gray-700 hover:text-white rounded-md">
-                <span class="ml-3">Profile</span>
-              </a>
-            </li>
-            <li>
-              <a
-                href="#"
-                class="flex items-center p-2 text-gray-300 hover:bg-gray-700 hover:text-white rounded-md">
-                <span class="ml-3">Settings</span>
-              </a>
-            </li>
-            <li>
-              <a
-                href="#"
-                class="flex items-center p-2 text-gray-300 hover:bg-gray-700 hover:text-white rounded-md">
-                <span class="ml-3">Logout</span>
-              </a>
-            </li>
-          </ul>
-        </nav>
-      </div> */}
+      
 
       {/* Main Content */}
       <div class="flex-1 p-6 bg-gray-100">
@@ -124,10 +88,10 @@ const Profile = () => {
           <div class="flex flex-row gap-3">
             <div
               className="w-16 h-16 rounded-full overflow-hidden bg-gray-200 cursor-pointer"
-              onClick={() => setIsModalOpen(true)}>
+              >
               <img
                 src={image}
-                alt="Profile Logo"
+                alt=""
                 class="w-16 h-16 rounded-full mr-4"></img>
             </div>
 
@@ -157,7 +121,7 @@ const Profile = () => {
                     : ""
                 }`}
                 onClick={() => setActiveTab("tab-1")}>
-                Bio
+                Profile
               </button>
             </li>
             <li className=" text-center w-1/2" role="presentation">
@@ -313,4 +277,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default Profile;

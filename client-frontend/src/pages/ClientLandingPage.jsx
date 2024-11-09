@@ -757,26 +757,6 @@ const ClientLandingPage = () => {
   // Function to close the modal
   const closeModal = () => setIsModalOpen(false);
 
-  // CARD SELECTION START
-
-  // const [selectedCards, setSelectedCards] = useState([]);
-
-  // const cardData = [
-  //   { id: 1, title: "Card 1", description: "This is card 1" },
-  //   { id: 2, title: "Card 2", description: "This is card 2" },
-  //   { id: 3, title: "Card 3", description: "This is card 3" },
-  //   { id: 4, title: "Card 4", description: "This is card 4" },
-  // ];
-
-  // const handleSelect = (id) => {
-  //   if (selectedCards.includes(id)) {
-  //     setSelectedCards(selectedCards.filter((cardId) => cardId !== id));
-  //   } else {
-  //     setSelectedCards([...selectedCards, id]);
-  //   }
-  // };
-
-  // CARD SELECTION END
 
   const [quickLaunchIcons, setQuickLaunchIcons] = useState([
     { title: "Tasks", iconSrc: tasksImage },
@@ -787,22 +767,6 @@ const ClientLandingPage = () => {
 
   // State to track selected cards (already present in your code)
   const [selectedCards, setSelectedCards] = useState([]);
-
-  // const handleSelect = (title) => {
-  //   if (selectedCards.includes(title)) {
-  //     setSelectedCards(
-  //       selectedCards.filter((cardTitle) => cardTitle !== title)
-  //     );
-  //   } else {
-  //     setSelectedCards([...selectedCards, title]);
-  //   }
-  // };
-
-  // const handleSelect = (title) => {
-  //   setSelectedCards((prev) =>
-  //     prev.includes(title) ? prev.filter((t) => t !== title) : [...prev, title]
-  //   );
-  // };
 
   const handleSelect = (title) => {
     setSelectedCards((prev) => {
@@ -868,56 +832,10 @@ const ClientLandingPage = () => {
 
   return (
     <>
-      {/* //{" "}
-      <div>
-        //{" "}
-        <div>
-          // <h2>Welcome, Abrar Skaikh</h2>
-          //{" "}
-          <div>
-            // <button>Edit</button>
-            //{" "}
-          </div>
-          // <div>6 Icons</div>
-          // <h2>Quick Launch</h2>
-          // <div>4 Icons</div>
-          //{" "}
-        </div>
-        //{" "}
-      </div> */}
-
-      {/* TEST SELECTION START */}
-      {/* <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4">
-        {cardData.map((card) => (
-          <div
-            key={card.id}
-            className={`border rounded-lg p-4 cursor-pointer transition-shadow duration-300 ${
-              selectedCards.includes(card.id)
-                ? "shadow-lg border-blue-500"
-                : "shadow-sm"
-            }`}
-            onClick={() => handleSelect(card.id)}>
-            <div className="flex items-start">
-              <input
-                type="checkbox"
-                checked={selectedCards.includes(card.id)}
-                readOnly
-                className="form-checkbox h-5 w-5 text-blue-600 mr-3 pointer-events-none"
-              />
-              <div>
-                <h3 className="text-lg font-semibold">{card.title}</h3>
-                <p className="text-gray-600">{card.description}</p>
-              </div>
-            </div>
-          </div>
-        ))}
-      </div> */}
-      {/* TEST SELECTION END */}
-
       <div className="bg-white p-8 ">
         {/* Welcome Section */}
         <div className="flex justify-between items-center mb-12 flex-wrap">
-          <h1 className="text-3xl md:text-4xl font-bold lg:ps-[7rem] uppercase">
+          <h1 className="text-3xl md:text-4xl font-bold lg:ps-[7rem]">
             {user.name}
           </h1>
           <button className="bg-red-500 text-white py-2 px-6 rounded-lg hover:bg-red-600 mt-4 md:mt-0">
@@ -928,9 +846,6 @@ const ClientLandingPage = () => {
         {/* Main Grid Section */}
         {/* <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-8 mb-12"> */}
         <div className="grid grid-cols-2 sm:grid-cols-3  gap-8 mb-12">
-          {/* <Card title="Dashboard" iconSrc="dashboard-icon.png" /> */}
-          {/* <Card title="Dashboard" iconSrc="../LandingPageImages/dummy-icon.png" /> */}
-          {/* <Card title="Dashboard" iconSrc={dashboardIcon} /> */}
           <CardNS
             title="Dashboard"
             iconSrc={dashboardImage}
@@ -1026,7 +941,8 @@ const ClientLandingPage = () => {
           <div className="flex justify-center">
             <button
               className="bg-red-500 text-white py-3 px-8 rounded-lg hover:bg-red-600"
-              onClick={openModal}>
+              onClick={openModal}
+            >
               Add More
             </button>
           </div>
@@ -1061,7 +977,8 @@ const ClientLandingPage = () => {
                   {/* Close button */}
                   <button
                     className="bg-red-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-red-600"
-                    onClick={closeModal}>
+                    onClick={closeModal}
+                  >
                     X
                   </button>
                 </div>
@@ -1298,7 +1215,8 @@ const ClientLandingPage = () => {
                   {/* Add button */}
                   <button
                     className="bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600"
-                    onClick={handleAddServices}>
+                    onClick={handleAddServices}
+                  >
                     Add
                   </button>
                 </div>
@@ -1306,7 +1224,8 @@ const ClientLandingPage = () => {
               {/* Close button */}
               <button
                 className="bg-red-500 text-white py-2 px-4 my-4 rounded-lg hover:bg-red-600"
-                onClick={closeModal}>
+                onClick={closeModal}
+              >
                 Close
               </button>
             </div>
@@ -1353,7 +1272,8 @@ const Card = ({ title, iconSrc, isSelected, handleSelect }) => {
       className={`relative w-32 h-32 border-2 rounded-lg p-3 transition-shadow duration-300 cursor-pointer flex flex-col justify-center items-center ${
         isSelected ? "border-blue-500 shadow-lg" : "border-gray-300"
       }`}
-      onClick={() => handleSelect(title)}>
+      onClick={() => handleSelect(title)}
+    >
       <input
         type="checkbox"
         checked={isSelected}
