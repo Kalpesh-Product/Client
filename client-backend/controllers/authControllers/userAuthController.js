@@ -111,7 +111,7 @@ const login = async (req, res, next) => {
 const logOut = async (req, res, next) => {
   try {
     const cookie = req.cookies;
-    if (!cookie.clientCookie) return res.sendStatus(204);
+    if (!cookie?.clientCookie) return res.sendStatus(204);
 
     const refreshToken = cookie.clientCookie;
     const foundUser = await User.findOne({ refreshToken }).lean().exec();
@@ -230,9 +230,8 @@ const createUser = async (req, res, next) => {
       },
     });
 
-    await newUser.save();
     const userMailOptions = emailTemplates(email, name, password);
-    await mailer.sendMail(userMailOptions);
+    await Promise.all([newUser.save(), mailer.sendMail(userMailOptions)]);
     res.status(201).json({ message: "user created successfully" });
   } catch (error) {
     next(error);
