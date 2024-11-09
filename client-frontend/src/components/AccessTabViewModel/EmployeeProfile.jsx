@@ -89,8 +89,8 @@ const EmployeeProfile = ({ data }) => {
           onChange={handleChange}
           className={`text-gray-800 border ${
             isEditing
-              ? "border-gray-400 bg-white"
-              : "border-transparent bg-transparent"
+              ? "border-gray-400 bg-white w-30"
+              : "border-transparent bg-transparent w-30"
           } rounded`}
           disabled={!isEditing}></input>
       </div>
@@ -122,13 +122,13 @@ const EmployeeProfile = ({ data }) => {
       </div>
       <div className="flex items-center gap-20">
         <span className="w-24 font-semibold text-gray-600">Email:</span>
-        <span className="text-gray-800">{data?.email || userData.email}</span>
+        <span className="text-gray-800">{ isAccessPage? data?.email : isProfilePage ? userData.email :""}</span>
       </div>
       <div className="flex items-center gap-20">
         <span className="w-24 font-semibold text-gray-600">Phone:</span>
         <input
           name="phone"
-          value={isAccessPage? data?.email : isProfilePage ? userData.email:""}
+          value={isAccessPage? data?.email : isProfilePage ? userData.Phone:""}
           onChange={handleChange}
           className={`text-gray-800 border ${
             isEditing
@@ -137,19 +137,7 @@ const EmployeeProfile = ({ data }) => {
           } rounded`}
           disabled={!isEditing}></input>
       </div>
-      <div className="flex items-center gap-20">
-        <span className="w-24 font-semibold text-gray-600">Address:</span>
-        <input
-          name="address"
-          value={isAccessPage? data?.address: isProfilePage ? formData.address:""}
-          onChange={handleChange}
-          className={`text-gray-800 border ${
-            isEditing
-              ? "border-gray-400 bg-white"
-              : "border-transparent bg-transparent"
-          } rounded`}
-          disabled={!isEditing}></input>
-      </div>
+      
       <div className="flex items-center gap-20">
         <span className="w-24 font-semibold text-gray-600">DOB:</span>
         <input

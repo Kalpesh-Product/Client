@@ -1,23 +1,33 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import EmployeeProfile from "../components/AccessTabViewModel/EmployeeProfile";
 import AccessHierarchyTab from "../components/AccessTabViewModel/AccessHierarchyTab";
 import ClientSidebar from "../components/ClientSidebar";
+import image from "../profile.jpg";
+
 
 const Profile = () => {
-  const [image, setImage] = useState("");
+  
   const [isModelOpen, setIsModalOpen] = useState(false);
   const [IsAccessModalOpen, setIsAccessModalOpen] = useState(false);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [checkedItems, setCheckedItems] = useState({});
   const [activeTab, setActiveTab] = useState("tab-1");
+  const [userData, setUserData] = useState(null);
+
+  useEffect(() => {
+    const storedUser = JSON.parse(localStorage.getItem("user"));
+    if (storedUser) {
+      setUserData(storedUser); // Populate user data
+    }
+  }, []);
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = () => setImage(reader.result); // set the image to display in the container
-      reader.readAsDataURL(file);
-    }
+    // if (file) {
+    //   const reader = new FileReader();
+    //   reader.onload = () => setImage(reader.result); // set the image to display in the container
+    //   reader.readAsDataURL(file);
+    // }
     setIsModalOpen(false);
   };
 
@@ -80,33 +90,26 @@ const Profile = () => {
       {/* Sidebar */}
       <ClientSidebar/>
       
-
       {/* Main Content */}
       <div class="flex-1 p-6 bg-gray-100">
         <h1 class="text-3xl font-bold mb-4">Profile</h1>
         <div class="flex items-center p-4 bg-white rounded-lg shadow-md justify-between">
           <div class="flex flex-row gap-3">
-            <div
+            {/* <div
               className="w-16 h-16 rounded-full overflow-hidden bg-gray-200 cursor-pointer"
-              >
+              onClick={() => setIsModalOpen(true)}>
               <img
                 src={image}
-                alt=""
+                alt="Profile Logo"
                 class="w-16 h-16 rounded-full mr-4"></img>
-            </div>
+            </div> */}
 
             <div>
-              <h2 class="text-xl font-semibold">Abrar Shaikh</h2>
+              <h2 class="text-xl font-semibold">{userData?.name}</h2>
               <p class="text-gray-500">Active</p>
             </div>
           </div>
-          <div class="flex j">
-            <button
-              class="bg-blue-500 w-20 h-10 rounded-md"
-              onClick={() => setIsAccessModalOpen(true)}>
-              Access
-            </button>
-          </div>
+          
         </div>
         {/* <!-- Horizontal Divider --> */}
         <hr class="border-t border-gray-300 my-4" />

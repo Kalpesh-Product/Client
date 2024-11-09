@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState , useEffect} from "react";
 import { useLocation } from "react-router-dom";
 
 const AccessHierarchyTab = () => {
   const [checkedItems, setCheckedItems] = useState({});
+  const [userData, setUserData] = useState(null);
   const location = useLocation();
   const modules = {
     HR: [
@@ -116,6 +117,51 @@ const AccessHierarchyTab = () => {
       "Customised Reports",
     ],
   };
+
+  useEffect(() => {
+    const storedUser = JSON.parse(localStorage.getItem("user"));
+    if (storedUser) {
+      setUserData(storedUser); // Populate user data
+    }
+  }, [userData]);
+
+  useEffect(() => {
+    const initializeCheckedItems = () => {
+      const initialState = {};
+
+      if (userData?.role === "Master Admin") {
+        // All modules and submodules checked
+        for (const module in modules) {
+          initialState[module] = {
+            all: true,
+            ...Object.fromEntries(modules[module].map((sub) => [sub, true])),
+          };
+        }
+      } else if (userData?.role === "Super Admin") {
+        // Only Finance module checked
+        for (const module in modules) {
+          initialState[module] = {
+            all: module === "Finance",
+            ...Object.fromEntries(
+              modules[module].map((sub) => [sub, module === "Finance"])
+            ),
+          };
+        }
+      } else {
+        // Default: All modules unchecked
+        for (const module in modules) {
+          initialState[module] = {
+            all: false,
+            ...Object.fromEntries(modules[module].map((sub) => [sub, false])),
+          };
+        }
+      }
+
+      setCheckedItems(initialState);
+    };
+
+    initializeCheckedItems();
+  }, [userData?.role]);
 
   const handleCheckboxChange = (module, submodule = null) => {
     setCheckedItems((prevState) => {
