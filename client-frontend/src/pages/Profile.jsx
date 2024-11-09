@@ -2,7 +2,7 @@ import React, { useState,useEffect } from "react";
 import EmployeeProfile from "../components/AccessTabViewModel/EmployeeProfile";
 import AccessHierarchyTab from "../components/AccessTabViewModel/AccessHierarchyTab";
 import ClientSidebar from "../components/ClientSidebar";
-import image from "../profile.jpg";
+// import image from "../profile.jpg";
 
 
 const Profile = () => {
