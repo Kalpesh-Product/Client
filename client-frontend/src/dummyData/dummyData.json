@@ -18,62 +18,83 @@
     "email": "kalpesh@biznest.co.in",
     "role": "Admin",
     "department": "Tech",
-    "password": "456"
+    "password": "123"
+  },
+  {
+    "name": "Aaron Pires",
+    "email": "aaron@biznest.co.in",
+    "role": "Admin",
+    "department": "Sales",
+    "password": "123"
+  },
+  {
+    "name": "Machendranath",
+    "email": "mac@biznest.co.in",
+    "role": "Admin",
+    "department": "IT",
+    "password": "123"
+  },
+  {
+    "name": "Faizan",
+    "email": "faizan@biznest.co.in",
+    "role": "Employee",
+    "department": "IT",
+   "password": "123"
   },
   {
     "name": "Allan Silveira",
     "email": "allan@biznest.co.in",
     "role": "Employee",
     "department": "Tech",
-    "password": "789"
+   "password": "123"
   },
   {
     "name": "Aiwinraj KS",
     "email": "aiwinraj@biznest.co.in",
     "role": "Employee",
     "department": "Tech",
-    "password": "789"
+   "password": "123"
   },
   {
     "name": "Anushri Bhagat",
     "email": "anushri@biznest.co.in",
     "role": "Employee",
     "department": "Tech",
-    "password": "789"
+   "password": "123"
   },
   {
     "name": "Sankalp Kalangutkar",
     "email": "sankalp@biznest.co.in",
     "role": "Employee",
     "department": "Tech",
-    "password": "789"
+   "password": "123"
   },
   {
     "name": "Narshiva Naik",
     "email": "narshiva@biznest.co.in",
     "role": "Admin",
     "department": "Finance",
-    "password": "456"
+    "password": "123"
   },
   {
     "name": "Hema Natalkar",
     "email": "hema@biznest.co.in",
     "role": "Employee",
     "department": "Finance",
-    "password": "789"
+   "password": "123"
   },
   {
     "name": "Rhutvik Sawant",
     "email": "rhutvik@biznest.co.in",
     "role": "Employee",
     "department": "Finance",
-    "password": "789"
+   "password": "123"
   },
   {
     "name": "Siddhi Vernekar",
     "email": "siddhi@biznest.co.in",
     "role": "Employee",
     "department": "Finance",
-    "password": "789"
+   "password": "123"
   }
 ]

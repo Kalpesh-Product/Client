@@ -918,7 +918,7 @@ const ClientLandingPage = () => {
         {/* Welcome Section */}
         <div className="flex justify-between items-center mb-12 flex-wrap">
           <h1 className="text-3xl md:text-4xl font-bold lg:ps-[7rem] uppercase">
-            Welcome, {user.name}
+            {user.name}
           </h1>
           <button className="bg-red-500 text-white py-2 px-6 rounded-lg hover:bg-red-600 mt-4 md:mt-0">
             Organize

@@ -38,3 +38,7 @@
   font-family: Popins-Regular;
   src: url('../src/assets/WONO_images/img/font/Poppins-Regular.ttf');
 }
+@font-face {
+  font-family: Popins-SemiBold;
+  src: url('../src/assets/WONO_images/img/font/Poppins-SemiBold.ttf');
+}

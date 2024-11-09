@@ -61,7 +61,7 @@ const ClientHeader = () => {
         <nav className="flex space-x-6">
           <span
             className="text-white hover:text-gray-400 cursor-pointer"
-            onClick={() => navigate("/")}>
+            onClick={() => navigate("/landing")}>
             Home
           </span>
           <a
