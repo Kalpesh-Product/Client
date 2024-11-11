@@ -24,7 +24,7 @@ const ClientHeader = () => {
   };
   return (
     <>
-      <header className="bg-black text-white py-4 px-6 flex justify-between items-center sticky top-0">
+      <header className="bg-black text-white py-4 px-6 flex justify-between items-center sticky top-0 z-40">
         {/* Logo Section */}
         {/* <div className="flex items-center">
         <span className="text-white text-xl font-semibold">

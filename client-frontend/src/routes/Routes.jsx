@@ -8,6 +8,7 @@ import DragDropGrid from "../pages/DragDropGrid";
 import ClientLoginPage from "../pages/ClientLoginPage";
 import Dashboard from "../pages/Dashboard";
 import LoginPage from "../pages/LoginPage";
+import TestDashboard from "../pages/TestPage";
 
 
 const router = createBrowserRouter([
@@ -46,6 +47,10 @@ const router = createBrowserRouter([
       {
         path: "/drag-test",
         element: <DragDropGrid />,
+      },
+      {
+        path: "/testdash",
+        element: <TestDashboard />,
       },
     ],
   },

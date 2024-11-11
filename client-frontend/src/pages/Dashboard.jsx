@@ -16,6 +16,8 @@ import {
 
 import {RecurringClients, SalesProgress, SalesTarget, SalesByMonthGraph, SalesTrendGraph, SalesDistributionGraph} from '../Widgets/SalesWidgets'
 import {PCFixes, WiFiConfiguration, WiFiTraffic, NetworkIssuesResolved, PCFixesPending, PCFixesProgress, PCFixesLineGraph} from '../Widgets/ITWidgets'
+import Sidetest from "../components/Sidetest";
+import TestSide from "../components/Sidetest";
 
 const WidgetSection = ({ heading, widgets }) => (
   <div className="mt-4">
@@ -166,15 +168,21 @@ const itWidgetsData = {
   ];
 
   return (
-    <div className="flex ">
+    <div className="flex h-screen">
       {/* Sidebar */}
-      <ClientSidebar className="sticky top-0" />
+      {/* <ClientSidebar className="sticky top-0" /> */}
+      {/* <div className="sticky top-10">
 
-      <div className="flex-1 p-6 bg-gray-100 space-y-8">
+      <Sidetest />
+      </div> */}
+
+      <TestSide />
+
+      <div className="flex-1 bg-gray-100 p-8 overflow-y-auto">
         {/* Heading 1 */}
         <h1 className="text-3xl">{user.name}'s Dashboard</h1>
         <h2>
-          BizNest-{user.role}-{user.department}
+          BIZ Nest-{user.role}-{user.department}
         </h2>
 
         {/* Conditionally render widgets based on user role */}

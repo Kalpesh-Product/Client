@@ -9,12 +9,12 @@ const Sidebar = () => {
 
   // Menu items array (without DASHBOARD)
   const menuItems = [
-    { name: "REPORTS", icon: "https://via.placeholder.com/24" },
-    { name: "TASKS", icon: "https://via.placeholder.com/24" },
-    { name: "CALENDAR", icon: "https://via.placeholder.com/24" },
-    { name: "CHAT", icon: "https://via.placeholder.com/24" },
-    { name: "ACCESS", icon: "https://via.placeholder.com/24" },
-    { name: "PROFILE", icon: "https://via.placeholder.com/24" },
+    { name: "Reports", icon: "https://via.placeholder.com/24" },
+    { name: "Tasks", icon: "https://via.placeholder.com/24" },
+    { name: "Calendar", icon: "https://via.placeholder.com/24" },
+    { name: "Chat", icon: "https://via.placeholder.com/24" },
+    { name: "Access", icon: "https://via.placeholder.com/24" },
+    { name: "Profile", icon: "https://via.placeholder.com/24" },
   ];
 
   const departments = [
@@ -66,105 +66,103 @@ const Sidebar = () => {
 
   return (
     <div
-      className={`flex flex-col bg-white text-black ${
+      className={`flex flex-col  bg-white text-black border-gray-400 border-[1px] fixed overflow-scroll top-15 transition-all duration-300 ${
         isCollapsed ? "w-20" : "w-64"
-      } transition-width duration-300 border-gray-400 border-[1px]`}
+      } h-[100vh] `}
     >
-      {/* Collapse button */}
-      <div className="sticky top-20">
+      {/* Sidebar Header and Collapse Button */}
+      <div className="p-4 flex justify-between items-center">
+        <h1 className={`text-lg font-semibold ${isCollapsed ? "hidden" : ""}`}>Dashboard</h1>
         <button
           onClick={() => setIsCollapsed(!isCollapsed)}
-          className="p-4 flex items-center justify-center focus:outline-none hover:bg-gray-700"
+          className="p-2 bg-gray-700 text-white rounded-md hover:bg-gray-600 focus:outline-none"
         >
-          <motion.div
-            className="" // Push arrow to the far right
-            animate={{ rotate: isCollapsed ? 0 : 180 }}
-            transition={{ duration: 0.3 }}
-          >
-            ➤
-          </motion.div>
+          {isCollapsed ? ">" : "Close"}
         </button>
-
-        {/* Menu items */}
-        <nav className="flex flex-col  mt-3 ">
-          {/* Hardcoded DASHBOARD menu item */}
-          <Link
-            to="/dashboard"
-            className="p-4 hover:bg-gray-700 hover:text-white text-sm"
-          >
-            {isCollapsed && (
-              <img
-                src="https://via.placeholder.com/24"
-                alt="dashboard"
-                className="mr-2 inline-block"
-              />
-            )}
-            <span className={isCollapsed ? "hidden" : ""}>DASHBOARD</span>
-          </Link>
-          {/* Departments Dropdown */}
-          {!isCollapsed && (
-            <div className="relative">
-              <button
-                onClick={() => setIsDepartmentsOpen(!isDepartmentsOpen)}
-                className="p-4 w-full text-left hover:bg-gray-700 hover:text-white flex justify-between items-center"
-              >
-                <span>DEPARTMENTS</span>
-                <motion.div
-                  animate={{ rotate: isDepartmentsOpen ? 90 : 0 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  ➤
-                </motion.div>
-              </button>
-
-              {/* Dropdown content */}
-              <div
-                className={`${
-                  isDepartmentsOpen ? "max-h-screen" : "max-h-0"
-                } overflow-hidden transition-all duration-300 ease-in-out bg-white pl-8 space-y-2`}
-              >
-                {filteredDepartments.map((dept, index) => (
-                  <a
-                    key={index}
-                    href={`#${dept.name.toLowerCase().replace(/\s+/g, "-")}`}
-                    className="flex items-center p-4 hover:bg-gray-700 hover:text-white"
-                  >
-                    <img
-                      src={dept.icon}
-                      alt={`${dept.name} icon`}
-                      className="mr-3"
-                    />
-                    <span>{dept.name}</span>
-                  </a>
-                ))}
-              </div>
-            </div>
-          )}
-          {/* Other Menu items */}
-          {menuItems
-            .filter(
-              (item) => !(item.name === "ACCESS" && user.role === "Employee")
-            ) // Filter out 'ACCESS' for employee role
-            .map((item, index) => (
-              <a
-                key={index}
-                href={`#${item.name.toLowerCase().replace(/\s+/g, "-")}`}
-                className="p-4 hover:bg-gray-700 hover:text-white text-sm border-b-[1px] border-black"
-              >
-                {isCollapsed && (
-                  <img
-                    src={item.icon}
-                    alt={item.name}
-                    className="mr-2 inline-block"
-                  />
-                )}
-                <span className={`${isCollapsed ? "hidden" : ""}`}>
-                  {item.name}
-                </span>
-              </a>
-            ))}
-        </nav>
       </div>
+
+      {/* Menu Items */}
+      <nav className="flex flex-col mt-4 space-y-2 ">
+        {/* Dashboard Item */}
+        <Link
+          to="/dashboard"
+          className={`p-4 hover:bg-gray-700 hover:text-white text-sm flex items-center ${
+            isCollapsed ? "justify-center" : "justify-start"
+          }`}
+        >
+          {isCollapsed && (
+            <img
+              src="https://via.placeholder.com/24"
+              alt="dashboard"
+              className="mr-2 inline-block"
+            />
+          )}
+          <span className={isCollapsed ? "hidden" : ""}>Dashboard</span>
+        </Link>
+
+        {/* Departments Dropdown */}
+        {!isCollapsed && (
+          <div className="relative">
+            <button
+              onClick={() => setIsDepartmentsOpen(!isDepartmentsOpen)}
+              className="p-4 w-full text-left hover:bg-gray-700 hover:text-white flex justify-between items-center"
+            >
+              <span>Departments</span>
+              <motion.div
+                animate={{ rotate: isDepartmentsOpen ? 90 : 0 }}
+                transition={{ duration: 0.3 }}
+                className="transform"
+              >
+                ➤
+              </motion.div>
+            </button>
+
+            {/* Dropdown Content */}
+            <div
+              className={`${
+                isDepartmentsOpen ? "max-h-screen" : "max-h-0"
+              } overflow-hidden transition-all duration-300 ease-in-out bg-white pl-8 space-y-2`}
+            >
+              {filteredDepartments.map((dept, index) => (
+                <a
+                  key={index}
+                  href={`#${dept.name.toLowerCase().replace(/\s+/g, "-")}`}
+                  className="flex items-center p-4 hover:bg-gray-700 hover:text-white"
+                >
+                  <img
+                    src={dept.icon}
+                    alt={`${dept.name} icon`}
+                    className="mr-3 w-6 h-6"
+                  />
+                  <span>{dept.name}</span>
+                </a>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Menu Items (Other) */}
+        {menuItems
+          .filter((item) => !(item.name === "ACCESS" && user.role === "Employee"))
+          .map((item, index) => (
+            <a
+              key={index}
+              href={`#${item.name.toLowerCase().replace(/\s+/g, "-")}`}
+              className={`p-4 hover:bg-gray-700 hover:text-white text-sm flex items-center ${
+                isCollapsed ? "justify-center" : "justify-start"
+              }`}
+            >
+              {isCollapsed && (
+                <img
+                  src={item.icon}
+                  alt={item.name}
+                  className="mr-2 inline-block"
+                />
+              )}
+              <span className={isCollapsed ? "hidden" : ""}>{item.name}</span>
+            </a>
+          ))}
+      </nav>
     </div>
   );
 };

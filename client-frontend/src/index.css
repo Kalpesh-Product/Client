@@ -42,3 +42,7 @@
   font-family: Popins-SemiBold;
   src: url('../src/assets/WONO_images/img/font/Poppins-SemiBold.ttf');
 }
+
+::-webkit-scrollbar{
+  display: none;
+}
