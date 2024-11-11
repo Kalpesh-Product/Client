@@ -9,6 +9,7 @@ import ClientLoginPage from "../pages/ClientLoginPage";
 import Dashboard from "../pages/Dashboard";
 import LoginPage from "../pages/LoginPage";
 import ChatPage from "../pages/ChatPage";import TestDashboard from "../pages/TestPage";
+import DropTest from "../pages/DropTest";
 
 
 const router = createBrowserRouter([
@@ -55,6 +56,10 @@ const router = createBrowserRouter([
       {
         path: "/chat",
         element: <ChatPage />,
+      },
+      {
+        path: "/dropTest",
+        element: <DropTest />,
       },
     ],
   },

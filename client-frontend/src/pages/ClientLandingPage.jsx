@@ -82,6 +82,10 @@ import {
   // } from "../../../frontend/src/assets/WONO_images/img/icon_service_color";
 } from "../assets/WONO_images/img/icon_service_color";
 
+import { DndContext, closestCorners } from "@dnd-kit/core";
+import { arrayMove, SortableContext, useSortable, verticalListSortingStrategy } from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
+
 const ClientLandingPage = () => {
   const navigate = useNavigate();
 
@@ -756,13 +760,29 @@ const ClientLandingPage = () => {
 
   // Function to close the modal
   const closeModal = () => setIsModalOpen(false);
+  const [isDragEnabled, setIsDragEnabled] = useState(false);
 
   const [quickLaunchIcons, setQuickLaunchIcons] = useState([
-    { title: "Tasks", iconSrc: tasksImage },
-    { title: "Ticket", iconSrc: ticketsImage },
-    { title: "Meeting", iconSrc: meetingImage },
-    { title: "Customer Service", iconSrc: customerServiceImage },
+    { id: 1, title: "Tasks", iconSrc: tasksImage },
+    { id: 2, title: "Ticket", iconSrc: ticketsImage },
+    { id: 3, title: "Meeting", iconSrc: meetingImage },
+    { id: 4, title: "Customer Service", iconSrc: customerServiceImage },
   ]);
+
+    // Toggle drag-and-drop functionality
+    const toggleDragAndDrop = () => {
+      setIsDragEnabled((prev) => !prev);
+    };
+
+  // Handle drag end to swap items
+  const handleDragEnd = (event) => {
+    const { active, over } = event;
+    if (active.id !== over.id) {
+      const oldIndex = quickLaunchIcons.findIndex((icon) => icon.id === active.id);
+      const newIndex = quickLaunchIcons.findIndex((icon) => icon.id === over.id);
+      setQuickLaunchIcons((items) => arrayMove(items, oldIndex, newIndex));
+    }
+  };
 
   // State to track selected cards (already present in your code)
   const [selectedCards, setSelectedCards] = useState([]);
@@ -837,7 +857,7 @@ const ClientLandingPage = () => {
           <h1 className="text-3xl md:text-4xl font-bold lg:ps-[7rem]">
             {user.name}
           </h1>
-          <button className="bg-red-500 text-white py-2 px-6 rounded-lg hover:bg-red-600 mt-4 md:mt-0">
+          <button onClick={toggleDragAndDrop} className="bg-red-500 text-white py-2 px-6 rounded-lg hover:bg-red-600 mt-4 md:mt-0">
             Organize
           </button>
         </div>
@@ -874,64 +894,46 @@ const ClientLandingPage = () => {
             Quick launch
           </h2>
         ) : null} */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 gap-8 mb-12">
-          {/* <CardNS title="Tasks" iconSrc={tasksImage} />
-          <CardNS title="Ticket" iconSrc={ticketsImage} />
-          <CardNS title="Meeting" iconSrc={meetingImage} />
-          <CardNS title="Customer Service" iconSrc={customerServiceImage} /> */}
+ <div>
+     
 
-          {quickLaunchIcons.map((icon, index) => (
-            <CardNS key={index} title={icon.title} iconSrc={icon.iconSrc} />
-          ))}
+      {isDragEnabled ? (
+        <DndContext collisionDetection={closestCorners} onDragEnd={handleDragEnd}>
+          <SortableContext items={quickLaunchIcons.map((icon) => icon.id)} strategy={verticalListSortingStrategy}>
+            <IconGrid isDragEnabled = {isDragEnabled} quickLaunchIcons={quickLaunchIcons} />
+          </SortableContext>
+        </DndContext>
+      ) : (
+        <IconGrid quickLaunchIcons={quickLaunchIcons} />
+      )}
 
-          {/* Conditional rendering for tech admin role (at) */}
-          {/* {role === "at" && <CardNS title="Website" iconSrc={websiteImage} />} */}
+      {/* Conditional rendering for employee-specific cards */}
+      <div className="grid grid-cols-2 sm:grid-cols-3 gap-8 mb-12">
+        {user.role === "Employee" && (
+          <>
+            <CardNS title="Attendance" iconSrc={services_hrSupport[0].image} />
+            <CardNS title="Payroll" iconSrc={services_hrSupport[1].image} />
+            <CardNS title="Leaves" iconSrc={services_hrSupport[3].image} />
+            <CardNS title="Performance" iconSrc={services_hrSupport[8].image} />
+          </>
+        )}
 
-          {/* Conditional rendering for employee  */}
-          {user.role === "Employee" && (
-            <>
-              <CardNS
-                title="Attendance"
-                iconSrc={services_hrSupport[0].image}
-              />
-              <CardNS title="Payroll" iconSrc={services_hrSupport[1].image} />
-              <CardNS title="Leaves" iconSrc={services_hrSupport[3].image} />
-              <CardNS
-                title="Performance"
-                iconSrc={services_hrSupport[8].image}
-              />
-            </>
-          )}
+        {user.role === "Employee" && user.department === "Tech" && (
+          <>
+            <CardNS title="Website" iconSrc={websiteImage} />
+            <CardNS title="Notifications" iconSrc={services_frontend[7].image} />
+          </>
+        )}
 
-          {/* Conditional rendering for employee with tech department */}
-          {user.role === "Employee" && user.department === "Tech" && (
-            <>
-              <CardNS title="Website" iconSrc={websiteImage} />
-              <CardNS
-                title="Notifications"
-                iconSrc={services_frontend[7].image}
-              />
-            </>
-          )}
-
-          {/* Conditional rendering for employee with finance department */}
-          {user.role === "Employee" && user.department === "Finance" && (
-            <>
-              <CardNS
-                title="Invoicing"
-                iconSrc={services_financeAccounting[0].image}
-              />
-              <CardNS
-                title="Budget"
-                iconSrc={services_financeAccounting[3].image}
-              />
-              <CardNS
-                title="Financial Reports"
-                iconSrc={services_financeAccounting[5].image}
-              />
-            </>
-          )}
-        </div>
+        {user.role === "Employee" && user.department === "Finance" && (
+          <>
+            <CardNS title="Invoicing" iconSrc={services_financeAccounting[0].image} />
+            <CardNS title="Budget" iconSrc={services_financeAccounting[3].image} />
+            <CardNS title="Financial Reports" iconSrc={services_financeAccounting[5].image} />
+          </>
+        )}
+      </div>
+    </div>
 
         {/* Add More Button */}
         {user.role === "Master Admin" ||
@@ -1243,6 +1245,41 @@ const CardNS = ({ title, iconSrc, onClick }) => {
     </div>
   );
 };
+
+// Sortable Card Component
+const SortableCard = ({ id, title, iconSrc, isDragEnabled }) => {
+  const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id });
+
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+    borderColor: isDragEnabled ? "red" : "white", // Red border if drag is enabled
+  };
+
+  return (
+    <div
+      ref={setNodeRef}
+      style={style}
+      {...attributes}
+      {...listeners}
+      className={`flex flex-col items-center text-center cursor-pointer p-4 bg-white border-2 rounded-lg ${
+        isDragEnabled ? "border-white" : "border-white"
+      }`}
+    >
+      <img src={iconSrc} alt={title} className="w-16 h-16 mb-4" />
+      <p className="text-lg font-medium">{title}</p>
+    </div>
+  );
+};
+
+// Icon Grid Component (for reusability)
+const IconGrid = ({ quickLaunchIcons, isDragEnabled }) => (
+  <div className="grid grid-cols-2 sm:grid-cols-3 gap-8 mb-12">
+    {quickLaunchIcons.map((icon) => (
+      <SortableCard key={icon.id} id={icon.id} title={icon.title} iconSrc={icon.iconSrc} isDragEnabled={{isDragEnabled}} />
+    ))}
+  </div>
+);
 
 // Card Component in popup
 const Card = ({ title, iconSrc, isSelected, handleSelect }) => {

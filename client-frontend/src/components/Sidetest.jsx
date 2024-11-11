@@ -91,7 +91,7 @@ const TestSide = () => {
     >
       <div
         onClick={toggleSidebar}
-        className="flex justify-center items-center w-full bg-black cursor-pointer"
+        className="flex justify-center items-center w-full bg-black cursor-pointer sticky top-0"
       >
         <button
           onClick={toggleSidebar}
@@ -152,7 +152,7 @@ const TestSide = () => {
         </button>
 
         {isDepartmentsOpen && (
-          <ul className="mt-3 mx-3 cursor-pointer">
+          <ul className={`mt-3 cursor-pointer ${isSidebarOpen ? "px-3" : "px-0"}`}>
             {filteredDepartments.map((dept, index) => (
               <Tooltip title={dept.name} placement="right">
               <div
