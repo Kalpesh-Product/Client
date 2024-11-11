@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { IoMdSend } from "react-icons/io";
 
 export default function ChatScreen() {
+  const lastMessageRef = useRef(null);
   const [messages, setMessages] = useState([
     { id: 1, sender: "User", text: "Hello! How are you?" },
     {
@@ -11,6 +12,12 @@ export default function ChatScreen() {
     },
   ]);
   const [newMessage, setNewMessage] = useState("");
+
+  useEffect(() => {
+    if (lastMessageRef.current) {
+      lastMessageRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [messages]);
 
   const handleSendMessage = () => {
     if (newMessage.trim()) {
@@ -25,20 +32,21 @@ export default function ChatScreen() {
   };
 
   return (
-    <div className="flex flex-col h-full bg-gray-100 shadow-lg rounded-lg">
+    <div className="flex flex-col h-full bg-gray-100 shadow-lg w-full overflow-hidden">
       {/* Chat Header */}
-      <div className="sticky top-[3.7rem] z-10 py-4 px-6 bg-blue-600 text-white text-lg font-semibold">
+      <div className="sticky top-0 z-20 py-4 px-6 bg-blue-600 text-white text-lg font-semibold">
         Chat with Support
       </div>
 
       {/* Chat Messages */}
-      <div className="flex-1 overflow-y-auto p-4 space-y-3">
-        {messages.map((message) => (
+      <div className="flex-1 p-4 space-y-3 overflow-y-auto">
+        {messages.map((message, index) => (
           <div
             key={message.id}
             className={`flex ${
               message.sender === "User" ? "justify-end" : "justify-start"
             }`}
+            ref={index === messages.length - 1 ? lastMessageRef : null}
           >
             <div
               className={`p-3 rounded-lg max-w-xs ${
@@ -54,7 +62,7 @@ export default function ChatScreen() {
       </div>
 
       {/* Message Input */}
-      <div className="flex p-4 border-t border-gray-300 bg-white">
+      <div className="sticky bottom-0 flex p-4 border-t border-gray-300 bg-white">
         <input
           type="text"
           placeholder="Type a message..."
