@@ -5,7 +5,7 @@ import Sidebar from "../components/ClientSidebar";
 export default function ChatPage() {
   return (
     <main className="flex h-screen">
-      <Sidebar />
+      {/* <Sidebar /> */}
       <ChatSidebar />
       <div className="flex-grow h-full">
         <ChatScreen />
