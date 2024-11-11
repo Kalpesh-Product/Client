@@ -27,12 +27,12 @@ export default function ChatScreen() {
   return (
     <div className="flex flex-col h-full bg-gray-100 shadow-lg rounded-lg">
       {/* Chat Header */}
-      <div className="sticky top-[3.7rem] z-10 py-4 px-6 bg-blue-600 text-white text-lg font-semibold">
+      <div className="sticky top-0 z-10 py-4 px-6 bg-blue-600 text-white text-lg font-semibold">
         Chat with Support
       </div>
 
       {/* Chat Messages */}
-      <div className="flex-1 overflow-y-auto p-4 space-y-3">
+      <div className="flex-1 p-4 space-y-3 overflow-y-auto">
         {messages.map((message) => (
           <div
             key={message.id}
@@ -54,7 +54,7 @@ export default function ChatScreen() {
       </div>
 
       {/* Message Input */}
-      <div className="flex p-4 border-t border-gray-300 bg-white">
+      <div className="sticky bottom-0 flex p-4 border-t border-gray-300 bg-white">
         <input
           type="text"
           placeholder="Type a message..."
