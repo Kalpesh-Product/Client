@@ -26,19 +26,19 @@ const ClientHeader = () => {
     <>
       <header className="bg-black text-white py-4 px-6 flex justify-between items-center sticky top-0">
         {/* Logo Section */}
-        {/* <div className="flex items-center">
-        <span className="text-white text-xl font-semibold">
-          <img
-            src={BiznestLogo}
-            onClick={() => {
-              navigate("/");
-            }}
-            alt=""
-            className="rounded cursor-pointer"
-          />
-        </span>
-      </div> */}
         <div className="flex items-center">
+          <span className="text-white text-xl font-semibold">
+            <img
+              src={BiznestLogo}
+              onClick={() => {
+                navigate("/");
+              }}
+              alt=""
+              className="rounded cursor-pointer"
+            />
+          </span>
+        </div>
+        {/* <div className="flex items-center">
           <span className="text-white text-xl font-semibold">
             <img
               src={image}
@@ -47,7 +47,7 @@ const ClientHeader = () => {
               className="rounded cursor-pointer max-h-16 max-w-32"
             />
           </span>
-        </div>
+        </div> */}
         {/* <div
           className="w-16 h-16 rounded-full overflow-hidden bg-gray-200 cursor-pointer"
           onClick={() => setIsModalOpen(true)}>

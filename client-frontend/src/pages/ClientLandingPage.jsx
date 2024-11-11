@@ -757,7 +757,6 @@ const ClientLandingPage = () => {
   // Function to close the modal
   const closeModal = () => setIsModalOpen(false);
 
-
   const [quickLaunchIcons, setQuickLaunchIcons] = useState([
     { title: "Tasks", iconSrc: tasksImage },
     { title: "Ticket", iconSrc: ticketsImage },
@@ -868,13 +867,13 @@ const ClientLandingPage = () => {
 
         {/* Quick Launch Section */}
 
-        {user.role === "Master Admin" ||
+        {/* {user.role === "Master Admin" ||
         user.role === "Super Admin" ||
         user.role === "Admin" ? (
           <h2 className="text-2xl md:text-3xl font-bold mb-8 lg:ps-[7rem] uppercase">
             Quick launch
           </h2>
-        ) : null}
+        ) : null} */}
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-8 mb-12">
           {/* <CardNS title="Tasks" iconSrc={tasksImage} />
           <CardNS title="Ticket" iconSrc={ticketsImage} />
@@ -941,8 +940,7 @@ const ClientLandingPage = () => {
           <div className="flex justify-center">
             <button
               className="bg-red-500 text-white py-3 px-8 rounded-lg hover:bg-red-600"
-              onClick={openModal}
-            >
+              onClick={openModal}>
               Add More
             </button>
           </div>
@@ -977,8 +975,7 @@ const ClientLandingPage = () => {
                   {/* Close button */}
                   <button
                     className="bg-red-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-red-600"
-                    onClick={closeModal}
-                  >
+                    onClick={closeModal}>
                     X
                   </button>
                 </div>
@@ -1215,8 +1212,7 @@ const ClientLandingPage = () => {
                   {/* Add button */}
                   <button
                     className="bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600"
-                    onClick={handleAddServices}
-                  >
+                    onClick={handleAddServices}>
                     Add
                   </button>
                 </div>
@@ -1224,8 +1220,7 @@ const ClientLandingPage = () => {
               {/* Close button */}
               <button
                 className="bg-red-500 text-white py-2 px-4 my-4 rounded-lg hover:bg-red-600"
-                onClick={closeModal}
-              >
+                onClick={closeModal}>
                 Close
               </button>
             </div>
@@ -1272,8 +1267,7 @@ const Card = ({ title, iconSrc, isSelected, handleSelect }) => {
       className={`relative w-32 h-32 border-2 rounded-lg p-3 transition-shadow duration-300 cursor-pointer flex flex-col justify-center items-center ${
         isSelected ? "border-blue-500 shadow-lg" : "border-gray-300"
       }`}
-      onClick={() => handleSelect(title)}
-    >
+      onClick={() => handleSelect(title)}>
       <input
         type="checkbox"
         checked={isSelected}
