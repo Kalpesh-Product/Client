@@ -1,4 +1,4 @@
-import { createBrowserRouter} from "react-router-dom";
+import { createBrowserRouter } from "react-router-dom";
 import MainLayout from "../layouts/MainLayout";
 import Home from "../pages/Home";
 import Profile from "../pages/Profile";
@@ -8,7 +8,7 @@ import DragDropGrid from "../pages/DragDropGrid";
 import ClientLoginPage from "../pages/ClientLoginPage";
 import Dashboard from "../pages/Dashboard";
 import LoginPage from "../pages/LoginPage";
-import TestDashboard from "../pages/TestPage";
+import ChatPage from "../pages/ChatPage";import TestDashboard from "../pages/TestPage";
 
 
 const router = createBrowserRouter([
@@ -51,6 +51,10 @@ const router = createBrowserRouter([
       {
         path: "/testdash",
         element: <TestDashboard />,
+      },
+      {
+        path: "/chat",
+        element: <ChatPage />,
       },
     ],
   },
