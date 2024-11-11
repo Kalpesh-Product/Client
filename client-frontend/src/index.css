@@ -10,6 +10,11 @@
     backdrop-filter: blur(5px);
   }
 
+  .wono-blue{
+    background-color: rgb(13,180,234);
+  }
+  
+
 }
 
 
@@ -25,3 +30,4 @@
 ::-webkit-scrollbar{
   display: none;
 }
+

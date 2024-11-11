@@ -10,7 +10,25 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    function ({ addUtilities }) {
+      addUtilities({
+        '.half-border': {
+          position: 'relative',
+        },
+        '.half-border::after': {
+          content: '""',
+          position: 'absolute',
+          bottom: '0',          /* Position at the bottom */
+          left: '50%',          /* Start at the center horizontally */
+          transform: 'translateX(-50%)', /* Center it */
+          width: '70%',         /* Set width to half of the parent */
+          borderBottom: '1px solid gray', /* Create the bottom border */
+          color:'gray'
+        },
+      });
+    },
+  ],
 }
 
 

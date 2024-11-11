@@ -1,8 +1,22 @@
 import React, { useState, useEffect } from "react";
+import {
+  FaArrowRightToBracket,
+  FaBuildingUser,
+  FaCode,
+  FaMoneyBillTrendUp,
+} from "react-icons/fa6";
+import { FaArrowLeft, FaCalendarAlt, FaHandsHelping, FaTasks } from "react-icons/fa";
+import { TbReportSearch, TbSection } from "react-icons/tb";
+import { IoIosChatboxes } from "react-icons/io";
+import { SiAuthelia, SiMarketo } from "react-icons/si";
+import { CgProfile } from "react-icons/cg";
+import { Toolbar, Tooltip } from "@mui/material";
+import { MdAccountBalance, MdDashboard, MdLocalCafe, MdOutlineWifiTethering, MdPolicy } from "react-icons/md";
+import { RiCustomerService2Line } from "react-icons/ri";
 
 const TestSide = () => {
   const [isDepartmentsOpen, setIsDepartmentsOpen] = useState(false);
-  const [user, setUser] = useState('');
+  const [user, setUser] = useState("");
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
   const toggleSidebar = () => {
@@ -11,25 +25,28 @@ const TestSide = () => {
 
   // Menu items array (without DASHBOARD)
   const menuItems = [
-    { name: "Reports", icon: "https://via.placeholder.com/24" },
-    { name: "Tasks", icon: "https://via.placeholder.com/24" },
-    { name: "Calendar", icon: "https://via.placeholder.com/24" },
-    { name: "Chat", icon: "https://via.placeholder.com/24" },
-    { name: "Access", icon: "https://via.placeholder.com/24" },
-    { name: "Profile", icon: "https://via.placeholder.com/24" },
+    {
+      name: "Reports",
+      icon: <TbReportSearch />,
+    },
+    { name: "Tasks", icon: <FaTasks /> },
+    { name: "Calendar", icon: <FaCalendarAlt /> },
+    { name: "Chat", icon: <IoIosChatboxes /> },
+    { name: "Access", icon: <SiAuthelia /> },
+    { name: "Profile", icon: <CgProfile /> },
   ];
 
   const departments = [
-    { name: "FRONTEND", icon: "https://via.placeholder.com/24" },
-    { name: "FINANCE & ACCOUNTING", icon: "https://via.placeholder.com/24" },
-    { name: "SALES", icon: "https://via.placeholder.com/24" },
-    { name: "HUMAN RESOURCE", icon: "https://via.placeholder.com/24" },
-    { name: "CUSTOMER SERVICE", icon: "https://via.placeholder.com/24" },
-    { name: "MARKETING", icon: "https://via.placeholder.com/24" },
-    { name: "CAFE (F&B)", icon: "https://via.placeholder.com/24" },
-    { name: "IT", icon: "https://via.placeholder.com/24" },
-    { name: "MAINTENANCE", icon: "https://via.placeholder.com/24" },
-    { name: "LEGAL", icon: "https://via.placeholder.com/24" },
+    { name: "FRONTEND", icon: <FaCode /> },
+    { name: "FINANCE & ACCOUNTING", icon: <MdAccountBalance /> },
+    { name: "SALES", icon: <FaMoneyBillTrendUp /> },
+    { name: "HUMAN RESOURCE", icon: <FaBuildingUser /> },
+    { name: "CUSTOMER SERVICE", icon: <RiCustomerService2Line /> },
+    { name: "MARKETING", icon: <SiMarketo /> },
+    { name: "CAFE (F&B)", icon: <MdLocalCafe /> },
+    { name: "IT", icon: <MdOutlineWifiTethering /> },
+    { name: "MAINTENANCE", icon: <FaHandsHelping /> },
+    { name: "LEGAL", icon: <MdPolicy /> },
   ];
 
   useEffect(() => {
@@ -70,35 +87,52 @@ const TestSide = () => {
     <div
       className={`${
         isSidebarOpen ? "w-64" : "w-20"
-      } bg-white text-black flex-shrink-0 h-full sticky top-10 overflow-y-auto transition-all duration-300`}
+      } bg-white text-black flex-shrink-0 h-full sticky top-10 overflow-y-auto transition-all duration-300 `}
     >
-      <button
+      <div
         onClick={toggleSidebar}
-        className="text-black p-4 focus:outline-none"
+        className="flex justify-center items-center w-full bg-black cursor-pointer sticky top-0"
       >
-        {isSidebarOpen ? "Close" : "Open"}
-      </button>
-
-      {/* Menu items */}
-      <div className="mt-5">
-        {menuItems.map((item, index) => (
-          <div key={index} className="flex items-center px-4 py-4 hover:bg-gray-600">
-            <img src={item.icon} alt={item.name} className="w-6 h-6 mr-3" />
-            {isSidebarOpen && <span>{item.name}</span>}
-          </div>
-        ))}
+        <button
+          onClick={toggleSidebar}
+          className="text-white p-4 focus:outline-none text-center"
+        >
+          {isSidebarOpen ? <FaArrowLeft /> : <FaArrowRightToBracket />}
+        </button>
       </div>
 
-      {/* Department dropdown */}
+      {/*Dashboard */}
+      <div className="mt-5 px-3">
+        <Tooltip title={"Dashboard"} placement="right">
+          <div className="flex  items-center   py-4 hover:wono-blue hover:text-white hover:rounded-md pl-[1rem]">
+            <div className="flex justify-center w-6 text-2xl">
+              <MdDashboard />
+            </div>
+            {isSidebarOpen && <span className="pl-5">Dashboard</span>}
+          </div>
+        </Tooltip>
+
+       {/* Department dropdown */}
+
       <div className="mt-5">
         <button
           onClick={() => setIsDepartmentsOpen(!isDepartmentsOpen)}
-          className="flex items-center px-4 py-2 w-full text-white bg-gray-700 hover:bg-gray-600"
+          className="flex items-center px-4 py-2 w-full text-black bg-white hover:wono-blue hover:rounded-md "
         >
           {isSidebarOpen ? (
-            <span>Departments</span>
-          ) : <span> Dep</span>}
-          
+            <div className="flex items-center justify-center">
+              <div className="flex justify-center w-6 text-2xl">
+              <TbSection />
+              </div>
+              <span className="pl-5 ">Departments</span>
+            </div>
+          ) : (
+            <span>
+              {" "}
+              <TbSection />
+            </span>
+          )}
+
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -118,16 +152,42 @@ const TestSide = () => {
         </button>
 
         {isDepartmentsOpen && (
-          <ul>
+          <ul className={`mt-3 cursor-pointer ${isSidebarOpen ? "px-3" : "px-0"}`}>
             {filteredDepartments.map((dept, index) => (
-              <li key={index} className="flex items-center px-4 py-2 hover:bg-gray-600">
-                <img src={dept.icon} alt={dept.name} className="w-6 h-6 mr-3" />
-                {isSidebarOpen && <span>{dept.name}</span>}
-              </li>
+              <Tooltip title={dept.name} placement="right">
+              <div
+                key={index}
+                className="flex items-center py-4 hover:wono-blue pl-[1rem] hover:text-white  hover:rounded-md"
+              >
+                {/* <img src={item.icon} alt={item.name} className="w-6 h-6 mr-3" /> */}
+                <div className="flex justify-center w-6 text-[1.3rem]">
+                  {dept.icon}
+                </div>
+                {isSidebarOpen && <span className="pl-5 text-[1rem]">{dept.name}</span>}
+              </div>
+              </Tooltip>
             ))}
           </ul>
         )}
       </div>
+
+        {menuItems.map((item, index) => (
+          <Tooltip title={item.name} placement="right">
+            <div
+              key={index}
+              className="flex items-center py-[1.15rem] hover:wono-blue pl-[1rem] hover:rounded-md hover:text-white "
+            >
+              {/* <img src={item.icon} alt={item.name} className="w-6 h-6 mr-3" /> */}
+              <div className="flex justify-center w-6 text-[1.3rem]">
+                {item.icon}
+              </div>
+              {isSidebarOpen && <span className="pl-5">{item.name}</span>}
+            </div>
+          </Tooltip>
+        ))}
+      </div>
+
+ 
     </div>
   );
 };
