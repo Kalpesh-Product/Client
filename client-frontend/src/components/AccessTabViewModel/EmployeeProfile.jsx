@@ -128,7 +128,7 @@ const EmployeeProfile = ({ data }) => {
         <span className="w-24 font-semibold text-gray-600">Phone:</span>
         <input
           name="phone"
-          value={isAccessPage? data?.email : isProfilePage ? userData.Phone:""}
+          value={isAccessPage? data?.phone : isProfilePage ? userData.Phone:""}
           onChange={handleChange}
           className={`text-gray-800 border ${
             isEditing

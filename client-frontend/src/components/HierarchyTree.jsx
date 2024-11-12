@@ -25,8 +25,8 @@ const TreeNode = ({ node }) => {
     <div className="flex flex-col items-start mb-6 space-y-4 w-full max-w-[600px]">
       {/* Modal to show the user's details */}
       <Modal open={showModal} onClose={closeModal}>
-        <div className="relative w-full max-w-4xl h-[90vh] overflow-hidden p-6 bg-white rounded-lg shadow-lg">
-          <div className="flex items-center p-4 bg-white rounded-lg shadow-md justify-between mb-4">
+        <div className="relative w-[58rem] max-w-4xl h-[90vh] overflow-hidden p-2 bg-white  ">
+          <div className="flex items-center p-1 bg-white rounded-lg  justify-between mb-4">
             <div className="flex flex-row gap-3">
               <div
                 className={`flex items-center justify-center w-12 h-12 rounded-full text-white font-bold mr-3 ${getNodeColor(
