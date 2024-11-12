@@ -201,7 +201,8 @@ const AccessHierarchyTab = () => {
               checked={checkedItems[module]?.all || false}
               onChange={() => handleCheckboxChange(module)}
               className="cursor-pointer"
-              disabled
+              disabled={!isAccessPage}
+              
             />
             <span className="font-semibold">{module}</span>
           </label>
@@ -214,7 +215,7 @@ const AccessHierarchyTab = () => {
                   checked={checkedItems[module]?.[submodule] || false}
                   onChange={() => handleCheckboxChange(module, submodule)}
                   className="cursor-pointer"
-                  disabled
+                  disabled={!isAccessPage}
                 />
                 <span>{submodule}</span>
               </label>
