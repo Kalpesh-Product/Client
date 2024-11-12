@@ -5,6 +5,7 @@ import dayGridPlugin from "@fullcalendar/daygrid"
 import timeGridPlugin from "@fullcalendar/timegrid"
 import interactionPlugin from '@fullcalendar/interaction'
 import ClientSidebar from "../components/ClientSidebar";
+import TestSide from "../components/Sidetest";
 import "../styles/CalenderModal.css"
 
 
@@ -63,7 +64,7 @@ const Calender = () => {
   return (
     <>
     <div class="flex min-h-screen">
-    <ClientSidebar/>
+    <TestSide/>
     <div class="flex-1 p-6 bg-gray-100">
     <FullCalendar
     plugins={[ dayGridPlugin,timeGridPlugin,interactionPlugin]}
