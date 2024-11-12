@@ -10,6 +10,7 @@ import Dashboard from "../pages/Dashboard";
 import LoginPage from "../pages/LoginPage";
 import Reports from "../pages/Reports";import ChatPage from "../pages/ChatPage";import TestDashboard from "../pages/TestPage";
 import DropTest from "../pages/DropTest";
+import Calender from "../pages/Calender";
 
 
 const router = createBrowserRouter([
@@ -44,6 +45,10 @@ const router = createBrowserRouter([
       {
         path: "/dashboard",
         element: <Dashboard />,
+      },
+      {
+        path: "/calender",
+        element: <Calender />,
       },
       {
         path: "/drag-test",

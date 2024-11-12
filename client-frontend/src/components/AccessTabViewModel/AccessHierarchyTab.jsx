@@ -192,7 +192,7 @@ const AccessHierarchyTab = () => {
 
   const isAccessPage = location.pathname === "/access";
   return (
-    <div className="mb-4">
+    <div className="mb-4" aria-disabled>
       {Object.keys(modules).map((module) => (
         <div key={module} className="mb-4">
           <label className="flex items-center space-x-2 mb-2">
@@ -201,6 +201,7 @@ const AccessHierarchyTab = () => {
               checked={checkedItems[module]?.all || false}
               onChange={() => handleCheckboxChange(module)}
               className="cursor-pointer"
+              disabled
             />
             <span className="font-semibold">{module}</span>
           </label>
@@ -213,9 +214,11 @@ const AccessHierarchyTab = () => {
                   checked={checkedItems[module]?.[submodule] || false}
                   onChange={() => handleCheckboxChange(module, submodule)}
                   className="cursor-pointer"
+                  disabled
                 />
                 <span>{submodule}</span>
               </label>
+
             ))}
           </div>
         </div>
