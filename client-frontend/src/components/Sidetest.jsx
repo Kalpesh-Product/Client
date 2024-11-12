@@ -90,6 +90,7 @@ const TestSide = () => {
 
   const handleActive = (index) =>{
     setIsActive(index)
+    console.log("Menu clicked")
   }
 
   return (
@@ -186,7 +187,7 @@ const TestSide = () => {
           <Tooltip title={item.name} placement="right">
             <div
               key={index}
-              onClick={()=>{handleActive(index); navigate(item.route)}}
+              onClick={()=>{navigate(item.route);handleActive(index);}}
               className={`cursor-pointer flex items-center py-[1.15rem] hover:wono-blue pl-[1rem] hover:rounded-md hover:text-white  ${isActive === index ? 'wono-blue rounded-md text-white' : 'bg-white'} `}
             >
               {/* <img src={item.icon} alt={item.name} className="w-6 h-6 mr-3" /> */}
