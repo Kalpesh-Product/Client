@@ -3,6 +3,10 @@ import EmployeeProfile from "../components/AccessTabViewModel/EmployeeProfile";
 import AccessHierarchyTab from "../components/AccessTabViewModel/AccessHierarchyTab";
 import ClientSidebar from "../components/ClientSidebar";
 import TestSide from "../components/Sidetest";
+import MasterAdmin from "../assets/abrar.jpeg"
+import Profilepic from "../assets/profile.jpg"
+
+import SuperAdmin from "../assets/kashif-bg.png"
 // import image from "../profile.jpg";
 
 
@@ -96,14 +100,14 @@ const Profile = () => {
         <h1 class="text-3xl font-bold mb-4">Profile</h1>
         <div class="flex items-center p-4 bg-white rounded-lg shadow-md justify-between">
           <div class="flex flex-row gap-3">
-            {/* <div
+            <div
               className="w-16 h-16 rounded-full overflow-hidden bg-gray-200 cursor-pointer"
               onClick={() => setIsModalOpen(true)}>
               <img
-                src={image}
+                src={userData?.role === "Master Admin" ?MasterAdmin :userData?.role === "Super Admin"  ? SuperAdmin :Profilepic}
                 alt="Profile Logo"
                 class="w-16 h-16 rounded-full mr-4"></img>
-            </div> */}
+            </div>
 
             <div>
               <h2 class="text-xl font-semibold">{userData?.name}</h2>
