@@ -66,7 +66,7 @@ const Dashboard = () => {
     setUser(storedUser);
     console.log(user); // Log the user object on component mount
     console.log(user.name);
-  }, [user]);
+  }, []);
 
   const techWidgetsData = {
     activeTickets: 8,

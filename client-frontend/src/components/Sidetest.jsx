@@ -13,11 +13,14 @@ import { CgProfile } from "react-icons/cg";
 import { Toolbar, Tooltip } from "@mui/material";
 import { MdAccountBalance, MdDashboard, MdLocalCafe, MdOutlineWifiTethering, MdPolicy } from "react-icons/md";
 import { RiCustomerService2Line } from "react-icons/ri";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const TestSide = () => {
+  const navigate = useNavigate()
   const [isDepartmentsOpen, setIsDepartmentsOpen] = useState(false);
   const [user, setUser] = useState("");
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [isActive, setIsActive] = useState(null)
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
@@ -29,12 +32,13 @@ const TestSide = () => {
     {
       name: "Reports",
       icon: <TbReportSearch />,
+      route : '#reports'
     },
-    { name: "Tasks", icon: <FaTasks /> },
-    { name: "Calendar", icon: <FaCalendarAlt /> },
-    { name: "Chat", icon: <IoIosChatboxes /> },
-    { name: "Access", icon: <SiAuthelia /> },
-    { name: "Profile", icon: <CgProfile /> },
+    { name: "Tasks", icon: <FaTasks />, route : '#tasks' },
+    { name: "Calendar", icon: <FaCalendarAlt />, route : '#calendar' },
+    { name: "Chat", icon: <IoIosChatboxes />, route : '#chat' },
+    { name: "Access", icon: <SiAuthelia />, route : '/access' },
+    { name: "Profile", icon: <CgProfile />, route : '/profile' },
   ];
 
   const departments = [
@@ -84,6 +88,12 @@ const TestSide = () => {
     (departmentMapping[user?.department] || []).includes(dept.name)
   );
 
+  const handleActive = (index) =>{
+    setIsActive(index)
+    console.log("Menu clicked")
+  }
+  const location = useLocation()
+
   return (
     <div
       className={`${
@@ -92,7 +102,7 @@ const TestSide = () => {
     >
       <div
         onClick={toggleSidebar}
-        className="flex justify-center items-center w-full bg-black cursor-pointer sticky top-0"
+        className="flex justify-center items-center w-full wono-blue cursor-pointer sticky top-0 rounded-br-md"
       >
         <button
           onClick={toggleSidebar}
@@ -105,7 +115,8 @@ const TestSide = () => {
       {/*Dashboard */}
       <div className="mt-5 px-3">
         <Tooltip title={"Dashboard"} placement="right">
-          <div className="flex  items-center   py-4 hover:wono-blue hover:text-white hover:rounded-md pl-[1rem]">
+          <div onClick={()=>{navigate('/dashboard')}} 
+          className={`flex  items-center cursor-pointer  py-4 hover:wono-blue hover:text-white hover:rounded-md pl-[1rem] ${location.pathname === '/dashboard' ? 'wono-blue rounded-md text-white' : 'bg-white' }`}>
             <div className="flex justify-center w-6 text-2xl">
               <MdDashboard />
             </div>
@@ -115,10 +126,10 @@ const TestSide = () => {
 
        {/* Department dropdown */}
 
-      <div className="mt-5">
+      <div>
         <button
-          onClick={() => setIsDepartmentsOpen(!isDepartmentsOpen)}
-          className="flex items-center px-4 py-2 w-full text-black bg-white hover:wono-blue hover:rounded-md hover:text-white"
+          onClick={() => {setIsDepartmentsOpen(!isDepartmentsOpen); handleActive(-2)}}
+          className={`flex items-center px-4 py-4 w-full text-black bg-white hover:wono-blue hover:rounded-md hover:text-white ${isActive === -2 ? 'wono-blue rounded-md text-white' : 'bg-white'}`}
         >
           {isSidebarOpen ? (
             <div className="flex items-center justify-center">
@@ -139,7 +150,7 @@ const TestSide = () => {
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
-            className={`w-4 h-4 ml-2 transform ${
+            className={`w-4 h-4 ml-9 transform ${
               isDepartmentsOpen ? "rotate-180" : ""
             }`}
           >
@@ -158,7 +169,8 @@ const TestSide = () => {
               <Tooltip title={dept.name} placement="right">
               <div
                 key={index}
-                className="flex items-center py-4 hover:wono-blue pl-[1rem] hover:text-white  hover:rounded-md"
+                onClick={()=>handleActive(index)}
+                className={`flex items-center py-4 hover:wono-blue pl-[1rem] hover:text-white  hover:rounded-md ${isActive === index ? 'wono-blue rounded-md text-white' : 'bg-white'}`}
               >
                 {/* <img src={item.icon} alt={item.name} className="w-6 h-6 mr-3" /> */}
                 <div className="flex justify-center w-6 text-[1.3rem]">
@@ -176,7 +188,10 @@ const TestSide = () => {
           <Tooltip title={item.name} placement="right">
             <div
               key={index}
-              className="flex items-center py-[1.15rem] hover:wono-blue pl-[1rem] hover:rounded-md hover:text-white "
+              onClick={()=>{
+               navigate(item.route);
+                }}
+              className={`cursor-pointer flex items-center py-[1.15rem] hover:wono-blue pl-[1rem] hover:rounded-md hover:text-white  ${location.pathname === item.route ? 'wono-blue rounded-md text-white' : 'bg-white'} `}
             >
               {/* <img src={item.icon} alt={item.name} className="w-6 h-6 mr-3" /> */}
               <div className="flex justify-center w-6 text-[1.3rem]">
