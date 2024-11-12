@@ -13,7 +13,7 @@ import { CgProfile } from "react-icons/cg";
 import { Toolbar, Tooltip } from "@mui/material";
 import { MdAccountBalance, MdDashboard, MdLocalCafe, MdOutlineWifiTethering, MdPolicy } from "react-icons/md";
 import { RiCustomerService2Line } from "react-icons/ri";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const TestSide = () => {
   const navigate = useNavigate()
@@ -92,6 +92,7 @@ const TestSide = () => {
     setIsActive(index)
     console.log("Menu clicked")
   }
+  const location = useLocation()
 
   return (
     <div
@@ -101,7 +102,7 @@ const TestSide = () => {
     >
       <div
         onClick={toggleSidebar}
-        className="flex justify-center items-center w-full bg-black cursor-pointer sticky top-0"
+        className="flex justify-center items-center w-full wono-blue cursor-pointer sticky top-0 rounded-br-md"
       >
         <button
           onClick={toggleSidebar}
@@ -114,21 +115,21 @@ const TestSide = () => {
       {/*Dashboard */}
       <div className="mt-5 px-3">
         <Tooltip title={"Dashboard"} placement="right">
-          <div onClick={()=>{handleActive(-1); navigate('/dashboard')}} 
-          className={`flex  items-center cursor-pointer  py-4 hover:wono-blue hover:text-white hover:rounded-md pl-[1rem] ${isActive === -1 ? 'wono-blue rounded-md text-white' : 'bg-white' }`}>
+          <div onClick={()=>{navigate('/dashboard')}} 
+          className={`flex  items-center cursor-pointer  py-4 hover:wono-blue hover:text-white hover:rounded-md pl-[1rem] ${location.pathname === '/dashboard' ? 'wono-blue rounded-md text-white' : 'bg-white' }`}>
             <div className="flex justify-center w-6 text-2xl">
               <MdDashboard />
             </div>
-            {isSidebarOpen && <span onClick={handleActive} className="pl-5">Dashboard</span>}
+            {isSidebarOpen && <span className="pl-5">Dashboard</span>}
           </div>
         </Tooltip>
 
        {/* Department dropdown */}
 
-      <div className="mt-5">
+      <div>
         <button
           onClick={() => {setIsDepartmentsOpen(!isDepartmentsOpen); handleActive(-2)}}
-          className={`flex items-center px-4 py-2 w-full text-black bg-white hover:wono-blue hover:rounded-md hover:text-white ${isActive === -2 ? 'wono-blue rounded-md text-white' : 'bg-white'}`}
+          className={`flex items-center px-4 py-4 w-full text-black bg-white hover:wono-blue hover:rounded-md hover:text-white ${isActive === -2 ? 'wono-blue rounded-md text-white' : 'bg-white'}`}
         >
           {isSidebarOpen ? (
             <div className="flex items-center justify-center">
@@ -187,8 +188,10 @@ const TestSide = () => {
           <Tooltip title={item.name} placement="right">
             <div
               key={index}
-              onClick={()=>{navigate(item.route);handleActive(index);}}
-              className={`cursor-pointer flex items-center py-[1.15rem] hover:wono-blue pl-[1rem] hover:rounded-md hover:text-white  ${isActive === index ? 'wono-blue rounded-md text-white' : 'bg-white'} `}
+              onClick={()=>{
+               navigate(item.route);
+                }}
+              className={`cursor-pointer flex items-center py-[1.15rem] hover:wono-blue pl-[1rem] hover:rounded-md hover:text-white  ${location.pathname === item.route ? 'wono-blue rounded-md text-white' : 'bg-white'} `}
             >
               {/* <img src={item.icon} alt={item.name} className="w-6 h-6 mr-3" /> */}
               <div className="flex justify-center w-6 text-[1.3rem]">
