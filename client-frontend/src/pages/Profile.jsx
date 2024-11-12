@@ -2,6 +2,7 @@ import React, { useState,useEffect } from "react";
 import EmployeeProfile from "../components/AccessTabViewModel/EmployeeProfile";
 import AccessHierarchyTab from "../components/AccessTabViewModel/AccessHierarchyTab";
 import ClientSidebar from "../components/ClientSidebar";
+import TestSide from "../components/Sidetest";
 // import image from "../profile.jpg";
 
 
@@ -88,7 +89,7 @@ const Profile = () => {
   return (
     <div class="flex min-h-screen">
       {/* Sidebar */}
-      <ClientSidebar/>
+      <TestSide/>
       
       {/* Main Content */}
       <div class="flex-1 p-6 bg-gray-100">

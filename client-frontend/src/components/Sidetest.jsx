@@ -23,6 +23,7 @@ const TestSide = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
 
+
   // Menu items array (without DASHBOARD)
   const menuItems = [
     {
@@ -117,7 +118,7 @@ const TestSide = () => {
       <div className="mt-5">
         <button
           onClick={() => setIsDepartmentsOpen(!isDepartmentsOpen)}
-          className="flex items-center px-4 py-2 w-full text-black bg-white hover:wono-blue hover:rounded-md "
+          className="flex items-center px-4 py-2 w-full text-black bg-white hover:wono-blue hover:rounded-md hover:text-white"
         >
           {isSidebarOpen ? (
             <div className="flex items-center justify-center">

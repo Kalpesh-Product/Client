@@ -13,9 +13,25 @@ import {
   ServerUptime,
   CriticalAlerts,
 } from "../Widgets/TechWidgets";
+import DoughnutChart from "../Widgets/DoughnutGraph";
 
-import {RecurringClients, SalesProgress, SalesTarget, SalesByMonthGraph, SalesTrendGraph, SalesDistributionGraph} from '../Widgets/SalesWidgets'
-import {PCFixes, WiFiConfiguration, WiFiTraffic, NetworkIssuesResolved, PCFixesPending, PCFixesProgress, PCFixesLineGraph} from '../Widgets/ITWidgets'
+import {
+  RecurringClients,
+  SalesProgress,
+  SalesTarget,
+  SalesByMonthGraph,
+  SalesTrendGraph,
+  SalesDistributionGraph,
+} from "../Widgets/SalesWidgets";
+import {
+  PCFixes,
+  WiFiConfiguration,
+  WiFiTraffic,
+  NetworkIssuesResolved,
+  PCFixesPending,
+  PCFixesProgress,
+  PCFixesLineGraph,
+} from "../Widgets/ITWidgets";
 import Sidetest from "../components/Sidetest";
 import TestSide from "../components/Sidetest";
 
@@ -23,10 +39,12 @@ const WidgetSection = ({ heading, widgets }) => (
   <div className="mt-4">
     <h2 className="text-2xl font-semibold">{heading}</h2>
     <div
-      className="grid gap-4 mt-3 "
-      style={{
-        gridTemplateColumns: `repeat(${Math.min(widgets.length, 3)}, minmax(0, 1fr))`,
-      }}
+      className={`grid gap-4 mt-3
+    grid-cols-1
+    sm:grid-cols-${Math.min(widgets.length, 2)}
+    md:grid-cols-${Math.min(widgets.length, 3)}
+    lg:grid-cols-${Math.min(widgets.length, 4)}
+  `}
     >
       {widgets.map((Widget, index) => (
         <div
@@ -48,7 +66,7 @@ const Dashboard = () => {
     setUser(storedUser);
     console.log(user); // Log the user object on component mount
     console.log(user.name);
-  }, [user]); 
+  }, [user]);
 
   const techWidgetsData = {
     activeTickets: 8,
@@ -59,21 +77,20 @@ const Dashboard = () => {
   };
 
   // Random Data for Sales Widgets
-const salesWidgetsData = {
-  recurringClients: 120,
-  salesProgress: 75,
-  salesTarget: 50000, // Example target value in dollars
-};
+  const salesWidgetsData = {
+    recurringClients: 120,
+    salesProgress: 75,
+    salesTarget: 50000, // Example target value in dollars
+  };
 
-const itWidgetsData = {
-  pcFixes: 120,  // Number of PCs fixed
-  pcFixesProgress: 75,  // Progress of PC fixes (percentage)
-  pcFixesPending: 25,  // Pending PC repairs (number of pending repairs)
-  wifiConfig: 35,  // Number of WiFi configurations
-  wifiTraffic: 150,  // Total WiFi traffic in GB
-  networkIssues: 45,  // Number of network issues resolved
-};
-
+  const itWidgetsData = {
+    pcFixes: 120, // Number of PCs fixed
+    pcFixesProgress: 75, // Progress of PC fixes (percentage)
+    pcFixesPending: 25, // Pending PC repairs (number of pending repairs)
+    wifiConfig: 35, // Number of WiFi configurations
+    wifiTraffic: 150, // Total WiFi traffic in GB
+    networkIssues: 45, // Number of network issues resolved
+  };
 
   const allWidgets = {
     Sales: [
@@ -95,21 +112,21 @@ const itWidgetsData = {
 
   const salesWidgets = [
     {
-      heading : "Overview",
-      widgets : [
-        <RecurringClients count={salesWidgetsData.recurringClients}/>,
-        <SalesProgress progress={salesWidgetsData.salesProgress}/>,
-        <SalesTarget target={salesWidgetsData.salesTarget}/>,
-      ]
+      heading: "Overview",
+      widgets: [
+        <RecurringClients count={salesWidgetsData.recurringClients} />,
+        <SalesProgress progress={salesWidgetsData.salesProgress} />,
+        <SalesTarget target={salesWidgetsData.salesTarget} />,
+      ],
     },
     {
-      heading : "Graphs",
-      widgets : [
-        <SalesByMonthGraph/>,
-        <SalesDistributionGraph/>,
-        <SalesTrendGraph/>,
-      ]
-    }, 
+      heading: "Graphs",
+      widgets: [
+        <SalesByMonthGraph />,
+        <SalesDistributionGraph />,
+        <SalesTrendGraph />,
+      ],
+    },
   ];
 
   const itWidgets = [
@@ -131,12 +148,9 @@ const itWidgetsData = {
     },
     {
       heading: "Overview",
-      widgets: [
-        <PCFixesLineGraph/>,
-      ],
+      widgets: [<PCFixesLineGraph />, <DoughnutChart />],
     },
   ];
-  
 
   const financeWidgets = [
     <RevenueVsExpensesWidget />,
@@ -163,7 +177,10 @@ const itWidgetsData = {
     },
     {
       heading: "Requirements",
-      widgets: [<CriticalAlerts count={techWidgetsData.criticalAlerts} />],
+      widgets: [
+        <CriticalAlerts count={techWidgetsData.criticalAlerts} />,
+        <DoughnutChart />,
+      ],
     },
   ];
 
@@ -181,7 +198,7 @@ const itWidgetsData = {
       <div className="flex-1 bg-gray-100 p-8 overflow-y-auto">
         {/* Heading 1 */}
         <h1 className="text-3xl">{user.name}'s Dashboard</h1>
-        <h2>
+        <h2 className="my-5">
           BIZ Nest-{user.role}-{user.department}
         </h2>
 
@@ -189,17 +206,17 @@ const itWidgetsData = {
         {(user.role === "Master Admin" || user.role === "Super Admin") && (
           <div className="grid grid-cols-1 md:grid-cols-1 gap-4">
             {/* Sales Widget */}
-            <div className="bg-white p-4  rounded-lg h-[100%] ">
+            <div className="bg-white p-4  rounded-lg  ">
               <WidgetSection heading="Sales" widgets={allWidgets.Sales} />
             </div>
 
             {/* Finance Widget */}
-            <div className="bg-white p-4  rounded-lg h-[100%] ">
+            <div className="bg-white p-4  rounded-lg  ">
               <WidgetSection heading="Finance" widgets={allWidgets.Finance} />
             </div>
 
             {/* Other Widgets */}
-            <div className="bg-white p-4  rounded-lg h-[100%] ">
+            <div className="bg-white p-4  rounded-lg  ">
               <WidgetSection heading="Tech" widgets={allWidgets.Tech} />
             </div>
           </div>
@@ -207,7 +224,7 @@ const itWidgetsData = {
 
         {/* For Admin or Employee, display only Sales section */}
         {user.department === "Sales" && (
-          <div className="bg-white p-4 rounded-lg h-[100%] mt-4">
+          <div className="bg-white p-4 rounded-lg  mt-4">
             {salesWidgets.map((section, index) => (
               <WidgetSection
                 key={index}
@@ -219,19 +236,19 @@ const itWidgetsData = {
         )}
 
         {user.department === "Finance" && (
-          <div className="bg-white p-4 rounded-lg h-[100%] ">
+          <div className="bg-white p-4 rounded-lg  ">
             <WidgetSection heading="Finance" widgets={financeWidgets} />
           </div>
         )}
 
         {user.department === "HR" && (
-          <div className="bg-white p-4 rounded-lg h-[100%] ">
+          <div className="bg-white p-4 rounded-lg  ">
             <WidgetSection heading="HR" widgets={salesWidgets} />
           </div>
         )}
 
         {user.department === "Tech" && (
-          <div className="bg-white p-4 rounded-lg h-[100%] mt-4">
+          <div className="bg-white p-4 rounded-lg  mt-4">
             {techWidgets.map((section, index) => (
               <WidgetSection
                 key={index}
@@ -242,7 +259,7 @@ const itWidgetsData = {
           </div>
         )}
         {user.department === "IT" && (
-          <div className="bg-white p-4 rounded-lg h-[100%] mt-4">
+          <div className="bg-white p-4 rounded-lg  mt-4">
             {itWidgets.map((section, index) => (
               <WidgetSection
                 key={index}

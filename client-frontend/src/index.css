@@ -31,3 +31,7 @@
   display: none;
 }
 
+body{
+  overscroll-behavior: none;
+}
+

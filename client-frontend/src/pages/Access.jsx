@@ -8,6 +8,7 @@ import { data } from "../utils/data";
 import { motion } from "framer-motion";
 import DepartmentForm from "../components/DepartmentForm";
 import Sidebar from "../components/ClientSidebar";
+import TestSide from "../components/Sidetest";
 
 export default function Access() {
   const open = useSelector((state) => state.modal.open);
@@ -22,7 +23,7 @@ export default function Access() {
   return (
     <div className="flex min-h-screen">
       {/* Sidebar */}
-      <Sidebar className="w-64 p-4 bg-gray-100 border-r" />
+      <TestSide/>
 
       {/* Main Content */}
       <main className="flex-1 p-4 md:p-8">
