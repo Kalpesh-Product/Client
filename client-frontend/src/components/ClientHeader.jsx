@@ -31,7 +31,7 @@ const ClientHeader = () => {
             <img
               src={BiznestLogo}
               onClick={() => {
-                navigate("/");
+                navigate("/landing");
               }}
               alt=""
               className="rounded cursor-pointer"
