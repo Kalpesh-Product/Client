@@ -95,64 +95,16 @@ const Reports = () => {
                 label="Ticket"
                 value="2"
                 sx={{ textTransform: "capitalize" }}
-                // sx={{
-                //   textTransform: "capitalize",
-                //   borderRadius: "16px",
-                //   padding: "4px 16px",
-                //   margin: "0 8px",
-                //   minWidth: "100px",
-                //   minHeight: "32px",
-                //   height: "32px",
-                //   "&.Mui-selected": {
-                //     backgroundColor: "rgb(13,180,234)", // Apply wono-blue when selected
-                //     color: "#fff", // Change text color to white when selected
-                //   },
-                //   "&:hover": {
-                //     backgroundColor: "#d3d3d3",
-                //   },
-                // }}
               />
               <Tab
                 label="Meeting"
                 value="3"
                 sx={{ textTransform: "capitalize" }}
-                // sx={{
-                //   textTransform: "capitalize",
-                //   borderRadius: "16px",
-                //   padding: "4px 16px",
-                //   margin: "0 8px",
-                //   minWidth: "100px",
-                //   minHeight: "32px",
-                //   height: "32px",
-                //   "&.Mui-selected": {
-                //     backgroundColor: "rgb(13,180,234)", // Apply wono-blue when selected
-                //     color: "#fff", // Change text color to white when selected
-                //   },
-                //   "&:hover": {
-                //     backgroundColor: "#d3d3d3",
-                //   },
-                // }}
               />
               <Tab
                 label="Customer Service"
                 value="4"
                 sx={{ textTransform: "capitalize" }}
-                // sx={{
-                //   textTransform: "capitalize",
-                //   borderRadius: "16px",
-                //   padding: "4px 16px",
-                //   margin: "0 8px",
-                //   minWidth: "100px",
-                //   minHeight: "32px",
-                //   height: "32px",
-                //   "&.Mui-selected": {
-                //     backgroundColor: "rgb(13,180,234)", // Apply wono-blue when selected
-                //     color: "#fff", // Change text color to white when selected
-                //   },
-                //   "&:hover": {
-                //     backgroundColor: "#d3d3d3",
-                //   },
-                // }}
               />
             </TabList>
           </Box>
@@ -167,6 +119,7 @@ const Reports = () => {
               </div>
             </div>
             <br />
+
             <DataTable />
           </TabPanel>
 
