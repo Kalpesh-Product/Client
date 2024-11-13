@@ -1,6 +1,6 @@
 export default function Chat({ item }) {
   return (
-    <article className="flex items-center w-full max-w-xs px-4 py-3 mb-2 bg-white hover:bg-gray-200 transition rounded-lg shadow-sm hover:shadow-md cursor-pointer">
+    <article className="flex items-center w-full px-4 py-3 mb-2 bg-white hover:bg-gray-200 transition rounded-lg cursor-pointer">
       <div
         className={`flex items-center justify-center w-12 h-12 rounded-full text-white font-semibold mr-3 ${getNodeColor(
           item.name
