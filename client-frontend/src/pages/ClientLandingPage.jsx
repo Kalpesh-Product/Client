@@ -834,7 +834,7 @@ const ClientLandingPage = () => {
       <div className="bg-white p-8 ">
         {/* Welcome Section */}
         <div className="flex justify-between items-center mb-12 flex-wrap">
-          <h1 className="text-3xl md:text-4xl font-bold lg:ps-[7rem]">
+          <h1 className="text-3xl md:text-4xl font-bold lg:ps-[7rem] motion-preset-slide-right-md">
             {user.name}
           </h1>
           <div className="flex gap-4">
@@ -860,7 +860,7 @@ const ClientLandingPage = () => {
 
         {/* Main Grid Section */}
         {/* <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-8 mb-12"> */}
-        <div className="grid grid-cols-2 sm:grid-cols-3  gap-8 mb-12">
+        <div className="grid grid-cols-2 sm:grid-cols-3  gap-8 mb-12 ">
           <CardNS
             title="Dashboard"
             iconSrc={dashboardImage}
@@ -1255,7 +1255,7 @@ const ClientLandingPage = () => {
 const CardNS = ({ title, iconSrc, onClick }) => {
   return (
     <div
-      className="flex flex-col items-center text-center cursor-pointer"
+      className="flex flex-col items-center text-center cursor-pointer motion-preset-expand"
       onClick={onClick} // Attach onClick event here
     >
       <img src={iconSrc} alt={title} className="w-16 h-16 mb-4" />

@@ -102,11 +102,11 @@ const TestSide = () => {
     >
       <div
         onClick={toggleSidebar}
-        className="flex justify-center items-center w-full wono-blue cursor-pointer sticky top-0 rounded-br-md"
+        className={`flex ${isSidebarOpen ? 'justify-end' : 'justify-center'} items-center w-full bg-[#0DB4EA] cursor-pointer sticky top-0 rounded-br-md`}
       >
         <button
           onClick={toggleSidebar}
-          className="text-white p-4 focus:outline-none text-center"
+          className="text-white p-4 focus:outline-none text-end"
         >
           {isSidebarOpen ? <FaArrowLeft /> : <FaArrowRightToBracket />}
         </button>
@@ -116,11 +116,11 @@ const TestSide = () => {
       <div className="mt-5 px-3">
         <Tooltip title={"Dashboard"} placement="right">
           <div onClick={()=>{navigate('/dashboard')}} 
-          className={`flex  items-center cursor-pointer  py-4 hover:wono-blue hover:text-white hover:rounded-md pl-[1rem] ${location.pathname === '/dashboard' ? 'wono-blue rounded-md text-white' : 'bg-white' }`}>
+          className={`flex  items-center cursor-pointer  py-3 hover:wono-blue-dark hover:text-white hover:rounded-md pl-[1rem] ${location.pathname === '/dashboard' ? 'wono-blue rounded-md text-[#0DB4EA]' : 'bg-white' }`}>
             <div className="flex justify-center w-6 text-2xl">
               <MdDashboard />
             </div>
-            {isSidebarOpen && <span className="pl-5">Dashboard</span>}
+            {isSidebarOpen  && <span className="pl-5">Dashboard</span>}
           </div>
         </Tooltip>
 
@@ -129,7 +129,7 @@ const TestSide = () => {
       <div>
         <button
           onClick={() => {setIsDepartmentsOpen(!isDepartmentsOpen); handleActive(-2)}}
-          className={`flex items-center px-4 py-4 w-full text-black bg-white hover:wono-blue hover:rounded-md hover:text-white ${isActive === -2 ? 'wono-blue rounded-md text-white' : 'bg-white'}`}
+          className={`flex items-center px-4 py-4 w-full text-black bg-white hover:wono-blue-dark hover:rounded-md hover:text-white ${isActive === -2 ? 'wono-blue-dark rounded-md text-white' : 'bg-white'}`}
         >
           {isSidebarOpen ? (
             <div className="flex items-center justify-center">
@@ -170,7 +170,7 @@ const TestSide = () => {
               <div
                 key={index}
                 onClick={()=>handleActive(index)}
-                className={`flex items-center py-4 hover:wono-blue pl-[1rem] hover:text-white  hover:rounded-md ${isActive === index ? 'wono-blue rounded-md text-white' : 'bg-white'}`}
+                className={`flex items-center py-4 hover:wono-blue-dark pl-[1rem] hover:text-white  hover:rounded-md ${isActive === index ? 'wono-blue-dark rounded-md text-white' : 'bg-white'}`}
               >
                 {/* <img src={item.icon} alt={item.name} className="w-6 h-6 mr-3" /> */}
                 <div className="flex justify-center w-6 text-[1.3rem]">
@@ -191,7 +191,7 @@ const TestSide = () => {
               onClick={()=>{
                navigate(item.route);
                 }}
-              className={`cursor-pointer flex items-center py-[1.15rem] hover:wono-blue pl-[1rem] hover:rounded-md hover:text-white  ${location.pathname === item.route ? 'wono-blue rounded-md text-white' : 'bg-white'} `}
+              className={`cursor-pointer flex items-center py-[1rem] hover:wono-blue-dark pl-[1rem] hover:rounded-md hover:text-white  ${location.pathname === item.route ? 'wono-blue rounded-md text-[#0DB4EA]' : 'bg-white'} `}
             >
               {/* <img src={item.icon} alt={item.name} className="w-6 h-6 mr-3" /> */}
               <div className="flex justify-center w-6 text-[1.3rem]">

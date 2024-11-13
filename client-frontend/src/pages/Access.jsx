@@ -21,12 +21,12 @@ export default function Access() {
   };
 
   return (
-    <div className="flex min-h-screen">
+    <div className="flex min-h-screen bg-slate-50">
       {/* Sidebar */}
       <TestSide/>
 
       {/* Main Content */}
-      <main className="flex-1 p-4 md:p-8">
+      <main className="flex-1 p-4 md:p-8 motion-preset-blur-right-md">
         <div className="flex flex-col md:flex-row justify-between items-center mb-8">
           <h1 className="text-3xl md:text-4xl font-bold mb-4 md:mb-0">Access</h1>
           <div className="flex justify-center items-center gap-4 flex-wrap">
@@ -34,7 +34,7 @@ export default function Access() {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => handleOpenModal("department")}
-              className="px-6 py-2 rounded-lg text-white bg-purple-500 hover:bg-purple-600 transition-shadow shadow-md hover:shadow-lg active:shadow-inner"
+              className="px-6 py-2 rounded-lg text-white wono-blue-dark hover:bg-[#3cbce7] transition-shadow shadow-md hover:shadow-lg active:shadow-inner"
             >
               Add Department
             </motion.button>
@@ -42,7 +42,7 @@ export default function Access() {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => handleOpenModal("employee")}
-              className="px-6 py-2 rounded-lg text-white bg-purple-500 hover:bg-purple-600 transition-shadow shadow-md hover:shadow-lg active:shadow-inner"
+              className="px-6 py-2 rounded-lg text-white wono-blue-dark hover:bg-[#3cbce7] transition-shadow shadow-md hover:shadow-lg active:shadow-inner"
             >
               Add Employee
             </motion.button>
@@ -52,23 +52,17 @@ export default function Access() {
         <Modal open={open} onClose={() => dispatch(closeModal())}>
           {activeModal === "employee" ? (
             <>
-              <h1 className="text-xl text-center my-2 font-bold">
-                Enter Employee Details
-              </h1>
-              <MemberForm />
+              <MemberForm formTitle={"Enter Employee Details"}/>
             </>
           ) : activeModal === "department" ? (
             <>
-              <h1 className="text-xl text-center my-2 font-bold">
-                Enter Department Details
-              </h1>
-              <DepartmentForm />
+              <DepartmentForm formTitle={"Enter Department Details"} />
             </>
           ) : null}
         </Modal>
 
         <div className="overflow-x-auto p-4 md:p-8 flex justify-center">
-          <div className="max-w-4xl w-full">
+          <div className="max-w-4xl w-full motion-preset-expand">
             <HierarchyTree data={data} />
           </div>
         </div>

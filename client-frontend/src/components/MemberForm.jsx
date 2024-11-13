@@ -12,8 +12,9 @@ import { motion } from "framer-motion";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { toast } from "sonner";
+import { IoMdClose } from "react-icons/io";
 
-export default function MemberForm() {
+export default function MemberForm({formTitle}) {
   const dispatch = useDispatch();
   const [formData, setFormData] = useState({
     personalInfo: {
@@ -161,13 +162,25 @@ export default function MemberForm() {
     <Box
       sx={{
         maxWidth: 600,
-        padding: 3,
+        padding: 1,
         bgcolor: "background.paper",
         borderRadius: 2,
       }}
-      className="bg-white p-6 rounded-lg shadow-md mx-auto"
+      className="bg-white p-4 rounded-lg mx-auto"
     >
       {/* Personal Information */}
+      <div className="flex justify-between mb-5">
+      <h1 className="text-xl text-center my-2 font-bold w-full">{formTitle}</h1>
+      <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.9 }}
+            type="button"
+            onClick={() => dispatch(closeModal())}
+            className=" p-2 bg-white text-[red] border border-red-200 hover:border-red-400 text-2xl rounded-md"
+          >
+            <IoMdClose />
+          </motion.button>
+      </div>
       <h2 className="text-lg font-semibold mb-4">Personal Information</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         {/* Name, Mobile, Email, DOB fields */}
@@ -344,14 +357,7 @@ export default function MemberForm() {
         >
           Submit
         </motion.button>
-        <motion.button
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.9 }}
-          className="w-full py-2 px-4 bg-red-600 text-white rounded mt-4"
-          onClick={() => dispatch(closeModal())}
-        >
-          Cancel
-        </motion.button>
+
       </div>
     </Box>
   );
