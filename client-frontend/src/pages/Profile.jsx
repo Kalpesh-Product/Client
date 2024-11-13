@@ -1,13 +1,11 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import EmployeeProfile from "../components/AccessTabViewModel/EmployeeProfile";
 import AccessHierarchyTab from "../components/AccessTabViewModel/AccessHierarchyTab";
 import ClientSidebar from "../components/ClientSidebar";
 import TestSide from "../components/Sidetest";
 // import image from "../profile.jpg";
 
-
 const Profile = () => {
-  
   const [isModelOpen, setIsModalOpen] = useState(false);
   const [IsAccessModalOpen, setIsAccessModalOpen] = useState(false);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
@@ -89,8 +87,8 @@ const Profile = () => {
   return (
     <div class="flex min-h-screen">
       {/* Sidebar */}
-      <TestSide/>
-      
+      <TestSide />
+
       {/* Main Content */}
       <div class="flex-1 p-6 bg-gray-100">
         <h1 class="text-3xl font-bold mb-4">Profile</h1>
@@ -110,7 +108,6 @@ const Profile = () => {
               <p class="text-gray-500">Active</p>
             </div>
           </div>
-          
         </div>
         {/* <!-- Horizontal Divider --> */}
         <hr class="border-t border-gray-300 my-4" />
@@ -281,4 +278,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default Profile;
