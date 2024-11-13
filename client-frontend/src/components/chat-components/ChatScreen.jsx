@@ -21,12 +21,21 @@ export default function ChatScreen() {
 
   const handleSendMessage = () => {
     if (newMessage.trim()) {
-      const message = {
+      const userMessage = {
         id: messages.length + 1,
         sender: "User",
         text: newMessage,
       };
-      setMessages([...messages, message]);
+
+      const senderMessage = {
+        id: messages.length + 2,
+        sender: "other",
+        text: "demo message",
+      };
+      setMessages([...messages, userMessage]);
+      setTimeout(() => {
+        setMessages([...messages, userMessage, senderMessage]);
+      }, 1000);
       setNewMessage("");
     }
   };

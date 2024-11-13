@@ -2,10 +2,10 @@ export const data = [
   {
     name: "Abrar Shaikh",
     role: "Manager",
-    designation: "TopManagement",
+    designation: "CEO",
     email: "abrar@biznest.co.in",
     company: "Biznest",
-    department: "TopManagement",
+    department: "Top Management",
     phone: "+1234567890",
     address: "123 Main St, Cityville",
     dateOfBirth: "1975-02-15",
@@ -13,7 +13,7 @@ export const data = [
       {
         name: "Kashif Shaikh",
         role: "Co-Founder & CEO",
-        designation: "Management",
+        designation: "Co-Founder & CEO",
         email: "kashif@biznest.co.in",
         company: "Biznest",
         department: "Management",
