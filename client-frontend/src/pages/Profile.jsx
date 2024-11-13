@@ -91,12 +91,12 @@ const Profile = () => {
     }));
   };
   return (
-    <div class="flex min-h-screen">
+    <div class="flex min-h-screen ">
       {/* Sidebar */}
       <TestSide/>
       
       {/* Main Content */}
-      <div class="flex-1 p-6 bg-gray-100">
+      <div class="flex-1 p-6 bg-gray-100 motion-preset-blur-right-md">
         <h1 class="text-3xl font-bold mb-4">Profile</h1>
         <div class="flex items-center p-4 bg-white rounded-lg shadow-md justify-between">
           <div class="flex flex-row gap-3">
@@ -147,7 +147,7 @@ const Profile = () => {
           <div className="tab-content">
             {activeTab === "tab-1" && (
               <div
-                className="tab-pane fade show active"
+                className="tab-pane motion-preset-slide-up show active"
                 id="tab-1"
                 role="tabpanel">
                 <div
@@ -171,7 +171,7 @@ const Profile = () => {
               </div>
             )}
             {activeTab === "tab-2" && (
-              <div className="tab-pane fade show" id="tab-2" role="tabpanel">
+              <div className="tab-pane motion-preset-slide-up-sm show" id="tab-2" role="tabpanel">
                 <div
                   className="flex flex-col  mt-3"
                   data-aos="fade-up"

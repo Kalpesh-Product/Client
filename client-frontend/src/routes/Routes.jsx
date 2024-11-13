@@ -40,7 +40,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/profile",
-        element: <Profile />,
+        element: <Profile className="motion-preset-slide-right-sm" />,
       },
       {
         path: "/dashboard",

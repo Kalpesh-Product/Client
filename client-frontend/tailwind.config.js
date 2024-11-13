@@ -28,6 +28,7 @@ module.exports = {
         },
       });
     },
+    require('tailwindcss-motion')
   ],
 }
 

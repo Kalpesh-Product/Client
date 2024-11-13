@@ -204,7 +204,7 @@ const AccessHierarchyTab = () => {
               disabled={!isAccessPage}
               
             />
-            <span className="font-semibold">{module}</span>
+            <span className="font-[Popins-SemiBold]">{module}</span>
           </label>
 
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2 ml-6">
@@ -217,7 +217,7 @@ const AccessHierarchyTab = () => {
                   className="cursor-pointer"
                   disabled={!isAccessPage}
                 />
-                <span>{submodule}</span>
+                <span className="font-[Popins-Regular]">{submodule}</span>
               </label>
 
             ))}
