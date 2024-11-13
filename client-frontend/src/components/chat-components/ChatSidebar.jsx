@@ -5,48 +5,80 @@ import { useState } from "react";
 export default function ChatSidebar() {
   const storedUser = JSON.parse(localStorage.getItem("user"));
   const [data, setData] = useState(flattenData);
-  const [openGroups, setOpenGroups] = useState({});
+  const [search, setSearch] = useState("");
+  const [isCompanyDropdownOpen, setIsCompanyDropdownOpen] = useState(false);
+  const [selectedCompany, setSelectedCompany] = useState("All");
 
-  const toggleGroup = (groupName) => {
-    setOpenGroups((prev) => ({
-      ...prev,
-      [groupName]: !prev[groupName],
-    }));
+  // Filtered data based on search input and selected company
+  const filteredData = data.filter((item) => {
+    const matchesSearch = item.name
+      .toLowerCase()
+      .includes(search.toLowerCase());
+    const matchesCompany =
+      selectedCompany === "All" ||
+      (selectedCompany === "BIZNest");
+
+    return matchesSearch && matchesCompany;
+  });
+
+  const toggleDropdown = () => {
+    setIsCompanyDropdownOpen(!isCompanyDropdownOpen);
   };
 
-  const groupedData = data.reduce((acc, item) => {
-    const group = item.group || "Others";
-    if (!acc[group]) acc[group] = [];
-    acc[group].push(item);
-    return acc;
-  }, {});
+  const handleCompanySelect = (company) => {
+    setSelectedCompany(company);
+    setIsCompanyDropdownOpen(false);
+  };
 
   return (
-    <aside className="min-h-screen w-64 overflow-y-auto bg-white border-r shadow-lg">
-      <h2 className="text-2xl font-bold p-4">Chats</h2>
-      <div className="w-full h-full p-4">
-        {Object.keys(groupedData).map((group, index) => (
-          <div key={index}>
+    <aside className="min-h-screen w-72 overflow-y-auto bg-white border-r border-gray-300 shadow-lg">
+      {/* Header */}
+      <div className="p-4 bg-black text-white text-xl font-bold flex items-center justify-between">
+        <span>Chats</span>
+      </div>
+
+      {/* Company Dropdown */}
+      <div className="p-4 cursor-pointer" onClick={toggleDropdown}>
+        <div className="flex items-center justify-between">
+          <span className="text-lg font-medium">{selectedCompany}</span>
+          <span className="text-xl">{isCompanyDropdownOpen ? "▲" : "▼"}</span>
+        </div>
+        {isCompanyDropdownOpen && (
+          <div className="mt-2 border-t border-gray-300">
             <div
-              onClick={() => toggleGroup(group)}
-              className="flex items-center justify-between py-2 px-4 cursor-pointer hover:bg-gray-100"
+              className="py-2 cursor-pointer hover:bg-gray-200"
+              onClick={() => handleCompanySelect("wono")}
             >
-              <h3 className="text-lg font-semibold text-gray-700">{group}</h3>
-              <span className="text-sm text-blue-600 font-bold">
-                {groupedData[group].length}
-              </span>
+              WoNo
             </div>
-            {openGroups[group] && (
-              <div className="pl-6">
-                {groupedData[group].map((item, index) =>
-                  item.email !== storedUser.email ? (
-                    <Chat key={index} item={item} />
-                  ) : null
-                )}
-              </div>
-            )}
+            <div
+              className="py-2 cursor-pointer hover:bg-gray-200"
+              onClick={() => handleCompanySelect("BIZNest")}
+            >
+              BIZNest
+            </div>
           </div>
-        ))}
+        )}
+      </div>
+
+      {/* Search Bar */}
+      <div className="p-4">
+        <input
+          type="text"
+          placeholder="Search"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          className="w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
+      </div>
+
+      {/* Chat items list */}
+      <div className="px-4 pb-4">
+        {filteredData.map((item, index) =>
+          item.email !== storedUser.email ? (
+            <Chat key={index} item={item} />
+          ) : null
+        )}
       </div>
     </aside>
   );
