@@ -96,7 +96,7 @@ const Profile = () => {
       <TestSide/>
       
       {/* Main Content */}
-      <div class="flex-1 p-6 bg-gray-100 motion-preset-blur-right-md">
+      <div class="flex-1 p-6  motion-preset-blur-right-md">
         <h1 class="text-3xl font-bold mb-4">Profile</h1>
         <div class="flex items-center p-4 bg-white rounded-lg shadow-md justify-between">
           <div class="flex flex-row gap-3">

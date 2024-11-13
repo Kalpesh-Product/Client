@@ -15,9 +15,8 @@ import { MdAccountBalance, MdDashboard, MdLocalCafe, MdOutlineWifiTethering, MdP
 import { RiCustomerService2Line } from "react-icons/ri";
 import { useNavigate, useLocation } from "react-router-dom";
 
-const TestSide = () => {
+const ModuleSidebar = () => {
   const navigate = useNavigate()
-  const [isDepartmentsOpen, setIsDepartmentsOpen] = useState(false);
   const [user, setUser] = useState("");
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isActive, setIsActive] = useState(null)
@@ -42,16 +41,16 @@ const TestSide = () => {
   ];
 
   const departments = [
-    { name: "FRONTEND", icon: <FaCode />, route:'/frontend' },
-    { name: "FINANCE & ACCOUNTING", icon: <MdAccountBalance />, route:'/finance' },
-    { name: "SALES", icon: <FaMoneyBillTrendUp />, route:'/sales' },
-    { name: "HUMAN RESOURCE", icon: <FaBuildingUser />, route:'/hr' },
-    { name: "CUSTOMER SERVICE", icon: <RiCustomerService2Line />, route:'/customer' },
-    { name: "MARKETING", icon: <SiMarketo />, route:'/marketing' },
-    { name: "CAFE (F&B)", icon: <MdLocalCafe />, route:'/cafe' },
-    { name: "IT", icon: <MdOutlineWifiTethering />, route:'/it' },
-    { name: "MAINTENANCE", icon: <FaHandsHelping />, route:'/maintainance' },
-    { name: "LEGAL", icon: <MdPolicy />, route:'/legal' },
+    { name: "FRONTEND", icon: <FaCode /> },
+    { name: "FINANCE & ACCOUNTING", icon: <MdAccountBalance /> },
+    { name: "SALES", icon: <FaMoneyBillTrendUp /> },
+    { name: "HUMAN RESOURCE", icon: <FaBuildingUser /> },
+    { name: "CUSTOMER SERVICE", icon: <RiCustomerService2Line /> },
+    { name: "MARKETING", icon: <SiMarketo /> },
+    { name: "CAFE (F&B)", icon: <MdLocalCafe /> },
+    { name: "IT", icon: <MdOutlineWifiTethering /> },
+    { name: "MAINTENANCE", icon: <FaHandsHelping /> },
+    { name: "LEGAL", icon: <MdPolicy /> },
   ];
 
   useEffect(() => {
@@ -118,11 +117,29 @@ const TestSide = () => {
             {isSidebarOpen  && <span className="pl-5">Dashboard</span>}
           </div>
         </Tooltip>
+        <Tooltip title={"Dashboard"} placement="right">
+          <div onClick={()=>{navigate('/dashboard')}} 
+          className={`flex ${isSidebarOpen ? 'pl-[1rem]' : 'justify-center'} items-center cursor-pointer  py-3 hover:wono-blue-dark hover:text-white hover:rounded-md ${location.pathname === '/dashboard' ? 'wono-blue rounded-md text-[#0DB4EA]' : 'bg-white' }`}>
+            <div className="flex justify-center w-6 text-2xl">
+              <MdDashboard />
+            </div>
+            {isSidebarOpen  && <span className="pl-5">Submodule-1</span>}
+          </div>
+        </Tooltip>
+        <Tooltip title={"Dashboard"} placement="right">
+          <div onClick={()=>{navigate('/dashboard')}} 
+          className={`flex ${isSidebarOpen ? 'pl-[1rem]' : 'justify-center'} items-center cursor-pointer  py-3 hover:wono-blue-dark hover:text-white hover:rounded-md ${location.pathname === '/dashboard' ? 'wono-blue rounded-md text-[#0DB4EA]' : 'bg-white' }`}>
+            <div className="flex justify-center w-6 text-2xl">
+              <MdDashboard />
+            </div>
+            {isSidebarOpen  && <span className="pl-5">Submodule-2</span>}
+          </div>
+        </Tooltip>
 
        {/* Department dropdown */}
 
       <div>
-        <button
+        {/* <button
           onClick={() => {setIsDepartmentsOpen(!isDepartmentsOpen); handleActive(-2)}}
           className={`flex items-center px-4 py-4 w-full text-black bg-white hover:wono-blue-dark hover:rounded-md hover:text-white ${isActive === -2 ? 'wono-blue-dark rounded-md text-white' : 'bg-white'}`}
         >
@@ -158,19 +175,18 @@ const TestSide = () => {
           </svg>
           ) : ''}
           
-        </button>
+        </button> */}
 
-        {isDepartmentsOpen && (
+        {/* {isDepartmentsOpen && (
           <ul className={`mt-3 cursor-pointer ${isSidebarOpen ? "px-3" : "px-0"}`}>
             {filteredDepartments.map((dept, index) => (
               <Tooltip title={dept.name} placement="right">
               <div
                 key={index}
-                onClick={()=>{handleActive(index); navigate(dept.route, {state : {departmentName : dept.name}})}}
+                onClick={()=>handleActive(index)}
                 className={`flex items-center py-4 hover:wono-blue-dark pl-[1rem] hover:text-white  hover:rounded-md ${isActive === index ? 'wono-blue-dark rounded-md text-white' : 'bg-white'}`}
               >
-                {/* <img src={item.icon} alt={item.name} className="w-6 h-6 mr-3" /> */}
-                <div  className="flex justify-center w-6 text-[1.3rem]">
+                <div className="flex justify-center w-6 text-[1.3rem]">
                   {dept.icon}
                 </div>
                 {isSidebarOpen && <span className="pl-5 text-[1rem]">{dept.name}</span>}
@@ -178,10 +194,10 @@ const TestSide = () => {
               </Tooltip>
             ))}
           </ul>
-        )}
+        )} */}
       </div>
 
-        {menuItems.map((item, index) => (
+        {/* {menuItems.map((item, index) => (
           <Tooltip title={item.name} placement="right">
             <div
               key={index}
@@ -190,20 +206,19 @@ const TestSide = () => {
                 }}
               className={`cursor-pointer flex ${isSidebarOpen ? 'pl-[1rem]' : 'justify-center'} items-center py-[1rem] hover:wono-blue-dark  hover:rounded-md hover:text-white  ${location.pathname === item.route ? 'wono-blue rounded-md text-[#0DB4EA]' : 'bg-white'} `}
             >
-              {/* <img src={item.icon} alt={item.name} className="w-6 h-6 mr-3" /> */}
               <div className="flex justify-center w-6 text-[1.3rem]">
                 {item.icon}
               </div>
               {isSidebarOpen && <span className="pl-5">{item.name}</span>}
             </div>
           </Tooltip>
-        ))}
+        ))} */}
       </div>
 
       
       <div
         onClick={toggleSidebar}
-        className={`flex ${isSidebarOpen ? 'justify-end' : 'justify-center'} items-center  bg-[#0DB4EA] cursor-pointer fixed top-[6.25rem] ${isSidebarOpen ? 'left-[13.5rem]' : 'left-14'} transition-all duration-300 rounded-full`}
+        className={`flex ${isSidebarOpen ? 'justify-end' : 'justify-center'} items-center  bg-[#0DB4EA] cursor-pointer fixed top-[6.25rem] ${isSidebarOpen ? 'left-[15.5rem]' : 'left-32'} transition-all duration-300 rounded-full`}
       >
         <button
           onClick={toggleSidebar}
@@ -220,4 +235,4 @@ const TestSide = () => {
   );
 };
 
-export default TestSide;
+export default ModuleSidebar;

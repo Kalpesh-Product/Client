@@ -11,6 +11,9 @@ import LoginPage from "../pages/LoginPage";
 import Reports from "../pages/Reports";import ChatPage from "../pages/ChatPage";import TestDashboard from "../pages/TestPage";
 import DropTest from "../pages/DropTest";
 import Calender from "../pages/Calender";
+import Sidebar from "../components/ClientSidebar";
+import Services from "../pages/Services";
+import DepartmentDash from "../pages/modules/PageFrontend";
 
 
 const router = createBrowserRouter([
@@ -40,14 +43,22 @@ const router = createBrowserRouter([
       },
       {
         path: "/profile",
-        element: <Profile className="motion-preset-slide-right-sm" />,
+        element: <Profile/>,
       },
       {
         path: "/dashboard",
         element: <Dashboard />,
       },
       {
-        path: "/calender",
+        path: "/services",
+        element: <Services />,
+      },
+      {
+        path: "/:department",
+        element:<DepartmentDash />,
+      },
+      {
+        path: "/calendar",
         element: <Calender />,
       },
       {
@@ -60,7 +71,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/testdash",
-        element: <TestDashboard />,
+        element: <Sidebar />,
       },
       {
         path: "/chat",
