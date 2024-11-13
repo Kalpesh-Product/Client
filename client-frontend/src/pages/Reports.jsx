@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import Box from "@mui/material/Box";
 import Tab from "@mui/material/Tab";
@@ -7,6 +7,11 @@ import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
 import TestSide from "../components/Sidetest";
 import DataTable from "../components/Datatable";
+import Select from "react-select";
+import TaskReportsSection from "../components/Submodules/tasks/TaskReportsSection";
+import TicketReportsSection from "../components/Submodules/ticket/TicketReportsSection";
+import MeetingReportsSection from "../components/Submodules/meetings/MeetingReportsSection";
+import CustomerServiceReportsSection from "../components/Submodules/customer-service/CustomerServiceReportsSection";
 
 const Reports = () => {
   // For Top Bar
@@ -23,50 +28,67 @@ const Reports = () => {
     setValue(newValue);
   };
 
+  // For the selected report
+  const [selectedOption, setSelectedOption] = useState(null);
+
+  const options = [
+    { value: "Tasks", label: "Tasks" },
+    { value: "Tickets", label: "Tickets" },
+    { value: "Meetings", label: "Meetings" },
+    { value: "Customer Service", label: "Customer Service" },
+  ];
+
+  const handleSelectChange = (selected) => {
+    setSelectedOption(selected ? selected.value : null); // Set the selected option
+  };
+
   return (
     <div className="flex min-h-screen">
       <TestSide />
-      <div className=" w-full">
-        <h2 className="text-4xl pt-3 pl-3">Reports</h2>
-        <h3 className="text-2xl pt-5 pb-4 pl-5">My Reports</h3>
+      <div className=" w-full pl-3">
+        <h2 className="text-4xl pt-3 ">Reports</h2>
+        <h3 className="text-2xl pt-5 pb-4 ">Select Report</h3>
 
-        {/* Tabs Custom Start*/}
-        {/* <div className="bg-yellow-500">
-          <ul className="flex">
-            <li className="px-3">Finance</li>
-            <li className="px-3">Admin</li>
-            <li className="px-3">Sales</li>
-            <li className="px-3">Tech</li>
-            <li className="px-3">HR</li>
-            <li className="px-3">IT</li>
-            <li className="px-3">Maintenance</li>
-          </ul>
-        </div> */}
-        {/* Tabs Custom End*/}
+        {/* Select Tag To Select Submodule START */}
+        <div className="grid grid-cols-3 sm:grid-cols-6 pb-5">
+          <Select
+            options={options}
+            onChange={handleSelectChange} // Handle select option change
+            placeholder="Select a report"
+          />
+        </div>
+        {/* Select Tag To Select Submodule END */}
 
-        {/* Tabs Departments Start */}
-        {/* <TabContext value={value}>
-          <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-            <TabList onChange={handleTopBarChange} aria-label="Top Tab">
-              <Tab
-                label="My Tickets"
-                value="myTickets"
-                sx={{ textTransform: "capitalize" }}
-              />
-              <Tab
-                label="Departments"
-                value="departments"
-                sx={{ textTransform: "capitalize" }}
-              />
-            </TabList>
-          </Box>
-          <TabPanel value="myTickets">My Tickets</TabPanel>
-          <TabPanel value="departments">Departments</TabPanel>
-        </TabContext> */}
-        {/* Tabs Departments End */}
+        {selectedOption === "Tasks" && (
+          <div>
+            <TaskReportsSection />
+            {/* Add your Tasks section content here */}
+          </div>
+        )}
+
+        {selectedOption === "Tickets" && (
+          <div>
+            <TicketReportsSection />
+            {/* Add your Tickets section content here */}
+          </div>
+        )}
+
+        {selectedOption === "Meetings" && (
+          <div>
+            <MeetingReportsSection />
+            {/* Add your Meetings section content here */}
+          </div>
+        )}
+
+        {selectedOption === "Customer Service" && (
+          <div>
+            <CustomerServiceReportsSection />
+            {/* Add your Customer Service section content here */}
+          </div>
+        )}
 
         {/* Tabs Material UI Start*/}
-        <TabContext value={value}>
+        {/* <TabContext value={value}>
           <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
             <TabList onChange={handleChange} aria-label="Departments">
               <Tab
@@ -74,22 +96,7 @@ const Reports = () => {
                 value="1"
                 className="wono-blue"
                 sx={{ textTransform: "capitalize" }}
-                // sx={{
-                //   textTransform: "capitalize",
-                //   borderRadius: "16px",
-                //   padding: "4px 16px",
-                //   margin: "0 8px",
-                //   minWidth: "100px",
-                //   minHeight: "32px",
-                //   height: "32px",
-                //   "&.Mui-selected": {
-                //     backgroundColor: "rgb(13,180,234)", // Apply wono-blue when selected
-                //     color: "#fff", // Change text color to white when selected
-                //   },
-                //   "&:hover": {
-                //     backgroundColor: "#d3d3d3",
-                //   },
-                // }}
+   
               />
               <Tab
                 label="Ticket"
@@ -162,7 +169,7 @@ const Reports = () => {
             <br />
             <DataTable />
           </TabPanel>
-        </TabContext>
+        </TabContext> */}
         {/* Tabs Material UI End*/}
       </div>
     </div>
