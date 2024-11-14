@@ -111,7 +111,7 @@ const TreeNode = ({ node }) => {
             }}
             animate={{ rotate: isExpanded ? 180 : 0 }}
             transition={{ duration: 0.3, ease: "easeInOut" }}
-            className="text-gray-500 ml-2"
+            className="text-gray-500 ml-2 p-4"
           >
             ▲
           </motion.div>
