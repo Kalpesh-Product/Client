@@ -145,7 +145,7 @@ const Calender = () => {
         id="time-input"
         value={newEvent.time}
         onChange={(e) => setnewEvent({ ...newEvent, time: e.target.value })}
-        className="w-full py-3.5 px-2 text-gray-900 bg-transparent border border-gray-300 rounded-md outline-none focus:border-blue-500 focus:ring focus:ring-blue-200 peer"
+        className="w-full py-2 px-2 text-gray-900 bg-transparent border border-gray-300 rounded-md outline-none focus:border-blue-500 focus:ring focus:ring-blue-200 peer"
       />
         {/* <input type='time'
         value={newEvent.time}
