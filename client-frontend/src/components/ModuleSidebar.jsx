@@ -25,7 +25,9 @@ import {
   MdOutlineWifiTethering,
   MdPolicy,
 } from "react-icons/md";
+import { HiColorSwatch } from "react-icons/hi";
 import { RiCustomerService2Line } from "react-icons/ri";
+import { GrDocumentUpdate } from "react-icons/gr";
 import { useNavigate, useLocation } from "react-router-dom";
 import { CgWebsite } from "react-icons/cg";
 
@@ -146,175 +148,53 @@ const ModuleSidebar = ({ mainSideBar }) => {
             <div
               className={`flex ${
                 isSidebarOpen ? "pl-[1rem]" : "justify-center"
-              } items-center py-3  ${
-                location.pathname === "/dashboard"
-                  ? "wono-blue rounded-md text-[#0DB4EA]"
-                  : "bg-white"
-              }`}
+              } items-center py-3 wono-blue wono-blue-text rounded-md `}
             >
-              {/* <div className="flex justify-center w-6 text-2xl">
-         
-              </div> */}
+              <div className="flex justify-center w-5 text-2xl">
+              <CgWebsite />
+              </div>
               {isSidebarOpen && <span className="pl-5 font-bold">{departmentName}</span>}
             </div>
             <Tooltip title={isSidebarOpen ? 'Close' : 'Collapse'} placement="right">
             <button
               onClick={toggleSidebar}
               className={`text-black text-[0.8rem] p-2 focus:outline-none text-end absolute top-[0.6rem] ${
-                isSidebarOpen ? "left-[11rem]" : "left-[2.5rem]"
+                isSidebarOpen ? "left-[11rem]" : "left-[3.2rem]"
               } `}
             >
               {isSidebarOpen ? (
-                <BsArrowLeftSquare />
+                <FaArrowLeft />
               ) : (
                 <FaArrowRightToBracket />
               )}
             </button>
           </Tooltip>
 
-          <Tooltip title={"Dashboard"} placement="right">
-            <div
-              onClick={() => {
-                navigate("#dashboard");
-              }}
-              className={`flex ${
-                isSidebarOpen ? "pl-[1rem]" : "justify-center"
-              } items-center cursor-pointer  py-3 hover:wono-blue-dark hover:text-white hover:rounded-md ${
-                location.pathname === "/dashboard"
-                  ? "wono-blue rounded-md text-[#0DB4EA]"
-                  : "bg-white"
-              }`}
-            >
-              <div className="flex justify-center w-6 text-2xl">
-                <MdDashboard />
-              </div>
-              {isSidebarOpen && <span className="pl-5">Dashboard</span>}
-            </div>
-          </Tooltip>
           <Tooltip title={"Themes"} placement="right">
             <div
               onClick={() => {
-                navigate("#themes");
+                navigate("/frontend/themes");
               }}
               className={`flex ${
                 isSidebarOpen ? "pl-[1rem]" : "justify-center"
               } items-center cursor-pointer  py-3 hover:wono-blue-dark hover:text-white hover:rounded-md ${
-                location.pathname === "/dashboard"
+                location.pathname === "/frontend/themes"
                   ? "wono-blue rounded-md text-[#0DB4EA]"
                   : "bg-white"
               }`}
             >
-              <div className="flex justify-center w-6 text-2xl">
-                <MdDashboard />
+              <div className="flex justify-center w-5 text-2xl">
+              <HiColorSwatch />
               </div>
               {isSidebarOpen && <span className="pl-5">Themes</span>}
             </div>
           </Tooltip>
 
-          {/* Department dropdown */}
-
-          <div>
-            <button
-              onClick={() => {
-                setIsDepartmentsOpen(!isDepartmentsOpen);
-                handleActive(-2);
-              }}
-              className={`flex items-center px-4 py-4 w-full text-black bg-white hover:wono-blue-dark hover:rounded-md hover:text-white ${
-                isActive === -2
-                  ? "wono-blue-dark rounded-md text-white"
-                  : "bg-white"
-              }`}
-            >
-              {isSidebarOpen ? (
-                <div className="flex items-center justify-center">
-                  <div className="flex justify-center w-6 text-2xl">
-                    <CgWebsite />
-                  </div>
-                  <span className="pl-5 ">Update</span>
-                </div>
-              ) : (
-                <span>
-                  {" "}
-                  <CgWebsite />
-                </span>
-              )}
-              {isSidebarOpen ? (
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  className={`w-4 h-4 ml-3 transform ${
-                    isDepartmentsOpen ? "rotate-180" : ""
-                  }`}
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M19 9l-7 7-7-7"
-                  />
-                </svg>
-              ) : (
-                ""
-              )}
-            </button>
-
-            {isDepartmentsOpen && (
-              <ul
-                className={`mt-3 cursor-pointer ${
-                  isSidebarOpen ? "px-0" : "px-0"
-                }`}
-              >
-                {/* {filteredDepartments.map((dept, index) => (
-            ))} */}
-                <Tooltip title={"Home"} placement="right">
-                  <div
-                    // onClick={()=>handleActive(index)}
-                    className={`flex items-center  py-4 hover:wono-blue-dark px-[0rem] hover:text-white  hover:rounded-md `}
-                  >
-                    <div className="flex justify-center w-6 text-[1.3rem]">
-                      <MdOutlineAddBox />
-                    </div>
-                    {isSidebarOpen && (
-                      <span className="pl-5 text-[1rem]">Home Page</span>
-                    )}
-                  </div>
-                </Tooltip>
-                <Tooltip title={"Add"} placement="right">
-                  <div
-                    // onClick={()=>handleActive(index)}
-                    className={`flex items-center  py-4 hover:wono-blue-dark px-[0rem] hover:text-white  hover:rounded-md `}
-                  >
-                    <div className="flex justify-center w-6 text-[1.3rem]">
-                      <MdOutlineAddBox />
-                    </div>
-                    {isSidebarOpen && (
-                      <span className="pl-5 text-[1rem]">Add Page</span>
-                    )}
-                  </div>
-                </Tooltip>
-                <Tooltip title={"Reports"} placement="right">
-                  <div
-                    // onClick={()=>handleActive(index)}
-                    className={`flex items-center w-full py-4 hover:wono-blue-dark px-[0rem] hover:text-white  hover:rounded-md `}
-                  >
-                    <div className="flex justify-center w-6 text-[1.3rem]">
-                      <MdOutlineAddBox />
-                    </div>
-                    {isSidebarOpen && (
-                      <span className="pl-5 text-[1rem]">Reports</span>
-                    )}
-                  </div>
-                </Tooltip>
-              </ul>
-            )}
-          </div>
 
           <Tooltip title={"Themes"} placement="right">
             <div
               onClick={() => {
-                navigate("#themes");
+                navigate("/frontend/updates");
               }}
               className={`flex ${
                 isSidebarOpen ? "pl-[1rem]" : "justify-center"
@@ -324,10 +204,10 @@ const ModuleSidebar = ({ mainSideBar }) => {
                   : "bg-white"
               }`}
             >
-              <div className="flex justify-center w-6 text-2xl">
-                <MdDashboard />
+              <div className="flex justify-center w-5 text-2xl">
+              <GrDocumentUpdate />
               </div>
-              {isSidebarOpen && <span className="pl-5">Themes</span>}
+              {isSidebarOpen && <span className="pl-5">Update</span>}
             </div>
           </Tooltip>
           <Tooltip title={"Dashboard"} placement="right">
@@ -346,7 +226,7 @@ const ModuleSidebar = ({ mainSideBar }) => {
               <div className="flex justify-center w-6 text-2xl">
                 <MdDashboard />
               </div>
-              {isSidebarOpen && <span className="pl-5">Update</span>}
+              {isSidebarOpen && <span className="pl-5">Reports</span>}
             </div>
           </Tooltip>
 

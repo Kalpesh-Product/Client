@@ -26,7 +26,7 @@ export default function Access() {
       <TestSide/>
 
       {/* Main Content */}
-      <main className="flex-1 p-4 ml-4 md:p-8 motion-preset-blur-right-md">
+      <main className="flex-1 p-4 ml-4 md:p-8 motion-preset-blur-right-md overflow-y-auto">
         <div className="flex flex-col md:flex-row justify-between items-center mb-8">
           <h1 className="text-3xl md:text-4xl font-bold mb-4 md:mb-0">Access</h1>
           <div className="flex justify-center items-center gap-4 flex-wrap">

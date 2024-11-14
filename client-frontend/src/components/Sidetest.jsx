@@ -5,14 +5,15 @@ import {
   FaCode,
   FaMoneyBillTrendUp,
 } from "react-icons/fa6";
-import { FaArrowLeft, FaCalendarAlt, FaHandsHelping, FaTasks } from "react-icons/fa";
+import { FaArrowLeft, FaCalendarAlt, FaHandsHelping, FaRegCalendarAlt, FaTasks } from "react-icons/fa";
 import { TbReportSearch, TbSection } from "react-icons/tb";
 import { IoIosChatboxes } from "react-icons/io";
 import { SiAuthelia, SiMarketo } from "react-icons/si";
 import { CgProfile } from "react-icons/cg";
 import { Toolbar, Tooltip } from "@mui/material";
 import { MdAccountBalance, MdDashboard, MdLocalCafe, MdOutlineWifiTethering, MdPolicy } from "react-icons/md";
-import { RiCustomerService2Line } from "react-icons/ri";
+import { HiOutlineChatAlt2 } from "react-icons/hi";
+import { RiCustomerService2Line, RiDashboardLine } from "react-icons/ri";
 import { useNavigate, useLocation } from "react-router-dom";
 
 const TestSide = () => {
@@ -35,8 +36,8 @@ const TestSide = () => {
       route : '/reports'
     },
     { name: "Tasks", icon: <FaTasks />, route : '#tasks' },
-    { name: "Calendar", icon: <FaCalendarAlt />, route : '/calendar' },
-    { name: "Chat", icon: <IoIosChatboxes />, route : '/chat' },
+    { name: "Calendar", icon: <FaRegCalendarAlt />, route : '/calendar' },
+    { name: "Chat", icon: <HiOutlineChatAlt2 />, route : '/chat' },
     { name: "Access", icon: <SiAuthelia />, route : '/access' },
     { name: "Profile", icon: <CgProfile />, route : '/profile' },
   ];
@@ -115,9 +116,9 @@ useEffect(() => {
       <div className="mt-5 px-3">
         <Tooltip title={"Dashboard"} placement="right">
           <div onClick={()=>{navigate('/dashboard')}} 
-          className={`flex ${isSidebarOpen ? 'pl-[1rem]' : 'justify-center'} items-center cursor-pointer  py-3 hover:wono-blue-dark hover:text-white hover:rounded-md ${location.pathname === '/dashboard' ? 'wono-blue rounded-md text-[#0DB4EA]' : 'bg-white' }`}>
+          className={`flex ${isSidebarOpen ? 'pl-[1rem]' : 'justify-center'} items-center cursor-pointer  py-3 hover:wono-blue-dark hover:text-white hover:rounded-md ${location.pathname === '/dashboard' ? 'wono-blue border-r-4 border-[#0DB4EA] rounded-tl-md rounded-bl-md text-[#0DB4EA]' : 'bg-white' }`}>
             <div className="flex justify-center w-6 text-2xl">
-              <MdDashboard />
+              <RiDashboardLine />
             </div>
             {isSidebarOpen  && <span className="pl-5">Dashboard</span>}
           </div>
@@ -128,7 +129,7 @@ useEffect(() => {
       <div>
         <button
           onClick={() => {setIsDepartmentsOpen(!isDepartmentsOpen); handleActive(-2)}}
-          className={`flex items-center px-4 py-3 w-full text-black bg-white hover:wono-blue-dark hover:rounded-md hover:text-white ${isActive === -2 ? 'wono-blue-dark rounded-md text-white' : 'bg-white'}`}
+          className={`flex items-center px-4 py-3 w-full text-black bg-white hover:wono-blue-dark hover:rounded-md hover:text-white ${location.pathname === '/frontend' ? 'wono-blue rounded-md wono-blue-text' : 'bg-white'}`}
         >
           {isSidebarOpen ? (
             <div className="flex items-center justify-center">
@@ -171,7 +172,7 @@ useEffect(() => {
               <div
                 key={index}
                 onClick={()=>{handleActive(index); navigate(dept.route, {state : {departmentName : dept.name}})}}
-                className={`flex items-center py-3 hover:wono-blue-dark pl-[1rem] hover:text-white  hover:rounded-md ${isActive === index ? 'wono-blue-dark rounded-md text-white' : 'bg-white'}`}
+                className={`flex items-center py-3 gap-3 hover:wono-blue-dark pl-[1rem] hover:text-white  hover:rounded-md `}
               >
                 {/* <img src={item.icon} alt={item.name} className="w-6 h-6 mr-3" /> */}
                 <div  className="flex justify-center w-6 text-[1.3rem]">
@@ -192,7 +193,7 @@ useEffect(() => {
               onClick={()=>{
                navigate(item.route);
                 }}
-              className={`cursor-pointer flex ${isSidebarOpen ? 'pl-[1rem]' : 'justify-center'} items-center py-3 hover:wono-blue-dark  hover:rounded-md hover:text-white  ${location.pathname === item.route ? 'wono-blue rounded-md text-[#0DB4EA]' : 'bg-white'} `}
+              className={`cursor-pointer flex ${isSidebarOpen ? 'pl-[1rem]' : 'justify-center'} items-center py-3 hover:wono-blue-dark  hover:rounded-md hover:text-white  ${location.pathname === item.route ? 'wono-blue border-r-4 border-[#0DB4EA] rounded-tl-md rounded-bl-md text-[#0DB4EA]' : 'bg-white'} `}
             >
               {/* <img src={item.icon} alt={item.name} className="w-6 h-6 mr-3" /> */}
               <div className="flex justify-center w-6 text-[1.3rem]">
@@ -207,7 +208,7 @@ useEffect(() => {
       
       <div
         onClick={toggleSidebar}
-        className={`flex ${isSidebarOpen ? 'justify-end' : 'justify-center '} items-center  bg-white text-black cursor-pointer fixed top-[6.8rem] ${isSidebarOpen ? 'left-[13rem]' : 'left-[4rem]'} transition-all duration-300 rounded-md`}
+        className={`flex ${isSidebarOpen ? 'justify-end' : 'justify-center '} items-center  bg-white text-black cursor-pointer fixed top-[6.8rem] ${isSidebarOpen ? 'left-[14.3rem]' : 'left-[4rem]'} transition-all duration-300 rounded-md`}
       >
         <button
           onClick={toggleSidebar}
