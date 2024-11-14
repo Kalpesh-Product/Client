@@ -133,9 +133,9 @@ export default function ChatPage() {
   });
 
   return (
-    <div className="flex h-screen bg-gray-100 overflow-hidden">
+    <div className="flex h-full bg-gray-100 overflow-hidden">
       <TestSide />
-      <aside className="w-1/4 bg-white p-4 shadow-lg border-r border-gray-300 overflow-y-auto h-full">
+      <aside className="w-1/4 bg-white p-4 shadow-lg border-r border-gray-300 overflow-y-auto h-[90vh]">
         <h2 className="text-lg font-semibold mb-4">Chat</h2>
 
         <select
@@ -227,7 +227,7 @@ export default function ChatPage() {
         </ul>
       </aside>
 
-      <div className="flex-1 flex flex-col bg-white h-full">
+      <div className="flex-1 flex flex-col justify-around  bg-white h-[90vh]">
         <header className="p-4 border-b flex items-center">
           <div
             className={`flex items-center justify-center w-10 h-10 rounded-full text-white font-semibold mr-3 ${getNodeColor(
