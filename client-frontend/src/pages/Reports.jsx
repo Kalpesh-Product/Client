@@ -14,13 +14,6 @@ import MeetingReportsSection from "../components/Submodules/meetings/MeetingRepo
 import CustomerServiceReportsSection from "../components/Submodules/customer-service/CustomerServiceReportsSection";
 
 const Reports = () => {
-  // For Top Bar
-  // const [topBarValue, setTopBarValue] = React.useState("myTickets");
-
-  // const handleTopBarChange = (e, newVal) => {
-  //   setTopBarValue(newVal);
-  // };
-
   // For Departments
   const [value, setValue] = React.useState("1");
 
@@ -29,7 +22,7 @@ const Reports = () => {
   };
 
   // For the selected report
-  const [selectedOption, setSelectedOption] = useState(null);
+  const [selectedOption, setSelectedOption] = useState("Tickets");
 
   const options = [
     { value: "Tasks", label: "Tasks" },
@@ -86,91 +79,6 @@ const Reports = () => {
             {/* Add your Customer Service section content here */}
           </div>
         )}
-
-        {/* Tabs Material UI Start*/}
-        {/* <TabContext value={value}>
-          <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-            <TabList onChange={handleChange} aria-label="Departments">
-              <Tab
-                label="Tasks"
-                value="1"
-                className="wono-blue"
-                sx={{ textTransform: "capitalize" }}
-   
-              />
-              <Tab
-                label="Ticket"
-                value="2"
-                sx={{ textTransform: "capitalize" }}
-              />
-              <Tab
-                label="Meeting"
-                value="3"
-                sx={{ textTransform: "capitalize" }}
-              />
-              <Tab
-                label="Customer Service"
-                value="4"
-                sx={{ textTransform: "capitalize" }}
-              />
-            </TabList>
-          </Box>
-          <TabPanel value="1">
-            <div className="flex gap-4">
-              <div>Tasks Reports</div>
-
-              <div>
-                <button class="wono-blue hover:bg-blue-600 text-white font-bold text-xs py-1 px-4 rounded-3xl">
-                  View Service
-                </button>
-              </div>
-            </div>
-            <br />
-
-            <DataTable />
-          </TabPanel>
-
-          <TabPanel value="2">
-            <div className="flex gap-4">
-              <div>Ticket Reports</div>
-
-              <div>
-                <button class="wono-blue hover:bg-blue-600 text-white font-bold text-xs py-1 px-4 rounded-3xl">
-                  View Service
-                </button>
-              </div>
-            </div>
-            <br />
-            <DataTable />
-          </TabPanel>
-          <TabPanel value="3">
-            <div className="flex gap-4">
-              <div>Meeting Reports</div>
-
-              <div>
-                <button class="wono-blue hover:bg-blue-600 text-white font-bold text-xs py-1 px-4 rounded-3xl">
-                  View Service
-                </button>
-              </div>
-            </div>
-            <br />
-            <DataTable />
-          </TabPanel>
-          <TabPanel value="4">
-            <div className="flex gap-4">
-              <div>Customer Service Reports</div>
-
-              <div>
-                <button class="wono-blue hover:bg-blue-600 text-white font-bold text-xs py-1 px-4 rounded-3xl">
-                  View Service
-                </button>
-              </div>
-            </div>
-            <br />
-            <DataTable />
-          </TabPanel>
-        </TabContext> */}
-        {/* Tabs Material UI End*/}
       </div>
     </div>
   );
