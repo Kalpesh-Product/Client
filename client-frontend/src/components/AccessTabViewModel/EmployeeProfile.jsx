@@ -60,7 +60,7 @@ const EmployeeProfile = ({ data }) => {
             className={`px-4 py-2 text-white rounded ${
               isEditing
                 ? "bg-green-500 hover:bg-green-600"
-                : "bg-blue-500 hover:bg-blue-600"
+                : "wono-blue-dark hover:bg-[#3cbce7]"
             }`}
           >
             {isEditing ? "Save" : "Edit"}

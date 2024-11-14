@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import EmployeeProfile from "../components/AccessTabViewModel/EmployeeProfile";
 import AccessHierarchyTab from "../components/AccessTabViewModel/AccessHierarchyTab";
 import ClientSidebar from "../components/ClientSidebar";
@@ -9,9 +9,7 @@ import Profilepic from "../assets/profile.jpg"
 import SuperAdmin from "../assets/kashif-bg.png"
 // import image from "../profile.jpg";
 
-
 const Profile = () => {
-  
   const [isModelOpen, setIsModalOpen] = useState(false);
   const [IsAccessModalOpen, setIsAccessModalOpen] = useState(false);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
@@ -91,12 +89,12 @@ const Profile = () => {
     }));
   };
   return (
-    <div class="flex min-h-screen">
+    <div class="flex min-h-screen ">
       {/* Sidebar */}
-      <TestSide/>
-      
+      <TestSide />
+
       {/* Main Content */}
-      <div class="flex-1 p-6 bg-gray-100">
+      <div class="flex-1 p-6 ml-4 motion-preset-blur-right-md">
         <h1 class="text-3xl font-bold mb-4">Profile</h1>
         <div class="flex items-center p-4 bg-white rounded-lg shadow-md justify-between">
           <div class="flex flex-row gap-3">
@@ -114,7 +112,6 @@ const Profile = () => {
               <p class="text-gray-500">Active</p>
             </div>
           </div>
-          
         </div>
         {/* <!-- Horizontal Divider --> */}
         <hr class="border-t border-gray-300 my-4" />
@@ -147,7 +144,7 @@ const Profile = () => {
           <div className="tab-content">
             {activeTab === "tab-1" && (
               <div
-                className="tab-pane fade show active"
+                className="tab-pane motion-preset-slide-up show active"
                 id="tab-1"
                 role="tabpanel">
                 <div
@@ -171,7 +168,7 @@ const Profile = () => {
               </div>
             )}
             {activeTab === "tab-2" && (
-              <div className="tab-pane fade show" id="tab-2" role="tabpanel">
+              <div className="tab-pane motion-preset-slide-up-sm show" id="tab-2" role="tabpanel">
                 <div
                   className="flex flex-col  mt-3"
                   data-aos="fade-up"
@@ -285,4 +282,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default Profile;

@@ -20,6 +20,16 @@
     "Phone" : "1234523456"
   },
   {
+    "name": "Farzeen",
+    "email": "farzeen@biznest.co.in",
+    "role": "Super Admin",
+    "department": "HR",
+    "password": "123",
+    "designation": "Co-Founder",
+    "company" : "Biznest",
+    "Phone" : "1234523456"
+  },
+  {
     "name": "Kalpesh Naik",
     "email": "kalpesh@biznest.co.in",
     "role": "Admin",

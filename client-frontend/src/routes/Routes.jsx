@@ -8,10 +8,14 @@ import DragDropGrid from "../pages/DragDropGrid";
 import ClientLoginPage from "../pages/ClientLoginPage";
 import Dashboard from "../pages/Dashboard";
 import LoginPage from "../pages/LoginPage";
-import Reports from "../pages/Reports";import ChatPage from "../pages/ChatPage";import TestDashboard from "../pages/TestPage";
+import Reports from "../pages/Reports";
+import TestDashboard from "../pages/TestPage";
 import DropTest from "../pages/DropTest";
 import Calender from "../pages/Calender";
-
+import Sidebar from "../components/ClientSidebar";
+import Services from "../pages/Services";
+import DepartmentDash from "../pages/modules/PageFrontend";
+import ChatPage from "../pages/ChatPage";
 
 const router = createBrowserRouter([
   {
@@ -47,7 +51,15 @@ const router = createBrowserRouter([
         element: <Dashboard />,
       },
       {
-        path: "/calender",
+        path: "/services",
+        element: <Services />,
+      },
+      {
+        path: "/:department",
+        element: <DepartmentDash />,
+      },
+      {
+        path: "/calendar",
         element: <Calender />,
       },
       {
@@ -60,7 +72,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/testdash",
-        element: <TestDashboard />,
+        element: <Sidebar />,
       },
       {
         path: "/chat",
