@@ -838,23 +838,21 @@ const ClientLandingPage = () => {
             {user.name}
           </h1>
           <div className="flex gap-4">
-
-          {/* Add More Button */}
-          {user.role === "Master Admin" ||
-          user.role === "Super Admin" ||
-          user.role === "Admin" ? (
-            <div className="flex justify-center">
-              <button
-                className="bg-red-500 text-white py-3 px-8 rounded-lg hover:bg-red-600"
-                onClick={openModal}
-              >
-                Add More
-              </button>
-            </div>
-          ) : null}
-          <button className="bg-red-500 text-white py-2 px-6 rounded-lg hover:bg-red-600 mt-4 md:mt-0">
-            Organize
-          </button>
+            {/* Add More Button */}
+            {user.role === "Master Admin" ||
+            user.role === "Super Admin" ||
+            user.role === "Admin" ? (
+              <div className="flex justify-center">
+                <button
+                  className="bg-red-500 text-white py-3 px-8 rounded-lg hover:bg-red-600"
+                  onClick={openModal}>
+                  Add More
+                </button>
+              </div>
+            ) : null}
+            <button className="bg-red-500 text-white py-2 px-6 rounded-lg hover:bg-red-600 mt-4 md:mt-0">
+              Organize
+            </button>
           </div>
         </div>
 
@@ -992,8 +990,7 @@ const ClientLandingPage = () => {
                   {/* Close button */}
                   <button
                     className="bg-red-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-red-600"
-                    onClick={closeModal}
-                  >
+                    onClick={closeModal}>
                     X
                   </button>
                 </div>
@@ -1064,7 +1061,7 @@ const ClientLandingPage = () => {
                     <h2 className="text-xl md:text-2xl font-bold mb-8 ps-[7rem] uppercase">
                       Frontend
                     </h2>
-                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-8 mb-12">
+                    <div className="grid grid-cols-2 sm:grid-cols-6 gap-8 mb-12">
                       {services_frontend.map((service) => (
                         <div className="flex justify-center items-center">
                           <Card
@@ -1094,7 +1091,7 @@ const ClientLandingPage = () => {
                     <h2 className="text-xl md:text-2xl font-bold mb-8 ps-[7rem] uppercase">
                       Finance & Accounting
                     </h2>
-                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-8 mb-12">
+                    <div className="grid grid-cols-2 sm:grid-cols-6 gap-8 mb-12">
                       {services_financeAccounting.map((service) => (
                         <div className="flex justify-center items-center">
                           <Card
@@ -1121,7 +1118,7 @@ const ClientLandingPage = () => {
                     <h2 className="text-xl md:text-2xl font-bold mb-8 ps-[7rem] uppercase">
                       Sales & Marketing
                     </h2>
-                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-8 mb-12">
+                    <div className="grid grid-cols-2 sm:grid-cols-6 gap-8 mb-12">
                       {services_salesMarketing.map((service) => (
                         <div className="flex justify-center items-center">
                           <Card
@@ -1148,7 +1145,7 @@ const ClientLandingPage = () => {
                     <h2 className="text-xl md:text-2xl font-bold mb-8 ps-[7rem] uppercase">
                       HR Support
                     </h2>
-                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-8 mb-12">
+                    <div className="grid grid-cols-2 sm:grid-cols-6 gap-8 mb-12">
                       {services_hrSupport.map((service) => (
                         <div className="flex justify-center items-center">
                           <Card
@@ -1175,7 +1172,7 @@ const ClientLandingPage = () => {
                     <h2 className="text-xl md:text-2xl font-bold mb-8 ps-[7rem] uppercase">
                       Customer Management
                     </h2>
-                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-8 mb-12">
+                    <div className="grid grid-cols-2 sm:grid-cols-6 gap-8 mb-12">
                       {services_customerManagement.map((service) => (
                         <div className="flex justify-center items-center">
                           <Card
@@ -1202,7 +1199,7 @@ const ClientLandingPage = () => {
                     <h2 className="text-xl md:text-2xl font-bold mb-8 ps-[7rem] uppercase">
                       Reports & Analytics
                     </h2>
-                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-8 mb-12">
+                    <div className="grid grid-cols-2 sm:grid-cols-6 gap-8 mb-12">
                       {services_reportsAnalytics.map((service) => (
                         <div className="flex justify-center items-center">
                           <Card
@@ -1230,19 +1227,18 @@ const ClientLandingPage = () => {
                   {/* Add button */}
                   <button
                     className="bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600"
-                    onClick={handleAddServices}
-                  >
+                    onClick={handleAddServices}>
                     Add
                   </button>
                 </div>
               </div>
               {/* Close button */}
-              <button
+              {/* <button
                 className="bg-red-500 text-white py-2 px-4 my-4 rounded-lg hover:bg-red-600"
                 onClick={closeModal}
               >
                 Close
-              </button>
+              </button> */}
             </div>
           </div>
         )}
@@ -1287,8 +1283,7 @@ const Card = ({ title, iconSrc, isSelected, handleSelect }) => {
       className={`relative w-32 h-32 border-2 rounded-lg p-3 transition-shadow duration-300 cursor-pointer flex flex-col justify-center items-center ${
         isSelected ? "border-blue-500 shadow-lg" : "border-gray-300"
       }`}
-      onClick={() => handleSelect(title)}
-    >
+      onClick={() => handleSelect(title)}>
       <input
         type="checkbox"
         checked={isSelected}
