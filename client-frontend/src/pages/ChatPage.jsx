@@ -22,7 +22,8 @@ export default function ChatPage() {
   const [messages, setMessages] = useState(initialChats(activeContact.name));
   const [message, setMessage] = useState("");
   const [expandedGroup, setExpandedGroup] = useState(null);
-  const [searchQuery, setSearchQuery] = useState(""); // New state for search query
+  const [searchQuery, setSearchQuery] = useState("");
+  const [contactFilter, setContactFilter] = useState("All"); // New state for contact filter
 
   useEffect(() => {
     setMessages(initialChats(activeContact.name));
@@ -70,17 +71,26 @@ export default function ChatPage() {
     }
   };
 
-  // Filter contacts based on the search query
+  // Filter contacts based on the search query and selected contact filter
   const filteredContacts = contacts.filter((contact) => {
     const isMatch = contact.name
       .toLowerCase()
       .includes(searchQuery.toLowerCase());
+
     if (contact.subGroups) {
       const subGroupMatch = contact.subGroups.some((sub) =>
         sub.toLowerCase().includes(searchQuery.toLowerCase())
       );
       return isMatch || subGroupMatch;
     }
+
+    // Filter based on selected contact filter
+    if (contactFilter === "BIZNest") {
+      return isMatch && contact.name.includes("BIZ");
+    } else if (contactFilter === "WoNo") {
+      return false; // Hide all contacts for "WoNo" filter
+    }
+
     return isMatch;
   });
 
@@ -90,13 +100,26 @@ export default function ChatPage() {
       <TestSide />
       <aside className="w-1/4 bg-white p-4 shadow-lg">
         <h2 className="text-lg font-semibold">Chat</h2>
+
+        {/* Filter Dropdown */}
+        <select
+          className="mt-2 mb-4 w-full p-2 rounded-xl bg-gray-200 border-none"
+          value={contactFilter}
+          onChange={(e) => setContactFilter(e.target.value)}
+        >
+          <option value="All">All</option>
+          <option value="BIZNest">BIZNest</option>
+          <option value="WoNo">WoNo</option>
+        </select>
+
         <input
           type="search"
           placeholder="Search"
           className="mt-4 mb-6 w-full p-2 rounded-xl bg-gray-200 border-none"
           value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)} // Update search query
+          onChange={(e) => setSearchQuery(e.target.value)}
         />
+
         <ul className="space-y-2">
           {filteredContacts.map((contact) => (
             <li key={contact.id} className="space-y-1">
