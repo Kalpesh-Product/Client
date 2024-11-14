@@ -32,7 +32,7 @@ const TestSide = () => {
     {
       name: "Reports",
       icon: <TbReportSearch />,
-      route : '#reports'
+      route : '/reports'
     },
     { name: "Tasks", icon: <FaTasks />, route : '#tasks' },
     { name: "Calendar", icon: <FaCalendarAlt />, route : '/calendar' },
@@ -42,16 +42,16 @@ const TestSide = () => {
   ];
 
   const departments = [
-    { name: "FRONTEND", icon: <FaCode />, route:'/frontend' },
-    { name: "FINANCE & ACCOUNTING", icon: <MdAccountBalance />, route:'/finance' },
-    { name: "SALES", icon: <FaMoneyBillTrendUp />, route:'/sales' },
-    { name: "HUMAN RESOURCE", icon: <FaBuildingUser />, route:'/hr' },
-    { name: "CUSTOMER SERVICE", icon: <RiCustomerService2Line />, route:'/customer' },
-    { name: "MARKETING", icon: <SiMarketo />, route:'/marketing' },
-    { name: "CAFE (F&B)", icon: <MdLocalCafe />, route:'/cafe' },
-    { name: "IT", icon: <MdOutlineWifiTethering />, route:'/it' },
-    { name: "MAINTENANCE", icon: <FaHandsHelping />, route:'/maintainance' },
-    { name: "LEGAL", icon: <MdPolicy />, route:'/legal' },
+    { name: "FRONTEND", icon: <FaCode />, iconName: "FaCode", route: '/frontend' },
+    { name: "FINANCE & ACCOUNTING", icon: <MdAccountBalance />, iconName: "MdAccountBalance", route: '/finance' },
+    { name: "SALES", icon: <FaMoneyBillTrendUp />, iconName: "FaMoneyBillTrendUp", route: '/sales' },
+    { name: "HUMAN RESOURCE", icon: <FaBuildingUser />, iconName: "FaBuildingUser", route: '/hr' },
+    { name: "CUSTOMER SERVICE", icon: <RiCustomerService2Line />, iconName: "RiCustomerService2Line", route: '/customer' },
+    { name: "MARKETING", icon: <SiMarketo />, iconName: "SiMarketo", route: '/marketing' },
+    { name: "CAFE (F&B)", icon: <MdLocalCafe />, iconName: "MdLocalCafe", route: '/cafe' },
+    { name: "IT", icon: <MdOutlineWifiTethering />, iconName: "MdOutlineWifiTethering", route: '/it' },
+    { name: "MAINTENANCE", icon: <FaHandsHelping />, iconName: "FaHandsHelping", route: '/maintainance' },
+    { name: "LEGAL", icon: <MdPolicy />, iconName: "MdPolicy", route: '/legal' },
   ];
 
   useEffect(() => {
@@ -95,16 +95,20 @@ const TestSide = () => {
     console.log("Menu clicked")
   }
   const location = useLocation()
-   // Close sidebar when navigating to any route
-   useEffect(() => {
-    setIsSidebarOpen(false);
-  }, [location.pathname]);
+// Close sidebar when navigating to any route
+useEffect(() => {
+  if( location.pathname === '/dashboard'){
+    setIsSidebarOpen(true);
+  }else{
+    setIsSidebarOpen(false)
+  } 
+}, [location.pathname]);
 
   return (
     <div
       className={`${
         isSidebarOpen ? "w-60" : "w-20"
-      } bg-white text-black flex-shrink-0 h-full sticky top-10 overflow-y-auto transition-all duration-300 `}
+      } bg-white text-black flex-shrink-0 h-full sticky top-10 overflow-y-auto transition-all duration-300 z-[1]`}
     >
       <div className="flex relative w-full">
       {/*Dashboard */}
@@ -124,7 +128,7 @@ const TestSide = () => {
       <div>
         <button
           onClick={() => {setIsDepartmentsOpen(!isDepartmentsOpen); handleActive(-2)}}
-          className={`flex items-center px-4 py-4 w-full text-black bg-white hover:wono-blue-dark hover:rounded-md hover:text-white ${isActive === -2 ? 'wono-blue-dark rounded-md text-white' : 'bg-white'}`}
+          className={`flex items-center px-4 py-3 w-full text-black bg-white hover:wono-blue-dark hover:rounded-md hover:text-white ${isActive === -2 ? 'wono-blue-dark rounded-md text-white' : 'bg-white'}`}
         >
           {isSidebarOpen ? (
             <div className="flex items-center justify-center">
@@ -167,7 +171,7 @@ const TestSide = () => {
               <div
                 key={index}
                 onClick={()=>{handleActive(index); navigate(dept.route, {state : {departmentName : dept.name}})}}
-                className={`flex items-center py-4 hover:wono-blue-dark pl-[1rem] hover:text-white  hover:rounded-md ${isActive === index ? 'wono-blue-dark rounded-md text-white' : 'bg-white'}`}
+                className={`flex items-center py-3 hover:wono-blue-dark pl-[1rem] hover:text-white  hover:rounded-md ${isActive === index ? 'wono-blue-dark rounded-md text-white' : 'bg-white'}`}
               >
                 {/* <img src={item.icon} alt={item.name} className="w-6 h-6 mr-3" /> */}
                 <div  className="flex justify-center w-6 text-[1.3rem]">
@@ -188,7 +192,7 @@ const TestSide = () => {
               onClick={()=>{
                navigate(item.route);
                 }}
-              className={`cursor-pointer flex ${isSidebarOpen ? 'pl-[1rem]' : 'justify-center'} items-center py-[1rem] hover:wono-blue-dark  hover:rounded-md hover:text-white  ${location.pathname === item.route ? 'wono-blue rounded-md text-[#0DB4EA]' : 'bg-white'} `}
+              className={`cursor-pointer flex ${isSidebarOpen ? 'pl-[1rem]' : 'justify-center'} items-center py-3 hover:wono-blue-dark  hover:rounded-md hover:text-white  ${location.pathname === item.route ? 'wono-blue rounded-md text-[#0DB4EA]' : 'bg-white'} `}
             >
               {/* <img src={item.icon} alt={item.name} className="w-6 h-6 mr-3" /> */}
               <div className="flex justify-center w-6 text-[1.3rem]">
@@ -203,11 +207,11 @@ const TestSide = () => {
       
       <div
         onClick={toggleSidebar}
-        className={`flex ${isSidebarOpen ? 'justify-end' : 'justify-center'} items-center  bg-[#0DB4EA] cursor-pointer fixed top-[6.25rem] ${isSidebarOpen ? 'left-[13.5rem]' : 'left-14'} transition-all duration-300 rounded-full`}
+        className={`flex ${isSidebarOpen ? 'justify-end' : 'justify-center '} items-center  bg-white text-black cursor-pointer fixed top-[6.8rem] ${isSidebarOpen ? 'left-[13rem]' : 'left-[4rem]'} transition-all duration-300 rounded-md`}
       >
         <button
           onClick={toggleSidebar}
-          className="text-white text-xl p-3 focus:outline-none text-end"
+          className="text-black text-[0.8rem] p-2 focus:outline-none text-end"
         >
           {isSidebarOpen ? <FaArrowLeft /> : <FaArrowRightToBracket />}
         </button>
