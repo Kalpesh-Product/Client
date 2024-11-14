@@ -872,7 +872,7 @@ const ClientLandingPage = () => {
           <h1 className="text-3xl md:text-4xl font-bold lg:ps-[7rem] motion-preset-slide-right-md">
             {user.name}
           </h1>
-          <div className="flex gap-4">
+          <div className="flex gap-4 pr-20">
             {/* Add More Button */}
             {user.role === "Master Admin" ||
             user.role === "Super Admin" ||
