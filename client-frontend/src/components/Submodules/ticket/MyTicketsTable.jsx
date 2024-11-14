@@ -6,26 +6,27 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
+import { CSVLink } from "react-csv";
 
 const MyTicketsTable = () => {
   const columns = [
-    { field: "id", headerName: "ID", width: 70 },
-    { field: "ticketTitle", headerName: "Ticket Title", width: 200 },
+    { field: "id", headerName: "ID", width: 100 },
+    { field: "ticketTitle", headerName: "Ticket Title", width: 300 },
     {
       field: "priority",
       headerName: "Priority",
-      width: 130,
+      width: 300,
       type: "singleSelect",
       valueOptions: ["High", "Medium", "Low"],
     },
     {
       field: "department",
       headerName: "Department",
-      width: 150,
+      width: 300,
       type: "singleSelect",
       valueOptions: ["IT", "HR", "Tech", "Admin"],
     },
-    { field: "requestDate", headerName: "Request Date", width: 160 },
+    { field: "requestDate", headerName: "Request Date", width: 300 },
   ];
 
   const allRows = [
@@ -107,9 +108,17 @@ const MyTicketsTable = () => {
       ? allRows // show all rows if no department is selected
       : allRows.filter((row) => row.department === department);
 
+  const csvHeaders = [
+    { label: "ID", key: "id" },
+    { label: "Ticket Title", key: "ticketTitle" },
+    { label: "Priority", key: "priority" },
+    { label: "Department", key: "department" },
+    { label: "Request Date", key: "requestDate" },
+  ];
+
   return (
     <div>
-      <div className="flex gap-4">
+      <div className="flex gap-4 h-10">
         <div>Filter by department:</div>
         <div>
           <Box sx={{ minWidth: 140 }}>
@@ -141,9 +150,16 @@ const MyTicketsTable = () => {
           </Box>
         </div>
         <div>
-          <button className="bg-blue-500 hover:bg-blue-700 text-white text-sm font-bold py-2 px-4 rounded">
+          {/* <button className="bg-blue-500 hover:bg-blue-700 text-white text-sm font-bold py-2 px-4 rounded">
             Export Report
-          </button>
+          </button> */}
+          <CSVLink
+            data={filteredRows} // Pass the filtered rows for CSV download
+            headers={csvHeaders} // Pass the CSV headers
+            filename="tickets_report.csv" // Set the filename for the CSV file
+            className="bg-blue-500 hover:bg-blue-700 text-white text-sm font-bold py-2 px-4 rounded">
+            Export Report
+          </CSVLink>
         </div>
       </div>
 
@@ -154,6 +170,7 @@ const MyTicketsTable = () => {
           columns={columns}
           initialState={{ pagination: { paginationModel } }}
           pageSizeOptions={[5, 10]}
+          checkboxSelection
           sx={{ border: 0 }}
         />
       </Paper>
