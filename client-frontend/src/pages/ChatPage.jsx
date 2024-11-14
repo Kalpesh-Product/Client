@@ -1,33 +1,63 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import TestSide from "../components/Sidetest";
 import { IoMdSend, IoMdArrowDropdown, IoMdArrowDropup } from "react-icons/io";
+import { FaPaperclip } from "react-icons/fa6";
+import { MdOutlineEmojiEmotions } from "react-icons/md";
 import initialChats from "../utils/initialChats";
+import { toast } from "sonner";
 
 const contacts = [
-  { id: 1, name: "Mac" },
-  { id: 2, name: "Farzeen" },
-  { id: 3, name: "Aaron" },
-  { id: 4, name: "Kalpesh" },
-  { id: 5, name: "BIZ Nest-admins", group: true },
+  { id: 1, name: "Mac", status: "online", previewMessage: "See you soon!" },
+  {
+    id: 2,
+    name: "Farzeen",
+    status: "offline",
+    previewMessage: "Let's catch up later.",
+  },
+  {
+    id: 3,
+    name: "Aaron",
+    status: "online",
+    previewMessage: "I'll send the files.",
+  },
+  {
+    id: 4,
+    name: "Kalpesh",
+    status: "offline",
+    previewMessage: "Got it, thanks!",
+  },
+  {
+    id: 5,
+    name: "BIZ Nest-admins",
+    group: true,
+    previewMessage: "Meeting scheduled for tomorrow.",
+  },
   {
     id: 6,
     name: "Companies",
     group: true,
     subGroups: ["Zomato", "SquadStack"],
+    previewMessage: "Project updates ready.",
   },
 ];
 
 export default function ChatPage() {
+  const fileRef = useRef(null);
+  const messagesEndRef = useRef(null);
   const [activeContact, setActiveContact] = useState(contacts[0]);
   const [messages, setMessages] = useState(initialChats(activeContact.name));
   const [message, setMessage] = useState("");
   const [expandedGroup, setExpandedGroup] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
-  const [contactFilter, setContactFilter] = useState("All"); // New state for contact filter
+  const [contactFilter, setContactFilter] = useState("All");
 
   useEffect(() => {
     setMessages(initialChats(activeContact.name));
   }, [activeContact]);
+
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
 
   const handleSendMessage = () => {
     if (message.trim() === "") return;
@@ -64,6 +94,16 @@ export default function ChatPage() {
     setMessage("");
   };
 
+  const handleFileSelect = () => {
+    fileRef.current.click();
+  };
+
+  const handleFileChange = (e) => {
+    if (e.target.files && e.target.files.length > 0) {
+      toast.success("File saved successfully");
+    }
+  };
+
   const handleKeyDown = (e) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
@@ -71,7 +111,6 @@ export default function ChatPage() {
     }
   };
 
-  // Filter contacts based on the search query and selected contact filter
   const filteredContacts = contacts.filter((contact) => {
     const isMatch = contact.name
       .toLowerCase()
@@ -84,26 +123,23 @@ export default function ChatPage() {
       return isMatch || subGroupMatch;
     }
 
-    // Filter based on selected contact filter
     if (contactFilter === "BIZNest") {
       return isMatch && contact.name.includes("BIZ");
     } else if (contactFilter === "WoNo") {
-      return false; // Hide all contacts for "WoNo" filter
+      return false;
     }
 
     return isMatch;
   });
 
   return (
-    <div className="flex h-screen bg-gray-100 overflow-y-auto top-0">
-      {/* Sidebar */}
+    <div className="flex h-screen bg-gray-100 overflow-hidden">
       <TestSide />
-      <aside className="w-1/4 bg-white p-4 shadow-lg">
-        <h2 className="text-lg font-semibold">Chat</h2>
+      <aside className="w-1/4 bg-white p-4 shadow-lg border-r border-gray-300 overflow-y-auto h-full">
+        <h2 className="text-lg font-semibold mb-4">Chat</h2>
 
-        {/* Filter Dropdown */}
         <select
-          className="mt-2 mb-4 w-full p-2 rounded-xl border border-gray-300"
+          className="mt-2 mb-4 w-full p-2 rounded-lg border border-gray-300 bg-gray-50"
           value={contactFilter}
           onChange={(e) => setContactFilter(e.target.value)}
         >
@@ -115,7 +151,7 @@ export default function ChatPage() {
         <input
           type="search"
           placeholder="Search"
-          className="mt-4 mb-6 w-full p-2 rounded-xl bg-gray-200 border-none"
+          className="w-full p-2 mb-4 rounded-lg bg-gray-200 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
         />
@@ -124,12 +160,12 @@ export default function ChatPage() {
           {filteredContacts.map((contact) => (
             <li key={contact.id} className="space-y-1">
               <div
-                className={`flex items-center justify-between p-2 rounded cursor-pointer ${
+                className={`flex items-center justify-between p-3 rounded-lg cursor-pointer transition-all ${
                   activeContact.id === contact.id ||
                   (contact.subGroups &&
                     contact.subGroups.includes(activeContact.name))
-                    ? "bg-blue-200"
-                    : "hover:bg-gray-200"
+                    ? "bg-blue-100 text-blue-700"
+                    : "hover:bg-gray-100"
                 }`}
                 onClick={() => {
                   if (contact.subGroups) {
@@ -141,10 +177,21 @@ export default function ChatPage() {
                   }
                 }}
               >
-                <span>{contact.name}</span>
-                {/* Render indicator if the contact has subGroups */}
+                <div
+                  className={`flex items-center justify-center w-10 h-10 rounded-full text-white font-semibold mr-3 ${getNodeColor(
+                    contact.name
+                  )}`}
+                >
+                  {getInitials(contact.name)}
+                </div>
+                <div className="flex-1 truncate">
+                  <span className="font-semibold">{contact.name}</span>
+                  <p className="text-sm text-gray-500 truncate">
+                    {contact.previewMessage}
+                  </p>
+                </div>
                 {contact.subGroups && (
-                  <span className="ml-2">
+                  <span>
                     {expandedGroup === contact.id ? (
                       <IoMdArrowDropup />
                     ) : (
@@ -153,16 +200,15 @@ export default function ChatPage() {
                   </span>
                 )}
               </div>
-              {/* Render subgroups if it's the expanded group */}
               {contact.subGroups && expandedGroup === contact.id && (
                 <ul className="pl-4 space-y-1">
                   {contact.subGroups.map((subGroup, idx) => (
                     <li
                       key={idx}
-                      className={`p-2 rounded cursor-pointer ${
+                      className={`p-2 rounded-lg cursor-pointer ${
                         activeContact.name === subGroup
-                          ? "bg-blue-200"
-                          : "hover:bg-gray-200"
+                          ? "bg-blue-100 text-blue-700"
+                          : "hover:bg-gray-100"
                       }`}
                       onClick={() =>
                         setActiveContact({
@@ -181,14 +227,21 @@ export default function ChatPage() {
         </ul>
       </aside>
 
-      {/* Chat Area */}
-      <div className="flex-1 flex flex-col bg-white">
-        {/* Chat Header */}
+      <div className="flex-1 flex flex-col bg-white h-full">
         <header className="p-4 border-b flex items-center">
-          <h3 className="font-semibold">{activeContact.name}</h3>
+          <div
+            className={`flex items-center justify-center w-10 h-10 rounded-full text-white font-semibold mr-3 ${getNodeColor(
+              activeContact.name
+            )}`}
+          >
+            {getInitials(activeContact.name)}
+          </div>
+          <div>
+            <h3 className="font-semibold">{activeContact.name}</h3>
+            <p>{activeContact.status}</p>
+          </div>
         </header>
 
-        {/* Messages */}
         <div className="flex-1 p-4 overflow-y-auto space-y-4">
           {messages.map((msg) => (
             <div
@@ -208,10 +261,21 @@ export default function ChatPage() {
               </div>
             </div>
           ))}
+          <div ref={messagesEndRef} />
         </div>
 
-        {/* Message Input */}
         <footer className="p-4 border-t flex items-center space-x-2">
+          <MdOutlineEmojiEmotions size={20} className="cursor-pointer" />
+          <FaPaperclip
+            className="cursor-pointer bg-gray-200"
+            onClick={handleFileSelect}
+          />
+          <input
+            type="file"
+            className="hidden"
+            ref={fileRef}
+            onChange={handleFileChange}
+          />
           <textarea
             className="flex-1 px-4 py-2 border rounded-xl resize-none bg-gray-200"
             rows="1"
@@ -221,7 +285,7 @@ export default function ChatPage() {
             onKeyDown={handleKeyDown}
           />
           <button
-            className="p-4 bg-blue-500 text-white rounded-full"
+            className="p-[0.7rem] bg-blue-500 text-white rounded-full"
             onClick={handleSendMessage}
           >
             <IoMdSend />
@@ -231,3 +295,29 @@ export default function ChatPage() {
     </div>
   );
 }
+
+const getInitials = (name) => {
+  return name
+    .split(" ")
+    .map((part) => part[0])
+    .join("")
+    .toUpperCase();
+};
+
+const getNodeColor = (name) => {
+  const colors = [
+    "bg-orange-600",
+    "bg-purple-600",
+    "bg-yellow-600",
+    "bg-green-600",
+    "bg-blue-600",
+    "bg-red-600",
+    "bg-teal-600",
+    "bg-pink-600",
+  ];
+  const hash = Array.from(name).reduce(
+    (acc, char) => acc + char.charCodeAt(0),
+    0
+  );
+  return colors[hash % colors.length];
+};
