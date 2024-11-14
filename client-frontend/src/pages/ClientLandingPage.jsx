@@ -869,7 +869,7 @@ const ClientLandingPage = () => {
       <div className="bg-white p-8 ">
         {/* Welcome Section */}
         <div className="flex justify-between items-center mb-12 flex-wrap">
-          <h1 className="text-3xl md:text-4xl font-bold lg:ps-[7rem] motion-preset-slide-right-md">
+          <h1 className="text-3xl md:text-4xl font-bold pl-20 motion-preset-slide-right-md">
             {user.name}
           </h1>
           <div className="flex gap-4 pr-20">
