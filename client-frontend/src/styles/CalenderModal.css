@@ -64,3 +64,6 @@
   .close{
     background-color: blue;
   }
+  .custom-popper-class {
+    z-index: 1500 !important;
+  }
