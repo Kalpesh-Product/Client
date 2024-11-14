@@ -59,7 +59,7 @@ const TicketReportsSection = () => {
             <div>Tickets Assigned To Me</div>
           </div>
           <br />
-          <TicketsAssignedToMeTable />
+          <MyTicketsTable />
         </TabPanel>
       </TabContext>
       {/* Tabs Material UI End*/}
