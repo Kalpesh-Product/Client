@@ -126,7 +126,7 @@ const Calender = () => {
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         {/* Name, Mobile, Email, DOB fields */}
         <TextField
-          label="Event Name"
+          label="Event And Title"
           value={newEvent.name}
           onChange={(e)=> setnewEvent({ ...newEvent, name: e.target.value })}
           fullWidth
