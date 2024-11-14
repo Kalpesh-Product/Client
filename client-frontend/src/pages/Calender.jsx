@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState ,useEffect} from 'react'
 import Modal from "../components/Modal"
 import FullCalendar from "@fullcalendar/react"
 import dayGridPlugin from "@fullcalendar/daygrid"
@@ -26,6 +26,9 @@ const Calender = () => {
     const [showModal,setShowModal] = useState(false);
     const [value, setValue] = useState(dayjs());
     const [eventColor,setEventColor] = useState('#3788d8');
+    const [userData, setUserData] = useState(null);
+    const [selectedEvent, setSelectedEvent] = useState(null);
+
     
 
     const [events,setEvents] = useState([
@@ -46,7 +49,7 @@ const Calender = () => {
 
     ])
     
-    const [newEvent,setnewEvent] = useState({name:"",time:"",endTime:"",Agenda:"",color:""});
+    const [newEvent,setnewEvent] = useState({name:"",description:"",time:"",endTime:"",Agenda:"",color:""});
 
     const get30DayRange = (date) => {
         const start = new Date(date.getFullYear(), date.getMonth(), 1);
@@ -62,6 +65,10 @@ const Calender = () => {
 
 
       }
+      const handleEventClick = (info) => {
+        setSelectedEvent(info.event);
+        setShowModal(true);
+      };
 
       const handleSaveEvent = () => {
         if (newEvent.name)
@@ -82,6 +89,13 @@ const Calender = () => {
         '#FF5733', '#33FF57', '#3357FF', '#FF33A1', '#A1FF33', '#FF8C00', '#800080', '#FFC0CB', '#FFD700'
       ];
 
+      useEffect(() => {
+        const storedUser = JSON.parse(localStorage.getItem("user"));
+        if (storedUser) {
+          setUserData(storedUser); // Populate user data
+        }
+      }, []);
+
   return (
     <>
     <div class="flex ">
@@ -92,6 +106,8 @@ const Calender = () => {
     initialView='dayGridMonth'
     weekends={true}
     events={events}
+    eventClick={handleEventClick}
+    
     
   visibleRange={(currentDate) => {
     return get30DayRange(currentDate); // Restrict to 30 days
@@ -112,6 +128,7 @@ const Calender = () => {
 
       <Modal open={showModal} onClose={() => dispatch(closeModal())}>
           <h1  className='text-xl text-center my-2 font-bold'>Add Events</h1>
+          
           <Box
       sx={{
         maxWidth: 600,
@@ -123,14 +140,27 @@ const Calender = () => {
     >
       {/* Personal Information */}
       <h2 className="text-lg font-semibold mb-4">Add Events</h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1  gap-4">
         {/* Name, Mobile, Email, DOB fields */}
+        <div className="grid grid-cols-2 gap-4">
         <TextField
           label="Event And Title"
           value={newEvent.name}
           onChange={(e)=> setnewEvent({ ...newEvent, name: e.target.value })}
           fullWidth
         />
+         <TextField
+          label="Description"
+          value={newEvent.description}
+          onChange={(e)=> setnewEvent({ ...newEvent, description: e.target.value })}
+          fullWidth
+          multiline
+          rows={1}
+        />
+        </div>
+
+        <div className="grid grid-cols-2 gap-4">
+        <label className="text-gray-700 text-sm">{selectedDate}</label>
         <div className="relative w-full">
         <label
         htmlFor="time-input"
@@ -139,6 +169,7 @@ const Calender = () => {
       >
         Time
       </label>
+      
       {/* Input Field */}
       <input
         type="time"
@@ -153,17 +184,21 @@ const Calender = () => {
         >
         </input> */}
         </div>
+        </div>
+        
 
         <TextField
         label="Agenda"
-  style={{textAlign: 'left'}}
+  style={{textAlign: 'left',width: '100%' }}
   value={newEvent.Agenda}
   onChange={(e)=> setnewEvent({ ...newEvent, Agenda: e.target.value })}
   hintText="Message Field"
   floatingLabelText="MultiLine and FloatingLabel"
   multiline
+  fullWidth
   rows={2}
 />
+
 {/* <SketchPicker
           color={newEvent.color}
           onChange={(color) => setnewEvent({ ...newEvent, color: color.hex })}
@@ -185,9 +220,11 @@ const Calender = () => {
   {/* value={value}
   /> */}
     {/* </LocalizationProvider> */}
-    <div>
-          <label>Select Event Color: </label>
-          <div className="color-picker-dropdown">
+    <div className="grid grid-cols-2 gap-4 items-center">
+    <label >{userData?.name}</label>
+    <div >
+          {/* <label>Select Event Color: </label> */}
+          <div className="color-picker-dropdown flex flex-row gap-5">
             <select
               value={newEvent.color}
               onChange={(e) => setnewEvent({ ...newEvent, color: e.target.value })}
@@ -209,6 +246,7 @@ const Calender = () => {
             title="Selected Color"
           ></div>
           </div>
+        </div>
         </div>
         
         
