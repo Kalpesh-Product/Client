@@ -38,7 +38,7 @@ const Reports = () => {
   return (
     <div className="flex min-h-screen">
       <TestSide />
-      <div className=" w-full pl-3">
+      <div className=" w-full pl-3 motion-preset-blur-right-md">
         <h2 className="text-4xl pt-3 ">Reports</h2>
         <h3 className="text-2xl pt-5 pb-4 ">Select Report</h3>
 

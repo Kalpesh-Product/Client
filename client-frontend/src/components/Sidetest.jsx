@@ -165,7 +165,7 @@ useEffect(() => {
         </button>
 
         {isDepartmentsOpen && (
-          <ul className={`mt-3 cursor-pointer ${isSidebarOpen ? "px-3" : "px-0"}`}>
+          <ul className={`cursor-pointer ${isSidebarOpen ? "px-3" : "px-0"}`}>
             {filteredDepartments.map((dept, index) => (
               <Tooltip title={dept.name} placement="right">
               <div
@@ -177,7 +177,7 @@ useEffect(() => {
                 <div  className="flex justify-center w-6 text-[1.3rem]">
                   {dept.icon}
                 </div>
-                {isSidebarOpen && <span className="pl-5 text-[1rem]">{dept.name}</span>}
+                {isSidebarOpen && <span className="pl-5 text-[0.8rem]">{dept.name}</span>}
               </div>
               </Tooltip>
             ))}
