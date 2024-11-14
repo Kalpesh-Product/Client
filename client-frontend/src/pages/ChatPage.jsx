@@ -103,7 +103,7 @@ export default function ChatPage() {
 
         {/* Filter Dropdown */}
         <select
-          className="mt-2 mb-4 w-full p-2 rounded-xl bg-gray-200 border-none"
+          className="mt-2 mb-4 w-full p-2 rounded-xl border border-gray-300"
           value={contactFilter}
           onChange={(e) => setContactFilter(e.target.value)}
         >
