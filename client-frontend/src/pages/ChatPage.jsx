@@ -95,10 +95,10 @@ export default function ChatPage() {
   });
 
   return (
-    <div className="flex h-screen bg-gray-100 overflow-y-auto top-0">
+    <div className="flex h-screen bg-gray-100 overflow-y-auto top-0  ">
       {/* Sidebar */}
       <TestSide />
-      <aside className="w-1/4 bg-white p-4 shadow-lg">
+      <aside className="w-1/4 bg-white p-4 shadow-lg ">
         <h2 className="text-lg font-semibold">Chat</h2>
 
         {/* Filter Dropdown */}
@@ -182,7 +182,7 @@ export default function ChatPage() {
       </aside>
 
       {/* Chat Area */}
-      <div className="flex-1 flex flex-col bg-white">
+      <div className="flex-1 flex flex-col bg-white motion-preset-blur-right-md">
         {/* Chat Header */}
         <header className="p-4 border-b flex items-center">
           <h3 className="font-semibold">{activeContact.name}</h3>
