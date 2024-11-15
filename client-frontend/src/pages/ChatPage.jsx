@@ -277,7 +277,7 @@ export default function ChatPage() {
             onChange={handleFileChange}
           />
           <textarea
-            className="flex-1 px-4 py-2 border rounded-xl resize-none bg-gray-200"
+            className="flex-1 px-4 py-2 border rounded-xl resize-none bg-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
             rows="1"
             placeholder="Enter a message"
             value={message}
