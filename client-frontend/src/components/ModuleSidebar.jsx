@@ -239,7 +239,7 @@ if (passedDepartment === 'frontend') {
               }`}
             >
               <div className="flex justify-center w-6 text-2xl">
-                <MdDashboard />
+              <TbReportSearch />
               </div>
               {isSidebarOpen && <span className="pl-5 text-[0.8rem]">Reports</span>}
             </div>

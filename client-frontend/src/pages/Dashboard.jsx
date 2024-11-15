@@ -201,7 +201,7 @@ const Dashboard = () => {
 
       <div className="flex-1 bg-gray-100 p-8 overflow-y-auto">
         {/* Heading 1 */}
-        <h1 className="text-3xl motion-preset-slide-right-md">{user.name}'s Dashboard</h1>
+        <h1 className="text-3xl motion-preset-slide-right-md font-bold">{user.name}'s Dashboard</h1>
         <h2 className="my-5 motion-preset-slide-right-md">
           BIZ Nest-{user.role}-{user.department}
         </h2>

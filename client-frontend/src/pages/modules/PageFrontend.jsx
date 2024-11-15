@@ -193,7 +193,8 @@ const DepartmentDash = () => {
           <>
             {location.pathname === "/frontend" ? (
               <div>
-                <div className="bg-white p-4 rounded-lg  mt-4">
+                <div className="bg-white p-4 rounded-lg">
+                  <h1 className="text-3xl font-bold mb-4">Frontend Dashboard</h1>
                   {techWidgets.map((section, index) => (
                     <WidgetSection
                       key={index}
