@@ -119,7 +119,10 @@ const Profile = () => {
                 class="w-16 h-16 rounded-full border-4 border-[#0DB4EA] mr-4"
               ></img>
             </div>
-            <span className="p-1 absolute left-11 top-10 rounded-full bg-p wono-blue-dark">
+            <span
+              className="p-1 absolute left-11 top-10 cursor-pointer rounded-full bg-p wono-blue-dark"
+              onClick={() => dispatch(openModal())}
+            >
               <TbCameraPlus size={15} color="white" />
             </span>
             <div>
@@ -137,7 +140,7 @@ const Profile = () => {
               <button
                 className={`text-md py-2 w-full hover:bg-gray-100  ${
                   activeTab === "tab-1"
-                    ? "border-b-4 border-blue-500 text-blue-600"
+                    ? "border-b-4 border-[#0DB4EA] text-blue-600"
                     : ""
                 }`}
                 onClick={() => setActiveTab("tab-1")}
@@ -149,7 +152,7 @@ const Profile = () => {
               <button
                 className={`text-md py-2 w-full hover:bg-gray-100 ${
                   activeTab === "tab-2"
-                    ? "border-b-4 border-blue-500 text-blue-600"
+                    ? "border-b-4 border-[#0DB4EA] text-blue-600"
                     : ""
                 }`}
                 onClick={() => setActiveTab("tab-2")}
@@ -308,7 +311,7 @@ const Profile = () => {
 
             <button
               onClick={() => setIsAccessModalOpen(false)}
-              className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600"
+              className="w-full bg-[#0DB4EA] text-white py-2 rounded-lg hover:bg-blue-600"
             >
               Save & Close
             </button>
