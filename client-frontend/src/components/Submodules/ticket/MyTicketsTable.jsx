@@ -118,17 +118,19 @@ const MyTicketsTable = () => {
 
   return (
     <div>
-      <div className="flex gap-4 h-10">
-        <div>Filter by department:</div>
+      <div className="flex gap-4 h-16 ">
+        <div className="pt-2">Filter by department:</div>
         <div>
           <Box sx={{ minWidth: 140 }}>
             <FormControl
               fullWidth
               sx={{
                 height: "34px", // Adjust height of the select input
-                padding: "4px 8px 4px 2px", // Adjust padding inside
+                padding: "10px 8px 4px 2px", // Adjust padding inside
               }}>
-              <InputLabel id="department-select-label">Department</InputLabel>
+              <InputLabel id="department-select-label" className=" pt-0 mt-0">
+                Department
+              </InputLabel>
               <Select
                 labelId="department-select-label"
                 id="department-select"
@@ -138,6 +140,7 @@ const MyTicketsTable = () => {
                   height: "32px", // Adjust the height of the select
                   padding: "2px 8px 4px 8px", // Adjust the padding inside the select
                 }}
+                className=" pt-0"
                 onChange={handleChange}>
                 <MenuItem value="">All</MenuItem>{" "}
                 {/* Option to show all departments */}
@@ -149,7 +152,7 @@ const MyTicketsTable = () => {
             </FormControl>
           </Box>
         </div>
-        <div>
+        <div className=" flex">
           {/* <button className="bg-blue-500 hover:bg-blue-700 text-white text-sm font-bold py-2 px-4 rounded">
             Export Report
           </button> */}
@@ -157,7 +160,7 @@ const MyTicketsTable = () => {
             data={filteredRows} // Pass the filtered rows for CSV download
             headers={csvHeaders} // Pass the CSV headers
             filename="tickets_report.csv" // Set the filename for the CSV file
-            className="bg-blue-500 hover:bg-blue-700 text-white text-sm font-bold py-2 px-4 rounded">
+            className="wono-blue-dark hover:bg-blue-700 text-white text-sm font-bold py-2 px-4 rounded h-9 mt-2">
             Export Report
           </CSVLink>
         </div>

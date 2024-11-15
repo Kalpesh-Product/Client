@@ -24,7 +24,8 @@ const TicketReportsSection = () => {
       <div className="pt-3 pb-7">
         <span className="text-xl">Ticket Reports</span>&nbsp;&nbsp;
         {/* <button>View Service</button> */}
-        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold text-xs py-1 px-3 rounded-full">
+        <button class="wono-blue-dark hover:bg-blue-700 text-white font-bold text-xs py-1 px-3 rounded-full">
+          {/* <button class="wono-blue-dark hover:bg-blue-700 text-white font-bold text-xs py-1 px-3 rounded-full"> */}
           View Service
         </button>
       </div>
@@ -36,7 +37,7 @@ const TicketReportsSection = () => {
             <button
               className={`text-md py-2 w-full hover:bg-gray-100  ${
                 activeTab === "tab-1"
-                  ? "border-b-4 border-blue-500 text-blue-600"
+                  ? "border-b-4 wono-blue-dark-border wono-blue-text"
                   : ""
               }`}
               onClick={() => setActiveTab("tab-1")}>
@@ -47,7 +48,7 @@ const TicketReportsSection = () => {
             <button
               className={`text-md py-2 w-full hover:bg-gray-100 ${
                 activeTab === "tab-2"
-                  ? "border-b-4 border-blue-500 text-blue-600"
+                  ? "border-b-4 wono-blue-dark-border wono-blue-text"
                   : ""
               }`}
               onClick={() => setActiveTab("tab-2")}>
@@ -79,7 +80,7 @@ const TicketReportsSection = () => {
                 data-aos="fade-up"
                 data-aos-delay="100">
                 {/* Tab 2 Content */}
-                <MyTicketsTable />
+                <TicketsAssignedToMeTable />
               </div>
             </div>
           )}

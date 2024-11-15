@@ -3,47 +3,44 @@
 @tailwind utilities;
 
 @layer utilities {
-
-
   dialog::backdrop {
     background-color: rgba(0, 0, 0, 0.7);
     backdrop-filter: blur(5px);
   }
 
-  .wono-blue{
+  .wono-blue {
     background-color: rgba(176, 235, 255, 0.36);
   }
-  .wono-blue-dark{
-    background-color: #0DB4EA;
+  .wono-blue-dark {
+    background-color: #0db4ea;
   }
-  .wono-blue-text{
-   color: #0DB4EA;
+  .wono-blue-dark-border {
+    border-color: #0db4ea;
   }
-  .wono-text{
+  .wono-blue-text {
+    color: #0db4ea;
+  }
+  .wono-text {
     color: rgb(234, 127, 13);
   }
-  .wono-opacity{
+  .wono-opacity {
     opacity: 15%;
   }
-  
-
 }
-
 
 @font-face {
   font-family: Popins-Regular;
-  src: url('../src/assets/WONO_images/img/font/Poppins-Regular.ttf');
+  src: url("../src/assets/WONO_images/img/font/Poppins-Regular.ttf");
 }
 @font-face {
   font-family: Popins-SemiBold;
-  src: url('../src/assets/WONO_images/img/font/Poppins-SemiBold.ttf');
+  src: url("../src/assets/WONO_images/img/font/Poppins-SemiBold.ttf");
 }
 
-::-webkit-scrollbar{
+::-webkit-scrollbar {
   display: none;
 }
 
-body{
+body {
   overscroll-behavior: none;
 }
-
