@@ -11,16 +11,18 @@ import TicketsAssignedToMeTable from "./TicketsAssignedToMeTable";
 
 const TicketReportsSection = () => {
   // For Departments
-  const [value, setValue] = React.useState("1");
+  // const [value, setValue] = React.useState("1");
 
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
+  // const handleChange = (event, newValue) => {
+  //   setValue(newValue);
+  // };
+
+  const [activeTab, setActiveTab] = useState("tab-1");
 
   return (
     <div>
-      <div>
-        <span className="text-2xl">Ticket Reports</span>&nbsp;&nbsp;
+      <div className="pt-3 pb-7">
+        <span className="text-xl">Ticket Reports</span>&nbsp;&nbsp;
         {/* <button>View Service</button> */}
         <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold text-xs py-1 px-3 rounded-full">
           View Service
@@ -28,8 +30,63 @@ const TicketReportsSection = () => {
       </div>
       {/* <div>Tabs For Tickets</div> */}
 
+      <div className="mx-auto">
+        <ul className="flex  border-b mb-4 gap-4">
+          <li className=" text-center w-1/2" role="presentation">
+            <button
+              className={`text-md py-2 w-full hover:bg-gray-100  ${
+                activeTab === "tab-1"
+                  ? "border-b-4 border-blue-500 text-blue-600"
+                  : ""
+              }`}
+              onClick={() => setActiveTab("tab-1")}>
+              My Tickets
+            </button>
+          </li>
+          <li className=" text-center w-1/2" role="presentation">
+            <button
+              className={`text-md py-2 w-full hover:bg-gray-100 ${
+                activeTab === "tab-2"
+                  ? "border-b-4 border-blue-500 text-blue-600"
+                  : ""
+              }`}
+              onClick={() => setActiveTab("tab-2")}>
+              Tickets Assigned To Me
+            </button>
+          </li>
+        </ul>
+        <div className="tab-content">
+          {activeTab === "tab-1" && (
+            <div
+              className="tab-pane motion-preset-slide-up show active"
+              id="tab-1"
+              role="tabpanel">
+              <div
+                className="flex flex-col  mt-3"
+                data-aos="fade-up"
+                data-aos-delay="100">
+                <MyTicketsTable />
+              </div>
+            </div>
+          )}
+          {activeTab === "tab-2" && (
+            <div
+              className="tab-pane motion-preset-slide-up-sm show"
+              id="tab-2"
+              role="tabpanel">
+              <div
+                className="flex flex-col  mt-3"
+                data-aos="fade-up"
+                data-aos-delay="100">
+                {/* Tab 2 Content */}
+                <MyTicketsTable />
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
       {/* Tabs Material UI Start*/}
-      <TabContext value={value}>
+      {/* <TabContext value={value}>
         <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
           <TabList onChange={handleChange} aria-label="Departments">
             <Tab
@@ -61,7 +118,7 @@ const TicketReportsSection = () => {
           <br />
           <MyTicketsTable />
         </TabPanel>
-      </TabContext>
+      </TabContext> */}
       {/* Tabs Material UI End*/}
     </div>
   );

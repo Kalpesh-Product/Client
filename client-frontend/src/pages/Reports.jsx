@@ -34,21 +34,28 @@ const Reports = () => {
   const handleSelectChange = (selected) => {
     setSelectedOption(selected ? selected.value : null); // Set the selected option
   };
+  // const handleSelectChange = (selected) => {
+  //   setSelectedOption(selected ? selected.value : "Tickets"); // Set the selected option
+  // };
 
   return (
     <div className="flex min-h-screen">
       <TestSide />
-      <div className=" w-full pl-3 motion-preset-blur-right-md">
+      <div className=" w-full pl-16 motion-preset-blur-right-md">
         <h2 className="text-4xl pt-3 ">Reports</h2>
-        <h3 className="text-2xl pt-5 pb-4 ">Select Report</h3>
+        <div className="flex">
+          <div>
+            <h3 className="text-2xl pt-5 pb-4 ">Select Report: &nbsp;&nbsp;</h3>
+          </div>
 
-        {/* Select Tag To Select Submodule START */}
-        <div className="grid grid-cols-3 sm:grid-cols-6 pb-5">
-          <Select
-            options={options}
-            onChange={handleSelectChange} // Handle select option change
-            placeholder="Select a report"
-          />
+          {/* Select Tag To Select Submodule START */}
+          <div className="grid grid-cols-3 sm:grid-cols-6 pt-5 pb-4">
+            <Select
+              options={options}
+              onChange={handleSelectChange} // Handle select option change
+              placeholder="Select a report"
+            />
+          </div>
         </div>
         {/* Select Tag To Select Submodule END */}
 
