@@ -35,8 +35,8 @@ import {
 import Sidetest from "../components/Sidetest";
 import TestSide from "../components/Sidetest";
 
-const WidgetSection = ({ heading, widgets }) => (
-  <div className="mt-4">
+export const WidgetSection = ({ heading, widgets }) => (
+  <div className="mt-0">
     <h2 className="text-2xl font-semibold">{heading}</h2>
     <div
       className={`grid gap-4 mt-3

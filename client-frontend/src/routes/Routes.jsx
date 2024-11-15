@@ -16,6 +16,7 @@ import Sidebar from "../components/ClientSidebar";
 import Services from "../pages/Services";
 import DepartmentDash from "../pages/modules/PageFrontend";
 import ChatPage from "../pages/ChatPage";
+import PageHR from "../pages/modules/PageHR";
 
 const router = createBrowserRouter([
   {
