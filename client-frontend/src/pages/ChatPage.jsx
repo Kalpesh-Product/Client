@@ -36,8 +36,32 @@ const contacts = [
     id: 6,
     name: "Companies",
     group: true,
-    subGroups: ["Zomato", "SquadStack"],
+    subGroups: ["Zomato", "SquadStack", "Infuse"],
     previewMessage: "Project updates ready.",
+  },
+  {
+    id: 7,
+    name: "BIZNest All Hands",
+    group: true,
+    previewMessage: "The workload is divided between y'all",
+  },
+  {
+    id: 8,
+    name: "BIZNest Tech Dept 💻",
+    group: true,
+    previewMessage: "The task of fixing the backend is pending",
+  },
+  {
+    id: 9,
+    name: "BIZNest Finance Dept",
+    group: true,
+    previewMessage: "The payment has been processed",
+  },
+  {
+    id: 10,
+    name: "Customer Service",
+    status: "online",
+    previewMessage: "What can I help you with?",
   },
 ];
 
@@ -52,7 +76,22 @@ export default function ChatPage() {
   const [contactFilter, setContactFilter] = useState("All");
 
   useEffect(() => {
-    setMessages(initialChats(activeContact.name));
+    if (activeContact.name === "Customer Service") {
+      setMessages([
+        {
+          id: 1,
+          sender: "Customer Service",
+          time: new Date().toLocaleTimeString([], {
+            hour: "2-digit",
+            minute: "2-digit",
+          }),
+          content: "What can I help you with?",
+          fromMe: false,
+        },
+      ]);
+    } else {
+      setMessages(initialChats(activeContact.name));
+    }
   }, [activeContact]);
 
   useEffect(() => {
@@ -116,28 +155,29 @@ export default function ChatPage() {
       .toLowerCase()
       .includes(searchQuery.toLowerCase());
 
-    if (contact.subGroups) {
-      const subGroupMatch = contact.subGroups.some((sub) =>
-        sub.toLowerCase().includes(searchQuery.toLowerCase())
+    if (contactFilter === "WoNo") {
+      // Show only the Customer Service chat
+      return contact.name === "Customer Service";
+    } else if (contactFilter === "BIZNest") {
+      // Show group chats and one-to-one chats excluding Customer Service
+      return (
+        (contact.name.includes("BIZ") || !contact.group) &&
+        contact.name !== "Customer Service"
       );
-      return isMatch || subGroupMatch;
+    } else if (contactFilter === "Companies") {
+      // Show only the Companies chat
+      return contact.name === "Companies";
     }
 
-    if (contactFilter === "BIZNest") {
-      return isMatch && contact.name.includes("BIZ");
-    } else if (contactFilter === "WoNo") {
-      return false;
-    }
-
+    // Default: Show all chats
     return isMatch;
   });
 
   return (
     <div className="flex h-full bg-gray-100 overflow-hidden">
       <TestSide />
-      <aside className="w-1/4 bg-white p-4 shadow-lg border-r border-gray-300 overflow-y-auto h-[90vh]">
+      <aside className="w-1/4 bg-white p-4 shadow-lg border-r border-gray-300">
         <h2 className="text-lg font-semibold mb-4">Chat</h2>
-
         <select
           className="mt-2 mb-4 w-full p-2 rounded-lg border border-gray-300 bg-gray-50"
           value={contactFilter}
@@ -146,6 +186,7 @@ export default function ChatPage() {
           <option value="All">All</option>
           <option value="BIZNest">BIZNest</option>
           <option value="WoNo">WoNo</option>
+          <option value="Companies">Companies</option>
         </select>
 
         <input
@@ -156,7 +197,9 @@ export default function ChatPage() {
           onChange={(e) => setSearchQuery(e.target.value)}
         />
 
-        <ul className="space-y-2">
+        <ul className="space-y-2 overflow-y-auto h-[70vh]">
+          {" "}
+          {/* Set scrollable height here */}
           {filteredContacts.map((contact) => (
             <li key={contact.id} className="space-y-1">
               <div
@@ -227,7 +270,7 @@ export default function ChatPage() {
         </ul>
       </aside>
 
-      <div className="flex-1 flex flex-col justify-around  bg-white h-[90vh]">
+      <div className="flex-1 flex flex-col justify-around bg-white h-screen">
         <header className="p-4 border-b flex items-center">
           <div
             className={`flex items-center justify-center w-10 h-10 rounded-full text-white font-semibold mr-3 ${getNodeColor(
@@ -264,7 +307,7 @@ export default function ChatPage() {
           <div ref={messagesEndRef} />
         </div>
 
-        <footer className="p-4 border-t flex items-center space-x-2">
+        <footer className="p-4 border-t flex items-center space-x-2 sticky">
           <MdOutlineEmojiEmotions size={20} className="cursor-pointer" />
           <FaPaperclip
             className="cursor-pointer bg-gray-200"
@@ -277,7 +320,7 @@ export default function ChatPage() {
             onChange={handleFileChange}
           />
           <textarea
-            className="flex-1 px-4 py-2 border rounded-xl resize-none bg-gray-200"
+            className="flex-1 px-4 py-2 border rounded-xl resize-none bg-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
             rows="1"
             placeholder="Enter a message"
             value={message}
