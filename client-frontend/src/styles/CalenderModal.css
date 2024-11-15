@@ -67,51 +67,59 @@
   .custom-popper-class {
     z-index: 1500 !important;
   }
-  /* Styling the entire toolbar */
-.fc-toolbar {
-  background-color: #f0f0f0;
-  padding: 10px;
-}
-
-/* Customizing the left (start) section */
-.fc-toolbar .fc-toolbar-chunk:first-child {
-  background-color: #d9edf7;
-  padding: 5px;
-}
-
-/* Customizing individual buttons */
-.fc-today-button {
-  color: blue;
-  font-weight: bold;
-}
-
-.fc-prev-button, .fc-next-button {
-  background-color: #e0e0e0;
-  border-radius: 5px;
-}
-
-/* Customizing the center title */
-.fc-toolbar-title {
-  font-size: 1.5rem;
-  color: #333;
-  text-transform: uppercase;
-}
-
-/* Styling the right (end) section */
-.fc-toolbar .fc-toolbar-chunk:last-child {
-  background-color: #f7e1d9;
-  padding: 5px;
-}
-.fc .fc-button-primary {
-  background-color: #0DB4EA;
+  .fc-toolbar {
+    background-color: #f0f0f0;
+    padding: 10px;
+  }
   
-  color: var(--fc-button-text-color);
-}
-.fc .fc-button-primary:disabled {
-  background-color:  rgba(176, 235, 255, 0.36);
- 
-}
-.fc .fc-button-primary:not(:disabled).fc-button-active, .fc .fc-button-primary:not(:disabled):active {
-  background-color:#0DB4EA ;
+  /* Customizing the left (start) section */
+  .fc-toolbar .fc-toolbar-chunk:first-child {
+   
+    padding: 5px;
+  }
   
+  /* Customizing individual buttons */
+  .fc-today-button {
+    color: blue;
+    font-weight: bold;
+  }
+  
+  .fc-prev-button, .fc-next-button {
+    background-color: #e0e0e0;
+    border-radius: 5px;
+  }
+  
+  /* Customizing the center title */
+  .fc-toolbar-title {
+    font-size: 1.5rem;
+    color: #333;
+    text-transform: uppercase;
+  }
+  
+  /* Styling the right (end) section */
+  .fc-toolbar .fc-toolbar-chunk:last-child {
+   
+    padding: 5px;
+  }
+  .fc .fc-button-primary {
+    background-color: #0DB4EA;
+    
+    color: var(--fc-button-text-color);
+  }
+  .fc .fc-button-primary:disabled {
+    background-color:  rgba(176, 235, 255, 0.36);
+   
+  }
+  .fc .fc-button-primary:not(:disabled).fc-button-active, .fc .fc-button-primary:not(:disabled):active {
+    background-color:#0DB4EA ;
+    
+  }
+  /* .fc-direction-ltr .fc-button-group > .fc-button:not(:first-child) {
+    visibility: hidden;
+  } */
+  .fc-direction-ltr .fc-button-group > .fc-button:not(:first-child) {
+    border-bottom-left-radius: 0px;
+    border-top-left-radius: 0px;
+    margin-left: -1px;
+    
 }
