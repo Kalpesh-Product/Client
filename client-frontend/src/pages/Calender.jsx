@@ -17,6 +17,18 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import dayjs from 'dayjs';
 import { SketchPicker } from "react-color"
+import {data} from "../utils/data"
+
+const extractNames = (data) => {
+  const names = [];
+  data.forEach((item) => {
+    names.push(item.name);
+    if (item.reports && item.reports.length > 0) {
+      names.push(...extractNames(item.reports));
+    }
+  });
+  return names;
+};
 
 
 const Calender = () => {
@@ -30,6 +42,17 @@ const Calender = () => {
     const [selectedEvent, setSelectedEvent] = useState(null);
     const [isOpen,setIsOpen] = useState(false);
     const [isEditModal,setIsEditModal] = useState(false);
+    const [selectedNames, setSelectedNames] = useState([]);
+
+    const names = extractNames(data);
+
+  const handleChange = (event) => {
+    const value = Array.from(
+      event.target.selectedOptions,
+      (option) => option.value
+    );
+    setSelectedNames(value);
+  };
 
     
 
@@ -290,7 +313,22 @@ const Calender = () => {
 
         </div>
         <div className='grid grid-cols-1 gap-4'>
-          
+        <select
+        multiple
+        value={selectedNames}
+        onChange={handleChange}
+        style={{ width: "300px", padding: "8px" }}
+      >
+        {names.map((name) => (
+          <option key={name} value={name}>
+            {name}
+          </option>
+        ))}
+      </select>
+      <div style={{ marginTop: "20px" }}>
+        <strong>Selected Names:</strong> {selectedNames.join(", ")}
+      </div>
+
 
         </div>
 
