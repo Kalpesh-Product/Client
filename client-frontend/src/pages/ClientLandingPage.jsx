@@ -866,7 +866,7 @@ const ClientLandingPage = () => {
 
   return (
     <>
-      <div className="bg-white p-8 ">
+      <div className="bg-white p-6 h-[80vh] flex flex-col">
         {/* Welcome Section */}
         <div className="flex justify-between items-center mb-12 flex-wrap">
           <h1 className="text-3xl md:text-4xl font-bold pl-20 motion-preset-slide-right-md">
@@ -944,7 +944,7 @@ const ClientLandingPage = () => {
           )}
 
           {/* Conditional rendering for employee-specific cards */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-8 mb-12">
+          <div className="grid grid-cols-2 sm:grid-cols-5 gap-8 mb-12">
             {user.role === "Employee" && (
               <>
                 <CardNS

@@ -11,22 +11,22 @@ import { CSVLink } from "react-csv";
 const TicketsAssignedToMeTable = () => {
   const columns = [
     { field: "id", headerName: "ID", width: 100 },
-    { field: "ticketTitle", headerName: "Ticket Title", width: 300 },
+    { field: "ticketTitle", headerName: "Ticket Title", width: 250 },
     {
       field: "status",
       headerName: "Status",
-      width: 300,
+      width: 250,
       type: "singleSelect",
       valueOptions: ["Pending", "In Process", "Closed"],
     },
     {
       field: "department",
       headerName: "Department",
-      width: 300,
+      width: 250,
       type: "singleSelect",
       valueOptions: ["IT", "HR", "Tech", "Admin"],
     },
-    { field: "requestDate", headerName: "Request Date", width: 300 },
+    { field: "requestDate", headerName: "Request Date", width: 250 },
   ];
 
   const allRows = [

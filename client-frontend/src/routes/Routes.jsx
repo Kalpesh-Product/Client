@@ -17,6 +17,7 @@ import Services from "../pages/Services";
 import DepartmentDash from "../pages/modules/PageFrontend";
 import ChatPage from "../pages/ChatPage";
 import PageHR from "../pages/modules/PageHR";
+import NotFoundPage from "../pages/NotFoundPage";
 
 const router = createBrowserRouter([
   {
@@ -27,6 +28,10 @@ const router = createBrowserRouter([
       //   index: true,
       //   element: <ClientLoginPage />,
       // },
+      {
+        path: "*",
+        element: <NotFoundPage />,
+      },
       {
         path: "/landing",
         element: <ClientLandingPage />,
@@ -57,6 +62,22 @@ const router = createBrowserRouter([
       },
       {
         path: "/:department",
+        element: <DepartmentDash />,
+      },
+      {
+        path: "/hr/dashboard",
+        element: <DepartmentDash />,
+      },
+      {
+        path: "/sales/dashboard",
+        element: <DepartmentDash />,
+      },
+      {
+        path: "/finance/dashboard",
+        element: <DepartmentDash />,
+      },
+      {
+        path: "/frontend/dashboard",
         element: <DepartmentDash />,
       },
       {

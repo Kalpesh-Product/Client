@@ -21,16 +21,24 @@ import {
   MdAccountBalance,
   MdDashboard,
   MdLocalCafe,
+  MdOutlineLocalCafe,
   MdOutlineAddBox,
   MdOutlineViewModule,
   MdOutlineWifiTethering,
   MdPolicy,
 } from "react-icons/md";
-import { HiColorSwatch, HiCurrencyDollar, HiOutlineClipboardList, HiUsers } from "react-icons/hi";
+import {
+  HiColorSwatch,
+  HiCurrencyDollar,
+  HiOutlineClipboardList,
+  HiUsers,
+} from "react-icons/hi";
 import { RiCustomerService2Line } from "react-icons/ri";
 import { GrDocumentUpdate } from "react-icons/gr";
 import { useNavigate, useLocation, useParams } from "react-router-dom";
 import { CgWebsite } from "react-icons/cg";
+import { BsCashCoin } from "react-icons/bs";
+import { AiOutlineSecurityScan } from "react-icons/ai";
 
 const ModuleSidebar = ({ mainSideBar }) => {
   const location = useLocation();
@@ -58,7 +66,7 @@ const ModuleSidebar = ({ mainSideBar }) => {
       icon: <GrDocumentUpdate />,
     },
   ];
-  
+
   const hrModules = [
     {
       title: "Attendance",
@@ -71,21 +79,17 @@ const ModuleSidebar = ({ mainSideBar }) => {
       icon: <HiCurrencyDollar />,
     },
   ];
-  
 
-// Get the department based on the current path
-const passedDepartment = location.pathname.split('/')[1];
+  // Get the department based on the current path
+  const passedDepartment = location.pathname.split("/")[1];
 
-// Determine which module array to render based on the department in the URL
-let modules = [];
-if (passedDepartment === 'frontend') {
-  modules = frontendModules;
-} else if (passedDepartment === 'hr') {
-  modules = hrModules;
-}
-
-
-
+  // Determine which module array to render based on the department in the URL
+  let modules = [];
+  if (passedDepartment === "frontend") {
+    modules = frontendModules;
+  } else if (passedDepartment === "hr") {
+    modules = hrModules;
+  }
 
   const departments = [
     { name: "FRONTEND", icon: <FaCode /> },
@@ -116,8 +120,10 @@ if (passedDepartment === 'frontend') {
   useEffect(() => {
     if (location.pathname === "/frontend") {
       setIsSidebarOpen(true);
+    } else if (location.pathname === "/reports") {
+      setIsSidebarOpen(true);
     } else {
-      setIsSidebarOpen(false);
+      setIsSidebarOpen(true);
     }
   }, [location.pathname]);
 
@@ -162,6 +168,8 @@ if (passedDepartment === 'frontend') {
     console.log("Menu clicked");
   };
 
+  
+
 
 
   return (
@@ -169,36 +177,34 @@ if (passedDepartment === 'frontend') {
       <div
         className={`${
           isSidebarOpen ? "w-60" : "w-20"
-        } bg-white text-black flex-shrink-0 h-full sticky top-10 overflow-y-auto transition-all duration-300`}
-      >
+        } bg-white text-black flex-shrink-0 h-full sticky top-10 overflow-y-auto transition-all duration-300`}>
         {/*Dashboard */}
         <div className="flex flex-col gap-2 mt-5 px-3 relative">
           {/* Title/Dashboard */}
           <div
-            onClick={() => navigate(department)}
-            className={`flex ${
+            onClick={() => navigate(`/${passedDepartment}/dashboard`)}
+            className={`flex border-b-[1px] ${
               isSidebarOpen ? "pl-[1rem]" : "justify-center"
-            } items-center py-3 wono-blue wono-blue-text rounded-md `}
-          >
+            } items-center py-3 wono-blue wono-blue-text rounded-md `}>
             <div className="flex justify-center w-5 text-2xl">
               <MdOutlineViewModule />
             </div>
             {isSidebarOpen && (
-              <span className="pl-5 font-bold uppercase">{passedDepartment}</span>
+              <span className="pl-5 font-bold uppercase">
+                {passedDepartment}
+              </span>
             )}
           </div>
 
           {/* Collapse-button */}
           <Tooltip
             title={isSidebarOpen ? "Close" : "Collapse"}
-            placement="right"
-          >
+            placement="right">
             <button
               onClick={toggleSidebar}
               className={`text-black text-[0.8rem] p-2 focus:outline-none text-end absolute top-[0.6rem] ${
                 isSidebarOpen ? "left-[11rem]" : "left-[3.2rem]"
-              } `}
-            >
+              } `}>
               {isSidebarOpen ? <FaArrowLeft /> : <FaArrowRightToBracket />}
             </button>
           </Tooltip>
@@ -209,9 +215,9 @@ if (passedDepartment === 'frontend') {
           <Tooltip title={title} placement="right" key={index}>
             <div
               onClick={() => navigate(route)}
-              className={`flex ${
+              className={`flex border-b-[1px] ${
                 isSidebarOpen ? "pl-[1rem]" : "justify-center"
-              } items-center cursor-pointer py-3 hover:wono-blue-dark hover:text-white hover:rounded-md ${
+              } items-center cursor-pointer py-2 hover:wono-blue-dark hover:text-white hover:rounded-md ${
                 location.pathname === route
                   ? "wono-blue border-r-4  border-[#0DB4EA] rounded-tl-md rounded-bl-md text-[#0DB4EA]"
                   : "bg-white"
@@ -230,20 +236,245 @@ if (passedDepartment === 'frontend') {
               onClick={() => {
                 navigate("#dashboard");
               }}
-              className={`flex ${
+              className={`flex border-b-[1px] ${
                 isSidebarOpen ? "pl-[1rem]" : "justify-center"
-              } items-center cursor-pointer  py-3 hover:wono-blue-dark hover:text-white hover:rounded-md ${
+              } items-center cursor-pointer  py-2 hover:wono-blue-dark hover:text-white hover:rounded-md ${
                 location.pathname === "/dashboard"
                   ? "wono-blue rounded-md text-[#0DB4EA]"
                   : "bg-white"
               }`}
             >
-              <div className="flex justify-center w-6 text-2xl">
+              <div className="flex justify-center w-6 text-[1.3rem]">
               <TbReportSearch />
               </div>
               {isSidebarOpen && <span className="pl-5 text-[0.8rem]">Reports</span>}
-            </div>
-          </Tooltip>
+              </div>
+            </Tooltip>
+         
+
+          {/* Menu Items only for reports */}
+          {location.pathname === "/reports" && (
+            <>
+              <Tooltip title={"Reports"} placement="right">
+                <div
+                  onClick={() => {
+                    navigate("#dashboard");
+                  }}
+                  className={`flex border-b-[1px] ${
+                    isSidebarOpen ? "pl-[1rem]" : "justify-center"
+                  } items-center cursor-pointer  py-3 hover:wono-blue-dark hover:text-white hover:rounded-md ${
+                    location.pathname === "/dashboard"
+                      ? "wono-blue rounded-md text-[#0DB4EA]"
+                      : "bg-white"
+                  }`}>
+                  <div className="flex justify-center w-6 text-[1.3rem]">
+                    <FaCode />
+                  </div>
+                  {isSidebarOpen && (
+                    <span className="pl-5 text-[0.8rem]">
+                      {" "}
+                      Frontend Reports
+                    </span>
+                  )}
+                </div>
+              </Tooltip>
+              <Tooltip title={"Reports"} placement="right">
+                <div
+                  onClick={() => {
+                    navigate("#dashboard");
+                  }}
+                  className={`flex border-b-[1px] ${
+                    isSidebarOpen ? "pl-[1rem]" : "justify-center"
+                  } items-center cursor-pointer  py-3 hover:wono-blue-dark hover:text-white hover:rounded-md ${
+                    location.pathname === "/dashboard"
+                      ? "wono-blue rounded-md text-[#0DB4EA]"
+                      : "bg-white"
+                  }`}>
+                  <div className="flex justify-center w-6 text-[1.3rem]">
+                    <MdAccountBalance />
+                  </div>
+                  {isSidebarOpen && (
+                    <span className="pl-5 text-[0.8rem]"> Finance Reports</span>
+                  )}
+                </div>
+              </Tooltip>
+              <Tooltip title={"Reports"} placement="right">
+                <div
+                  onClick={() => {
+                    navigate("#dashboard");
+                  }}
+                  className={`flex border-b-[1px] ${
+                    isSidebarOpen ? "pl-[1rem]" : "justify-center"
+                  } items-center cursor-pointer  py-3 hover:wono-blue-dark hover:text-white hover:rounded-md ${
+                    location.pathname === "/dashboard"
+                      ? "wono-blue rounded-md text-[#0DB4EA]"
+                      : "bg-white"
+                  }`}>
+                  <div className="flex justify-center w-6 text-[1.3rem]">
+                    <BsCashCoin />
+                  </div>
+                  {isSidebarOpen && (
+                    <span className="pl-5 text-[0.8rem]"> Sales Reports</span>
+                  )}
+                </div>
+              </Tooltip>
+              <Tooltip title={"Reports"} placement="right">
+                <div
+                  onClick={() => {
+                    navigate("#dashboard");
+                  }}
+                  className={`flex border-b-[1px] ${
+                    isSidebarOpen ? "pl-[1rem]" : "justify-center"
+                  } items-center cursor-pointer  py-3 hover:wono-blue-dark hover:text-white hover:rounded-md ${
+                    location.pathname === "/dashboard"
+                      ? "wono-blue rounded-md text-[#0DB4EA]"
+                      : "bg-white"
+                  }`}>
+                  <div className="flex justify-center w-6 text-[1.3rem]">
+                    <FaBuildingUser />
+                  </div>
+                  {isSidebarOpen && (
+                    <span className="pl-5 text-[0.8rem]">
+                      {" "}
+                      Human Resource Reports
+                    </span>
+                  )}
+                </div>
+              </Tooltip>
+              <Tooltip title={"Reports"} placement="right">
+                <div
+                  onClick={() => {
+                    navigate("#dashboard");
+                  }}
+                  className={`flex border-b-[1px] ${
+                    isSidebarOpen ? "pl-[1rem]" : "justify-center"
+                  } items-center cursor-pointer  py-3 hover:wono-blue-dark hover:text-white hover:rounded-md ${
+                    location.pathname === "/dashboard"
+                      ? "wono-blue rounded-md text-[#0DB4EA]"
+                      : "bg-white"
+                  }`}>
+                  <div className="flex justify-center w-6 text-[1.3rem]">
+                    <RiCustomerService2Line />
+                  </div>
+                  {isSidebarOpen && (
+                    <span className="pl-5 text-[0.8rem]">
+                      {" "}
+                      Customer Service Reports
+                    </span>
+                  )}
+                </div>
+              </Tooltip>
+              <Tooltip title={"Reports"} placement="right">
+                <div
+                  onClick={() => {
+                    navigate("#dashboard");
+                  }}
+                  className={`flex border-b-[1px] ${
+                    isSidebarOpen ? "pl-[1rem]" : "justify-center"
+                  } items-center cursor-pointer  py-3 hover:wono-blue-dark hover:text-white hover:rounded-md ${
+                    location.pathname === "/dashboard"
+                      ? "wono-blue rounded-md text-[#0DB4EA]"
+                      : "bg-white"
+                  }`}>
+                  <div className="flex justify-center w-6 text-[1.3rem]">
+                    <SiMarketo />
+                  </div>
+                  {isSidebarOpen && (
+                    <span className="pl-5 text-[0.8rem]">
+                      {" "}
+                      Marketing Reports
+                    </span>
+                  )}
+                </div>
+              </Tooltip>
+              <Tooltip title={"Reports"} placement="right">
+                <div
+                  onClick={() => {
+                    navigate("#dashboard");
+                  }}
+                  className={`flex border-b-[1px] ${
+                    isSidebarOpen ? "pl-[1rem]" : "justify-center"
+                  } items-center cursor-pointer  py-3 hover:wono-blue-dark hover:text-white hover:rounded-md ${
+                    location.pathname === "/dashboard"
+                      ? "wono-blue rounded-md text-[#0DB4EA]"
+                      : "bg-white"
+                  }`}>
+                  <div className="flex justify-center w-6 text-[1.3rem]">
+                    <MdOutlineLocalCafe />
+                  </div>
+                  {isSidebarOpen && (
+                    <span className="pl-5 text-[0.8rem]">
+                      {" "}
+                      Cafe(F&B) Reports
+                    </span>
+                  )}
+                </div>
+              </Tooltip>
+              <Tooltip title={"Reports"} placement="right">
+                <div
+                  onClick={() => {
+                    navigate("#dashboard");
+                  }}
+                  className={`flex border-b-[1px] ${
+                    isSidebarOpen ? "pl-[1rem]" : "justify-center"
+                  } items-center cursor-pointer  py-3 hover:wono-blue-dark hover:text-white hover:rounded-md ${
+                    location.pathname === "/dashboard"
+                      ? "wono-blue rounded-md text-[#0DB4EA]"
+                      : "bg-white"
+                  }`}>
+                  <div className="flex justify-center w-6 text-[1.3rem]">
+                    <MdOutlineWifiTethering />
+                  </div>
+                  {isSidebarOpen && (
+                    <span className="pl-5 text-[0.8rem]"> IT Reports</span>
+                  )}
+                </div>
+              </Tooltip>
+              <Tooltip title={"Reports"} placement="right">
+                <div
+                  onClick={() => {
+                    navigate("#dashboard");
+                  }}
+                  className={`flex border-b-[1px] ${
+                    isSidebarOpen ? "pl-[1rem]" : "justify-center"
+                  } items-center cursor-pointer  py-3 hover:wono-blue-dark hover:text-white hover:rounded-md ${
+                    location.pathname === "/dashboard"
+                      ? "wono-blue rounded-md text-[#0DB4EA]"
+                      : "bg-white"
+                  }`}>
+                  <div className="flex justify-center w-6 text-[1.3rem]">
+                    <FaHandsHelping />
+                  </div>
+                  {isSidebarOpen && (
+                    <span className="pl-5 text-[0.8rem]">
+                      {" "}
+                      Maintenance Reports
+                    </span>
+                  )}
+                </div>
+              </Tooltip>
+              <Tooltip title={"Reports"} placement="right">
+                <div
+                  onClick={() => {
+                    navigate("#dashboard");
+                  }}
+                  className={`flex border-b-[1px] ${
+                    isSidebarOpen ? "pl-[1rem]" : "justify-center"
+                  } items-center cursor-pointer  py-3 hover:wono-blue-dark hover:text-white hover:rounded-md ${
+                    location.pathname === "/dashboard"
+                      ? "wono-blue rounded-md text-[#0DB4EA]"
+                      : "bg-white"
+                  }`}>
+                  <div className="flex justify-center w-6 text-[1.3rem]">
+                    <AiOutlineSecurityScan />
+                  </div>
+                  {isSidebarOpen && (
+                    <span className="pl-5 text-[0.8rem]"> Legal Reports</span>
+                  )}
+                </div>
+              </Tooltip>
+            </>
+          )}
         </div>
       </div>
     </div>

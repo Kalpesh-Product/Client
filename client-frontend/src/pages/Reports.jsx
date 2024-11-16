@@ -12,6 +12,7 @@ import TaskReportsSection from "../components/Submodules/tasks/TaskReportsSectio
 import TicketReportsSection from "../components/Submodules/ticket/TicketReportsSection";
 import MeetingReportsSection from "../components/Submodules/meetings/MeetingReportsSection";
 import CustomerServiceReportsSection from "../components/Submodules/customer-service/CustomerServiceReportsSection";
+import ModuleSidebar from "../components/ModuleSidebar";
 
 const Reports = () => {
   // For Departments
@@ -41,15 +42,16 @@ const Reports = () => {
   return (
     <div className="flex min-h-screen">
       <TestSide />
+      <ModuleSidebar />
       <div className=" w-full p-6 motion-preset-blur-right-md">
         <h2 className="text-4xl  ">Reports</h2>
-        <div className="flex">
-          <div>
+        <div className="flex h-16">
+          <div className="w-60">
             <h3 className="text-2xl pt-5 pb-4 ">Select Report: &nbsp;&nbsp;</h3>
           </div>
 
           {/* Select Tag To Select Submodule START */}
-          <div className="grid grid-cols-3 sm:grid-cols-6 pt-5 pb-4">
+          <div className="grid grid-cols-3 sm:grid-cols-6 pt-5 h-8">
             <Select
               options={options}
               onChange={handleSelectChange} // Handle select option change

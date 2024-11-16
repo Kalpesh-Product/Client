@@ -187,14 +187,16 @@ const DepartmentDash = () => {
       <TestSide />
       <ModuleSidebar />
 
-      <div className="w-full">
+      <div className="w-full h-screen">
         {/* Frontend submodules */}
         {location.pathname.startsWith("/frontend") && (
           <>
-            {location.pathname === "/frontend" ? (
+            {(location.pathname === "/frontend" || location.pathname === "/frontend/dashboard") ? (
               <div>
                 <div className="bg-white p-4 rounded-lg">
-                  <h1 className="text-3xl font-bold mb-4">Frontend Dashboard</h1>
+                  <h1 className="text-3xl font-bold mb-4">
+                    Frontend Dashboard
+                  </h1>
                   {techWidgets.map((section, index) => (
                     <WidgetSection
                       key={index}
@@ -210,13 +212,26 @@ const DepartmentDash = () => {
                   value={value}
                   onChange={handleChange}
                   aria-label="tabs example"
-                  sx={{ width: "100%" }} // This makes the Tabs take full width
-                  indicatorColor="primary"
+                  variant="fullWidth"
+                  indicatorColor="#0db4ea"
+                  sx={{
+                    border: "2px solid #ccc", // Add a border
+                    borderRadius: "4px", // Optional: add rounded corners
+                    "& .MuiTab-root": {
+                      borderRight: "1px solid #ccc", // Add border between tabs
+                    },
+                    "& .MuiTab-root:last-of-type": {
+                      borderRight: "none", // Remove border for the last tab
+                    },
+                    "& .MuiTabs-indicator": {
+                      backgroundColor: "#0db4ea", // Custom indicator color
+                    },
+                  }}
                 >
-                  <Tab sx={{width:'25%'}} label="Home" />
-                  <Tab sx={{width:'25%'}} label="About" />
-                  <Tab sx={{width:'25%'}} label="Gallery" />
-                  <Tab sx={{width:'25%'}} label="Contact" />
+                  <Tab label="Home" />
+                  <Tab label="About" />
+                  <Tab label="Gallery" />
+                  <Tab label="Contact" />
                 </Tabs>
 
                 <Box sx={{ padding: 2 }}>
@@ -246,31 +261,22 @@ const DepartmentDash = () => {
                   {/* Modern Content Examples */}
                   {value === 0 && (
                     <Typography variant="body1">
-                      <p>
-                        Edit home section of the website here
-                      </p>
-                     
+                      <p>Edit home section of the website here</p>
                     </Typography>
                   )}
                   {value === 1 && (
                     <Typography variant="body1">
-                      <p>
-                      Edit about section of the website here
-                      </p>
+                      <p>Edit about section of the website here</p>
                     </Typography>
                   )}
                   {value === 2 && (
                     <Typography variant="body1">
-                      <p>
-                      Edit Gallery section of the website here
-                      </p>
+                      <p>Edit Gallery section of the website here</p>
                     </Typography>
                   )}
                   {value === 3 && (
                     <Typography variant="body1">
-                      <p>
-                      Edit Contact section of the website here
-                      </p>
+                      <p>Edit Contact section of the website here</p>
                     </Typography>
                   )}
                 </Box>
@@ -282,8 +288,7 @@ const DepartmentDash = () => {
                   {products.map((product) => (
                     <div
                       key={product.id}
-                      className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow"
-                    >
+                      className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
                       <img
                         src={product.image}
                         alt={product.name}
@@ -311,7 +316,7 @@ const DepartmentDash = () => {
         {/* HR submodules */}
         {location.pathname.startsWith("/hr") && (
           <>
-            {location.pathname === "/hr" && (
+            {(location.pathname === "/hr" || location.pathname === "/hr/dashboard")&& (
               <div className="bg-white p-4 rounded-lg  mt-4">
                 {hrWidgets.map((section, index) => (
                   <WidgetSection
@@ -327,7 +332,7 @@ const DepartmentDash = () => {
         {/* Finance submodules */}
         {location.pathname.startsWith("/finance") && (
           <>
-            {location.pathname === "/finance" && (
+            {(location.pathname === "/finance" || location.pathname === "/finance/dashboard") && (
               <div className="bg-white p-4 rounded-lg  mt-4">
                 <WidgetSection heading="Finance" widgets={financeWidgets} />
               </div>
@@ -337,7 +342,7 @@ const DepartmentDash = () => {
         {/* HR submodules */}
         {location.pathname.startsWith("/sales") && (
           <>
-            {location.pathname === "/sales" && (
+            {(location.pathname === "/sales" || location.pathname === "/sales/dashboard") && (
               <div className="bg-white p-4 rounded-lg  mt-4">
                 {salesWidgets.map((section, index) => (
                   <WidgetSection
