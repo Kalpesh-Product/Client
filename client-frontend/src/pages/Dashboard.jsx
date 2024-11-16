@@ -35,8 +35,8 @@ import {
 import Sidetest from "../components/Sidetest";
 import TestSide from "../components/Sidetest";
 
-const WidgetSection = ({ heading, widgets }) => (
-  <div className="mt-4">
+export const WidgetSection = ({ heading, widgets }) => (
+  <div className="mt-0">
     <h2 className="text-2xl font-semibold">{heading}</h2>
     <div
       className={`grid gap-4 mt-3
@@ -201,7 +201,7 @@ const Dashboard = () => {
 
       <div className="flex-1 bg-gray-100 p-8 overflow-y-auto">
         {/* Heading 1 */}
-        <h1 className="text-3xl motion-preset-slide-right-md">{user.name}'s Dashboard</h1>
+        <h1 className="text-3xl motion-preset-slide-right-md font-bold">{user.name}'s Dashboard</h1>
         <h2 className="my-5 motion-preset-slide-right-md">
           BIZ Nest-{user.role}-{user.department}
         </h2>

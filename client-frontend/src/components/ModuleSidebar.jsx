@@ -22,13 +22,14 @@ import {
   MdDashboard,
   MdLocalCafe,
   MdOutlineAddBox,
+  MdOutlineViewModule,
   MdOutlineWifiTethering,
   MdPolicy,
 } from "react-icons/md";
-import { HiColorSwatch } from "react-icons/hi";
+import { HiColorSwatch, HiCurrencyDollar, HiOutlineClipboardList, HiUsers } from "react-icons/hi";
 import { RiCustomerService2Line } from "react-icons/ri";
 import { GrDocumentUpdate } from "react-icons/gr";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, useParams } from "react-router-dom";
 import { CgWebsite } from "react-icons/cg";
 
 const ModuleSidebar = ({ mainSideBar }) => {
@@ -43,19 +44,48 @@ const ModuleSidebar = ({ mainSideBar }) => {
     setIsSidebarOpen(!isSidebarOpen);
   };
 
-  // Menu items array (without DASHBOARD)
-  const menuItems = [
+  const { department } = useParams();
+
+  const frontendModules = [
     {
-      name: "Reports",
-      icon: <TbReportSearch />,
-      route: "#reports",
+      title: "Themes",
+      route: "/frontend/themes",
+      icon: <HiColorSwatch />,
     },
-    { name: "Tasks", icon: <FaTasks />, route: "#tasks" },
-    { name: "Calendar", icon: <FaCalendarAlt />, route: "/calendar" },
-    { name: "Chat", icon: <IoIosChatboxes />, route: "/chat" },
-    { name: "Access", icon: <SiAuthelia />, route: "/access" },
-    { name: "Profile", icon: <CgProfile />, route: "/profile" },
+    {
+      title: "Updates",
+      route: "/frontend/updates",
+      icon: <GrDocumentUpdate />,
+    },
   ];
+  
+  const hrModules = [
+    {
+      title: "Attendance",
+      route: "#hr/leave-requests",
+      icon: <HiOutlineClipboardList />,
+    },
+    {
+      title: "Payroll",
+      route: "#hr/payroll",
+      icon: <HiCurrencyDollar />,
+    },
+  ];
+  
+
+// Get the department based on the current path
+const passedDepartment = location.pathname.split('/')[1];
+
+// Determine which module array to render based on the department in the URL
+let modules = [];
+if (passedDepartment === 'frontend') {
+  modules = frontendModules;
+} else if (passedDepartment === 'hr') {
+  modules = hrModules;
+}
+
+
+
 
   const departments = [
     { name: "FRONTEND", icon: <FaCode /> },
@@ -70,29 +100,28 @@ const ModuleSidebar = ({ mainSideBar }) => {
     { name: "LEGAL", icon: <MdPolicy /> },
   ];
 
-  const iconMap = {
-    FaCode: <FaCode />,
-    MdAccountBalance: <MdAccountBalance />,
-    FaMoneyBillTrendUp: <FaMoneyBillTrendUp />,
-    FaBuildingUser: <FaBuildingUser />,
-    RiCustomerService2Line: <RiCustomerService2Line />,
-    SiMarketo: <SiMarketo />,
-    MdLocalCafe: <MdLocalCafe />,
-    MdOutlineWifiTethering: <MdOutlineWifiTethering />,
-    FaHandsHelping: <FaHandsHelping />,
-    MdPolicy: <MdPolicy />
-  };
-    // Close sidebar when navigating to any route
-    useEffect(() => {
-      if( location.pathname === '/frontend'){
-        setIsSidebarOpen(true);
-      }else{
-        setIsSidebarOpen(false)
-      } 
-    }, [location.pathname]);
-  
-    const { departmentName } = location.state || {};
+  // const iconMap = {
+  //   FaCode: <FaCode />,
+  //   MdAccountBalance: <MdAccountBalance />,
+  //   FaMoneyBillTrendUp: <FaMoneyBillTrendUp />,
+  //   FaBuildingUser: <FaBuildingUser />,
+  //   RiCustomerService2Line: <RiCustomerService2Line />,
+  //   SiMarketo: <SiMarketo />,
+  //   MdLocalCafe: <MdLocalCafe />,
+  //   MdOutlineWifiTethering: <MdOutlineWifiTethering />,
+  //   FaHandsHelping: <FaHandsHelping />,
+  //   MdPolicy: <MdPolicy />
+  // };
+  // Close sidebar when navigating to any route
+  useEffect(() => {
+    if (location.pathname === "/frontend") {
+      setIsSidebarOpen(true);
+    } else {
+      setIsSidebarOpen(false);
+    }
+  }, [location.pathname]);
 
+  const { departmentName } = location.state || {};
 
   useEffect(() => {
     const storedUser = JSON.parse(localStorage.getItem("user"));
@@ -132,88 +161,74 @@ const ModuleSidebar = ({ mainSideBar }) => {
     setIsActive(index);
     console.log("Menu clicked");
   };
- 
+
 
 
   return (
-    <div
-      className=''
-    >
-      <div className={`${
-        isSidebarOpen ? "w-60" : "w-20"
-      } bg-white text-black flex-shrink-0 h-full sticky top-10 overflow-y-auto transition-all duration-300`}>
+    <div className="">
+      <div
+        className={`${
+          isSidebarOpen ? "w-60" : "w-20"
+        } bg-white text-black flex-shrink-0 h-full sticky top-10 overflow-y-auto transition-all duration-300`}
+      >
         {/*Dashboard */}
-        <div className="mt-5 px-3 relative">
-          
-            <div
-              className={`flex ${
-                isSidebarOpen ? "pl-[1rem]" : "justify-center"
-              } items-center py-3 wono-blue wono-blue-text rounded-md `}
-            >
-              <div className="flex justify-center w-5 text-2xl">
-              <CgWebsite />
-              </div>
-              {isSidebarOpen && <span className="pl-5 font-bold">{departmentName}</span>}
+        <div className="flex flex-col gap-2 mt-5 px-3 relative">
+          {/* Title/Dashboard */}
+          <div
+            onClick={() => navigate(department)}
+            className={`flex ${
+              isSidebarOpen ? "pl-[1rem]" : "justify-center"
+            } items-center py-3 wono-blue wono-blue-text rounded-md `}
+          >
+            <div className="flex justify-center w-5 text-2xl">
+              <MdOutlineViewModule />
             </div>
-            <Tooltip title={isSidebarOpen ? 'Close' : 'Collapse'} placement="right">
+            {isSidebarOpen && (
+              <span className="pl-5 font-bold uppercase">{passedDepartment}</span>
+            )}
+          </div>
+
+          {/* Collapse-button */}
+          <Tooltip
+            title={isSidebarOpen ? "Close" : "Collapse"}
+            placement="right"
+          >
             <button
               onClick={toggleSidebar}
               className={`text-black text-[0.8rem] p-2 focus:outline-none text-end absolute top-[0.6rem] ${
                 isSidebarOpen ? "left-[11rem]" : "left-[3.2rem]"
               } `}
             >
-              {isSidebarOpen ? (
-                <FaArrowLeft />
-              ) : (
-                <FaArrowRightToBracket />
-              )}
+              {isSidebarOpen ? <FaArrowLeft /> : <FaArrowRightToBracket />}
             </button>
           </Tooltip>
 
-          <Tooltip title={"Themes"} placement="right">
+          {/* SubModules-Items */}
+          {
+        modules.map(({ title, route, icon }, index) => (
+          <Tooltip title={title} placement="right" key={index}>
             <div
-              onClick={() => {
-                navigate("/frontend/themes");
-              }}
+              onClick={() => navigate(route)}
               className={`flex ${
                 isSidebarOpen ? "pl-[1rem]" : "justify-center"
-              } items-center cursor-pointer  py-3 hover:wono-blue-dark hover:text-white hover:rounded-md ${
-                location.pathname === "/frontend/themes"
-                  ? "wono-blue rounded-md text-[#0DB4EA]"
+              } items-center cursor-pointer py-3 hover:wono-blue-dark hover:text-white hover:rounded-md ${
+                location.pathname === route
+                  ? "wono-blue border-r-4  border-[#0DB4EA] rounded-tl-md rounded-bl-md text-[#0DB4EA]"
                   : "bg-white"
               }`}
             >
-              <div className="flex justify-center w-5 text-2xl">
-              <HiColorSwatch />
-              </div>
-              {isSidebarOpen && <span className="pl-5">Themes</span>}
+              <div className="flex justify-center w-5 text-2xl">{icon}</div>
+              {isSidebarOpen && <span className="pl-5 text-[0.8rem]">{title}</span>}
             </div>
           </Tooltip>
+        ))
+      }
 
-
-          <Tooltip title={"Themes"} placement="right">
+          {/* Common-submodules-menu */}
+          <Tooltip title={"Reports"} placement="right">
             <div
               onClick={() => {
-                navigate("/frontend/updates");
-              }}
-              className={`flex ${
-                isSidebarOpen ? "pl-[1rem]" : "justify-center"
-              } items-center cursor-pointer  py-3 hover:wono-blue-dark hover:text-white hover:rounded-md ${
-                location.pathname === "/dashboard"
-                  ? "wono-blue rounded-md text-[#0DB4EA]"
-                  : "bg-white"
-              }`}
-            >
-              <div className="flex justify-center w-5 text-2xl">
-              <GrDocumentUpdate />
-              </div>
-              {isSidebarOpen && <span className="pl-5">Update</span>}
-            </div>
-          </Tooltip>
-          <Tooltip title={"Dashboard"} placement="right">
-            <div
-              onClick={() => {
-                navigate("/dashboard");
+                navigate("#dashboard");
               }}
               className={`flex ${
                 isSidebarOpen ? "pl-[1rem]" : "justify-center"
@@ -224,28 +239,11 @@ const ModuleSidebar = ({ mainSideBar }) => {
               }`}
             >
               <div className="flex justify-center w-6 text-2xl">
-                <MdDashboard />
+              <TbReportSearch />
               </div>
-              {isSidebarOpen && <span className="pl-5">Reports</span>}
+              {isSidebarOpen && <span className="pl-5 text-[0.8rem]">Reports</span>}
             </div>
           </Tooltip>
-
-          {/* {menuItems.map((item, index) => (
-          <Tooltip title={item.name} placement="right">
-            <div
-              key={index}
-              onClick={()=>{
-               navigate(item.route);
-                }}
-              className={`cursor-pointer flex ${isSidebarOpen ? 'pl-[1rem]' : 'justify-center'} items-center py-[1rem] hover:wono-blue-dark  hover:rounded-md hover:text-white  ${location.pathname === item.route ? 'wono-blue rounded-md text-[#0DB4EA]' : 'bg-white'} `}
-            >
-              <div className="flex justify-center w-6 text-[1.3rem]">
-                {item.icon}
-              </div>
-              {isSidebarOpen && <span className="pl-5">{item.name}</span>}
-            </div>
-          </Tooltip>
-        ))} */}
         </div>
       </div>
     </div>

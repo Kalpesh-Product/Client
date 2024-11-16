@@ -7,7 +7,7 @@ import "../styles/ClientSpecialClasses.css";
 import LoginWithGoogleImage from "../assets/WONO_images/img/login_images/google-icon2.png";
 import LoginWithFacebookImage from "../assets/WONO_images/img/login_images/login-with-facebook-icon.png";
 import LoginWithEmailImage from "../assets/WONO_images/img/login_images/email-icon.png";
-import WonoLogo from "../assets/WONO_images/img/WONO_LOGO_white _TP.png";
+import WonoLogo from "../assets/WONO_images/img/WONO_LOGO_white_TP.png";
 import Footer from "../components/LoginFooter/LoginFooter";
 
 const LoginPage = () => {
