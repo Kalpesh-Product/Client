@@ -247,8 +247,10 @@ const ModuleSidebar = ({ mainSideBar }) => {
               <div className="flex justify-center w-6 text-[1.3rem]">
               <TbReportSearch />
               </div>
+              {isSidebarOpen && <span className="pl-5 text-[0.8rem]">Reports</span>}
+              </div>
             </Tooltip>
-          )}
+         
 
           {/* Menu Items only for reports */}
           {location.pathname === "/reports" && (
@@ -258,14 +260,14 @@ const ModuleSidebar = ({ mainSideBar }) => {
                   onClick={() => {
                     navigate("#dashboard");
                   }}
-                  className={`flex ${
+                  className={`flex border-b-[1px] ${
                     isSidebarOpen ? "pl-[1rem]" : "justify-center"
                   } items-center cursor-pointer  py-3 hover:wono-blue-dark hover:text-white hover:rounded-md ${
                     location.pathname === "/dashboard"
                       ? "wono-blue rounded-md text-[#0DB4EA]"
                       : "bg-white"
                   }`}>
-                  <div className="flex justify-center w-6 text-2xl">
+                  <div className="flex justify-center w-6 text-[1.3rem]">
                     <FaCode />
                   </div>
                   {isSidebarOpen && (
@@ -281,14 +283,14 @@ const ModuleSidebar = ({ mainSideBar }) => {
                   onClick={() => {
                     navigate("#dashboard");
                   }}
-                  className={`flex ${
+                  className={`flex border-b-[1px] ${
                     isSidebarOpen ? "pl-[1rem]" : "justify-center"
                   } items-center cursor-pointer  py-3 hover:wono-blue-dark hover:text-white hover:rounded-md ${
                     location.pathname === "/dashboard"
                       ? "wono-blue rounded-md text-[#0DB4EA]"
                       : "bg-white"
                   }`}>
-                  <div className="flex justify-center w-6 text-2xl">
+                  <div className="flex justify-center w-6 text-[1.3rem]">
                     <MdAccountBalance />
                   </div>
                   {isSidebarOpen && (
@@ -301,14 +303,14 @@ const ModuleSidebar = ({ mainSideBar }) => {
                   onClick={() => {
                     navigate("#dashboard");
                   }}
-                  className={`flex ${
+                  className={`flex border-b-[1px] ${
                     isSidebarOpen ? "pl-[1rem]" : "justify-center"
                   } items-center cursor-pointer  py-3 hover:wono-blue-dark hover:text-white hover:rounded-md ${
                     location.pathname === "/dashboard"
                       ? "wono-blue rounded-md text-[#0DB4EA]"
                       : "bg-white"
                   }`}>
-                  <div className="flex justify-center w-6 text-2xl">
+                  <div className="flex justify-center w-6 text-[1.3rem]">
                     <BsCashCoin />
                   </div>
                   {isSidebarOpen && (
@@ -321,14 +323,14 @@ const ModuleSidebar = ({ mainSideBar }) => {
                   onClick={() => {
                     navigate("#dashboard");
                   }}
-                  className={`flex ${
+                  className={`flex border-b-[1px] ${
                     isSidebarOpen ? "pl-[1rem]" : "justify-center"
                   } items-center cursor-pointer  py-3 hover:wono-blue-dark hover:text-white hover:rounded-md ${
                     location.pathname === "/dashboard"
                       ? "wono-blue rounded-md text-[#0DB4EA]"
                       : "bg-white"
                   }`}>
-                  <div className="flex justify-center w-6 text-2xl">
+                  <div className="flex justify-center w-6 text-[1.3rem]">
                     <FaBuildingUser />
                   </div>
                   {isSidebarOpen && (
@@ -344,14 +346,14 @@ const ModuleSidebar = ({ mainSideBar }) => {
                   onClick={() => {
                     navigate("#dashboard");
                   }}
-                  className={`flex ${
+                  className={`flex border-b-[1px] ${
                     isSidebarOpen ? "pl-[1rem]" : "justify-center"
                   } items-center cursor-pointer  py-3 hover:wono-blue-dark hover:text-white hover:rounded-md ${
                     location.pathname === "/dashboard"
                       ? "wono-blue rounded-md text-[#0DB4EA]"
                       : "bg-white"
                   }`}>
-                  <div className="flex justify-center w-6 text-2xl">
+                  <div className="flex justify-center w-6 text-[1.3rem]">
                     <RiCustomerService2Line />
                   </div>
                   {isSidebarOpen && (
@@ -367,14 +369,14 @@ const ModuleSidebar = ({ mainSideBar }) => {
                   onClick={() => {
                     navigate("#dashboard");
                   }}
-                  className={`flex ${
+                  className={`flex border-b-[1px] ${
                     isSidebarOpen ? "pl-[1rem]" : "justify-center"
                   } items-center cursor-pointer  py-3 hover:wono-blue-dark hover:text-white hover:rounded-md ${
                     location.pathname === "/dashboard"
                       ? "wono-blue rounded-md text-[#0DB4EA]"
                       : "bg-white"
                   }`}>
-                  <div className="flex justify-center w-6 text-2xl">
+                  <div className="flex justify-center w-6 text-[1.3rem]">
                     <SiMarketo />
                   </div>
                   {isSidebarOpen && (
@@ -390,14 +392,14 @@ const ModuleSidebar = ({ mainSideBar }) => {
                   onClick={() => {
                     navigate("#dashboard");
                   }}
-                  className={`flex ${
+                  className={`flex border-b-[1px] ${
                     isSidebarOpen ? "pl-[1rem]" : "justify-center"
                   } items-center cursor-pointer  py-3 hover:wono-blue-dark hover:text-white hover:rounded-md ${
                     location.pathname === "/dashboard"
                       ? "wono-blue rounded-md text-[#0DB4EA]"
                       : "bg-white"
                   }`}>
-                  <div className="flex justify-center w-6 text-2xl">
+                  <div className="flex justify-center w-6 text-[1.3rem]">
                     <MdOutlineLocalCafe />
                   </div>
                   {isSidebarOpen && (
@@ -413,14 +415,14 @@ const ModuleSidebar = ({ mainSideBar }) => {
                   onClick={() => {
                     navigate("#dashboard");
                   }}
-                  className={`flex ${
+                  className={`flex border-b-[1px] ${
                     isSidebarOpen ? "pl-[1rem]" : "justify-center"
                   } items-center cursor-pointer  py-3 hover:wono-blue-dark hover:text-white hover:rounded-md ${
                     location.pathname === "/dashboard"
                       ? "wono-blue rounded-md text-[#0DB4EA]"
                       : "bg-white"
                   }`}>
-                  <div className="flex justify-center w-6 text-2xl">
+                  <div className="flex justify-center w-6 text-[1.3rem]">
                     <MdOutlineWifiTethering />
                   </div>
                   {isSidebarOpen && (
@@ -433,14 +435,14 @@ const ModuleSidebar = ({ mainSideBar }) => {
                   onClick={() => {
                     navigate("#dashboard");
                   }}
-                  className={`flex ${
+                  className={`flex border-b-[1px] ${
                     isSidebarOpen ? "pl-[1rem]" : "justify-center"
                   } items-center cursor-pointer  py-3 hover:wono-blue-dark hover:text-white hover:rounded-md ${
                     location.pathname === "/dashboard"
                       ? "wono-blue rounded-md text-[#0DB4EA]"
                       : "bg-white"
                   }`}>
-                  <div className="flex justify-center w-6 text-2xl">
+                  <div className="flex justify-center w-6 text-[1.3rem]">
                     <FaHandsHelping />
                   </div>
                   {isSidebarOpen && (
@@ -456,14 +458,14 @@ const ModuleSidebar = ({ mainSideBar }) => {
                   onClick={() => {
                     navigate("#dashboard");
                   }}
-                  className={`flex ${
+                  className={`flex border-b-[1px] ${
                     isSidebarOpen ? "pl-[1rem]" : "justify-center"
                   } items-center cursor-pointer  py-3 hover:wono-blue-dark hover:text-white hover:rounded-md ${
                     location.pathname === "/dashboard"
                       ? "wono-blue rounded-md text-[#0DB4EA]"
                       : "bg-white"
                   }`}>
-                  <div className="flex justify-center w-6 text-2xl">
+                  <div className="flex justify-center w-6 text-[1.3rem]">
                     <AiOutlineSecurityScan />
                   </div>
                   {isSidebarOpen && (
