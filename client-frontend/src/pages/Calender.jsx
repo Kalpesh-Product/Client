@@ -9,6 +9,15 @@ import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import { useDispatch } from "react-redux";
 import { color, motion } from "framer-motion";
+import {
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  OutlinedInput,
+  Chip,
+} from "@mui/material";
+
 
 import TestSide from "../components/Sidetest";
 import "../styles/CalenderModal.css"
@@ -46,14 +55,17 @@ const Calender = () => {
 
     const names = extractNames(data);
 
+  // const handleChange = (event) => {
+  //   const value = Array.from(
+  //     event.target.selectedOptions,
+  //     (option) => option.value
+  //   );
+  //   setSelectedNames(value);
+  // };
   const handleChange = (event) => {
-    const value = Array.from(
-      event.target.selectedOptions,
-      (option) => option.value
-    );
-    setSelectedNames(value);
+    const value = event.target.value;
+    setSelectedNames(Array.isArray(value) ? value : value.split(","));
   };
-
     
 
     const [events,setEvents] = useState([
@@ -313,22 +325,38 @@ const Calender = () => {
 
         </div>
         <div className='grid grid-cols-1 gap-4'>
-        <select
-        multiple
-        value={selectedNames}
-        onChange={handleChange}
-        style={{ width: "300px", padding: "8px" }}
-      >
-        {names.map((name) => (
-          <option key={name} value={name}>
-            {name}
-          </option>
-        ))}
-      </select>
-      <div style={{ marginTop: "20px" }}>
-        <strong>Selected Names:</strong> {selectedNames.join(", ")}
-      </div>
-
+        <FormControl fullWidth>
+        <InputLabel id="multiple-name-label">Name</InputLabel>
+        <Select
+          labelId="multiple-name-label"
+          id="multiple-name"
+          multiple
+          value={selectedNames}
+          onChange={handleChange}
+          input={<OutlinedInput label="Name" />}
+          renderValue={(selected) => (
+            <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
+              {selected.map((value) => (
+                <Chip key={value} label={value} />
+              ))}
+            </Box>
+          )}
+          MenuProps={{
+            PaperProps: {
+              style: {
+                maxHeight: 48 * 4.5 + 8,
+                width: 250,
+              },
+            },
+          }}
+        >
+          {names.map((name) => (
+            <MenuItem key={name} value={name}>
+              {name}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
 
         </div>
 
