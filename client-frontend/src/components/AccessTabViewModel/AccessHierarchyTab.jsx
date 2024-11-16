@@ -1,10 +1,25 @@
-import React, { useState , useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
+import { toast } from "sonner";
+import { useDispatch } from "react-redux";
+import { closeModal } from "../../redux/features/modalSlice";
+import {
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
+  Checkbox,
+  Typography,
+  Grid,
+  Button,
+} from "@mui/material";
+import { MdOutlineExpandMore } from "react-icons/md";
 
 const AccessHierarchyTab = () => {
+  const dispatch = useDispatch();
   const [checkedItems, setCheckedItems] = useState({});
   const [userData, setUserData] = useState(null);
   const location = useLocation();
+
   const modules = {
     HR: [
       "Attendance",
@@ -117,42 +132,42 @@ const AccessHierarchyTab = () => {
       "Customised Reports",
     ],
   };
-
   useEffect(() => {
     const storedUser = JSON.parse(localStorage.getItem("user"));
     if (storedUser) {
-      setUserData(storedUser); // Populate user data
+      setUserData(storedUser);
     }
-  }, [userData]);
+  }, []);
 
   useEffect(() => {
     const initializeCheckedItems = () => {
       const initialState = {};
 
-      if (userData?.role === "Master Admin") {
-        // All modules and submodules checked
-        for (const module in modules) {
+      for (const module in modules) {
+        if (userData?.role === "Master Admin") {
+          // Select all for Master Admin
           initialState[module] = {
             all: true,
-            ...Object.fromEntries(modules[module].map((sub) => [sub, true])),
-          };
-        }
-      } else if (userData?.role === "Super Admin") {
-        // Only Finance module checked
-        for (const module in modules) {
-          initialState[module] = {
-            all: module === "Finance",
-            ...Object.fromEntries(
-              modules[module].map((sub) => [sub, module === "Finance"])
+            submodules: Object.fromEntries(
+              modules[module].map((sub) => [sub, true])
             ),
           };
-        }
-      } else {
-        // Default: All modules unchecked
-        for (const module in modules) {
+        } else if (userData?.role === "Super Admin") {
+          // Select only Finance and Sales for Super Admin
+          const isSelectedModule = module === "Finance" || module === "Sales";
+          initialState[module] = {
+            all: isSelectedModule,
+            submodules: Object.fromEntries(
+              modules[module].map((sub) => [sub, isSelectedModule])
+            ),
+          };
+        } else {
+          // Default: nothing selected
           initialState[module] = {
             all: false,
-            ...Object.fromEntries(modules[module].map((sub) => [sub, false])),
+            submodules: Object.fromEntries(
+              modules[module].map((sub) => [sub, false])
+            ),
           };
         }
       }
@@ -160,77 +175,105 @@ const AccessHierarchyTab = () => {
       setCheckedItems(initialState);
     };
 
-    initializeCheckedItems();
-  }, [userData?.role]);
+    if (userData) {
+      initializeCheckedItems();
+    }
+  }, [userData]); // Run when userData changes
 
   const handleCheckboxChange = (module, submodule = null) => {
     setCheckedItems((prevState) => {
       const newState = { ...prevState };
 
       if (submodule) {
-        newState[module] = {
-          ...newState[module],
-          [submodule]: !newState[module]?.[submodule],
-        };
-        const allChecked = modules[module].every(
-          (sub) => newState[module][sub]
+        // Update the specific submodule
+        newState[module].submodules[submodule] =
+          !newState[module].submodules[submodule];
+
+        // Check if all submodules are now checked
+        const allChecked = Object.values(newState[module].submodules).every(
+          (isChecked) => isChecked
         );
+
         newState[module].all = allChecked;
       } else {
-        const allSelected = !newState[module]?.all;
-        newState[module] = {
-          all: allSelected,
-          ...Object.fromEntries(
-            modules[module].map((sub) => [sub, allSelected])
-          ),
-        };
+        // Update all submodules when "All" is toggled
+        const allSelected = !newState[module].all;
+        newState[module].all = allSelected;
+        newState[module].submodules = Object.fromEntries(
+          modules[module].map((sub) => [sub, allSelected])
+        );
       }
 
       return newState;
     });
   };
 
+  const handleSaveAccess = () => {
+    dispatch(closeModal());
+    toast.success("Access updated successfully");
+  };
+
   const isAccessPage = location.pathname === "/access";
+
   return (
-    <div className="mb-4" aria-disabled>
-      {Object.keys(modules).map((module) => (
-        <div key={module} className="mb-4">
-          <label className="flex items-center space-x-2 mb-2">
-            <input
-              type="checkbox"
-              checked={checkedItems[module]?.all || false}
-              onChange={() => handleCheckboxChange(module)}
-              className="cursor-pointer"
-              disabled={!isAccessPage}
-              
-            />
-            <span className="font-[Popins-SemiBold]">{module}</span>
-          </label>
+    <div className="mb-4">
+      <>
+        {Object.keys(modules).map((module) => (
+          <Accordion key={module}>
+            <AccordionSummary
+              expandIcon={<MdOutlineExpandMore />}
+              aria-controls={`${module}-content`}
+              id={`${module}-header`}
+            >
+              <Typography>{module}</Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              <div>
+                {/* All Checkbox */}
+                <label className="flex items-center space-x-2 mb-4">
+                  <Checkbox
+                    checked={checkedItems[module]?.all || false}
+                    onChange={() => handleCheckboxChange(module)}
+                    disabled={!isAccessPage} // Disable if not on access page
+                  />
+                  <Typography>Select All</Typography>
+                </label>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2 ml-6">
-            {modules[module].map((submodule) => (
-              <label key={submodule} className="flex items-center space-x-2">
-                <input
-                  type="checkbox"
-                  checked={checkedItems[module]?.[submodule] || false}
-                  onChange={() => handleCheckboxChange(module, submodule)}
-                  className="cursor-pointer"
-                  disabled={!isAccessPage}
-                />
-                <span className="font-[Popins-Regular]">{submodule}</span>
-              </label>
-
-            ))}
+                {/* Submodules Grid */}
+                <Grid container spacing={2}>
+                  {modules[module].map((submodule) => (
+                    <Grid item xs={6} sm={4} md={3} key={submodule}>
+                      <label className="flex items-center space-x-2">
+                        <Checkbox
+                          checked={
+                            checkedItems[module]?.submodules[submodule] || false
+                          }
+                          onChange={() =>
+                            handleCheckboxChange(module, submodule)
+                          }
+                          disabled={!isAccessPage} // Disable if not on access page
+                        />
+                        <Typography>{submodule}</Typography>
+                      </label>
+                    </Grid>
+                  ))}
+                </Grid>
+              </div>
+            </AccordionDetails>
+          </Accordion>
+        ))}
+        {isAccessPage && (
+          <div className="flex items-center justify-center mt-8">
+            <Button
+              variant="contained"
+              className="wono-blue-dark w-full"
+              onClick={() => toast.success("Access updated successfully")}
+            >
+              Save
+            </Button>
           </div>
-        </div>
-      ))}
-      {isAccessPage && (
-        <div className="flex items-center justify-center">
-          <button className="bg-green-800 w-24 h-10 rounded-md mt-6">
-            Save
-          </button>
-        </div>
-      )}
+        )}
+      </>
     </div>
   );
 };

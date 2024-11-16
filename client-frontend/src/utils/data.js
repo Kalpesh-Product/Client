@@ -2,7 +2,7 @@ export const data = [
   {
     name: "Abrar Shaikh",
     role: "Manager",
-    designation: "CEO",
+    designation: "Founder and CEO",
     email: "abrar@biznest.co.in",
     company: "Biznest",
     department: "Top Management",

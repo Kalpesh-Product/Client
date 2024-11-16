@@ -52,7 +52,7 @@ const EmployeeProfile = ({ data }) => {
   const isAccessPage = location.pathname === "/access";
 
   return (
-    <div className="flex flex-col space-y-7">
+    <div className="flex flex-col space-y-7 justify-center">
       <div className="flex justify-end space-x-4">
         {isProfilePage && (
           <button
@@ -67,7 +67,8 @@ const EmployeeProfile = ({ data }) => {
           </button>
         )}
       </div>
-      
+
+      <div className="grid grid-cols-2 gap-y-8 ">
       <div className="flex items-center gap-20">
         <span className="w-24 font-semibold text-gray-600">Role:</span>
         <input
@@ -151,6 +152,7 @@ const EmployeeProfile = ({ data }) => {
           } rounded`}
           disabled={!isEditing}></input>
       </div>
+      </div> 
     </div>
   );
 };

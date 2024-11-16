@@ -177,7 +177,7 @@ export default function ChatPage() {
     <div className="flex h-full bg-gray-100 overflow-hidden">
       <TestSide />
       <aside className="w-1/4 bg-white p-4 shadow-lg border-r border-gray-300">
-        <h2 className="text-lg font-semibold mb-4">Chat</h2>
+        <h2 className="text-3xl font-semibold mb-4">Chat</h2>
         <select
           className="mt-2 mb-4 w-full p-2 rounded-lg border border-gray-300 bg-gray-50"
           value={contactFilter}
