@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
+import { toast } from "sonner";
+import { useDispatch } from "react-redux";
+import { closeModal } from "../../redux/features/modalSlice";
 import {
   Accordion,
   AccordionSummary,
@@ -12,6 +15,7 @@ import {
 import { MdOutlineExpandMore } from "react-icons/md";
 
 const AccessHierarchyTab = () => {
+  const dispatch = useDispatch();
   const [checkedItems, setCheckedItems] = useState({});
   const [userData, setUserData] = useState(null);
   const location = useLocation();
@@ -138,19 +142,43 @@ const AccessHierarchyTab = () => {
   useEffect(() => {
     const initializeCheckedItems = () => {
       const initialState = {};
+
       for (const module in modules) {
-        initialState[module] = {
-          all: false,
-          submodules: Object.fromEntries(
-            modules[module].map((sub) => [sub, false])
-          ),
-        };
+        if (userData?.role === "Master Admin") {
+          // Select all for Master Admin
+          initialState[module] = {
+            all: true,
+            submodules: Object.fromEntries(
+              modules[module].map((sub) => [sub, true])
+            ),
+          };
+        } else if (userData?.role === "Super Admin") {
+          // Select only Finance and Sales for Super Admin
+          const isSelectedModule = module === "Finance" || module === "Sales";
+          initialState[module] = {
+            all: isSelectedModule,
+            submodules: Object.fromEntries(
+              modules[module].map((sub) => [sub, isSelectedModule])
+            ),
+          };
+        } else {
+          // Default: nothing selected
+          initialState[module] = {
+            all: false,
+            submodules: Object.fromEntries(
+              modules[module].map((sub) => [sub, false])
+            ),
+          };
+        }
       }
+
       setCheckedItems(initialState);
     };
 
-    initializeCheckedItems();
-  }, []);
+    if (userData) {
+      initializeCheckedItems();
+    }
+  }, [userData]); // Run when userData changes
 
   const handleCheckboxChange = (module, submodule = null) => {
     setCheckedItems((prevState) => {
@@ -178,6 +206,11 @@ const AccessHierarchyTab = () => {
 
       return newState;
     });
+  };
+
+  const handleSaveAccess = () => {
+    dispatch(closeModal());
+    toast.success("Access updated successfully");
   };
 
   const isAccessPage = location.pathname === "/access";
@@ -234,7 +267,7 @@ const AccessHierarchyTab = () => {
             <Button
               variant="contained"
               className="wono-blue-dark w-full"
-              onClick={() => console.log("Save clicked!", checkedItems)}
+              onClick={() => toast.success("Access updated successfully")}
             >
               Save
             </Button>
