@@ -173,8 +173,7 @@ const TestSide = () => {
     <div
       className={`${
         isSidebarOpen ? "w-60" : "w-20"
-      } bg-white  border-gray-300 text-black flex-shrink-0  sticky top-10 overflow-y-auto transition-all duration-300 z-[1]`}
-    >
+      } bg-white  border-gray-300 text-black flex-shrink-0  sticky top-10 overflow-y-auto transition-all duration-300 z-[1]`}>
       <div className="flex relative w-full">
         {/*Dashboard */}
         <div className="mt-5 px-3 flex flex-col gap-2">
@@ -189,8 +188,7 @@ const TestSide = () => {
                 location.pathname === "/dashboard"
                   ? "wono-blue border-r-4 border-[#0DB4EA] rounded-tl-md rounded-bl-md text-[#0DB4EA]"
                   : "bg-white"
-              }`}
-            >
+              }`}>
               <div className="flex justify-center w-6 text-2xl">
                 <RiDashboardLine />
               </div>
@@ -210,8 +208,7 @@ const TestSide = () => {
                 location.pathname === "/:department"
                   ? "wono-blue rounded-md wono-blue-text"
                   : "bg-white"
-              }`}
-            >
+              }`}>
               {isSidebarOpen ? (
                 <div className="flex items-center justify-center">
                   <div className="flex justify-center w-6 text-2xl">
@@ -233,8 +230,7 @@ const TestSide = () => {
                   stroke="currentColor"
                   className={`w-4 h-4 ml-3 transform ${
                     isDepartmentsOpen ? "rotate-180" : ""
-                  }`}
-                >
+                  }`}>
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -249,8 +245,7 @@ const TestSide = () => {
 
             {isDepartmentsOpen && (
               <ul
-                className={`cursor-pointer ${isSidebarOpen ? "px-3" : "px-0"}`}
-              >
+                className={`cursor-pointer ${isSidebarOpen ? "px-3" : "px-0"}`}>
                 {filteredDepartments.map((dept, index) => (
                   <Tooltip title={dept.name} placement="right">
                     <div
@@ -290,8 +285,7 @@ const TestSide = () => {
                   location.pathname === item.route
                     ? "wono-blue border-r-4 border-b-[0px]  border-[#0DB4EA] rounded-tl-md rounded-bl-md text-[#0DB4EA]"
                     : "bg-white"
-                } `}
-              >
+                } `}>
                 {/* <img src={item.icon} alt={item.name} className="w-6 h-6 mr-3" /> */}
                 <div className="flex justify-center w-6 text-[1.3rem]">
                   {item.icon}
@@ -308,12 +302,10 @@ const TestSide = () => {
             isSidebarOpen ? "justify-end" : "justify-center "
           } items-center  bg-white text-black cursor-pointer fixed top-[6.8rem] ${
             isSidebarOpen ? "left-[14.3rem]" : "left-[4rem]"
-          } transition-all duration-300 rounded-md`}
-        >
+          } transition-all duration-300 rounded-md`}>
           <button
             onClick={toggleSidebar}
-            className="text-black text-[0.8rem] p-2 focus:outline-none text-end"
-          >
+            className="text-black text-[0.8rem] p-2 focus:outline-none text-end">
             {isSidebarOpen ? <FaArrowLeft /> : <FaArrowRightToBracket />}
           </button>
         </div>

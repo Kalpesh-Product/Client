@@ -11,11 +11,11 @@ import { CSVLink } from "react-csv";
 const MeetingsTable = () => {
   const columns = [
     { field: "id", headerName: "ID", width: 100 },
-    { field: "roomName", headerName: "Room Name", width: 250 },
-    { field: "meetingDate", headerName: "Meeting Date", width: 250 },
-    { field: "startTime", headerName: "Start Time", width: 250 },
-    { field: "endTime", headerName: "End Time", width: 250 },
-    { field: "duration", headerName: "Duration (hrs)", width: 250 },
+    { field: "roomName", headerName: "Room Name", width: 200 },
+    { field: "meetingDate", headerName: "Meeting Date", width: 200 },
+    { field: "startTime", headerName: "Start Time", width: 200 },
+    { field: "endTime", headerName: "End Time", width: 200 },
+    { field: "duration", headerName: "Duration (hrs)", width: 200 },
   ];
 
   const allRows = [
