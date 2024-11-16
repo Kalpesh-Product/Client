@@ -10,7 +10,7 @@ const EmployeeProfile = ({ data }) => {
   const [formData, setFormData] = useState({
     name: "Abrar Shaikh",
     role: "Master Admin",
-    designation: "CEO",
+    designation: "Founder and CEO",
     company: "Biznest",
     Department: "All Department",
     email: "John@gmail.com",
