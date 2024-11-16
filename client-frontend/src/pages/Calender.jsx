@@ -208,13 +208,15 @@ const Calender = () => {
           className="w-full py-2 px-4 bg-blue-600 text-white rounded mt-4"
           onClick={handleSaveEvent}
         >
-          Save
+          Edit
         </motion.button>
         <motion.button
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.9 }}
           className="w-full py-2 px-4 bg-red-600 text-white rounded mt-4"
-          onClick={()=>setIsEditModal(false)}
+          onClick={()=>{setShowModal(false);
+            setIsEditModal(false);
+          }}
         >
           Cancel
         </motion.button>
@@ -235,21 +237,14 @@ const Calender = () => {
       <h2 className="text-lg font-semibold mb-4">Add Events</h2>
       <div className="grid grid-cols-1  gap-4">
         {/* Name, Mobile, Email, DOB fields */}
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 gap-4">
         <TextField
           label="Event And Title"
           value={newEvent.name}
           onChange={(e)=> setnewEvent({ ...newEvent, name: e.target.value })}
           fullWidth
         />
-         <TextField
-          label="Description"
-          value={newEvent.description}
-          onChange={(e)=> setnewEvent({ ...newEvent, description: e.target.value })}
-          fullWidth
-          multiline
-          rows={1}
-        />
+        
         </div>
 
         <div className="grid grid-cols-2 gap-4">
@@ -294,6 +289,11 @@ const Calender = () => {
         </div>
 
         </div>
+        <div className='grid grid-cols-1 gap-4'>
+          
+
+        </div>
+
         
 
         <TextField
@@ -307,6 +307,7 @@ const Calender = () => {
   fullWidth
   rows={2}
 />
+
 
 
         
