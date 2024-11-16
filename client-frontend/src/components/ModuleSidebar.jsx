@@ -117,7 +117,7 @@ if (passedDepartment === 'frontend') {
     if (location.pathname === "/frontend") {
       setIsSidebarOpen(true);
     } else {
-      setIsSidebarOpen(false);
+      setIsSidebarOpen(true);
     }
   }, [location.pathname]);
 
@@ -162,6 +162,8 @@ if (passedDepartment === 'frontend') {
     console.log("Menu clicked");
   };
 
+  
+
 
 
   return (
@@ -175,8 +177,8 @@ if (passedDepartment === 'frontend') {
         <div className="flex flex-col gap-2 mt-5 px-3 relative">
           {/* Title/Dashboard */}
           <div
-            onClick={() => navigate(department)}
-            className={`flex ${
+            onClick={() => navigate(`/${passedDepartment}/dashboard`)}
+            className={`flex border-b-[1px] ${
               isSidebarOpen ? "pl-[1rem]" : "justify-center"
             } items-center py-3 wono-blue wono-blue-text rounded-md `}
           >
@@ -209,9 +211,9 @@ if (passedDepartment === 'frontend') {
           <Tooltip title={title} placement="right" key={index}>
             <div
               onClick={() => navigate(route)}
-              className={`flex ${
+              className={`flex border-b-[1px] ${
                 isSidebarOpen ? "pl-[1rem]" : "justify-center"
-              } items-center cursor-pointer py-3 hover:wono-blue-dark hover:text-white hover:rounded-md ${
+              } items-center cursor-pointer py-2 hover:wono-blue-dark hover:text-white hover:rounded-md ${
                 location.pathname === route
                   ? "wono-blue border-r-4  border-[#0DB4EA] rounded-tl-md rounded-bl-md text-[#0DB4EA]"
                   : "bg-white"
@@ -230,15 +232,15 @@ if (passedDepartment === 'frontend') {
               onClick={() => {
                 navigate("#dashboard");
               }}
-              className={`flex ${
+              className={`flex border-b-[1px] ${
                 isSidebarOpen ? "pl-[1rem]" : "justify-center"
-              } items-center cursor-pointer  py-3 hover:wono-blue-dark hover:text-white hover:rounded-md ${
+              } items-center cursor-pointer  py-2 hover:wono-blue-dark hover:text-white hover:rounded-md ${
                 location.pathname === "/dashboard"
                   ? "wono-blue rounded-md text-[#0DB4EA]"
                   : "bg-white"
               }`}
             >
-              <div className="flex justify-center w-6 text-2xl">
+              <div className="flex justify-center w-6 text-[1.3rem]">
               <TbReportSearch />
               </div>
               {isSidebarOpen && <span className="pl-5 text-[0.8rem]">Reports</span>}

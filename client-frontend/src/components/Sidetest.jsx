@@ -183,7 +183,7 @@ const TestSide = () => {
               onClick={() => {
                 navigate("/dashboard");
               }}
-              className={`flex ${
+              className={`flex border-b-[1px] ${
                 isSidebarOpen ? "pl-[1rem]" : "justify-center"
               } items-center cursor-pointer  py-3 hover:wono-blue-dark hover:text-white hover:rounded-md ${
                 location.pathname === "/dashboard"
@@ -206,7 +206,7 @@ const TestSide = () => {
                 setIsDepartmentsOpen(!isDepartmentsOpen);
                 handleActive(-2);
               }}
-              className={`flex items-center px-4 py-3 w-full text-black bg-white hover:wono-blue-dark hover:rounded-md hover:text-white ${
+              className={`flex items-center border-b-[1px] px-4 py-3 w-full text-black bg-white hover:wono-blue-dark hover:rounded-md hover:text-white ${
                 location.pathname === "/:department"
                   ? "wono-blue rounded-md wono-blue-text"
                   : "bg-white"
@@ -261,7 +261,7 @@ const TestSide = () => {
                           state: { departmentName: dept.name },
                         });
                       }}
-                      className={`flex items-center py-3 gap-3 hover:wono-blue-dark pl-[1rem] hover:text-white  hover:rounded-md `}
+                      className={`flex items-center border-b-[1px] py-3 gap-3 hover:wono-blue-dark pl-[1rem] hover:text-white  hover:rounded-md `}
                     >
                       {/* <img src={item.icon} alt={item.name} className="w-6 h-6 mr-3" /> */}
                       <div className="flex justify-center w-6 text-[1.3rem]">
