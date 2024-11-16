@@ -30,11 +30,11 @@ const MeetingReportsSection = () => {
       </div>
       {/* <div>Tabs For Tickets</div> */}
 
-      <div>
+      {/* <div>
         <MeetingsTable />
-      </div>
+      </div> */}
 
-      {/* <div className="mx-auto">
+      <div className="mx-auto">
         <ul className="flex  border-b mb-4 gap-4">
           <li className=" text-center w-1/2" role="presentation">
             <button
@@ -44,7 +44,7 @@ const MeetingReportsSection = () => {
                   : ""
               }`}
               onClick={() => setActiveTab("tab-1")}>
-              My Tickets
+              Internal Meetings
             </button>
           </li>
           <li className=" text-center w-1/2" role="presentation">
@@ -55,7 +55,7 @@ const MeetingReportsSection = () => {
                   : ""
               }`}
               onClick={() => setActiveTab("tab-2")}>
-              Tickets Assigned To Me
+              External Meetings
             </button>
           </li>
         </ul>
@@ -82,13 +82,12 @@ const MeetingReportsSection = () => {
                 className="flex flex-col  mt-3"
                 data-aos="fade-up"
                 data-aos-delay="100">
-             
                 <MeetingsTable />
               </div>
             </div>
           )}
         </div>
-      </div> */}
+      </div>
       {/* Tabs Material UI Start*/}
       {/* <TabContext value={value}>
         <Box sx={{ borderBottom: 1, borderColor: "divider" }}>

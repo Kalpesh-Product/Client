@@ -194,7 +194,9 @@ const DepartmentDash = () => {
             {location.pathname === "/frontend" ? (
               <div>
                 <div className="bg-white p-4 rounded-lg">
-                  <h1 className="text-3xl font-bold mb-4">Frontend Dashboard</h1>
+                  <h1 className="text-3xl font-bold mb-4">
+                    Frontend Dashboard
+                  </h1>
                   {techWidgets.map((section, index) => (
                     <WidgetSection
                       key={index}
@@ -211,12 +213,11 @@ const DepartmentDash = () => {
                   onChange={handleChange}
                   aria-label="tabs example"
                   sx={{ width: "100%" }} // This makes the Tabs take full width
-                  indicatorColor="primary"
-                >
-                  <Tab sx={{width:'25%'}} label="Home" />
-                  <Tab sx={{width:'25%'}} label="About" />
-                  <Tab sx={{width:'25%'}} label="Gallery" />
-                  <Tab sx={{width:'25%'}} label="Contact" />
+                  indicatorColor="primary">
+                  <Tab sx={{ width: "25%" }} label="Home" />
+                  <Tab sx={{ width: "25%" }} label="About" />
+                  <Tab sx={{ width: "25%" }} label="Gallery" />
+                  <Tab sx={{ width: "25%" }} label="Contact" />
                 </Tabs>
 
                 <Box sx={{ padding: 2 }}>
@@ -246,31 +247,22 @@ const DepartmentDash = () => {
                   {/* Modern Content Examples */}
                   {value === 0 && (
                     <Typography variant="body1">
-                      <p>
-                        Edit home section of the website here
-                      </p>
-                     
+                      <p>Edit home section of the website here</p>
                     </Typography>
                   )}
                   {value === 1 && (
                     <Typography variant="body1">
-                      <p>
-                      Edit about section of the website here
-                      </p>
+                      <p>Edit about section of the website here</p>
                     </Typography>
                   )}
                   {value === 2 && (
                     <Typography variant="body1">
-                      <p>
-                      Edit Gallery section of the website here
-                      </p>
+                      <p>Edit Gallery section of the website here</p>
                     </Typography>
                   )}
                   {value === 3 && (
                     <Typography variant="body1">
-                      <p>
-                      Edit Contact section of the website here
-                      </p>
+                      <p>Edit Contact section of the website here</p>
                     </Typography>
                   )}
                 </Box>
@@ -282,8 +274,7 @@ const DepartmentDash = () => {
                   {products.map((product) => (
                     <div
                       key={product.id}
-                      className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow"
-                    >
+                      className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
                       <img
                         src={product.image}
                         alt={product.name}
