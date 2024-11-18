@@ -35,6 +35,7 @@
 @font-face {
   font-family: Popins-SemiBold;
   src: url("../src/assets/WONO_images/img/font/Poppins-SemiBold.ttf");
+  font-weight: 600;
 }
 
 ::-webkit-scrollbar {
