@@ -122,7 +122,7 @@ const ModuleSidebar = ({ mainSideBar }) => {
       setIsSidebarOpen(true);
     } else if (location.pathname === "/reports") {
       setIsSidebarOpen(true);
-    } else {
+    } else  {
       setIsSidebarOpen(true);
     }
   }, [location.pathname]);

@@ -18,6 +18,7 @@ import DepartmentDash from "../pages/modules/PageFrontend";
 import ChatPage from "../pages/ChatPage";
 import PageHR from "../pages/modules/PageHR";
 import NotFoundPage from "../pages/NotFoundPage";
+import Task from "../pages/Task";
 
 const router = createBrowserRouter([
   {
@@ -112,6 +113,10 @@ const router = createBrowserRouter([
         path: "/dropTest",
         element: <DropTest />,
       },
+      {
+        path: "/tasks",
+        element: <Task/>
+      }
     ],
   },
 ]);
