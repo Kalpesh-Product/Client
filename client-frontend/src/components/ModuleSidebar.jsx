@@ -80,6 +80,19 @@ const ModuleSidebar = ({ mainSideBar }) => {
     },
   ];
 
+  const cmsModules = [
+    {
+      title: "Tickets",
+      route: "/cms/tickets",
+      icon: <HiOutlineClipboardList />,
+    },
+    {
+      title: "Meetings",
+      route: "cms/meetings",
+      icon: <HiCurrencyDollar />,
+    },
+  ];
+
   // Get the department based on the current path
   const passedDepartment = location.pathname.split("/")[1];
 
@@ -89,6 +102,8 @@ const ModuleSidebar = ({ mainSideBar }) => {
     modules = frontendModules;
   } else if (passedDepartment === "hr") {
     modules = hrModules;
+  } else if (passedDepartment === "cms") {
+    modules = cmsModules;
   }
 
   const departments = [
@@ -151,6 +166,7 @@ const ModuleSidebar = ({ mainSideBar }) => {
     Finance: ["FINANCE & ACCOUNTING"],
     Sales: ["SALES"],
     HR: ["HUMAN RESOURCE", "CUSTOMER SERVICE"],
+    CMS: ["CUSTOMER SERVICE"],
     Marketing: ["MARKETING"],
     Cafe: ["CAFE (F&B)"],
     IT: ["IT"],
@@ -167,10 +183,6 @@ const ModuleSidebar = ({ mainSideBar }) => {
     setIsActive(index);
     console.log("Menu clicked");
   };
-
-  
-
-
 
   return (
     <div className="">
@@ -210,25 +222,24 @@ const ModuleSidebar = ({ mainSideBar }) => {
           </Tooltip>
 
           {/* SubModules-Items */}
-          {
-        modules.map(({ title, route, icon }, index) => (
-          <Tooltip title={title} placement="right" key={index}>
-            <div
-              onClick={() => navigate(route)}
-              className={`flex border-b-[1px] ${
-                isSidebarOpen ? "pl-[1rem]" : "justify-center"
-              } items-center cursor-pointer py-2 hover:wono-blue-dark hover:text-white hover:rounded-md ${
-                location.pathname === route
-                  ? "wono-blue border-r-4  border-[#0DB4EA] rounded-tl-md rounded-bl-md text-[#0DB4EA]"
-                  : "bg-white"
-              }`}
-            >
-              <div className="flex justify-center w-5 text-2xl">{icon}</div>
-              {isSidebarOpen && <span className="pl-5 text-[0.8rem]">{title}</span>}
-            </div>
-          </Tooltip>
-        ))
-      }
+          {modules.map(({ title, route, icon }, index) => (
+            <Tooltip title={title} placement="right" key={index}>
+              <div
+                onClick={() => navigate(route)}
+                className={`flex border-b-[1px] ${
+                  isSidebarOpen ? "pl-[1rem]" : "justify-center"
+                } items-center cursor-pointer py-2 hover:wono-blue-dark hover:text-white hover:rounded-md ${
+                  location.pathname === route
+                    ? "wono-blue border-r-4  border-[#0DB4EA] rounded-tl-md rounded-bl-md text-[#0DB4EA]"
+                    : "bg-white"
+                }`}>
+                <div className="flex justify-center w-5 text-2xl">{icon}</div>
+                {isSidebarOpen && (
+                  <span className="pl-5 text-[0.8rem]">{title}</span>
+                )}
+              </div>
+            </Tooltip>
+          ))}
 
           {/* Common-submodules-menu */}
           <Tooltip title={"Reports"} placement="right">
@@ -242,15 +253,15 @@ const ModuleSidebar = ({ mainSideBar }) => {
                 location.pathname === "/dashboard"
                   ? "wono-blue rounded-md text-[#0DB4EA]"
                   : "bg-white"
-              }`}
-            >
+              }`}>
               <div className="flex justify-center w-6 text-[1.3rem]">
-              <TbReportSearch />
+                <TbReportSearch />
               </div>
-              {isSidebarOpen && <span className="pl-5 text-[0.8rem]">Reports</span>}
-              </div>
-            </Tooltip>
-         
+              {isSidebarOpen && (
+                <span className="pl-5 text-[0.8rem]">Reports</span>
+              )}
+            </div>
+          </Tooltip>
 
           {/* Menu Items only for reports */}
           {location.pathname === "/reports" && (
@@ -475,6 +486,27 @@ const ModuleSidebar = ({ mainSideBar }) => {
               </Tooltip>
             </>
           )}
+
+          <Tooltip title={"Reports"} placement="right">
+            <div
+              onClick={() => {
+                navigate("#dashboard");
+              }}
+              className={`flex border-b-[1px] ${
+                isSidebarOpen ? "pl-[1rem]" : "justify-center"
+              } items-center cursor-pointer  py-3 hover:wono-blue-dark hover:text-white hover:rounded-md ${
+                location.pathname === "/dashboard"
+                  ? "wono-blue rounded-md text-[#0DB4EA]"
+                  : "bg-white"
+              }`}>
+              <div className="flex justify-center w-6 text-[1.3rem]">
+                <FaCode />
+              </div>
+              {isSidebarOpen && (
+                <span className="pl-5 text-[0.8rem]"> Frontend Reports</span>
+              )}
+            </div>
+          </Tooltip>
         </div>
       </div>
     </div>

@@ -191,7 +191,8 @@ const DepartmentDash = () => {
         {/* Frontend submodules */}
         {location.pathname.startsWith("/frontend") && (
           <>
-            {(location.pathname === "/frontend" || location.pathname === "/frontend/dashboard") ? (
+            {location.pathname === "/frontend" ||
+            location.pathname === "/frontend/dashboard" ? (
               <div>
                 <div className="bg-white p-4 rounded-lg">
                   <h1 className="text-3xl font-bold mb-4">
@@ -226,8 +227,7 @@ const DepartmentDash = () => {
                     "& .MuiTabs-indicator": {
                       backgroundColor: "#0db4ea", // Custom indicator color
                     },
-                  }}
-                >
+                  }}>
                   <Tab label="Home" />
                   <Tab label="About" />
                   <Tab label="Gallery" />
@@ -316,7 +316,8 @@ const DepartmentDash = () => {
         {/* HR submodules */}
         {location.pathname.startsWith("/hr") && (
           <>
-            {(location.pathname === "/hr" || location.pathname === "/hr/dashboard")&& (
+            {(location.pathname === "/hr" ||
+              location.pathname === "/hr/dashboard") && (
               <div className="bg-white p-4 rounded-lg  mt-4">
                 {hrWidgets.map((section, index) => (
                   <WidgetSection
@@ -329,10 +330,12 @@ const DepartmentDash = () => {
             )}
           </>
         )}
+
         {/* Finance submodules */}
         {location.pathname.startsWith("/finance") && (
           <>
-            {(location.pathname === "/finance" || location.pathname === "/finance/dashboard") && (
+            {(location.pathname === "/finance" ||
+              location.pathname === "/finance/dashboard") && (
               <div className="bg-white p-4 rounded-lg  mt-4">
                 <WidgetSection heading="Finance" widgets={financeWidgets} />
               </div>
@@ -342,7 +345,8 @@ const DepartmentDash = () => {
         {/* HR submodules */}
         {location.pathname.startsWith("/sales") && (
           <>
-            {(location.pathname === "/sales" || location.pathname === "/sales/dashboard") && (
+            {(location.pathname === "/sales" ||
+              location.pathname === "/sales/dashboard") && (
               <div className="bg-white p-4 rounded-lg  mt-4">
                 {salesWidgets.map((section, index) => (
                   <WidgetSection

@@ -14,10 +14,14 @@ import DropTest from "../pages/DropTest";
 import Calender from "../pages/Calender";
 import Sidebar from "../components/ClientSidebar";
 import Services from "../pages/Services";
-import DepartmentDash from "../pages/modules/PageFrontend";
+import DepartmentDash from "../pages/modules/DepartmentDash";
 import ChatPage from "../pages/ChatPage";
 import PageHR from "../pages/modules/PageHR";
 import NotFoundPage from "../pages/NotFoundPage";
+import TicketDashboard from "../pages/cms/tickets/TicketDashboard";
+import AddTicket from "../pages/cms/tickets/AddTicket";
+import TicketReports from "../pages/cms/tickets/TicketReports";
+import ViewTickets from "../pages/cms/tickets/ViewTickets";
 
 const router = createBrowserRouter([
   {
@@ -69,6 +73,10 @@ const router = createBrowserRouter([
         element: <DepartmentDash />,
       },
       {
+        path: "/cms/dashboard",
+        element: <DepartmentDash />,
+      },
+      {
         path: "/sales/dashboard",
         element: <DepartmentDash />,
       },
@@ -107,6 +115,22 @@ const router = createBrowserRouter([
       {
         path: "/chat",
         element: <ChatPage />,
+      },
+      {
+        path: "/ticket-dashboard",
+        element: <TicketDashboard />,
+      },
+      {
+        path: "/add-ticket",
+        element: <AddTicket />,
+      },
+      {
+        path: "/view-tickets",
+        element: <ViewTickets />,
+      },
+      {
+        path: "/ticket-reports",
+        element: <TicketReports />,
       },
       {
         path: "/dropTest",
