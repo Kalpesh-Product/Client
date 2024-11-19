@@ -52,11 +52,11 @@ import AddAssetForm from "../cms/asset/AddAssetForm";
 import { NewModal } from "../../components/NewModal";
 import ViewAssets from "../cms/asset/ViewAssets";
 import AssetsData from "../cms/asset/AssetsData";
-import ManageAsset from "../cms/asset/ManageAsset";
+import Listing from "../cms/room-booking/Listing";
 
 const DepartmentDash = () => {
   const dispatch = useDispatch();
-  const [open,setOpen] = useState(false)
+  const [open, setOpen] = useState(false);
   const location = useLocation();
   const departmentName = location.state?.departmentName;
   const { department } = useParams();
@@ -69,15 +69,14 @@ const DepartmentDash = () => {
     setValue(newValue);
   };
 
-
   const style = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
     width: 400,
-    bgcolor: 'background.paper',
-    border: '2px solid #000',
+    bgcolor: "background.paper",
+    border: "2px solid #000",
     boxShadow: 24,
     p: 4,
   };
@@ -322,7 +321,8 @@ const DepartmentDash = () => {
                     "& .MuiTabs-indicator": {
                       backgroundColor: "#0db4ea", // Custom indicator color
                     },
-                  }}>
+                  }}
+                >
                   <Tab label="Home" />
                   <Tab label="About" />
                   <Tab label="Gallery" />
@@ -486,15 +486,17 @@ const DepartmentDash = () => {
               </>
             ) : location.pathname === "/customer/asset/view" ? (
               <>
-              <ViewAssets />
+                <ViewAssets />
               </>
             ) : location.pathname === "/customer/asset/manage" ? (
               <>
               <ManageAsset />
               </>
-            )
-
-            : (
+            ) : location.pathname === "/customer/meetings/booking" ? (
+              <>
+                <Listing />
+              </>
+            ) : (
               <></>
             )}
           </>
@@ -503,11 +505,10 @@ const DepartmentDash = () => {
       <div>
         <NewModal open={open} onClose={handleClose}>
           <div className="motion-preset-expand">
-          <AddAssetForm title={"Add Asset"} handleClose={handleClose} />
+            <AddAssetForm title={"Add Asset"} handleClose={handleClose} />
           </div>
         </NewModal>
       </div>
-      
     </div>
   );
 };

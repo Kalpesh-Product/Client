@@ -210,7 +210,7 @@ const Calender = () => {
         </div>
       </div>
       {showModal && (
-        <Modal open={showModal} onClose={() => dispatch(closeModal())}>
+        <Modal open={showModal} onClose={() => setShowModal(false)}>
           {selectedEvent && isEditModal ? (
             <>
               <div className="flex align-middle justify-center flex-col gap-10">
@@ -253,7 +253,8 @@ const Calender = () => {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.9 }}
                   className="w-full py-2 px-4 bg-blue-600 text-white rounded mt-4"
-                  onClick={handleSaveEvent}>
+                  onClick={handleSaveEvent}
+                >
                   Edit
                 </motion.button>
                 <motion.button
@@ -263,7 +264,8 @@ const Calender = () => {
                   onClick={() => {
                     setShowModal(false);
                     setIsEditModal(false);
-                  }}>
+                  }}
+                >
                   Cancel
                 </motion.button>
               </div>
@@ -278,7 +280,8 @@ const Calender = () => {
                   bgcolor: "background.paper",
                   borderRadius: 2,
                 }}
-                className="bg-white p-6 rounded-lg shadow-md mx-auto">
+                className="bg-white p-6 rounded-lg shadow-md mx-auto"
+              >
                 {/* Personal Information */}
                 <h2 className="text-lg font-semibold mb-4">Add Events</h2>
                 <div className="grid grid-cols-1  gap-4">
@@ -343,7 +346,8 @@ const Calender = () => {
                           selectedNames.length > 0
                             ? "-top-2 text-blue-600 text-sm"
                             : "top-4 text-base"
-                        }`}>
+                        }`}
+                      >
                         Name
                       </label>
                       <select
@@ -364,11 +368,13 @@ const Calender = () => {
                         {selectedNames.map((name) => (
                           <div
                             key={name}
-                            className="flex items-center px-2 py-1 text-sm text-white bg-blue-600 rounded">
+                            className="flex items-center px-2 py-1 text-sm text-white bg-blue-600 rounded"
+                          >
                             {name}
                             <button
                               onClick={() => removeChip(name)}
-                              className="ml-1 text-white hover:text-gray-200 focus:outline-none">
+                              className="ml-1 text-white hover:text-gray-200 focus:outline-none"
+                            >
                               ×
                             </button>
                           </div>
@@ -428,7 +434,8 @@ const Calender = () => {
                           borderRadius: "5px",
                           cursor: "pointer",
                           backgroundColor: eventColor || "#fff",
-                        }}>
+                        }}
+                      >
                         {"Select a color "}
                       </div>
                       {isOpen && (
@@ -445,7 +452,8 @@ const Calender = () => {
                             gap: "10px",
                             padding: "10px",
                             zIndex: 10,
-                          }}>
+                          }}
+                        >
                           {colors.map((color, index) => (
                             <div
                               key={index}
@@ -476,14 +484,16 @@ const Calender = () => {
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.9 }}
                     className="w-full py-2 px-4 bg-blue-600 text-white rounded mt-4"
-                    onClick={handleSaveEvent}>
+                    onClick={handleSaveEvent}
+                  >
                     Save
                   </motion.button>
                   <motion.button
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.9 }}
                     className="w-full py-2 px-4 bg-red-600 text-white rounded mt-4"
-                    onClick={() => setShowModal(false)}>
+                    onClick={() => setShowModal(false)}
+                  >
                     Cancel
                   </motion.button>
                 </div>
