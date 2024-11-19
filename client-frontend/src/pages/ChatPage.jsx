@@ -67,7 +67,6 @@ const contacts = [
 
 export default function ChatPage() {
   const fileRef = useRef(null);
-  const messagesEndRef = useRef(null);
   const [activeContact, setActiveContact] = useState(contacts[0]);
   const [messages, setMessages] = useState(initialChats(activeContact.name));
   const [message, setMessage] = useState("");
@@ -93,10 +92,6 @@ export default function ChatPage() {
       setMessages(initialChats(activeContact.name));
     }
   }, [activeContact]);
-
-  useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages]);
 
   const handleSendMessage = () => {
     if (message.trim() === "") return;
@@ -304,7 +299,6 @@ export default function ChatPage() {
               </div>
             </div>
           ))}
-          <div ref={messagesEndRef} />
         </div>
 
         <footer className="p-4 border-t flex items-center space-x-2 sticky">
