@@ -55,6 +55,7 @@ const Calender = () => {
 
     const names = extractNames(data);
 
+    
   // const handleChange = (event) => {
   //   const value = Array.from(
   //     event.target.selectedOptions,
@@ -62,9 +63,9 @@ const Calender = () => {
   //   );
   //   setSelectedNames(value);
   // };
-  const handleChange = (event) => {
-    const value = event.target.value;
-    setSelectedNames(Array.isArray(value) ? value : value.split(","));
+  const handleChange = (e) => {
+    const value = Array.from(e.target.selectedOptions, (option) => option.value);
+    setSelectedNames((prevNames) => [...new Set([...prevNames, ...value])]); // Avoid duplicates
   };
     
 
@@ -99,6 +100,7 @@ const Calender = () => {
         setSelectedDate(args.dateStr);
         setShowModal(true);
         console.log("Date is selected");
+        console.log(names);
 
 
       }
@@ -159,6 +161,10 @@ const Calender = () => {
     setEventColor(color);
     setIsOpen(false);
   };
+  const removeChip = (name) => {
+    setSelectedNames(selectedNames.filter((selected) => selected !== name));
+  };
+
 
   return (
     <>
@@ -325,39 +331,48 @@ const Calender = () => {
 
         </div>
         <div className='grid grid-cols-1 gap-4'>
-        <FormControl fullWidth>
-        <InputLabel id="multiple-name-label">Name</InputLabel>
-        <Select
-          labelId="multiple-name-label"
-          id="multiple-name"
-          multiple
-          value={selectedNames}
-          onChange={handleChange}
-          input={<OutlinedInput label="Name" />}
-          renderValue={(selected) => (
-            <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
-              {selected.map((value) => (
-                <Chip key={value} label={value} />
-              ))}
-            </Box>
-          )}
-          MenuProps={{
-            PaperProps: {
-              style: {
-                maxHeight: 48 * 4.5 + 8,
-                width: 250,
-              },
-            },
-          }}
-        >
-          {names.map((name) => (
-            <MenuItem key={name} value={name}>
-              {name}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
-
+        <div className="relative w-full">
+      <label
+        htmlFor="multiple-select"
+        className={`absolute left-3 transition-all text-gray-600 ${
+          selectedNames.length > 0 ? "-top-2 text-blue-600 text-sm" : "top-4 text-base"
+        }`}
+      >
+        Name
+      </label>
+      <select
+        id="multiple-select"
+        multiple
+        className="w-full p-2 mt-4 text-sm border rounded focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-blue-600"
+        value={selectedNames}
+        onChange={handleChange}
+        // style={{ height: "150px" }}
+      >
+      
+        {names.map((name) => (
+          <option key={name} value={name}>
+            {name}
+          </option>
+        ))}
+      
+      </select>
+      <div className="flex flex-wrap gap-2 mt-2">
+        {selectedNames.map((name) => (
+          <div
+            key={name}
+            className="flex items-center px-2 py-1 text-sm text-white bg-blue-600 rounded"
+          >
+            {name}
+            <button
+              onClick={() => removeChip(name)}
+              className="ml-1 text-white hover:text-gray-200 focus:outline-none"
+            >
+              ×
+            </button>
+          </div>
+        ))}
+      </div>
+    </div>
         </div>
 
         
