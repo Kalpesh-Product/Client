@@ -1,5 +1,5 @@
 import React from "react";
-import WonoLogo from '../assets/BIZNest/biznest_logo.jpg'
+import WonoLogo from "../assets/BIZNest/biznest_logo.jpg";
 
 const ClientFooter = () => {
   return (
@@ -10,9 +10,10 @@ const ClientFooter = () => {
           <span>Powered by W<span className="wono-blue-text">o</span>N<span className="wono-blue-text">o</span></span> 
         </div>   */}
 
-         <p className="text-sm text-gray-400 text-center">
-          © Copyright 2024-25 by WONOCO PRIVATE-LIMITED - SINGAPORE . All rights reserved.
-        </p>    
+        <p className="text-sm text-gray-400 text-center">
+          © Copyright 2024-25 by WONOCO PRIVATE-LIMITED - SINGAPORE . All rights
+          reserved.
+        </p>
       </div>
     </footer>
   );

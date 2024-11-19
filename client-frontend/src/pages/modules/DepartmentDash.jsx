@@ -321,8 +321,7 @@ const DepartmentDash = () => {
                     "& .MuiTabs-indicator": {
                       backgroundColor: "#0db4ea", // Custom indicator color
                     },
-                  }}
-                >
+                  }}>
                   <Tab label="Home" />
                   <Tab label="About" />
                   <Tab label="Gallery" />
@@ -426,6 +425,7 @@ const DepartmentDash = () => {
             )}
           </>
         )}
+
         {/* Finance submodules */}
         {location.pathname.startsWith("/finance") && (
           <>
