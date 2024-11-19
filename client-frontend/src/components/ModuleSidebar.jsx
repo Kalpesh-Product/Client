@@ -33,7 +33,11 @@ import {
   HiOutlineClipboardList,
   HiUsers,
 } from "react-icons/hi";
-import { RiCustomerService2Line } from "react-icons/ri";
+import {
+  RiAppsLine,
+  RiCustomerService2Line,
+  RiDashboardLine,
+} from "react-icons/ri";
 import { GrDocumentUpdate } from "react-icons/gr";
 import { useNavigate, useLocation, useParams } from "react-router-dom";
 import { CgWebsite } from "react-icons/cg";
@@ -92,6 +96,23 @@ const ModuleSidebar = ({ mainSideBar }) => {
       icon: <HiCurrencyDollar />,
     },
   ];
+  const itModules = [
+    {
+      title: "Assets",
+      route: "/customer/kpi",
+      icon: <RiDashboardLine />,
+      subMenus: [
+        {
+          title: "View asset",
+          route: "/customer/asset/view",
+        },
+        {
+          title: "Delete asset",
+          route: "/customer/asset/delete",
+        },
+      ],
+    },
+  ];
 
   // Get the department based on the current path
   const passedDepartment = location.pathname.split("/")[1];
@@ -102,8 +123,8 @@ const ModuleSidebar = ({ mainSideBar }) => {
     modules = frontendModules;
   } else if (passedDepartment === "hr") {
     modules = hrModules;
-  } else if (passedDepartment === "cms") {
-    modules = cmsModules;
+  } else if (passedDepartment === "customer") {
+    modules = itModules;
   }
 
   const departments = [
@@ -119,18 +140,6 @@ const ModuleSidebar = ({ mainSideBar }) => {
     { name: "LEGAL", icon: <MdPolicy /> },
   ];
 
-  // const iconMap = {
-  //   FaCode: <FaCode />,
-  //   MdAccountBalance: <MdAccountBalance />,
-  //   FaMoneyBillTrendUp: <FaMoneyBillTrendUp />,
-  //   FaBuildingUser: <FaBuildingUser />,
-  //   RiCustomerService2Line: <RiCustomerService2Line />,
-  //   SiMarketo: <SiMarketo />,
-  //   MdLocalCafe: <MdLocalCafe />,
-  //   MdOutlineWifiTethering: <MdOutlineWifiTethering />,
-  //   FaHandsHelping: <FaHandsHelping />,
-  //   MdPolicy: <MdPolicy />
-  // };
   // Close sidebar when navigating to any route
   useEffect(() => {
     if (location.pathname === "/frontend") {
@@ -222,23 +231,90 @@ const ModuleSidebar = ({ mainSideBar }) => {
           </Tooltip>
 
           {/* SubModules-Items */}
-          {modules.map(({ title, route, icon }, index) => (
-            <Tooltip title={title} placement="right" key={index}>
-              <div
-                onClick={() => navigate(route)}
-                className={`flex border-b-[1px] ${
-                  isSidebarOpen ? "pl-[1rem]" : "justify-center"
-                } items-center cursor-pointer py-2 hover:wono-blue-dark hover:text-white hover:rounded-md ${
-                  location.pathname === route
-                    ? "wono-blue border-r-4  border-[#0DB4EA] rounded-tl-md rounded-bl-md text-[#0DB4EA]"
-                    : "bg-white"
-                }`}>
-                <div className="flex justify-center w-5 text-2xl">{icon}</div>
-                {isSidebarOpen && (
-                  <span className="pl-5 text-[0.8rem]">{title}</span>
-                )}
-              </div>
-            </Tooltip>
+
+          {modules.map(({ title, route, icon, subMenus }, index) => (
+            <div key={index}>
+              {/* Main Menu Item */}
+              <Tooltip title={title} placement="right">
+                <div
+                  onClick={() => {
+                    navigate(route);
+
+                    setIsDepartmentsOpen(
+                      isDepartmentsOpen === index ? null : index
+                    ); // Toggle specific dropdown
+                  }}
+                  className={`flex border-b-[1px] ${
+                    isSidebarOpen ? "pl-[1rem]" : "justify-center"
+                  } items-center cursor-pointer py-2 hover:wono-blue-dark hover:text-white hover:rounded-md ${
+                    location.pathname === route
+                      ? "wono-blue border-r-4 border-[#0DB4EA] rounded-tl-md rounded-bl-md text-[#0DB4EA]"
+                      : "bg-white"
+                  }`}>
+                  <div className="flex justify-center w-5 text-2xl">{icon}</div>
+
+                  {isSidebarOpen && (
+                    <div className="flex w-full gap-x-10">
+                      <span className="pl-5 text-[0.8rem]">{title}</span>
+                      <div>
+                        {isSidebarOpen ? (
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                            className={`w-4 h-4 ml-3 transform ${
+                              isDepartmentsOpen ? "rotate-180" : ""
+                            }`}>
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth="2"
+                              d="M19 9l-7 7-7-7"
+                            />
+                          </svg>
+                        ) : (
+                          ""
+                        )}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </Tooltip>
+
+              {/* Submenu Items */}
+              {subMenus && isDepartmentsOpen === index && (
+                <div className="ml-4">
+                  {" "}
+                  {/* Submenu container */}
+                  <div className="flex flex-col p-2">
+                    {subMenus.map((menu, subIndex) => (
+                      <Tooltip
+                        title={menu.title}
+                        placement="right"
+                        key={subIndex}>
+                        <div
+                          onClick={() => navigate(menu.route)}
+                          className={`flex items-center border-b-[1px] py-3 gap-3 cursor-pointer hover:wono-blue-dark hover:text-white hover:rounded-md  ${
+                            location.pathname === menu.route
+                              ? "wono-blue border-r-4 border-b-[0px]  border-[#0DB4EA] rounded-tl-md rounded-bl-md text-[#0DB4EA]"
+                              : "bg-white"
+                          } `}>
+                          <div className="flex justify-center w-6 text-[1rem]">
+                            {menu.icon || <RiAppsLine />}
+                          </div>
+                          {isSidebarOpen && (
+                            <span className="pl-5 text-[0.8rem]">
+                              {menu.title}
+                            </span>
+                          )}
+                        </div>
+                      </Tooltip>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
           ))}
 
           {/* Common-submodules-menu */}

@@ -30,17 +30,56 @@ import {
   SalesTrendGraph,
 } from "../../Widgets/SalesWidgets";
 import { Tabs, Tab, Box, Typography } from "@mui/material";
+import {
+  NetworkIssuesResolved,
+  PCFixes,
+  PCFixesLineGraph,
+  PCFixesPending,
+  PCFixesProgress,
+  WiFiConfiguration,
+  WiFiTraffic,
+} from "../../Widgets/ITWidgets";
+import {
+  AssetsAssigned,
+  AssetsCount,
+  AssetsInRepair,
+  MaintenanceRequests,
+  NewAssetsAdded,
+} from "../../Widgets/CMS/customerServiceWidgets";
+import { useDispatch, useSelector } from "react-redux";
+import { openModal, closeModal } from "../../redux/features/modalSlice";
+import AddAssetForm from "../cms/asset/AddAssetForm";
+import { NewModal } from "../../components/NewModal";
+import ViewAssets from "../cms/asset/ViewAssets";
+import AssetsData from "../cms/asset/AssetsData";
 
 const DepartmentDash = () => {
+  const dispatch = useDispatch();
+  const [open,setOpen] = useState(false)
   const location = useLocation();
   const departmentName = location.state?.departmentName;
   const { department } = useParams();
   const [value, setValue] = useState(0);
+  const [activeModal, setActiveModal] = useState(null);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
+
+  const style = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 400,
+    bgcolor: 'background.paper',
+    border: '2px solid #000',
+    boxShadow: 24,
+    p: 4,
+  };
   const products = [
     {
       id: 1,
@@ -182,6 +221,61 @@ const DepartmentDash = () => {
     // <BarGraphWidget />,
   ];
 
+  const itWidgetsData = {
+    pcFixes: 120, // Number of PCs fixed
+    pcFixesProgress: 75, // Progress of PC fixes (percentage)
+    pcFixesPending: 25, // Pending PC repairs (number of pending repairs)
+    wifiConfig: 35, // Number of WiFi configurations
+    wifiTraffic: 150, // Total WiFi traffic in GB
+    networkIssues: 45, // Number of network issues resolved
+  };
+
+  const itWidgets = [
+    {
+      heading: "PC Maintenance",
+      widgets: [
+        <PCFixes count={itWidgetsData.pcFixes} />,
+        <PCFixesProgress progress={itWidgetsData.pcFixesProgress} />,
+        <PCFixesPending pendingCount={itWidgetsData.pcFixesPending} />,
+      ],
+    },
+    {
+      heading: "WiFi & Network",
+      widgets: [
+        <WiFiConfiguration count={itWidgetsData.wifiConfig} />,
+        <WiFiTraffic traffic={itWidgetsData.wifiTraffic} />,
+        <NetworkIssuesResolved count={itWidgetsData.networkIssues} />,
+      ],
+    },
+    {
+      heading: "Overview",
+      widgets: [<PCFixesLineGraph />, <DoughnutChart />],
+    },
+  ];
+
+  const customerServiceWidgetsData = {
+    totalAssets: 200,
+    pendingMaintenance: 15,
+    assignedAssets: 120,
+    assetsInRepair: 5,
+    newAssetsAdded: 10,
+  };
+
+  const customerServiceWidgets = [
+    {
+      heading: "Asset Management",
+      widgets: [
+        <AssetsCount count={customerServiceWidgetsData.totalAssets} />,
+        <MaintenanceRequests
+          requests={customerServiceWidgetsData.pendingMaintenance}
+        />,
+        <AssetsAssigned assigned={customerServiceWidgetsData.assignedAssets} />,
+        <AssetsInRepair count={customerServiceWidgetsData.assetsInRepair} />,
+        <NewAssetsAdded added={customerServiceWidgetsData.newAssetsAdded} />,
+      ],
+    },
+  ];
+
   return (
     <div className="flex">
       <TestSide />
@@ -288,7 +382,8 @@ const DepartmentDash = () => {
                   {products.map((product) => (
                     <div
                       key={product.id}
-                      className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+                      className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow"
+                    >
                       <img
                         src={product.image}
                         alt={product.name}
@@ -342,7 +437,7 @@ const DepartmentDash = () => {
             )}
           </>
         )}
-        {/* HR submodules */}
+        {/* Sales submodules */}
         {location.pathname.startsWith("/sales") && (
           <>
             {(location.pathname === "/sales" ||
@@ -359,7 +454,65 @@ const DepartmentDash = () => {
             )}
           </>
         )}
+        {/* IT submodules */}
+        {location.pathname.startsWith("/customer") && (
+          <>
+            {location.pathname === "/customer" ||
+            location.pathname === "/customer/dashboard" ? (
+              <div className="bg-white p-4 rounded-lg  mt-4">
+                {itWidgets.map((section, index) => (
+                  <WidgetSection
+                    key={index}
+                    heading={section.heading}
+                    widgets={section.widgets}
+                  />
+                ))}
+              </div>
+            ) : location.pathname === "/customer/kpi" ? (
+              <>
+                <div className="bg-white p-4 rounded-lg  mt-4">
+                  <div className="mb-8 flex justify-between">
+                    <h1 className="text-3xl">Key insights</h1>
+                    <button
+                      onClick={handleOpen}
+                      className="px-6 py-2 rounded-lg text-white wono-blue-dark hover:bg-[#3cbce7] transition-shadow shadow-md hover:shadow-lg active:shadow-inner"
+                    >
+                      Add Assets
+                    </button>
+                  </div>
+                  {customerServiceWidgets.map((section, index) => (
+                    <WidgetSection
+                      key={index}
+                      heading={section.heading}
+                      widgets={section.widgets}
+                    />
+                  ))}
+                </div>
+              </>
+            ) : location.pathname === "/customer/asset/view" ? (
+              <>
+              <ViewAssets />
+              </>
+            ) : location.pathname === "/customer/asset/details" ? (
+              <>
+              <AssetsData />
+              </>
+            )
+
+            : (
+              <></>
+            )}
+          </>
+        )}
       </div>
+      <div>
+        <NewModal open={open} onClose={handleClose}>
+          <div className="motion-preset-expand">
+          <AddAssetForm title={"Add Asset"} handleClose={handleClose} />
+          </div>
+        </NewModal>
+      </div>
+      
     </div>
   );
 };

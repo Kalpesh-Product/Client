@@ -69,6 +69,26 @@ const router = createBrowserRouter([
         element: <DepartmentDash />,
       },
       {
+        path: "/customer/asset",
+        element: <DepartmentDash />,
+      },
+      {
+        path: "/customer/asset/details",
+        element: <DepartmentDash />,
+      },
+      {
+        path: "/customer/asset/view",
+        element: <DepartmentDash />,
+      },
+      {
+        path: "/customer/dashboard",
+        element: <DepartmentDash />,
+      },
+      {
+        path: "/customer/kpi",
+        element: <DepartmentDash />,
+      },
+      {
         path: "/hr/dashboard",
         element: <DepartmentDash />,
       },
