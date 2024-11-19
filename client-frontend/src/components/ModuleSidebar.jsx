@@ -84,18 +84,6 @@ const ModuleSidebar = ({ mainSideBar }) => {
     },
   ];
 
-  const cmsModules = [
-    {
-      title: "Tickets",
-      route: "/cms/tickets",
-      icon: <HiOutlineClipboardList />,
-    },
-    {
-      title: "Meetings",
-      route: "cms/meetings",
-      icon: <HiCurrencyDollar />,
-    },
-  ];
   const itModules = [
     {
       title: "Assets",
@@ -111,6 +99,16 @@ const ModuleSidebar = ({ mainSideBar }) => {
           route: "/customer/asset/delete",
         },
       ],
+    },
+    {
+      title: "Tickets",
+      route: "/customer/tickets",
+      icon: <HiOutlineClipboardList />,
+    },
+    {
+      title: "Meetings",
+      route: "customer/meetings",
+      icon: <HiCurrencyDollar />,
     },
   ];
 

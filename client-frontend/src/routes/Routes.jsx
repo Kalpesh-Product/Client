@@ -137,7 +137,7 @@ const router = createBrowserRouter([
         element: <ChatPage />,
       },
       {
-        path: "/ticket-dashboard",
+        path: "/customer/tickets",
         element: <TicketDashboard />,
       },
       {
