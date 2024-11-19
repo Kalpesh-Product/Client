@@ -19,9 +19,10 @@ import ChatPage from "../pages/ChatPage";
 import PageHR from "../pages/modules/PageHR";
 import NotFoundPage from "../pages/NotFoundPage";
 import TicketDashboard from "../pages/cms/tickets/TicketDashboard";
-import AddTicket from "../pages/cms/tickets/AddTicket";
+
 import TicketReports from "../pages/cms/tickets/TicketReports";
 import ViewTickets from "../pages/cms/tickets/ViewTickets";
+import TicketMembers from "../pages/cms/tickets/TicketMembers";
 
 const router = createBrowserRouter([
   {
@@ -147,19 +148,19 @@ const router = createBrowserRouter([
       },
       {
         path: "/customer/tickets",
-        element: <TicketDashboard />,
+        element: <DepartmentDash />,
       },
       {
-        path: "/add-ticket",
-        element: <AddTicket />,
+        path: "/customer/tickets/members",
+        element: <DepartmentDash />,
       },
       {
-        path: "/view-tickets",
-        element: <ViewTickets />,
+        path: "/customer/tickets/view-tickets",
+        element: <DepartmentDash />,
       },
       {
-        path: "/ticket-reports",
-        element: <TicketReports />,
+        path: "/customer/tickets/ticket-reports",
+        element: <DepartmentDash />,
       },
       {
         path: "/dropTest",

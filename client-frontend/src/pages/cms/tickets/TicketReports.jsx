@@ -6,8 +6,8 @@ import MyTicketsTable from "../../../components/Submodules/ticket/MyTicketsTable
 const TicketReports = () => {
   return (
     <div className="flex">
-      <TestSide />
-      <TestLink />
+      {/* <TestSide /> */}
+      {/* <TestLink /> */}
       <div>
         <div>TicketReports</div>
         <MyTicketsTable />

@@ -54,6 +54,10 @@ import ViewAssets from "../cms/asset/ViewAssets";
 import AssetsData from "../cms/asset/AssetsData";
 import Listing from "../cms/room-booking/Listing";
 import ManageAsset from "../cms/asset/ManageAsset";
+import TicketWidget from "../cms/tickets/components/TicketWidget";
+import TicketWidget2 from "../cms/tickets/components/TicketWidget2";
+import TicketWidget3 from "../cms/tickets/components/TicketWidget3";
+import TicketWidget4 from "../cms/tickets/components/TicketWidget4";
 
 const DepartmentDash = () => {
   const dispatch = useDispatch();
@@ -65,6 +69,8 @@ const DepartmentDash = () => {
   const [activeModal, setActiveModal] = useState(null);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  // const handleOpenTicket = () => setOpenTicket(true);
+  // const handleCloseTicket = () => setOpenTicket(false);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -75,7 +81,13 @@ const DepartmentDash = () => {
     top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
     width: 400,
+    bgcolor: "background.paper",
+    border: "2px solid #000",
     bgcolor: "background.paper",
     border: "2px solid #000",
     boxShadow: 24,
@@ -262,9 +274,18 @@ const DepartmentDash = () => {
     newAssetsAdded: 10,
   };
 
+  const customerServiceWidgetsTicketData = {
+    totalAssets: 200,
+    pendingMaintenance: 15,
+    assignedAssets: 120,
+    assetsInRepair: 5,
+    newAssetsAdded: 10,
+  };
+
   const customerServiceWidgets = [
     {
       heading: "Asset Management",
+      subModule: "asset",
       widgets: [
         <AssetsCount count={customerServiceWidgetsData.totalAssets} />,
         <MaintenanceRequests
@@ -273,6 +294,23 @@ const DepartmentDash = () => {
         <AssetsAssigned assigned={customerServiceWidgetsData.assignedAssets} />,
         <AssetsInRepair count={customerServiceWidgetsData.assetsInRepair} />,
         <NewAssetsAdded added={customerServiceWidgetsData.newAssetsAdded} />,
+      ],
+    },
+    {
+      heading: "Ticket Management",
+      subModule: "ticket",
+      widgets: [
+        <TicketWidget />,
+        <TicketWidget2 />,
+        <TicketWidget3 />,
+        <TicketWidget4 />,
+        // <AssetsCount count={customerServiceWidgetsData.totalAssets} />,
+        // <MaintenanceRequests
+        //   requests={customerServiceWidgetsData.pendingMaintenance}
+        // />,
+        // <AssetsAssigned assigned={customerServiceWidgetsData.assignedAssets} />,
+        // <AssetsInRepair count={customerServiceWidgetsData.assetsInRepair} />,
+        // <NewAssetsAdded added={customerServiceWidgetsData.newAssetsAdded} />,
       ],
     },
   ];
@@ -384,8 +422,7 @@ const DepartmentDash = () => {
                   {products.map((product) => (
                     <div
                       key={product.id}
-                      className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow"
-                    >
+                      className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
                       <img
                         src={product.image}
                         alt={product.name}
@@ -476,17 +513,20 @@ const DepartmentDash = () => {
                   <div className="mb-8 flex justify-between">
                     <h1 className="text-3xl">Key insights</h1>
                   </div>
-                  {customerServiceWidgets.map((section, index) => (
-                    <WidgetSection
-                      key={index}
-                      heading={section.heading}
-                      widgets={section.widgets}
-                    />
-                  ))}
+                  {customerServiceWidgets
+                    .filter((section) => section.subModule === "asset")
+                    .map((section, index) => (
+                      <WidgetSection
+                        key={index}
+                        heading={section.heading}
+                        widgets={section.widgets}
+                      />
+                    ))}
                 </div>
               </>
             ) : location.pathname === "/customer/asset/view" ? (
               <>
+                <ViewAssets />
                 <ViewAssets />
               </>
             ) : location.pathname === "/customer/asset/manage" ? (
@@ -506,6 +546,7 @@ const DepartmentDash = () => {
       <div>
         <NewModal open={open} onClose={handleClose}>
           <div className="motion-preset-expand">
+            <AddAssetForm title={"Add Asset"} handleClose={handleClose} />
             <AddAssetForm title={"Add Asset"} handleClose={handleClose} />
           </div>
         </NewModal>
