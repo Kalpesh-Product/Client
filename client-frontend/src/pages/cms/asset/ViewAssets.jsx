@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const ViewAssets = () => {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
   const assetCategories = [
     { name: "Laptops", count: 5, icon: "💻" },
     { name: "Monitors", count: 15, icon: "🖥️" },
@@ -71,8 +71,7 @@ const ViewAssets = () => {
               <div
                 key={index}
                 className="bg-white shadow-lg hover:shadow-xl transition-shadow rounded-lg p-6 flex flex-col items-center text-center cursor-pointer"
-                onClick={() => setSelectedCategory(asset.name)}
-              >
+                onClick={() => setSelectedCategory(asset.name)}>
                 <div className="text-4xl mb-4">{asset.icon}</div>
                 <h2 className="text-lg font-semibold text-gray-700">
                   {asset.name}
@@ -86,8 +85,7 @@ const ViewAssets = () => {
         <>
           <button
             className="mb-6 px-4 py-2 wono-blue-dark text-white rounded-lg hover:bg-blue-600"
-            onClick={() => setSelectedCategory(null)}
-          >
+            onClick={() => setSelectedCategory(null)}>
             Back to Categories
           </button>
           <h1 className="text-2xl font-bold mb-6 text-gray-800">
@@ -97,9 +95,12 @@ const ViewAssets = () => {
             {laptopData.map((laptop, index) => (
               <div
                 key={index}
-                onClick={() => navigate(`/customer/asset/details`, { state: { brand: laptop.brand } })}
-                className="bg-white motion-preset-expand shadow-lg hover:shadow-xl transition-shadow rounded-lg p-6"
-              >
+                onClick={() =>
+                  navigate(`/customer/asset/details`, {
+                    state: { brand: laptop.brand },
+                  })
+                }
+                className="bg-white motion-preset-expand shadow-lg hover:shadow-xl transition-shadow rounded-lg p-6">
                 <h2 className="text-lg font-semibold mb-2">{laptop.brand}</h2>
                 <p className="text-sm text-gray-500 mb-1">
                   Model: {laptop.model}

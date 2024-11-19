@@ -10,7 +10,7 @@ import {
 import { motion } from "framer-motion";
 import { IoMdClose } from "react-icons/io";
 
-const AddAssetForm = ({title, handleClose}) => {
+const AddAssetForm = ({ title, handleClose }) => {
   const [formData, setFormData] = useState({
     assetName: "",
     assetType: "",
@@ -28,27 +28,36 @@ const AddAssetForm = ({title, handleClose}) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Asset Data Submitted:", formData);
-    handleClose()
+    handleClose();
   };
 
   return (
-    <Box sx={{ maxWidth: 600, mx: "auto", p: 3, borderRadius: 2, fontFamily:'Popins-SemiBold' }}>
-        <div className="flex justify-between align-middle mb-4">
-      <Typography sx={{fontFamily:'Popins-SemiBold'}} variant="h5" gutterBottom>
-        {title}
-      </Typography>
-      <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.9 }}
-            type="button"
-            onClick={handleClose}
-            className=" p-2 bg-white text-[red] border border-red-200 hover:border-red-400 text-2xl rounded-md"
-          >
-            <IoMdClose />
-          </motion.button>
-        </div>
+    <Box
+      sx={{
+        maxWidth: 600,
+        mx: "auto",
+        p: 3,
+        borderRadius: 2,
+        fontFamily: "Popins-SemiBold",
+      }}>
+      <div className="flex justify-between align-middle mb-4">
+        <Typography
+          sx={{ fontFamily: "Popins-SemiBold" }}
+          variant="h5"
+          gutterBottom>
+          {title}
+        </Typography>
+        <motion.button
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.9 }}
+          type="button"
+          onClick={handleClose}
+          className=" p-2 bg-white text-[red] border border-red-200 hover:border-red-400 text-2xl rounded-md">
+          <IoMdClose />
+        </motion.button>
+      </div>
       <form onSubmit={handleSubmit}>
-        <Grid  container spacing={3}>
+        <Grid container spacing={3}>
           <Grid item xs={12}>
             <TextField
               label="Asset Name"
@@ -67,8 +76,7 @@ const AddAssetForm = ({title, handleClose}) => {
               onChange={handleChange}
               fullWidth
               required
-              select
-            >
+              select>
               <MenuItem value="Hardware">Hardware</MenuItem>
               <MenuItem value="Software">Software</MenuItem>
               <MenuItem value="Furniture">Furniture</MenuItem>
@@ -104,8 +112,7 @@ const AddAssetForm = ({title, handleClose}) => {
               onChange={handleChange}
               fullWidth
               required
-              select
-            >
+              select>
               <MenuItem value="Available">Available</MenuItem>
               <MenuItem value="Assigned">Assigned</MenuItem>
               <MenuItem value="In Repair">In Repair</MenuItem>
@@ -124,7 +131,10 @@ const AddAssetForm = ({title, handleClose}) => {
             />
           </Grid>
           <Grid item xs={12}>
-            <button className="wono-blue-dark p-2 rounded-md w-full font-[Popins-Regular]" type="submit" onSubmit={handleClose} >
+            <button
+              className="wono-blue-dark p-2 rounded-md w-full font-[Popins-Regular]"
+              type="submit"
+              onSubmit={handleClose}>
               Submit
             </button>
           </Grid>

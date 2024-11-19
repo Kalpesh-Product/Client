@@ -104,6 +104,20 @@ const ModuleSidebar = ({ mainSideBar }) => {
       title: "Tickets",
       route: "/customer/tickets",
       icon: <HiOutlineClipboardList />,
+      subMenus: [
+        {
+          title: "View Tickets",
+          route: "/customer/tickets/view-tickets",
+        },
+        {
+          title: "Members",
+          route: "/customer/tickets/members",
+        },
+        {
+          title: "Ticket Reports",
+          route: "/customer/tickets/ticket-reports",
+        },
+      ],
     },
     {
       title: "Meetings",

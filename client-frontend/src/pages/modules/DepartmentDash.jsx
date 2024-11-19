@@ -52,10 +52,24 @@ import AddAssetForm from "../cms/asset/AddAssetForm";
 import { NewModal } from "../../components/NewModal";
 import ViewAssets from "../cms/asset/ViewAssets";
 import AssetsData from "../cms/asset/AssetsData";
+import ViewTickets from "../cms/tickets/ViewTickets";
+import TicketWidget from "../cms/tickets/components/TicketWidget";
+import TicketWidget2 from "../cms/tickets/components/TicketWidget2";
+import TicketWidget3 from "../cms/tickets/components/TicketWidget3";
+import TicketWidget4 from "../cms/tickets/components/TicketWidget4";
+import MyTicketsTable from "../../components/Submodules/ticket/MyTicketsTable";
+import TicketMembers from "../cms/tickets/TicketMembers";
+import TicketReports from "../cms/tickets/TicketReports";
+import AddTicketForm from "../cms/tickets/components/AddTicketForm";
+import Button from "@mui/material/Button";
+
+import Modal from "@mui/material/Modal";
+import { color, motion } from "framer-motion";
 
 const DepartmentDash = () => {
   const dispatch = useDispatch();
-  const [open,setOpen] = useState(false)
+  const [open, setOpen] = useState(false);
+  const [openTicket, setOpenTicket] = useState(false);
   const location = useLocation();
   const departmentName = location.state?.departmentName;
   const { department } = useParams();
@@ -63,20 +77,21 @@ const DepartmentDash = () => {
   const [activeModal, setActiveModal] = useState(null);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const handleOpenTicket = () => setOpenTicket(true);
+  const handleCloseTicket = () => setOpenTicket(false);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
-
   const style = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
     width: 400,
-    bgcolor: 'background.paper',
-    border: '2px solid #000',
+    bgcolor: "background.paper",
+    border: "2px solid #000",
     boxShadow: 24,
     p: 4,
   };
@@ -261,9 +276,18 @@ const DepartmentDash = () => {
     newAssetsAdded: 10,
   };
 
+  const customerServiceWidgetsTicketData = {
+    totalAssets: 200,
+    pendingMaintenance: 15,
+    assignedAssets: 120,
+    assetsInRepair: 5,
+    newAssetsAdded: 10,
+  };
+
   const customerServiceWidgets = [
     {
       heading: "Asset Management",
+      subModule: "asset",
       widgets: [
         <AssetsCount count={customerServiceWidgetsData.totalAssets} />,
         <MaintenanceRequests
@@ -272,6 +296,23 @@ const DepartmentDash = () => {
         <AssetsAssigned assigned={customerServiceWidgetsData.assignedAssets} />,
         <AssetsInRepair count={customerServiceWidgetsData.assetsInRepair} />,
         <NewAssetsAdded added={customerServiceWidgetsData.newAssetsAdded} />,
+      ],
+    },
+    {
+      heading: "Ticket Management",
+      subModule: "ticket",
+      widgets: [
+        <TicketWidget />,
+        <TicketWidget2 />,
+        <TicketWidget3 />,
+        <TicketWidget4 />,
+        // <AssetsCount count={customerServiceWidgetsData.totalAssets} />,
+        // <MaintenanceRequests
+        //   requests={customerServiceWidgetsData.pendingMaintenance}
+        // />,
+        // <AssetsAssigned assigned={customerServiceWidgetsData.assignedAssets} />,
+        // <AssetsInRepair count={customerServiceWidgetsData.assetsInRepair} />,
+        // <NewAssetsAdded added={customerServiceWidgetsData.newAssetsAdded} />,
       ],
     },
   ];
@@ -382,8 +423,7 @@ const DepartmentDash = () => {
                   {products.map((product) => (
                     <div
                       key={product.id}
-                      className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow"
-                    >
+                      className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
                       <img
                         src={product.image}
                         alt={product.name}
@@ -475,31 +515,70 @@ const DepartmentDash = () => {
                     <h1 className="text-3xl">Key insights</h1>
                     <button
                       onClick={handleOpen}
-                      className="px-6 py-2 rounded-lg text-white wono-blue-dark hover:bg-[#3cbce7] transition-shadow shadow-md hover:shadow-lg active:shadow-inner"
-                    >
+                      className="px-6 py-2 rounded-lg text-white wono-blue-dark hover:bg-[#3cbce7] transition-shadow shadow-md hover:shadow-lg active:shadow-inner">
                       Add Assets
                     </button>
                   </div>
-                  {customerServiceWidgets.map((section, index) => (
-                    <WidgetSection
-                      key={index}
-                      heading={section.heading}
-                      widgets={section.widgets}
-                    />
-                  ))}
+                  {customerServiceWidgets
+                    .filter((section) => section.subModule === "asset")
+                    .map((section, index) => (
+                      <WidgetSection
+                        key={index}
+                        heading={section.heading}
+                        widgets={section.widgets}
+                      />
+                    ))}
                 </div>
               </>
             ) : location.pathname === "/customer/asset/view" ? (
               <>
-              <ViewAssets />
+                <ViewAssets />
               </>
             ) : location.pathname === "/customer/asset/details" ? (
               <>
-              <AssetsData />
+                <AssetsData />
               </>
-            )
+            ) : location.pathname === "/customer/tickets" ? (
+              <>
+                <div className="bg-white p-4 rounded-lg  mt-4">
+                  <div className="mb-8 flex justify-between">
+                    <h1 className="text-3xl">Key insights</h1>
+                    <button
+                      onClick={handleOpenTicket}
+                      className="px-6 py-2 rounded-lg text-white wono-blue-dark hover:bg-[#3cbce7] transition-shadow shadow-md hover:shadow-lg active:shadow-inner">
+                      Raise Ticket
+                    </button>
+                  </div>
+                  {customerServiceWidgets
+                    .filter((section) => section.subModule === "ticket")
+                    .map((section, index) => (
+                      <WidgetSection
+                        key={index}
+                        heading={section.heading}
+                        widgets={section.widgets}
+                      />
+                    ))}
 
-            : (
+                  <div className=" py-10">
+                    {/* <p>Table Component</p> */}
+                    <MyTicketsTable />
+                  </div>
+                  {/* <p>x</p> */}
+                </div>
+              </>
+            ) : location.pathname === "/customer/tickets/view-tickets" ? (
+              <>
+                <ViewTickets />
+              </>
+            ) : location.pathname === "/customer/tickets/members" ? (
+              <>
+                <TicketMembers />
+              </>
+            ) : location.pathname === "/customer/tickets/ticket-reports" ? (
+              <>
+                <TicketReports />
+              </>
+            ) : (
               <></>
             )}
           </>
@@ -508,11 +587,34 @@ const DepartmentDash = () => {
       <div>
         <NewModal open={open} onClose={handleClose}>
           <div className="motion-preset-expand">
-          <AddAssetForm title={"Add Asset"} handleClose={handleClose} />
+            <AddAssetForm title={"Add Asset"} handleClose={handleClose} />
           </div>
         </NewModal>
       </div>
-      
+      <div>
+        {/* <Button onClick={handleOpenTicket}>Open modal</Button> */}
+        <Modal
+          open={openTicket}
+          onClose={handleCloseTicket}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description">
+          {/* <Box sx={style}> */}
+          <Box sx={style}>
+            <AddTicketForm />
+            <div className="col-span-2 flex gap-4">
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.9 }}
+                className="w-full py-2 px-4 bg-blue-600 text-white rounded mt-4"
+                onClick={handleCloseTicket}
+                // onClick={() => navigate("/customer/tickets")}
+              >
+                Save
+              </motion.button>
+            </div>
+          </Box>
+        </Modal>
+      </div>
     </div>
   );
 };
