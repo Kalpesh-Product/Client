@@ -53,6 +53,7 @@ import { NewModal } from "../../components/NewModal";
 import ViewAssets from "../cms/asset/ViewAssets";
 import AssetsData from "../cms/asset/AssetsData";
 import Listing from "../cms/room-booking/Listing";
+import ManageAsset from "../cms/asset/ManageAsset";
 
 const DepartmentDash = () => {
   const dispatch = useDispatch();
