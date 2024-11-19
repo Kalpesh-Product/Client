@@ -146,7 +146,7 @@ const TestSide = () => {
     CMS: ["CUSTOMER SERVICE"],
     Marketing: ["MARKETING"],
     Cafe: ["CAFE (F&B)"],
-    IT: ["IT"],
+    IT: ["IT","CUSTOMER SERVICE"],
     Maintenance: ["MAINTENANCE"],
     Legal: ["LEGAL"],
   };

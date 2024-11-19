@@ -91,9 +91,14 @@ const ModuleSidebar = ({ mainSideBar }) => {
       icon: <RiDashboardLine />,
       subMenus: [
         {
+          title: "Manage asset",
+          route: "/customer/asset/manage",
+        },
+        {
           title: "View asset",
           route: "/customer/asset/view",
         },
+  
         {
           title: "Delete asset",
           route: "/customer/asset/delete",

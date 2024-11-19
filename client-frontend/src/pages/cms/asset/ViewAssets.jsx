@@ -1,8 +1,42 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import {
+  Box,
+  Tabs,
+  Tab,
+  Paper,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Button,
+  Typography,
+} from "@mui/material";
+import { DataGrid } from "@mui/x-data-grid";
+import { NewModal } from "../../../components/NewModal";
+import { IoMdClose } from "react-icons/io";
+import { motion } from "framer-motion";
 
 const ViewAssets = () => {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
+
+  const [selectedTab, setSelectedTab] = useState(0);
+  const [openModal, setOpenModal] = useState(false);
+  const [selectedLaptop, setSelectedLaptop] = useState(null);
+
+  const handleViewDetails = (row) => {
+    setSelectedLaptop(row);
+    setOpenModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setOpenModal(false);
+    setSelectedLaptop(null);
+  };
+
+  const handleTabChange = (event, newValue) => {
+    setSelectedTab(newValue);
+  };
   const assetCategories = [
     { name: "Laptops", count: 5, icon: "💻" },
     { name: "Monitors", count: 15, icon: "🖥️" },
@@ -14,6 +48,7 @@ const ViewAssets = () => {
 
   const laptopData = [
     {
+      id: 1,
       brand: "Dell",
       model: "Inspiron 15",
       specs: {
@@ -25,6 +60,7 @@ const ViewAssets = () => {
       purchaseDate: "2023-05-10",
     },
     {
+      id: 2,
       brand: "HP",
       model: "Pavilion 14",
       specs: {
@@ -36,6 +72,7 @@ const ViewAssets = () => {
       purchaseDate: "2022-12-20",
     },
     {
+      id: 3,
       brand: "Apple",
       model: "MacBook Air M2",
       specs: {
@@ -47,6 +84,7 @@ const ViewAssets = () => {
       purchaseDate: "2023-01-15",
     },
     {
+      id: 4,
       brand: "Lenovo",
       model: "ThinkPad X1 Carbon",
       specs: {
@@ -59,71 +97,146 @@ const ViewAssets = () => {
     },
   ];
 
+  const laptopColumns = [
+    { field: "id", headerName: "ID", width: 90 },
+    {
+      field: "category",
+      headerName: "Category",
+      width: 150,
+      valueGetter: () => "Laptop",
+    },
+    { field: "brand", headerName: "Brand", width: 150 },
+    { field: "model", headerName: "Model", width: 350 },
+    {
+      field: "actions",
+      headerName: "Actions",
+      flex: 1,
+      renderCell: (params) => (
+        <div className="p-2 mb-2">
+          <button
+            style={{
+              backgroundColor: "#0db4ea",
+              color: "white",
+              border: "none",
+              padding: "0.5rem",
+              borderRadius: "4px",
+              cursor: "pointer",
+              fontFamily: 'Popins-Regular'
+            }}
+            onClick={() => handleViewDetails(params.row)}
+          >
+            View Details
+          </button>
+        </div>
+      ),
+    },
+  ];
+
   const [selectedCategory, setSelectedCategory] = useState(null);
 
   return (
     <div className="p-8">
-      {!selectedCategory ? (
-        <>
-          <h1 className="text-2xl font-bold mb-6 text-gray-800">View Assets</h1>
-          <div className="grid motion-preset-expand grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            {assetCategories.map((asset, index) => (
-              <div
-                key={index}
-                className="bg-white shadow-lg hover:shadow-xl transition-shadow rounded-lg p-6 flex flex-col items-center text-center cursor-pointer"
-                onClick={() => setSelectedCategory(asset.name)}
+      <>
+        <h1 className="text-2xl font-bold mb-6 text-gray-800">View Assets</h1>
+        {/* <div className="grid motion-preset-expand grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"> */}
+        <div className="">
+          <Box>
+            {/* Tabs */}
+            <Tabs
+              value={selectedTab}
+              onChange={handleTabChange}
+              variant="fullWidth"
+              scrollButtons="auto"
+              aria-label="Asset Categories"
+            >
+              {assetCategories.map((category, index) => (
+                <Tab
+                  key={index}
+                  icon={<span>{category.icon}</span>}
+                  label={`${category.name} (${category.count})`}
+                  wrapped
+                />
+              ))}
+            </Tabs>
+
+            {/* Tab Content */}
+            <Box sx={{ p: 3 }}>
+              {selectedTab === 0 && (
+                <div className="w-full motion-preset-slide-up-md">
+                  <DataGrid
+                    rows={laptopData}
+                    columns={laptopColumns}
+                    pageSize={5}
+                    rowsPerPageOptions={[5]}
+                    checkboxSelection
+                    disableSelectionOnClick
+                    getRowHeight={() => "auto"} // Automatically adjust row height
+                    sx={{
+                      "& .MuiDataGrid-cell": {
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "start", // Center align button content
+                      },
+                      "& .MuiDataGrid-row": {
+                        padding: 0, // Ensure no extra padding
+                      },
+                    }}
+                  />
+                </div>
+              )}
+            </Box>
+          </Box>
+        </div>
+      </>
+
+      {/* Modal to show laptop details */}
+      <NewModal open={openModal} onClose={handleCloseModal}>
+        {selectedLaptop && (
+          <>
+            <div className="flex justify-between align-middle mb-4">
+              <Typography
+                sx={{ fontFamily: "Popins-SemiBold" }}
+                variant="h5"
+                gutterBottom
               >
-                <div className="text-4xl mb-4">{asset.icon}</div>
-                <h2 className="text-lg font-semibold text-gray-700">
-                  {asset.name}
-                </h2>
-                <p className="text-sm text-gray-500">{asset.count} available</p>
-              </div>
-            ))}
-          </div>
-        </>
-      ) : (
-        <>
-          <button
-            className="mb-6 px-4 py-2 wono-blue-dark text-white rounded-lg hover:bg-blue-600"
-            onClick={() => setSelectedCategory(null)}
-          >
-            Back to Categories
-          </button>
-          <h1 className="text-2xl font-bold mb-6 text-gray-800">
-            {selectedCategory} Details
-          </h1>
-          <div className="grid  grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 ">
-            {laptopData.map((laptop, index) => (
-              <div
-                key={index}
-                onClick={() => navigate(`/customer/asset/details`, { state: { brand: laptop.brand } })}
-                className="bg-white motion-preset-expand shadow-lg hover:shadow-xl transition-shadow rounded-lg p-6"
+                {selectedLaptop.brand} - {selectedLaptop.model}
+              </Typography>
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.9 }}
+                type="button"
+                onClick={handleCloseModal}
+                className=" p-2 bg-white text-[red] border border-red-200 hover:border-red-400 text-2xl rounded-md"
               >
-                <h2 className="text-lg font-semibold mb-2">{laptop.brand}</h2>
-                <p className="text-sm text-gray-500 mb-1">
-                  Model: {laptop.model}
-                </p>
-                <p className="text-sm text-gray-500 mb-1">
-                  Processor: {laptop.specs.processor}
-                </p>
-                <p className="text-sm text-gray-500 mb-1">
-                  RAM: {laptop.specs.ram}
-                </p>
-                <p className="text-sm text-gray-500 mb-1">
-                  Storage: {laptop.specs.storage}
-                </p>
-                <p className="text-sm text-gray-500 mb-1">
-                  Assigned To: {laptop.assignedTo}
-                </p>
-                <p className="text-sm text-gray-500">
-                  Purchase Date: {laptop.purchaseDate}
-                </p>
-              </div>
-            ))}
-          </div>
-        </>
-      )}
+                <IoMdClose />
+              </motion.button>
+            </div>
+            <div>
+              <p>
+                <strong>Brand:</strong> {selectedLaptop.brand}
+              </p>
+              <p>
+                <strong>Model:</strong> {selectedLaptop.model}
+              </p>
+              <p>
+                <strong>Processor:</strong> {selectedLaptop.specs.processor}
+              </p>
+              <p>
+                <strong>RAM:</strong> {selectedLaptop.specs.ram}
+              </p>
+              <p>
+                <strong>Storage:</strong> {selectedLaptop.specs.storage}
+              </p>
+              <p>
+                <strong>Assigned To:</strong> {selectedLaptop.assignedTo}
+              </p>
+              <p>
+                <strong>Purchase Date:</strong> {selectedLaptop.purchaseDate}
+              </p>
+            </div>
+          </>
+        )}
+      </NewModal>
     </div>
   );
 };

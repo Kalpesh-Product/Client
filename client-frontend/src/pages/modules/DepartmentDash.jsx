@@ -52,6 +52,7 @@ import AddAssetForm from "../cms/asset/AddAssetForm";
 import { NewModal } from "../../components/NewModal";
 import ViewAssets from "../cms/asset/ViewAssets";
 import AssetsData from "../cms/asset/AssetsData";
+import ManageAsset from "../cms/asset/ManageAsset";
 
 const DepartmentDash = () => {
   const dispatch = useDispatch();
@@ -473,12 +474,6 @@ const DepartmentDash = () => {
                 <div className="bg-white p-4 rounded-lg  mt-4">
                   <div className="mb-8 flex justify-between">
                     <h1 className="text-3xl">Key insights</h1>
-                    <button
-                      onClick={handleOpen}
-                      className="px-6 py-2 rounded-lg text-white wono-blue-dark hover:bg-[#3cbce7] transition-shadow shadow-md hover:shadow-lg active:shadow-inner"
-                    >
-                      Add Assets
-                    </button>
                   </div>
                   {customerServiceWidgets.map((section, index) => (
                     <WidgetSection
@@ -493,9 +488,9 @@ const DepartmentDash = () => {
               <>
               <ViewAssets />
               </>
-            ) : location.pathname === "/customer/asset/details" ? (
+            ) : location.pathname === "/customer/asset/manage" ? (
               <>
-              <AssetsData />
+              <ManageAsset />
               </>
             )
 

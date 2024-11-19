@@ -9,7 +9,7 @@ export default function MainLayout() {
   return (
     <div>
       {!hideHeader && <ClientHeader />}
-      <div className="min-h-screen">
+      <div className="min-h-screen overflow-y-auto">
         <Outlet />
       </div>
       {!hideFooter && <ClientFooter />}

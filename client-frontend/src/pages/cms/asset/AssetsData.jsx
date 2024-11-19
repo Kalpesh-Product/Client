@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import { useLocation, useNavigate } from "react-router-dom";
+import { NewModal } from "../../../components/NewModal";
+import AssignAssetForm from "./AssignAssetForm";
 
 const AssetsData = () => {
     const location = useLocation();
+
   const { brand } = location.state || { brand: "Unknown Brand" };
   const navigate = useNavigate();
 
@@ -53,17 +56,18 @@ const AssetsData = () => {
     { field: "remarks", headerName: "Remarks", width: 200 },
   ];
 
+
+
   return (
     <div className="p-6">
-      <button
-        className="mb-6 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
-        onClick={() => navigate(-1)} // Navigate back to the previous page
-      >
-        Back to Laptops
-      </button>
-      <h1 className="text-2xl font-bold mb-6 text-gray-800">
-        Asset Details: {brand}
+      <div className="flex justify-between mb-6">
+        <div className="content-center">
+      <h1 className="text-2xl font-bold text-gray-800 ">
+        Assets Data
       </h1>
+        </div>
+      </div>
+
       <div style={{ height: 400, width: "100%" }}>
         <DataGrid
           rows={laptopUsageData}
@@ -73,6 +77,8 @@ const AssetsData = () => {
           checkboxSelection
         />
       </div>
+
+     
     </div>
   );
 };
