@@ -2,32 +2,122 @@ import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import Modal from "../../../components/Modal";
-import { useState } from "react";
-import getCurrentTimePlus30Minutes from "../../../utils/plusHalfAnHour";
+import { useState, useEffect } from "react";
+import { rooms } from "../../../utils/Rooms";
+import BookingForm from "./components/BookingForm";
+import BookingDetails from "./components/BookingDetails";
+import { format, addMinutes } from "date-fns";
+import { v4 as uuid } from "uuid";
 
 export default function Listing() {
-  const [open, setOpen] = useState(false);
+  const [openBookingModal, setOpenBookingModal] = useState(false);
+  const [openEventDetailsModal, setOpenEventDetailsModal] = useState(false);
+  const [selectedEvent, setSelectedEvent] = useState(null); // For event details modal
   const [currentTime, setCurrentTime] = useState("");
   const [timePlus30, setTimePlus30] = useState("");
   const [currentDate, setCurrentDate] = useState("");
+  const [credit, setCredit] = useState(500);
+  const [events, setEvents] = useState([]);
+  const [roomList, setRoomList] = useState(rooms);
+  const [newMeeting, setNewMeeting] = useState({
+    startTime: "",
+    endTime: "",
+    internal: "BIZNest",
+    room: "",
+    participants: "",
+    subject: "",
+    agenda: "",
+    backgroundColor: "",
+  });
+  const [loggedInUser, setLoggedInUser] = useState(null);
 
   const handleDateClick = (e) => {
     const now = new Date();
 
-    // Format the current time in local timezone
-    const formattedTime = now.toLocaleTimeString([], {
-      hour: "2-digit",
-      minute: "2-digit",
-      hour12: false, // 24-hour format
-    });
+    const formattedTime = format(now, "HH:mm"); // 24-hour format
+    const timePlus30 = format(addMinutes(now, 30), "HH:mm");
 
-    // Update states
     setCurrentTime(formattedTime);
-    setTimePlus30(getCurrentTimePlus30Minutes(now));
+    setTimePlus30(timePlus30);
     setCurrentDate(e.dateStr);
 
-    setOpen(true);
+    setNewMeeting((prev) => ({
+      ...prev,
+      startTime: formattedTime,
+      endTime: timePlus30,
+      date: e.dateStr,
+    }));
+
+    setOpenBookingModal(true);
   };
+
+  const handleEventClick = (clickInfo) => {
+    setSelectedEvent(clickInfo.event); // Get event details
+    setOpenEventDetailsModal(true); // Open event details modal
+  };
+
+  const handleCancel = (eventId) => {
+    const filteredEvents = events.filter((event) => event.id !== eventId);
+    setEvents([...filteredEvents]);
+    setOpenEventDetailsModal(false);
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setNewMeeting((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const localStart = `${newMeeting.date}T${newMeeting.startTime}`;
+    const localEnd = `${newMeeting.date}T${newMeeting.endTime}`;
+
+    const newEvent = {
+      id: uuid(),
+      title: newMeeting.subject || "No Subject",
+      start: localStart,
+      end: localEnd,
+      extendedProps: {
+        room: newMeeting.room,
+        participants: newMeeting.participants,
+        agenda: newMeeting.agenda,
+      },
+      backgroundColor: "#5E5F9C",
+    };
+
+    setEvents((prev) => [...prev, newEvent]);
+    setOpenBookingModal(false);
+  };
+
+  const handleUpdate = (eventId, updatedMeeting) => {
+    setEvents((prevEvents) =>
+      prevEvents.map((event) =>
+        event.id === eventId
+          ? {
+              ...event,
+              title: updatedMeeting.subject,
+              start: `${updatedMeeting.date}T${updatedMeeting.startTime}`,
+              end: `${updatedMeeting.date}T${updatedMeeting.endTime}`,
+              extendedProps: {
+                room: updatedMeeting.room,
+                participants: updatedMeeting.participants,
+                agenda: updatedMeeting.agenda,
+              },
+            }
+          : event
+      )
+    );
+    setOpenEventDetailsModal(false); // Close modal
+  };
+
+  useEffect(() => {
+    const authenticatedUser = localStorage.getItem("user");
+    setLoggedInUser(JSON.parse(authenticatedUser));
+  }, []);
 
   return (
     <section className="h-screen overflow-y-auto top-0">
@@ -35,53 +125,41 @@ export default function Listing() {
         plugins={[dayGridPlugin, interactionPlugin]}
         initialView="dayGridMonth"
         dateClick={handleDateClick}
+        eventClick={handleEventClick}
+        eventDisplay="block"
+        events={events}
+        timeZone="local" // Use local timezone
       />
-      {open && (
-        <Modal open={open} onClose={() => setOpen(false)}>
-          <h1 className="text-2xl font-bold">Create Booking</h1>
-          <form className="space-y-4">
-            {/* Start Time */}
-            <div>
-              <label htmlFor="start-time" className="block text-gray-700">
-                Start Time
-              </label>
-              <input
-                type="time"
-                id="start-time"
-                value={currentTime}
-                readOnly
-                className="w-full py-2 px-2 text-gray-900 bg-transparent border border-gray-300 rounded-md outline-none focus:border-blue-500 focus:ring focus:ring-blue-200"
-              />
-            </div>
 
-            {/* End Time */}
-            <div>
-              <label htmlFor="end-time" className="block text-gray-700">
-                End Time
-              </label>
-              <input
-                type="time"
-                id="end-time"
-                value={timePlus30}
-                readOnly
-                className="w-full py-2 px-2 text-gray-900 bg-transparent border border-gray-300 rounded-md outline-none focus:border-blue-500 focus:ring focus:ring-blue-200"
-              />
-            </div>
+      {/* Booking Modal */}
+      {openBookingModal && (
+        <Modal
+          open={openBookingModal}
+          onClose={() => setOpenBookingModal(false)}
+        >
+          <h1 className="text-2xl font-bold ml-4">Create Booking</h1>
+          <BookingForm
+            newMeeting={newMeeting}
+            handleChange={handleChange}
+            handleSubmit={handleSubmit}
+            currentDate={currentDate}
+            loggedInUser={loggedInUser}
+            roomList={roomList}
+          />
+        </Modal>
+      )}
 
-            {/* Date */}
-            <div>
-              <label htmlFor="date-input" className="block text-gray-700">
-                Date
-              </label>
-              <input
-                type="date"
-                id="date-input"
-                value={currentDate}
-                readOnly
-                className="w-full py-2 px-2 text-gray-900 bg-transparent border border-gray-300 rounded-md outline-none focus:border-blue-500 focus:ring focus:ring-blue-200"
-              />
-            </div>
-          </form>
+      {/* Event Details Modal */}
+      {openEventDetailsModal && selectedEvent && (
+        <Modal
+          open={openEventDetailsModal}
+          onClose={() => setOpenEventDetailsModal(false)}
+        >
+          <BookingDetails
+            selectedEvent={selectedEvent}
+            handleUpdate={handleUpdate}
+            handleCancel={handleCancel}
+          />
         </Modal>
       )}
     </section>
