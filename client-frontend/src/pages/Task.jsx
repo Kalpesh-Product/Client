@@ -10,7 +10,6 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import { type } from 'jquery';
 import ModuleSidebar from '../components/ModuleSidebar';
 import { alignProperty } from '@mui/material/styles/cssUtils';
 import { NewModal } from '../components/NewModal';
