@@ -1,6 +1,7 @@
 import React,{useState} from 'react'
 import TestSide from '../components/Sidetest'
-import TaskSidebar from '../components/TaskManagement/TaskSidebar'
+import TaskSidebar from '../components/TaskManagement/TaskSidebar';
+import AssignTaskForm from '../components/TaskManagement/AssignTaskForm';
 
 import { DataGrid } from "@mui/x-data-grid";
 import Paper from "@mui/material/Paper";
@@ -265,15 +266,10 @@ const Task = () => {
         
         {modalOpen &&
 (<NewModal open={modalOpen} onClose={closeModal}>
-  <div className='flex items-center justify-center flex-col'>
-    <h1 className='font-bold text-2xl '>Add Task</h1>
-    <div className='p-10'>
-      <label>Task Name</label>
-      <input className='border-gray-100 bg-gray-500 rounded-sm'  type='text'></input>
+  
+      <AssignTaskForm title="Add Task" handleClose={closeModal}  />
 
-    </div>
-
-  </div>
+    
   </NewModal>)}
 
 
