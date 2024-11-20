@@ -267,7 +267,7 @@ const AccessHierarchyTab = () => {
             <Button
               variant="contained"
               className="wono-blue-dark w-full"
-              onClick={() => toast.success("Access updated successfully")}
+              onClick={handleSaveAccess}
             >
               Save
             </Button>

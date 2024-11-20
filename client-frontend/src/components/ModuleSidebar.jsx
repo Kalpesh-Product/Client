@@ -84,6 +84,7 @@ const ModuleSidebar = ({ mainSideBar }) => {
       icon: <HiCurrencyDollar />,
     },
   ];
+
   const itModules = [
     {
       title: "Assets",
@@ -91,12 +92,47 @@ const ModuleSidebar = ({ mainSideBar }) => {
       icon: <RiDashboardLine />,
       subMenus: [
         {
+          title: "Manage asset",
+          route: "/customer/asset/manage",
+        },
+        {
           title: "View asset",
           route: "/customer/asset/view",
         },
+  
         {
           title: "Delete asset",
           route: "/customer/asset/delete",
+        },
+      ],
+    },
+    {
+      title: "Tickets",
+      route: "/customer/tickets",
+      icon: <HiOutlineClipboardList />,
+      subMenus: [
+        {
+          title: "View Tickets",
+          route: "/customer/tickets/view-tickets",
+        },
+        {
+          title: "Members",
+          route: "/customer/tickets/members",
+        },
+        {
+          title: "Ticket Reports",
+          route: "/customer/tickets/ticket-reports",
+        },
+      ],
+    },
+    {
+      title: "Meetings",
+      route: "#customer/meetings",
+      icon: <HiCurrencyDollar />,
+      subMenus: [
+        {
+          title: "Room Booking",
+          route: "/customer/meetings/booking",
         },
       ],
     },
@@ -186,6 +222,7 @@ const ModuleSidebar = ({ mainSideBar }) => {
     Finance: ["FINANCE & ACCOUNTING"],
     Sales: ["SALES"],
     HR: ["HUMAN RESOURCE", "CUSTOMER SERVICE"],
+    CMS: ["CUSTOMER SERVICE"],
     Marketing: ["MARKETING"],
     Cafe: ["CAFE (F&B)"],
     IT: ["IT"],
@@ -591,6 +628,28 @@ const ModuleSidebar = ({ mainSideBar }) => {
               </Tooltip>
             </>
           )}
+
+          <Tooltip title={"Reports"} placement="right">
+            <div
+              onClick={() => {
+                navigate("#dashboard");
+              }}
+              className={`flex border-b-[1px] ${
+                isSidebarOpen ? "pl-[1rem]" : "justify-center"
+              } items-center cursor-pointer  py-3 hover:wono-blue-dark hover:text-white hover:rounded-md ${
+                location.pathname === "/dashboard"
+                  ? "wono-blue rounded-md text-[#0DB4EA]"
+                  : "bg-white"
+              }`}
+            >
+              <div className="flex justify-center w-6 text-[1.3rem]">
+                <FaCode />
+              </div>
+              {isSidebarOpen && (
+                <span className="pl-5 text-[0.8rem]"> Frontend Reports</span>
+              )}
+            </div>
+          </Tooltip>
         </div>
       </div>
     </div>

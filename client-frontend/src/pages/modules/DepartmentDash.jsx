@@ -52,10 +52,16 @@ import AddAssetForm from "../cms/asset/AddAssetForm";
 import { NewModal } from "../../components/NewModal";
 import ViewAssets from "../cms/asset/ViewAssets";
 import AssetsData from "../cms/asset/AssetsData";
+import Listing from "../cms/room-booking/Listing";
+import ManageAsset from "../cms/asset/ManageAsset";
+import TicketWidget from "../cms/tickets/components/TicketWidget";
+import TicketWidget2 from "../cms/tickets/components/TicketWidget2";
+import TicketWidget3 from "../cms/tickets/components/TicketWidget3";
+import TicketWidget4 from "../cms/tickets/components/TicketWidget4";
 
 const DepartmentDash = () => {
   const dispatch = useDispatch();
-  const [open,setOpen] = useState(false)
+  const [open, setOpen] = useState(false);
   const location = useLocation();
   const departmentName = location.state?.departmentName;
   const { department } = useParams();
@@ -63,20 +69,27 @@ const DepartmentDash = () => {
   const [activeModal, setActiveModal] = useState(null);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  // const handleOpenTicket = () => setOpenTicket(true);
+  // const handleCloseTicket = () => setOpenTicket(false);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
-
   const style = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
     width: 400,
-    bgcolor: 'background.paper',
-    border: '2px solid #000',
+    bgcolor: "background.paper",
+    border: "2px solid #000",
+    bgcolor: "background.paper",
+    border: "2px solid #000",
     boxShadow: 24,
     p: 4,
   };
@@ -261,9 +274,18 @@ const DepartmentDash = () => {
     newAssetsAdded: 10,
   };
 
+  const customerServiceWidgetsTicketData = {
+    totalAssets: 200,
+    pendingMaintenance: 15,
+    assignedAssets: 120,
+    assetsInRepair: 5,
+    newAssetsAdded: 10,
+  };
+
   const customerServiceWidgets = [
     {
       heading: "Asset Management",
+      subModule: "asset",
       widgets: [
         <AssetsCount count={customerServiceWidgetsData.totalAssets} />,
         <MaintenanceRequests
@@ -272,6 +294,23 @@ const DepartmentDash = () => {
         <AssetsAssigned assigned={customerServiceWidgetsData.assignedAssets} />,
         <AssetsInRepair count={customerServiceWidgetsData.assetsInRepair} />,
         <NewAssetsAdded added={customerServiceWidgetsData.newAssetsAdded} />,
+      ],
+    },
+    {
+      heading: "Ticket Management",
+      subModule: "ticket",
+      widgets: [
+        <TicketWidget />,
+        <TicketWidget2 />,
+        <TicketWidget3 />,
+        <TicketWidget4 />,
+        // <AssetsCount count={customerServiceWidgetsData.totalAssets} />,
+        // <MaintenanceRequests
+        //   requests={customerServiceWidgetsData.pendingMaintenance}
+        // />,
+        // <AssetsAssigned assigned={customerServiceWidgetsData.assignedAssets} />,
+        // <AssetsInRepair count={customerServiceWidgetsData.assetsInRepair} />,
+        // <NewAssetsAdded added={customerServiceWidgetsData.newAssetsAdded} />,
       ],
     },
   ];
@@ -383,8 +422,7 @@ const DepartmentDash = () => {
                   {products.map((product) => (
                     <div
                       key={product.id}
-                      className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow"
-                    >
+                      className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
                       <img
                         src={product.image}
                         alt={product.name}
@@ -426,6 +464,7 @@ const DepartmentDash = () => {
             )}
           </>
         )}
+
         {/* Finance submodules */}
         {location.pathname.startsWith("/finance") && (
           <>
@@ -473,33 +512,32 @@ const DepartmentDash = () => {
                 <div className="bg-white p-4 rounded-lg  mt-4">
                   <div className="mb-8 flex justify-between">
                     <h1 className="text-3xl">Key insights</h1>
-                    <button
-                      onClick={handleOpen}
-                      className="px-6 py-2 rounded-lg text-white wono-blue-dark hover:bg-[#3cbce7] transition-shadow shadow-md hover:shadow-lg active:shadow-inner"
-                    >
-                      Add Assets
-                    </button>
                   </div>
-                  {customerServiceWidgets.map((section, index) => (
-                    <WidgetSection
-                      key={index}
-                      heading={section.heading}
-                      widgets={section.widgets}
-                    />
-                  ))}
+                  {customerServiceWidgets
+                    .filter((section) => section.subModule === "asset")
+                    .map((section, index) => (
+                      <WidgetSection
+                        key={index}
+                        heading={section.heading}
+                        widgets={section.widgets}
+                      />
+                    ))}
                 </div>
               </>
             ) : location.pathname === "/customer/asset/view" ? (
               <>
-              <ViewAssets />
+                <ViewAssets />
+                <ViewAssets />
               </>
-            ) : location.pathname === "/customer/asset/details" ? (
+            ) : location.pathname === "/customer/asset/manage" ? (
               <>
-              <AssetsData />
+              <ManageAsset />
               </>
-            )
-
-            : (
+            ) : location.pathname === "/customer/meetings/booking" ? (
+              <>
+                <Listing />
+              </>
+            ) : (
               <></>
             )}
           </>
@@ -508,11 +546,11 @@ const DepartmentDash = () => {
       <div>
         <NewModal open={open} onClose={handleClose}>
           <div className="motion-preset-expand">
-          <AddAssetForm title={"Add Asset"} handleClose={handleClose} />
+            <AddAssetForm title={"Add Asset"} handleClose={handleClose} />
+            <AddAssetForm title={"Add Asset"} handleClose={handleClose} />
           </div>
         </NewModal>
       </div>
-      
     </div>
   );
 };

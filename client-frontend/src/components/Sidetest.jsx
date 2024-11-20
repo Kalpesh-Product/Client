@@ -143,9 +143,10 @@ const TestSide = () => {
     Finance: ["FINANCE & ACCOUNTING"],
     Sales: ["SALES"],
     HR: ["HUMAN RESOURCE", "CUSTOMER SERVICE"],
+    CMS: ["CUSTOMER SERVICE"],
     Marketing: ["MARKETING"],
     Cafe: ["CAFE (F&B)"],
-    IT: ["IT"],
+    IT: ["IT","CUSTOMER SERVICE"],
     Maintenance: ["MAINTENANCE"],
     Legal: ["LEGAL"],
   };
@@ -256,8 +257,7 @@ const TestSide = () => {
                           state: { departmentName: dept.name },
                         });
                       }}
-                      className={`flex items-center border-b-[1px] py-3 gap-3 hover:wono-blue-dark pl-[1rem] hover:text-white  hover:rounded-md `}
-                    >
+                      className={`flex items-center border-b-[1px] py-3 gap-3 hover:wono-blue-dark pl-[1rem] hover:text-white  hover:rounded-md `}>
                       {/* <img src={item.icon} alt={item.name} className="w-6 h-6 mr-3" /> */}
                       <div className="flex justify-center w-6 text-[1.3rem]">
                         {dept.icon}
