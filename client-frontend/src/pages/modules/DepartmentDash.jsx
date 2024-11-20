@@ -65,6 +65,8 @@ import Button from "@mui/material/Button";
 
 import Modal from "@mui/material/Modal";
 import { color, motion } from "framer-motion";
+import ManageAsset from "../cms/asset/ManageAsset";
+import Listing from "../cms/room-booking/Listing";
 
 const DepartmentDash = () => {
   const dispatch = useDispatch();
@@ -534,6 +536,10 @@ const DepartmentDash = () => {
               <>
                 <ViewAssets />
               </>
+            ) : location.pathname === "/customer/asset/manage" ? (
+              <>
+                <ManageAsset />
+              </>
             ) : location.pathname === "/customer/asset/details" ? (
               <>
                 <AssetsData />
@@ -578,7 +584,11 @@ const DepartmentDash = () => {
               <>
                 <TicketReports />
               </>
-            ) : (
+            ): location.pathname === "/customer/meetings/booking" ? (
+              <>
+                <Listing />
+              </>
+            ): (
               <></>
             )}
           </>
