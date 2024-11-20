@@ -169,7 +169,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/tasks",
-        element: <Task/>
+        element: <DepartmentDash/>
       }
     ],
   },

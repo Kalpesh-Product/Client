@@ -58,6 +58,7 @@ import TicketWidget from "../cms/tickets/components/TicketWidget";
 import TicketWidget2 from "../cms/tickets/components/TicketWidget2";
 import TicketWidget3 from "../cms/tickets/components/TicketWidget3";
 import TicketWidget4 from "../cms/tickets/components/TicketWidget4";
+import Task from "../Task";
 
 const DepartmentDash = () => {
   const dispatch = useDispatch();
@@ -69,6 +70,7 @@ const DepartmentDash = () => {
   const [activeModal, setActiveModal] = useState(null);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
   // const handleOpenTicket = () => setOpenTicket(true);
   // const handleCloseTicket = () => setOpenTicket(false);
 
@@ -446,6 +448,9 @@ const DepartmentDash = () => {
             )}
           </>
         )}
+        {
+
+        }
 
         {/* HR submodules */}
         {location.pathname.startsWith("/hr") && (
@@ -537,11 +542,19 @@ const DepartmentDash = () => {
               <>
                 <Listing />
               </>
-            ) : (
-              <></>
-            )}
+            )  (
+             
+
+            ):<></>}
           </>
         )}
+        {
+          location.pathname.startsWith("/tasks") && (
+            <>
+            <Task/>
+            </>
+          )
+        }
       </div>
       <div>
         <NewModal open={open} onClose={handleClose}>
