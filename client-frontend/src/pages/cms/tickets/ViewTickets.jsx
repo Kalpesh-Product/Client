@@ -1,8 +1,9 @@
 import React from "react";
 import TestLink from "./TestLink";
-import MyTicketsTable from "../../../components/Submodules/ticket/MyTicketsTable";
+
 import TestSide from "../../../components/Sidetest";
 import ModuleSidebar from "../../../components/ModuleSidebar";
+import ViewTicketsTabs from "./components/ViewTicketsTabs";
 
 const ViewTickets = () => {
   return (
@@ -10,10 +11,10 @@ const ViewTickets = () => {
       {/* <TestSide /> */}
       {/* <ModuleSidebar /> */}
       {/* <TestLink /> */}
-      <div>
-        <div>ViewTickets</div>
+      <div className=" w-full">
+        {/* <div>ViewTickets</div> */}
 
-        <MyTicketsTable />
+        <ViewTicketsTabs />
       </div>
     </div>
   );

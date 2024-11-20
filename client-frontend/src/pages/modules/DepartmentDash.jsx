@@ -68,6 +68,7 @@ import { color, motion } from "framer-motion";
 import ManageAsset from "../cms/asset/ManageAsset";
 import Listing from "../cms/room-booking/Listing";
 import Task from "../Task";
+import TodaysTickets from "../cms/tickets/components/TodaysTickets";
 
 const DepartmentDash = () => {
   const dispatch = useDispatch();
@@ -450,9 +451,7 @@ const DepartmentDash = () => {
             )}
           </>
         )}
-        {
-
-        }
+        {}
 
         {/* HR submodules */}
         {location.pathname.startsWith("/hr") && (
@@ -550,7 +549,7 @@ const DepartmentDash = () => {
               </>
             ) : location.pathname === "/customer/tickets" ? (
               <>
-                <div className="bg-white p-4 rounded-lg  mt-4">
+                <div className="bg-white p-4 rounded-lg mt-4">
                   <div className="mb-8 flex justify-between">
                     <h1 className="text-3xl">Key insights</h1>
                     <button
@@ -570,8 +569,8 @@ const DepartmentDash = () => {
                     ))}
 
                   <div className=" py-10">
-                    {/* <p>Table Component</p> */}
-                    <MyTicketsTable />
+                    {/* <p>Today's tickets Table Component</p> */}
+                    <TodaysTickets />
                   </div>
                   {/* <p>x</p> */}
                 </div>
@@ -588,22 +587,20 @@ const DepartmentDash = () => {
               <>
                 <TicketReports />
               </>
-            ): location.pathname === "/customer/meetings/booking" ? (
+            ) : location.pathname === "/customer/meetings/booking" ? (
               <>
                 <Listing />
               </>
-            ): (
+            ) : (
               <></>
             )}
           </>
         )}
-        {
-          location.pathname.startsWith("/tasks") && (
-            <>
-            <Task/>
-            </>
-          )
-        }
+        {location.pathname.startsWith("/tasks") && (
+          <>
+            <Task />
+          </>
+        )}
       </div>
       <div>
         <NewModal open={open} onClose={handleClose}>

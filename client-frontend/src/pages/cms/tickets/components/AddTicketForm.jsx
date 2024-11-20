@@ -36,7 +36,7 @@ const AddTicketForm = () => {
     <div className="flex">
       {/* <TestSide />
       <TestLink /> */}
-      <div className=" w-full">
+      <div className="w-full">
         {/* <div>AddT icket Form</div> */}
         <div className="">
           <div className=" mx-auto">
@@ -49,10 +49,10 @@ const AddTicketForm = () => {
                 borderRadius: 2,
               }}
               // className="bg-white p-6 rounded-lg shadow-md mx-auto">
-              className="bg-white p-6 rounded-lg  mx-auto">
+              className="bg-white p-6 rounded-lg mx-auto">
               {/* Personal Information */}
               {/* <h2 className="text-lg font-semibold mb-4">Add Ticket</h2> */}
-              <div className="grid grid-cols-1  gap-4">
+              <div className="grid grid-cols-1 gap-4">
                 {/* Name, Mobile, Email, DOB fields */}
                 <div className="grid grid-cols-1 gap-4">
                   <FormControl fullWidth>

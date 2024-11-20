@@ -121,10 +121,9 @@ const ViewAssets = () => {
               padding: "0.5rem",
               borderRadius: "4px",
               cursor: "pointer",
-              fontFamily: 'Popins-Regular'
+              fontFamily: "Popins-Regular",
             }}
-            onClick={() => handleViewDetails(params.row)}
-          >
+            onClick={() => handleViewDetails(params.row)}>
             View Details
           </button>
         </div>
@@ -147,8 +146,7 @@ const ViewAssets = () => {
               onChange={handleTabChange}
               variant="fullWidth"
               scrollButtons="auto"
-              aria-label="Asset Categories"
-            >
+              aria-label="Asset Categories">
               {assetCategories.map((category, index) => (
                 <Tab
                   key={index}
@@ -197,8 +195,7 @@ const ViewAssets = () => {
               <Typography
                 sx={{ fontFamily: "Popins-SemiBold" }}
                 variant="h5"
-                gutterBottom
-              >
+                gutterBottom>
                 {selectedLaptop.brand} - {selectedLaptop.model}
               </Typography>
               <motion.button
@@ -206,8 +203,7 @@ const ViewAssets = () => {
                 whileTap={{ scale: 0.9 }}
                 type="button"
                 onClick={handleCloseModal}
-                className=" p-2 bg-white text-[red] border border-red-200 hover:border-red-400 text-2xl rounded-md"
-              >
+                className=" p-2 bg-white text-[red] border border-red-200 hover:border-red-400 text-2xl rounded-md">
                 <IoMdClose />
               </motion.button>
             </div>

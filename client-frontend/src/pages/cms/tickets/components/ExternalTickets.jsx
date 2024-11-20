@@ -9,7 +9,7 @@ import Select from "@mui/material/Select";
 import { CSVLink } from "react-csv";
 import Button from "@mui/material/Button";
 
-const TodaysTickets = () => {
+const ExternalTickets = () => {
   const columns = [
     { field: "id", headerName: "ID", width: 100 },
     { field: "ticketTitle", headerName: "Ticket Title", width: 200 },
@@ -209,10 +209,10 @@ const TodaysTickets = () => {
         <h2>Today's Tickets</h2>
       </div> */}
 
-      <div>
+      {/* <div>
         <h2 className="text-lg">Today's Tickets</h2>
         <br />
-      </div>
+      </div> */}
 
       {/* Tickets datatable START */}
       <Paper sx={{ height: 400, width: "100%" }}>
@@ -230,4 +230,4 @@ const TodaysTickets = () => {
   );
 };
 
-export default TodaysTickets;
+export default ExternalTickets;
