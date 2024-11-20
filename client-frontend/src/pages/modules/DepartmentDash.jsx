@@ -67,6 +67,7 @@ import Modal from "@mui/material/Modal";
 import { color, motion } from "framer-motion";
 import ManageAsset from "../cms/asset/ManageAsset";
 import Listing from "../cms/room-booking/Listing";
+import Task from "../Task";
 
 const DepartmentDash = () => {
   const dispatch = useDispatch();
@@ -449,6 +450,9 @@ const DepartmentDash = () => {
             )}
           </>
         )}
+        {
+
+        }
 
         {/* HR submodules */}
         {location.pathname.startsWith("/hr") && (
@@ -593,6 +597,13 @@ const DepartmentDash = () => {
             )}
           </>
         )}
+        {
+          location.pathname.startsWith("/tasks") && (
+            <>
+            <Task/>
+            </>
+          )
+        }
       </div>
       <div>
         <NewModal open={open} onClose={handleClose}>
