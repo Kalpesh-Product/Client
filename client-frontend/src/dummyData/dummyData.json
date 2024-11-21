@@ -6,8 +6,8 @@
     "department": "TopManagement",
     "password": "123",
     "designation": "Founder & CEO",
-    "company" : "Biznest",
-    "Phone" : "1234523456"
+    "company": "Biznest",
+    "Phone": "1234523456"
   },
   {
     "name": "Kashif Shaikh",
@@ -16,8 +16,8 @@
     "department": "TopManagement",
     "password": "123",
     "designation": "Co-Founder",
-    "company" : "Biznest",
-    "Phone" : "1234523456"
+    "company": "Biznest",
+    "Phone": "1234523456"
   },
   {
     "name": "Farzeen",
@@ -26,98 +26,98 @@
     "department": "HR",
     "password": "123",
     "designation": "Co-Founder",
-    "company" : "Biznest",
-    "Phone" : "1234523456"
+    "company": "Biznest",
+    "Phone": "1234523456"
   },
   {
     "name": "Kalpesh Naik",
     "email": "kalpesh@biznest.co.in",
     "role": "Admin",
     "department": "Tech",
-  "password": "123",
+    "password": "123",
     "designation": "Admin",
-    "company" : "Biznest",
-    "Phone" : "1234523456"
+    "company": "Biznest",
+    "Phone": "1234523456"
   },
   {
     "name": "Allan Silveira",
     "email": "allan@biznest.co.in",
     "role": "Employee",
     "department": "Tech",
-   "password": "123",
+    "password": "123",
     "designation": "Employee",
-    "company" : "Biznest",
-    "Phone" : "1234523456"
+    "company": "Biznest",
+    "Phone": "1234523456"
   },
   {
     "name": "Aiwinraj KS",
     "email": "aiwinraj@biznest.co.in",
     "role": "Employee",
     "department": "Tech",
-   "password": "123",
+    "password": "123",
     "designation": "Employee",
-    "company" : "Biznest",
-    "Phone" : "1234523456"
+    "company": "Biznest",
+    "Phone": "1234523456"
   },
   {
     "name": "Anushri Bhagat",
     "email": "anushri@biznest.co.in",
     "role": "Employee",
     "department": "Tech",
-   "password": "123",
+    "password": "123",
     "designation": "CEO",
-    "company" : "Biznest",
-    "Phone" : "1234523456"
+    "company": "Biznest",
+    "Phone": "1234523456"
   },
   {
     "name": "Sankalp Kalangutkar",
     "email": "sankalp@biznest.co.in",
     "role": "Employee",
     "department": "Tech",
-   "password": "123",
+    "password": "123",
     "designation": "CEO",
-    "company" : "Biznest",
-    "Phone" : "1234523456"
+    "company": "Biznest",
+    "Phone": "1234523456"
   },
   {
     "name": "Narshiva Naik",
     "email": "narshiva@biznest.co.in",
     "role": "Admin",
     "department": "Finance",
-  "password": "123",
+    "password": "123",
     "designation": "CEO",
-    "company" : "Biznest",
-    "Phone" : "1234523456"
+    "company": "Biznest",
+    "Phone": "1234523456"
   },
   {
     "name": "Hema Natalkar",
     "email": "hema@biznest.co.in",
     "role": "Employee",
     "department": "Finance",
-   "password": "123",
+    "password": "123",
     "designation": "CEO",
-    "company" : "Biznest",
-    "Phone" : "1234523456"
+    "company": "Biznest",
+    "Phone": "1234523456"
   },
   {
     "name": "Rhutvik Sawant",
     "email": "rhutvik@biznest.co.in",
     "role": "Employee",
     "department": "Finance",
-   "password": "123",
+    "password": "123",
     "designation": "CEO",
-    "company" : "Biznest",
-    "Phone" : "1234523456"
+    "company": "Biznest",
+    "Phone": "1234523456"
   },
   {
     "name": "Siddhi Vernekar",
     "email": "siddhi@biznest.co.in",
     "role": "Employee",
     "department": "Finance",
-   "password": "123",
+    "password": "123",
     "designation": "CEO",
-    "company" : "Biznest",
-    "Phone" : "1234523456"
+    "company": "Biznest",
+    "Phone": "1234523456"
   },
 
   {
@@ -127,15 +127,15 @@
     "department": "IT",
     "password": "123",
     "designation": "CEO",
-    "company" : "Biznest"
+    "company": "Biznest"
   },
   {
     "name": "Faizan",
     "email": "faizan@biznest.co.in",
     "role": "Employee",
     "department": "IT",
-   "password": "123",
+    "password": "123",
     "designation": "CEO",
-    "company" : "Biznest"
+    "company": "Biznest"
   }
 ]

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Box from "@mui/material/Box";
 import Tab from "@mui/material/Tab";
 import TabContext from "@mui/lab/TabContext";
@@ -9,7 +9,7 @@ import ExternalTickets from "./ExternalTickets";
 import ClosedTickets from "./ClosedTickets";
 import UnresolvedTickets from "./UnresolvedTickets";
 
-const ViewTicketsTabs = () => {
+const MyTicketsTabs = () => {
   // For Departments
   const [value, setValue] = React.useState("1");
 
@@ -17,16 +17,10 @@ const ViewTicketsTabs = () => {
     setValue(newValue);
   };
 
-  const [user, setUser] = useState("");
-  useEffect(() => {
-    const storedUser = JSON.parse(localStorage.getItem("user"));
-    setUser(storedUser);
-  }, []);
-
   return (
     <div>
       <div className=" w-full py-10 text-lg">
-        <h2>View Tickets</h2>
+        <h2>My Tickets</h2>
       </div>
 
       <div>
@@ -48,42 +42,21 @@ const ViewTicketsTabs = () => {
                 className="wono-blue"
                 sx={{ textTransform: "capitalize" }}
               />
-
-              {user.role === "Admin" && user.department === "IT" && (
-                <Tab
-                  label="External Tickets"
-                  value="2"
-                  sx={{ textTransform: "capitalize" }}
-                />
-              )}
-              {user.role === "Employee" && user.department === "IT" && (
-                <Tab
-                  label="Closed Tickets"
-                  value="3"
-                  sx={{ textTransform: "capitalize" }}
-                />
-              )}
-              {user.role === "Admin" && user.department === "IT" && (
-                <Tab
-                  label="Unresolved Tickets"
-                  value="4"
-                  sx={{ textTransform: "capitalize" }}
-                />
-              )}
-              {user.role === "Employee" && user.department === "IT" && (
-                <Tab
-                  label="Assigned Tickets"
-                  value="5"
-                  sx={{ textTransform: "capitalize" }}
-                />
-              )}
-              {user.role === "Employee" && user.department === "IT" && (
-                <Tab
-                  label="Accepted Tickets"
-                  value="6"
-                  sx={{ textTransform: "capitalize" }}
-                />
-              )}
+              <Tab
+                label="External Tickets"
+                value="2"
+                sx={{ textTransform: "capitalize" }}
+              />
+              <Tab
+                label="Closed Tickets"
+                value="3"
+                sx={{ textTransform: "capitalize" }}
+              />
+              <Tab
+                label="Unresolved Tickets"
+                value="4"
+                sx={{ textTransform: "capitalize" }}
+              />
             </TabList>
           </Box>
           <TabPanel value="1">
@@ -122,24 +95,6 @@ const ViewTicketsTabs = () => {
             {/* <MyTicketsTable /> */}
             <UnresolvedTickets />
           </TabPanel>
-
-          <TabPanel value="5">
-            <div className="flex gap-4">
-              <div>Assigned Tickets</div>
-            </div>
-            <br />
-            {/* <MyTicketsTable /> */}
-            <UnresolvedTickets />
-          </TabPanel>
-
-          <TabPanel value="6">
-            <div className="flex gap-4">
-              <div>Accepted Tickets</div>
-            </div>
-            <br />
-            {/* <MyTicketsTable /> */}
-            <UnresolvedTickets />
-          </TabPanel>
         </TabContext>
         {/* Tabs Material UI End*/}
       </div>
@@ -147,4 +102,4 @@ const ViewTicketsTabs = () => {
   );
 };
 
-export default ViewTicketsTabs;
+export default MyTicketsTabs;

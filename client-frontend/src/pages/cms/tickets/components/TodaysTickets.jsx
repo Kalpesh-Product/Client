@@ -21,6 +21,13 @@ const TodaysTickets = () => {
       valueOptions: ["High", "Medium", "Low"],
     },
     {
+      field: "status",
+      headerName: "Status",
+      width: 150,
+      type: "singleSelect",
+      valueOptions: ["Pending", "In Process", "Resolved"],
+    },
+    {
       field: "department",
       headerName: "Department",
       width: 150,
@@ -28,80 +35,78 @@ const TodaysTickets = () => {
       valueOptions: ["IT", "HR", "Tech", "Admin"],
     },
     { field: "requestDate", headerName: "Request Date", width: 150 },
-
     {
       field: "viewDetails",
-      headerName: "View Details",
+      headerName: "Actions",
       width: 150,
-      renderCell: (params) => (
-        <Button
-          size="small"
-          onClick={() => handleViewDetails(params.row)}
-          variant="contained"
-          sx={{
-            backgroundColor: "#3B82F6", // Tailwind blue-500
-            color: "white",
-            "&:hover": {
-              backgroundColor: "#2563EB", // Tailwind blue-600
-            },
-            padding: "8px 16px",
-            borderRadius: "0.375rem", // Tailwind rounded
-          }}>
-          View Details
-        </Button>
-      ),
-    },
-    {
-      field: "edit",
-      headerName: "Edit",
-      width: 100,
-      renderCell: (params) => (
-        <Button
-          size="small"
-          onClick={() => handleEdit(params.row)}
-          variant="contained"
-          sx={{
-            backgroundColor: "#22C55E", // Tailwind green-500
-            color: "white",
-            "&:hover": {
-              backgroundColor: "#16A34A", // Tailwind green-600
-            },
-            padding: "8px 16px",
-            borderRadius: "0.375rem", // Tailwind rounded
-          }}>
-          Edit
-        </Button>
-      ),
-    },
-    {
-      field: "delete",
-      headerName: "Delete",
-      width: 120,
-      renderCell: (params) => (
-        <Button
-          size="small"
-          onClick={() => handleDelete(params.row)}
-          variant="contained"
-          sx={{
-            backgroundColor: "#EF4444", // Tailwind red-500
-            color: "white",
-            "&:hover": {
-              backgroundColor: "#DC2626", // Tailwind red-600
-            },
-            padding: "8px 16px",
-            borderRadius: "0.375rem", // Tailwind rounded
-          }}>
-          Delete
-        </Button>
-      ),
+      renderCell: (params) => {
+        const handleActionChange = (event) => {
+          const selectedAction = event.target.value;
+
+          if (selectedAction === "view") {
+            handleViewDetails(params.row);
+          } else if (selectedAction === "edit") {
+            handleEdit(params.row);
+          } else if (selectedAction === "delete") {
+            handleDelete(params.row);
+          }
+        };
+
+        return (
+          <FormControl size="small" sx={{ width: "100%" }}>
+            <Select
+              value="" // Always forces the dropdown to display the SVG
+              onChange={handleActionChange}
+              displayEmpty
+              disableUnderline
+              IconComponent={() => null} // Removes the dropdown arrow
+              sx={{
+                "& .MuiSelect-select": {
+                  padding: "8px 16px",
+                  borderRadius: "0.375rem", // Tailwind rounded
+                  backgroundColor: "transparent",
+                  border: "none", // Removes border
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                },
+                "& fieldset": {
+                  border: "none", // Removes border in outlined variant
+                },
+              }}>
+              <MenuItem value="" disabled>
+                <svg
+                  className="flex-none size-4 text-gray-600 dark:text-neutral-500"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width={24}
+                  height={24}
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth={2}
+                  strokeLinecap="round"
+                  strokeLinejoin="round">
+                  <circle cx={12} cy={12} r={1} />
+                  <circle cx={12} cy={5} r={1} />
+                  <circle cx={12} cy={19} r={1} />
+                </svg>
+              </MenuItem>
+              <MenuItem value="view">View Details</MenuItem>
+              <MenuItem value="edit">Edit</MenuItem>
+              <MenuItem value="delete">Delete</MenuItem>
+            </Select>
+          </FormControl>
+        );
+      },
     },
   ];
 
   const allRows = [
     {
       id: 1,
-      ticketTitle: "Website Bug",
+      ticketTitle: "Wifi is not working",
       priority: "High",
+      status: "Pending",
       department: "IT",
       requestDate: "2024-10-01",
     },
@@ -109,6 +114,7 @@ const TodaysTickets = () => {
       id: 2,
       ticketTitle: "Payroll Issue",
       priority: "Medium",
+      status: "In Process",
       department: "HR",
       requestDate: "2024-10-03",
     },
@@ -116,6 +122,7 @@ const TodaysTickets = () => {
       id: 3,
       ticketTitle: "Server Downtime",
       priority: "High",
+      status: "Resolved",
       department: "Tech",
       requestDate: "2024-10-05",
     },
@@ -123,6 +130,7 @@ const TodaysTickets = () => {
       id: 4,
       ticketTitle: "New Workstation Setup",
       priority: "Low",
+      status: "Pending",
       department: "Admin",
       requestDate: "2024-10-06",
     },
@@ -130,6 +138,7 @@ const TodaysTickets = () => {
       id: 5,
       ticketTitle: "Employee Onboarding",
       priority: "Medium",
+      status: "In Process",
       department: "HR",
       requestDate: "2024-10-07",
     },
@@ -137,6 +146,7 @@ const TodaysTickets = () => {
       id: 6,
       ticketTitle: "Network Issue",
       priority: "High",
+      status: "Pending",
       department: "IT",
       requestDate: "2024-10-08",
     },
@@ -144,6 +154,7 @@ const TodaysTickets = () => {
       id: 7,
       ticketTitle: "Software Installation",
       priority: "Low",
+      status: "Resolved",
       department: "Tech",
       requestDate: "2024-10-09",
     },
@@ -151,6 +162,7 @@ const TodaysTickets = () => {
       id: 8,
       ticketTitle: "Office Supplies Request",
       priority: "Low",
+      status: "Pending",
       department: "Admin",
       requestDate: "2024-10-10",
     },
@@ -158,6 +170,7 @@ const TodaysTickets = () => {
       id: 9,
       ticketTitle: "Email Access Issue",
       priority: "Medium",
+      status: "In Process",
       department: "IT",
       requestDate: "2024-10-11",
     },

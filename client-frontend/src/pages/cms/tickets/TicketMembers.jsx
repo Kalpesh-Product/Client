@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
@@ -18,27 +18,91 @@ const TicketMembers = () => {
     { field: "email", headerName: "Email", width: 250 },
     { field: "role", headerName: "Role", width: 150 },
     { field: "availability", headerName: "Availability", width: 150 },
+    // {
+    //   field: "action",
+    //   headerName: "Action",
+    //   width: 150,
+    //   renderCell: (params) => (
+    //     <Button
+    //       size="small"
+    //       onClick={() => handleDelete(params.row)}
+    //       variant="contained"
+    //       sx={{
+    //         backgroundColor: "#EF4444",
+    //         color: "white",
+    //         "&:hover": {
+    //           backgroundColor: "#DC2626",
+    //         },
+    //         padding: "8px 16px",
+    //         borderRadius: "0.375rem",
+    //       }}>
+    //       Delete
+    //     </Button>
+    //   ),
+    // },
     {
-      field: "action",
-      headerName: "Action",
+      field: "viewDetails",
+      headerName: "Actions",
       width: 150,
-      renderCell: (params) => (
-        <Button
-          size="small"
-          onClick={() => handleDelete(params.row)}
-          variant="contained"
-          sx={{
-            backgroundColor: "#EF4444",
-            color: "white",
-            "&:hover": {
-              backgroundColor: "#DC2626",
-            },
-            padding: "8px 16px",
-            borderRadius: "0.375rem",
-          }}>
-          Delete
-        </Button>
-      ),
+      renderCell: (params) => {
+        const handleActionChange = (event) => {
+          const selectedAction = event.target.value;
+
+          if (selectedAction === "view") {
+            handleViewDetails(params.row);
+          } else if (selectedAction === "edit") {
+            handleEdit(params.row);
+          } else if (selectedAction === "delete") {
+            handleDelete(params.row);
+          }
+        };
+
+        return (
+          <FormControl size="small" sx={{ width: "100%" }}>
+            <Select
+              value="" // Always forces the dropdown to display the SVG
+              onChange={handleActionChange}
+              displayEmpty
+              disableUnderline
+              IconComponent={() => null} // Removes the dropdown arrow
+              sx={{
+                "& .MuiSelect-select": {
+                  padding: "8px 16px",
+                  borderRadius: "0.375rem", // Tailwind rounded
+                  backgroundColor: "transparent",
+                  border: "none", // Removes border
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                },
+                "& fieldset": {
+                  border: "none", // Removes border in outlined variant
+                },
+              }}>
+              <MenuItem value="" disabled>
+                <svg
+                  className="flex-none size-4 text-gray-600 dark:text-neutral-500"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width={24}
+                  height={24}
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth={2}
+                  strokeLinecap="round"
+                  strokeLinejoin="round">
+                  <circle cx={12} cy={12} r={1} />
+                  <circle cx={12} cy={5} r={1} />
+                  <circle cx={12} cy={19} r={1} />
+                </svg>
+              </MenuItem>
+              <MenuItem value="view">View Details</MenuItem>
+              <MenuItem value="edit">Edit</MenuItem>
+              <MenuItem value="delete">Delete</MenuItem>
+            </Select>
+          </FormControl>
+        );
+      },
     },
   ];
 
@@ -94,6 +158,15 @@ const TicketMembers = () => {
       : allRows.filter((row) => row.department === department);
 
   // Handlers for the buttons
+
+  // Handlers for the buttons
+  const handleViewDetails = (row) => {
+    alert(`Viewing details for: ${row.ticketTitle}`);
+  };
+
+  const handleEdit = (row) => {
+    alert(`Editing ticket: ${row.ticketTitle}`);
+  };
   const handleDelete = (row) => {
     if (
       window.confirm(`Are you sure you want to delete ${row.name}'s record?`)
@@ -123,6 +196,37 @@ const TicketMembers = () => {
     toast.success("New Member Added");
     closeModal(); // Optionally close the modal after the alert
   };
+
+  const [nameInput, setNameInput] = useState(""); // To store the current input value
+  const [filteredSuggestions, setFilteredSuggestions] = useState([]); // To store filtered name suggestions
+
+  const fullNames = [
+    "Faizan Shaikh",
+    "Rajiv Kumar Pal",
+    "Desmon Goes",
+    "Allan Mark Silveira",
+    "Aiwinraj KS",
+    "Anushri Mohandas Bhagat",
+    "Sankalp Chandrashekar Kalangutkar",
+    "Kashif Shaikh",
+    "Ragesh A C",
+    "Machindranath Parkar",
+    "Benson Nadakattin",
+    "Kalpesh Naik",
+    "Nikhil Nagvekar",
+    "Farzeen Qadri",
+  ];
+
+  useEffect(() => {
+    if (nameInput === "") {
+      setFilteredSuggestions([]); // Clear suggestions if input is empty
+    } else {
+      const filtered = fullNames.filter((name) =>
+        name.toLowerCase().startsWith(nameInput.toLowerCase())
+      );
+      setFilteredSuggestions(filtered);
+    }
+  }, [nameInput]);
 
   return (
     <div>
@@ -219,7 +323,7 @@ const TicketMembers = () => {
                           </Select>
                         </FormControl>
                       </div> */}
-                      <div className="grid grid-cols-1 gap-4">
+                      {/* <div className="grid grid-cols-1 gap-4">
                         <TextField
                           label="Name"
                           // value={newEvent.name}
@@ -228,8 +332,42 @@ const TicketMembers = () => {
                           // }
                           fullWidth
                         />
-                      </div>
-                      <div className="grid grid-cols-1 gap-4">
+                      </div> */}
+
+                      <TextField
+                        label="Name"
+                        value={nameInput}
+                        onChange={(e) => setNameInput(e.target.value)} // Trigger suggestion filtering on typing
+                        fullWidth
+                      />
+
+                      {filteredSuggestions.length > 0 && nameInput && (
+                        <ul
+                          style={{
+                            listStyleType: "none",
+                            padding: 0,
+                            marginTop: 4,
+                          }}>
+                          {filteredSuggestions.map((suggestion, index) => (
+                            <li
+                              key={index}
+                              style={{
+                                padding: 4,
+                                background: "#f1f1f1",
+                                cursor: "pointer",
+                                borderRadius: 4,
+                              }}
+                              onClick={() => {
+                                setNameInput(suggestion); // Set input to clicked suggestion
+                                setFilteredSuggestions([]); // Clear suggestions after selecting
+                              }}>
+                              {suggestion}
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+
+                      {/* <div className="grid grid-cols-1 gap-4">
                         <TextField
                           label="Email"
                           // value={newEvent.name}
@@ -238,8 +376,8 @@ const TicketMembers = () => {
                           // }
                           fullWidth
                         />
-                      </div>
-                      <div className="grid grid-cols-1 gap-4">
+                      </div> */}
+                      {/* <div className="grid grid-cols-1 gap-4">
                         <TextField
                           label="Password"
                           // value={newEvent.name}
@@ -248,7 +386,7 @@ const TicketMembers = () => {
                           // }
                           fullWidth
                         />
-                      </div>
+                      </div> */}
                       {/* <div className="grid grid-cols-1 gap-4">
                         <TextField
                           label="Role"

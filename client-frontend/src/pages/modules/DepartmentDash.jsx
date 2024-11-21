@@ -69,6 +69,8 @@ import ManageAsset from "../cms/asset/ManageAsset";
 import Listing from "../cms/room-booking/Listing";
 import Task from "../Task";
 import TodaysTickets from "../cms/tickets/components/TodaysTickets";
+import MyTicketsPage from "./../cms/tickets/MyTicketsPage";
+import { toast } from "sonner";
 
 const DepartmentDash = () => {
   const dispatch = useDispatch();
@@ -83,6 +85,11 @@ const DepartmentDash = () => {
   const handleClose = () => setOpen(false);
   const handleOpenTicket = () => setOpenTicket(true);
   const handleCloseTicket = () => setOpenTicket(false);
+
+  const handleTwo = () => {
+    setOpenTicket(false);
+    toast.success("Added New Ticket");
+  };
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -575,6 +582,10 @@ const DepartmentDash = () => {
                   {/* <p>x</p> */}
                 </div>
               </>
+            ) : location.pathname === "/customer/tickets/my-tickets" ? (
+              <>
+                <MyTicketsPage />
+              </>
             ) : location.pathname === "/customer/tickets/view-tickets" ? (
               <>
                 <ViewTickets />
@@ -624,7 +635,8 @@ const DepartmentDash = () => {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.9 }}
                 className="w-full py-2 px-4 bg-blue-600 text-white rounded mt-4"
-                onClick={handleCloseTicket}
+                // onClick={handleCloseTicket}
+                onClick={handleTwo}
                 // onClick={() => navigate("/customer/tickets")}
               >
                 Save

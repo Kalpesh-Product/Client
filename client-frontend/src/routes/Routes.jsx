@@ -156,6 +156,10 @@ const router = createBrowserRouter([
         element: <DepartmentDash />,
       },
       {
+        path: "/customer/tickets/my-tickets",
+        element: <DepartmentDash />,
+      },
+      {
         path: "/customer/tickets/view-tickets",
         element: <DepartmentDash />,
       },
@@ -169,8 +173,8 @@ const router = createBrowserRouter([
       },
       {
         path: "/tasks",
-        element: <DepartmentDash/>
-      }
+        element: <DepartmentDash />,
+      },
     ],
   },
 ]);
