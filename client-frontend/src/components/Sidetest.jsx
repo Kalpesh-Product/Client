@@ -49,7 +49,7 @@ const TestSide = () => {
       icon: <TbReportSearch />,
       route: "/reports",
     },
-    { name: "Tasks", icon: <FaTasks />, route: "#tasks" },
+    { name: "Tasks", icon: <FaTasks />, route: "/tasks" },
     { name: "Calendar", icon: <FaRegCalendarAlt />, route: "/calendar" },
     { name: "Chat", icon: <HiOutlineChatAlt2 />, route: "/chat" },
     { name: "Access", icon: <SiAuthelia />, route: "/access" },
@@ -290,7 +290,7 @@ const TestSide = () => {
                 <div className="flex justify-center w-6 text-[1.3rem]">
                   {item.icon}
                 </div>
-                {isSidebarOpen && <span className="pl-5">{item.name}</span>}
+                {isSidebarOpen && <span className="pl-5 text-black">{item.name}</span>}
               </div>
             </Tooltip>
           ))}

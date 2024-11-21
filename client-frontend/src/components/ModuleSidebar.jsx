@@ -44,6 +44,7 @@ import { CgWebsite } from "react-icons/cg";
 import { BsCashCoin } from "react-icons/bs";
 import { AiOutlineSecurityScan } from "react-icons/ai";
 
+
 const ModuleSidebar = ({ mainSideBar }) => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -136,6 +137,26 @@ const ModuleSidebar = ({ mainSideBar }) => {
       ],
     },
   ];
+  const tasks = [
+    {
+      title: "Tasks",
+      route: "/tasks",
+      subMenus: [
+        {
+          title: "Dashboard",
+          route:""
+        },
+        {
+          title: "Tasklist",
+          route:""
+        },
+        {
+          title:"Team",
+          route:""
+        }
+      ],
+    },
+  ]
 
   // Get the department based on the current path
   const passedDepartment = location.pathname.split("/")[1];
@@ -148,7 +169,10 @@ const ModuleSidebar = ({ mainSideBar }) => {
     modules = hrModules;
   } else if (passedDepartment === "customer") {
     modules = itModules;
+  } else if (passedDepartment === "tasks") {
+    modules = tasks;
   }
+    
 
   const departments = [
     { name: "FRONTEND", icon: <FaCode /> },
@@ -169,7 +193,7 @@ const ModuleSidebar = ({ mainSideBar }) => {
       setIsSidebarOpen(true);
     } else if (location.pathname === "/reports") {
       setIsSidebarOpen(true);
-    } else {
+    } else  {
       setIsSidebarOpen(true);
     }
   }, [location.pathname]);

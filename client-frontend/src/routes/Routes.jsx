@@ -23,6 +23,7 @@ import TicketDashboard from "../pages/cms/tickets/TicketDashboard";
 import TicketReports from "../pages/cms/tickets/TicketReports";
 import ViewTickets from "../pages/cms/tickets/ViewTickets";
 import TicketMembers from "../pages/cms/tickets/TicketMembers";
+import Task from "../pages/Task";
 
 const router = createBrowserRouter([
   {
@@ -166,6 +167,10 @@ const router = createBrowserRouter([
         path: "/dropTest",
         element: <DropTest />,
       },
+      {
+        path: "/tasks",
+        element: <DepartmentDash/>
+      }
     ],
   },
 ]);
