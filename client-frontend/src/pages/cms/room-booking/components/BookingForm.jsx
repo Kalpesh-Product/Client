@@ -7,6 +7,21 @@ import {
   FormControlLabel,
   Typography,
 } from "@mui/material";
+import Select from "react-select";
+
+const selectStyles = {
+  menu: (base) => ({
+    ...base,
+    zIndex: 100,
+  }),
+};
+
+const participantsList = [
+  { label: "Allan Silvera", value: "Allan Silvera" },
+  { label: "Aiwinraj KS", value: "Aiwinraj KS" },
+  { label: "Anushri Bhagat", value: "Anushri Bhagat" },
+  { label: "Kalpesh Naik", value: "Kalpesh Naik" },
+];
 
 export default function BookingForm({
   newMeeting,
@@ -18,6 +33,8 @@ export default function BookingForm({
 }) {
   const [selectedSeats, setSelectedSeats] = useState("");
   const [filteredRooms, setFilteredRooms] = useState([]);
+  const [selectedParticipants, setSelectedParticipants] = useState([]);
+  const [credits, setCredits] = useState(500);
 
   const handleSeatsChange = (e) => {
     const selectedValue = e.target.value;
@@ -28,6 +45,18 @@ export default function BookingForm({
       (room) => room.seats.toString() === selectedValue
     );
     setFilteredRooms(filtered);
+    setCredits(500 - Number(selectedValue));
+  };
+
+  const handleParticipantsChange = (selectedOptions) => {
+    setSelectedParticipants(selectedOptions);
+    // Update `newMeeting.participants` to store selected values as a comma-separated string
+    const participants = selectedOptions
+      .map((option) => option.value)
+      .join(", ");
+    handleChange({
+      target: { name: "participants", value: participants },
+    });
   };
 
   return (
@@ -128,14 +157,16 @@ export default function BookingForm({
 
         {/* Participants */}
         <div>
-          <TextField
-            label="Participants"
-            type="text"
-            name="participants"
-            value={newMeeting.participants}
-            onChange={handleChange}
-            placeholder="Enter participants (comma-separated)"
-            fullWidth
+          <label className="block mb-2 font-medium">Participants</label>
+          <Select
+            isMulti
+            options={participantsList}
+            value={selectedParticipants}
+            onChange={handleParticipantsChange}
+            placeholder="Select participants"
+            className="basic-multi-select"
+            classNamePrefix="select"
+            styles={selectStyles}
           />
         </div>
 
@@ -167,6 +198,7 @@ export default function BookingForm({
         </div>
 
         {/* Submit Button */}
+        {selectedSeats.length!==0 && <p className="text-red-500 font-bold text-center">You will have {credits} credits remaining</p>}
         <div>
           <Button
             type="submit"

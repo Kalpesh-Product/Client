@@ -44,7 +44,6 @@ import { CgWebsite } from "react-icons/cg";
 import { BsCashCoin } from "react-icons/bs";
 import { AiOutlineSecurityScan } from "react-icons/ai";
 
-
 const ModuleSidebar = ({ mainSideBar }) => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -99,7 +98,7 @@ const ModuleSidebar = ({ mainSideBar }) => {
           title: "View asset",
           route: "/customer/asset/view",
         },
-  
+
         {
           title: "Delete asset",
           route: "/customer/asset/delete",
@@ -127,12 +126,20 @@ const ModuleSidebar = ({ mainSideBar }) => {
     },
     {
       title: "Meetings",
-      route: "#customer/meetings",
+      route: "/customer/meetings",
       icon: <HiCurrencyDollar />,
       subMenus: [
         {
-          title: "Room Booking",
+          title: "Calendar",
           route: "/customer/meetings/booking",
+        },
+        {
+          title: "Add new Room",
+          route: "/customer/meetings/add-room",
+        },
+        {
+          title: "Reports",
+          route: "/customer/meetings/reports",
         },
       ],
     },
@@ -144,19 +151,19 @@ const ModuleSidebar = ({ mainSideBar }) => {
       subMenus: [
         {
           title: "Dashboard",
-          route:""
+          route: "",
         },
         {
           title: "Tasklist",
-          route:""
+          route: "",
         },
         {
-          title:"Team",
-          route:""
-        }
+          title: "Team",
+          route: "",
+        },
       ],
     },
-  ]
+  ];
 
   // Get the department based on the current path
   const passedDepartment = location.pathname.split("/")[1];
@@ -172,7 +179,6 @@ const ModuleSidebar = ({ mainSideBar }) => {
   } else if (passedDepartment === "tasks") {
     modules = tasks;
   }
-    
 
   const departments = [
     { name: "FRONTEND", icon: <FaCode /> },
@@ -193,7 +199,7 @@ const ModuleSidebar = ({ mainSideBar }) => {
       setIsSidebarOpen(true);
     } else if (location.pathname === "/reports") {
       setIsSidebarOpen(true);
-    } else  {
+    } else {
       setIsSidebarOpen(true);
     }
   }, [location.pathname]);

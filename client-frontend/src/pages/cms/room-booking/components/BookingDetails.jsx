@@ -5,23 +5,28 @@ import { format } from "date-fns";
 export default function BookingDetails({
   selectedEvent,
   handleUpdate,
+  handleExtendTime,
   handleCancel,
 }) {
   const [tabIndex, setTabIndex] = useState(0);
   const [updatedMeeting, setUpdatedMeeting] = useState({
-    startTime: format(new Date(selectedEvent.start), "HH:mm"),
-    endTime: format(new Date(selectedEvent.end), "HH:mm"),
-    date: format(new Date(selectedEvent.start), "yyyy-MM-dd"),
     room: selectedEvent.extendedProps.room || "",
     participants: selectedEvent.extendedProps.participants || "",
     subject: selectedEvent.title || "",
     agenda: selectedEvent.extendedProps.agenda || "",
   });
 
+  const [extendedTime, setExtendedTime] = useState({
+    startTime: format(new Date(selectedEvent.start), "HH:mm"),
+    endTime: format(new Date(selectedEvent.end), "HH:mm"),
+    date: format(new Date(selectedEvent.start), "yyyy-MM-dd"),
+  });
+
   const handleTabChange = (event, newIndex) => {
     setTabIndex(newIndex);
   };
-  const handleChange = (e) => {
+
+  const handleUpdateChange = (e) => {
     const { name, value } = e.target;
     setUpdatedMeeting((prev) => ({
       ...prev,
@@ -29,9 +34,22 @@ export default function BookingDetails({
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleExtendTimeChange = (e) => {
+    const { name, value } = e.target;
+    setExtendedTime((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleUpdateSubmit = (e) => {
     e.preventDefault();
-    handleUpdate(selectedEvent.id, updatedMeeting); // Call the update function
+    handleUpdate(selectedEvent.id, updatedMeeting);
+  };
+
+  const handleExtendTimeSubmit = (e) => {
+    e.preventDefault();
+    handleExtendTime(selectedEvent.id, extendedTime);
   };
 
   return (
@@ -45,6 +63,7 @@ export default function BookingDetails({
       >
         <Tab label="Details" />
         <Tab label="Edit" />
+        <Tab label="Extend Time" />
       </Tabs>
 
       {/* Details Tab */}
@@ -65,6 +84,7 @@ export default function BookingDetails({
               rowGap={2}
               columnGap={3}
             >
+              {/* Render details as before */}
               <Typography
                 variant="subtitle2"
                 sx={{ fontWeight: "bold", color: "#555" }}
@@ -152,37 +172,13 @@ export default function BookingDetails({
           <Typography variant="h6" gutterBottom>
             Edit Booking
           </Typography>
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <TextField
-              label="Date"
-              type="date"
-              name="date"
-              value={updatedMeeting.date}
-              onChange={handleChange}
-              fullWidth
-            />
-            <TextField
-              label="Start Time"
-              type="time"
-              name="startTime"
-              value={updatedMeeting.startTime}
-              onChange={handleChange}
-              fullWidth
-            />
-            <TextField
-              label="End Time"
-              type="time"
-              name="endTime"
-              value={updatedMeeting.endTime}
-              onChange={handleChange}
-              fullWidth
-            />
+          <form onSubmit={handleUpdateSubmit} className="space-y-4">
             <TextField
               label="Room"
               type="text"
               name="room"
               value={updatedMeeting.room}
-              onChange={handleChange}
+              onChange={handleUpdateChange}
               placeholder="Enter room name"
               fullWidth
             />
@@ -191,7 +187,7 @@ export default function BookingDetails({
               type="text"
               name="participants"
               value={updatedMeeting.participants}
-              onChange={handleChange}
+              onChange={handleUpdateChange}
               placeholder="Enter participants (comma-separated)"
               fullWidth
             />
@@ -200,7 +196,7 @@ export default function BookingDetails({
               type="text"
               name="subject"
               value={updatedMeeting.subject}
-              onChange={handleChange}
+              onChange={handleUpdateChange}
               placeholder="Enter meeting subject"
               fullWidth
             />
@@ -208,7 +204,7 @@ export default function BookingDetails({
               label="Agenda"
               name="agenda"
               value={updatedMeeting.agenda}
-              onChange={handleChange}
+              onChange={handleUpdateChange}
               placeholder="Enter meeting agenda"
               multiline
               rows={4}
@@ -221,6 +217,49 @@ export default function BookingDetails({
               className="w-full py-2 font-bold"
             >
               Update Booking
+            </Button>
+          </form>
+        </Box>
+      )}
+
+      {/* Extend Time Tab */}
+      {tabIndex === 2 && (
+        <Box p={3}>
+          <Typography variant="h6" gutterBottom>
+            Extend Time
+          </Typography>
+          <form onSubmit={handleExtendTimeSubmit} className="space-y-4">
+            <TextField
+              label="Date"
+              type="date"
+              name="date"
+              value={extendedTime.date}
+              onChange={handleExtendTimeChange}
+              fullWidth
+            />
+            <TextField
+              label="Start Time"
+              type="time"
+              name="startTime"
+              value={extendedTime.startTime}
+              onChange={handleExtendTimeChange}
+              fullWidth
+            />
+            <TextField
+              label="End Time"
+              type="time"
+              name="endTime"
+              value={extendedTime.endTime}
+              onChange={handleExtendTimeChange}
+              fullWidth
+            />
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              className="w-full py-2 font-bold"
+            >
+              Extend Time
             </Button>
           </form>
         </Box>

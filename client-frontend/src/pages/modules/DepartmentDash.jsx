@@ -68,6 +68,9 @@ import { color, motion } from "framer-motion";
 import ManageAsset from "../cms/asset/ManageAsset";
 import Listing from "../cms/room-booking/Listing";
 import Task from "../Task";
+import RoomBookingDash from "../cms/room-booking/RoomBookingDash";
+import BookingReports from "../cms/room-booking/BookingReports";
+import AddRooms from "../cms/room-booking/AddRooms";
 
 const DepartmentDash = () => {
   const dispatch = useDispatch();
@@ -365,7 +368,8 @@ const DepartmentDash = () => {
                     "& .MuiTabs-indicator": {
                       backgroundColor: "#0db4ea", // Custom indicator color
                     },
-                  }}>
+                  }}
+                >
                   <Tab label="Home" />
                   <Tab label="About" />
                   <Tab label="Gallery" />
@@ -426,7 +430,8 @@ const DepartmentDash = () => {
                   {products.map((product) => (
                     <div
                       key={product.id}
-                      className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+                      className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow"
+                    >
                       <img
                         src={product.image}
                         alt={product.name}
@@ -450,9 +455,7 @@ const DepartmentDash = () => {
             )}
           </>
         )}
-        {
-
-        }
+        {}
 
         {/* HR submodules */}
         {location.pathname.startsWith("/hr") && (
@@ -521,7 +524,8 @@ const DepartmentDash = () => {
                     <h1 className="text-3xl">Key insights</h1>
                     <button
                       onClick={handleOpen}
-                      className="px-6 py-2 rounded-lg text-white wono-blue-dark hover:bg-[#3cbce7] transition-shadow shadow-md hover:shadow-lg active:shadow-inner">
+                      className="px-6 py-2 rounded-lg text-white wono-blue-dark hover:bg-[#3cbce7] transition-shadow shadow-md hover:shadow-lg active:shadow-inner"
+                    >
                       Add Assets
                     </button>
                   </div>
@@ -555,7 +559,8 @@ const DepartmentDash = () => {
                     <h1 className="text-3xl">Key insights</h1>
                     <button
                       onClick={handleOpenTicket}
-                      className="px-6 py-2 rounded-lg text-white wono-blue-dark hover:bg-[#3cbce7] transition-shadow shadow-md hover:shadow-lg active:shadow-inner">
+                      className="px-6 py-2 rounded-lg text-white wono-blue-dark hover:bg-[#3cbce7] transition-shadow shadow-md hover:shadow-lg active:shadow-inner"
+                    >
                       Raise Ticket
                     </button>
                   </div>
@@ -588,22 +593,32 @@ const DepartmentDash = () => {
               <>
                 <TicketReports />
               </>
-            ): location.pathname === "/customer/meetings/booking" ? (
+            ) : location.pathname === "/customer/meetings" ? (
+              <>
+                <RoomBookingDash />
+              </>
+            ) : location.pathname === "/customer/meetings/booking" ? (
               <>
                 <Listing />
               </>
-            ): (
+            ) : location.pathname === "/customer/meetings/add-room" ? (
+              <>
+                <AddRooms />
+              </>
+            ) : location.pathname === "/customer/meetings/reports" ? (
+              <>
+                <BookingReports />
+              </>
+            ) : (
               <></>
             )}
           </>
         )}
-        {
-          location.pathname.startsWith("/tasks") && (
-            <>
-            <Task/>
-            </>
-          )
-        }
+        {location.pathname.startsWith("/tasks") && (
+          <>
+            <Task />
+          </>
+        )}
       </div>
       <div>
         <NewModal open={open} onClose={handleClose}>
@@ -618,7 +633,8 @@ const DepartmentDash = () => {
           open={openTicket}
           onClose={handleCloseTicket}
           aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description">
+          aria-describedby="modal-modal-description"
+        >
           {/* <Box sx={style}> */}
           <Box sx={style}>
             <AddTicketForm />

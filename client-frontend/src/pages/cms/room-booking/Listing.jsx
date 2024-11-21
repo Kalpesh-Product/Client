@@ -8,6 +8,7 @@ import BookingForm from "./components/BookingForm";
 import BookingDetails from "./components/BookingDetails";
 import { format, addMinutes } from "date-fns";
 import { v4 as uuid } from "uuid";
+import { toast } from "sonner";
 
 export default function Listing() {
   const [openBookingModal, setOpenBookingModal] = useState(false);
@@ -16,7 +17,6 @@ export default function Listing() {
   const [currentTime, setCurrentTime] = useState("");
   const [timePlus30, setTimePlus30] = useState("");
   const [currentDate, setCurrentDate] = useState("");
-  const [credit, setCredit] = useState(500);
   const [events, setEvents] = useState([]);
   const [roomList, setRoomList] = useState(rooms);
   const [newMeeting, setNewMeeting] = useState({
@@ -57,8 +57,13 @@ export default function Listing() {
   };
 
   const handleCancel = (eventId) => {
-    const filteredEvents = events.filter((event) => event.id !== eventId);
-    setEvents([...filteredEvents]);
+    setEvents((prevEvents) =>
+      prevEvents.map((event) =>
+        event.id === eventId
+          ? { ...event, status: "cancelled", backgroundColor: "#FF0000" }
+          : event
+      )
+    );
     setOpenEventDetailsModal(false);
   };
 
@@ -87,8 +92,9 @@ export default function Listing() {
         agenda: newMeeting.agenda,
       },
       backgroundColor: "#5E5F9C",
+      status: "active", // Default status
     };
-
+    toast.success("Booking completed successfully");
     setEvents((prev) => [...prev, newEvent]);
     setOpenBookingModal(false);
   };
@@ -100,13 +106,28 @@ export default function Listing() {
           ? {
               ...event,
               title: updatedMeeting.subject,
-              start: `${updatedMeeting.date}T${updatedMeeting.startTime}`,
-              end: `${updatedMeeting.date}T${updatedMeeting.endTime}`,
+              start: event.start, // Preserve existing start time
+              end: event.end, // Preserve existing end time
               extendedProps: {
-                room: updatedMeeting.room,
-                participants: updatedMeeting.participants,
-                agenda: updatedMeeting.agenda,
+                ...event.extendedProps, // Merge extendedProps
+                ...updatedMeeting,
               },
+            }
+          : event
+      )
+    );
+    setOpenEventDetailsModal(false); // Close modal
+  };
+
+  // **Handle Extend Time Function**
+  const handleExtendTime = (eventId, extendedTime) => {
+    setEvents((prevEvents) =>
+      prevEvents.map((event) =>
+        event.id === eventId
+          ? {
+              ...event,
+              start: `${extendedTime.date}T${extendedTime.startTime}`,
+              end: `${extendedTime.date}T${extendedTime.endTime}`,
             }
           : event
       )
@@ -121,14 +142,19 @@ export default function Listing() {
 
   return (
     <section className="h-screen overflow-y-auto top-0">
+      <h1 className="font-bold text-3xl mt-4 mb-3">Booking Calendar</h1>
       <FullCalendar
         plugins={[dayGridPlugin, interactionPlugin]}
         initialView="dayGridMonth"
         dateClick={handleDateClick}
         eventClick={handleEventClick}
         eventDisplay="block"
-        events={events}
-        timeZone="local" // Use local timezone
+        events={events.map((event) => ({
+          ...event,
+          backgroundColor:
+            event.status === "cancelled" ? "#FF0000" : event.backgroundColor,
+        }))} // Apply red color for cancelled events
+        timeZone="local"
       />
 
       {/* Booking Modal */}
@@ -137,7 +163,15 @@ export default function Listing() {
           open={openBookingModal}
           onClose={() => setOpenBookingModal(false)}
         >
-          <h1 className="text-2xl font-bold ml-4">Create Booking</h1>
+          <div className="flex justify-between items-center p-4">
+            <h1 className="text-2xl font-bold ml-4">Create Booking</h1>
+            <button
+              onClick={() => setOpenBookingModal(false)}
+              className="px-4 py-2 text-red-500 border-2 border-red-500 font-bold rounded-md"
+            >
+              X
+            </button>
+          </div>
           <BookingForm
             newMeeting={newMeeting}
             handleChange={handleChange}
@@ -158,6 +192,7 @@ export default function Listing() {
           <BookingDetails
             selectedEvent={selectedEvent}
             handleUpdate={handleUpdate}
+            handleExtendTime={handleExtendTime} // Pass handleExtendTime
             handleCancel={handleCancel}
           />
         </Modal>
