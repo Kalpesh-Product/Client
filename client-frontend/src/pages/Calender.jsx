@@ -25,7 +25,7 @@ const customStyles = {
 const extractNames = (data) => {
   const names = [];
   data.forEach((item) => {
-    names.push(item.name);
+    names.push(item.name);;
     if (item.reports && item.reports.length > 0) {
       names.push(...extractNames(item.reports));
     }

@@ -147,22 +147,22 @@ const ModuleSidebar = ({ mainSideBar }) => {
     {
       title: "Tasks",
       route: "/tasks",
-      subMenus: [
-        {
-          title: "Dashboard",
-          route: "",
-        },
-        {
-          title: "Tasklist",
-          route: "",
-        },
-        {
-          title: "Team",
-          route: "",
-        },
-      ],
+     
     },
-  ];
+    // {
+    //   title: "Tasklist",
+    //   route:"/tasklistTable"
+    // },
+    {
+      title:"Teams",
+      route: "/teams"
+    },
+    {
+      title:"Projects",
+      route:"/tasklist"
+    }
+
+  ]
 
   // Get the department based on the current path
   const passedDepartment = location.pathname.split("/")[1];
