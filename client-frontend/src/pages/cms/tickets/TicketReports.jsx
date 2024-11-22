@@ -9,7 +9,9 @@ const TicketReports = () => {
       {/* <TestSide /> */}
       {/* <TestLink /> */}
       <div>
-        <div>TicketReports</div>
+        <div className="py-10">
+          <h2 className="text-lg">Ticket Reports</h2>
+        </div>
         <MyTicketsTable />
       </div>
     </div>

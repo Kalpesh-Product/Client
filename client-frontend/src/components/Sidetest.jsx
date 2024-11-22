@@ -140,14 +140,14 @@ const TestSide = () => {
       "LEGAL",
     ],
     Tech: ["FRONTEND"],
-    Finance: ["FINANCE & ACCOUNTING"],
+    Finance: ["FINANCE & ACCOUNTING", "CUSTOMER SERVICE"],
     Sales: ["SALES"],
     HR: ["HUMAN RESOURCE", "CUSTOMER SERVICE"],
     CMS: ["CUSTOMER SERVICE"],
     Marketing: ["MARKETING"],
     Cafe: ["CAFE (F&B)"],
     IT: ["IT","CUSTOMER SERVICE"],
-    Maintenance: ["MAINTENANCE"],
+    Maintainance: ["CUSTOMER SERVICE"],
     Legal: ["LEGAL"],
   };
 
@@ -290,7 +290,9 @@ const TestSide = () => {
                 <div className="flex justify-center w-6 text-[1.3rem]">
                   {item.icon}
                 </div>
-                {isSidebarOpen && <span className="pl-5 text-black">{item.name}</span>}
+                {isSidebarOpen && (
+                  <span className="pl-5 text-black">{item.name}</span>
+                )}
               </div>
             </Tooltip>
           ))}

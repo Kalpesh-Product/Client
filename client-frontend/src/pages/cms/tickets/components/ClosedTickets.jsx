@@ -9,7 +9,7 @@ import Select from "@mui/material/Select";
 import { CSVLink } from "react-csv";
 import Button from "@mui/material/Button";
 
-const TodaysTickets = () => {
+const ClosedTickets = () => {
   const columns = [
     { field: "id", headerName: "ID", width: 100 },
     { field: "ticketTitle", headerName: "Ticket Title", width: 200 },
@@ -21,13 +21,6 @@ const TodaysTickets = () => {
       valueOptions: ["High", "Medium", "Low"],
     },
     {
-      field: "status",
-      headerName: "Status",
-      width: 150,
-      type: "singleSelect",
-      valueOptions: ["Pending", "In Process", "Resolved"],
-    },
-    {
       field: "department",
       headerName: "Department",
       width: 150,
@@ -35,6 +28,73 @@ const TodaysTickets = () => {
       valueOptions: ["IT", "HR", "Tech", "Admin"],
     },
     { field: "requestDate", headerName: "Request Date", width: 150 },
+
+    // {
+    //   field: "viewDetails",
+    //   headerName: "View Details",
+    //   width: 150,
+    //   renderCell: (params) => (
+    //     <Button
+    //       size="small"
+    //       onClick={() => handleViewDetails(params.row)}
+    //       variant="contained"
+    //       sx={{
+    //         backgroundColor: "#3B82F6", // Tailwind blue-500
+    //         color: "white",
+    //         "&:hover": {
+    //           backgroundColor: "#2563EB", // Tailwind blue-600
+    //         },
+    //         padding: "8px 16px",
+    //         borderRadius: "0.375rem", // Tailwind rounded
+    //       }}>
+    //       View Details
+    //     </Button>
+    //   ),
+    // },
+    // {
+    //   field: "edit",
+    //   headerName: "Edit",
+    //   width: 100,
+    //   renderCell: (params) => (
+    //     <Button
+    //       size="small"
+    //       onClick={() => handleEdit(params.row)}
+    //       variant="contained"
+    //       sx={{
+    //         backgroundColor: "#22C55E", // Tailwind green-500
+    //         color: "white",
+    //         "&:hover": {
+    //           backgroundColor: "#16A34A", // Tailwind green-600
+    //         },
+    //         padding: "8px 16px",
+    //         borderRadius: "0.375rem", // Tailwind rounded
+    //       }}>
+    //       Edit
+    //     </Button>
+    //   ),
+    // },
+    // {
+    //   field: "delete",
+    //   headerName: "Delete",
+    //   width: 120,
+    //   renderCell: (params) => (
+    //     <Button
+    //       size="small"
+    //       onClick={() => handleDelete(params.row)}
+    //       variant="contained"
+    //       sx={{
+    //         backgroundColor: "#EF4444", // Tailwind red-500
+    //         color: "white",
+    //         "&:hover": {
+    //           backgroundColor: "#DC2626", // Tailwind red-600
+    //         },
+    //         padding: "8px 16px",
+    //         borderRadius: "0.375rem", // Tailwind rounded
+    //       }}>
+    //       Delete
+    //     </Button>
+    //   ),
+    // },
     {
       field: "viewDetails",
       headerName: "Actions",
@@ -104,9 +164,8 @@ const TodaysTickets = () => {
   const allRows = [
     {
       id: 1,
-      ticketTitle: "Wifi is not working",
+      ticketTitle: "Website Bug",
       priority: "High",
-      status: "Pending",
       department: "IT",
       requestDate: "2024-10-01",
     },
@@ -114,7 +173,6 @@ const TodaysTickets = () => {
       id: 2,
       ticketTitle: "Payroll Issue",
       priority: "Medium",
-      status: "In Process",
       department: "HR",
       requestDate: "2024-10-03",
     },
@@ -122,7 +180,6 @@ const TodaysTickets = () => {
       id: 3,
       ticketTitle: "Server Downtime",
       priority: "High",
-      status: "Resolved",
       department: "Tech",
       requestDate: "2024-10-05",
     },
@@ -130,7 +187,6 @@ const TodaysTickets = () => {
       id: 4,
       ticketTitle: "New Workstation Setup",
       priority: "Low",
-      status: "Pending",
       department: "Admin",
       requestDate: "2024-10-06",
     },
@@ -138,7 +194,6 @@ const TodaysTickets = () => {
       id: 5,
       ticketTitle: "Employee Onboarding",
       priority: "Medium",
-      status: "In Process",
       department: "HR",
       requestDate: "2024-10-07",
     },
@@ -146,7 +201,6 @@ const TodaysTickets = () => {
       id: 6,
       ticketTitle: "Network Issue",
       priority: "High",
-      status: "Pending",
       department: "IT",
       requestDate: "2024-10-08",
     },
@@ -154,7 +208,6 @@ const TodaysTickets = () => {
       id: 7,
       ticketTitle: "Software Installation",
       priority: "Low",
-      status: "Resolved",
       department: "Tech",
       requestDate: "2024-10-09",
     },
@@ -162,7 +215,6 @@ const TodaysTickets = () => {
       id: 8,
       ticketTitle: "Office Supplies Request",
       priority: "Low",
-      status: "Pending",
       department: "Admin",
       requestDate: "2024-10-10",
     },
@@ -170,7 +222,6 @@ const TodaysTickets = () => {
       id: 9,
       ticketTitle: "Email Access Issue",
       priority: "Medium",
-      status: "In Process",
       department: "IT",
       requestDate: "2024-10-11",
     },
@@ -222,9 +273,54 @@ const TodaysTickets = () => {
         <h2>Today's Tickets</h2>
       </div> */}
 
-      <div>
+      {/* <div>
         <h2 className="text-lg">Today's Tickets</h2>
         <br />
+      </div> */}
+
+      <div className="flex gap-4 h-16 ">
+        <div className="pt-2">Filter by department:</div>
+        <div>
+          <Box sx={{ minWidth: 140 }}>
+            <FormControl
+              fullWidth
+              sx={{
+                height: "34px", // Adjust height of the select input
+                padding: "10px 8px 4px 2px", // Adjust padding inside
+              }}>
+              <InputLabel id="department-select-label" className=" pt-0 mt-0">
+                Department
+              </InputLabel>
+              <Select
+                labelId="department-select-label"
+                id="department-select"
+                value={department}
+                label="Department"
+                sx={{
+                  height: "32px", // Adjust the height of the select
+                  padding: "2px 8px 4px 8px", // Adjust the padding inside the select
+                }}
+                className=" pt-0"
+                onChange={handleChange}>
+                <MenuItem value="">All</MenuItem>{" "}
+                {/* Option to show all departments */}
+                <MenuItem value="IT">IT</MenuItem>
+                <MenuItem value="HR">HR</MenuItem>
+                <MenuItem value="Tech">Tech</MenuItem>
+                <MenuItem value="Admin">Admin</MenuItem>
+              </Select>
+            </FormControl>
+          </Box>
+        </div>
+        {/* <div className=" flex">
+          <CSVLink
+            data={filteredRows} // Pass the filtered rows for CSV download
+            headers={csvHeaders} // Pass the CSV headers
+            filename="tickets_report.csv" // Set the filename for the CSV file
+            className="wono-blue-dark hover:bg-blue-700 text-white text-sm font-bold py-2 px-4 rounded h-9 mt-2">
+            Export Report
+          </CSVLink>
+        </div> */}
       </div>
 
       {/* Tickets datatable START */}
@@ -243,4 +339,4 @@ const TodaysTickets = () => {
   );
 };
 
-export default TodaysTickets;
+export default ClosedTickets;

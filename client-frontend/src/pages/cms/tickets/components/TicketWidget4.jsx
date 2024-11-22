@@ -5,7 +5,7 @@ const TicketWidget4 = () => {
     <div>
       {" "}
       <div className="p-4">
-        <h3 className="text-lg font-semibold">Total Members</h3>
+        <h3 className="text-lg font-semibold">My Tickets</h3>
         <p className="text-3xl font-bold">8</p>
       </div>
     </div>

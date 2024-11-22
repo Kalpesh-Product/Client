@@ -90,6 +90,10 @@ const router = createBrowserRouter([
         element: <DepartmentDash />,
       },
       {
+        path: "/customer/asset/reports",
+        element: <DepartmentDash />,
+      },
+      {
         path: "/customer/dashboard",
         element: <DepartmentDash />,
       },
@@ -98,7 +102,19 @@ const router = createBrowserRouter([
         element: <DepartmentDash />,
       },
       {
+        path: "/customer/meetings",
+        element: <DepartmentDash />,
+      },
+      {
         path: "/customer/meetings/booking",
+        element: <DepartmentDash />,
+      },
+      {
+        path: "/customer/meetings/reports",
+        element: <DepartmentDash />,
+      },
+      {
+        path: "/customer/meetings/add-room",
         element: <DepartmentDash />,
       },
       {
@@ -156,6 +172,10 @@ const router = createBrowserRouter([
       },
       {
         path: "/customer/tickets/members",
+        element: <DepartmentDash />,
+      },
+      {
+        path: "/customer/tickets/my-tickets",
         element: <DepartmentDash />,
       },
       {

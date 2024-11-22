@@ -3,9 +3,10 @@ import TestLink from "./TestLink";
 
 import TestSide from "../../../components/Sidetest";
 import ModuleSidebar from "../../../components/ModuleSidebar";
-import ViewTicketsTabs from "./components/ViewTicketsTabs";
 
-const ViewTickets = () => {
+import MyTicketsTabs from "./components/MyTicketsTabs";
+
+const MyTicketsPage = () => {
   return (
     <div className="flex">
       {/* <TestSide /> */}
@@ -14,10 +15,10 @@ const ViewTickets = () => {
       <div className=" w-full">
         {/* <div>ViewTickets</div> */}
 
-        <ViewTicketsTabs />
+        <MyTicketsTabs />
       </div>
     </div>
   );
 };
 
-export default ViewTickets;
+export default MyTicketsPage;
