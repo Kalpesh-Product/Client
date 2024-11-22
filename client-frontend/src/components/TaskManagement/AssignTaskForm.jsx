@@ -63,7 +63,7 @@ const AssignTaskForm = ({ title, handleClose ,rows, setAllRows,selectedRow,modal
       const priorityType = ["High","Low","Medium"];
       const statusTypes = ["Ongoing","Pending","Start","InProgress","Running late"];
 
-      const projects = ["Website Redesign","Financial Forcastig And Budgeting","Annual Co-orporate and Conference",""]
+      const projects = ["Website Redesign","Financial Forcastig And Budgeting","Annual Co-orporate and Conference","Launch a New Digital Marketing Campaign","Bussiness process optimization and automation"]
 
       const location = useLocation();
       const navigate = useNavigate();
