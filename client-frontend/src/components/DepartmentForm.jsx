@@ -8,7 +8,7 @@ import axios from "axios";
 import { toast } from "sonner";
 import { IoMdClose, IoMdCloseCircleOutline } from "react-icons/io";
 
-export default function DepartmentForm({formTitle}) {
+export default function DepartmentForm({ formTitle }) {
   const dispatch = useDispatch();
   const [department, setDepartment] = useState({
     name: "",
@@ -51,19 +51,19 @@ export default function DepartmentForm({formTitle}) {
   return (
     <form
       onSubmit={handleSubmit}
-      className="p-0 w-full max-w-md sm:max-w-lg mx-auto bg-white rounded"
-    >
+      className="p-0 w-full max-w-md sm:max-w-lg mx-auto bg-white rounded">
       <div className="flex justify-between mb-5">
-      <h1 className="text-xl text-center my-2 font-bold w-full">{formTitle}</h1>
-      <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.9 }}
-            type="button"
-            onClick={() => dispatch(closeModal())}
-            className=" p-2 bg-white text-[red] border border-red-200 hover:border-red-400 text-2xl rounded-md"
-          >
-            <IoMdClose />
-          </motion.button>
+        <h1 className="text-xl text-center my-2 font-bold w-full">
+          {formTitle}
+        </h1>
+        <motion.button
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.9 }}
+          type="button"
+          onClick={() => dispatch(closeModal())}
+          className=" p-2 bg-white text-[red] border border-red-200 hover:border-red-400 text-2xl rounded-md">
+          <IoMdClose />
+        </motion.button>
       </div>
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-1 sm:w-[450px] w-[300px]">
         <div className="col-span-1 sm:col-span-2 w-full">
@@ -97,11 +97,9 @@ export default function DepartmentForm({formTitle}) {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.9 }}
             type="submit"
-            className="w-full py-2 px-4 wono-blue-dark hover:bg-[#3cbce7] text-white rounded mt-4"
-          >
+            className="w-full py-2 px-4 wono-blue-dark hover:bg-[#3cbce7] text-white rounded mt-4">
             Submit
           </motion.button>
-         
         </div>
       </div>
     </form>

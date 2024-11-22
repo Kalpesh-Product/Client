@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
@@ -8,33 +8,90 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { CSVLink } from "react-csv";
 import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
 import { toast } from "sonner";
+import TextField from "@mui/material/TextField";
 
-const TicketMembers = () => {
+const AcceptedTickets = () => {
   const columns = [
     { field: "id", headerName: "ID", width: 100 },
-    { field: "name", headerName: "Name", width: 200 },
-    { field: "email", headerName: "Email", width: 250 },
-    { field: "role", headerName: "Role", width: 150 },
-    { field: "availability", headerName: "Availability", width: 150 },
+    { field: "ticketTitle", headerName: "Ticket Title", width: 200 },
+    {
+      field: "priority",
+      headerName: "Priority",
+      width: 150,
+      type: "singleSelect",
+      valueOptions: ["High", "Medium", "Low"],
+    },
+    {
+      field: "department",
+      headerName: "Department",
+      width: 150,
+      type: "singleSelect",
+      valueOptions: ["IT", "HR", "Tech", "Admin"],
+    },
+    { field: "requestDate", headerName: "Request Date", width: 150 },
+
     // {
-    //   field: "action",
-    //   headerName: "Action",
+    //   field: "viewDetails",
+    //   headerName: "View Details",
     //   width: 150,
+    //   renderCell: (params) => (
+    //     <Button
+    //       size="small"
+    //       onClick={() => handleViewDetails(params.row)}
+    //       variant="contained"
+    //       sx={{
+    //         backgroundColor: "#3B82F6", // Tailwind blue-500
+    //         color: "white",
+    //         "&:hover": {
+    //           backgroundColor: "#2563EB", // Tailwind blue-600
+    //         },
+    //         padding: "8px 16px",
+    //         borderRadius: "0.375rem", // Tailwind rounded
+    //       }}>
+    //       View Details
+    //     </Button>
+    //   ),
+    // },
+    // {
+    //   field: "edit",
+    //   headerName: "Edit",
+    //   width: 100,
+    //   renderCell: (params) => (
+    //     <Button
+    //       size="small"
+    //       onClick={() => handleEdit(params.row)}
+    //       variant="contained"
+    //       sx={{
+    //         backgroundColor: "#22C55E", // Tailwind green-500
+    //         color: "white",
+    //         "&:hover": {
+    //           backgroundColor: "#16A34A", // Tailwind green-600
+    //         },
+    //         padding: "8px 16px",
+    //         borderRadius: "0.375rem", // Tailwind rounded
+    //       }}>
+    //       Edit
+    //     </Button>
+    //   ),
+    // },
+    // {
+    //   field: "delete",
+    //   headerName: "Delete",
+    //   width: 120,
     //   renderCell: (params) => (
     //     <Button
     //       size="small"
     //       onClick={() => handleDelete(params.row)}
     //       variant="contained"
     //       sx={{
-    //         backgroundColor: "#EF4444",
+    //         backgroundColor: "#EF4444", // Tailwind red-500
     //         color: "white",
     //         "&:hover": {
-    //           backgroundColor: "#DC2626",
+    //           backgroundColor: "#DC2626", // Tailwind red-600
     //         },
     //         padding: "8px 16px",
-    //         borderRadius: "0.375rem",
+    //         borderRadius: "0.375rem", // Tailwind rounded
     //       }}>
     //       Delete
     //     </Button>
@@ -50,11 +107,13 @@ const TicketMembers = () => {
 
           if (selectedAction === "view") {
             handleViewDetails(params.row);
-          } else if (selectedAction === "edit") {
-            handleEdit(params.row);
-          } else if (selectedAction === "delete") {
-            handleDelete(params.row);
           }
+          //    else if (selectedAction === "edit") {
+          //     handleEdit(params.row);
+          //   }
+          //   //   else if (selectedAction === "delete") {
+          //     handleDelete(params.row);
+          //   }
         };
 
         return (
@@ -97,8 +156,10 @@ const TicketMembers = () => {
                 </svg>
               </MenuItem>
               <MenuItem value="view">View Details</MenuItem>
-              <MenuItem value="edit">Edit</MenuItem>
-              <MenuItem value="delete">Delete</MenuItem>
+              <MenuItem value="edit" onClick={openDeleteTicket}>
+                Action Taken
+              </MenuItem>
+              {/* <MenuItem value="delete">Delete</MenuItem> */}
             </Select>
           </FormControl>
         );
@@ -109,39 +170,67 @@ const TicketMembers = () => {
   const allRows = [
     {
       id: 1,
-      name: "Faizan",
-      email: "faizan@biznest.co.in",
-      role: "IT",
-      availability: "Available",
+      ticketTitle: "Website Bug",
+      priority: "High",
+      department: "IT",
+      requestDate: "2024-10-01",
     },
     {
       id: 2,
-      name: "Rajiv",
-      email: "rajiv@biznest.co.in",
-      role: "HR",
-      availability: "Unavailable",
+      ticketTitle: "Payroll Issue",
+      priority: "Medium",
+      department: "HR",
+      requestDate: "2024-10-03",
     },
     {
       id: 3,
-      name: "Desmon",
-      email: "desmon@biznest.co.in",
-      role: "Tech",
-      availability: "Available",
+      ticketTitle: "Server Downtime",
+      priority: "High",
+      department: "Tech",
+      requestDate: "2024-10-05",
     },
-    // {
-    //   id: 4,
-    //   name: "Bob Brown",
-    //   email: "bob.brown@example.com",
-    //   role: "Admin",
-    //   availability: "Unavailable",
-    // },
-    // {
-    //   id: 5,
-    //   name: "Charlie Wilson",
-    //   email: "charlie.wilson@example.com",
-    //   role: "Admin",
-    //   availability: "Available",
-    // },
+    {
+      id: 4,
+      ticketTitle: "New Workstation Setup",
+      priority: "Low",
+      department: "Admin",
+      requestDate: "2024-10-06",
+    },
+    {
+      id: 5,
+      ticketTitle: "Employee Onboarding",
+      priority: "Medium",
+      department: "HR",
+      requestDate: "2024-10-07",
+    },
+    {
+      id: 6,
+      ticketTitle: "Network Issue",
+      priority: "High",
+      department: "IT",
+      requestDate: "2024-10-08",
+    },
+    {
+      id: 7,
+      ticketTitle: "Software Installation",
+      priority: "Low",
+      department: "Tech",
+      requestDate: "2024-10-09",
+    },
+    {
+      id: 8,
+      ticketTitle: "Office Supplies Request",
+      priority: "Low",
+      department: "Admin",
+      requestDate: "2024-10-10",
+    },
+    {
+      id: 9,
+      ticketTitle: "Email Access Issue",
+      priority: "Medium",
+      department: "IT",
+      requestDate: "2024-10-11",
+    },
   ];
 
   const paginationModel = { page: 0, pageSize: 5 };
@@ -158,20 +247,21 @@ const TicketMembers = () => {
       : allRows.filter((row) => row.department === department);
 
   // Handlers for the buttons
-
-  // Handlers for the buttons
   const handleViewDetails = (row) => {
     alert(`Viewing details for: ${row.ticketTitle}`);
   };
 
-  const handleEdit = (row) => {
-    alert(`Editing ticket: ${row.ticketTitle}`);
-  };
+  //   const handleEdit = (row) => {
+  //     alert(`Editing ticket: ${row.ticketTitle}`);
+  //   };
+
   const handleDelete = (row) => {
     if (
-      window.confirm(`Are you sure you want to delete ${row.name}'s record?`)
+      window.confirm(
+        `Are you sure you want to delete ticket: ${row.ticketTitle}?`
+      )
     ) {
-      alert(`Deleted record for ${row.name}`);
+      alert(`Deleted ticket: ${row.ticketTitle}`);
     }
   };
 
@@ -183,50 +273,25 @@ const TicketMembers = () => {
     { label: "Request Date", key: "requestDate" },
   ];
 
+  // EDIT TICKET DETAILS MODAL START
   // State to manage modal visibility
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isDeleteTicketOpen, setIsDeleteTicketOpen] = useState(false);
 
   // Function to open the modal
-  const openModal = () => setIsModalOpen(true);
+  const openDeleteTicket = () => setIsDeleteTicketOpen(true);
 
   // Function to close the modal
-  const closeModal = () => setIsModalOpen(false);
+  const closeDeleteTicket = () => setIsDeleteTicketOpen(false);
 
-  const handleAddTicket = () => {
-    toast.success("New Member Added");
-    closeModal(); // Optionally close the modal after the alert
+  const handleDeleteTicket = () => {
+    toast.success("Ticket Closed");
+    closeDeleteTicket(); // Optionally close the modal after the alert
   };
-
-  const [nameInput, setNameInput] = useState(""); // To store the current input value
-  const [filteredSuggestions, setFilteredSuggestions] = useState([]); // To store filtered name suggestions
-
-  const fullNames = [
-    "Faizan Shaikh",
-    "Rajiv Kumar Pal",
-    "Desmon Goes",
-    "Allan Mark Silveira",
-    "Aiwinraj KS",
-    "Anushri Mohandas Bhagat",
-    "Sankalp Chandrashekar Kalangutkar",
-    "Kashif Shaikh",
-    "Ragesh A C",
-    "Machindranath Parkar",
-    "Benson Nadakattin",
-    "Kalpesh Naik",
-    "Nikhil Nagvekar",
-    "Farzeen Qadri",
-  ];
-
-  useEffect(() => {
-    if (nameInput === "") {
-      setFilteredSuggestions([]); // Clear suggestions if input is empty
-    } else {
-      const filtered = fullNames.filter((name) =>
-        name.toLowerCase().startsWith(nameInput.toLowerCase())
-      );
-      setFilteredSuggestions(filtered);
-    }
-  }, [nameInput]);
+  const handleNotResolved = () => {
+    toast.error("Ticket Not Resolved");
+    closeDeleteTicket(); // Optionally close the modal after the alert
+  };
+  // EDIT TICKET DETAILS MODAL END
 
   return (
     <div>
@@ -234,16 +299,54 @@ const TicketMembers = () => {
         <h2>Today's Tickets</h2>
       </div> */}
 
-      <div className="py-10 pr-3">
-        <div className="mb-8 flex justify-between">
-          <h1 className="text-3xl">All Members</h1>
-          <button
-            //   onClick={handleOpenTicket}
-            onClick={openModal}
-            className="px-6 py-2 rounded-lg text-white wono-blue-dark hover:bg-[#3cbce7] transition-shadow shadow-md hover:shadow-lg active:shadow-inner">
-            Add Member
-          </button>
+      {/* <div>
+        <h2 className="text-lg">Today's Tickets</h2>
+        <br />
+      </div> */}
+
+      <div className="flex gap-4 h-16 ">
+        <div className="pt-2">Filter by department:</div>
+        <div>
+          <Box sx={{ minWidth: 140 }}>
+            <FormControl
+              fullWidth
+              sx={{
+                height: "34px", // Adjust height of the select input
+                padding: "10px 8px 4px 2px", // Adjust padding inside
+              }}>
+              <InputLabel id="department-select-label" className=" pt-0 mt-0">
+                Department
+              </InputLabel>
+              <Select
+                labelId="department-select-label"
+                id="department-select"
+                value={department}
+                label="Department"
+                sx={{
+                  height: "32px", // Adjust the height of the select
+                  padding: "2px 8px 4px 8px", // Adjust the padding inside the select
+                }}
+                className=" pt-0"
+                onChange={handleChange}>
+                <MenuItem value="">All</MenuItem>{" "}
+                {/* Option to show all departments */}
+                <MenuItem value="IT">IT</MenuItem>
+                <MenuItem value="HR">HR</MenuItem>
+                <MenuItem value="Tech">Tech</MenuItem>
+                <MenuItem value="Admin">Admin</MenuItem>
+              </Select>
+            </FormControl>
+          </Box>
         </div>
+        {/* <div className=" flex">
+          <CSVLink
+            data={filteredRows} // Pass the filtered rows for CSV download
+            headers={csvHeaders} // Pass the CSV headers
+            filename="tickets_report.csv" // Set the filename for the CSV file
+            className="wono-blue-dark hover:bg-blue-700 text-white text-sm font-bold py-2 px-4 rounded h-9 mt-2">
+            Export Report
+          </CSVLink>
+        </div> */}
       </div>
 
       {/* Tickets datatable START */}
@@ -259,38 +362,38 @@ const TicketMembers = () => {
       </Paper>
       {/* Tickets datatable END */}
 
-      {isModalOpen && (
+      {/* EDIT TICKET MODAL END */}
+
+      {/* DELETE TICKET MODAL START */}
+      {isDeleteTicketOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="absolute inset-0" onClick={closeModal}></div>
+          <div className="absolute inset-0" onClick={closeDeleteTicket}></div>
 
           <div className="bg-white w-11/12 max-w-[90%] lg:max-w-[40%] pl-8 pr-8  rounded-lg shadow-lg z-10 relative overflow-y-auto max-h-[80vh]">
-            {/* Modal Content */}
+            {/* DeleteTicket Content */}
 
-            {/* Modal Header */}
+            {/* DeleteTicket Header */}
             <div className="sticky top-0 bg-white py-6 z-20 flex justify-between">
               <div>
                 <h2 className="text-3xl font-bold mb-4 uppercase">
-                  Add Member
+                  Delete Ticket
                 </h2>
               </div>
               <div>
                 {/* Close button */}
                 <button
                   className="bg-blue-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-600"
-                  onClick={closeModal}>
+                  onClick={closeDeleteTicket}>
                   X
                 </button>
               </div>
             </div>
 
-            {/* Modal Body START */}
+            {/* DeleteTicket Body START */}
             <div className=" w-full">
               {/* <div>AddT icket Form</div> */}
               <div className="">
                 <div className=" mx-auto">
-                  <h1 className="text-xl text-center my-2 font-bold">
-                    Add Member
-                  </h1>
                   <Box
                     sx={{
                       maxWidth: 600,
@@ -307,12 +410,13 @@ const TicketMembers = () => {
                       {/* <div className="grid grid-cols-1 gap-4">
                         <FormControl fullWidth>
                           <InputLabel id="department-select-label">
-                            Department
+                            Issue?
                           </InputLabel>
                           <Select
                             labelId="department-select-label"
                             id="department-select"
                             // value={department}
+                            // value="IT" // Hardcoded value for department
                             label="Department"
                             // onChange={handleChange}
                           >
@@ -323,99 +427,16 @@ const TicketMembers = () => {
                           </Select>
                         </FormControl>
                       </div> */}
-                      {/* <div className="grid grid-cols-1 gap-4">
-                        <TextField
-                          label="Name"
-                          // value={newEvent.name}
-                          // onChange={(e) =>
-                          //   setnewEvent({ ...newEvent, name: e.target.value })
-                          // }
-                          fullWidth
-                        />
-                      </div> */}
-
-                      <TextField
-                        label="Name"
-                        value={nameInput}
-                        onChange={(e) => setNameInput(e.target.value)} // Trigger suggestion filtering on typing
-                        fullWidth
-                      />
-
-                      {filteredSuggestions.length > 0 && nameInput && (
-                        <ul
-                          style={{
-                            listStyleType: "none",
-                            padding: 0,
-                            marginTop: 4,
-                          }}>
-                          {filteredSuggestions.map((suggestion, index) => (
-                            <li
-                              key={index}
-                              style={{
-                                padding: 4,
-                                background: "#f1f1f1",
-                                cursor: "pointer",
-                                borderRadius: 4,
-                              }}
-                              onClick={() => {
-                                setNameInput(suggestion); // Set input to clicked suggestion
-                                setFilteredSuggestions([]); // Clear suggestions after selecting
-                              }}>
-                              {suggestion}
-                            </li>
-                          ))}
-                        </ul>
-                      )}
-
-                      {/* <div className="grid grid-cols-1 gap-4">
-                        <TextField
-                          label="Email"
-                          // value={newEvent.name}
-                          // onChange={(e) =>
-                          //   setnewEvent({ ...newEvent, name: e.target.value })
-                          // }
-                          fullWidth
-                        />
-                      </div> */}
-                      {/* <div className="grid grid-cols-1 gap-4">
-                        <TextField
-                          label="Password"
-                          // value={newEvent.name}
-                          // onChange={(e) =>
-                          //   setnewEvent({ ...newEvent, name: e.target.value })
-                          // }
-                          fullWidth
-                        />
-                      </div> */}
-                      {/* <div className="grid grid-cols-1 gap-4">
-                        <TextField
-                          label="Role"
-                          // value={newEvent.name}
-                          // onChange={(e) =>
-                          //   setnewEvent({ ...newEvent, name: e.target.value })
-                          // }
-                          fullWidth
-                        />
-                      </div> */}
-
                       <div className="grid grid-cols-1 gap-4">
-                        <FormControl fullWidth>
-                          <InputLabel id="department-select-label">
-                            Role
-                          </InputLabel>
-                          <Select
-                            labelId="department-select-label"
-                            id="department-select"
-                            // value={department}
-                            label="Department"
-                            // onChange={handleChange}
-                          >
-                            <MenuItem value="IT">IT</MenuItem>
-                            <MenuItem value="HR">HR</MenuItem>
-                            <MenuItem value="Tech">Tech</MenuItem>
-                            <MenuItem value="Admin">Admin</MenuItem>
-                          </Select>
-                        </FormControl>
+                        <TextField
+                          label="Action Taken"
+                          // value={newEvent.name}
+                          //   value="Wifi is not working" // Hardcoded value for ticket title
+                          // onChange={(e) =>
+                          //   setnewEvent({ ...newEvent, name: e.target.value })
+                          // }
+                          fullWidth
+                        />
                       </div>
                     </div>
 
@@ -433,33 +454,45 @@ const TicketMembers = () => {
           
               </div> */}
                   </Box>
+                  <h1 className="text-xl text-center my-2 font-bold">
+                    Is the ticket resolved?
+                  </h1>
                 </div>
               </div>
             </div>
-            {/* Modal Body END */}
+            {/* DeleteTicket Body END */}
 
-            {/* Modal Footer */}
+            {/* DeleteTicket Footer */}
 
-            <div className="sticky bottom-0 bg-white py-6 z-20 flex justify-center">
+            <div className="sticky bottom-0 bg-white py-6 z-20 flex justify-center gap-5">
               <div className="flex justify-center items-center">
                 <button
                   className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600"
-                  onClick={handleAddTicket}>
-                  Save
+                  onClick={handleDeleteTicket}>
+                  Yes
+                </button>
+              </div>
+              <div className="flex justify-center items-center">
+                <button
+                  className="bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600"
+                  onClick={handleNotResolved}>
+                  No
                 </button>
               </div>
             </div>
             {/* Close button */}
             {/* <button
-                className="bg-blue-500 text-white py-2 px-4 my-4 rounded-lg hover:bg-blue-600"
-                onClick={closeModal}>
-                Close
-              </button> */}
+              className="bg-blue-500 text-white py-2 px-4 my-4 rounded-lg hover:bg-blue-600"
+              onClick={closeDeleteTicket}>
+              No
+            </button> */}
           </div>
         </div>
       )}
+
+      {/* DELETE TICKET MODAL END */}
     </div>
   );
 };
 
-export default TicketMembers;
+export default AcceptedTickets;

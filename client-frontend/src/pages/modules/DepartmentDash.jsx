@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ModuleSidebar from "../../components/ModuleSidebar";
 import { useLocation, useParams } from "react-router-dom";
 import TestSide from "../../components/Sidetest";
@@ -70,9 +70,18 @@ import { color, motion } from "framer-motion";
 import ManageAsset from "../cms/asset/ManageAsset";
 import Listing from "../cms/room-booking/Listing";
 import Task from "../Task";
+import TodaysTickets from "../cms/tickets/components/TodaysTickets";
+import MyTicketsPage from "./../cms/tickets/MyTicketsPage";
+import { toast } from "sonner";
 import AssetReports from "../cms/asset/AssetReports";
 
 const DepartmentDash = () => {
+  const [user, setUser] = useState("");
+  useEffect(() => {
+    const storedUser = JSON.parse(localStorage.getItem("user"));
+    setUser(storedUser);
+  }, []);
+
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
   const [openTicket, setOpenTicket] = useState(false);
@@ -85,6 +94,11 @@ const DepartmentDash = () => {
   const handleClose = () => setOpen(false);
   const handleOpenTicket = () => setOpenTicket(true);
   const handleCloseTicket = () => setOpenTicket(false);
+
+  const handleTwo = () => {
+    setOpenTicket(false);
+    toast.success("Added New Ticket");
+  };
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -321,6 +335,12 @@ const DepartmentDash = () => {
       ],
     },
   ];
+
+  const [isAvailable, setIsAvailable] = useState(true);
+
+  const toggleStatus = () => {
+    setIsAvailable((prevState) => !prevState);
+  };
 
   return (
     <div className="flex">
@@ -566,15 +586,34 @@ const DepartmentDash = () => {
               </>
             ) : location.pathname === "/customer/tickets" ? (
               <>
-                <div className="bg-white p-4 rounded-lg  mt-4">
+                <div className="bg-white p-4 rounded-lg mt-4">
                   <div className="mb-8 flex justify-between">
                     <h1 className="text-3xl">Key insights</h1>
-                    <button
-                      onClick={handleOpenTicket}
-                      className="px-6 py-2 rounded-lg text-white wono-blue-dark hover:bg-[#3cbce7] transition-shadow shadow-md hover:shadow-lg active:shadow-inner"
-                    >
-                      Raise Ticket
-                    </button>
+                    <div className=" flex gap-4">
+                      {/* If IT Employee */}
+
+                      {user.role === "Employee" && user.department === "IT" && (
+                        <div>
+                          <span className="text-2xl">Status: </span>
+                          <button
+                            onClick={toggleStatus}
+                            className={`px-6 py-2 rounded-lg text-white transition-shadow shadow-md hover:shadow-lg active:shadow-inner ${
+                              isAvailable
+                                ? "bg-green-400 hover:bg-green-300"
+                                : "bg-red-400 hover:bg-red-300"
+                            }`}>
+                            {isAvailable ? "Available" : "Unavailable"}
+                          </button>
+                        </div>
+                      )}
+                      {/*  */}
+
+                      <button
+                        onClick={handleOpenTicket}
+                        className="px-6 py-2 rounded-lg text-white wono-blue-dark hover:bg-[#3cbce7] transition-shadow shadow-md hover:shadow-lg active:shadow-inner">
+                        Raise Ticket
+                      </button>
+                    </div>
                   </div>
                   {customerServiceWidgets
                     .filter((section) => section.subModule === "ticket")
@@ -587,11 +626,15 @@ const DepartmentDash = () => {
                     ))}
 
                   <div className=" py-10">
-                    {/* <p>Table Component</p> */}
-                    <MyTicketsTable />
+                    {/* <p>Today's tickets Table Component</p> */}
+                    <TodaysTickets />
                   </div>
                   {/* <p>x</p> */}
                 </div>
+              </>
+            ) : location.pathname === "/customer/tickets/my-tickets" ? (
+              <>
+                <MyTicketsPage />
               </>
             ) : location.pathname === "/customer/tickets/view-tickets" ? (
               <>
@@ -643,7 +686,8 @@ const DepartmentDash = () => {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.9 }}
                 className="w-full py-2 px-4 bg-blue-600 text-white rounded mt-4"
-                onClick={handleCloseTicket}
+                // onClick={handleCloseTicket}
+                onClick={handleTwo}
                 // onClick={() => navigate("/customer/tickets")}
               >
                 Save
