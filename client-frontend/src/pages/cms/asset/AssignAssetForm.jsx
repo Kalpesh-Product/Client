@@ -1,49 +1,149 @@
-import React, { useState } from "react";
-import { Button, TextField, Select, MenuItem, InputLabel, FormControl, Grid, Typography, Box } from "@mui/material";
+import React, { useState, useEffect } from "react";
+import {
+  Button,
+  TextField,
+  Select,
+  MenuItem,
+  InputLabel,
+  FormControl,
+  Grid,
+  Typography,
+  Box,
+} from "@mui/material";
 import { motion } from "framer-motion";
 import { IoMdClose } from "react-icons/io";
 import { toast } from "sonner";
+import axios from "axios";
+import userData from "E:/work/SaaS-Client/Client/client-frontend/src/dummyData/dummyData.json";
 
 const departments = ["HR", "Tech", "Sales", "Marketing"];
 const categories = ["Laptop", "Monitor", "Headphones", "Keyboard", "Mice"];
 const brands = ["Dell", "HP", "Apple", "Lenovo"];
-const models = ["Inspiron 15", "Pavilion 14", "MacBook Air M2", "ThinkPad X1 Carbon"];
+const models = [
+  "Inspiron 15",
+  "Pavilion 14",
+  "MacBook Air M2",
+  "ThinkPad X1 Carbon",
+];
 
-export default function AssignAssetForm({handleCloseModal}) {
-  const [assigneeDetails, setAssigneeDetails] = useState({ department: "", name: "" });
-  const [assetDetails, setAssetDetails] = useState({
-    category: "",
-    brand: "",
-    model: "",
-    issueDate: new Date().toLocaleDateString(),  // Current date as a string
+export default function AssignAssetForm({ handleCloseModal, selectedAsset }) {
+  const [formData, setFormData] = useState({
+    department: "",
+    name: "",
+    assetNumber: "",
+    assetType: "",
+    assetName: "",
+    brandName: "",
+    location: "",
+    status: "",
+    assignmentDate: new Date().toLocaleDateString(),
   });
+  const [user, setUser] = useState("");
+  const [selectedDepartment, setSelectedDepartment] = useState("");
+
+  const assetUpdate = () => {
+    // Fetch the user from localStorage and update the assignedAsset field
+    const storedUser = JSON.parse(localStorage.getItem("user")); // Parse the user data from localStorage
+    storedUser.assignedAsset = `${formData.assetNumber} - ${formData.assetName} - ${formData.brandName}`; // Update the assignedAsset field
+    console.log(storedUser);
+    localStorage.setItem("user", JSON.stringify(storedUser)); // Save the updated user data to localStorage
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const payload = {
+      department: selectedDepartment,
+      assigneeName: formData.name,
+      assetNumber: formData.assetNumber,
+      assetType: formData.assetType,
+      assetName: formData.assetName,
+      location: formData.location,
+      status: formData.status,
+      assignmentDate: formData.assignmentDate,
+    };
+
+    console.log(payload);
+
+    try {
+      // Fetch the current data at "0"
+      const response = await axios.get("http://localhost:5001/0");
+      const assignedAsset = response.data;
+
+      // Update the IT array by appending the new payload
+      const updatedITArray = assignedAsset.IT
+        ? [...assignedAsset.IT, payload]
+        : [payload];
+
+      // Save the updated IT array back to the server
+      await axios.put("http://localhost:5001/0", {
+        ...assignedAsset,
+        IT: updatedITArray,
+      });
+
+      assetUpdate()
+
+      handleCloseModal();
+      toast.success(`Asset assigned to ${formData.name}`);
+    } catch (error) {
+      console.error("Error assigning asset:", error);
+      toast.error("Failed to assign asset. Please try again.");
+    }
+  };
+
+  useEffect(() => {
+    if (selectedAsset) {
+      setFormData((prevState) => ({
+        ...prevState,
+        assetNumber: selectedAsset.assetNumber || "",
+        assetType: selectedAsset.assetType || "",
+        assetName: selectedAsset.assetName || "",
+        brandName: selectedAsset.brandName || "",
+        location: selectedAsset.location || "",
+        status: selectedAsset.status || "",
+        assignmentDate: new Date().toLocaleDateString(),
+      }));
+    }
+  }, [selectedAsset]); // Runs when selectedAsset changes
 
   const handleAssigneeChange = (e) => {
     const { name, value } = e.target;
-    setAssigneeDetails((prevState) => ({ ...prevState, [name]: value }));
+    setFormData((prevState) => ({ ...prevState, [name]: value }));
   };
 
   const handleAssetChange = (e) => {
     const { name, value } = e.target;
-    setAssetDetails((prevState) => ({ ...prevState, [name]: value }));
+    setFormData((prevState) => ({ ...prevState, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Handle form submission logic here
-    console.log("Assignee Details:", assigneeDetails);
-    console.log("Asset Details:", assetDetails);
-    handleCloseModal()
-    toast.success("Asset assigned")
-  };
+  //User names
+  const AssigneeOptions = userData
+    .filter((user) => user.department === selectedDepartment) // Filter by selected department
+    .map((user) => (
+      <MenuItem key={user.email} value={user.name}>
+        {user.name}
+      </MenuItem>
+    ));
+  const AssigneeDepartment = [
+    ...new Set(userData.map((user) => user.department)),
+  ].map((department, index) => (
+    <MenuItem key={index} value={department}>
+      {department}
+    </MenuItem>
+  ));
+
+  // If selectedAsset is undefined or null, don't render the form yet
+  if (!selectedAsset) {
+    return <Typography>Loading...</Typography>; // Show loading or nothing
+  }
 
   return (
-    <Box sx={{ p: 3, maxWidth: 600, mx: "auto"}}>
+    <Box sx={{ p: 3, maxWidth: 600, mx: "auto" }}>
       <div className="flex justify-between mb-4">
-      <Typography sx={{fontFamily:'Popins-Semibold'}} variant="h4">
-        Assign Asset
-      </Typography>
-      <motion.button
+        <Typography sx={{ fontFamily: "Popins-Semibold" }} variant="h4">
+          Assign Asset
+        </Typography>
+        <motion.button
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.9 }}
           type="button"
@@ -55,8 +155,11 @@ export default function AssignAssetForm({handleCloseModal}) {
       </div>
       <form onSubmit={handleSubmit}>
         {/* Section 1: Assignee Details */}
-        <Typography variant="h6" sx={{ mb: 2, fontFamily:'Popins-Semibold', color:'gray' }}>
-        Assignee Details
+        <Typography
+          variant="h6"
+          sx={{ mb: 2, fontFamily: "Popins-Semibold", color: "gray" }}
+        >
+          Assignee Details
         </Typography>
         <Grid container spacing={3}>
           <Grid item xs={12} sm={6}>
@@ -65,100 +168,125 @@ export default function AssignAssetForm({handleCloseModal}) {
               <Select
                 label="Department"
                 name="department"
-                value={assigneeDetails.department}
-                onChange={handleAssigneeChange}
+                value={selectedDepartment}
+                onChange={(e) => setSelectedDepartment(e.target.value)}
               >
-                {departments.map((dept, index) => (
-                  <MenuItem key={index} value={dept}>
-                    {dept}
-                  </MenuItem>
-                ))}
+                {AssigneeDepartment}
               </Select>
             </FormControl>
           </Grid>
 
           <Grid item xs={12} sm={6}>
             <TextField
-              label="Name"
+              label="Assignee Name"
               name="name"
-              value={assigneeDetails.name}
+              value={formData.name || ""}
               onChange={handleAssigneeChange}
               fullWidth
-            />
+              select
+            >
+              {AssigneeOptions}
+            </TextField>
           </Grid>
         </Grid>
 
         {/* Section 2: Asset Details */}
-        <Typography variant="h6" sx={{ my: 2, fontFamily:'Popins-Semibold',color:'gray' }}>
+        <Typography
+          variant="h6"
+          sx={{ my: 2, fontFamily: "Popins-Semibold", color: "gray" }}
+        >
           Asset Details
         </Typography>
         <Grid container spacing={3}>
           <Grid item xs={12} sm={6}>
-            <FormControl fullWidth>
-              <InputLabel>Category</InputLabel>
-              <Select
-                label="Category"
-                name="category"
-                value={assetDetails.category}
-                onChange={handleAssetChange}
-              >
-                {categories.map((category, index) => (
-                  <MenuItem key={index} value={category}>
-                    {category}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
+            <TextField
+              label="Asset Number"
+              name="assetNumber"
+              value={formData.assetNumber}
+              onChange={handleAssetChange}
+              fullWidth
+              required
+            />
+          </Grid>
+
+          <Grid item xs={12} sm={6}>
+            <TextField
+              label="Asset Type"
+              name="assetType"
+              value={formData.assetType}
+              onChange={handleAssetChange}
+              fullWidth
+              required
+            />
+          </Grid>
+
+          <Grid item xs={12} sm={6}>
+            <TextField
+              label="Asset Name"
+              name="assetName"
+              value={formData.assetName}
+              onChange={handleAssetChange}
+              fullWidth
+              required
+            />
+          </Grid>
+
+          <Grid item xs={12} sm={6}>
+            <TextField
+              label="Brand Name"
+              name="brandName"
+              value={formData.brandName}
+              onChange={handleAssetChange}
+              fullWidth
+              required
+            />
+          </Grid>
+
+          <Grid item xs={12} sm={6}>
+            <TextField
+              label="Location"
+              name="location"
+              value={formData.location}
+              onChange={handleAssetChange}
+              fullWidth
+              required
+            />
           </Grid>
 
           <Grid item xs={12} sm={6}>
             <FormControl fullWidth>
-              <InputLabel>Brand</InputLabel>
+              <InputLabel>Status</InputLabel>
               <Select
-                label="Brand"
-                name="brand"
-                value={assetDetails.brand}
+                label="Status"
+                name="status"
+                value={formData.status}
                 onChange={handleAssetChange}
+                required
               >
-                {brands.map((brand, index) => (
-                  <MenuItem key={index} value={brand}>
-                    {brand}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-          </Grid>
-
-          <Grid item xs={12} sm={6}>
-            <FormControl fullWidth>
-              <InputLabel>Model</InputLabel>
-              <Select
-                label="Model"
-                name="model"
-                value={assetDetails.model}
-                onChange={handleAssetChange}
-              >
-                {models.map((model, index) => (
-                  <MenuItem key={index} value={model}>
-                    {model}
-                  </MenuItem>
-                ))}
+                <MenuItem value="active">Active</MenuItem>
+                <MenuItem value="inactive">Inactive</MenuItem>
               </Select>
             </FormControl>
           </Grid>
 
           <Grid item xs={12} sm={6}>
             <TextField
-              label="Issue Date"
-              value={assetDetails.issueDate}
-              disabled  // Make the date field non-editable
+              label="Assignment Date"
+              name="assignmentDate"
+              value={formData.assignmentDate}
+              onChange={handleAssetChange}
+              disabled
               fullWidth
+              required
             />
           </Grid>
         </Grid>
 
         <Box sx={{ mt: 3 }}>
-          <button type="submit" className="px-6 w-full py-2 rounded-lg text-white wono-blue-dark hover:bg-[#3cbce7] transition-shadow shadow-md hover:shadow-lg active:shadow-inner">
+          <button
+            type="submit"
+            className="px-6 w-full py-2 rounded-lg text-white wono-blue-dark hover:bg-[#3cbce7] transition-shadow shadow-md hover:shadow-lg active:shadow-inner"
+          >
             Assign
           </button>
         </Box>

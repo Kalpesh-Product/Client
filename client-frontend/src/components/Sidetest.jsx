@@ -147,7 +147,7 @@ const TestSide = () => {
     Marketing: ["MARKETING"],
     Cafe: ["CAFE (F&B)"],
     IT: ["IT","CUSTOMER SERVICE"],
-    Maintenance: ["MAINTENANCE"],
+    Maintainance: ["CUSTOMER SERVICE"],
     Legal: ["LEGAL"],
   };
 

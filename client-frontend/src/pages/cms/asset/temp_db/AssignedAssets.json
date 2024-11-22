@@ -1,0 +1,217 @@
+{
+  "0": {
+    "id": 1,
+    "IT": [
+      {
+        "department": "HR",
+        "assigneeName": "Farzeen",
+        "assetNumber": "0002",
+        "assetType": "Laptop",
+        "assetName": "Laptop",
+        "location": "ST-1",
+        "status": "active",
+        "assignmentDate": "21/11/2024"
+      },
+      {
+        "department": "HR",
+        "assigneeName": "Aiwin Raj",
+        "assetNumber": "0001",
+        "assetType": "Laptop",
+        "assetName": "Laptop",
+        "location": "ST-701B",
+        "status": "active",
+        "assignmentDate": "21/11/2024"
+      },
+      {
+        "department": "Marketing",
+        "assigneeName": "fesutah laraveh",
+        "assetNumber": "0001",
+        "assetType": "Laptop",
+        "assetName": "Laptop",
+        "location": "ST-701B",
+        "status": "active",
+        "assignmentDate": "21/11/2024"
+      },
+      {
+        "department": "Marketing",
+        "assigneeName": "fesutah laraveh",
+        "assetNumber": "0001",
+        "assetType": "Laptop",
+        "assetName": "PC",
+        "location": "ST-701B",
+        "status": "active",
+        "assignmentDate": "21/11/2024"
+      },
+      {
+        "department": "Marketing",
+        "assigneeName": "Sethu",
+        "assetNumber": "0001",
+        "assetType": "Laptop",
+        "assetName": "Laptop",
+        "location": "ST-701B",
+        "status": "active",
+        "assignmentDate": "21/11/2024"
+      },
+      {
+        "department": "HR",
+        "assigneeName": "Sethu",
+        "assetNumber": "0001",
+        "assetType": "Laptop",
+        "assetName": "Laptop",
+        "location": "ST-701B",
+        "status": "active",
+        "assignmentDate": "21/11/2024"
+      },
+      {
+        "department": "Marketing",
+        "assigneeName": "fesutah laraveh",
+        "assetNumber": "0001",
+        "assetType": "Laptop",
+        "assetName": "Laptop",
+        "location": "ST-701B",
+        "status": "active",
+        "assignmentDate": "21/11/2024"
+      },
+      {
+        "department": "Tech",
+        "assigneeName": "farzeen",
+        "assetNumber": "0001",
+        "assetType": "Laptop",
+        "assetName": "Laptop",
+        "location": "ST-701B",
+        "status": "active",
+        "assignmentDate": "21/11/2024"
+      },
+      {
+        "department": "Tech",
+        "assigneeName": "farzeen",
+        "assetNumber": "0001",
+        "assetType": "Laptop",
+        "assetName": "Laptop",
+        "location": "ST-701B",
+        "status": "active",
+        "assignmentDate": "21/11/2024"
+      },
+      {
+        "department": "HR",
+        "assigneeName": "Sethu",
+        "assetNumber": "0001",
+        "assetType": "Laptop",
+        "assetName": "Laptop",
+        "location": "ST-701B",
+        "status": "active",
+        "assignmentDate": "21/11/2024"
+      },
+      {
+        "department": "Tech",
+        "assigneeName": "Aiwinraj KS",
+        "assetNumber": "0001",
+        "assetType": "Laptop",
+        "assetName": "Laptop",
+        "location": "ST-701B",
+        "status": "active",
+        "assignmentDate": "22/11/2024"
+      },
+      {
+        "department": "HR",
+        "assigneeName": "Farzeen",
+        "assetNumber": "0003",
+        "assetType": "Laptop",
+        "assetName": "Laptop",
+        "location": "ST-703A",
+        "status": "active",
+        "assignmentDate": "22/11/2024"
+      },
+      {
+        "department": "IT",
+        "assigneeName": "Machendranath",
+        "assetNumber": "0004",
+        "assetType": "ll",
+        "assetName": "Laptop",
+        "location": "ST-704D",
+        "status": "active",
+        "assignmentDate": "22/11/2024"
+      },
+      {
+        "department": "IT",
+        "assigneeName": "Machendranath",
+        "assetNumber": "0002",
+        "assetType": "Laptop",
+        "assetName": "Laptop",
+        "location": "ST-702C",
+        "status": "active",
+        "assignmentDate": "22/11/2024"
+      },
+      {
+        "department": "TopManagement",
+        "assigneeName": "Abrar Shaikh",
+        "assetNumber": "0001",
+        "assetType": "aa",
+        "assetName": "Laptop",
+        "location": "ST-701B",
+        "status": "active",
+        "assignmentDate": "22/11/2024"
+      },
+      {
+        "department": "HR",
+        "assigneeName": "Farzeen",
+        "assetNumber": "0001",
+        "assetType": "aa",
+        "assetName": "Laptop",
+        "location": "ST-701B",
+        "status": "active",
+        "assignmentDate": "22/11/2024"
+      },
+      {
+        "department": "Tech",
+        "assigneeName": "Aiwinraj KS",
+        "assetNumber": "0003",
+        "assetType": "Software",
+        "assetName": "Laptop",
+        "location": "ST-703A",
+        "status": "active",
+        "assignmentDate": "22/11/2024"
+      },
+      {
+        "department": "Tech",
+        "assigneeName": "Aiwinraj KS",
+        "assetNumber": "0001",
+        "assetType": "aa",
+        "assetName": "Laptop",
+        "location": "ST-701B",
+        "status": "inactive",
+        "assignmentDate": "22/11/2024"
+      },
+      {
+        "department": "IT",
+        "assigneeName": "Faizan",
+        "assetNumber": "0002",
+        "assetType": "Hardware",
+        "assetName": "Laptop",
+        "location": "ST-702C",
+        "status": "active",
+        "assignmentDate": "22/11/2024"
+      },
+      {
+        "department": "Tech",
+        "assigneeName": "Aiwinraj KS",
+        "assetNumber": "0003",
+        "assetType": "Hardware",
+        "assetName": "Laptop",
+        "location": "ST-703A",
+        "status": "active",
+        "assignmentDate": "22/11/2024"
+      },
+      {
+        "department": "Tech",
+        "assigneeName": "Aiwinraj KS",
+        "assetNumber": "0001",
+        "assetType": "uu",
+        "assetName": "Laptop",
+        "location": "ST-701B",
+        "status": "active",
+        "assignmentDate": "22/11/2024"
+      }
+    ]
+  }
+}

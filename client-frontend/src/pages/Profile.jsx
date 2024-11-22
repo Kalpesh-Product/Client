@@ -8,9 +8,10 @@ import Profilepic from "../assets/profile.jpg";
 import { TbCameraPlus } from "react-icons/tb";
 import Modal from "../components/Modal";
 import { closeModal, openModal } from "../redux/features/modalSlice";
-
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import SuperAdmin from "../assets/kashif-bg.png";
 import { useDispatch, useSelector } from "react-redux";
+import { Accordion, AccordionDetails, AccordionSummary } from "@mui/material";
 // import image from "../profile.jpg";
 
 const Profile = () => {
@@ -20,7 +21,7 @@ const Profile = () => {
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [checkedItems, setCheckedItems] = useState({});
   const [activeTab, setActiveTab] = useState("tab-1");
-  const [userData, setUserData] = useState(null);
+  const [userData, setUserData] = useState("");
 
   useEffect(() => {
     const storedUser = JSON.parse(localStorage.getItem("user"));
@@ -28,6 +29,10 @@ const Profile = () => {
       setUserData(storedUser); // Populate user data
     }
   }, []);
+
+  useEffect(() => {
+    console.log(userData); // This will log the updated user data after it changes
+  }, [userData]); // This will run when userData changes
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -160,6 +165,18 @@ const Profile = () => {
                 Access
               </button>
             </li>
+            <li className=" text-center w-1/2" role="presentation">
+              <button
+                className={`text-md py-2 w-full hover:bg-gray-100 ${
+                  activeTab === "tab-3"
+                    ? "border-b-4 border-[#0DB4EA] text-blue-600"
+                    : ""
+                }`}
+                onClick={() => setActiveTab("tab-3")}
+              >
+                Assets
+              </button>
+            </li>
           </ul>
           <div className="tab-content">
             {activeTab === "tab-1" && (
@@ -202,6 +219,48 @@ const Profile = () => {
                 >
                   {/* Tab 2 Content */}
                   <AccessHierarchyTab />
+                </div>
+              </div>
+            )}
+            {activeTab === "tab-3" && (
+              <div
+                className="tab-pane motion-preset-slide-up-sm show"
+                id="tab-2"
+                role="tabpanel"
+              >
+                <div
+                  className="flex flex-col"
+                  data-aos="fade-up"
+                  data-aos-delay="100"
+                >
+                  <div className="bg-white shadow-lg rounded-lg overflow-hidden inline-block">
+                    <Accordion>
+                      <AccordionSummary
+                        expandIcon={<ExpandMoreIcon />}
+                        aria-controls="panel1-content"
+                        id="panel1-header"
+                        sx={{fontFamily:'Popins-SemiBold'}}
+                      >
+                         IT
+                      </AccordionSummary>
+                      <AccordionDetails>
+                       {userData.assignedAsset}
+                      </AccordionDetails>
+                    </Accordion>
+                    <Accordion>
+                      <AccordionSummary
+                        expandIcon={<ExpandMoreIcon />}
+                        aria-controls="panel1-content"
+                        id="panel1-header"
+                        sx={{fontFamily:'Popins-SemiBold'}}
+                      >
+                         Maintainance
+                      </AccordionSummary>
+                      <AccordionDetails>
+                       5001 - Chair - Herman Miller
+                      </AccordionDetails>
+                    </Accordion>
+                  </div>
                 </div>
               </div>
             )}

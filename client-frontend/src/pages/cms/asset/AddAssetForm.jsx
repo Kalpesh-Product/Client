@@ -10,6 +10,7 @@ import {
 import { motion } from "framer-motion";
 import { IoMdClose } from "react-icons/io";
 import { toast } from "sonner";
+import axios from "axios";
 
 const AddAssetForm = ({ title, handleClose, user }) => {
   const [formData, setFormData] = useState({
@@ -19,6 +20,7 @@ const AddAssetForm = ({ title, handleClose, user }) => {
     brandName: "",
     quantity: "",
     price: "",
+    totalPrice: "",
     vendorName: "",
     purchaseDate: "",
     warranty: "",
@@ -27,10 +29,18 @@ const AddAssetForm = ({ title, handleClose, user }) => {
   });
 
   const storedUser = user;
-  console.log(storedUser.department)
+  console.log("passed user :", storedUser.department);
 
   const assetTypes = ["Laptop", "Monitor", "Keyboard", "Mouse", "Headphones"];
-  const departments = ["IT", "HR", "Finance", "Marketing", "Maintainance"];
+  const departments = ["IT", "Maintainance", "Admin"];
+
+  // Filter the departments based on the user's department
+  const filteredDepartments = departments.filter(
+    (dept) => dept === storedUser.department
+  );
+
+  console.log(filteredDepartments); // ["IT"] if user.department is "IT"
+
   const locations = ["ST-701A", "ST-701B", "ST-601A", "ST-601B"];
 
   const handleChange = (e) => {
@@ -41,11 +51,36 @@ const AddAssetForm = ({ title, handleClose, user }) => {
     }));
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("Form Submitted:", formData);
-    handleClose();
-    toast.success('Asset added')
+  const handleSubmit = async (e) => {
+    try {
+      e.preventDefault();
+      // Fetch the existing data for the IT department
+      const response = await axios.get("http://localhost:5000/IT");
+
+      if (response.data.length > 0) {
+        const itData = response.data[0]; // Extract IT department data
+
+        // Get the last ID and increment it for the new entry
+        const lastLaptop = itData.laptops[itData.laptops.length - 1];
+        const newId = lastLaptop ? lastLaptop.id + 1 : 1; // Start with 1 if no data exists
+
+        // Add the new id to formData
+        const newAsset = { ...formData, id: newId };
+
+        // Update the laptops array
+        const updatedLaptops = [...(itData.laptops || []), newAsset];
+        const updatedData = { ...itData, laptops: updatedLaptops };
+
+        // Update the IT department with the new laptops array
+        await axios.put(`http://localhost:5000/IT/${itData.id}`, updatedData);
+
+        toast.success("Asset added successfully!");
+      }
+    } catch {
+      toast.error("Error adding asset");
+    } finally {
+      handleClose();
+    }
   };
 
   return (
@@ -95,11 +130,16 @@ const AddAssetForm = ({ title, handleClose, user }) => {
               name="department"
               select
               fullWidth
-              disabled
               value={user.department}
               onChange={handleChange}
             >
-              {departments.map((dept, index) => (
+              {user.department === 'TopManagement' ? departments.map((dept,index)=>{
+                return (
+                  <MenuItem key={index} value={dept}>
+                  {dept}
+                </MenuItem>
+                )
+              }): filteredDepartments.map((dept, index) => (
                 <MenuItem key={index} value={dept}>
                   {dept}
                 </MenuItem>
@@ -181,7 +221,7 @@ const AddAssetForm = ({ title, handleClose, user }) => {
               type="number"
               fullWidth
               disabled
-              value={(formData.price * formData.quantity)}
+              value={formData.price * formData.quantity}
               onChange={handleChange}
             />
           </Grid>

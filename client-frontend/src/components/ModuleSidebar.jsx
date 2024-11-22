@@ -96,13 +96,8 @@ const ModuleSidebar = ({ mainSideBar }) => {
           route: "/customer/asset/manage",
         },
         {
-          title: "View asset",
-          route: "/customer/asset/view",
-        },
-  
-        {
-          title: "Delete asset",
-          route: "/customer/asset/delete",
+          title: "Reports",
+          route: "/customer/asset/reports",
         },
       ],
     },

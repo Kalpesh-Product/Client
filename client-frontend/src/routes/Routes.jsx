@@ -87,6 +87,10 @@ const router = createBrowserRouter([
         element: <DepartmentDash />,
       },
       {
+        path: "/customer/asset/reports",
+        element: <DepartmentDash />,
+      },
+      {
         path: "/customer/dashboard",
         element: <DepartmentDash />,
       },

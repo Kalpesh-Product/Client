@@ -40,11 +40,13 @@ import {
   WiFiTraffic,
 } from "../../Widgets/ITWidgets";
 import {
+  AssetAllocationWidget,
   AssetsAssigned,
   AssetsCount,
   AssetsInRepair,
   MaintenanceRequests,
   NewAssetsAdded,
+  QuantityRemainingWidget,
 } from "../../Widgets/CMS/customerServiceWidgets";
 import { useDispatch, useSelector } from "react-redux";
 import { openModal, closeModal } from "../../redux/features/modalSlice";
@@ -68,6 +70,7 @@ import { color, motion } from "framer-motion";
 import ManageAsset from "../cms/asset/ManageAsset";
 import Listing from "../cms/room-booking/Listing";
 import Task from "../Task";
+import AssetReports from "../cms/asset/AssetReports";
 
 const DepartmentDash = () => {
   const dispatch = useDispatch();
@@ -298,7 +301,6 @@ const DepartmentDash = () => {
         />,
         <AssetsAssigned assigned={customerServiceWidgetsData.assignedAssets} />,
         <AssetsInRepair count={customerServiceWidgetsData.assetsInRepair} />,
-        <NewAssetsAdded added={customerServiceWidgetsData.newAssetsAdded} />,
       ],
     },
     {
@@ -365,7 +367,8 @@ const DepartmentDash = () => {
                     "& .MuiTabs-indicator": {
                       backgroundColor: "#0db4ea", // Custom indicator color
                     },
-                  }}>
+                  }}
+                >
                   <Tab label="Home" />
                   <Tab label="About" />
                   <Tab label="Gallery" />
@@ -426,7 +429,8 @@ const DepartmentDash = () => {
                   {products.map((product) => (
                     <div
                       key={product.id}
-                      className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+                      className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow"
+                    >
                       <img
                         src={product.image}
                         alt={product.name}
@@ -450,9 +454,7 @@ const DepartmentDash = () => {
             )}
           </>
         )}
-        {
-
-        }
+        {}
 
         {/* HR submodules */}
         {location.pathname.startsWith("/hr") && (
@@ -505,7 +507,7 @@ const DepartmentDash = () => {
           <>
             {location.pathname === "/customer" ||
             location.pathname === "/customer/dashboard" ? (
-              <div className="bg-white p-4 rounded-lg  mt-4">
+              <div className="bg-white p-4 rounded-lg  mt-4 ">
                 {itWidgets.map((section, index) => (
                   <WidgetSection
                     key={index}
@@ -516,14 +518,9 @@ const DepartmentDash = () => {
               </div>
             ) : location.pathname === "/customer/kpi" ? (
               <>
-                <div className="bg-white p-4 rounded-lg  mt-4">
+                <div className="bg-white p-4 rounded-lg  mt-4 h-[90vh] overflow-y-auto">
                   <div className="mb-8 flex justify-between">
                     <h1 className="text-3xl">Key insights</h1>
-                    <button
-                      onClick={handleOpen}
-                      className="px-6 py-2 rounded-lg text-white wono-blue-dark hover:bg-[#3cbce7] transition-shadow shadow-md hover:shadow-lg active:shadow-inner">
-                      Add Assets
-                    </button>
                   </div>
                   {customerServiceWidgets
                     .filter((section) => section.subModule === "asset")
@@ -534,11 +531,30 @@ const DepartmentDash = () => {
                         widgets={section.widgets}
                       />
                     ))}
+                  <div className="flex w-full flex-1 flex-grow gap-x-4">
+                    <QuantityRemainingWidget
+                      totalStock={100}
+                      remainingStock={30}
+                      assetType="Laptops"
+                    />
+
+                    <QuantityRemainingWidget
+                      totalStock={100}
+                      remainingStock={10}
+                      assetType="Mobiles"
+                    />
+                  </div>
+
+                  <AssetAllocationWidget />
                 </div>
               </>
             ) : location.pathname === "/customer/asset/view" ? (
               <>
                 <ViewAssets />
+              </>
+            ) : location.pathname === "/customer/asset/reports" ? (
+              <>
+                <AssetReports />
               </>
             ) : location.pathname === "/customer/asset/manage" ? (
               <>
@@ -555,7 +571,8 @@ const DepartmentDash = () => {
                     <h1 className="text-3xl">Key insights</h1>
                     <button
                       onClick={handleOpenTicket}
-                      className="px-6 py-2 rounded-lg text-white wono-blue-dark hover:bg-[#3cbce7] transition-shadow shadow-md hover:shadow-lg active:shadow-inner">
+                      className="px-6 py-2 rounded-lg text-white wono-blue-dark hover:bg-[#3cbce7] transition-shadow shadow-md hover:shadow-lg active:shadow-inner"
+                    >
                       Raise Ticket
                     </button>
                   </div>
@@ -588,22 +605,20 @@ const DepartmentDash = () => {
               <>
                 <TicketReports />
               </>
-            ): location.pathname === "/customer/meetings/booking" ? (
+            ) : location.pathname === "/customer/meetings/booking" ? (
               <>
                 <Listing />
               </>
-            ): (
+            ) : (
               <></>
             )}
           </>
         )}
-        {
-          location.pathname.startsWith("/tasks") && (
-            <>
-            <Task/>
-            </>
-          )
-        }
+        {location.pathname.startsWith("/tasks") && (
+          <>
+            <Task />
+          </>
+        )}
       </div>
       <div>
         <NewModal open={open} onClose={handleClose}>
@@ -618,7 +633,8 @@ const DepartmentDash = () => {
           open={openTicket}
           onClose={handleCloseTicket}
           aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description">
+          aria-describedby="modal-modal-description"
+        >
           {/* <Box sx={style}> */}
           <Box sx={style}>
             <AddTicketForm />
