@@ -24,6 +24,9 @@ import TicketReports from "../pages/cms/tickets/TicketReports";
 import ViewTickets from "../pages/cms/tickets/ViewTickets";
 import TicketMembers from "../pages/cms/tickets/TicketMembers";
 import Task from "../pages/Task";
+import Teams from "../pages/Teams";
+import Tasklist from "../pages/Tasklist";
+import TasklistTable from "../pages/TasklistTable";
 
 const router = createBrowserRouter([
   {
@@ -169,7 +172,20 @@ const router = createBrowserRouter([
       },
       {
         path: "/tasks",
-        element: <DepartmentDash/>
+        element: <DepartmentDash/>,
+      },
+      {
+        path: "/teams",
+        element: <Teams/>,
+      },
+      {
+        path: "/tasklist",
+        element: <Tasklist/>
+
+      },
+      {
+        path: "/tasklisttable",
+        element: <TasklistTable/>
       }
     ],
   },
