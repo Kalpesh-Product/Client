@@ -96,6 +96,30 @@ const UnresolvedTickets = () => {
     //   ),
     // },
 
+    // {
+    //   field: "accept",
+    //   headerName: "Accept",
+    //   width: 150,
+    //   renderCell: (params) => (
+    //     <Button
+    //       size="small"
+    //       // onClick={() => handleDelete(params.row)}
+    //       onClick={handleDelete}
+    //       variant="contained"
+    //       sx={{
+    //         backgroundColor: "#EF4444",
+    //         color: "white",
+    //         "&:hover": {
+    //           backgroundColor: "#DC2626",
+    //         },
+    //         padding: "4px 8px",
+    //         borderRadius: "0.375rem",
+    //       }}>
+    //       Accept
+    //     </Button>
+    //   ),
+    // },
+
     {
       field: "viewDetails",
       headerName: "Actions",
@@ -332,7 +356,7 @@ const UnresolvedTickets = () => {
           initialState={{ pagination: { paginationModel } }}
           pageSizeOptions={[5, 10]}
           // checkboxSelection
-          sx={{ border: 0 }}
+          sx={{ border: 0, width: "75vw" }}
         />
       </Paper>
       {/* Tickets datatable END */}

@@ -11,29 +11,37 @@ import { CSVLink } from "react-csv";
 const MyTicketsTable = () => {
   const columns = [
     { field: "id", headerName: "ID", width: 100 },
-    { field: "ticketTitle", headerName: "Ticket Title", width: 250 },
+    { field: "ticketTitle", headerName: "Ticket Title", width: 200 },
     {
       field: "priority",
       headerName: "Priority",
-      width: 250,
+      width: 150,
       type: "singleSelect",
       valueOptions: ["High", "Medium", "Low"],
     },
     {
+      field: "status",
+      headerName: "Status",
+      width: 150,
+      type: "singleSelect",
+      valueOptions: ["Pending", "In Process", "Resolved"],
+    },
+    {
       field: "department",
       headerName: "Department",
-      width: 250,
+      width: 150,
       type: "singleSelect",
       valueOptions: ["IT", "HR", "Tech", "Admin"],
     },
-    { field: "requestDate", headerName: "Request Date", width: 250 },
+    { field: "requestDate", headerName: "Request Date", width: 150 },
   ];
 
   const allRows = [
     {
       id: 1,
-      ticketTitle: "Website Bug",
+      ticketTitle: "Wifi is not working",
       priority: "High",
+      status: "Pending",
       department: "IT",
       requestDate: "2024-10-01",
     },
@@ -41,6 +49,7 @@ const MyTicketsTable = () => {
       id: 2,
       ticketTitle: "Payroll Issue",
       priority: "Medium",
+      status: "In Process",
       department: "HR",
       requestDate: "2024-10-03",
     },
@@ -48,6 +57,7 @@ const MyTicketsTable = () => {
       id: 3,
       ticketTitle: "Server Downtime",
       priority: "High",
+      status: "Resolved",
       department: "Tech",
       requestDate: "2024-10-05",
     },
@@ -55,6 +65,7 @@ const MyTicketsTable = () => {
       id: 4,
       ticketTitle: "New Workstation Setup",
       priority: "Low",
+      status: "Pending",
       department: "Admin",
       requestDate: "2024-10-06",
     },
@@ -62,6 +73,7 @@ const MyTicketsTable = () => {
       id: 5,
       ticketTitle: "Employee Onboarding",
       priority: "Medium",
+      status: "In Process",
       department: "HR",
       requestDate: "2024-10-07",
     },
@@ -69,6 +81,7 @@ const MyTicketsTable = () => {
       id: 6,
       ticketTitle: "Network Issue",
       priority: "High",
+      status: "Pending",
       department: "IT",
       requestDate: "2024-10-08",
     },
@@ -76,6 +89,7 @@ const MyTicketsTable = () => {
       id: 7,
       ticketTitle: "Software Installation",
       priority: "Low",
+      status: "Resolved",
       department: "Tech",
       requestDate: "2024-10-09",
     },
@@ -83,6 +97,7 @@ const MyTicketsTable = () => {
       id: 8,
       ticketTitle: "Office Supplies Request",
       priority: "Low",
+      status: "Pending",
       department: "Admin",
       requestDate: "2024-10-10",
     },
@@ -90,6 +105,7 @@ const MyTicketsTable = () => {
       id: 9,
       ticketTitle: "Email Access Issue",
       priority: "Medium",
+      status: "In Process",
       department: "IT",
       requestDate: "2024-10-11",
     },
@@ -119,7 +135,7 @@ const MyTicketsTable = () => {
   return (
     <div>
       <div className="flex gap-4 h-16 ">
-        <div className="pt-2">Filter by department:</div>
+        <div className="pt-2">Filter by :</div>
         <div>
           <Box sx={{ minWidth: 140 }}>
             <FormControl
@@ -152,6 +168,70 @@ const MyTicketsTable = () => {
             </FormControl>
           </Box>
         </div>
+        <div>
+          <Box sx={{ minWidth: 140 }}>
+            <FormControl
+              fullWidth
+              sx={{
+                height: "34px", // Adjust height of the select input
+                padding: "10px 8px 4px 2px", // Adjust padding inside
+              }}>
+              <InputLabel id="department-select-label" className=" pt-0 mt-0">
+                Date
+              </InputLabel>
+              <Select
+                labelId="department-select-label"
+                id="department-select"
+                value={department}
+                label="Department"
+                sx={{
+                  height: "32px", // Adjust the height of the select
+                  padding: "2px 8px 4px 8px", // Adjust the padding inside the select
+                }}
+                className=" pt-0"
+                onChange={handleChange}>
+                <MenuItem value="">All</MenuItem>{" "}
+                {/* Option to show all departments */}
+                <MenuItem value="Tech">Today</MenuItem>
+                <MenuItem value="IT">Last 7 Days</MenuItem>
+                <MenuItem value="HR">Last 30 Days</MenuItem>
+                <MenuItem value="Admin">Last 365 Days</MenuItem>
+              </Select>
+            </FormControl>
+          </Box>
+        </div>
+        <div>
+          <Box sx={{ minWidth: 140 }}>
+            <FormControl
+              fullWidth
+              sx={{
+                height: "34px", // Adjust height of the select input
+                padding: "10px 8px 4px 2px", // Adjust padding inside
+              }}>
+              <InputLabel id="department-select-label" className=" pt-0 mt-0">
+                Status
+              </InputLabel>
+              <Select
+                labelId="department-select-label"
+                id="department-select"
+                value={department}
+                label="Department"
+                sx={{
+                  height: "32px", // Adjust the height of the select
+                  padding: "2px 8px 4px 8px", // Adjust the padding inside the select
+                }}
+                className=" pt-0"
+                onChange={handleChange}>
+                <MenuItem value="">All</MenuItem>{" "}
+                {/* Option to show all departments */}
+                <MenuItem value="Tech">Pending</MenuItem>
+                <MenuItem value="IT">In Process</MenuItem>
+                <MenuItem value="HR">Resolved</MenuItem>
+                {/* <MenuItem value="Admin">Last 365 Days</MenuItem> */}
+              </Select>
+            </FormControl>
+          </Box>
+        </div>
         <div className=" flex">
           {/* <button className="bg-blue-500 hover:bg-blue-700 text-white text-sm font-bold py-2 px-4 rounded">
             Export Report
@@ -174,7 +254,7 @@ const MyTicketsTable = () => {
           initialState={{ pagination: { paginationModel } }}
           pageSizeOptions={[5, 10]}
           checkboxSelection
-          sx={{ border: 0 }}
+          sx={{ border: 0, width: "75vw" }}
         />
       </Paper>
       {/* Tickets datatable END */}

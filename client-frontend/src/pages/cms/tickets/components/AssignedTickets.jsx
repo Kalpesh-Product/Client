@@ -8,8 +8,9 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { CSVLink } from "react-csv";
 import Button from "@mui/material/Button";
+import { toast } from "sonner";
 
-const ExternalTickets = () => {
+const AssignedTickets = () => {
   const columns = [
     { field: "id", headerName: "ID", width: 100 },
     { field: "ticketTitle", headerName: "Ticket Title", width: 200 },
@@ -28,6 +29,30 @@ const ExternalTickets = () => {
       valueOptions: ["IT", "HR", "Tech", "Admin"],
     },
     { field: "requestDate", headerName: "Request Date", width: 150 },
+
+    {
+      field: "accept",
+      headerName: "Accept",
+      width: 150,
+      renderCell: (params) => (
+        <Button
+          size="small"
+          // onClick={() => handleDelete(params.row)}
+          onClick={handleAccept}
+          variant="contained"
+          sx={{
+            backgroundColor: "#EF4444",
+            color: "white",
+            "&:hover": {
+              backgroundColor: "#DC2626",
+            },
+            padding: "4px 8px",
+            borderRadius: "0.375rem",
+          }}>
+          Accept
+        </Button>
+      ),
+    },
 
     // {
     //   field: "viewDetails",
@@ -95,7 +120,6 @@ const ExternalTickets = () => {
     //     </Button>
     //   ),
     // },
-
     {
       field: "viewDetails",
       headerName: "Actions",
@@ -268,6 +292,11 @@ const ExternalTickets = () => {
     { label: "Request Date", key: "requestDate" },
   ];
 
+  const handleAccept = () => {
+    toast.success("Ticket Accepted");
+    //   closeDeleteTicket();
+  };
+
   return (
     <div>
       {/* <div className="bg-green-500">
@@ -340,4 +369,4 @@ const ExternalTickets = () => {
   );
 };
 
-export default ExternalTickets;
+export default AssignedTickets;

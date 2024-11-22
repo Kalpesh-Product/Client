@@ -42,7 +42,7 @@ const MyTicketsTabs = () => {
                 className="wono-blue"
                 sx={{ textTransform: "capitalize" }}
               />
-              <Tab
+              {/* <Tab
                 label="External Tickets"
                 value="2"
                 sx={{ textTransform: "capitalize" }}
@@ -56,7 +56,7 @@ const MyTicketsTabs = () => {
                 label="Unresolved Tickets"
                 value="4"
                 sx={{ textTransform: "capitalize" }}
-              />
+              /> */}
             </TabList>
           </Box>
           <TabPanel value="1">

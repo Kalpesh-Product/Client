@@ -118,10 +118,10 @@ const ModuleSidebar = ({ mainSideBar }) => {
           title: "My Tickets",
           route: "/customer/tickets/my-tickets",
         },
-        {
-          title: "Members",
-          route: "/customer/tickets/members",
-        },
+        // {
+        //   title: "Members",
+        //   route: "/customer/tickets/members",
+        // },
         {
           title: "Ticket Reports",
           route: "/customer/tickets/ticket-reports",

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ModuleSidebar from "../../components/ModuleSidebar";
 import { useLocation, useParams } from "react-router-dom";
 import TestSide from "../../components/Sidetest";
@@ -73,6 +73,12 @@ import MyTicketsPage from "./../cms/tickets/MyTicketsPage";
 import { toast } from "sonner";
 
 const DepartmentDash = () => {
+  const [user, setUser] = useState("");
+  useEffect(() => {
+    const storedUser = JSON.parse(localStorage.getItem("user"));
+    setUser(storedUser);
+  }, []);
+
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
   const [openTicket, setOpenTicket] = useState(false);
@@ -328,6 +334,12 @@ const DepartmentDash = () => {
     },
   ];
 
+  const [isAvailable, setIsAvailable] = useState(true);
+
+  const toggleStatus = () => {
+    setIsAvailable((prevState) => !prevState);
+  };
+
   return (
     <div className="flex">
       <TestSide />
@@ -559,11 +571,31 @@ const DepartmentDash = () => {
                 <div className="bg-white p-4 rounded-lg mt-4">
                   <div className="mb-8 flex justify-between">
                     <h1 className="text-3xl">Key insights</h1>
-                    <button
-                      onClick={handleOpenTicket}
-                      className="px-6 py-2 rounded-lg text-white wono-blue-dark hover:bg-[#3cbce7] transition-shadow shadow-md hover:shadow-lg active:shadow-inner">
-                      Raise Ticket
-                    </button>
+                    <div className=" flex gap-4">
+                      {/* If IT Employee */}
+
+                      {user.role === "Employee" && user.department === "IT" && (
+                        <div>
+                          <span className="text-2xl">Status: </span>
+                          <button
+                            onClick={toggleStatus}
+                            className={`px-6 py-2 rounded-lg text-white transition-shadow shadow-md hover:shadow-lg active:shadow-inner ${
+                              isAvailable
+                                ? "bg-green-400 hover:bg-green-300"
+                                : "bg-red-400 hover:bg-red-300"
+                            }`}>
+                            {isAvailable ? "Available" : "Unavailable"}
+                          </button>
+                        </div>
+                      )}
+                      {/*  */}
+
+                      <button
+                        onClick={handleOpenTicket}
+                        className="px-6 py-2 rounded-lg text-white wono-blue-dark hover:bg-[#3cbce7] transition-shadow shadow-md hover:shadow-lg active:shadow-inner">
+                        Raise Ticket
+                      </button>
+                    </div>
                   </div>
                   {customerServiceWidgets
                     .filter((section) => section.subModule === "ticket")

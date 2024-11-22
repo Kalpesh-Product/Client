@@ -45,13 +45,13 @@ const MyTickets = () => {
         const handleActionChange = (event) => {
           const selectedAction = event.target.value;
 
-          if (selectedAction === "view") {
-            handleViewDetails(params.row);
-            // } else if (selectedAction === "edit") {
-            //   handleEdit(params.row);
-          } else if (selectedAction === "delete") {
-            handleDelete(params.row);
-          }
+          // if (selectedAction === "view") {
+          //   handleViewDetails(params.row);
+          //   // } else if (selectedAction === "edit") {
+          //   //   handleEdit(params.row);
+          // } else if (selectedAction === "delete") {
+          //   handleDelete(params.row);
+          // }
         };
 
         return (
@@ -93,11 +93,15 @@ const MyTickets = () => {
                   <circle cx={12} cy={19} r={1} />
                 </svg>
               </MenuItem>
-              <MenuItem value="view">View Details</MenuItem>
-              <MenuItem value="edit" onClick={openModal}>
+              <MenuItem value="view" onClick={openDetailsModal}>
+                View Details
+              </MenuItem>
+              <MenuItem value="edit" onClick={openEditTicket}>
                 Edit
               </MenuItem>
-              <MenuItem value="delete">Delete</MenuItem>
+              <MenuItem value="delete" onClick={openDeleteTicket}>
+                Delete
+              </MenuItem>
             </Select>
           </FormControl>
         );
@@ -220,6 +224,7 @@ const MyTickets = () => {
     { label: "Request Date", key: "requestDate" },
   ];
 
+  // ADD TICKET MODAL START
   // State to manage modal visibility
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -233,6 +238,55 @@ const MyTickets = () => {
     toast.success("New Ticket Created");
     closeModal(); // Optionally close the modal after the alert
   };
+  // ADD TICKET MODAL END
+
+  // VIEW TICKET DETAILS MODAL START
+  // State to manage modal visibility
+  const [isDetailsModalOpen, setIsDetailsModalOpen] = useState(false);
+
+  // Function to open the modal
+  const openDetailsModal = () => setIsDetailsModalOpen(true);
+
+  // Function to close the modal
+  const closeDetailsModal = () => setIsDetailsModalOpen(false);
+
+  const handleTicketDetails = () => {
+    // toast.success("New Ticket Created");
+    closeDetailsModal(); // Optionally close the modal after the alert
+  };
+  // VIEW TICKET DETAILS MODAL END
+
+  // EDIT TICKET DETAILS MODAL START
+  // State to manage modal visibility
+  const [isEditTicketOpen, setIsEditTicketOpen] = useState(false);
+
+  // Function to open the modal
+  const openEditTicket = () => setIsEditTicketOpen(true);
+
+  // Function to close the modal
+  const closeEditTicket = () => setIsEditTicketOpen(false);
+
+  const handleEditTicket = () => {
+    toast.success("Ticket Updated");
+    closeEditTicket(); // Optionally close the modal after the alert
+  };
+  // EDIT TICKET DETAILS MODAL END
+
+  // EDIT TICKET DETAILS MODAL START
+  // State to manage modal visibility
+  const [isDeleteTicketOpen, setIsDeleteTicketOpen] = useState(false);
+
+  // Function to open the modal
+  const openDeleteTicket = () => setIsDeleteTicketOpen(true);
+
+  // Function to close the modal
+  const closeDeleteTicket = () => setIsDeleteTicketOpen(false);
+
+  const handleDeleteTicket = () => {
+    toast.success("Ticket Deleted");
+    closeDeleteTicket(); // Optionally close the modal after the alert
+  };
+  // EDIT TICKET DETAILS MODAL END
 
   return (
     <div>
@@ -308,11 +362,12 @@ const MyTickets = () => {
           initialState={{ pagination: { paginationModel } }}
           pageSizeOptions={[5, 10]}
           // checkboxSelection
-          sx={{ border: 0 }}
+          sx={{ border: 0, width: "75vw" }}
         />
       </Paper>
       {/* Tickets datatable END */}
 
+      {/* ADD TICKET MODAL START */}
       {isModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
           <div className="absolute inset-0" onClick={closeModal}></div>
@@ -428,6 +483,283 @@ const MyTickets = () => {
           </div>
         </div>
       )}
+
+      {/* ADD TICKET MODAL END */}
+
+      {/* TICKET DETAILS MODAL START */}
+      {isDetailsModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="absolute inset-0" onClick={closeDetailsModal}></div>
+
+          <div className="bg-white w-11/12 max-w-[90%] lg:max-w-[40%] pl-8 pr-8  rounded-lg shadow-lg z-10 relative overflow-y-auto max-h-[80vh]">
+            {/* DetailsModal Content */}
+
+            {/* DetailsModal Header */}
+            <div className="sticky top-0 bg-white py-6 z-20 flex justify-between">
+              <div>
+                <h2 className="text-3xl font-bold mb-4 uppercase">
+                  Ticket Details
+                </h2>
+              </div>
+              <div>
+                {/* Close button */}
+                <button
+                  className="bg-blue-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-600"
+                  onClick={closeDetailsModal}>
+                  X
+                </button>
+              </div>
+            </div>
+
+            {/* DetailsModal Body START */}
+            <div className=" w-full">
+              {/* <div>AddT icket Form</div> */}
+              <div className="">
+                <div className=" mx-auto">
+                  <h1 className="text-xl text-center my-2 font-bold">
+                    Ticket Details
+                  </h1>
+
+                  <p>
+                    <span className="font-bold">Ticket Title : </span>
+                    <span>Wifi is not working</span>
+                  </p>
+                  <br />
+                  <p>
+                    <span className="font-bold">Ticket Priority : </span>
+                    <span>High</span>
+                  </p>
+                  <br />
+                  <p>
+                    <span className="font-bold">Ticket Status : </span>
+                    <span>Pending</span>
+                  </p>
+                  <br />
+                  <p>
+                    <span className="font-bold">Ticket Department : </span>
+                    <span>IT</span>
+                  </p>
+                  <br />
+                  <p>
+                    <span className="font-bold">Request Date : </span>
+                    <span>2024-10-01</span>
+                  </p>
+                </div>
+              </div>
+            </div>
+            {/* DetailsModal Body END */}
+
+            {/* DetailsModal Footer */}
+
+            <div className="sticky bottom-0 bg-white py-6 z-20 flex justify-center">
+              <div className="flex justify-center items-center">
+                <button
+                  className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600"
+                  onClick={handleTicketDetails}>
+                  Close
+                </button>
+              </div>
+            </div>
+            {/* Close button */}
+            {/* <button
+                className="bg-blue-500 text-white py-2 px-4 my-4 rounded-lg hover:bg-blue-600"
+                onClick={closeDetailsModal}>
+                Close
+              </button> */}
+          </div>
+        </div>
+      )}
+
+      {/* TICKET DETAILS MODAL END */}
+
+      {/* EDIT TICKET MODAL START */}
+      {isEditTicketOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="absolute inset-0" onClick={closeEditTicket}></div>
+
+          <div className="bg-white w-11/12 max-w-[90%] lg:max-w-[40%] pl-8 pr-8  rounded-lg shadow-lg z-10 relative overflow-y-auto max-h-[80vh]">
+            {/* EditTicket Content */}
+
+            {/* EditTicket Header */}
+            <div className="sticky top-0 bg-white py-6 z-20 flex justify-between">
+              <div>
+                <h2 className="text-3xl font-bold mb-4 uppercase">
+                  Edit Ticket
+                </h2>
+              </div>
+              <div>
+                {/* Close button */}
+                <button
+                  className="bg-blue-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-600"
+                  onClick={closeEditTicket}>
+                  X
+                </button>
+              </div>
+            </div>
+
+            {/* EditTicket Body START */}
+            <div className=" w-full">
+              {/* <div>AddT icket Form</div> */}
+              <div className="">
+                <div className=" mx-auto">
+                  <h1 className="text-xl text-center my-2 font-bold">
+                    Edit Ticket
+                  </h1>
+                  <Box
+                    sx={{
+                      maxWidth: 600,
+                      padding: 3,
+                      bgcolor: "background.paper",
+                      borderRadius: 2,
+                    }}
+                    // className="bg-white p-6 rounded-lg shadow-md mx-auto">
+                    className="bg-white p-6 rounded-lg mx-auto">
+                    {/* Personal Information */}
+                    {/* <h2 className="text-lg font-semibold mb-4">Add Ticket</h2> */}
+                    <div className="grid grid-cols-1 gap-4">
+                      {/* Name, Mobile, Email, DOB fields */}
+                      <div className="grid grid-cols-1 gap-4">
+                        <FormControl fullWidth>
+                          <InputLabel id="department-select-label">
+                            Department
+                          </InputLabel>
+                          <Select
+                            labelId="department-select-label"
+                            id="department-select"
+                            // value={department}
+                            value="IT" // Hardcoded value for department
+                            label="Department"
+                            // onChange={handleChange}
+                          >
+                            <MenuItem value="IT">IT</MenuItem>
+                            <MenuItem value="HR">HR</MenuItem>
+                            <MenuItem value="Tech">Tech</MenuItem>
+                            <MenuItem value="Admin">Admin</MenuItem>
+                          </Select>
+                        </FormControl>
+                      </div>
+                      <div className="grid grid-cols-1 gap-4">
+                        <TextField
+                          label="Ticket Title"
+                          // value={newEvent.name}
+                          value="Wifi is not working" // Hardcoded value for ticket title
+                          // onChange={(e) =>
+                          //   setnewEvent({ ...newEvent, name: e.target.value })
+                          // }
+                          fullWidth
+                        />
+                      </div>
+                    </div>
+
+                    {/* Role & Department fields */}
+
+                    {/* <div className="col-span-2 flex gap-4">
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.9 }}
+                  className="w-full py-2 px-4 bg-blue-600 text-white rounded mt-4"
+                  //   onClick={handleSaveEvent}
+                  onClick={() => navigate("/customer/tickets")}>
+                  Save
+                </motion.button>
+          
+              </div> */}
+                  </Box>
+                </div>
+              </div>
+            </div>
+            {/* EditTicket Body END */}
+
+            {/* EditTicket Footer */}
+
+            <div className="sticky bottom-0 bg-white py-6 z-20 flex justify-center">
+              <div className="flex justify-center items-center">
+                <button
+                  className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600"
+                  onClick={handleEditTicket}>
+                  Save
+                </button>
+              </div>
+            </div>
+            {/* Close button */}
+            {/* <button
+                className="bg-blue-500 text-white py-2 px-4 my-4 rounded-lg hover:bg-blue-600"
+                onClick={closeEditTicket}>
+                Close
+              </button> */}
+          </div>
+        </div>
+      )}
+
+      {/* EDIT TICKET MODAL END */}
+
+      {/* DELETE TICKET MODAL START */}
+      {isDeleteTicketOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="absolute inset-0" onClick={closeDeleteTicket}></div>
+
+          <div className="bg-white w-11/12 max-w-[90%] lg:max-w-[40%] pl-8 pr-8  rounded-lg shadow-lg z-10 relative overflow-y-auto max-h-[80vh]">
+            {/* DeleteTicket Content */}
+
+            {/* DeleteTicket Header */}
+            <div className="sticky top-0 bg-white py-6 z-20 flex justify-between">
+              <div>
+                <h2 className="text-3xl font-bold mb-4 uppercase">
+                  Delete Ticket
+                </h2>
+              </div>
+              <div>
+                {/* Close button */}
+                <button
+                  className="bg-blue-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-600"
+                  onClick={closeDeleteTicket}>
+                  X
+                </button>
+              </div>
+            </div>
+
+            {/* DeleteTicket Body START */}
+            <div className=" w-full">
+              {/* <div>AddT icket Form</div> */}
+              <div className="">
+                <div className=" mx-auto">
+                  <h1 className="text-xl text-center my-2 font-bold">
+                    Are you sure you want to delete the ticket?
+                  </h1>
+                </div>
+              </div>
+            </div>
+            {/* DeleteTicket Body END */}
+
+            {/* DeleteTicket Footer */}
+
+            <div className="sticky bottom-0 bg-white py-6 z-20 flex justify-center gap-5">
+              <div className="flex justify-center items-center">
+                <button
+                  className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600"
+                  onClick={handleDeleteTicket}>
+                  Yes
+                </button>
+              </div>
+              <div className="flex justify-center items-center">
+                <button
+                  className="bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600"
+                  onClick={closeDeleteTicket}>
+                  No
+                </button>
+              </div>
+            </div>
+            {/* Close button */}
+            {/* <button
+              className="bg-blue-500 text-white py-2 px-4 my-4 rounded-lg hover:bg-blue-600"
+              onClick={closeDeleteTicket}>
+              No
+            </button> */}
+          </div>
+        </div>
+      )}
+
+      {/* DELETE TICKET MODAL END */}
     </div>
   );
 };
