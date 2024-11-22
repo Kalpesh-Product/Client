@@ -4,28 +4,23 @@ import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
-import { closeModal } from "../redux/features/modalSlice";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import { useDispatch } from "react-redux";
-import { color, motion } from "framer-motion";
-import {
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-  OutlinedInput,
-  Chip,
-} from "@mui/material";
-
+import { motion } from "framer-motion";
+import { FormControl, MenuItem, Select } from "@mui/material";
+import ReactSelect from "react-select";
 import TestSide from "../components/Sidetest";
 import "../styles/CalenderModal.css";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { TimePicker } from "@mui/x-date-pickers/TimePicker";
 import dayjs from "dayjs";
-import { SketchPicker } from "react-color";
 import { data } from "../utils/data";
+
+const customStyles = {
+  menu: (base) => ({
+    ...base,
+    zIndex: 100,
+  }),
+};
 
 const extractNames = (data) => {
   const names = [];
@@ -50,6 +45,7 @@ const Calender = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isEditModal, setIsEditModal] = useState(false);
   const [selectedNames, setSelectedNames] = useState([]);
+  const [eventFilter, setEventFilter] = useState("All");
 
   const names = extractNames(data);
 
@@ -69,25 +65,39 @@ const Calender = () => {
   };
 
   const [events, setEvents] = useState([
-    { title: "New Year 2024", date: "2024-01-01" },
-    { title: "Republic Day", date: "2024-01-26" },
-    { title: "Good Friday", date: "2024-03-29" },
-    { title: "Gudi Padva", date: "2024-04-09" },
-    { title: "Eid Al-Fitr (Ramadan)", date: "2024-01-26" },
-    { title: "Labor Day", date: "2024-05-01" },
-    { title: "Eid Al-Adha (Bakri Eid)", date: "2024-06-17" },
-    { title: "Independance Day", date: "2024-08-15" },
-    { title: "Ganesh Chaturthi", date: "2024-09-07" },
-    { title: "Gandhi Jayanti", date: "2024-10-02" },
-    { title: "Diwali", date: "2024-10-31" },
+    { title: "New Year 2024", date: "2024-01-01", type: "holiday" },
+    { title: "Republic Day", date: "2024-01-26", type: "holiday" },
+    { title: "Good Friday", date: "2024-03-29", type: "holiday" },
+    { title: "Gudi Padva", date: "2024-04-09", type: "holiday" },
+    { title: "Eid Al-Fitr (Ramadan)", date: "2024-01-26", type: "holiday" },
+    { title: "Labor Day", date: "2024-05-01", type: "holiday" },
+    { title: "Eid Al-Adha (Bakri Eid)", date: "2024-06-17", type: "holiday" },
+    { title: "Independance Day", date: "2024-08-15", type: "holiday" },
+    { title: "Ganesh Chaturthi", date: "2024-09-07", type: "holiday" },
+    { title: "Gandhi Jayanti", date: "2024-10-02", type: "holiday" },
+    { title: "Diwali", date: "2024-10-31", type: "holiday" },
     {
       title: "Feast Of Saint Fransis Xavior",
       date: "2024-12-03",
       backgroundColor: "#FFC300",
+      type: "holiday",
     },
     { title: "Goa Liberation Day", date: "2024-12-03" },
     { title: "Christmas", date: "2024-12-25" },
+    { title: "Strategy Sync", date: "2024-11-27", type: "meeting" },
+    { title: "Innovation Jam", date: "2024-12-01", type: "meeting" },
+    { title: "Project Kickoff", date: "2024-12-05", type: "meeting" },
+    { title: "Feedback Loop", date: "2024-12-10", type: "meeting" },
   ]);
+  const [filteredEvents, setFilteredEvents] = useState(events);
+  useEffect(() => {
+    if (eventFilter === "All") {
+      setFilteredEvents(events);
+    } else {
+      const filtered = events.filter((event) => event.type === eventFilter);
+      setFilteredEvents(filtered);
+    }
+  }, [eventFilter, events]);
 
   const [newEvent, setnewEvent] = useState({
     name: "",
@@ -134,9 +144,6 @@ const Calender = () => {
     });
     setShowModal(true);
     setIsEditModal(true);
-
-    // console.log(info.event._def);
-    // console.log(info.event._instance.range);
   };
 
   const handleSaveEvent = () => {
@@ -189,12 +196,26 @@ const Calender = () => {
       <div class="flex ">
         <TestSide />
         <div class="flex-1 p-6 bg-gray-100">
-          <h1 className=" font-bold text-4xl pb-5">Calendar</h1>
+          <div className="flex justify-between items-center">
+            <h1 className=" font-bold text-4xl pb-5">Calendar</h1>
+            <FormControl className="w-[10%]">
+              <Select
+                labelId="event-filter-label"
+                value={eventFilter}
+                onChange={(e) => setEventFilter(e.target.value)}
+                className="bg-white"
+              >
+                <MenuItem value="All">All</MenuItem>
+                <MenuItem value="holiday">Holidays</MenuItem>
+                <MenuItem value="meeting">Meetings</MenuItem>
+              </Select>
+            </FormControl>
+          </div>
           <FullCalendar
             plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
             initialView="dayGridMonth"
             weekends={true}
-            events={events}
+            events={filteredEvents}
             eventClick={handleEventClick}
             visibleRange={(currentDate) => {
               return get30DayRange(currentDate); // Restrict to 30 days
@@ -341,45 +362,30 @@ const Calender = () => {
                   <div className="grid grid-cols-1 gap-4">
                     <div className="relative w-full">
                       <label
-                        htmlFor="multiple-select"
-                        className={`absolute left-3 transition-all text-gray-600 ${
-                          selectedNames.length > 0
-                            ? "-top-2 text-blue-600 text-sm"
-                            : "top-4 text-base"
-                        }`}
+                        htmlFor="name-select"
+                        className="block text-sm font-medium text-gray-600"
                       >
-                        Name
+                        Select Names
                       </label>
-                      <select
-                        id="multiple-select"
-                        multiple
-                        className="w-full p-2 mt-4 text-sm border rounded focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-blue-600"
-                        value={selectedNames}
-                        onChange={handleChange}
-                        // style={{ height: "150px" }}
-                      >
-                        {names.map((name) => (
-                          <option key={name} value={name}>
-                            {name}
-                          </option>
-                        ))}
-                      </select>
-                      <div className="flex flex-wrap gap-2 mt-2">
-                        {selectedNames.map((name) => (
-                          <div
-                            key={name}
-                            className="flex items-center px-2 py-1 text-sm text-white bg-blue-600 rounded"
-                          >
-                            {name}
-                            <button
-                              onClick={() => removeChip(name)}
-                              className="ml-1 text-white hover:text-gray-200 focus:outline-none"
-                            >
-                              ×
-                            </button>
-                          </div>
-                        ))}
-                      </div>
+                      <ReactSelect
+                        id="name-select"
+                        options={names.map((name) => ({
+                          value: name,
+                          label: name,
+                        }))}
+                        isMulti
+                        styles={customStyles}
+                        value={selectedNames.map((name) => ({
+                          value: name,
+                          label: name,
+                        }))}
+                        onChange={(selectedOptions) =>
+                          setSelectedNames(
+                            selectedOptions.map((option) => option.value)
+                          )
+                        }
+                        placeholder="Select names..."
+                      />
                     </div>
                   </div>
 
@@ -399,31 +405,6 @@ const Calender = () => {
 
                   <div className="grid grid-cols-2 gap-4 items-center">
                     <label>{userData?.name}</label>
-                    {/* <div >
-          
-                          <div className="color-picker-dropdown flex flex-row gap-5">
-                            <select
-                              value={newEvent.color}
-                              onChange={(e) => setnewEvent({ ...newEvent, color: e.target.value })}
-                            >
-                              {colors.map((color, index) => (
-                                <option key={index} value={color} style={{ backgroundColor: color ,width:"10px",height:"10px",borderRadius:"2px", padding:"5px"}}>
-                                  
-                                </option>
-                              ))}
-                            </select>
-                            <div
-                            style={{
-                              width: '24px',
-                              height: '24px',
-                              backgroundColor: newEvent.color,
-                              borderRadius: '50%',
-                              border: '1px solid #ccc',
-                            }}
-                            title="Selected Color"
-                          ></div>
-                          </div>
-                      </div> */}
 
                     <div style={{ position: "relative", width: "200px" }}>
                       <div
@@ -471,9 +452,6 @@ const Calender = () => {
                         </div>
                       )}
                     </div>
-                    {/* <div style={{width:"20px",height:"20px",borderRadius:"50px",
-                            backgroundColor:eventColor
-                          }}></div> */}
                   </div>
                 </div>
 
@@ -501,57 +479,6 @@ const Calender = () => {
             </div>
           )}
         </Modal>
-
-        //       <div className="modal">
-        //           <div className="modal-content">
-        //             <h3 className='modal-heading'>Add Event</h3>
-        //             <div className='Fields-container'>
-
-        //             <label style={{ display: "block", marginRight: "8px" }}>
-
-        //               Event Name:
-        //               </label>
-        //               <input
-        //                 type="text"
-
-        //                 value={newEvent.name}
-        //                 onChange={(e) =>
-        //                   setnewEvent({ ...newEvent, name: e.target.value })
-        //                 }
-        //               />
-        //               <label>
-
-        // Start Time (hours):
-        // </label>
-        // <input
-        //   type="Time"
-        //   min="1"
-        //   value={newEvent}
-        //   onChange={(e) =>
-        //     setnewEvent({ ...newEvent, time: e.target.value })
-        //   }
-        // />
-
-        //             <label>
-
-        //               Time Duration (hours):
-        //               </label>
-        //               <input
-        //                 type="number"
-        //                 min="1"
-        //                 value={newEvent.time}
-        //                 onChange={(e) =>
-        //                   setnewEvent({ ...newEvent, time: e.target.value })
-        //                 }
-        //               />
-
-        //             </div>
-        //             <div className='btns'>
-        //             <button className='btn save' onClick={handleSaveEvent} >Save</button>
-        //             <button  className='btn close' onClick={() => setShowModal(false)}>Cancel</button>
-        //             </div>
-        //           </div>
-        //         </div>
       )}
     </>
   );

@@ -74,6 +74,9 @@ import TodaysTickets from "../cms/tickets/components/TodaysTickets";
 import MyTicketsPage from "./../cms/tickets/MyTicketsPage";
 import { toast } from "sonner";
 import AssetReports from "../cms/asset/AssetReports";
+import RoomBookingDash from "../cms/room-booking/RoomBookingDash";
+import BookingReports from "../cms/room-booking/BookingReports";
+import AddRooms from "../cms/room-booking/AddRooms";
 
 const DepartmentDash = () => {
   const [user, setUser] = useState("");
@@ -648,9 +651,21 @@ const DepartmentDash = () => {
               <>
                 <TicketReports />
               </>
+            ) : location.pathname === "/customer/meetings" ? (
+              <>
+                <RoomBookingDash />
+              </>
             ) : location.pathname === "/customer/meetings/booking" ? (
               <>
                 <Listing />
+              </>
+            ) : location.pathname === "/customer/meetings/add-room" ? (
+              <>
+                <AddRooms />
+              </>
+            ) : location.pathname === "/customer/meetings/reports" ? (
+              <>
+                <BookingReports />
               </>
             ) : (
               <></>

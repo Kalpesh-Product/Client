@@ -99,7 +99,19 @@ const router = createBrowserRouter([
         element: <DepartmentDash />,
       },
       {
+        path: "/customer/meetings",
+        element: <DepartmentDash />,
+      },
+      {
         path: "/customer/meetings/booking",
+        element: <DepartmentDash />,
+      },
+      {
+        path: "/customer/meetings/reports",
+        element: <DepartmentDash />,
+      },
+      {
+        path: "/customer/meetings/add-room",
         element: <DepartmentDash />,
       },
       {

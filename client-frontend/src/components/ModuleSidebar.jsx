@@ -125,12 +125,20 @@ const ModuleSidebar = ({ mainSideBar }) => {
     },
     {
       title: "Meetings",
-      route: "#customer/meetings",
+      route: "/customer/meetings",
       icon: <HiCurrencyDollar />,
       subMenus: [
         {
-          title: "Room Booking",
+          title: "Calendar",
           route: "/customer/meetings/booking",
+        },
+        {
+          title: "Add new Room",
+          route: "/customer/meetings/add-room",
+        },
+        {
+          title: "Reports",
+          route: "/customer/meetings/reports",
         },
       ],
     },
