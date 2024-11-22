@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from "react";
 import EmployeeProfile from "../components/AccessTabViewModel/EmployeeProfile";
 import AccessHierarchyTab from "../components/AccessTabViewModel/AccessHierarchyTab";
-import ClientSidebar from "../components/ClientSidebar";
 import TestSide from "../components/Sidetest";
 import MasterAdmin from "../assets/abrar.jpeg";
 import Profilepic from "../assets/profile.jpg";
 import { TbCameraPlus } from "react-icons/tb";
 import Modal from "../components/Modal";
 import { closeModal, openModal } from "../redux/features/modalSlice";
-
+import { DataGrid } from "@mui/x-data-grid";
 import SuperAdmin from "../assets/kashif-bg.png";
 import { useDispatch, useSelector } from "react-redux";
 // import image from "../profile.jpg";
@@ -160,6 +159,18 @@ const Profile = () => {
                 Access
               </button>
             </li>
+            <li className=" text-center w-1/2" role="presentation">
+              <button
+                className={`text-md py-2 w-full hover:bg-gray-100 ${
+                  activeTab === "tab-4"
+                    ? "border-b-4 border-[#0DB4EA] text-blue-600"
+                    : ""
+                }`}
+                onClick={() => setActiveTab("tab-4")}
+              >
+                Credits
+              </button>
+            </li>
           </ul>
           <div className="tab-content">
             {activeTab === "tab-1" && (
@@ -202,6 +213,89 @@ const Profile = () => {
                 >
                   {/* Tab 2 Content */}
                   <AccessHierarchyTab />
+                </div>
+              </div>
+            )}
+            {activeTab === "tab-4" && (
+              <div
+                className="tab-pane motion-preset-slide-up-sm show"
+                id="tab-4"
+                role="tabpanel"
+              >
+                {/* Credits Summary Section */}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6 w-full">
+                  {/* Total Credits Widget */}
+                  <div className="p-4 bg-blue-50 rounded-lg shadow">
+                    <h4 className="text-lg font-semibold text-blue-600">
+                      Total Credits
+                    </h4>
+                    <p className="text-2xl font-bold text-blue-800">1000</p>
+                  </div>
+
+                  {/* Remaining Credits Widget */}
+                  <div className="p-4 bg-green-50 rounded-lg shadow">
+                    <h4 className="text-lg font-semibold text-green-600">
+                      Remaining Credits
+                    </h4>
+                    <p className="text-2xl font-bold text-green-800">450</p>
+                  </div>
+
+                  {/* Room Booking Summary Widget */}
+                  <div className="p-4 bg-yellow-50 rounded-lg shadow">
+                    <h4 className="text-lg font-semibold text-yellow-600">
+                      Rooms Booked
+                    </h4>
+                    <p className="text-2xl font-bold text-yellow-800">
+                      15 Bookings
+                    </p>
+                  </div>
+                </div>
+
+                {/* Data Grid Section */}
+                <div className="bg-white p-4 w-full">
+                  <h3 className="text-xl font-bold mb-4">
+                    Room Booking Details
+                  </h3>
+                  <div style={{ height: 400, width: "100%" }}>
+                    <DataGrid
+                      rows={[
+                        {
+                          id: 1,
+                          room: "Vatican",
+                          creditsUsed: 50,
+                          duration: "2 hours",
+                          date: "2024-11-21",
+                        },
+                        {
+                          id: 2,
+                          room: "Arambol",
+                          creditsUsed: 20,
+                          duration: "1 hour",
+                          date: "2024-11-20",
+                        },
+                        {
+                          id: 3,
+                          room: "Sydney",
+                          creditsUsed: 100,
+                          duration: "3 hours",
+                          date: "2024-11-19",
+                        },
+                      ]}
+                      columns={[
+                        { field: "room", headerName: "Room", flex: 1 },
+                        {
+                          field: "creditsUsed",
+                          headerName: "Credits Used",
+                          flex: 1,
+                        },
+                        { field: "duration", headerName: "Duration", flex: 1 },
+                        { field: "date", headerName: "Date", flex: 1 },
+                      ]}
+                      pageSize={5}
+                      rowsPerPageOptions={[5, 10]}
+                      disableSelectionOnClick
+                    />
+                  </div>
                 </div>
               </div>
             )}
