@@ -14,7 +14,7 @@ import { motion } from "framer-motion";
 import { IoMdClose } from "react-icons/io";
 import { toast } from "sonner";
 import axios from "axios";
-import userData from "E:/work/SaaS-Client/Client/client-frontend/src/dummyData/dummyData.json";
+import userData from "../../../dummyData/dummyData.json";
 
 const departments = ["HR", "Tech", "Sales", "Marketing"];
 const categories = ["Laptop", "Monitor", "Headphones", "Keyboard", "Mice"];
