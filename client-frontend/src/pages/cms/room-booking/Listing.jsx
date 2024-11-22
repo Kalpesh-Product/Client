@@ -189,10 +189,18 @@ export default function Listing() {
           open={openEventDetailsModal}
           onClose={() => setOpenEventDetailsModal(false)}
         >
+          <div className="flex w-full justify-end items-center">
+            <button
+              onClick={() => setOpenEventDetailsModal(false)}
+              className="px-4 py-2 text-red-500 border-2 border-red-500 font-bold rounded-md"
+            >
+              X
+            </button>
+          </div>
           <BookingDetails
             selectedEvent={selectedEvent}
             handleUpdate={handleUpdate}
-            handleExtendTime={handleExtendTime} // Pass handleExtendTime
+            handleExtendTime={handleExtendTime} 
             handleCancel={handleCancel}
           />
         </Modal>
