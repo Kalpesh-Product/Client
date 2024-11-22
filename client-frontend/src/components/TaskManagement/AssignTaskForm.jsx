@@ -37,7 +37,8 @@ const AssignTaskForm = ({ title, handleClose ,rows, setAllRows,selectedRow,modal
         taskName: "",
         date: "",
         priority: "",
-        status:""
+        status:"",
+        project:""
       });
 
   
@@ -57,8 +58,12 @@ const AssignTaskForm = ({ title, handleClose ,rows, setAllRows,selectedRow,modal
 
     
 
+    
+
       const priorityType = ["High","Low","Medium"];
       const statusTypes = ["Ongoing","Pending","Start","InProgress","Running late"];
+
+      const projects = ["Website Redesign","Financial Forcastig And Budgeting","Annual Co-orporate and Conference",""]
 
       const location = useLocation();
       const navigate = useNavigate();
@@ -238,12 +243,32 @@ const AssignTaskForm = ({ title, handleClose ,rows, setAllRows,selectedRow,modal
         <TextField
           {...params}
           variant="outlined"
-          label="Select Multiple Options"
+          label="Assignes"
           placeholder="Choose..."
         />
       )}
       />
           </Grid>
+
+          <Grid item xs={12}>
+            <TextField
+              label="Select Project"
+              name="Project"
+              select
+              fullWidth
+              value={formData.project}
+              onChange={handleChange}
+            >
+              {priorityType.map((type, index) => (
+                <MenuItem key={index} value={type}>
+                  {type}
+                </MenuItem>
+              ))}
+            </TextField>
+          </Grid>
+          
+
+
 
           {/* Asset Type Dropdown */}
           <Grid item xs={12}>
@@ -313,7 +338,7 @@ const AssignTaskForm = ({ title, handleClose ,rows, setAllRows,selectedRow,modal
         <TextField
           {...params}
           variant="outlined"
-          label="Select Multiple Options"
+          label="Assignes"
           placeholder="Choose..."
         />
       )}
