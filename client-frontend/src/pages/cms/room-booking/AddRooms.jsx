@@ -10,6 +10,7 @@ import { rooms as allRooms } from "../../../utils/Rooms";
 import { useState } from "react";
 import Modal from "../../../components/Modal";
 import { toast } from "sonner";
+import { useNavigate } from "react-router-dom";
 
 export default function AddRooms() {
   const [rooms, setRooms] = useState(allRooms);
@@ -20,6 +21,8 @@ export default function AddRooms() {
     description: "",
     seats: "",
   });
+
+  const navigate = useNavigate();
 
   // Handle form field changes
   const handleChange = (e) => {
@@ -64,7 +67,7 @@ export default function AddRooms() {
         {rooms.map((room) => (
           <Card
             key={room.id}
-            className="cursor-pointer shadow-md hover:shadow-lg transition-shadow border border-gray-200"
+            className="shadow-md hover:shadow-lg transition-shadow border border-gray-200"
           >
             <CardMedia
               component="img"
@@ -98,6 +101,15 @@ export default function AddRooms() {
               <Typography variant="body2" color="textSecondary">
                 {room.description}
               </Typography>
+              <div className="mt-4">
+                <Button
+                  disabled={room.availability === "Available" ? false : true}
+                  variant="contained"
+                  onClick={() => navigate("/customer/meetings/booking")}
+                >
+                  Book now
+                </Button>
+              </div>
             </CardContent>
           </Card>
         ))}

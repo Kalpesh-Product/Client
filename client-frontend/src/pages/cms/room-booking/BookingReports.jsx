@@ -11,7 +11,7 @@ export default function BookingReports() {
     {
       id: 1,
       department: "IT",
-      name: "John Doe",
+      name: "Faizan Shaikh",
       date: "2024-11-21",
       startTime: "09:00 AM",
       endTime: "11:00 AM",
@@ -21,7 +21,7 @@ export default function BookingReports() {
     {
       id: 2,
       department: "Admin",
-      name: "Jane Smith",
+      name: "Naaz Parveen Bavannawar",
       date: "2024-11-20",
       startTime: "01:00 PM",
       endTime: "03:00 PM",
@@ -31,7 +31,7 @@ export default function BookingReports() {
     {
       id: 3,
       department: "HR",
-      name: "Alice Johnson",
+      name: "Farzeen Qadri",
       date: "2024-11-19",
       startTime: "10:00 AM",
       endTime: "11:30 AM",
@@ -41,7 +41,7 @@ export default function BookingReports() {
     {
       id: 4,
       department: "Finance",
-      name: "Michael Brown",
+      name: "Narshiva Naik",
       date: "2024-11-18",
       startTime: "02:00 PM",
       endTime: "03:30 PM",
@@ -51,7 +51,7 @@ export default function BookingReports() {
     {
       id: 5,
       department: "IT",
-      name: "Emily Davis",
+      name: "Machindranath Parkar",
       date: "2024-11-17",
       startTime: "09:30 AM",
       endTime: "11:00 AM",
@@ -61,7 +61,7 @@ export default function BookingReports() {
     {
       id: 6,
       department: "Admin",
-      name: "Chris Wilson",
+      name: "Pranali Kandolkar",
       date: "2024-11-16",
       startTime: "03:00 PM",
       endTime: "05:00 PM",

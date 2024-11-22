@@ -21,7 +21,7 @@ export const rooms = [
     seats: 4,
     url: "https://images.unsplash.com/photo-1462826303086-329426d1aef5?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     description: "Throw some ideas on the barbie!",
-    availability:"Unavilable"
+    availability:"Currently Unavilable"
   },
   {
     id: 4,
@@ -38,7 +38,7 @@ export const rooms = [
     url: "https://images.unsplash.com/photo-1462826303086-329426d1aef5?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     url: "https://images.unsplash.com/photo-1462826303086-329426d1aef5?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     description: "Precise decisions, like Swiss watches.",
-    availability:"Unavilable"
+    availability:"Currently Unavilable"
   },
   {
     id: 6,
@@ -62,7 +62,7 @@ export const rooms = [
     seats: 6,
     url: "https://images.unsplash.com/photo-1462826303086-329426d1aef5?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     description: "Discuss ideas passionately, siesta later.",
-    availability:"Unavilable"
+    availability:"Currently Unavilable"
   },
   {
     id: 9,
@@ -78,6 +78,6 @@ export const rooms = [
     seats: 40,
     url: "https://images.unsplash.com/photo-1462826303086-329426d1aef5?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     description: "Where big debates feel like gladiator battles.",
-    availability:"Unavilable"
+    availability:"Currently Unavilable"
   },
 ];
