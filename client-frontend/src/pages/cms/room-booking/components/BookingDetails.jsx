@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Box, Tabs, Tab, Typography, TextField, Button } from "@mui/material";
 import { format } from "date-fns";
+import { toast } from "sonner";
 
 export default function BookingDetails({
   selectedEvent,
@@ -22,6 +23,12 @@ export default function BookingDetails({
     date: format(new Date(selectedEvent.start), "yyyy-MM-dd"),
   });
 
+  const [showMessage, setShowMessage] = useState({
+    show: false,
+    message: "",
+  });
+  const [cancelReason, setCancelReason] = useState("");
+
   const handleTabChange = (event, newIndex) => {
     setTabIndex(newIndex);
   };
@@ -42,18 +49,36 @@ export default function BookingDetails({
     }));
   };
 
+  const handleDurationExtension = (minutes) => {
+    const newEndTime = new Date(selectedEvent.end);
+    newEndTime.setMinutes(newEndTime.getMinutes() + minutes);
+
+    setExtendedTime((prev) => ({
+      ...prev,
+      endTime: format(newEndTime, "HH:mm"),
+    }));
+  };
+
   const handleUpdateSubmit = (e) => {
     e.preventDefault();
     handleUpdate(selectedEvent.id, updatedMeeting);
+    toast.success("successfully updated booking details");
   };
 
   const handleExtendTimeSubmit = (e) => {
     e.preventDefault();
     handleExtendTime(selectedEvent.id, extendedTime);
+    toast.success("successfully extended booking time");
+  };
+
+  const handleCancelSubmit = (e) => {
+    e.preventDefault();
+    handleCancel(selectedEvent.id, cancelReason);
+    toast.success("sucessfully cancelled booking");
   };
 
   return (
-    <Box width="70vw" height="70vh">
+    <Box width="50vw" height="70vh">
       <Tabs
         value={tabIndex}
         onChange={handleTabChange}
@@ -64,6 +89,7 @@ export default function BookingDetails({
         <Tab label="Details" />
         <Tab label="Edit" />
         <Tab label="Extend Time" />
+        <Tab label="Cancel Booking" />
       </Tabs>
 
       {/* Details Tab */}
@@ -78,91 +104,59 @@ export default function BookingDetails({
               borderRadius: "8px",
             }}
           >
-            <Box
-              display="grid"
-              gridTemplateColumns="150px 1fr"
-              rowGap={2}
-              columnGap={3}
-            >
-              {/* Render details as before */}
-              <Typography
-                variant="subtitle2"
-                sx={{ fontWeight: "bold", color: "#555" }}
-              >
-                Subject:
-              </Typography>
-              <Typography variant="body1" sx={{ color: "#333" }}>
-                {selectedEvent.title || "No Subject"}
-              </Typography>
-
-              <Typography
-                variant="subtitle2"
-                sx={{ fontWeight: "bold", color: "#555" }}
-              >
-                Date:
-              </Typography>
-              <Typography variant="body1" sx={{ color: "#333" }}>
-                {selectedEvent.start.toISOString().substring(0, 10)}
-              </Typography>
-
-              <Typography
-                variant="subtitle2"
-                sx={{ fontWeight: "bold", color: "#555" }}
-              >
-                Start Time:
-              </Typography>
-              <Typography variant="body1" sx={{ color: "#333" }}>
-                {format(new Date(selectedEvent.start), "hh:mm a")}
-              </Typography>
-
-              <Typography
-                variant="subtitle2"
-                sx={{ fontWeight: "bold", color: "#555" }}
-              >
-                End Time:
-              </Typography>
-              <Typography variant="body1" sx={{ color: "#333" }}>
-                {format(new Date(selectedEvent.end), "hh:mm a")}
-              </Typography>
-
-              <Typography
-                variant="subtitle2"
-                sx={{ fontWeight: "bold", color: "#555" }}
-              >
-                Room:
-              </Typography>
-              <Typography variant="body1" sx={{ color: "#333" }}>
-                {selectedEvent.extendedProps.room || "Not Assigned"}
-              </Typography>
-
-              <Typography
-                variant="subtitle2"
-                sx={{ fontWeight: "bold", color: "#555" }}
-              >
-                Participants:
-              </Typography>
-              <Typography variant="body1" sx={{ color: "#333" }}>
-                {selectedEvent.extendedProps.participants || "N/A"}
-              </Typography>
-
-              <Typography
-                variant="subtitle2"
-                sx={{ fontWeight: "bold", color: "#555" }}
-              >
-                Agenda:
-              </Typography>
-              <Typography variant="body1" sx={{ color: "#333" }}>
-                {selectedEvent.extendedProps.agenda || "N/A"}
-              </Typography>
+            <Box display="grid" gridTemplateColumns="1fr" rowGap={2}>
+              {/* Render details using TextField */}
+              <TextField
+                label="Subject"
+                value={selectedEvent.title || "No Subject"}
+                disabled
+                fullWidth
+                variant="outlined"
+              />
+              <TextField
+                label="Date"
+                value={selectedEvent.start.toISOString().substring(0, 10)}
+                disabled
+                fullWidth
+                variant="outlined"
+              />
+              <TextField
+                label="Start Time"
+                value={format(new Date(selectedEvent.start), "hh:mm a")}
+                disabled
+                fullWidth
+                variant="outlined"
+              />
+              <TextField
+                label="End Time"
+                value={format(new Date(selectedEvent.end), "hh:mm a")}
+                disabled
+                fullWidth
+                variant="outlined"
+              />
+              <TextField
+                label="Room"
+                value={selectedEvent.extendedProps.room || "Not Assigned"}
+                disabled
+                fullWidth
+                variant="outlined"
+              />
+              <TextField
+                label="Participants"
+                value={selectedEvent.extendedProps.participants || "N/A"}
+                disabled
+                fullWidth
+                variant="outlined"
+              />
+              <TextField
+                label="Agenda"
+                value={selectedEvent.extendedProps.agenda || "N/A"}
+                disabled
+                fullWidth
+                variant="outlined"
+              />
             </Box>
           </Box>
-          <Button
-            onClick={() => handleCancel(selectedEvent.id)}
-            variant="contained"
-            color="error"
-          >
-            Cancel booking
-          </Button>
         </Box>
       )}
 
@@ -181,7 +175,32 @@ export default function BookingDetails({
               onChange={handleUpdateChange}
               placeholder="Enter room name"
               fullWidth
+              sx={{ ":hover": "cursor-no-drop" }}
+              disabled
+              onMouseEnter={() =>
+                setShowMessage((prevState) => {
+                  return {
+                    ...prevState,
+                    show: true,
+                    message: "Cannot change room once booked",
+                  };
+                })
+              }
+              onMouseLeave={() =>
+                setShowMessage((prevState) => {
+                  return {
+                    ...prevState,
+                    show: false,
+                    message: "",
+                  };
+                })
+              }
             />
+            {showMessage.show && (
+              <p className="text-center text-red-500 font-bold">
+                {showMessage.message}
+              </p>
+            )}
             <TextField
               label="Participants"
               type="text"
@@ -223,6 +242,7 @@ export default function BookingDetails({
       )}
 
       {/* Extend Time Tab */}
+      {/* Extend Time Tab */}
       {tabIndex === 2 && (
         <Box p={3}>
           <Typography variant="h6" gutterBottom>
@@ -236,6 +256,7 @@ export default function BookingDetails({
               value={extendedTime.date}
               onChange={handleExtendTimeChange}
               fullWidth
+              disabled
             />
             <TextField
               label="Start Time"
@@ -244,6 +265,7 @@ export default function BookingDetails({
               value={extendedTime.startTime}
               onChange={handleExtendTimeChange}
               fullWidth
+              disabled
             />
             <TextField
               label="End Time"
@@ -253,13 +275,68 @@ export default function BookingDetails({
               onChange={handleExtendTimeChange}
               fullWidth
             />
+            {/* Buttons for predefined durations */}
+            <Box display="flex" justifyContent="space-between" mt={2}>
+              <Button
+                variant="outlined"
+                onClick={() => handleDurationExtension(30)}
+              >
+                Extend 30 mins
+              </Button>
+              <Button
+                variant="outlined"
+                onClick={() => handleDurationExtension(60)}
+              >
+                Extend 1 hour
+              </Button>
+              <Button
+                variant="outlined"
+                onClick={() => handleDurationExtension(120)}
+              >
+                Extend 2 hours
+              </Button>
+            </Box>
             <Button
               type="submit"
               variant="contained"
               color="primary"
               className="w-full py-2 font-bold"
+              sx={{ mt: 2 }}
             >
               Extend Time
+            </Button>
+          </form>
+        </Box>
+      )}
+
+      {/* Cancel Booking Tab */}
+      {tabIndex === 3 && (
+        <Box p={3}>
+          <Typography variant="h6" gutterBottom>
+            Cancel Booking
+          </Typography>
+          <form
+            onSubmit={handleCancelSubmit}
+            className="flex flex-col justify-center items-center gap-8"
+          >
+            <TextField
+              label="Reason for Cancellation"
+              name="reason"
+              value={cancelReason}
+              className="mb-16"
+              onChange={(e) => setCancelReason(e.target.value)}
+              placeholder="Enter the reason"
+              multiline
+              rows={4}
+              fullWidth
+            />
+            <Button
+              type="submit"
+              variant="contained"
+              color="error"
+              className="w-full py-2 font-bold"
+            >
+              Cancel Booking
             </Button>
           </form>
         </Box>

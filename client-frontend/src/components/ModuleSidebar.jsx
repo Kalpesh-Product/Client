@@ -11,6 +11,7 @@ import {
   FaHandsHelping,
   FaTasks,
 } from "react-icons/fa";
+import { MdMeetingRoom } from "react-icons/md";
 import { BsArrowLeftSquare } from "react-icons/bs";
 import { TbReportSearch, TbSection } from "react-icons/tb";
 import { IoIosChatboxes } from "react-icons/io";
@@ -129,7 +130,7 @@ const ModuleSidebar = ({ mainSideBar }) => {
     {
       title: "Meetings",
       route: "/customer/meetings",
-      icon: <HiCurrencyDollar />,
+      icon: <MdMeetingRoom />,
       subMenus: [
         {
           title: "Calendar",

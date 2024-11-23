@@ -60,7 +60,7 @@ export default function BookingForm({
   };
 
   return (
-    <div className="mx-auto p-6 bg-white w-[70vw]">
+    <div className="mx-auto p-6 bg-white w-[50vw]">
       <form onSubmit={handleSubmit} className="space-y-4">
         {/* Start Time */}
         <div>
