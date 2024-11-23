@@ -15,25 +15,25 @@ const MyTicketsTable = () => {
     {
       field: "priority",
       headerName: "Priority",
-      width: 150,
+      width: 190,
       type: "singleSelect",
       valueOptions: ["High", "Medium", "Low"],
     },
     {
       field: "status",
       headerName: "Status",
-      width: 150,
+      width: 190,
       type: "singleSelect",
       valueOptions: ["Pending", "In Process", "Resolved"],
     },
     {
       field: "department",
       headerName: "Department",
-      width: 150,
+      width: 190,
       type: "singleSelect",
       valueOptions: ["IT", "HR", "Tech", "Admin"],
     },
-    { field: "requestDate", headerName: "Request Date", width: 150 },
+    { field: "requestDate", headerName: "Request Date", width: 190 },
   ];
 
   const allRows = [
@@ -144,7 +144,9 @@ const MyTicketsTable = () => {
                 height: "34px", // Adjust height of the select input
                 padding: "10px 8px 4px 2px", // Adjust padding inside
               }}>
-              <InputLabel id="department-select-label" className=" pt-0 mt-0">
+              <InputLabel
+                id="department-select-label"
+                className=" pt-0 mt-0 mr-3 pr-2 pl-1">
                 Department
               </InputLabel>
               <Select
@@ -154,6 +156,7 @@ const MyTicketsTable = () => {
                 label="Department"
                 sx={{
                   height: "32px", // Adjust the height of the select
+                  width: "140px",
                   padding: "2px 8px 4px 8px", // Adjust the padding inside the select
                 }}
                 className=" pt-0"
@@ -193,9 +196,9 @@ const MyTicketsTable = () => {
                 <MenuItem value="">All</MenuItem>{" "}
                 {/* Option to show all departments */}
                 <MenuItem value="Tech">2024-10-01</MenuItem>
-                <MenuItem value="IT">2024-10-01</MenuItem>
-                <MenuItem value="HR">2024-10-01</MenuItem>
-                <MenuItem value="Admin">2024-10-01</MenuItem>
+                <MenuItem value="IT">Last 7 Days</MenuItem>
+                <MenuItem value="HR">Last 30 Days</MenuItem>
+                <MenuItem value="Admin">Last 365 Days</MenuItem>
               </Select>
             </FormControl>
           </Box>
@@ -224,10 +227,10 @@ const MyTicketsTable = () => {
                 onChange={handleChange}>
                 <MenuItem value="">All</MenuItem>{" "}
                 {/* Option to show all departments */}
-                <MenuItem value="Tech">2024-10-01</MenuItem>
-                <MenuItem value="IT">2024-10-01</MenuItem>
-                <MenuItem value="HR">2024-10-01</MenuItem>
-                <MenuItem value="Admin">2024-10-01</MenuItem>
+                <MenuItem value="Tech">Today</MenuItem>
+                <MenuItem value="IT">Last 7 Days</MenuItem>
+                <MenuItem value="HR">Last 30 Days</MenuItem>
+                <MenuItem value="Admin">Last 365 Days</MenuItem>
               </Select>
             </FormControl>
           </Box>

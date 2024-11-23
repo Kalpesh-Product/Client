@@ -325,9 +325,12 @@ const UnresolvedTickets = () => {
               fullWidth
               sx={{
                 height: "34px", // Adjust height of the select input
+                width: "140px",
                 padding: "10px 8px 4px 2px", // Adjust padding inside
               }}>
-              <InputLabel id="department-select-label" className=" pt-0 mt-0">
+              <InputLabel
+                id="department-select-label"
+                className=" pt-0 mt-0 mr-3 pr-2 pl-1">
                 Department
               </InputLabel>
               <Select
@@ -337,6 +340,7 @@ const UnresolvedTickets = () => {
                 label="Department"
                 sx={{
                   height: "32px", // Adjust the height of the select
+                  width: "140px",
                   padding: "2px 8px 4px 8px", // Adjust the padding inside the select
                 }}
                 className=" pt-0"
