@@ -8,7 +8,7 @@ import {
 } from "react-icons/fa6";
 import {
   FaArrowLeft,
-  FaCalendarAlt,
+  FaRegCalendarAlt,
   FaHandsHelping,
   FaTasks,
    FaUsers, FaProjectDiagram
@@ -134,7 +134,7 @@ const ModuleSidebar = ({ mainSideBar }) => {
         {
           title: "Calendar",
           route: "/customer/meetings/booking",
-          icon: <FaCalendarAlt />,
+          icon: <FaRegCalendarAlt />,
         },
         {
           title: "Add new Room",
