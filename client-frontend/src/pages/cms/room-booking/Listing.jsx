@@ -1,6 +1,7 @@
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
+import timeGridPlugin from "@fullcalendar/timegrid"; // Fix this typo
 import Modal from "../../../components/Modal";
 import { useState, useEffect } from "react";
 import { rooms } from "../../../utils/Rooms";
@@ -144,10 +145,16 @@ export default function Listing() {
     <section className="h-screen overflow-y-auto top-0">
       <h1 className="font-bold text-3xl mt-4 mb-3">Booking Calendar</h1>
       <FullCalendar
-        plugins={[dayGridPlugin, interactionPlugin]}
+        plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
         initialView="dayGridMonth"
         dateClick={handleDateClick}
+        weekends={true}
         eventClick={handleEventClick}
+        headerToolbar={{
+          start: "today prev,next", // Controls the 'today' and navigation buttons
+          center: "title", // Centered title of the calendar
+          end: "dayGridMonth,timeGridWeek,timeGridDay", // Adds Month, Week, and Day view buttons
+        }}
         eventDisplay="block"
         events={events.map((event) => ({
           ...event,
@@ -200,7 +207,7 @@ export default function Listing() {
           <BookingDetails
             selectedEvent={selectedEvent}
             handleUpdate={handleUpdate}
-            handleExtendTime={handleExtendTime} 
+            handleExtendTime={handleExtendTime}
             handleCancel={handleCancel}
           />
         </Modal>
