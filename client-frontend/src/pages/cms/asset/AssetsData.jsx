@@ -44,7 +44,7 @@ const AssetsData = () => {
       row.id === asset.id ? { ...row, status: "Revoked" } : row
     );
     setProcessedData(updatedRows); // Update the state
-    rows.status === "Revoked" && setRevoked(true);
+    processedData.status === "Revoked" && setRevoked(true);
     handleCloseModal(); // Close the modal
     toast.success(`Asset revoked for: ${asset && asset.assigneeName}`);
   };
