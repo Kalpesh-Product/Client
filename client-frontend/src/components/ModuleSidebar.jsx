@@ -4,6 +4,7 @@ import {
   FaBuildingUser,
   FaCode,
   FaMoneyBillTrendUp,
+  FaPlus,
 } from "react-icons/fa6";
 import {
   FaArrowLeft,
@@ -136,14 +137,17 @@ const ModuleSidebar = ({ mainSideBar }) => {
         {
           title: "Calendar",
           route: "/customer/meetings/booking",
+          icon: <FaCalendarAlt />,
         },
         {
           title: "Add new Room",
           route: "/customer/meetings/add-room",
+          icon: <FaPlus />,
         },
         {
           title: "Reports",
           route: "/customer/meetings/reports",
+          icon: <TbReportSearch />,
         },
       ],
     },
@@ -264,7 +268,8 @@ if (passedDepartment === "customer") {
       <div
         className={`${
           isSidebarOpen ? "w-60" : "w-20"
-        } bg-white text-black flex-shrink-0 h-full sticky top-10 overflow-y-auto transition-all duration-300`}>
+        } bg-white text-black flex-shrink-0 h-full sticky top-10 overflow-y-auto transition-all duration-300`}
+      >
         {/*Dashboard */}
         <div className="flex flex-col gap-2 mt-5 px-3 relative">
           {/* Title/Dashboard */}
@@ -272,7 +277,8 @@ if (passedDepartment === "customer") {
             onClick={() => navigate(`/${passedDepartment}/dashboard`)}
             className={`flex border-b-[1px] ${
               isSidebarOpen ? "pl-[1rem]" : "justify-center"
-            } items-center py-3 wono-blue wono-blue-text rounded-md `}>
+            } items-center py-3 wono-blue wono-blue-text rounded-md `}
+          >
             <div className="flex justify-center w-5 text-2xl">
               <MdOutlineViewModule />
             </div>
@@ -286,12 +292,14 @@ if (passedDepartment === "customer") {
           {/* Collapse-button */}
           <Tooltip
             title={isSidebarOpen ? "Close" : "Collapse"}
-            placement="right">
+            placement="right"
+          >
             <button
               onClick={toggleSidebar}
               className={`text-black text-[0.8rem] p-2 focus:outline-none text-end absolute top-[0.6rem] ${
                 isSidebarOpen ? "left-[11rem]" : "left-[3.2rem]"
-              } `}>
+              } `}
+            >
               {isSidebarOpen ? <FaArrowLeft /> : <FaArrowRightToBracket />}
             </button>
           </Tooltip>
@@ -316,7 +324,8 @@ if (passedDepartment === "customer") {
                     location.pathname === route
                       ? "wono-blue border-r-4 border-[#0DB4EA] rounded-tl-md rounded-bl-md text-[#0DB4EA]"
                       : "bg-white"
-                  }`}>
+                  }`}
+                >
                   <div className="flex justify-center w-5 text-2xl">{icon}</div>
 
                   {isSidebarOpen && (
@@ -331,7 +340,8 @@ if (passedDepartment === "customer") {
                             stroke="currentColor"
                             className={`w-4 h-4 ml-3 transform ${
                               isDepartmentsOpen ? "rotate-180" : ""
-                            }`}>
+                            }`}
+                          >
                             <path
                               strokeLinecap="round"
                               strokeLinejoin="round"
@@ -358,14 +368,16 @@ if (passedDepartment === "customer") {
                       <Tooltip
                         title={menu.title}
                         placement="right"
-                        key={subIndex}>
+                        key={subIndex}
+                      >
                         <div
                           onClick={() => navigate(menu.route)}
                           className={`flex items-center border-b-[1px] py-3 gap-3 cursor-pointer hover:wono-blue-dark hover:text-white hover:rounded-md  ${
                             location.pathname === menu.route
                               ? "wono-blue border-r-4 border-b-[0px]  border-[#0DB4EA] rounded-tl-md rounded-bl-md text-[#0DB4EA]"
                               : "bg-white"
-                          } `}>
+                          } `}
+                        >
                           <div className="flex justify-center w-6 text-[1rem]">
                             {menu.icon || <RiAppsLine />}
                           </div>
@@ -485,7 +497,8 @@ if (passedDepartment === "customer") {
                 location.pathname === "/dashboard"
                   ? "wono-blue rounded-md text-[#0DB4EA]"
                   : "bg-white"
-              }`}>
+              }`}
+            >
               <div className="flex justify-center w-6 text-[1.3rem]">
                 <TbReportSearch />
               </div>
@@ -509,7 +522,8 @@ if (passedDepartment === "customer") {
                     location.pathname === "/dashboard"
                       ? "wono-blue rounded-md text-[#0DB4EA]"
                       : "bg-white"
-                  }`}>
+                  }`}
+                >
                   <div className="flex justify-center w-6 text-[1.3rem]">
                     <FaCode />
                   </div>
@@ -532,7 +546,8 @@ if (passedDepartment === "customer") {
                     location.pathname === "/dashboard"
                       ? "wono-blue rounded-md text-[#0DB4EA]"
                       : "bg-white"
-                  }`}>
+                  }`}
+                >
                   <div className="flex justify-center w-6 text-[1.3rem]">
                     <MdAccountBalance />
                   </div>
@@ -552,7 +567,8 @@ if (passedDepartment === "customer") {
                     location.pathname === "/dashboard"
                       ? "wono-blue rounded-md text-[#0DB4EA]"
                       : "bg-white"
-                  }`}>
+                  }`}
+                >
                   <div className="flex justify-center w-6 text-[1.3rem]">
                     <BsCashCoin />
                   </div>
@@ -572,7 +588,8 @@ if (passedDepartment === "customer") {
                     location.pathname === "/dashboard"
                       ? "wono-blue rounded-md text-[#0DB4EA]"
                       : "bg-white"
-                  }`}>
+                  }`}
+                >
                   <div className="flex justify-center w-6 text-[1.3rem]">
                     <FaBuildingUser />
                   </div>
@@ -595,7 +612,8 @@ if (passedDepartment === "customer") {
                     location.pathname === "/dashboard"
                       ? "wono-blue rounded-md text-[#0DB4EA]"
                       : "bg-white"
-                  }`}>
+                  }`}
+                >
                   <div className="flex justify-center w-6 text-[1.3rem]">
                     <RiCustomerService2Line />
                   </div>
@@ -618,7 +636,8 @@ if (passedDepartment === "customer") {
                     location.pathname === "/dashboard"
                       ? "wono-blue rounded-md text-[#0DB4EA]"
                       : "bg-white"
-                  }`}>
+                  }`}
+                >
                   <div className="flex justify-center w-6 text-[1.3rem]">
                     <SiMarketo />
                   </div>
@@ -641,7 +660,8 @@ if (passedDepartment === "customer") {
                     location.pathname === "/dashboard"
                       ? "wono-blue rounded-md text-[#0DB4EA]"
                       : "bg-white"
-                  }`}>
+                  }`}
+                >
                   <div className="flex justify-center w-6 text-[1.3rem]">
                     <MdOutlineLocalCafe />
                   </div>
@@ -664,7 +684,8 @@ if (passedDepartment === "customer") {
                     location.pathname === "/dashboard"
                       ? "wono-blue rounded-md text-[#0DB4EA]"
                       : "bg-white"
-                  }`}>
+                  }`}
+                >
                   <div className="flex justify-center w-6 text-[1.3rem]">
                     <MdOutlineWifiTethering />
                   </div>
@@ -684,7 +705,8 @@ if (passedDepartment === "customer") {
                     location.pathname === "/dashboard"
                       ? "wono-blue rounded-md text-[#0DB4EA]"
                       : "bg-white"
-                  }`}>
+                  }`}
+                >
                   <div className="flex justify-center w-6 text-[1.3rem]">
                     <FaHandsHelping />
                   </div>
@@ -707,7 +729,8 @@ if (passedDepartment === "customer") {
                     location.pathname === "/dashboard"
                       ? "wono-blue rounded-md text-[#0DB4EA]"
                       : "bg-white"
-                  }`}>
+                  }`}
+                >
                   <div className="flex justify-center w-6 text-[1.3rem]">
                     <AiOutlineSecurityScan />
                   </div>
@@ -730,7 +753,8 @@ if (passedDepartment === "customer") {
                 location.pathname === "/dashboard"
                   ? "wono-blue rounded-md text-[#0DB4EA]"
                   : "bg-white"
-              }`}>
+              }`}
+            >
               <div className="flex justify-center w-6 text-[1.3rem]">
                 <FaCode />
               </div>

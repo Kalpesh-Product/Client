@@ -200,9 +200,9 @@ export default function AddRooms() {
             </div>
             <div className="flex justify-end gap-4">
               <Button
-                variant="outlined"
+                variant="contained"
                 onClick={() => setShowModal(false)}
-                color="secondary"
+                color="error"
               >
                 Cancel
               </Button>
