@@ -1,10 +1,16 @@
 import React, { useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
-import { Box, FormControl, Select, MenuItem } from "@mui/material";
+import { Box, FormControl, Select, MenuItem, TextField } from "@mui/material";
 import { CSVLink } from "react-csv";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import { DatePicker } from "@mui/x-date-pickers";
 
 export default function BookingReports() {
   const [selectedDepartment, setSelectedDepartment] = useState("All");
+  const [selectedStatus, setSelectedStatus] = useState("All");
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
 
   // Dummy data for bookings
   const bookings = [
@@ -16,6 +22,7 @@ export default function BookingReports() {
       startTime: "09:00 AM",
       endTime: "11:00 AM",
       duration: "2h",
+      credits: 20,
       status: "Ongoing",
     },
     {
@@ -26,6 +33,7 @@ export default function BookingReports() {
       startTime: "01:00 PM",
       endTime: "03:00 PM",
       duration: "2h",
+      credits: 50,
       status: "Cancelled",
     },
     {
@@ -36,6 +44,7 @@ export default function BookingReports() {
       startTime: "10:00 AM",
       endTime: "11:30 AM",
       duration: "1h 30m",
+      credits: 30,
       status: "Upcoming",
     },
     {
@@ -46,6 +55,7 @@ export default function BookingReports() {
       startTime: "02:00 PM",
       endTime: "03:30 PM",
       duration: "1h 30m",
+      credits: 10,
       status: "Cancelled",
     },
     {
@@ -56,6 +66,7 @@ export default function BookingReports() {
       startTime: "09:30 AM",
       endTime: "11:00 AM",
       duration: "1h 30m",
+      credits: 40,
       status: "Upcoming",
     },
     {
@@ -66,17 +77,24 @@ export default function BookingReports() {
       startTime: "03:00 PM",
       endTime: "05:00 PM",
       duration: "2h",
+      credits: 20,
       status: "Ongoing",
     },
   ];
 
-  // Filtering bookings based on the selected department
-  const filteredBookings =
-    selectedDepartment === "All"
-      ? bookings
-      : bookings.filter((booking) => booking.department === selectedDepartment);
+  // Filtering logic
+  const filteredBookings = bookings.filter((booking) => {
+    const isDepartmentMatch =
+      selectedDepartment === "All" || booking.department === selectedDepartment;
+    const isStatusMatch =
+      selectedStatus === "All" || booking.status === selectedStatus;
+    const isDateMatch =
+      (!startDate || new Date(booking.date) >= new Date(startDate)) &&
+      (!endDate || new Date(booking.date) <= new Date(endDate));
+    return isDepartmentMatch && isStatusMatch && isDateMatch;
+  });
 
-  // Define CSV headers
+  // CSV headers
   const csvHeaders = [
     { label: "ID", key: "id" },
     { label: "Department", key: "department" },
@@ -85,57 +103,99 @@ export default function BookingReports() {
     { label: "Start Time", key: "startTime" },
     { label: "End Time", key: "endTime" },
     { label: "Duration", key: "duration" },
+    { label: "Credits", key: "credits" },
     { label: "Status", key: "status" },
   ];
 
   return (
-    <section className="p-6 bg-gray-100 min-h-screen">
+    <section className="p-6 bg-gray-100 min-h-screen w-[80vw]">
       <h1 className="text-4xl font-bold text-gray-800 mb-6">Booking Reports</h1>
 
       <div className="bg-white shadow-md rounded-lg p-6">
-        {/* Department Dropdown */}
+        {/* Filters */}
         <div className="flex flex-col md:flex-row md:items-center md:space-x-4 mb-4">
-          <FormControl className="w-full md:w-1/3">
+          {/* Department Filter */}
+          <FormControl className="w-full md:w-1/4">
             <Select
               labelId="department-filter-label"
               value={selectedDepartment}
               onChange={(e) => setSelectedDepartment(e.target.value)}
               className="bg-white"
             >
-              <MenuItem value="All">All</MenuItem>
+              <MenuItem value="All">All Departments</MenuItem>
               <MenuItem value="IT">IT</MenuItem>
               <MenuItem value="Admin">Admin</MenuItem>
               <MenuItem value="HR">HR</MenuItem>
               <MenuItem value="Finance">Finance</MenuItem>
             </Select>
           </FormControl>
+
+          {/* Status Filter */}
+          <FormControl className="w-full md:w-1/4">
+            <Select
+              labelId="status-filter-label"
+              value={selectedStatus}
+              onChange={(e) => setSelectedStatus(e.target.value)}
+              className="bg-white"
+            >
+              <MenuItem value="All">All Statuses</MenuItem>
+              <MenuItem value="Ongoing">Ongoing</MenuItem>
+              <MenuItem value="Cancelled">Cancelled</MenuItem>
+              <MenuItem value="Upcoming">Upcoming</MenuItem>
+            </Select>
+          </FormControl>
+
+          {/* Date Range Filter */}
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <DatePicker
+              label="Start Date"
+              value={startDate}
+              onChange={(newValue) => setStartDate(newValue)}
+              renderInput={(params) => (
+                <TextField {...params} className="w-full md:w-1/4" />
+              )}
+            />
+            <DatePicker
+              label="End Date"
+              value={endDate}
+              onChange={(newValue) => setEndDate(newValue)}
+              renderInput={(params) => (
+                <TextField {...params} className="w-full md:w-1/4" />
+              )}
+            />
+          </LocalizationProvider>
+
+          {/* Export Button */}
           <CSVLink
-            filename="tickets_report.csv" // Set the filename for the CSV file
-            data={filteredBookings} // Use filtered data
-            headers={csvHeaders} // Add headers
-            className="flex items-center justify-center bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold p-7 rounded h-9"
+            filename="tickets_report.csv"
+            data={filteredBookings}
+            headers={csvHeaders}
+            className="flex items-center justify-center wono-blue-dark hover:bg-blue-700 text-white text-sm font-bold p-7 rounded h-9"
           >
-            Export Report
+            Export
           </CSVLink>
         </div>
 
         {/* DataGrid */}
-        <Box className="w-full">
+        <Box className="w-full" sx={{ overflowX: "auto" }}>
           <div style={{ height: 400, width: "100%" }}>
             <DataGrid
               rows={filteredBookings}
               columns={[
                 { field: "id", headerName: "ID", width: 70 },
-                { field: "department", headerName: "Department", width: 150 },
+                { field: "department", headerName: "Department", width: 120 },
                 { field: "name", headerName: "Name", width: 200 },
-                { field: "date", headerName: "Date", width: 150 },
-                { field: "startTime", headerName: "Start Time", width: 150 },
-                { field: "endTime", headerName: "End Time", width: 150 },
+                { field: "date", headerName: "Date", width: 120 },
+                { field: "startTime", headerName: "Start Time", width: 120 },
+                { field: "endTime", headerName: "End Time", width: 120 },
                 { field: "duration", headerName: "Duration", width: 120 },
+                { field: "credits", headerName: "Credits Used", width: 120 },
+
                 {
                   field: "status",
                   headerName: "Status",
                   width: 150,
+                  pinned: "right", // Pin this column to the right
                   renderCell: (params) => {
                     const statusColors = {
                       Ongoing: "text-blue-600 bg-blue-100",
@@ -143,7 +203,6 @@ export default function BookingReports() {
                       Upcoming: "text-yellow-600 bg-yellow-100",
                     };
                     const statusClass = statusColors[params.value] || "";
-
                     return (
                       <span
                         className={`px-3 py-1 rounded-full text-sm font-medium ${statusClass}`}
@@ -156,7 +215,9 @@ export default function BookingReports() {
               ]}
               pageSize={5}
               rowsPerPageOptions={[5]}
+              disableColumnResize={false}
               sx={{
+                overflowX: "scroll",
                 "& .MuiDataGrid-root": {
                   backgroundColor: "#f9fafb",
                   borderRadius: "0.5rem",
