@@ -195,17 +195,17 @@ const router = createBrowserRouter([
         element: <DepartmentDash/>,
       },
       {
-        path: "/teams",
-        element: <Teams/>,
+        path: "/tasks/teams",
+        element: <DepartmentDash/>,
       },
       {
-        path: "/tasklist",
-        element: <Tasklist/>
+        path: "/tasks/tasklist",
+        element: <DepartmentDash/>
 
       },
       {
-        path: "/tasklisttable",
-        element: <TasklistTable/>
+        path: "/tasks/tasklisttable",
+        element: <DepartmentDash/>
       }
     ],
   },

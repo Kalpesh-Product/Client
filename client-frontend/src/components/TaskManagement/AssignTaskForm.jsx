@@ -114,7 +114,7 @@ const AssignTaskForm = ({ title, handleClose ,rows, setAllRows,selectedRow,modal
         setAllRows([...rows, newTask]);
 
         toast('Task Added successfully');
-      }else if(location.pathname === "/teams"){
+      }else if(location.pathname === "/tasks/teams"){
         const newTeamsMembers = {
           id:rows.length + 1,
           Name: membersData.Name,
@@ -134,7 +134,7 @@ const AssignTaskForm = ({ title, handleClose ,rows, setAllRows,selectedRow,modal
       }
 
       const navigateProject = ()=>{
-        navigate('/tasklist',)
+        navigate('/tasks/tasklist',)
 
 
       }
@@ -172,7 +172,7 @@ const AssignTaskForm = ({ title, handleClose ,rows, setAllRows,selectedRow,modal
         </motion.button>
       </div>
       <form  onSubmit={handleSubmit}>
-        {location.pathname === "/teams" ? (<>
+        {location.pathname === "/tasks/teams" ? (<>
           <div className="grid grid-cols-1 gap-4">
           {/* Asset Number */}
           <Grid item xs={12}>
@@ -388,7 +388,7 @@ const AssignTaskForm = ({ title, handleClose ,rows, setAllRows,selectedRow,modal
           </>
         ):
 
-        location.pathname === "/teams" ? (
+        location.pathname === "/tasks/teams" ? (
           <>
           <div className="grid grid-cols-1 gap-4">
           {/* Asset Number */}
