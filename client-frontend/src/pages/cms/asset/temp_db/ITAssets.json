@@ -122,6 +122,22 @@
           "location": "ST-701A",
           "status": "active",
           "id": 8
+        },
+        {
+          "assetNumber": "0001",
+          "assetType": "Laptop",
+          "assetName": "Laptop",
+          "brandName": "Dell",
+          "quantity": "22",
+          "price": "503",
+          "totalPrice": "",
+          "vendorName": "jj",
+          "purchaseDate": "2024-11-28",
+          "warranty": "12",
+          "location": "ST-701A",
+          "status": "active",
+          "department": "IT",
+          "id": 9
         }
       ],
       "id": "4b08"

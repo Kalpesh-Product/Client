@@ -26,6 +26,7 @@ import {
   MdOutlineViewModule,
   MdOutlineWifiTethering,
   MdPolicy,
+  MdOutlineManageAccounts,
 } from "react-icons/md";
 import {
   HiColorSwatch,
@@ -42,7 +43,7 @@ import { GrDocumentUpdate } from "react-icons/gr";
 import { useNavigate, useLocation, useParams } from "react-router-dom";
 import { CgWebsite } from "react-icons/cg";
 import { BsCashCoin } from "react-icons/bs";
-import { AiOutlineSecurityScan } from "react-icons/ai";
+import { AiOutlineProduct, AiOutlineSecurityScan } from "react-icons/ai";
 
 const ModuleSidebar = ({ mainSideBar }) => {
   const location = useLocation();
@@ -88,15 +89,17 @@ const ModuleSidebar = ({ mainSideBar }) => {
     {
       title: "Assets",
       route: "/customer/kpi",
-      icon: <RiDashboardLine />,
+      icon: <AiOutlineProduct />,
       subMenus: [
         {
           title: "Manage asset",
           route: "/customer/asset/manage",
+          icon : <MdOutlineManageAccounts />
         },
         {
           title: "Reports",
           route: "/customer/asset/reports",
+          icon : <TbReportSearch />
         },
       ],
     },
@@ -165,7 +168,12 @@ const ModuleSidebar = ({ mainSideBar }) => {
   ]
 
   // Get the department based on the current path
-  const passedDepartment = location.pathname.split("/")[1];
+  let passedDepartment = location.pathname.split("/")[1];
+
+  // Replace "customer" with "cms"
+if (passedDepartment === "customer") {
+  passedDepartment = "cms";
+}
 
   // Determine which module array to render based on the department in the URL
   let modules = [];
@@ -173,7 +181,7 @@ const ModuleSidebar = ({ mainSideBar }) => {
     modules = frontendModules;
   } else if (passedDepartment === "hr") {
     modules = hrModules;
-  } else if (passedDepartment === "customer") {
+  } else if (passedDepartment === "cms") {
     modules = itModules;
   } else if (passedDepartment === "tasks") {
     modules = tasks;
