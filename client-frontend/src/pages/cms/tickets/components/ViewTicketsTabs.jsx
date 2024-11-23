@@ -28,7 +28,7 @@ const ViewTicketsTabs = () => {
   return (
     <div>
       <div className=" w-full py-10 text-lg">
-        <h2>View Tickets</h2>
+        <h2 className="text-2xl font-bold">View Tickets</h2>
       </div>
 
       <div>
@@ -133,46 +133,46 @@ const ViewTicketsTabs = () => {
           </TabPanel>
 
           <TabPanel value="2">
-            <div className="flex gap-4">
+            {/* <div className="flex gap-4">
               <div>External Tickets</div>
-            </div>
-            <br />
+            </div> */}
+            {/* <br /> */}
             {/* <MyTicketsTable /> */}
             <ExternalTickets />
           </TabPanel>
 
           <TabPanel value="3">
-            <div className="flex gap-4">
+            {/* <div className="flex gap-4">
               <div>Closed Tickets</div>
             </div>
-            <br />
+            <br /> */}
             {/* <MyTicketsTable /> */}
             <ClosedTickets />
           </TabPanel>
 
           <TabPanel value="4">
-            <div className="flex gap-4">
+            {/* <div className="flex gap-4">
               <div>Unresolved Tickets</div>
             </div>
-            <br />
+            <br /> */}
             {/* <MyTicketsTable /> */}
             <UnresolvedTickets />
           </TabPanel>
 
           <TabPanel value="5">
-            <div className="flex gap-4">
+            {/* <div className="flex gap-4">
               <div>Assigned Tickets</div>
             </div>
-            <br />
+            <br /> */}
             {/* <MyTicketsTable /> */}
             <AssignedTickets />
           </TabPanel>
 
           <TabPanel value="6">
-            <div className="flex gap-4">
+            {/* <div className="flex gap-4">
               <div>Accepted Tickets</div>
             </div>
-            <br />
+            <br /> */}
             {/* <MyTicketsTable /> */}
             <AcceptedTickets />
           </TabPanel>

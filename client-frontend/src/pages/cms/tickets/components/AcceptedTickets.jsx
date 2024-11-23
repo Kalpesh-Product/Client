@@ -376,7 +376,7 @@ const AcceptedTickets = () => {
             <div className="sticky top-0 bg-white py-6 z-20 flex justify-between">
               <div>
                 <h2 className="text-3xl font-bold mb-4 uppercase">
-                  Delete Ticket
+                  Action Taken
                 </h2>
               </div>
               <div>
@@ -469,14 +469,14 @@ const AcceptedTickets = () => {
                 <button
                   className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600"
                   onClick={handleDeleteTicket}>
-                  Yes
+                  Yes (Close Ticket)
                 </button>
               </div>
               <div className="flex justify-center items-center">
                 <button
                   className="bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600"
                   onClick={handleNotResolved}>
-                  No
+                  No (Escalate)
                 </button>
               </div>
             </div>

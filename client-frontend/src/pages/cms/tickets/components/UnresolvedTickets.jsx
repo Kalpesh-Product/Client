@@ -27,6 +27,11 @@ const UnresolvedTickets = () => {
       type: "singleSelect",
       valueOptions: ["IT", "HR", "Tech", "Admin"],
     },
+    {
+      field: "escalatedTo",
+      headerName: "Escalated To",
+      width: 200,
+    },
     { field: "requestDate", headerName: "Request Date", width: 150 },
 
     // {
@@ -177,8 +182,8 @@ const UnresolvedTickets = () => {
                 </svg>
               </MenuItem>
               <MenuItem value="view">View Details</MenuItem>
-              <MenuItem value="edit">Edit</MenuItem>
-              <MenuItem value="delete">Delete</MenuItem>
+              {/* <MenuItem value="edit">Edit</MenuItem>
+              <MenuItem value="delete">Delete</MenuItem> */}
             </Select>
           </FormControl>
         );
@@ -192,6 +197,7 @@ const UnresolvedTickets = () => {
       ticketTitle: "Website Bug",
       priority: "High",
       department: "IT",
+      escalatedTo: "Machindranath Parkar",
       requestDate: "2024-10-01",
     },
     {
@@ -199,6 +205,7 @@ const UnresolvedTickets = () => {
       ticketTitle: "Payroll Issue",
       priority: "Medium",
       department: "HR",
+      escalatedTo: "Machindranath Parkar",
       requestDate: "2024-10-03",
     },
     {
@@ -206,6 +213,7 @@ const UnresolvedTickets = () => {
       ticketTitle: "Server Downtime",
       priority: "High",
       department: "Tech",
+      escalatedTo: "Machindranath Parkar",
       requestDate: "2024-10-05",
     },
     {
@@ -213,6 +221,7 @@ const UnresolvedTickets = () => {
       ticketTitle: "New Workstation Setup",
       priority: "Low",
       department: "Admin",
+      escalatedTo: "Machindranath Parkar",
       requestDate: "2024-10-06",
     },
     {
@@ -220,6 +229,7 @@ const UnresolvedTickets = () => {
       ticketTitle: "Employee Onboarding",
       priority: "Medium",
       department: "HR",
+      escalatedTo: "Machindranath Parkar",
       requestDate: "2024-10-07",
     },
     {
@@ -227,6 +237,7 @@ const UnresolvedTickets = () => {
       ticketTitle: "Network Issue",
       priority: "High",
       department: "IT",
+      escalatedTo: "Machindranath Parkar",
       requestDate: "2024-10-08",
     },
     {
@@ -234,6 +245,7 @@ const UnresolvedTickets = () => {
       ticketTitle: "Software Installation",
       priority: "Low",
       department: "Tech",
+      escalatedTo: "Machindranath Parkar",
       requestDate: "2024-10-09",
     },
     {
@@ -241,6 +253,7 @@ const UnresolvedTickets = () => {
       ticketTitle: "Office Supplies Request",
       priority: "Low",
       department: "Admin",
+      escalatedTo: "Machindranath Parkar",
       requestDate: "2024-10-10",
     },
     {
@@ -248,6 +261,7 @@ const UnresolvedTickets = () => {
       ticketTitle: "Email Access Issue",
       priority: "Medium",
       department: "IT",
+      escalatedTo: "Machindranath Parkar",
       requestDate: "2024-10-11",
     },
   ];

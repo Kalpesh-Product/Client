@@ -12,25 +12,25 @@ import Button from "@mui/material/Button";
 const TodaysTickets = () => {
   const columns = [
     { field: "id", headerName: "ID", width: 100 },
-    { field: "ticketTitle", headerName: "Ticket Title", width: 200 },
+    { field: "ticketTitle", headerName: "Ticket Title", width: 220 },
     {
       field: "priority",
       headerName: "Priority",
-      width: 150,
+      width: 160,
       type: "singleSelect",
       valueOptions: ["High", "Medium", "Low"],
     },
     {
       field: "status",
       headerName: "Status",
-      width: 150,
+      width: 170,
       type: "singleSelect",
       valueOptions: ["Pending", "In Process", "Resolved"],
     },
     {
       field: "department",
       headerName: "Department",
-      width: 150,
+      width: 160,
       type: "singleSelect",
       valueOptions: ["IT", "HR", "Tech", "Admin"],
     },
@@ -38,7 +38,7 @@ const TodaysTickets = () => {
     {
       field: "viewDetails",
       headerName: "Actions",
-      width: 150,
+      width: 160,
       renderCell: (params) => {
         const handleActionChange = (event) => {
           const selectedAction = event.target.value;

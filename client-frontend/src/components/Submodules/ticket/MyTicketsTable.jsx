@@ -177,7 +177,7 @@ const MyTicketsTable = () => {
                 padding: "10px 8px 4px 2px", // Adjust padding inside
               }}>
               <InputLabel id="department-select-label" className=" pt-0 mt-0">
-                Date
+                Start Date
               </InputLabel>
               <Select
                 labelId="department-select-label"
@@ -192,10 +192,42 @@ const MyTicketsTable = () => {
                 onChange={handleChange}>
                 <MenuItem value="">All</MenuItem>{" "}
                 {/* Option to show all departments */}
-                <MenuItem value="Tech">Today</MenuItem>
-                <MenuItem value="IT">Last 7 Days</MenuItem>
-                <MenuItem value="HR">Last 30 Days</MenuItem>
-                <MenuItem value="Admin">Last 365 Days</MenuItem>
+                <MenuItem value="Tech">2024-10-01</MenuItem>
+                <MenuItem value="IT">2024-10-01</MenuItem>
+                <MenuItem value="HR">2024-10-01</MenuItem>
+                <MenuItem value="Admin">2024-10-01</MenuItem>
+              </Select>
+            </FormControl>
+          </Box>
+        </div>
+        <div>
+          <Box sx={{ minWidth: 140 }}>
+            <FormControl
+              fullWidth
+              sx={{
+                height: "34px", // Adjust height of the select input
+                padding: "10px 8px 4px 2px", // Adjust padding inside
+              }}>
+              <InputLabel id="department-select-label" className=" pt-0 mt-0">
+                End Date
+              </InputLabel>
+              <Select
+                labelId="department-select-label"
+                id="department-select"
+                value={department}
+                label="Department"
+                sx={{
+                  height: "32px", // Adjust the height of the select
+                  padding: "2px 8px 4px 8px", // Adjust the padding inside the select
+                }}
+                className=" pt-0"
+                onChange={handleChange}>
+                <MenuItem value="">All</MenuItem>{" "}
+                {/* Option to show all departments */}
+                <MenuItem value="Tech">2024-10-01</MenuItem>
+                <MenuItem value="IT">2024-10-01</MenuItem>
+                <MenuItem value="HR">2024-10-01</MenuItem>
+                <MenuItem value="Admin">2024-10-01</MenuItem>
               </Select>
             </FormControl>
           </Box>
