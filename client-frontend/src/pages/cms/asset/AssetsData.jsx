@@ -22,6 +22,10 @@ const AssetsData = () => {
   const [formData, setFormData] = useState(assignedAssetsData || {}); // Form data state
   const [revoked, setRevoked] = useState(false);
   const [selectedDepartment, setSelectedDepartment] = useState("");
+  const [processedData, setProcessedData] =useState(assignedAssetsData.IT.map((row, index) => ({
+    ...row,
+    id: index, // Assign a unique id based on the index
+  })))
 
   const storedUser = localStorage.getItem("user");
 
@@ -36,11 +40,11 @@ const AssetsData = () => {
 
   const handleRevokeAsset = () => {
     // Update the asset status to "Revoked"
-    const updatedRows = rows.map((row) =>
+    const updatedRows = processedData.map((row) =>
       row.id === asset.id ? { ...row, status: "Revoked" } : row
     );
-    setRows(updatedRows); // Update the state
-    rows.status === "Revoked" && setRevoked(true);
+    setProcessedData(updatedRows); // Update the state
+    processedData.status === "Revoked" && setRevoked(true);
     handleCloseModal(); // Close the modal
     toast.success(`Asset revoked for: ${asset && asset.assigneeName}`);
   };
@@ -121,10 +125,6 @@ const AssetsData = () => {
     fetchAssignedAssets();
   }, []);
 
-  const processedData = assignedAssetsData.IT.map((row, index) => ({
-    ...row,
-    id: index, // Assign a unique id based on the index
-  }));
 
   const ITUsageData = [
     {
@@ -201,7 +201,8 @@ const AssetsData = () => {
 
       <div style={{ height: 400, width: "100%" }}>
         <DataGrid
-          rows={rows ? rows : processedData}
+          // rows={rows ? rows : processedData}
+          rows={processedData}
           columns={columns}
           pageSize={5}
           rowsPerPageOptions={[5]}

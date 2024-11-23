@@ -4,13 +4,15 @@ import {
   FaBuildingUser,
   FaCode,
   FaMoneyBillTrendUp,
+  FaPlus,
 } from "react-icons/fa6";
 import {
   FaArrowLeft,
-  FaCalendarAlt,
+  FaRegCalendarAlt,
   FaHandsHelping,
   FaTasks,
-   FaUsers, FaProjectDiagram
+  FaUsers,
+  FaProjectDiagram,
 } from "react-icons/fa";
 import { MdMeetingRoom } from "react-icons/md";
 import { BsArrowLeftSquare } from "react-icons/bs";
@@ -96,12 +98,12 @@ const ModuleSidebar = ({ mainSideBar }) => {
         {
           title: "Manage asset",
           route: "/customer/asset/manage",
-          icon : <MdOutlineManageAccounts />
+          icon: <MdOutlineManageAccounts />,
         },
         {
           title: "Reports",
           route: "/customer/asset/reports",
-          icon : <TbReportSearch />
+          icon: <TbReportSearch />,
         },
       ],
     },
@@ -113,18 +115,22 @@ const ModuleSidebar = ({ mainSideBar }) => {
         {
           title: "View Tickets",
           route: "/customer/tickets/view-tickets",
+          icon: <HiOutlineClipboardList />,
         },
         {
           title: "My Tickets",
           route: "/customer/tickets/my-tickets",
+          icon: <HiOutlineClipboardList />,
         },
         // {
         //   title: "Members",
         //   route: "/customer/tickets/members",
+        //  icon: <MdOutlineManageAccounts />,
         // },
         {
           title: "Ticket Reports",
           route: "/customer/tickets/ticket-reports",
+          icon: <HiOutlineClipboardList />,
         },
       ],
     },
@@ -136,14 +142,17 @@ const ModuleSidebar = ({ mainSideBar }) => {
         {
           title: "Calendar",
           route: "/customer/meetings/booking",
+          icon: <FaRegCalendarAlt />,
         },
         {
           title: "Add new Room",
           route: "/customer/meetings/add-room",
+          icon: <FaPlus />,
         },
         {
           title: "Reports",
           route: "/customer/meetings/reports",
+          icon: <TbReportSearch />,
         },
       ],
     },
@@ -152,33 +161,27 @@ const ModuleSidebar = ({ mainSideBar }) => {
     {
       title: "Tasks",
       route: "/tasks",
-      icon :<FaTasks/>
-     
+      icon: <FaTasks />,
     },
-    // {
-    //   title: "Tasklist",
-    //   route:"/tasklistTable"
-    // },
     {
-      title:"Teams",
+      title: "Teams",
       route: "/tasks/teams",
-      icon: <FaUsers/>
+      icon: <FaUsers />,
     },
     {
-      title:"Projects",
-      route:"/tasks/tasklist",
-      icon: <FaProjectDiagram/>
-    }
-
-  ]
+      title: "Projects",
+      route: "/tasks/tasklist",
+      icon: <FaProjectDiagram />,
+    },
+  ];
 
   // Get the department based on the current path
   let passedDepartment = location.pathname.split("/")[1];
 
   // Replace "customer" with "cms"
-if (passedDepartment === "customer") {
-  passedDepartment = "cms";
-}
+  if (passedDepartment === "customer") {
+    passedDepartment = "cms";
+  }
 
   // Determine which module array to render based on the department in the URL
   let modules = [];
@@ -264,7 +267,8 @@ if (passedDepartment === "customer") {
       <div
         className={`${
           isSidebarOpen ? "w-60" : "w-20"
-        } bg-white text-black flex-shrink-0 h-full sticky top-10 overflow-y-auto transition-all duration-300`}>
+        } bg-white text-black flex-shrink-0 h-full sticky top-10 overflow-y-auto transition-all duration-300`}
+      >
         {/*Dashboard */}
         <div className="flex flex-col gap-2 mt-5 px-3 relative">
           {/* Title/Dashboard */}
@@ -272,7 +276,8 @@ if (passedDepartment === "customer") {
             onClick={() => navigate(`/${passedDepartment}/dashboard`)}
             className={`flex border-b-[1px] ${
               isSidebarOpen ? "pl-[1rem]" : "justify-center"
-            } items-center py-3 wono-blue wono-blue-text rounded-md `}>
+            } items-center py-3 wono-blue wono-blue-text rounded-md `}
+          >
             <div className="flex justify-center w-5 text-2xl">
               <MdOutlineViewModule />
             </div>
@@ -286,12 +291,14 @@ if (passedDepartment === "customer") {
           {/* Collapse-button */}
           <Tooltip
             title={isSidebarOpen ? "Close" : "Collapse"}
-            placement="right">
+            placement="right"
+          >
             <button
               onClick={toggleSidebar}
               className={`text-black text-[0.8rem] p-2 focus:outline-none text-end absolute top-[0.6rem] ${
                 isSidebarOpen ? "left-[11rem]" : "left-[3.2rem]"
-              } `}>
+              } `}
+            >
               {isSidebarOpen ? <FaArrowLeft /> : <FaArrowRightToBracket />}
             </button>
           </Tooltip>
@@ -316,7 +323,8 @@ if (passedDepartment === "customer") {
                     location.pathname === route
                       ? "wono-blue border-r-4 border-[#0DB4EA] rounded-tl-md rounded-bl-md text-[#0DB4EA]"
                       : "bg-white"
-                  }`}>
+                  }`}
+                >
                   <div className="flex justify-center w-5 text-2xl">{icon}</div>
 
                   {isSidebarOpen && (
@@ -331,7 +339,8 @@ if (passedDepartment === "customer") {
                             stroke="currentColor"
                             className={`w-4 h-4 ml-3 transform ${
                               isDepartmentsOpen ? "rotate-180" : ""
-                            }`}>
+                            }`}
+                          >
                             <path
                               strokeLinecap="round"
                               strokeLinejoin="round"
@@ -342,6 +351,95 @@ if (passedDepartment === "customer") {
                         ) : (
                           ""
                         )}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </Tooltip>
+
+              {/* Submenu Items */}
+              {subMenus && isDepartmentsOpen === index && (
+                <div className="ml-4">
+                  {" "}
+                  {/* Submenu container */}
+                  <div className="flex flex-col p-2">
+                    {subMenus.map((menu, subIndex) => (
+                      <Tooltip
+                        title={menu.title}
+                        placement="right"
+                        key={subIndex}
+                      >
+                        <div
+                          onClick={() => navigate(menu.route)}
+                          className={`flex items-center border-b-[1px] py-3 gap-3 cursor-pointer hover:wono-blue-dark hover:text-white hover:rounded-md  ${
+                            location.pathname === menu.route
+                              ? "wono-blue border-r-4 border-b-[0px]  border-[#0DB4EA] rounded-tl-md rounded-bl-md text-[#0DB4EA]"
+                              : "bg-white"
+                          } `}
+                        >
+                          <div className="flex justify-center w-6 text-[1rem]">
+                            {menu.icon || <RiAppsLine />}
+                          </div>
+                          {isSidebarOpen && (
+                            <span className="pl-5 text-[0.8rem]">
+                              {menu.title}
+                            </span>
+                          )}
+                        </div>
+                      </Tooltip>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          ))}
+
+          {/* Tasks */}
+
+          {taskModules.map(({ title, route, icon, subMenus }, index) => (
+            <div key={index}>
+              {/* Main Menu Item */}
+              <Tooltip title={title} placement="right">
+                <div
+                  onClick={() => {
+                    navigate(route);
+
+                    setIsDepartmentsOpen(
+                      isDepartmentsOpen === index ? null : index
+                    ); // Toggle specific dropdown
+                  }}
+                  className={`flex border-b-[1px] ${
+                    isSidebarOpen ? "pl-[1rem]" : "justify-center"
+                  } items-center cursor-pointer py-2 hover:wono-blue-dark hover:text-white hover:rounded-md ${
+                    location.pathname === route
+                      ? "wono-blue border-r-4 border-[#0DB4EA] rounded-tl-md rounded-bl-md text-[#0DB4EA]"
+                      : "bg-white"
+                  }`}>
+                  <div className="flex justify-center w-5 text-2xl">{icon}</div>
+
+                  {isSidebarOpen && (
+                    <div className="flex w-full gap-x-10">
+                      <span className="pl-5 text-[0.8rem]">{title}</span>
+                      <div>
+                        {/* {isSidebarOpen ? (
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke="currentColor"
+                              className={`w-4 h-4 ml-3 transform ${
+                                isDepartmentsOpen ? "rotate-180" : ""
+                              }`}>
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth="2"
+                                d="M19 9l-7 7-7-7"
+                              />
+                            </svg>
+                          ) : (
+                            ""
+                          )} */}
                       </div>
                     </div>
                   )}
@@ -383,96 +481,6 @@ if (passedDepartment === "customer") {
             </div>
           ))}
 
-{/* Tasks */}
-          
-            {taskModules.map(({ title, route, icon, subMenus }, index) => (
-              <div key={index}>
-                {/* Main Menu Item */}
-                <Tooltip title={title} placement="right">
-                  <div
-                    onClick={() => {
-                      navigate(route);
-  
-                      setIsDepartmentsOpen(
-                        isDepartmentsOpen === index ? null : index
-                      ); // Toggle specific dropdown
-                    }}
-                    className={`flex border-b-[1px] ${
-                      isSidebarOpen ? "pl-[1rem]" : "justify-center"
-                    } items-center cursor-pointer py-2 hover:wono-blue-dark hover:text-white hover:rounded-md ${
-                      location.pathname === route
-                        ? "wono-blue border-r-4 border-[#0DB4EA] rounded-tl-md rounded-bl-md text-[#0DB4EA]"
-                        : "bg-white"
-                    }`}>
-                    <div className="flex justify-center w-5 text-2xl">{icon}</div>
-  
-                    {isSidebarOpen && (
-                      <div className="flex w-full gap-x-10">
-                        <span className="pl-5 text-[0.8rem]">{title}</span>
-                        <div>
-                          {/* {isSidebarOpen ? (
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              stroke="currentColor"
-                              className={`w-4 h-4 ml-3 transform ${
-                                isDepartmentsOpen ? "rotate-180" : ""
-                              }`}>
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth="2"
-                                d="M19 9l-7 7-7-7"
-                              />
-                            </svg>
-                          ) : (
-                            ""
-                          )} */}
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                </Tooltip>
-  
-                {/* Submenu Items */}
-                {subMenus && isDepartmentsOpen === index && (
-                  <div className="ml-4">
-                    {" "}
-                    {/* Submenu container */}
-                    <div className="flex flex-col p-2">
-                      {subMenus.map((menu, subIndex) => (
-                        <Tooltip
-                          title={menu.title}
-                          placement="right"
-                          key={subIndex}>
-                          <div
-                            onClick={() => navigate(menu.route)}
-                            className={`flex items-center border-b-[1px] py-3 gap-3 cursor-pointer hover:wono-blue-dark hover:text-white hover:rounded-md  ${
-                              location.pathname === menu.route
-                                ? "wono-blue border-r-4 border-b-[0px]  border-[#0DB4EA] rounded-tl-md rounded-bl-md text-[#0DB4EA]"
-                                : "bg-white"
-                            } `}>
-                            <div className="flex justify-center w-6 text-[1rem]">
-                              {menu.icon || <RiAppsLine />}
-                            </div>
-                            {isSidebarOpen && (
-                              <span className="pl-5 text-[0.8rem]">
-                                {menu.title}
-                              </span>
-                            )}
-                          </div>
-                        </Tooltip>
-                      ))}
-                    </div>
-                  </div>
-                )}
-              </div>
-            ))
-            
-
-          }
-
           {/* Common-submodules-menu */}
           <Tooltip title={"Reports"} placement="right">
             <div
@@ -485,7 +493,8 @@ if (passedDepartment === "customer") {
                 location.pathname === "/dashboard"
                   ? "wono-blue rounded-md text-[#0DB4EA]"
                   : "bg-white"
-              }`}>
+              }`}
+            >
               <div className="flex justify-center w-6 text-[1.3rem]">
                 <TbReportSearch />
               </div>
@@ -509,7 +518,8 @@ if (passedDepartment === "customer") {
                     location.pathname === "/dashboard"
                       ? "wono-blue rounded-md text-[#0DB4EA]"
                       : "bg-white"
-                  }`}>
+                  }`}
+                >
                   <div className="flex justify-center w-6 text-[1.3rem]">
                     <FaCode />
                   </div>
@@ -532,7 +542,8 @@ if (passedDepartment === "customer") {
                     location.pathname === "/dashboard"
                       ? "wono-blue rounded-md text-[#0DB4EA]"
                       : "bg-white"
-                  }`}>
+                  }`}
+                >
                   <div className="flex justify-center w-6 text-[1.3rem]">
                     <MdAccountBalance />
                   </div>
@@ -552,7 +563,8 @@ if (passedDepartment === "customer") {
                     location.pathname === "/dashboard"
                       ? "wono-blue rounded-md text-[#0DB4EA]"
                       : "bg-white"
-                  }`}>
+                  }`}
+                >
                   <div className="flex justify-center w-6 text-[1.3rem]">
                     <BsCashCoin />
                   </div>
@@ -572,7 +584,8 @@ if (passedDepartment === "customer") {
                     location.pathname === "/dashboard"
                       ? "wono-blue rounded-md text-[#0DB4EA]"
                       : "bg-white"
-                  }`}>
+                  }`}
+                >
                   <div className="flex justify-center w-6 text-[1.3rem]">
                     <FaBuildingUser />
                   </div>
@@ -595,7 +608,8 @@ if (passedDepartment === "customer") {
                     location.pathname === "/dashboard"
                       ? "wono-blue rounded-md text-[#0DB4EA]"
                       : "bg-white"
-                  }`}>
+                  }`}
+                >
                   <div className="flex justify-center w-6 text-[1.3rem]">
                     <RiCustomerService2Line />
                   </div>
@@ -618,7 +632,8 @@ if (passedDepartment === "customer") {
                     location.pathname === "/dashboard"
                       ? "wono-blue rounded-md text-[#0DB4EA]"
                       : "bg-white"
-                  }`}>
+                  }`}
+                >
                   <div className="flex justify-center w-6 text-[1.3rem]">
                     <SiMarketo />
                   </div>
@@ -641,7 +656,8 @@ if (passedDepartment === "customer") {
                     location.pathname === "/dashboard"
                       ? "wono-blue rounded-md text-[#0DB4EA]"
                       : "bg-white"
-                  }`}>
+                  }`}
+                >
                   <div className="flex justify-center w-6 text-[1.3rem]">
                     <MdOutlineLocalCafe />
                   </div>
@@ -664,7 +680,8 @@ if (passedDepartment === "customer") {
                     location.pathname === "/dashboard"
                       ? "wono-blue rounded-md text-[#0DB4EA]"
                       : "bg-white"
-                  }`}>
+                  }`}
+                >
                   <div className="flex justify-center w-6 text-[1.3rem]">
                     <MdOutlineWifiTethering />
                   </div>
@@ -684,7 +701,8 @@ if (passedDepartment === "customer") {
                     location.pathname === "/dashboard"
                       ? "wono-blue rounded-md text-[#0DB4EA]"
                       : "bg-white"
-                  }`}>
+                  }`}
+                >
                   <div className="flex justify-center w-6 text-[1.3rem]">
                     <FaHandsHelping />
                   </div>
@@ -707,7 +725,8 @@ if (passedDepartment === "customer") {
                     location.pathname === "/dashboard"
                       ? "wono-blue rounded-md text-[#0DB4EA]"
                       : "bg-white"
-                  }`}>
+                  }`}
+                >
                   <div className="flex justify-center w-6 text-[1.3rem]">
                     <AiOutlineSecurityScan />
                   </div>
@@ -730,7 +749,8 @@ if (passedDepartment === "customer") {
                 location.pathname === "/dashboard"
                   ? "wono-blue rounded-md text-[#0DB4EA]"
                   : "bg-white"
-              }`}>
+              }`}
+            >
               <div className="flex justify-center w-6 text-[1.3rem]">
                 <FaCode />
               </div>
