@@ -18,7 +18,73 @@ export default function Listing() {
   const [currentTime, setCurrentTime] = useState("");
   const [timePlus30, setTimePlus30] = useState("");
   const [currentDate, setCurrentDate] = useState("");
-  const [events, setEvents] = useState([]);
+  const [events, setEvents] = useState([
+    {
+      id: "2a07c1a4-27f5-4f81-8af7-4c8ec2a35d7b",
+      title: "Innovation Strategy Discussion",
+      start: "2024-11-10T10:00",
+      end: "2024-11-10T11:30",
+      backgroundColor: "#FF5733",
+      status: "active",
+      extendedProps: {
+        agenda: "Discussing ideas for upcoming product launches",
+        participants: "Abrar Shaikh, Kashif Shaikh, Farzeen",
+        room: "San Francisco",
+      },
+    },
+    {
+      id: "d5f8ecab-45f1-47a5-bd62-4d1b93890861",
+      title: "Tech Sprint Planning",
+      start: "2024-11-15T14:00",
+      end: "2024-11-15T15:00",
+      backgroundColor: "#33C1FF",
+      status: "scheduled",
+      extendedProps: {
+        agenda: "Finalizing the next sprint tasks",
+        participants: "Kalpesh Naik, Allan Silveira, Aiwinraj KS",
+        room: "Baga",
+      },
+    },
+    {
+      id: "4973c51e-46b8-4f8f-8c52-8891a741cd6f",
+      title: "Finance Quarterly Review",
+      start: "2024-11-22T11:00",
+      end: "2024-11-22T12:30",
+      backgroundColor: "#5E9C5F",
+      status: "active",
+      extendedProps: {
+        agenda: "Reviewing quarterly financial reports",
+        participants: "Narshiva Naik, Hema Natalkar, Siddhi Vernekar",
+        room: "Zurich",
+      },
+    },
+    {
+      id: "79f5c23e-72df-45c4-8d51-bf3d10a3d5f2",
+      title: "Maintenance Equipment Training",
+      start: "2024-11-18T13:00",
+      end: "2024-11-18T14:30",
+      backgroundColor: "#FFC300",
+      status: "pending",
+      extendedProps: {
+        agenda: "Training on the new maintenance equipment",
+        participants: "Amol Kakade, Jill",
+        room: "Miami",
+      },
+    },
+    {
+      id: "1e3d8f1b-0ed6-4e5e-9cc4-8f1c5a7b8f39",
+      title: "HR Policy Announcement",
+      start: "2024-11-27T15:00",
+      end: "2024-11-27T16:00",
+      backgroundColor: "#9C5E7F",
+      status: "scheduled",
+      extendedProps: {
+        agenda: "Announcing updates to HR policies",
+        participants: "Farzeen, Urjita Sangodkar, Faizan",
+        room: "Hawai",
+      },
+    },
+  ]);
   const [roomList, setRoomList] = useState(rooms);
   const [newMeeting, setNewMeeting] = useState({
     startTime: "",
@@ -95,6 +161,7 @@ export default function Listing() {
       backgroundColor: "#5E5F9C",
       status: "active", // Default status
     };
+
     toast.success("Booking completed successfully");
     setEvents((prev) => [...prev, newEvent]);
     setOpenBookingModal(false);
