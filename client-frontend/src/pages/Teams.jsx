@@ -158,8 +158,7 @@ const Teams = () => {
 
   return (
     <div className='flex min-h-screen'>
-        <TestSide />
-        <ModuleSidebar />
+       
         <div className='w-full p-6 motion-preset-blur-right-md  max-w-screen-xl mx-auto '>
         {/* <h2 className="text-2xl  ">Team Members</h2> */}
         <div className="flex flex-wrap items-center justify-between ">
@@ -199,7 +198,7 @@ const Teams = () => {
       color: "black",          // Text color
       fontWeight: "bold",
             // Make header bold
-    }, }}
+    },width: "75vw" }}
         />
     </Paper>
 </div>

@@ -78,6 +78,10 @@ import RoomBookingDash from "../cms/room-booking/RoomBookingDash";
 import BookingReports from "../cms/room-booking/BookingReports";
 import AddRooms from "../cms/room-booking/AddRooms";
 
+import Teams from "../Teams";
+import Tasklist from "../Tasklist";
+import TasklistTable from "../TasklistTable";
+
 const DepartmentDash = () => {
   const [user, setUser] = useState("");
   useEffect(() => {
@@ -686,11 +690,23 @@ const DepartmentDash = () => {
             )}
           </>
         )}
-        {location.pathname.startsWith("/tasks") && (
-          <>
-            <Task />
-          </>
-        )}
+        {location.pathname === "/tasks" ?
+        (<Task/>)
+
+        :location.pathname === "/tasks/teams" ?
+        (<>
+        <Teams/>
+        </>):location.pathname === "/tasks/tasklist" ?
+        (<>
+         <Tasklist/>
+        </>):location.pathname === "/tasks/tasklisttable" ?
+       
+        (<>
+         <TasklistTable/>
+        </>):
+        (<></>)
+         
+        }
       </div>
       <div>
         <NewModal open={open} onClose={handleClose}>
