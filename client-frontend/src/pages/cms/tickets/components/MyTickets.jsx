@@ -299,8 +299,9 @@ const MyTickets = () => {
         <br />
       </div> */}
 
-      <div className="mb-8 flex justify-between">
-        <h1 className="text-3xl">My Tickets</h1>
+      <div className="mb-2 flex justify-between">
+        {/* <h1 className="text-3xl">My Tickets</h1> */}
+        <h1 className="text-3xl"></h1>
         <button
           //   onClick={handleOpenTicket}
           onClick={openModal}
@@ -724,8 +725,49 @@ const MyTickets = () => {
               <div className="">
                 <div className=" mx-auto">
                   <h1 className="text-xl text-center my-2 font-bold">
-                    Are you sure you want to delete the ticket?
+                    Reason for deleting the ticket?
                   </h1>
+                  <Box
+                    sx={{
+                      maxWidth: 600,
+                      padding: 3,
+                      bgcolor: "background.paper",
+                      borderRadius: 2,
+                    }}
+                    // className="bg-white p-6 rounded-lg shadow-md mx-auto">
+                    className="bg-white p-6 rounded-lg mx-auto">
+                    {/* Personal Information */}
+                    {/* <h2 className="text-lg font-semibold mb-4">Add Ticket</h2> */}
+                    <div className="grid grid-cols-1 gap-4">
+                      {/* Name, Mobile, Email, DOB fields */}
+
+                      <div className="grid grid-cols-1 gap-4">
+                        <TextField
+                          label="Reason"
+                          // value={newEvent.name}
+                          // value="Wifi is not working" // Hardcoded value for ticket title
+                          // onChange={(e) =>
+                          //   setnewEvent({ ...newEvent, name: e.target.value })
+                          // }
+                          fullWidth
+                        />
+                      </div>
+                    </div>
+
+                    {/* Role & Department fields */}
+
+                    {/* <div className="col-span-2 flex gap-4">
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.9 }}
+                  className="w-full py-2 px-4 bg-blue-600 text-white rounded mt-4"
+                  //   onClick={handleSaveEvent}
+                  onClick={() => navigate("/customer/tickets")}>
+                  Save
+                </motion.button>
+          
+              </div> */}
+                  </Box>
                 </div>
               </div>
             </div>
@@ -736,16 +778,18 @@ const MyTickets = () => {
             <div className="sticky bottom-0 bg-white py-6 z-20 flex justify-center gap-5">
               <div className="flex justify-center items-center">
                 <button
-                  className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600"
+                  // className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600"
+                  className="bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600"
                   onClick={handleDeleteTicket}>
-                  Yes
+                  Delete
                 </button>
               </div>
               <div className="flex justify-center items-center">
                 <button
-                  className="bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600"
+                  // className="bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600"
+                  className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600"
                   onClick={closeDeleteTicket}>
-                  No
+                  Cancel
                 </button>
               </div>
             </div>

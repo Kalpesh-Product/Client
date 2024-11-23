@@ -390,8 +390,7 @@ const DepartmentDash = () => {
                     "& .MuiTabs-indicator": {
                       backgroundColor: "#0db4ea", // Custom indicator color
                     },
-                  }}
-                >
+                  }}>
                   <Tab label="Home" />
                   <Tab label="About" />
                   <Tab label="Gallery" />
@@ -452,8 +451,7 @@ const DepartmentDash = () => {
                   {products.map((product) => (
                     <div
                       key={product.id}
-                      className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow"
-                    >
+                      className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
                       <img
                         src={product.image}
                         alt={product.name}
@@ -591,7 +589,7 @@ const DepartmentDash = () => {
               <>
                 <div className="bg-white p-4 rounded-lg mt-4">
                   <div className="mb-8 flex justify-between">
-                    <h1 className="text-3xl">Key insights</h1>
+                    <h1 className="text-3xl font-bold">Key insights</h1>
                     <div className=" flex gap-4">
                       {/* If IT Employee */}
 
@@ -627,6 +625,22 @@ const DepartmentDash = () => {
                         widgets={section.widgets}
                       />
                     ))}
+
+                  <div className="flex w-full flex-1 flex-grow gap-x-4">
+                    <QuantityRemainingWidget
+                      totalStock={100}
+                      remainingStock={30}
+                      assetType="Tickets"
+                    />
+
+                    <QuantityRemainingWidget
+                      totalStock={100}
+                      remainingStock={10}
+                      assetType="Available Members"
+                    />
+                  </div>
+
+                  {/* <AssetAllocationWidget /> */}
 
                   <div className=" py-10">
                     {/* <p>Today's tickets Table Component</p> */}
@@ -691,8 +705,7 @@ const DepartmentDash = () => {
           open={openTicket}
           onClose={handleCloseTicket}
           aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
-        >
+          aria-describedby="modal-modal-description">
           {/* <Box sx={style}> */}
           <Box sx={style}>
             <AddTicketForm />
