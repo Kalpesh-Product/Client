@@ -157,6 +157,7 @@ const ModuleSidebar = ({ mainSideBar }) => {
       title: "Tasks",
       route: "/tasks",
       icon :<FaTasks/>
+     
     },
     // {
     //   title: "Tasklist",
