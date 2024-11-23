@@ -37,7 +37,8 @@ const AssignTaskForm = ({ title, handleClose ,rows, setAllRows,selectedRow,modal
         taskName: "",
         date: "",
         priority: "",
-        status:""
+        status:"",
+        project:""
       });
 
   
@@ -57,8 +58,12 @@ const AssignTaskForm = ({ title, handleClose ,rows, setAllRows,selectedRow,modal
 
     
 
+    
+
       const priorityType = ["High","Low","Medium"];
       const statusTypes = ["Ongoing","Pending","Start","InProgress","Running late"];
+
+      const projects = ["Website Redesign","Financial Forcastig And Budgeting","Annual Co-orporate and Conference","Launch a New Digital Marketing Campaign","Bussiness process optimization and automation"]
 
       const location = useLocation();
       const navigate = useNavigate();
@@ -109,7 +114,7 @@ const AssignTaskForm = ({ title, handleClose ,rows, setAllRows,selectedRow,modal
         setAllRows([...rows, newTask]);
 
         toast('Task Added successfully');
-      }else if(location.pathname === "/teams"){
+      }else if(location.pathname === "/tasks/teams"){
         const newTeamsMembers = {
           id:rows.length + 1,
           Name: membersData.Name,
@@ -129,7 +134,7 @@ const AssignTaskForm = ({ title, handleClose ,rows, setAllRows,selectedRow,modal
       }
 
       const navigateProject = ()=>{
-        navigate('/tasklist',)
+        navigate('/tasks/tasklist',)
 
 
       }
@@ -167,7 +172,7 @@ const AssignTaskForm = ({ title, handleClose ,rows, setAllRows,selectedRow,modal
         </motion.button>
       </div>
       <form  onSubmit={handleSubmit}>
-        {location.pathname === "/teams" ? (<>
+        {location.pathname === "/tasks/teams" ? (<>
           <div className="grid grid-cols-1 gap-4">
           {/* Asset Number */}
           <Grid item xs={12}>
@@ -238,12 +243,32 @@ const AssignTaskForm = ({ title, handleClose ,rows, setAllRows,selectedRow,modal
         <TextField
           {...params}
           variant="outlined"
-          label="Select Multiple Options"
+          label="Assignes"
           placeholder="Choose..."
         />
       )}
       />
           </Grid>
+
+          <Grid item xs={12}>
+            <TextField
+              label="Select Project"
+              name="Project"
+              select
+              fullWidth
+              value={formData.project}
+              onChange={handleChange}
+            >
+              {priorityType.map((type, index) => (
+                <MenuItem key={index} value={type}>
+                  {type}
+                </MenuItem>
+              ))}
+            </TextField>
+          </Grid>
+          
+
+
 
           {/* Asset Type Dropdown */}
           <Grid item xs={12}>
@@ -313,7 +338,7 @@ const AssignTaskForm = ({ title, handleClose ,rows, setAllRows,selectedRow,modal
         <TextField
           {...params}
           variant="outlined"
-          label="Select Multiple Options"
+          label="Assignes"
           placeholder="Choose..."
         />
       )}
@@ -363,7 +388,7 @@ const AssignTaskForm = ({ title, handleClose ,rows, setAllRows,selectedRow,modal
           </>
         ):
 
-        location.pathname === "/teams" ? (
+        location.pathname === "/tasks/teams" ? (
           <>
           <div className="grid grid-cols-1 gap-4">
           {/* Asset Number */}

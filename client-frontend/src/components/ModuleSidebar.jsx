@@ -11,6 +11,7 @@ import {
   FaCalendarAlt,
   FaHandsHelping,
   FaTasks,
+   FaUsers, FaProjectDiagram
 } from "react-icons/fa";
 import { MdMeetingRoom } from "react-icons/md";
 import { BsArrowLeftSquare } from "react-icons/bs";
@@ -28,6 +29,7 @@ import {
   MdOutlineViewModule,
   MdOutlineWifiTethering,
   MdPolicy,
+  MdOutlineManageAccounts,
 } from "react-icons/md";
 import {
   HiColorSwatch,
@@ -44,7 +46,7 @@ import { GrDocumentUpdate } from "react-icons/gr";
 import { useNavigate, useLocation, useParams } from "react-router-dom";
 import { CgWebsite } from "react-icons/cg";
 import { BsCashCoin } from "react-icons/bs";
-import { AiOutlineSecurityScan } from "react-icons/ai";
+import { AiOutlineProduct, AiOutlineSecurityScan } from "react-icons/ai";
 
 const ModuleSidebar = ({ mainSideBar }) => {
   const location = useLocation();
@@ -90,15 +92,17 @@ const ModuleSidebar = ({ mainSideBar }) => {
     {
       title: "Assets",
       route: "/customer/kpi",
-      icon: <RiDashboardLine />,
+      icon: <AiOutlineProduct />,
       subMenus: [
         {
           title: "Manage asset",
           route: "/customer/asset/manage",
+          icon : <MdOutlineManageAccounts />
         },
         {
           title: "Reports",
           route: "/customer/asset/reports",
+          icon : <TbReportSearch />
         },
       ],
     },
@@ -152,34 +156,44 @@ const ModuleSidebar = ({ mainSideBar }) => {
     {
       title: "Tasks",
       route: "/tasks",
+      icon :<FaTasks/>
     },
     // {
     //   title: "Tasklist",
     //   route:"/tasklistTable"
     // },
     {
-      title: "Teams",
-      route: "/teams",
+      title:"Teams",
+      route: "/tasks/teams",
+      icon: <FaUsers/>
     },
     {
-      title: "Projects",
-      route: "/tasklist",
-    },
-  ];
+      title:"Projects",
+      route:"/tasks/tasklist",
+      icon: <FaProjectDiagram/>
+    }
+
+  ]
 
   // Get the department based on the current path
-  const passedDepartment = location.pathname.split("/")[1];
+  let passedDepartment = location.pathname.split("/")[1];
+
+  // Replace "customer" with "cms"
+if (passedDepartment === "customer") {
+  passedDepartment = "cms";
+}
 
   // Determine which module array to render based on the department in the URL
   let modules = [];
+  let taskModules = [];
   if (passedDepartment === "frontend") {
     modules = frontendModules;
   } else if (passedDepartment === "hr") {
     modules = hrModules;
-  } else if (passedDepartment === "customer") {
+  } else if (passedDepartment === "cms") {
     modules = itModules;
   } else if (passedDepartment === "tasks") {
-    modules = tasks;
+    taskModules = tasks;
   }
 
   const departments = [
@@ -379,6 +393,96 @@ const ModuleSidebar = ({ mainSideBar }) => {
               )}
             </div>
           ))}
+
+{/* Tasks */}
+          
+            {taskModules.map(({ title, route, icon, subMenus }, index) => (
+              <div key={index}>
+                {/* Main Menu Item */}
+                <Tooltip title={title} placement="right">
+                  <div
+                    onClick={() => {
+                      navigate(route);
+  
+                      setIsDepartmentsOpen(
+                        isDepartmentsOpen === index ? null : index
+                      ); // Toggle specific dropdown
+                    }}
+                    className={`flex border-b-[1px] ${
+                      isSidebarOpen ? "pl-[1rem]" : "justify-center"
+                    } items-center cursor-pointer py-2 hover:wono-blue-dark hover:text-white hover:rounded-md ${
+                      location.pathname === route
+                        ? "wono-blue border-r-4 border-[#0DB4EA] rounded-tl-md rounded-bl-md text-[#0DB4EA]"
+                        : "bg-white"
+                    }`}>
+                    <div className="flex justify-center w-5 text-2xl">{icon}</div>
+  
+                    {isSidebarOpen && (
+                      <div className="flex w-full gap-x-10">
+                        <span className="pl-5 text-[0.8rem]">{title}</span>
+                        <div>
+                          {/* {isSidebarOpen ? (
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke="currentColor"
+                              className={`w-4 h-4 ml-3 transform ${
+                                isDepartmentsOpen ? "rotate-180" : ""
+                              }`}>
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth="2"
+                                d="M19 9l-7 7-7-7"
+                              />
+                            </svg>
+                          ) : (
+                            ""
+                          )} */}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </Tooltip>
+  
+                {/* Submenu Items */}
+                {subMenus && isDepartmentsOpen === index && (
+                  <div className="ml-4">
+                    {" "}
+                    {/* Submenu container */}
+                    <div className="flex flex-col p-2">
+                      {subMenus.map((menu, subIndex) => (
+                        <Tooltip
+                          title={menu.title}
+                          placement="right"
+                          key={subIndex}>
+                          <div
+                            onClick={() => navigate(menu.route)}
+                            className={`flex items-center border-b-[1px] py-3 gap-3 cursor-pointer hover:wono-blue-dark hover:text-white hover:rounded-md  ${
+                              location.pathname === menu.route
+                                ? "wono-blue border-r-4 border-b-[0px]  border-[#0DB4EA] rounded-tl-md rounded-bl-md text-[#0DB4EA]"
+                                : "bg-white"
+                            } `}>
+                            <div className="flex justify-center w-6 text-[1rem]">
+                              {menu.icon || <RiAppsLine />}
+                            </div>
+                            {isSidebarOpen && (
+                              <span className="pl-5 text-[0.8rem]">
+                                {menu.title}
+                              </span>
+                            )}
+                          </div>
+                        </Tooltip>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            ))
+            
+
+          }
 
           {/* Common-submodules-menu */}
           <Tooltip title={"Reports"} placement="right">

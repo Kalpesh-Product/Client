@@ -47,19 +47,19 @@ const TaskReportsSection = () => {
           </TabList>
         </Box>
         <TabPanel value="1">
-          <div className="flex gap-4">
+          {/* <div className="flex gap-4">
             <div>My Tasks</div>
           </div>
-          <br />
+          <br /> */}
 
           <MyTasksTable />
         </TabPanel>
 
         <TabPanel value="2">
-          <div className="flex gap-4">
+          {/* <div className="flex gap-4">
             <div>Tasks Assigned To Me</div>
           </div>
-          <br />
+          <br /> */}
           <MyTasksTable />
         </TabPanel>
       </TabContext>

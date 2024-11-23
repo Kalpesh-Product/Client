@@ -282,9 +282,9 @@ const AddAssetForm = ({ title, handleClose, user }) => {
         </div>
         {/* Submit Button */}
         <div className="mt-4">
-          <Button type="submit" variant="contained" color="primary" fullWidth>
+          <button type="submit" className="p-2 wono-blue-dark text-white rounded-md w-full">
             Submit
-          </Button>
+          </button>
         </div>
       </form>
     </Box>

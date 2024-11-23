@@ -2,8 +2,10 @@ import React, { useEffect, useState } from "react";
 import AssetsData from "./AssetsData";
 import { NewModal } from "../../../components/NewModal";
 import AssignAssetForm from "./AssignAssetForm";
+import { motion } from "framer-motion";
 import AddAssetForm from "./AddAssetForm";
 import {
+  Button,
   FormControl,
   InputLabel,
   MenuItem,
@@ -11,10 +13,13 @@ import {
   Tab,
   Tabs,
   TextField,
+  Typography,
 } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import axios from "axios";
 import maintenanceAssets from "./temp_db/MaintainanceAssets.json";
+import { IoMdClose } from "react-icons/io";
+import { toast } from "sonner";
 
 const ManageAsset = () => {
   const [openModal, setOpenModal] = useState(false);
@@ -26,6 +31,8 @@ const ManageAsset = () => {
   const [selectedAssetName, setSelectedAssetName] = useState("");
   const [selectedDepartment, setSelectedDepartment] = useState("");
   const [assetsData, setAssetsData] = useState(maintenanceAssets);
+  const [isEditing, setIsEditing] = useState(false); // Editing state
+  const [formData, setFormData] = useState(assetsData || {}); // Form data state
 
   const [activeTab, setActiveTab] = useState(0);
 
@@ -36,9 +43,31 @@ const ManageAsset = () => {
     console.log(user.name);
   }, []);
 
-  const handleViewDetails = (row) => {
+  const handleAssignAsset = (row) => {
     setSelectedLaptop(row);
     handleOpenModal("assign");
+  };
+
+  const handleViewDetails = (row) => {
+    setFormData(row);
+    handleOpenModal("view");
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const handleEdit = () => {
+    setIsEditing(true); // Enable editing
+  };
+
+  const handleSave = () => {
+    setIsEditing(false); // Disable editing
+    toast.success("Asset data updated"); // Log updated data
   };
 
   useEffect(() => {
@@ -59,27 +88,26 @@ const ManageAsset = () => {
   }, []);
 
   const laptopColumns = [
-    { field: "id", headerName: "ID", width: 90 },
+    { field: "id", headerName: "ID", width: 50 },
     { field: "department", headerName: "Department", width: 90 },
-    { field: "assetNumber", headerName: "Asset Number", width: 150 },
+    { field: "assetNumber", headerName: "Asset Number", width: 90 },
     { field: "category", headerName: "Category", width: 150 },
-    { field: "assetName", headerName: "Asset Name", width: 150 },
-    { field: "brandName", headerName: "Brand", width: 150 },
-    { field: "price", headerName: "Price", width: 150 },
+    // { field: "assetName", headerName: "Asset Name", width: 150 },
+    // { field: "brandName", headerName: "Brand", width: 150 },
+    // { field: "price", headerName: "Price", width: 150 },
     { field: "quantity", headerName: "Quantity", width: 120 },
-    { field: "totalPrice", headerName: "Total Price", width: 150 },
-    { field: "vendorName", headerName: "Vendor", width: 200 },
+    { field: "totalPrice", headerName: "Total Price", width: 100 },
+    // { field: "vendorName", headerName: "Vendor", width: 200 },
     { field: "purchaseDate", headerName: "Purchase Date", width: 150 },
     { field: "warranty", headerName: "Warranty (Months)", width: 150 },
-    { field: "location", headerName: "Location", width: 150 },
+    // { field: "location", headerName: "Location", width: 150 },
     {
       field: "actions",
       headerName: "Actions",
-      width: 250,
+      width: 200,
       renderCell: (params) => (
         <div className="p-2 mb-2 gap-2 flex">
-        
-          <button
+          {/* <button
             style={{
               backgroundColor: "#0db4ea",
               color: "white",
@@ -89,12 +117,10 @@ const ManageAsset = () => {
               cursor: "pointer",
               fontFamily: "Popins-Regular",
             }}
-            
           >
             Edit
-          </button>
-
-          <button
+          </button> */}
+           <button
             style={{
               backgroundColor: "#0db4ea",
               color: "white",
@@ -106,8 +132,24 @@ const ManageAsset = () => {
             }}
             onClick={() => handleViewDetails(params.row)}
           >
+            Details
+          </button>
+          <button
+            style={{
+              backgroundColor: "#0db4ea",
+              color: "white",
+              border: "none",
+              padding: "0.5rem",
+              borderRadius: "4px",
+              cursor: "pointer",
+              fontFamily: "Popins-Regular",
+            }}
+            onClick={() => handleAssignAsset(params.row)}
+          >
             Assign
           </button>
+
+         
         </div>
       ),
     },
@@ -165,7 +207,7 @@ const ManageAsset = () => {
       ? combinedData
       : combinedData.filter((item) => item.department === selectedDepartment);
 
-  console.log(selectedDepartment)
+  console.log(selectedDepartment);
   return (
     <div className="p-6">
       <h1 className="text-2xl font-semibold mb-4">Manage Assets</h1>
@@ -192,6 +234,7 @@ const ManageAsset = () => {
             onChange={handleTabChange}
             aria-label="asset actions tabs"
             variant="fullWidth"
+            TabIndicatorProps={{ style: { transition: "none" } }}
             sx={{ width: "100%" }}
           >
             <Tab label="Add/Assign Assets" />
@@ -201,8 +244,8 @@ const ManageAsset = () => {
         <div>
           {activeTab === 0 && (
             <div className="w-[72vw]">
-              <h1 className="text-2xl font-semibold py-4 text-gray-600">
-                Add / Assign Assets
+              <h1 className="text-xl font-semibold py-4 text-gray-600">
+                Filter by :
               </h1>
               <div className="flex justify-between gap-4 pb-4">
                 <div className="flex gap-4">
@@ -214,7 +257,7 @@ const ManageAsset = () => {
                     onChange={(e) => setSearchTerm(e.target.value)}
                   />
 
-                  <FormControl size="small" style={{ minWidth: 200 }}>
+                  <FormControl size="small" style={{ minWidth: 220 }}>
                     {/* <InputLabel>Filter by Asset Name</InputLabel> */}
                     <TextField
                       label="Filter by Asset Name"
@@ -223,6 +266,7 @@ const ManageAsset = () => {
                       size="small"
                       value={selectedAssetName}
                       onChange={(e) => setSelectedAssetName(e.target.value)}
+                      sx={{ fontSize: "0.5rem" }}
                     >
                       <MenuItem value="">All</MenuItem>
                       <MenuItem value="Chair">Chair</MenuItem>
@@ -239,7 +283,7 @@ const ManageAsset = () => {
 
                   {user.department === "TopManagement" && (
                     <>
-                      <FormControl size="small" style={{ minWidth: 200 }}>
+                      <FormControl size="small" style={{ minWidth: 220 }}>
                         {/* <InputLabel>Filter by Asset Name</InputLabel> */}
                         <TextField
                           label="Filter by Department"
@@ -247,7 +291,9 @@ const ManageAsset = () => {
                           select
                           size="small"
                           value={selectedDepartment}
-                          onChange={(e) => setSelectedDepartment(e.target.value)}
+                          onChange={(e) =>
+                            setSelectedDepartment(e.target.value)
+                          }
                         >
                           <MenuItem value="">All</MenuItem>
                           <MenuItem value="IT">IT</MenuItem>
@@ -271,7 +317,6 @@ const ManageAsset = () => {
                   columns={laptopColumns}
                   pageSize={5}
                   rowsPerPageOptions={[5]}
-                  checkboxSelection
                   disableSelectionOnClick
                   initialState={{ pinnedColumns: { right: ["actions"] } }}
                   getRowHeight={() => "auto"} // Automatically adjust row height
@@ -296,8 +341,8 @@ const ManageAsset = () => {
           {activeTab === 1 && (
             <>
               <div className="flex justify-between gap-4 py-4">
-                <h1 className="text-2xl font-semibold text-gray-600">
-                  Assigned assets
+                <h1 className="text-xl font-semibold text-gray-600">
+                  Filter by :
                 </h1>
               </div>
               <div className="flex gap-4">
@@ -308,9 +353,8 @@ const ManageAsset = () => {
                 />
 
                 <FormControl size="small" style={{ minWidth: 200 }}>
-                  {/* <InputLabel>Filter by Asset Name</InputLabel> */}
                   <TextField
-                    label="Filter by Asset Name"
+                    label="Asset Name"
                     variant="outlined"
                     select
                     size="small"
@@ -343,6 +387,61 @@ const ManageAsset = () => {
             title="Add Asset"
             handleClose={handleCloseModal}
           />
+        )}
+        {openModal === "view" && (
+          <>
+            <div className="flex flex-col gap-4 p-6 bg-white rounded-md w-full">
+              <div className="flex justify-between mb-4">
+                <Typography sx={{ fontFamily: "Popins-Semibold" }} variant="h4">
+                  Details
+                </Typography>
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.9 }}
+                  type="button"
+                  onClick={handleCloseModal}
+                  className=" p-2 bg-white text-[red] border border-red-200 hover:border-red-400 text-2xl rounded-md"
+                >
+                  <IoMdClose />
+                </motion.button>
+              </div>
+              <div className="flex justify-start mb-4 gap-4">
+                <Button
+                  variant="contained"
+                  onClick={handleEdit}
+                  disabled={isEditing}
+                  sx={{ backgroundColor: "#0db4ea", color: "#fff" }}
+                >
+                  Edit
+                </Button>
+                {isEditing && (
+                  <div className="motion-preset-expand">
+                    <Button
+                      variant="contained"
+                      onClick={handleSave}
+                      sx={{ backgroundColor: "#4caf50", color: "#fff" }}
+                    >
+                      Save
+                    </Button>
+                  </div>
+                )}
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                {/* Render Form Fields */}
+                {Object.entries(formData).map(([key, value]) => (
+                  <TextField
+                    key={key}
+                    label={key.charAt(0).toUpperCase() + key.slice(1)} // Capitalize the label
+                    name={key}
+                    value={value}
+                    onChange={handleInputChange}
+                    fullWidth
+                    disabled={!isEditing}
+                  />
+                ))}
+              </div>
+            </div>
+          </>
         )}
         {openModal === "assign" && (
           <AssignAssetForm

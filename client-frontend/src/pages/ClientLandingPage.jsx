@@ -888,7 +888,8 @@ const ClientLandingPage = () => {
             <button
               onClick={toggleDragAndDrop}
               className="bg-blue-500 text-white py-2 px-6 rounded-lg hover:bg-blue-600 mt-4 md:mt-0">
-              Organize
+              {/* Organize */}
+              {isDragEnabled ? "Save Changes" : "Organize"}
             </button>
           </div>
         </div>

@@ -64,8 +64,7 @@ const Tasklist = () => {
       const closeModal = () => SetModalOpen(false);
   return (
     <div className='flex min-h-screen'>
-        <TestSide />
-        <ModuleSidebar />
+       
         <div className='w-full p-6 motion-preset-blur-right-md  max-w-screen-xl mx-auto '>
         <div className="flex flex-wrap items-center justify-between ">
         <h2 className="text-2xl  ">TaskLists</h2>

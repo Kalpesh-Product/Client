@@ -71,7 +71,7 @@ const AssetReports = () => {
   //     return matchesSearch && matchesDropdown;
   //   });
   return (
-    <div className="p-6">
+    <div className="p-6  ">
       {/* <button
         onClick={() => handleOpenModal("add")}
         className="wono-blue-dark p-2 rounded-md text-white"
@@ -81,6 +81,7 @@ const AssetReports = () => {
 
       <h1 className="text-2xl font-semibold mb-4">Asset Reports</h1>
 
+      <div className="w-[72vw]">
       <div className="flex justify-between gap-4 pb-4">
         <div className="flex gap-4">
           <TextField
@@ -115,7 +116,7 @@ const AssetReports = () => {
           Export
         </button>
       </div>
-      <div className="motion-preset-slide-up-md w-[72vw]">
+      <div className="motion-preset-slide-up-md">
         <DataGrid
           rows={laptops}
           columns={laptopColumns}
@@ -140,6 +141,9 @@ const AssetReports = () => {
           }}
         />
       </div>
+      </div>
+
+
     </div>
   );
 };

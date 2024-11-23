@@ -27,6 +27,9 @@ const models = [
 ];
 
 export default function AssignAssetForm({ handleCloseModal, selectedAsset }) {
+
+  const assignmentTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
   const [formData, setFormData] = useState({
     department: "",
     name: "",
@@ -37,6 +40,7 @@ export default function AssignAssetForm({ handleCloseModal, selectedAsset }) {
     location: "",
     status: "",
     assignmentDate: new Date().toLocaleDateString(),
+    assignmentTime: assignmentTime,
   });
   const [user, setUser] = useState("");
   const [selectedDepartment, setSelectedDepartment] = useState("");
@@ -67,7 +71,7 @@ export default function AssignAssetForm({ handleCloseModal, selectedAsset }) {
 
     try {
       // Fetch the current data at "0"
-      const response = await axios.get("http://localhost:5001/0");
+      const response = await axios.get("http://localhost:5001/IT");
       const assignedAsset = response.data;
 
       // Update the IT array by appending the new payload
@@ -76,7 +80,7 @@ export default function AssignAssetForm({ handleCloseModal, selectedAsset }) {
         : [payload];
 
       // Save the updated IT array back to the server
-      await axios.put("http://localhost:5001/0", {
+      await axios.put("http://localhost:5001/IT", {
         ...assignedAsset,
         IT: updatedITArray,
       });
@@ -274,6 +278,17 @@ export default function AssignAssetForm({ handleCloseModal, selectedAsset }) {
               label="Assignment Date"
               name="assignmentDate"
               value={formData.assignmentDate}
+              onChange={handleAssetChange}
+              disabled
+              fullWidth
+              required
+            />
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <TextField
+              label="Assignment Time"
+              name="assignment time"
+              value={formData.assignmentTime}
               onChange={handleAssetChange}
               disabled
               fullWidth

@@ -1,5 +1,4 @@
 {
-  "0": {
     "id": 1,
     "IT": [
       {
@@ -211,7 +210,17 @@
         "location": "ST-701B",
         "status": "active",
         "assignmentDate": "22/11/2024"
+      },
+      {
+        "department": "Finance",
+        "assigneeName": "Narshiva Naik",
+        "assetNumber": "0001",
+        "assetType": "z",
+        "assetName": "Laptop",
+        "location": "ST-701B",
+        "status": "active",
+        "assignmentDate": "22/11/2024"
       }
     ]
-  }
+  
 }
