@@ -341,6 +341,9 @@ export default function BookingDetails({
                 value={cancelReason}
                 onChange={(e) => setCancelReason(e.target.value)}
                 fullWidth
+                SelectProps={{
+                  native: true,
+                }}
               >
                 <option value="" disabled>
                   Select a reason
