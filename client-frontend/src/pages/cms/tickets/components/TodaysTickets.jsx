@@ -552,9 +552,9 @@ const TodaysTickets = () => {
               {/* <div>AddT icket Form</div> */}
               <div className="">
                 <div className=" mx-auto">
-                  <h1 className="text-xl text-center my-2 font-bold">
+                  {/* <h1 className="text-xl text-center my-2 font-bold">
                     Edit Ticket
-                  </h1>
+                  </h1> */}
                   <Box
                     sx={{
                       maxWidth: 600,
