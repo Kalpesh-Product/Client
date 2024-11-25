@@ -31,9 +31,7 @@ const ManageAsset = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedAssetName, setSelectedAssetName] = useState("");
   const [selectedDepartment, setSelectedDepartment] = useState("");
-  const [assetsData, setAssetsData] = useState(
-    user.department === 'Maintainance' ? maintenanceAssets : itAssets.laptops
-  );
+  const [assetsData, setAssetsData] = useState([]);
   const [isEditing, setIsEditing] = useState(false); // Editing state
   const [formData, setFormData] = useState(assetsData || {}); // Form data state
 
@@ -43,7 +41,14 @@ const ManageAsset = () => {
     const storedUser = JSON.parse(localStorage.getItem("user"));
     setUser(storedUser);
     console.log(user);
-    console.log(user.name);
+    console.log(user.department);
+    if(user.department === 'Maintainance'){
+      setAssetsData(itAssets);
+    }
+    else if(user.department === 'IT'){
+      setAssetsData(itAssets);
+    }
+    
   }, []);
 
   const handleAssignAsset = (row) => {
@@ -171,7 +176,7 @@ const ManageAsset = () => {
   };
 
   // Filter laptops based on search term and selected asset name
-  const filteredLaptops = assetsData[0].filter((asset) => {
+  const filteredLaptops = assetsData.filter((asset) => {
     const matchesSearch = asset.assetName
       .toLowerCase()
       .includes(searchTerm.toLowerCase());
