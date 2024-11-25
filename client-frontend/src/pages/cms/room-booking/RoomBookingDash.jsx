@@ -78,25 +78,37 @@ export default function RoomBookingDash() {
       {/* Widgets */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
         {/* Upcoming Bookings */}
-        <div className="bg-white shadow-md rounded-lg p-4">
+        <div
+          onClick={() => navigate("/customer/meetings/booking")}
+          className="bg-white shadow-md rounded-lg p-4 cursor-pointer"
+        >
           <h2 className="text-xl font-semibold">Upcoming Bookings</h2>
           <p className="text-4xl font-bold text-blue-600">{upcomingBookings}</p>
         </div>
 
         {/* Total Bookings */}
-        <div className="bg-white shadow-md rounded-lg p-4">
+        <div
+          onClick={() => navigate("/customer/meetings/reports")}
+          className="bg-white shadow-md rounded-lg p-4 cursor-pointer"
+        >
           <h2 className="text-xl font-semibold">Total Bookings</h2>
           <p className="text-4xl font-bold text-green-600">{totalBookings}</p>
         </div>
 
         {/* Cancellations */}
-        <div className="bg-white shadow-md rounded-lg p-4">
+        <div
+          className="bg-white shadow-md rounded-lg p-4 cursor-pointer"
+          onClick={() => navigate("/customer/meetings/reports")}
+        >
           <h2 className="text-xl font-semibold">Cancellations</h2>
           <p className="text-4xl font-bold text-red-600">{cancellations}</p>
         </div>
 
         {/* Credits */}
-        <div className="bg-white shadow-md rounded-lg p-4">
+        <div
+          onClick={() => navigate("/profile")}
+          className="bg-white shadow-md rounded-lg p-4"
+        >
           <h2 className="text-xl font-semibold">Credits</h2>
           <p className="text-4xl font-bold text-purple-600">{Credits}</p>
         </div>

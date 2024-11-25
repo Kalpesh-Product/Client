@@ -10,6 +10,8 @@ import { rooms as allRooms } from "../../../utils/Rooms";
 import { useState } from "react";
 import Modal from "../../../components/Modal";
 import { toast } from "sonner";
+import { motion } from "framer-motion";
+import { IoMdClose } from "react-icons/io";
 
 export default function AddRooms() {
   const [rooms, setRooms] = useState(allRooms);
@@ -153,12 +155,15 @@ export default function AddRooms() {
               <Typography variant="h5" fontWeight="bold">
                 {isEditing ? "Edit Room" : "Add New Room"}
               </Typography>
-              <button
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.9 }}
+                type="button"
                 onClick={() => setShowModal(false)}
-                className="px-4 py-2 text-red-500 border-2 border-red-500 font-bold rounded-md"
+                className=" p-2 bg-white text-[red] border border-red-200 hover:border-red-400 text-2xl rounded-md"
               >
-                X
-              </button>
+                <IoMdClose />
+              </motion.button>
             </div>
             <TextField
               label="Room Name"
@@ -204,7 +209,12 @@ export default function AddRooms() {
               />
             </div>
             <div className="flex justify-center w-full">
-              <Button className="w-full" type="submit" variant="contained" color="primary">
+              <Button
+                className="w-full"
+                type="submit"
+                variant="contained"
+                color="primary"
+              >
                 {isEditing ? "Update Room" : "Add Room"}
               </Button>
             </div>
