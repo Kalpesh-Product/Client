@@ -107,7 +107,7 @@ export default function RoomBookingDash() {
         {/* Credits */}
         <div
           onClick={() => navigate("/profile")}
-          className="bg-white shadow-md rounded-lg p-4"
+          className="bg-white shadow-md rounded-lg p-4 cursor-pointer"
         >
           <h2 className="text-xl font-semibold">Credits</h2>
           <p className="text-4xl font-bold text-purple-600">{Credits}</p>
