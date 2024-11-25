@@ -120,6 +120,7 @@ export default function BookingReports() {
               labelId="department-filter-label"
               value={selectedDepartment}
               onChange={(e) => setSelectedDepartment(e.target.value)}
+              size="small"
               className="bg-white"
             >
               <MenuItem value="All">All Departments</MenuItem>
@@ -134,6 +135,7 @@ export default function BookingReports() {
           <FormControl className="w-full md:w-1/4">
             <Select
               labelId="status-filter-label"
+              size="small"
               value={selectedStatus}
               onChange={(e) => setSelectedStatus(e.target.value)}
               className="bg-white"
@@ -150,17 +152,19 @@ export default function BookingReports() {
             <DatePicker
               label="Start Date"
               value={startDate}
+              slotProps={{ textField: { size: 'small' } }}
               onChange={(newValue) => setStartDate(newValue)}
               renderInput={(params) => (
-                <TextField {...params} className="w-full md:w-1/4" />
+                <TextField {...params}  className="w-full md:w-1/4" />
               )}
             />
             <DatePicker
               label="End Date"
+              slotProps={{ textField: { size: 'small' } }}
               value={endDate}
               onChange={(newValue) => setEndDate(newValue)}
               renderInput={(params) => (
-                <TextField {...params} className="w-full md:w-1/4" />
+                <TextField {...params}  className="w-full md:w-1/4" />
               )}
             />
           </LocalizationProvider>
@@ -170,7 +174,7 @@ export default function BookingReports() {
             filename="tickets_report.csv"
             data={filteredBookings}
             headers={csvHeaders}
-            className="flex items-center justify-center wono-blue-dark hover:bg-blue-700 text-white text-sm font-bold p-7 rounded h-9"
+            className="flex items-center justify-center wono-blue-dark hover:bg-blue-700 text-white text-sm font-bold p-4 rounded h-9"
           >
             Export
           </CSVLink>
