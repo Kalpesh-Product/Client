@@ -18,6 +18,7 @@ import {
 import { DataGrid } from "@mui/x-data-grid";
 import axios from "axios";
 import maintenanceAssets from "./temp_db/MaintainanceAssets.json";
+import itAssets from "./temp_db/ItTemp.json";
 import { IoMdClose } from "react-icons/io";
 import { toast } from "sonner";
 
@@ -30,7 +31,9 @@ const ManageAsset = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedAssetName, setSelectedAssetName] = useState("");
   const [selectedDepartment, setSelectedDepartment] = useState("");
-  const [assetsData, setAssetsData] = useState(maintenanceAssets);
+  const [assetsData, setAssetsData] = useState(
+    user.department === 'Maintainance' ? maintenanceAssets : itAssets.laptops
+  );
   const [isEditing, setIsEditing] = useState(false); // Editing state
   const [formData, setFormData] = useState(assetsData || {}); // Form data state
 
@@ -168,12 +171,12 @@ const ManageAsset = () => {
   };
 
   // Filter laptops based on search term and selected asset name
-  const filteredLaptops = laptops.filter((laptop) => {
-    const matchesSearch = laptop.assetName
+  const filteredLaptops = assetsData[0].filter((asset) => {
+    const matchesSearch = asset.assetName
       .toLowerCase()
       .includes(searchTerm.toLowerCase());
     const matchesDropdown = selectedAssetName
-      ? laptop.assetName === selectedAssetName
+      ? asset.assetName === selectedAssetName
       : true;
     return matchesSearch && matchesDropdown;
   });

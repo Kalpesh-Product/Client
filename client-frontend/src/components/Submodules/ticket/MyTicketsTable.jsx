@@ -10,30 +10,30 @@ import { CSVLink } from "react-csv";
 
 const MyTicketsTable = () => {
   const columns = [
-    { field: "id", headerName: "ID", width: 100 },
-    { field: "ticketTitle", headerName: "Ticket Title", width: 200 },
+    { field: "id", headerName: "ID", flex: 1 },
+    { field: "ticketTitle", headerName: "Ticket Title", flex: 1 },
     {
       field: "priority",
       headerName: "Priority",
-      width: 190,
+      flex: 1,
       type: "singleSelect",
       valueOptions: ["High", "Medium", "Low"],
     },
     {
       field: "status",
       headerName: "Status",
-      width: 190,
+      flex: 1,
       type: "singleSelect",
       valueOptions: ["Pending", "In Process", "Resolved"],
     },
     {
       field: "department",
       headerName: "Department",
-      width: 190,
+      flex: 1,
       type: "singleSelect",
       valueOptions: ["IT", "HR", "Tech", "Admin"],
     },
-    { field: "requestDate", headerName: "Request Date", width: 190 },
+    { field: "requestDate", headerName: "Request Date", flex: 1 },
   ];
 
   const allRows = [
@@ -267,7 +267,7 @@ const MyTicketsTable = () => {
             </FormControl>
           </Box>
         </div>
-        <div className=" flex">
+        <div className=" flex w-full">
           {/* <button className="bg-blue-500 hover:bg-blue-700 text-white text-sm font-bold py-2 px-4 rounded">
             Export Report
           </button> */}
@@ -282,16 +282,15 @@ const MyTicketsTable = () => {
       </div>
 
       {/* Tickets datatable START */}
-      <Paper sx={{ height: 400, width: "100%" }}>
+      <div className="w-full">
         <DataGrid
           rows={filteredRows} // Pass filtered rows
           columns={columns}
           initialState={{ pagination: { paginationModel } }}
           pageSizeOptions={[5, 10]}
           checkboxSelection
-          sx={{ border: 0, width: "75vw" }}
         />
-      </Paper>
+      </div>
       {/* Tickets datatable END */}
     </div>
   );
