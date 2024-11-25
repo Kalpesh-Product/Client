@@ -45,13 +45,13 @@ const MyTickets = () => {
         const handleActionChange = (event) => {
           const selectedAction = event.target.value;
 
-          // if (selectedAction === "view") {
-          //   handleViewDetails(params.row);
-          //   // } else if (selectedAction === "edit") {
-          //   //   handleEdit(params.row);
-          // } else if (selectedAction === "delete") {
-          //   handleDelete(params.row);
-          // }
+          if (selectedAction === "view") {
+            handleViewDetails(params.row);
+            // } else if (selectedAction === "edit") {
+            //   handleEdit(params.row);
+          } else if (selectedAction === "delete") {
+            handleDelete(params.row);
+          }
         };
 
         return (

@@ -177,8 +177,8 @@ const AssignedTickets = () => {
                 </svg>
               </MenuItem>
               <MenuItem value="view">View Details</MenuItem>
-              <MenuItem value="edit">Edit</MenuItem>
-              <MenuItem value="delete">Delete</MenuItem>
+              {/* <MenuItem value="edit">Edit</MenuItem>
+              <MenuItem value="delete">Delete</MenuItem> */}
             </Select>
           </FormControl>
         );
