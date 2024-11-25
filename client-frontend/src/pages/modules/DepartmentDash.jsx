@@ -316,7 +316,7 @@ const DepartmentDash = () => {
       heading: "Asset Management",
       subModule: "asset",
       widgets: [
-        <AssetsCount count={customerServiceWidgetsData.totalAssets} />,
+        <AssetsCount route={'/customer/asset/manage'} count={customerServiceWidgetsData.totalAssets}  />,
         <MaintenanceRequests
           requests={customerServiceWidgetsData.pendingMaintenance}
         />,
@@ -545,7 +545,7 @@ const DepartmentDash = () => {
               <>
                 <div className="bg-white p-4 rounded-lg  mt-4 h-[90vh] overflow-y-auto">
                   <div className="mb-8 flex justify-between">
-                    <h1 className="text-3xl">Key insights</h1>
+                    <h1 className="text-3xl font-semibold">Key insights</h1>
                   </div>
                   {customerServiceWidgets
                     .filter((section) => section.subModule === "asset")

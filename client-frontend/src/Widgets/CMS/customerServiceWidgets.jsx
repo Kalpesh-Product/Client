@@ -2,40 +2,46 @@
 import React from "react";
 import { Bar } from 'react-chartjs-2';
 import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js';
+import { useNavigate } from "react-router-dom";
 
 // Register necessary Chart.js components for Bar Chart
 ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale);
 
-export const AssetsCount = ({ count }) => (
-  <div className="p-4">
-    <h3 className="text-lg font-semibold">Total Assets</h3>
-    <p className="text-3xl font-bold">{count}</p>
-  </div>
-);
+
+export const AssetsCount = ({ count, route }) =>{
+    const navigate = useNavigate();
+  return(
+    <div onClick={()=>navigate(route)} className="p-4 cursor-pointer hover:bg-slate-300 transition-all">
+      <h3 className="text-lg font-semibold">Total Assets</h3>
+      <p className="text-3xl font-bold">{count}</p>
+    </div>
+  );
+} 
+  
 
 export const MaintenanceRequests = ({ requests }) => (
-  <div className="p-4">
+  <div className="p-4 cursor-pointer hover:bg-slate-300 transition-all">
     <h3 className="text-lg font-semibold">Pending Maintenance</h3>
     <p className="text-2xl">{requests} Requests</p>
   </div>
 );
 
 export const AssetsAssigned = ({ assigned }) => (
-  <div className="p-4">
+  <div className="p-4 cursor-pointer hover:bg-slate-300 transition-all">
     <h3 className="text-lg font-semibold">Assets Assigned</h3>
     <p className="text-2xl">{assigned}</p>
   </div>
 );
 
 export const AssetsInRepair = ({ count }) => (
-  <div className="p-4">
+  <div className="p-4 cursor-pointer hover:bg-slate-300 transition-all">
     <h3 className="text-lg font-semibold">Assets In Repair</h3>
     <p className="text-2xl">{count}</p>
   </div>
 );
 
 export const NewAssetsAdded = ({ added }) => (
-  <div className="p-4">
+  <div className="p-4 cursor-pointer hover:bg-slate-300 transition-all">
     <h3 className="text-lg font-semibold">New Assets Added</h3>
     <p className="text-2xl">{added}</p>
   </div>
@@ -54,7 +60,7 @@ export const QuantityRemainingWidget = ({ totalStock, remainingStock, assetType 
   }
 
   return (
-    <div className="bg-white shadow-lg rounded-lg p-4 my-4 w-full">
+    <div className="bg-white shadow-lg rounded-lg p-4 my-4 w-full cursor-pointer hover:bg-slate-300 transition-all">
       <div className="flex items-center justify-between mb-4">
         <div className="flex">
           {/* Asset Icon */}
@@ -66,7 +72,7 @@ export const QuantityRemainingWidget = ({ totalStock, remainingStock, assetType 
       </div>
 
       {/* Progress Bar */}
-      <div className="relative pt-1">
+      <div className="relative pt-1 ">
         <div className="flex mb-2 items-center justify-between">
           <span className="text-sm font-medium text-gray-500">Stock Remaining</span>
           <span className="text-sm font-medium text-gray-500">{Math.round(percentageRemaining)}%</span>
@@ -150,7 +156,7 @@ export const AssetAllocationWidget = () => {
   };
 
   return (
-    <div className="bg-white shadow-lg rounded-lg p-6 w-full">
+    <div className="bg-white shadow-lg rounded-lg p-6 w-full cursor-pointer hover:bg-slate-300 transition-all">
       <div className="flex items-center justify-between mb-4">
         <h2 className="text-xl font-semibold text-gray-800">Asset Allocation</h2>
       </div>

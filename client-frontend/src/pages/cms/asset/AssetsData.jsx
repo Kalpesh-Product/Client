@@ -11,7 +11,7 @@ import { toast } from "sonner";
 import assignedAssetsData from "./temp_db/AssignedAssets.json";
 import userData from "../../../dummyData/dummyData.json";
 
-const AssetsData = () => {
+const AssetsData = ({data}) => {
   const location = useLocation();
   const [rows, setRows] = useState([]);
   const { brand } = location.state || { brand: "Unknown Brand" };

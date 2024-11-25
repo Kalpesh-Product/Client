@@ -15,9 +15,10 @@ import axios from "axios";
 const AddAssetForm = ({ title, handleClose, user }) => {
   const [formData, setFormData] = useState({
     assetNumber: "0001",
+    department : "",
     assetType: "",
-    assetName: "",
     brandName: "",
+    modelName: "",
     quantity: "",
     price: "",
     totalPrice: "",
@@ -130,7 +131,7 @@ const AddAssetForm = ({ title, handleClose, user }) => {
               name="department"
               select
               fullWidth
-              value={user.department}
+              value={formData.department}
               onChange={handleChange}
             >
               {user.department === 'TopManagement' ? departments.map((dept,index)=>{
@@ -168,10 +169,10 @@ const AddAssetForm = ({ title, handleClose, user }) => {
           {/* Asset Name */}
           <Grid item xs={12}>
             <TextField
-              label="Asset Name"
-              name="assetName"
+              label="Brand Name"
+              name="brandName"
               fullWidth
-              value={formData.assetName}
+              value={formData.brandName}
               onChange={handleChange}
             />
           </Grid>
@@ -179,10 +180,10 @@ const AddAssetForm = ({ title, handleClose, user }) => {
           {/* Brand Name */}
           <Grid item xs={12}>
             <TextField
-              label="Brand Name"
-              name="brandName"
+              label="Model Name"
+              name="modelName"
               fullWidth
-              value={formData.brandName}
+              value={formData.modelName}
               onChange={handleChange}
             />
           </Grid>

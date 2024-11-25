@@ -17,7 +17,7 @@ import {
 } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import axios from "axios";
-import maintenanceAssets from "./temp_db/MaintainanceAssets.json";
+import allAssets from "./temp_db/MaintainanceAssets.json";
 import itAssets from "./temp_db/ItTemp.json";
 import { IoMdClose } from "react-icons/io";
 import { toast } from "sonner";
@@ -39,17 +39,29 @@ const ManageAsset = () => {
 
   useEffect(() => {
     const storedUser = JSON.parse(localStorage.getItem("user"));
-    setUser(storedUser);
-    console.log(user);
-    console.log(user.department);
-    if(user.department === 'Maintainance'){
-      setAssetsData(itAssets);
-    }
-    else if(user.department === 'IT'){
-      setAssetsData(itAssets);
-    }
-    
+    setUser(storedUser); // Set user here
   }, []);
+
+  useEffect(() => {
+    if (user) {
+      // Filter the assets based on the department of the user
+      if (user.department === "TopManagement") {
+        // TopManagement gets all assets
+        setAssetsData(allAssets); // Assuming 'allAssets' contains the combined data
+      } else {
+        // Filter assets based on user's department
+        const filteredAssets = allAssets.filter(
+          (asset) => asset.department === user.department
+        );
+        setAssetsData(filteredAssets);
+      }
+      console.log("User:", user);
+      console.log("Filtered Assets:", assetsData);
+    }
+  }, [user]);
+  
+  
+  
 
   const handleAssignAsset = (row) => {
     setSelectedLaptop(row);
@@ -128,7 +140,7 @@ const ManageAsset = () => {
           >
             Edit
           </button> */}
-           <button
+          <button
             style={{
               backgroundColor: "#0db4ea",
               color: "white",
@@ -156,8 +168,6 @@ const ManageAsset = () => {
           >
             Assign
           </button>
-
-         
         </div>
       ),
     },
@@ -175,47 +185,31 @@ const ManageAsset = () => {
     setActiveTab(newValue);
   };
 
-  // Filter laptops based on search term and selected asset name
-  const filteredLaptops = assetsData.filter((asset) => {
-    const matchesSearch = asset.assetName
-      .toLowerCase()
-      .includes(searchTerm.toLowerCase());
-    const matchesDropdown = selectedAssetName
-      ? asset.assetName === selectedAssetName
-      : true;
-    return matchesSearch && matchesDropdown;
-  });
-  // Filter laptops based on search term and selected asset name
-  const filteredMaintainance = assetsData.filter((asset) => {
-    const matchesSearch = asset.assetName
-      .toLowerCase()
-      .includes(searchTerm.toLowerCase());
-    const matchesDropdown = selectedAssetName
-      ? asset.assetName === selectedAssetName
-      : true;
-    return matchesSearch && matchesDropdown;
-  });
+// Filter assets based on search term and selected asset name
+const filteredAssets = allAssets.filter((asset) => {
+  const matchesSearch = asset.assetName
+    .toLowerCase()
+    .includes(searchTerm.toLowerCase());
+  const matchesDropdown = selectedAssetName
+    ? asset.assetName === selectedAssetName
+    : true;
+  return matchesSearch && matchesDropdown;
+});
+// Filter assets based on department
+const filteredByDepartment =
+  user?.department === "TopManagement"
+    ? filteredAssets // Include all assets for TopManagement
+    : filteredAssets.filter((asset) => asset.department === user?.department);
 
-  const adjustedMaintainance = filteredMaintainance.map((item, index) => ({
-    ...item,
-    id: filteredLaptops.length + index + 1, // Offset the IDs to avoid conflicts
-  }));
+// Further filter by selected department if applicable
+const filteredData =
+  selectedDepartment === ""
+    ? filteredByDepartment
+    : filteredByDepartment.filter(
+        (item) => item.department === selectedDepartment
+      );
 
-  //Combined data for TopManagement
-
-  const combinedData =
-    user.department === "TopManagement"
-      ? [...filteredLaptops, ...adjustedMaintainance]
-      : user.department === "IT"
-      ? filteredLaptops
-      : filteredMaintainance;
-
-  const filteredData =
-    selectedDepartment === ""
-      ? combinedData
-      : combinedData.filter((item) => item.department === selectedDepartment);
-
-  console.log(selectedDepartment);
+console.log(selectedDepartment);
   return (
     <div className="p-6">
       <h1 className="text-2xl font-semibold mb-4">Manage Assets</h1>
@@ -371,7 +365,7 @@ const ManageAsset = () => {
                   >
                     <MenuItem value="">All</MenuItem>
                     {[
-                      ...new Set(laptops.map((laptop) => laptop.assetName)),
+                      ...new Set(assetsData.map((laptop) => laptop.assetName)),
                     ].map((assetName) => (
                       <MenuItem key={assetName} value={assetName}>
                         {assetName}
@@ -380,7 +374,7 @@ const ManageAsset = () => {
                   </TextField>
                 </FormControl>
               </div>
-              <AssetsData />
+              <AssetsData data={assetsData} />
             </>
           )}
         </div>
