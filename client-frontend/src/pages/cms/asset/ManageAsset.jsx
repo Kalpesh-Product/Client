@@ -108,19 +108,19 @@ const ManageAsset = () => {
   }, []);
 
   const laptopColumns = [
-    { field: "id", headerName: "ID", width: 50 },
-    { field: "department", headerName: "Department", width: 90 },
-    { field: "assetNumber", headerName: "Asset Number", width: 90 },
-    { field: "category", headerName: "Category", width: 150 },
+    { field: "id", headerName: "ID", flex: 1 },
+    { field: "department", headerName: "Department", flex: 1 },
+    { field: "assetNumber", headerName: "Asset Number", flex: 1 },
+    { field: "category", headerName: "Category", flex: 1 },
     // { field: "assetName", headerName: "Asset Name", width: 150 },
     // { field: "brandName", headerName: "Brand", width: 150 },
     // { field: "price", headerName: "Price", width: 150 },
-    { field: "quantity", headerName: "Quantity", width: 120 },
-    { field: "totalPrice", headerName: "Total Price", width: 100 },
-    // { field: "vendorName", headerName: "Vendor", width: 200 },
-    { field: "purchaseDate", headerName: "Purchase Date", width: 150 },
-    { field: "warranty", headerName: "Warranty (Months)", width: 150 },
-    // { field: "location", headerName: "Location", width: 150 },
+    { field: "quantity", headerName: "Quantity", flex: 1 },
+    { field: "totalPrice", headerName: "Total Price", flex: 1 },
+    // { field: "vendorName", headerName: "Vendor", flex: 200 },
+    { field: "purchaseDate", headerName: "Purchase Date", flex: 1 },
+    { field: "warranty", headerName: "Warranty (Months)", flex: 1 },
+    // { field: "location", headerName: "Location", flex: 150 },
     {
       field: "actions",
       headerName: "Actions",
@@ -245,7 +245,7 @@ console.log(selectedDepartment);
         </div>
         <div>
           {activeTab === 0 && (
-            <div className="w-[72vw]">
+            <div className="w-[72vw] md:w-full">
               <h1 className="text-xl font-semibold py-4 text-gray-600">
                 Filter by :
               </h1>

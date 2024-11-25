@@ -210,26 +210,28 @@ export default function Listing() {
 
   return (
     <section className="h-screen overflow-y-auto top-0">
-      <h1 className="font-bold text-3xl mt-4 mb-3">Booking Calendar</h1>
-      <FullCalendar
-        plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
-        initialView="dayGridMonth"
-        dateClick={handleDateClick}
-        weekends={true}
-        eventClick={handleEventClick}
-        headerToolbar={{
-          start: "today prev,next", // Controls the 'today' and navigation buttons
-          center: "title", // Centered title of the calendar
-          end: "dayGridMonth,timeGridWeek,timeGridDay", // Adds Month, Week, and Day view buttons
-        }}
-        eventDisplay="block"
-        events={events.map((event) => ({
-          ...event,
-          backgroundColor:
-            event.status === "cancelled" ? "#FF0000" : event.backgroundColor,
-        }))} // Apply red color for cancelled events
-        timeZone="local"
-      />
+      <h1 className="font-bold text-4xl mt-4 mb-3 ml-2">Booking Calendar</h1>
+      <div className="w-full overflow-x-auto">
+        <FullCalendar
+          plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+          initialView="dayGridMonth"
+          dateClick={handleDateClick}
+          weekends={true}
+          eventClick={handleEventClick}
+          headerToolbar={{
+            start: "today prev,next", // Controls the 'today' and navigation buttons
+            center: "title", // Centered title of the calendar
+            end: "dayGridMonth,timeGridWeek,timeGridDay", // Adds Month, Week, and Day view buttons
+          }}
+          eventDisplay="block"
+          events={events.map((event) => ({
+            ...event,
+            backgroundColor:
+              event.status === "cancelled" ? "#FF0000" : event.backgroundColor,
+          }))} // Apply red color for cancelled events
+          timeZone="local"
+        />
+      </div>
 
       {/* Booking Modal */}
       {openBookingModal && (
@@ -263,15 +265,9 @@ export default function Listing() {
           open={openEventDetailsModal}
           onClose={() => setOpenEventDetailsModal(false)}
         >
-          <div className="flex w-full justify-end items-center">
-            <button
-              onClick={() => setOpenEventDetailsModal(false)}
-              className="px-4 py-2 text-red-500 border-2 border-red-500 font-bold rounded-md"
-            >
-              X
-            </button>
-          </div>
+          <div className="flex w-full justify-end items-center"></div>
           <BookingDetails
+            handleModalClose={() => setOpenEventDetailsModal(false)}
             selectedEvent={selectedEvent}
             handleUpdate={handleUpdate}
             handleExtendTime={handleExtendTime}

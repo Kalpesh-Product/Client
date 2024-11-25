@@ -135,10 +135,7 @@ export default function AddRooms() {
                 {room.description}
               </Typography>
               <div className="mt-4">
-                <Button
-                  variant="contained"
-                  onClick={() => handleEdit(room)}
-                >
+                <Button variant="contained" onClick={() => handleEdit(room)}>
                   Edit Room
                 </Button>
               </div>
@@ -152,9 +149,17 @@ export default function AddRooms() {
             onSubmit={handleSubmit}
             className="flex flex-col gap-4 p-4 w-[50vw] mx-auto"
           >
-            <Typography variant="h5" fontWeight="bold">
-              {isEditing ? "Edit Room" : "Add New Room"}
-            </Typography>
+            <div className="flex w-full justify-between items-center mb-3">
+              <Typography variant="h5" fontWeight="bold">
+                {isEditing ? "Edit Room" : "Add New Room"}
+              </Typography>
+              <button
+                onClick={() => setShowModal(false)}
+                className="px-4 py-2 text-red-500 border-2 border-red-500 font-bold rounded-md"
+              >
+                X
+              </button>
+            </div>
             <TextField
               label="Room Name"
               name="name"
@@ -198,15 +203,8 @@ export default function AddRooms() {
                 className="border-none mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
               />
             </div>
-            <div className="flex justify-end gap-4">
-              <Button
-                variant="contained"
-                onClick={() => setShowModal(false)}
-                color="error"
-              >
-                Cancel
-              </Button>
-              <Button type="submit" variant="contained" color="primary">
+            <div className="flex justify-center w-full">
+              <Button className="w-full" type="submit" variant="contained" color="primary">
                 {isEditing ? "Update Room" : "Add Room"}
               </Button>
             </div>

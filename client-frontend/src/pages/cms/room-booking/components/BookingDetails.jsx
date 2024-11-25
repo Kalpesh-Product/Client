@@ -8,6 +8,7 @@ export default function BookingDetails({
   handleUpdate,
   handleExtendTime,
   handleCancel,
+  handleModalClose,
 }) {
   const [tabIndex, setTabIndex] = useState(0);
   const [updatedMeeting, setUpdatedMeeting] = useState({
@@ -79,93 +80,99 @@ export default function BookingDetails({
 
   return (
     <Box width="50vw" height="70vh">
-      <Tabs
-        value={tabIndex}
-        onChange={handleTabChange}
-        indicatorColor="primary"
-        textColor="primary"
-        aria-label="booking details tabs"
-      >
-        <Tab label="Details" />
-        <Tab label="Edit" />
-        <Tab label="Extend Time" />
-        <Tab label="Cancel Booking" />
-      </Tabs>
+      <div className="flex flex-col justify-center items-center sticky top-0 bg-white z-100">
+        <div className="flex justify-between items-center w-full bg-white">
+          <Typography variant="h5" gutterBottom sx={{ fontWeight: "bold" }}>
+            Meeting Details
+          </Typography>
+          <button
+            onClick={handleModalClose}
+            className="px-4 py-2 text-red-500 border-2 border-red-500 font-bold rounded-md"
+          >
+            X
+          </button>
+        </div>
+        <Tabs
+          sx={{
+            marginTop: "1rem",
+            width: "100%",
+            background: "white",
+            marginBottom: "1rem",
+          }}
+          value={tabIndex}
+          onChange={handleTabChange}
+          indicatorColor="primary"
+          textColor="primary"
+          aria-label="booking details tabs"
+        >
+          <Tab label="Details" sx={{ width: "25%" }} />
+          <Tab label="Edit" sx={{ width: "25%" }} />
+          <Tab label="Extend Time" sx={{ width: "25%" }} />
+          <Tab label="Cancel Booking" sx={{ width: "25%" }} />
+        </Tabs>
+      </div>
 
       {/* Details Tab */}
       {tabIndex === 0 && (
         <Box p={3}>
-          <Typography variant="h5" gutterBottom sx={{ fontWeight: "bold" }}>
-            Meeting Details
-          </Typography>
-          <Box
-            sx={{
-              p: 3,
-              borderRadius: "8px",
-            }}
-          >
-            <Box display="grid" gridTemplateColumns="1fr" rowGap={2}>
-              {/* Render details using TextField */}
-              <TextField
-                label="Subject"
-                value={selectedEvent.title || "No Subject"}
-                disabled
-                fullWidth
-                variant="outlined"
-              />
-              <TextField
-                label="Date"
-                value={selectedEvent.start.toISOString().substring(0, 10)}
-                disabled
-                fullWidth
-                variant="outlined"
-              />
-              <TextField
-                label="Start Time"
-                value={format(new Date(selectedEvent.start), "hh:mm a")}
-                disabled
-                fullWidth
-                variant="outlined"
-              />
-              <TextField
-                label="End Time"
-                value={format(new Date(selectedEvent.end), "hh:mm a")}
-                disabled
-                fullWidth
-                variant="outlined"
-              />
-              <TextField
-                label="Room"
-                value={selectedEvent.extendedProps.room || "Not Assigned"}
-                disabled
-                fullWidth
-                variant="outlined"
-              />
-              <TextField
-                label="Participants"
-                value={selectedEvent.extendedProps.participants || "N/A"}
-                disabled
-                fullWidth
-                variant="outlined"
-              />
-              <TextField
-                label="Agenda"
-                value={selectedEvent.extendedProps.agenda || "N/A"}
-                disabled
-                fullWidth
-                variant="outlined"
-              />
-            </Box>
-          </Box>
+          <div className="grid grid-cols-1 gap-3 py-2 h-[47vh] overflow-y-scroll" >
+            {/* Render details using TextField */}
+            <TextField
+              label="Subject"
+              value={selectedEvent.title || "No Subject"}
+              disabled
+              fullWidth
+              variant="outlined"
+            />
+            <TextField
+              label="Date"
+              value={selectedEvent.start.toISOString().substring(0, 10)}
+              disabled
+              fullWidth
+              variant="outlined"
+            />
+            <TextField
+              label="Start Time"
+              value={format(new Date(selectedEvent.start), "hh:mm a")}
+              disabled
+              fullWidth
+              variant="outlined"
+            />
+            <TextField
+              label="End Time"
+              value={format(new Date(selectedEvent.end), "hh:mm a")}
+              disabled
+              fullWidth
+              variant="outlined"
+            />
+            <TextField
+              label="Room"
+              value={selectedEvent.extendedProps.room || "Not Assigned"}
+              disabled
+              fullWidth
+              variant="outlined"
+            />
+            <TextField
+              label="Participants"
+              value={selectedEvent.extendedProps.participants || "N/A"}
+              disabled
+              fullWidth
+              variant="outlined"
+            />
+            <TextField
+              label="Agenda"
+              value={selectedEvent.extendedProps.agenda || "N/A"}
+              disabled
+              fullWidth
+              variant="outlined"
+            />
+          </div>
         </Box>
       )}
 
       {/* Edit Tab */}
       {tabIndex === 1 && (
-        <Box p={3}>
-          <Typography variant="h6" gutterBottom>
-            Edit Booking
-          </Typography>
+        <div className="p-6 h-[20vh]">
           <form onSubmit={handleUpdateSubmit} className="space-y-4">
             <TextField
               label="Room"
@@ -238,7 +245,7 @@ export default function BookingDetails({
               Update Booking
             </Button>
           </form>
-        </Box>
+        </div>
       )}
 
       {/* Extend Time Tab */}

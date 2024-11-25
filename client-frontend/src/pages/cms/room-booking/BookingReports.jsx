@@ -108,7 +108,7 @@ export default function BookingReports() {
   ];
 
   return (
-    <section className="p-6 bg-gray-100 min-h-screen w-[80vw]">
+    <section className="p-6 bg-gray-100 min-h-screen w-[80vw] md:w-full">
       <h1 className="text-4xl font-bold text-gray-800 mb-6">Booking Reports</h1>
 
       <div className="bg-white shadow-md rounded-lg p-6">
@@ -186,14 +186,14 @@ export default function BookingReports() {
             <DataGrid
               rows={filteredBookings}
               columns={[
-                { field: "id", headerName: "ID", width: 70 },
-                { field: "department", headerName: "Department", width: 120 },
-                { field: "name", headerName: "Name", width: 200 },
-                { field: "date", headerName: "Date", width: 120 },
-                { field: "startTime", headerName: "Start Time", width: 120 },
-                { field: "endTime", headerName: "End Time", width: 120 },
-                { field: "duration", headerName: "Duration", width: 120 },
-                { field: "credits", headerName: "Credits Used", width: 120 },
+                { field: "id", headerName: "ID", flex: 1 },
+                { field: "department", headerName: "Department", flex: 1 },
+                { field: "name", headerName: "Name", flex: 1 },
+                { field: "date", headerName: "Date", flex: 1 },
+                { field: "startTime", headerName: "Start Time", flex: 1 },
+                { field: "endTime", headerName: "End Time", flex: 1 },
+                { field: "duration", headerName: "Duration", flex: 1 },
+                { field: "credits", headerName: "Credits Used", flex: 1 },
 
                 {
                   field: "status",
@@ -218,7 +218,7 @@ export default function BookingReports() {
                 },
               ]}
               pageSize={5}
-              rowsPerPageOptions={[5]}
+              rowsPerPageOptions={[4]}
               disableColumnResize={false}
               sx={{
                 overflowX: "scroll",
