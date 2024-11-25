@@ -245,7 +245,7 @@ console.log(selectedDepartment);
         </div>
         <div>
           {activeTab === 0 && (
-            <div className="w-[72vw] md:w-full">
+            <div className="w-[72vw] md:w-full transition-all duration-200 ease-in-out">
               <h1 className="text-xl font-semibold py-4 text-gray-600">
                 Filter by :
               </h1>

@@ -7,6 +7,7 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { CSVLink } from "react-csv";
+import { TextField } from "@mui/material";
 
 const MyTicketsTable = () => {
   const columns = [
@@ -141,12 +142,14 @@ const MyTicketsTable = () => {
             <FormControl
               fullWidth
               sx={{
-                height: "34px", // Adjust height of the select input
-                padding: "10px 8px 4px 2px", // Adjust padding inside
-              }}>
+                height: "34px", 
+                padding: "10px 8px 4px 2px", 
+              }}
+            >
               <InputLabel
                 id="department-select-label"
-                className=" pt-0 mt-0 mr-3 pr-2 pl-1">
+                className=" pt-0 mt-0 mr-3 pr-2 pl-1"
+              >
                 Department
               </InputLabel>
               <Select
@@ -155,12 +158,13 @@ const MyTicketsTable = () => {
                 value={department}
                 label="Department"
                 sx={{
-                  height: "32px", // Adjust the height of the select
+                  height: "32px", 
                   width: "140px",
-                  padding: "2px 8px 4px 8px", // Adjust the padding inside the select
+                  padding: "2px 8px 4px 8px", 
                 }}
                 className=" pt-0"
-                onChange={handleChange}>
+                onChange={handleChange}
+              >
                 <MenuItem value="">All</MenuItem>{" "}
                 {/* Option to show all departments */}
                 <MenuItem value="IT">IT</MenuItem>
@@ -178,7 +182,8 @@ const MyTicketsTable = () => {
               sx={{
                 height: "34px", // Adjust height of the select input
                 padding: "10px 8px 4px 2px", // Adjust padding inside
-              }}>
+              }}
+            >
               <InputLabel id="department-select-label" className=" pt-0 mt-0">
                 Start Date
               </InputLabel>
@@ -192,7 +197,8 @@ const MyTicketsTable = () => {
                   padding: "2px 8px 4px 8px", // Adjust the padding inside the select
                 }}
                 className=" pt-0"
-                onChange={handleChange}>
+                onChange={handleChange}
+              >
                 <MenuItem value="">All</MenuItem>{" "}
                 {/* Option to show all departments */}
                 <MenuItem value="Tech">2024-10-01</MenuItem>
@@ -210,7 +216,8 @@ const MyTicketsTable = () => {
               sx={{
                 height: "34px", // Adjust height of the select input
                 padding: "10px 8px 4px 2px", // Adjust padding inside
-              }}>
+              }}
+            >
               <InputLabel id="department-select-label" className=" pt-0 mt-0">
                 End Date
               </InputLabel>
@@ -224,7 +231,8 @@ const MyTicketsTable = () => {
                   padding: "2px 8px 4px 8px", // Adjust the padding inside the select
                 }}
                 className=" pt-0"
-                onChange={handleChange}>
+                onChange={handleChange}
+              >
                 <MenuItem value="">All</MenuItem>{" "}
                 {/* Option to show all departments */}
                 <MenuItem value="Tech">Today</MenuItem>
@@ -242,7 +250,8 @@ const MyTicketsTable = () => {
               sx={{
                 height: "34px", // Adjust height of the select input
                 padding: "10px 8px 4px 2px", // Adjust padding inside
-              }}>
+              }}
+            >
               <InputLabel id="department-select-label" className=" pt-0 mt-0">
                 Status
               </InputLabel>
@@ -256,7 +265,8 @@ const MyTicketsTable = () => {
                   padding: "2px 8px 4px 8px", // Adjust the padding inside the select
                 }}
                 className=" pt-0"
-                onChange={handleChange}>
+                onChange={handleChange}
+              >
                 <MenuItem value="">All</MenuItem>{" "}
                 {/* Option to show all departments */}
                 <MenuItem value="Tech">Pending</MenuItem>
@@ -275,12 +285,90 @@ const MyTicketsTable = () => {
             data={filteredRows} // Pass the filtered rows for CSV download
             headers={csvHeaders} // Pass the CSV headers
             filename="tickets_report.csv" // Set the filename for the CSV file
-            className="wono-blue-dark hover:bg-blue-700 text-white text-sm font-bold py-2 px-4 rounded h-9 mt-2">
+            className="wono-blue-dark hover:bg-blue-700 text-white text-sm font-bold py-2 px-4 rounded h-9 mt-2"
+          >
             Export Report
           </CSVLink>
         </div>
       </div>
 
+      <div className="flex justify-between p-2">
+        <div className="">Filter by :</div>
+        <FormControl size="small" style={{ minWidth: 220 }}>
+          {/* <InputLabel>Filter by Asset Name</InputLabel> */}
+          <TextField
+            label="Filter by Asset Name"
+            variant="outlined"
+            select
+            size="small"
+  
+          >
+            <MenuItem value="">All</MenuItem>
+            <MenuItem value="Chair">Chair</MenuItem>
+            <MenuItem value="Carpet Floor">Carpet</MenuItem>
+            
+          </TextField>
+        </FormControl>
+        <FormControl size="small" style={{ minWidth: 220 }}>
+          {/* <InputLabel>Filter by Asset Name</InputLabel> */}
+          <TextField
+            label="Filter by Asset Name"
+            variant="outlined"
+            select
+            size="small"
+  
+          >
+            <MenuItem value="">All</MenuItem>
+            <MenuItem value="Chair">Chair</MenuItem>
+            <MenuItem value="Carpet Floor">Carpet</MenuItem>
+            
+          </TextField>
+        </FormControl>
+        <FormControl size="small" style={{ minWidth: 220 }}>
+          {/* <InputLabel>Filter by Asset Name</InputLabel> */}
+          <TextField
+            label="Filter by Asset Name"
+            variant="outlined"
+            select
+            size="small"
+  
+          >
+            <MenuItem value="">All</MenuItem>
+            <MenuItem value="Chair">Chair</MenuItem>
+            <MenuItem value="Carpet Floor">Carpet</MenuItem>
+            
+          </TextField>
+        </FormControl>
+        <FormControl size="small" style={{ minWidth: 220 }}>
+          {/* <InputLabel>Filter by Asset Name</InputLabel> */}
+          <TextField
+            label="Filter by Asset Name"
+            variant="outlined"
+            select
+            size="small"
+  
+          >
+            <MenuItem value="">All</MenuItem>
+            <MenuItem value="Chair">Chair</MenuItem>
+            <MenuItem value="Carpet Floor">Carpet</MenuItem>
+            
+          </TextField>
+        </FormControl>
+        <div className="h-full">
+          {/* <button className="bg-blue-500 hover:bg-blue-700 text-white text-sm font-bold py-2 px-4 rounded">
+            Export Report
+          </button> */}
+          <CSVLink
+            data={filteredRows} // Pass the filtered rows for CSV download
+            headers={csvHeaders} // Pass the CSV headers
+            filename="tickets_report.csv" // Set the filename for the CSV file
+            className="wono-blue-dark hover:bg-blue-700 text-white text-sm font-bold p-2 rounded "
+          >
+            Export Report
+          </CSVLink>
+        </div>
+
+      </div>
       {/* Tickets datatable START */}
       <div className="w-full">
         <DataGrid
