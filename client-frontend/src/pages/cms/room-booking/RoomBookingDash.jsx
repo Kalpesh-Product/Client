@@ -63,7 +63,7 @@ export default function RoomBookingDash() {
   const navigate = useNavigate();
 
   return (
-    <div className="p-6 bg-gray-100 w-[80vw]">
+    <div className="p-6 bg-gray-100 w-[80vw] md:w-full">
       {/* Header */}
       <div className="w-full flex justify-between items-center mb-6">
         <h1 className="text-3xl font-bold">Room Booking Dashboard</h1>

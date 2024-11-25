@@ -108,7 +108,7 @@ export default function BookingReports() {
   ];
 
   return (
-    <section className="p-6 bg-gray-100 min-h-screen w-[80vw]">
+    <section className="p-6 bg-gray-100 min-h-screen w-[80vw] md:w-full">
       <h1 className="text-4xl font-bold text-gray-800 mb-6">Booking Reports</h1>
 
       <div className="bg-white shadow-md rounded-lg p-6">
