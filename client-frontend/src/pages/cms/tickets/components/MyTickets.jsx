@@ -390,7 +390,7 @@ const MyTickets = () => {
               <div>
                 {/* Close button */}
                 <button
-                  className="bg-blue-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-600"
+                  className="bg-red-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-red-600"
                   onClick={closeModal}>
                   X
                 </button>
@@ -471,9 +471,9 @@ const MyTickets = () => {
             {/* Modal Footer */}
 
             <div className="sticky bottom-0 bg-white py-6 z-20 flex justify-center">
-              <div className="flex justify-center items-center">
+              <div className="flex justify-center items-center w-full">
                 <button
-                  className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600"
+                  className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 w-full mx-6"
                   onClick={handleAddTicket}>
                   Save
                 </button>

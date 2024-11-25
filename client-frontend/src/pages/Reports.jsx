@@ -44,7 +44,8 @@ const Reports = () => {
       <TestSide />
       <ModuleSidebar />
       <div className=" w-full p-6 motion-preset-blur-right-md">
-        <h2 className="text-4xl  ">Reports</h2>
+        {/* <h2 className="text-4xl  ">Reports</h2> */}
+        <h2 className="text-3xl  font-bold  ">Reports</h2>
         <div className="flex h-16">
           <div className="w-60">
             <h3 className="text-2xl pt-5 pb-4 ">Select Report: &nbsp;&nbsp;</h3>
