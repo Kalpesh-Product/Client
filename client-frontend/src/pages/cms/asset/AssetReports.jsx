@@ -4,7 +4,6 @@ import { DataGrid } from "@mui/x-data-grid";
 import { FormControl, MenuItem, TextField } from "@mui/material";
 import allAssets from "./temp_db/MaintainanceAssets.json";
 
-
 const AssetReports = () => {
   const [user, setUser] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
@@ -27,7 +26,6 @@ const AssetReports = () => {
   //   };
   //   fetchITAssets();
   // }, []);
-
 
   useEffect(() => {
     const storedUser = JSON.parse(localStorage.getItem("user"));
@@ -53,30 +51,30 @@ const AssetReports = () => {
   }, [user]);
 
   // Filter assets based on search term and selected asset name
-const filteredAssets = allAssets.filter((asset) => {
-  const matchesSearch = asset.assetName
-    .toLowerCase()
-    .includes(searchTerm.toLowerCase());
-  const matchesDropdown = selectedAssetName
-    ? asset.assetName === selectedAssetName
-    : true;
-  return matchesSearch && matchesDropdown;
-});
-// Filter assets based on department
-const filteredByDepartment =
-  user?.department === "TopManagement"
-    ? filteredAssets // Include all assets for TopManagement
-    : filteredAssets.filter((asset) => asset.department === user?.department);
+  const filteredAssets = allAssets.filter((asset) => {
+    const matchesSearch = asset.assetName
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase());
+    const matchesDropdown = selectedAssetName
+      ? asset.assetName === selectedAssetName
+      : true;
+    return matchesSearch && matchesDropdown;
+  });
+  // Filter assets based on department
+  const filteredByDepartment =
+    user?.department === "TopManagement"
+      ? filteredAssets // Include all assets for TopManagement
+      : filteredAssets.filter((asset) => asset.department === user?.department);
 
-// Further filter by selected department if applicable
-const filteredData =
-  selectedDepartment === ""
-    ? filteredByDepartment
-    : filteredByDepartment.filter(
-        (item) => item.department === selectedDepartment
-      );
+  // Further filter by selected department if applicable
+  const filteredData =
+    selectedDepartment === ""
+      ? filteredByDepartment
+      : filteredByDepartment.filter(
+          (item) => item.department === selectedDepartment
+        );
 
-console.log(selectedDepartment);
+  console.log(selectedDepartment);
   const laptopColumns = [
     { field: "id", headerName: "ID", width: 90 },
     { field: "assetNumber", headerName: "Asset Number", width: 150 },
@@ -125,7 +123,7 @@ console.log(selectedDepartment);
   //     return matchesSearch && matchesDropdown;
   //   });
   return (
-    <div className="p-6  ">
+    <div className="p-4">
       {/* <button
         onClick={() => handleOpenModal("add")}
         className="wono-blue-dark p-2 rounded-md text-white"
@@ -136,72 +134,72 @@ console.log(selectedDepartment);
       <h1 className="text-2xl font-semibold mb-4">Asset Reports</h1>
 
       <div className="w-[72vw]">
-      <div className="flex justify-between gap-4 pb-4">
-        <div className="flex gap-4">
-          <TextField
-            label="Search by Name"
-            variant="outlined"
-            size="small"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
-
-          <FormControl size="small" style={{ minWidth: 200 }}>
-            {/* <InputLabel>Filter by Asset Name</InputLabel> */}
+        <div className="flex justify-between gap-4 p-2 rounded-md bg-white">
+          <div className="flex gap-4 ">
             <TextField
-              label="Filter by Asset Name"
+              label="Search by Name"
               variant="outlined"
-              select
               size="small"
-            >
-              <MenuItem value="">All</MenuItem>
-              {/* {[...new Set(laptops.map((laptop) => laptop.assetName))].map(
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+
+            <FormControl size="small" style={{ minWidth: 220 }}>
+              {/* <InputLabel>Filter by Asset Name</InputLabel> */}
+              <TextField
+                label="Filter by Asset Name"
+                variant="outlined"
+                select
+                size="small"
+              >
+                <MenuItem value="">All</MenuItem>
+                {/* {[...new Set(laptops.map((laptop) => laptop.assetName))].map(
                 (assetName) => (
                   <MenuItem key={assetName} value={assetName}>
                     {assetName}
                   </MenuItem>
                 )
               )} */}
-            </TextField>
-          </FormControl>
+              </TextField>
+            </FormControl>
+          </div>
+
+          <button className="wono-blue-dark p-2 rounded-md text-white">
+            Export
+          </button>
         </div>
 
-        <button
-          className="wono-blue-dark p-2 rounded-md text-white"
-        >
-          Export
-        </button>
+        <div className="motion-preset-slide-up-md">
+          <DataGrid
+            rows={filteredData}
+            columns={laptopColumns}
+            pageSize={5}
+            rowsPerPageOptions={[5]}
+            checkboxSelection
+            disableSelectionOnClick
+            initialState={{ pinnedColumns: { right: ["actions"] } }}
+            getRowHeight={() => "auto"} // Automatically adjust row height
+            sx={{
+              "& .MuiDataGrid-cell": {
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "start", // Center align button content
+              },
+              "& .MuiDataGrid-row": {
+                padding: 0, // Ensure no extra padding
+              },
+              width: "100%",
+              height: "50vh",
+              backgroundColor:'white',
+              fontFamily: "Popins-Regular",
+              overflowX: "scrollX", // Adds horizontal scrollbar
+              "& .MuiDataGrid-root": {
+                overflowX: "scroll", // Ensure the root container also supports horizontal scroll
+              },
+            }}
+          />
+        </div>
       </div>
-
-      
-      <div className="motion-preset-slide-up-md">
-        <DataGrid
-          rows={filteredData}
-          columns={laptopColumns}
-          pageSize={5}
-          rowsPerPageOptions={[5]}
-          checkboxSelection
-          disableSelectionOnClick
-          initialState={{ pinnedColumns: { right: ["actions"] } }}
-          getRowHeight={() => "auto"} // Automatically adjust row height
-          sx={{
-            "& .MuiDataGrid-cell": {
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "start", // Center align button content
-            },
-            "& .MuiDataGrid-row": {
-              padding: 0, // Ensure no extra padding
-            },
-            width: "100%",
-            height: "50vh",
-            fontFamily: "Popins-Regular",
-          }}
-        />
-      </div>
-      </div>
-
-
     </div>
   );
 };

@@ -11,7 +11,7 @@ import { toast } from "sonner";
 import assignedAssetsData from "./temp_db/AssignedAssets.json";
 import userData from "../../../dummyData/dummyData.json";
 
-const AssetsData = ({data}) => {
+const AssetsData = ({ data }) => {
   const location = useLocation();
   const [rows, setRows] = useState([]);
   const { brand } = location.state || { brand: "Unknown Brand" };
@@ -22,10 +22,12 @@ const AssetsData = ({data}) => {
   const [formData, setFormData] = useState(assignedAssetsData || {}); // Form data state
   const [revoked, setRevoked] = useState(false);
   const [selectedDepartment, setSelectedDepartment] = useState("");
-  const [processedData, setProcessedData] =useState(assignedAssetsData.IT.map((row, index) => ({
-    ...row,
-    id: index, // Assign a unique id based on the index
-  })))
+  const [processedData, setProcessedData] = useState(
+    assignedAssetsData.IT.map((row, index) => ({
+      ...row,
+      id: index, // Assign a unique id based on the index
+    }))
+  );
 
   const storedUser = localStorage.getItem("user");
 
@@ -83,7 +85,6 @@ const AssetsData = ({data}) => {
     setAsset(null);
   };
 
-  
   const AssigneeDepartment = [
     ...new Set(userData.map((user) => user.department)),
   ].map((department, index) => (
@@ -101,7 +102,7 @@ const AssetsData = ({data}) => {
       </MenuItem>
     ));
 
-    console.log(AssigneeOptions)
+  console.log(AssigneeOptions);
 
   // Fetch data from the JSON server
   useEffect(() => {
@@ -124,7 +125,6 @@ const AssetsData = ({data}) => {
 
     fetchAssignedAssets();
   }, []);
-
 
   const ITUsageData = [
     {
@@ -195,11 +195,11 @@ const AssetsData = ({data}) => {
 
   return (
     <div className="p-0">
-      <div className="flex justify-between mb-6">
+      <div className="flex justify-between">
         <div className="content-center"></div>
       </div>
 
-      <div style={{ height: 400, width: "100%" }}>
+      <div style={{ width: "100%" }}>
         <DataGrid
           // rows={rows ? rows : processedData}
           rows={processedData}
@@ -220,7 +220,12 @@ const AssetsData = ({data}) => {
               padding: 0, // Ensure no extra padding
             },
             fontFamily: "Popins-Regular",
+            backgroundColor:'white',
             width: "100%",
+            overflowX: "auto", // Adds horizontal scrollbar
+            "& .MuiDataGrid-root": {
+              overflowX: "auto", // Ensure the root container also supports horizontal scroll
+            },
           }}
         />
       </div>
@@ -335,9 +340,8 @@ const AssetsData = ({data}) => {
                   fullWidth
                   disabled={!isEditing}
                   variant="outlined"
-                  
                 >
-                 {AssigneeDepartment}
+                  {AssigneeDepartment}
                 </TextField>
 
                 <TextField
@@ -349,10 +353,9 @@ const AssetsData = ({data}) => {
                   fullWidth
                   disabled={!isEditing}
                   variant="outlined"
-                  
                 >
                   {AssigneeOptions}
-                  </TextField>
+                </TextField>
 
                 <TextField
                   label="Asset Number"
@@ -362,9 +365,8 @@ const AssetsData = ({data}) => {
                   fullWidth
                   disabled={!isEditing}
                   variant="outlined"
-                  
                 />
-                
+
                 <TextField
                   label="Asset Type"
                   name="assetType"
@@ -374,7 +376,6 @@ const AssetsData = ({data}) => {
                   fullWidth
                   disabled={!isEditing}
                   variant="outlined"
-                  
                 >
                   {["Laptop", "Monitor", "Keyboard", "Mouse"].map((option) => (
                     <MenuItem key={option} value={option}>
@@ -391,7 +392,6 @@ const AssetsData = ({data}) => {
                   fullWidth
                   disabled={!isEditing}
                   variant="outlined"
-                  
                 />
 
                 <TextField
@@ -402,7 +402,6 @@ const AssetsData = ({data}) => {
                   fullWidth
                   disabled={!isEditing}
                   variant="outlined"
-                  
                 />
 
                 <TextField
@@ -414,7 +413,6 @@ const AssetsData = ({data}) => {
                   fullWidth
                   disabled={!isEditing}
                   variant="outlined"
-                  
                 >
                   {["Active", "Revoked", "Pending"].map((option) => (
                     <MenuItem key={option} value={option}>
@@ -432,7 +430,6 @@ const AssetsData = ({data}) => {
                   fullWidth
                   disabled={!isEditing}
                   variant="outlined"
-                  
                   InputLabelProps={{ shrink: true }}
                 />
 
@@ -445,7 +442,6 @@ const AssetsData = ({data}) => {
                   fullWidth
                   disabled={!isEditing}
                   variant="outlined"
-                  
                   InputLabelProps={{ shrink: true }}
                 />
               </div>

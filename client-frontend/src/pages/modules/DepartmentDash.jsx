@@ -354,14 +354,14 @@ const DepartmentDash = () => {
       <TestSide />
       <ModuleSidebar />
 
-      <div className="w-full h-[90vh] overflow-y-auto">
+      <div className="w-full h-[90vh] overflow-y-auto bg-gray-100">
         {/* Frontend submodules */}
         {location.pathname.startsWith("/frontend") && (
           <>
             {location.pathname === "/frontend" ||
             location.pathname === "/frontend/dashboard" ? (
               <div>
-                <div className="bg-white p-4 rounded-lg">
+                <div className="bg-gray-100 p-4 rounded-lg">
                   <h1 className="text-3xl font-bold mb-4">
                     Frontend Dashboard
                   </h1>
@@ -455,7 +455,7 @@ const DepartmentDash = () => {
                   {products.map((product) => (
                     <div
                       key={product.id}
-                      className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+                      className="bg-gray-100 rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
                       <img
                         src={product.image}
                         alt={product.name}
@@ -486,7 +486,7 @@ const DepartmentDash = () => {
           <>
             {(location.pathname === "/hr" ||
               location.pathname === "/hr/dashboard") && (
-              <div className="bg-white p-4 rounded-lg  mt-4">
+              <div className="bg-gray-100 p-4 rounded-lg  mt-4">
                 {hrWidgets.map((section, index) => (
                   <WidgetSection
                     key={index}
@@ -504,7 +504,7 @@ const DepartmentDash = () => {
           <>
             {(location.pathname === "/finance" ||
               location.pathname === "/finance/dashboard") && (
-              <div className="bg-white p-4 rounded-lg  mt-4">
+              <div className="bg-gray-100 p-4 rounded-lg  mt-4">
                 <WidgetSection heading="Finance" widgets={financeWidgets} />
               </div>
             )}
@@ -515,7 +515,7 @@ const DepartmentDash = () => {
           <>
             {(location.pathname === "/sales" ||
               location.pathname === "/sales/dashboard") && (
-              <div className="bg-white p-4 rounded-lg  mt-4">
+              <div className="bg-gray-100 p-4 rounded-lg  mt-4">
                 {salesWidgets.map((section, index) => (
                   <WidgetSection
                     key={index}
@@ -532,7 +532,7 @@ const DepartmentDash = () => {
           <>
             {location.pathname === "/customer" ||
             location.pathname === "/customer/dashboard" ? (
-              <div className="bg-white p-4 rounded-lg  mt-4 ">
+              <div className="bg-gray-100 p-4 rounded-lg  mt-4 ">
                 {itWidgets.map((section, index) => (
                   <WidgetSection
                     key={index}
@@ -543,7 +543,7 @@ const DepartmentDash = () => {
               </div>
             ) : location.pathname === "/customer/kpi" ? (
               <>
-                <div className="bg-white p-4 rounded-lg  mt-4 h-[90vh] overflow-y-auto">
+                <div className="bg-gray-100 p-4 rounded-lg  mt-4 h-[90vh] overflow-y-auto">
                   <div className="mb-8 flex justify-between">
                     <h1 className="text-3xl font-semibold">Key insights</h1>
                   </div>
@@ -591,7 +591,7 @@ const DepartmentDash = () => {
               </>
             ) : location.pathname === "/customer/tickets" ? (
               <>
-                <div className="bg-white p-4 rounded-lg mt-4">
+                <div className="bg-gray-100 p-4 rounded-lg mt-4">
                   <div className="mb-8 flex justify-between">
                     <h1 className="text-3xl  font-bold">Key Insights</h1>
                     {/* <div className=" flex gap-4">

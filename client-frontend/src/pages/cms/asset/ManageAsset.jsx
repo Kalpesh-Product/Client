@@ -211,7 +211,7 @@ const filteredData =
 
 console.log(selectedDepartment);
   return (
-    <div className="p-6">
+    <div className="p-4">
       <h1 className="text-2xl font-semibold mb-4">Manage Assets</h1>
       <div>
         <div className="flex">
@@ -237,7 +237,7 @@ console.log(selectedDepartment);
             aria-label="asset actions tabs"
             variant="fullWidth"
             TabIndicatorProps={{ style: { transition: "none" } }}
-            sx={{ width: "100%" }}
+            sx={{ width: "100%", marginBottom:'1rem' }}
           >
             <Tab label="Add/Assign Assets" />
             <Tab label="Assigned Asset" />
@@ -245,7 +245,7 @@ console.log(selectedDepartment);
         </div>
         <div>
           {activeTab === 0 && (
-            <div className="w-[72vw] md:w-full transition-all duration-200 ease-in-out">
+            <div className="w-[72vw] md:w-full transition-all duration-200 ease-in-out bg-white p-2 rounded-md">
               <h1 className="text-xl font-semibold py-4 text-gray-600">
                 Filter by :
               </h1>
@@ -334,6 +334,7 @@ console.log(selectedDepartment);
                     width: "100%",
                     height: "50vh",
                     fontFamily: "Popins-Regular",
+                    backgroundColor:'white'
                   }}
                 />
               </div>
@@ -342,12 +343,12 @@ console.log(selectedDepartment);
 
           {activeTab === 1 && (
             <>
-              <div className="flex justify-between gap-4 py-4">
+              <div className="flex justify-between gap-4 bg-white p-2 rounded-md">
                 <h1 className="text-xl font-semibold text-gray-600">
                   Filter by :
                 </h1>
               </div>
-              <div className="flex gap-4">
+              <div className="flex gap-4 bg-white p-2 rounded-md">
                 <TextField
                   label="Search by Name"
                   variant="outlined"
