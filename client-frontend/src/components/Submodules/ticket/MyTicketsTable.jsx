@@ -282,6 +282,7 @@ const MyTicketsTable = () => {
             <MenuItem value="">All</MenuItem>
             <MenuItem value="Chair">Chair</MenuItem>
             <MenuItem value="Carpet Floor">Carpet</MenuItem>
+            <MenuItem value="Carpet Floor">Carpet</MenuItem>
           </TextField>
         </FormControl>
         <FormControl size="small" style={{ minWidth: 220 }}>

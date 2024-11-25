@@ -381,7 +381,7 @@ const MyTickets = () => {
             {/* Modal Content */}
 
             {/* Modal Header */}
-            <div className="sticky top-0 bg-white py-6 z-20 flex justify-between">
+            <div className="sticky top-0 bg-white pt-6 z-20 flex justify-between">
               <div>
                 <h2 className="text-3xl font-bold mb-4 uppercase">
                   Raise Ticket
@@ -390,7 +390,7 @@ const MyTickets = () => {
               <div>
                 {/* Close button */}
                 <button
-                  className="bg-red-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-red-600"
+                  className="text-red-500 border border-red-500 bg-white font-bold py-1 px-3 rounded-lg hover:bg-red-600 hover:text-white text-2xl"
                   onClick={closeModal}>
                   X
                 </button>
@@ -402,9 +402,9 @@ const MyTickets = () => {
               {/* <div>AddT icket Form</div> */}
               <div className="">
                 <div className=" mx-auto">
-                  <h1 className="text-xl text-center my-2 font-bold">
+                  {/* <h1 className="text-xl text-center my-2 font-bold">
                     Add Ticket
-                  </h1>
+                  </h1> */}
                   <Box
                     sx={{
                       maxWidth: 600,

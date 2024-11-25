@@ -109,7 +109,7 @@ const AcceptedTickets = () => {
           onClick={openDeleteTicket}
           variant="contained"
           sx={{
-            backgroundColor: "#EF4444",
+            backgroundColor: "green",
             color: "white",
             "&:hover": {
               backgroundColor: "#DC2626",
