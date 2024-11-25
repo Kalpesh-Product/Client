@@ -593,9 +593,9 @@ const DepartmentDash = () => {
               <>
                 <div className="bg-white p-4 rounded-lg mt-4">
                   <div className="mb-8 flex justify-between">
-                    <h1 className="text-3xl font-bold">Key insights</h1>
-                    <div className=" flex gap-4">
-                      {/* If IT Employee */}
+                    <h1 className="text-3xl  font-bold">Key Insights</h1>
+                    {/* <div className=" flex gap-4">
+                
 
                       {user.role === "Employee" && user.department === "IT" && (
                         <div>
@@ -611,14 +611,14 @@ const DepartmentDash = () => {
                           </button>
                         </div>
                       )}
-                      {/*  */}
+                 
 
                       <button
                         onClick={handleOpenTicket}
                         className="px-6 py-2 rounded-lg text-white wono-blue-dark hover:bg-[#3cbce7] transition-shadow shadow-md hover:shadow-lg active:shadow-inner">
                         Raise Ticket
                       </button>
-                    </div>
+                    </div> */}
                   </div>
                   {customerServiceWidgets
                     .filter((section) => section.subModule === "ticket")
@@ -690,23 +690,23 @@ const DepartmentDash = () => {
             )}
           </>
         )}
-        {location.pathname === "/tasks" ?
-        (<Task/>)
-
-        :location.pathname === "/tasks/teams" ?
-        (<>
-        <Teams/>
-        </>):location.pathname === "/tasks/tasklist" ?
-        (<>
-         <Tasklist/>
-        </>):location.pathname === "/tasks/tasklisttable" ?
-       
-        (<>
-         <TasklistTable/>
-        </>):
-        (<></>)
-         
-        }
+        {location.pathname === "/tasks" ? (
+          <Task />
+        ) : location.pathname === "/tasks/teams" ? (
+          <>
+            <Teams />
+          </>
+        ) : location.pathname === "/tasks/tasklist" ? (
+          <>
+            <Tasklist />
+          </>
+        ) : location.pathname === "/tasks/tasklisttable" ? (
+          <>
+            <TasklistTable />
+          </>
+        ) : (
+          <></>
+        )}
       </div>
       <div>
         <NewModal open={open} onClose={handleClose}>
