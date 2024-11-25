@@ -98,73 +98,121 @@ const AcceptedTickets = () => {
     //   ),
     // },
     {
-      field: "viewDetails",
-      headerName: "Actions",
-      width: 190,
-      renderCell: (params) => {
-        const handleActionChange = (event) => {
-          const selectedAction = event.target.value;
-
-          if (selectedAction === "view") {
-            handleViewDetails(params.row);
-          }
-          //    else if (selectedAction === "edit") {
-          //     handleEdit(params.row);
-          //   }
-          //   //   else if (selectedAction === "delete") {
-          //     handleDelete(params.row);
-          //   }
-        };
-
-        return (
-          <FormControl size="small" sx={{ width: "100%" }}>
-            <Select
-              value="" // Always forces the dropdown to display the SVG
-              onChange={handleActionChange}
-              displayEmpty
-              disableUnderline
-              IconComponent={() => null} // Removes the dropdown arrow
-              sx={{
-                "& .MuiSelect-select": {
-                  padding: "8px 16px",
-                  borderRadius: "0.375rem", // Tailwind rounded
-                  backgroundColor: "transparent",
-                  border: "none", // Removes border
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                },
-                "& fieldset": {
-                  border: "none", // Removes border in outlined variant
-                },
-              }}>
-              <MenuItem value="" disabled>
-                <svg
-                  className="flex-none size-4 text-gray-600 dark:text-neutral-500"
-                  xmlns="http://www.w3.org/2000/svg"
-                  width={24}
-                  height={24}
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth={2}
-                  strokeLinecap="round"
-                  strokeLinejoin="round">
-                  <circle cx={12} cy={12} r={1} />
-                  <circle cx={12} cy={5} r={1} />
-                  <circle cx={12} cy={19} r={1} />
-                </svg>
-              </MenuItem>
-              <MenuItem value="view">View Details</MenuItem>
-              <MenuItem value="edit" onClick={openDeleteTicket}>
-                Action Taken
-              </MenuItem>
-              {/* <MenuItem value="delete">Delete</MenuItem> */}
-            </Select>
-          </FormControl>
-        );
-      },
+      field: "close",
+      headerName: "Close",
+      width: 170,
+      renderCell: (params) => (
+        <Button
+          size="small"
+          // onClick={() => handleDelete(params.row)}
+          // onClick={handleAccept}
+          onClick={openDeleteTicket}
+          variant="contained"
+          sx={{
+            backgroundColor: "#EF4444",
+            color: "white",
+            "&:hover": {
+              backgroundColor: "#DC2626",
+            },
+            padding: "4px 8px",
+            borderRadius: "0.375rem",
+          }}>
+          Close
+        </Button>
+      ),
     },
+    {
+      field: "escalate",
+      headerName: "Escalate",
+      width: 170,
+      renderCell: (params) => (
+        <Button
+          size="small"
+          // onClick={() => handleDelete(params.row)}
+          // onClick={handleAccept}
+          onClick={openDeleteTicket}
+          variant="contained"
+          sx={{
+            backgroundColor: "#EF4444",
+            color: "white",
+            "&:hover": {
+              backgroundColor: "#DC2626",
+            },
+            padding: "4px 8px",
+            borderRadius: "0.375rem",
+          }}>
+          Escalate
+        </Button>
+      ),
+    },
+    // {
+    //   field: "viewDetails",
+    //   headerName: "Actions",
+    //   width: 190,
+    //   renderCell: (params) => {
+    //     const handleActionChange = (event) => {
+    //       const selectedAction = event.target.value;
+
+    //       if (selectedAction === "view") {
+    //         handleViewDetails(params.row);
+    //       }
+    //       //    else if (selectedAction === "edit") {
+    //       //     handleEdit(params.row);
+    //       //   }
+    //       //   //   else if (selectedAction === "delete") {
+    //       //     handleDelete(params.row);
+    //       //   }
+    //     };
+
+    //     return (
+    //       <FormControl size="small" sx={{ width: "100%" }}>
+    //         <Select
+    //           value="" // Always forces the dropdown to display the SVG
+    //           onChange={handleActionChange}
+    //           displayEmpty
+    //           disableUnderline
+    //           IconComponent={() => null} // Removes the dropdown arrow
+    //           sx={{
+    //             "& .MuiSelect-select": {
+    //               padding: "8px 16px",
+    //               borderRadius: "0.375rem", // Tailwind rounded
+    //               backgroundColor: "transparent",
+    //               border: "none", // Removes border
+    //               display: "flex",
+    //               alignItems: "center",
+    //               justifyContent: "center",
+    //             },
+    //             "& fieldset": {
+    //               border: "none", // Removes border in outlined variant
+    //             },
+    //           }}>
+    //           <MenuItem value="" disabled>
+    //             <svg
+    //               className="flex-none size-4 text-gray-600 dark:text-neutral-500"
+    //               xmlns="http://www.w3.org/2000/svg"
+    //               width={24}
+    //               height={24}
+    //               viewBox="0 0 24 24"
+    //               fill="none"
+    //               stroke="currentColor"
+    //               strokeWidth={2}
+    //               strokeLinecap="round"
+    //               strokeLinejoin="round">
+    //               <circle cx={12} cy={12} r={1} />
+    //               <circle cx={12} cy={5} r={1} />
+    //               <circle cx={12} cy={19} r={1} />
+    //             </svg>
+    //           </MenuItem>
+    //           <MenuItem value="view">View Details</MenuItem>
+    //           <MenuItem value="edit" onClick={openDeleteTicket}>
+    //             Action Taken
+    //           </MenuItem>
+    //           {/* <MenuItem value="delete">Delete</MenuItem> */}
+    //         </Select>
+    //       </FormControl>
+    //     );
+    //   },
+    // },
   ];
 
   const allRows = [
@@ -458,9 +506,9 @@ const AcceptedTickets = () => {
           
               </div> */}
                   </Box>
-                  <h1 className="text-xl text-center my-2 font-bold">
+                  {/* <h1 className="text-xl text-center my-2 font-bold">
                     Is the ticket resolved?
-                  </h1>
+                  </h1> */}
                 </div>
               </div>
             </div>
@@ -473,16 +521,17 @@ const AcceptedTickets = () => {
                 <button
                   className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600"
                   onClick={handleDeleteTicket}>
-                  Yes (Close Ticket)
+                  {/* Yes (Close Ticket) */}
+                  Save
                 </button>
               </div>
-              <div className="flex justify-center items-center">
+              {/* <div className="flex justify-center items-center">
                 <button
                   className="bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600"
                   onClick={handleNotResolved}>
                   No (Escalate)
                 </button>
-              </div>
+              </div> */}
             </div>
             {/* Close button */}
             {/* <button
