@@ -134,7 +134,7 @@ const MyTicketsTable = () => {
   ];
 
   return (
-    <div>
+    <div className="p-4 pt-0">
       {/* <div className="flex gap-4 h-16 ">
         <div className="pt-2">Filter by :</div>
         <div>
@@ -330,6 +330,7 @@ const MyTicketsTable = () => {
           initialState={{ pagination: { paginationModel } }}
           pageSizeOptions={[5, 10]}
           checkboxSelection
+          sx={{backgroundColor:'white'}}
         />
       </div>
       {/* Tickets datatable END */}

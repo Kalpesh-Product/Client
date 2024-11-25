@@ -482,7 +482,7 @@ const ModuleSidebar = ({ mainSideBar }) => {
           ))}
 
           {/* Common-submodules-menu */}
-          <Tooltip title={"Reports"} placement="right">
+          {/* <Tooltip title={"Reports"} placement="right">
             <div
               onClick={() => {
                 navigate("#dashboard");
@@ -502,7 +502,7 @@ const ModuleSidebar = ({ mainSideBar }) => {
                 <span className="pl-5 text-[0.8rem]">Reports</span>
               )}
             </div>
-          </Tooltip>
+          </Tooltip> */}
 
           {/* Menu Items only for reports */}
           {location.pathname === "/reports" && (
@@ -738,7 +738,7 @@ const ModuleSidebar = ({ mainSideBar }) => {
             </>
           )}
 
-          <Tooltip title={"Reports"} placement="right">
+          {/* <Tooltip title={"Reports"} placement="right">
             <div
               onClick={() => {
                 navigate("#dashboard");
@@ -758,7 +758,7 @@ const ModuleSidebar = ({ mainSideBar }) => {
                 <span className="pl-5 text-[0.8rem]"> Frontend Reports</span>
               )}
             </div>
-          </Tooltip>
+          </Tooltip> */}
         </div>
       </div>
     </div>

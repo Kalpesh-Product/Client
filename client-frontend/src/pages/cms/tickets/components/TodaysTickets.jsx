@@ -353,12 +353,12 @@ const TodaysTickets = () => {
                   <Box
                     sx={{
                       maxWidth: 600,
-                      padding: 3,
+                      paddingY: 3,
                       bgcolor: "background.paper",
                       borderRadius: 2,
                     }}
                     // className="bg-white p-6 rounded-lg shadow-md mx-auto">
-                    className="bg-white p-6 rounded-lg mx-auto">
+                    className="bg-white py-6 rounded-lg">
                     {/* Personal Information */}
                     {/* <h2 className="text-lg font-semibold mb-4">Add Ticket</h2> */}
                     <div className="grid grid-cols-1 gap-4">
@@ -418,7 +418,7 @@ const TodaysTickets = () => {
             <div className="sticky bottom-0 bg-white py-6 z-20 flex justify-center">
               <div className="flex justify-center items-center w-full">
                 <button
-                  className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 w-full mx-6"
+                  className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 w-full"
                   onClick={handleAddTicket}>
                   Save
                 </button>

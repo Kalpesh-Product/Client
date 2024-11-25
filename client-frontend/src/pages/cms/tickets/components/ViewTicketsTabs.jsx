@@ -27,7 +27,7 @@ const ViewTicketsTabs = () => {
 
   return (
     <div>
-      <div className=" w-full py-10 text-lg">
+      <div className=" w-full p-6 text-lg">
         {/* <h2 className="text-2xl font-bold">View Tickets</h2> */}
         {/* <h2 className="text-3xl motion-preset-slide-right-md font-bold"> */}
         <h2 className="text-3xl  font-bold">View Tickets</h2>
