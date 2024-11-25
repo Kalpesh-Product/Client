@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Box, Tabs, Tab, Typography, TextField, Button } from "@mui/material";
 import { format } from "date-fns";
 import { toast } from "sonner";
+import Select from "react-select";
 
 export default function BookingDetails({
   selectedEvent,
@@ -23,6 +24,15 @@ export default function BookingDetails({
     endTime: format(new Date(selectedEvent.end), "HH:mm"),
     date: format(new Date(selectedEvent.start), "yyyy-MM-dd"),
   });
+
+  const participantOptions = selectedEvent.extendedProps.participants
+    ? selectedEvent.extendedProps.participants
+        .split(",")
+        .map((participant) => ({
+          label: participant.trim(),
+          value: participant.trim(),
+        }))
+    : [];
 
   const [showMessage, setShowMessage] = useState({
     show: false,
@@ -97,7 +107,6 @@ export default function BookingDetails({
             marginTop: "1rem",
             width: "100%",
             background: "white",
-            marginBottom: "1rem",
           }}
           value={tabIndex}
           onChange={handleTabChange}
@@ -115,7 +124,7 @@ export default function BookingDetails({
       {/* Details Tab */}
       {tabIndex === 0 && (
         <Box p={3}>
-          <div className="grid grid-cols-1 gap-3 py-2 h-[47vh] overflow-y-scroll" >
+          <div className="grid grid-cols-1 gap-3 py-2 h-[47vh] overflow-y-scroll">
             {/* Render details using TextField */}
             <TextField
               label="Subject"
@@ -172,8 +181,8 @@ export default function BookingDetails({
 
       {/* Edit Tab */}
       {tabIndex === 1 && (
-        <div className="p-6 h-[20vh]">
-          <form onSubmit={handleUpdateSubmit} className="space-y-4">
+        <div className="p-6">
+          <form onSubmit={handleUpdateSubmit} className="flex flex-col gap-4">
             <TextField
               label="Room"
               type="text"
@@ -208,15 +217,21 @@ export default function BookingDetails({
                 {showMessage.message}
               </p>
             )}
-            <TextField
-              label="Participants"
-              type="text"
-              name="participants"
-              value={updatedMeeting.participants}
-              onChange={handleUpdateChange}
-              placeholder="Enter participants (comma-separated)"
-              fullWidth
+            <Select
+              isMulti
+              options={participantOptions}
+              value={participantOptions.filter((option) =>
+                updatedMeeting.participants.includes(option.value)
+              )}
+              onChange={(selectedOptions) => {
+                setUpdatedMeeting((prev) => ({
+                  ...prev,
+                  participants: selectedOptions.map((option) => option.value),
+                }));
+              }}
+              placeholder="Select participants"
             />
+
             <TextField
               label="Subject"
               type="text"
@@ -249,12 +264,8 @@ export default function BookingDetails({
       )}
 
       {/* Extend Time Tab */}
-      {/* Extend Time Tab */}
       {tabIndex === 2 && (
         <Box p={3}>
-          <Typography variant="h6" gutterBottom>
-            Extend Time
-          </Typography>
           <form onSubmit={handleExtendTimeSubmit} className="space-y-4">
             <TextField
               label="Date"
@@ -319,24 +330,47 @@ export default function BookingDetails({
       {/* Cancel Booking Tab */}
       {tabIndex === 3 && (
         <Box p={3}>
-          <Typography variant="h6" gutterBottom>
-            Cancel Booking
-          </Typography>
           <form
             onSubmit={handleCancelSubmit}
             className="flex flex-col justify-center items-center gap-8"
           >
-            <TextField
-              label="Reason for Cancellation"
-              name="reason"
-              value={cancelReason}
-              className="mb-16"
-              onChange={(e) => setCancelReason(e.target.value)}
-              placeholder="Enter the reason"
-              multiline
-              rows={4}
-              fullWidth
-            />
+            {/* Dropdown for Reasons */}
+            <div className="w-full">
+              <TextField
+                select
+                value={cancelReason}
+                onChange={(e) => setCancelReason(e.target.value)}
+                fullWidth
+                SelectProps={{
+                  native: true,
+                }}
+              >
+                <option value="" disabled>
+                  Select a reason
+                </option>
+                <option value="Schedule conflict">Schedule conflict</option>
+                <option value="No longer needed">No longer needed</option>
+                <option value="Change in requirements">
+                  Change in requirements
+                </option>
+                <option value="Other">Other</option>
+              </TextField>
+            </div>
+
+            {/* Show TextField when "Other" is selected */}
+            {cancelReason === "Other" && (
+              <TextField
+                label="Specify the reason"
+                name="reason"
+                value={cancelReason === "Other" ? "" : cancelReason}
+                onChange={(e) => setCancelReason(e.target.value)}
+                placeholder="Enter your reason"
+                multiline
+                rows={4}
+                fullWidth
+              />
+            )}
+
             <Button
               type="submit"
               variant="contained"

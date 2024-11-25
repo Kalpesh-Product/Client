@@ -221,7 +221,6 @@ export default function BookingReports() {
               rowsPerPageOptions={[4]}
               disableColumnResize={false}
               sx={{
-                overflowX: "scroll",
                 "& .MuiDataGrid-root": {
                   backgroundColor: "#f9fafb",
                   borderRadius: "0.5rem",
