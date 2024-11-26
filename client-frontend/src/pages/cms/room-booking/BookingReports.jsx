@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { DataGrid } from "@mui/x-data-grid";
 import { Box, FormControl, Select, MenuItem, TextField } from "@mui/material";
 import { CSVLink } from "react-csv";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { DatePicker } from "@mui/x-date-pickers";
+import AgTable from "../../../components/AgTable";
 
 export default function BookingReports() {
   const [selectedDepartment, setSelectedDepartment] = useState("All");
@@ -94,6 +94,37 @@ export default function BookingReports() {
     return isDepartmentMatch && isStatusMatch && isDateMatch;
   });
 
+  // Column definitions for AgGrid
+  const columns = [
+    { headerName: "ID", field: "id" },
+    { headerName: "Department", field: "department" },
+    { headerName: "Name", field: "name" },
+    { headerName: "Date", field: "date" },
+    { headerName: "Start Time", field: "startTime" },
+    { headerName: "End Time", field: "endTime" },
+    { headerName: "Duration", field: "duration" },
+    { headerName: "Credits Used", field: "credits" },
+    {
+      headerName: "Status",
+      field: "status",
+      cellRenderer: (params) => {
+        const statusColors = {
+          Ongoing: "text-blue-600 bg-blue-100",
+          Cancelled: "text-red-600 bg-red-100",
+          Upcoming: "text-yellow-600 bg-yellow-100",
+        };
+        const statusClass = statusColors[params.value] || "";
+        return (
+          <span
+            className={`px-3 py-1 rounded-full text-sm font-medium ${statusClass}`}
+          >
+            {params.value}
+          </span>
+        );
+      },
+    },
+  ];
+
   // CSV headers
   const csvHeaders = [
     { label: "ID", key: "id" },
@@ -111,9 +142,9 @@ export default function BookingReports() {
     <section className="p-6 bg-gray-100 min-h-screen w-[80vw] md:w-full">
       <h1 className="text-4xl font-bold text-gray-800 mb-6">Booking Reports</h1>
 
-      <div className="bg-white shadow-md rounded-lg p-6">
+      <div className="bg-white shadow-md rounded-lg p-6 h-full">
         {/* Filters */}
-        <div className="flex flex-col md:flex-row md:items-center md:space-x-4 mb-4">
+        <div className="flex flex-col h-full md:flex-row md:items-center md:space-x-4 mb-4">
           {/* Department Filter */}
           <FormControl className="w-full md:w-1/4">
             <Select
@@ -152,19 +183,19 @@ export default function BookingReports() {
             <DatePicker
               label="Start Date"
               value={startDate}
-              slotProps={{ textField: { size: 'small' } }}
+              slotProps={{ textField: { size: "small" } }}
               onChange={(newValue) => setStartDate(newValue)}
               renderInput={(params) => (
-                <TextField {...params}  className="w-full md:w-1/4" />
+                <TextField {...params} className="w-full md:w-1/4" />
               )}
             />
             <DatePicker
               label="End Date"
-              slotProps={{ textField: { size: 'small' } }}
+              slotProps={{ textField: { size: "small" } }}
               value={endDate}
               onChange={(newValue) => setEndDate(newValue)}
               renderInput={(params) => (
-                <TextField {...params}  className="w-full md:w-1/4" />
+                <TextField {...params} className="w-full md:w-1/4" />
               )}
             />
           </LocalizationProvider>
@@ -180,65 +211,13 @@ export default function BookingReports() {
           </CSVLink>
         </div>
 
-        {/* DataGrid */}
-        <Box className="w-full" sx={{ overflowX: "auto" }}>
-          <div style={{ height: 400, width: "100%" }}>
-            <DataGrid
-              rows={filteredBookings}
-              columns={[
-                { field: "id", headerName: "ID", flex: 1 },
-                { field: "department", headerName: "Department", flex: 1 },
-                { field: "name", headerName: "Name", flex: 1 },
-                { field: "date", headerName: "Date", flex: 1 },
-                { field: "startTime", headerName: "Start Time", flex: 1 },
-                { field: "endTime", headerName: "End Time", flex: 1 },
-                { field: "duration", headerName: "Duration", flex: 1 },
-                { field: "credits", headerName: "Credits Used", flex: 1 },
-
-                {
-                  field: "status",
-                  headerName: "Status",
-                  width: 150,
-                  pinned: "right", // Pin this column to the right
-                  renderCell: (params) => {
-                    const statusColors = {
-                      Ongoing: "text-blue-600 bg-blue-100",
-                      Cancelled: "text-red-600 bg-red-100",
-                      Upcoming: "text-yellow-600 bg-yellow-100",
-                    };
-                    const statusClass = statusColors[params.value] || "";
-                    return (
-                      <span
-                        className={`px-3 py-1 rounded-full text-sm font-medium ${statusClass}`}
-                      >
-                        {params.value}
-                      </span>
-                    );
-                  },
-                },
-              ]}
-              pageSize={5}
-              rowsPerPageOptions={[4]}
-              disableColumnResize={false}
-              sx={{
-                "& .MuiDataGrid-root": {
-                  backgroundColor: "#f9fafb",
-                  borderRadius: "0.5rem",
-                  border: "none",
-                },
-                "& .MuiDataGrid-cell": {
-                  color: "#374151",
-                  fontSize: "0.875rem",
-                },
-                "& .MuiDataGrid-columnHeaders": {
-                  backgroundColor: "#f3f4f6",
-                  fontSize: "0.875rem",
-                  fontWeight: "bold",
-                  color: "#1f2937",
-                },
-              }}
-            />
-          </div>
+        {/* AgGrid */}
+        <Box className="w-full" height="100%" sx={{ overflowX: "auto" }}>
+          <AgTable
+            data={filteredBookings}
+            columns={columns}
+            paginationPageSize={5}
+          />
         </Box>
       </div>
     </section>
