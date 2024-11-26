@@ -148,7 +148,6 @@ export default function RoomBookingDash() {
         >
           Book a Room
         </button>
-        ) : ''}
       </div>
 
       {/* Widgets */}
