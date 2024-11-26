@@ -10,6 +10,7 @@ import { motion } from "framer-motion";
 import { toast } from "sonner";
 import assignedAssetsData from "./temp_db/AssignedAssets.json";
 import userData from "../../../dummyData/dummyData.json";
+import AgTable from "../../../components/AgTable";
 
 const AssetsData = ({ data }) => {
   const location = useLocation();
@@ -43,10 +44,10 @@ const AssetsData = ({ data }) => {
   const handleRevokeAsset = () => {
     // Update the asset status to "Revoked"
     const updatedRows = processedData.map((row) =>
-      row.id === asset.id ? { ...row, status: "Revoked" } : row
+      row.id === asset.id 
     );
     setProcessedData(updatedRows); // Update the state
-    processedData.status === "Revoked" && setRevoked(true);
+    // processedData.status === "Revoked" && setRevoked(true);
     handleCloseModal(); // Close the modal
     toast.success(`Asset revoked for: ${asset && asset.assigneeName}`);
   };
@@ -155,41 +156,37 @@ const AssetsData = ({ data }) => {
       field: "actions",
       headerName: "Actions",
       width: 250,
-      renderCell: (params) =>
-        params.row.status !== "Revoked" ? (
-          <div className="p-2 mb-2 flex gap-2">
-            <button
-              style={{
-                backgroundColor: "#0db4ea",
-                color: "white",
-                border: "none",
-                padding: "0.5rem",
-                borderRadius: "4px",
-                cursor: "pointer",
-                fontFamily: "Popins-Regular",
-              }}
-              onClick={() => handleViewDetails(params.row)}
-            >
-              Details
-            </button>
-            <button
-              style={{
-                backgroundColor: "red",
-                color: "white",
-                border: "none",
-                padding: "0.5rem",
-                borderRadius: "4px",
-                cursor: "pointer",
-                fontFamily: "Popins-Regular",
-              }}
-              onClick={() => handleRevoke(params.row)}
-            >
-              Revoke
-            </button>
-          </div>
-        ) : (
-          <span style={{ color: "gray", fontStyle: "italic" }}>Revoked</span>
-        ),
+      cellRenderer: (params) =>
+        <div className="p-2 mb-2 flex gap-2">
+      <button
+        style={{
+          backgroundColor: "#0db4ea",
+          color: "white",
+          border: "none",
+          padding: "0.2rem",
+          borderRadius: "4px",
+          cursor: "pointer",
+          fontFamily: "Popins-Regular",
+        }}
+        onClick={() => handleViewDetails(params.data)}
+      >
+        Details
+      </button>
+      <button
+        style={{
+          backgroundColor: "red",
+          color: "white",
+          border: "none",
+          padding: "0.2rem",
+          borderRadius: "4px",
+          cursor: "pointer",
+          fontFamily: "Popins-Regular",
+        }}
+        onClick={() => handleRevoke(params.data)}
+      >
+        Revoke
+      </button>
+    </div>
     },
   ];
 
@@ -200,34 +197,7 @@ const AssetsData = ({ data }) => {
       </div>
 
       <div style={{ width: "100%" }}>
-        <DataGrid
-          // rows={rows ? rows : processedData}
-          rows={processedData}
-          columns={columns}
-          pageSize={5}
-          rowsPerPageOptions={[5]}
-          getRowClassName={(params) =>
-            params.row.status === "Revoked" ? "row-revoked" : ""
-          }
-          getRowHeight={() => "auto"}
-          sx={{
-            "& .MuiDataGrid-cell": {
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "start", // Center align button content
-            },
-            "& .MuiDataGrid-row": {
-              padding: 0, // Ensure no extra padding
-            },
-            fontFamily: "Popins-Regular",
-            backgroundColor:'white',
-            width: "100%",
-            overflowX: "auto", // Adds horizontal scrollbar
-            "& .MuiDataGrid-root": {
-              overflowX: "auto", // Ensure the root container also supports horizontal scroll
-            },
-          }}
-        />
+        <AgTable data={processedData} columns={columns} paginationPageSize={10}/>
       </div>
 
       {/* Modal to show laptop details */}
