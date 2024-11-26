@@ -1,7 +1,7 @@
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
-import timeGridPlugin from "@fullcalendar/timegrid"; 
+import timeGridPlugin from "@fullcalendar/timegrid";
 import Modal from "../../../components/Modal";
 import { useState, useEffect } from "react";
 import { rooms } from "../../../utils/Rooms";
@@ -221,9 +221,9 @@ export default function Listing() {
           weekends={true}
           eventClick={handleEventClick}
           headerToolbar={{
-            start: "today prev,next", // Controls the 'today' and navigation buttons
-            center: "title", // Centered title of the calendar
-            end: "dayGridMonth,timeGridWeek,timeGridDay", // Adds Month, Week, and Day view buttons
+            left: "dayGridMonth,timeGridWeek,timeGridDay",
+            center: "title",
+            right: "today prev,next",
           }}
           eventDisplay="block"
           events={events.map((event) => ({

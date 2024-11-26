@@ -10,6 +10,7 @@ import { v4 as uuid } from "uuid";
 import { motion } from "framer-motion";
 import { IoMdClose } from "react-icons/io";
 import RoomAvailabilityPieChart from "./components/RoomCharts";
+import AvailableRooms from "./components/AviliableRooms";
 
 export default function RoomBookingDash() {
   const [openBookingModal, setOpenBookingModal] = useState(false);
@@ -136,7 +137,7 @@ export default function RoomBookingDash() {
   }, []);
 
   return (
-    <div className="p-6 bg-gray-100 w-[80vw] md:w-full">
+    <div className="p-6 bg-gray-100 w-[80vw] md:w-full bottom-0">
       {/* Header */}
       <h1 className="text-3xl mb-8 font-bold">Key insights</h1>
       <div className="w-full flex justify-between items-center mb-6">
@@ -170,6 +171,8 @@ export default function RoomBookingDash() {
       </div>
 
       <RoomAvailabilityPieChart rooms={rooms} />
+      <h1 className="text-2xl font-semibold my-3">Available rooms</h1>
+      <AvailableRooms rooms={rooms} />
 
       {/* Recent Bookings */}
       <div className="bg-white shadow-md rounded-lg p-6">

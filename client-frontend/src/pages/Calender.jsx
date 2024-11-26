@@ -235,9 +235,9 @@ const Calender = () => {
               return get30DayRange(currentDate); // Restrict to 30 days
             }}
             headerToolbar={{
-              start: "today prev, next",
+              left: "dayGridMonth,timeGridWeek,timeGridDay",
               center: "title",
-              end: "dayGridMonth,timeGridWeek,timeGridDay",
+              right: "today prev,next",
             }}
             height={"90vh"}
             dateClick={handleDateClick}
