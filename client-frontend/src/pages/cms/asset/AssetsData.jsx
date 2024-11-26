@@ -155,38 +155,41 @@ const AssetsData = ({ data }) => {
     {
       field: "actions",
       headerName: "Actions",
-      width: 250,
+      flex: 1,
       cellRenderer: (params) =>
-        <div className="p-2 mb-2 flex gap-2">
-      <button
-        style={{
-          backgroundColor: "#0db4ea",
-          color: "white",
-          border: "none",
-          padding: "0.2rem",
-          borderRadius: "4px",
-          cursor: "pointer",
-          fontFamily: "Popins-Regular",
-        }}
-        onClick={() => handleViewDetails(params.data)}
-      >
-        Details
-      </button>
-      <button
-        style={{
-          backgroundColor: "red",
-          color: "white",
-          border: "none",
-          padding: "0.2rem",
-          borderRadius: "4px",
-          cursor: "pointer",
-          fontFamily: "Popins-Regular",
-        }}
-        onClick={() => handleRevoke(params.data)}
-      >
-        Revoke
-      </button>
-    </div>
+        params.data.status !== "Revoked" ? (
+          <div className="p-2 mb-2 flex gap-2">
+          <button
+            style={{
+              backgroundColor: "#0db4ea",
+              color: "white",
+              border: "none",
+              padding: "0.2rem",
+              borderRadius: "4px",
+              cursor: "pointer",
+              fontFamily: "Popins-Regular",
+            }}
+            onClick={() => handleViewDetails(params.data)}
+          >
+            Details
+          </button>
+          <button
+            style={{
+              backgroundColor: "red",
+              color: "white",
+              border: "none",
+              padding: "0.2rem",
+              borderRadius: "4px",
+              cursor: "pointer",
+              fontFamily: "Popins-Regular",
+            }}
+            onClick={() => handleRevoke(params.data)}
+          >
+            Revoke
+          </button>
+        </div>
+        ) :   <span style={{ color: "gray", fontStyle: "italic" }}>Revoked</span>
+        
     },
   ];
 
@@ -260,7 +263,7 @@ columns.forEach((column) => {
               </button>
 
               <button
-                onClick={handleRevokeAsset(asset)}
+                onClick={()=>handleRevokeAsset(asset)}
                 className="p-2 bg-red-600 text-white rounded-md hover:bg-red-700"
               >
                 Revoke

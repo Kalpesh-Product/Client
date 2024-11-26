@@ -3,6 +3,7 @@ import axios from "axios";
 import { DataGrid } from "@mui/x-data-grid";
 import { FormControl, MenuItem, TextField } from "@mui/material";
 import allAssets from "./temp_db/MaintainanceAssets.json";
+import AgTable from "../../../components/AgTable";
 
 const AssetReports = () => {
   const [user, setUser] = useState("");
@@ -170,34 +171,7 @@ const AssetReports = () => {
         </div>
 
         <div className="motion-preset-slide-up-md">
-          <DataGrid
-            rows={filteredData}
-            columns={laptopColumns}
-            pageSize={5}
-            rowsPerPageOptions={[5]}
-            checkboxSelection
-            disableSelectionOnClick
-            initialState={{ pinnedColumns: { right: ["actions"] } }}
-            getRowHeight={() => "auto"} // Automatically adjust row height
-            sx={{
-              "& .MuiDataGrid-cell": {
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "start", // Center align button content
-              },
-              "& .MuiDataGrid-row": {
-                padding: 0, // Ensure no extra padding
-              },
-              width: "100%",
-              height: "50vh",
-              backgroundColor:'white',
-              fontFamily: "Popins-Regular",
-              overflowX: "scrollX", // Adds horizontal scrollbar
-              "& .MuiDataGrid-root": {
-                overflowX: "scroll", // Ensure the root container also supports horizontal scroll
-              },
-            }}
-          />
+          <AgTable data={filteredData} columns={laptopColumns} paginationPageSize={6} />
         </div>
       </div>
     </div>
