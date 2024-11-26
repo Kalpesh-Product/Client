@@ -114,10 +114,10 @@ const ManageAsset = () => {
     { field: "assetNumber", headerName: "Asset Number", flex: 1 },
     { field: "category", headerName: "Category", flex: 1 },
     // { field: "assetName", headerName: "Asset Name", width: 150 },
-    // { field: "brandName", headerName: "Brand", width: 150 },
-    // { field: "price", headerName: "Price", width: 150 },
+    { field: "brandName", headerName: "Brand", flex:1 },
+    { field: "price", headerName: "Price", flex: 1 },
     { field: "quantity", headerName: "Quantity", flex: 1 },
-    { field: "totalPrice", headerName: "Total Price", flex: 1 },
+    // { field: "totalPrice", headerName: "Total Price", flex: 1 },
     // { field: "vendorName", headerName: "Vendor", flex: 200 },
     { field: "purchaseDate", headerName: "Purchase Date", flex: 1 },
     { field: "warranty", headerName: "Warranty (Months)", flex: 1 },
@@ -181,11 +181,11 @@ const ManageAsset = () => {
 
 // Filter assets based on search term and selected asset name
 const filteredAssets = allAssets.filter((asset) => {
-  const matchesSearch = asset.assetName
+  const matchesSearch = asset.brandName
     .toLowerCase()
     .includes(searchTerm.toLowerCase());
   const matchesDropdown = selectedAssetName
-    ? asset.assetName === selectedAssetName
+    ? asset.category === selectedAssetName
     : true;
   return matchesSearch && matchesDropdown;
 });
@@ -206,7 +206,7 @@ const filteredData =
 console.log(selectedDepartment);
   return (
     <div className="p-4">
-      <h1 className="text-2xl font-semibold mb-4">Manage Assets</h1>
+      <h1 className="text-3xl font-semibold mb-4  motion-preset-expand">Manage Assets</h1>
       <div>
         <div className="flex">
           {/* <button
@@ -231,10 +231,10 @@ console.log(selectedDepartment);
             aria-label="asset actions tabs"
             variant="fullWidth"
             TabIndicatorProps={{ style: { transition: "none" } }}
-            sx={{ width: "100%", marginBottom:'1rem' }}
+            sx={{ width: "100%", marginBottom:'1rem', backgroundColor:'white', borderRadius:'10px', fontFamily:'Popins-Semibold', padding:'0.5rem' }}
           >
-            <Tab label="Add/Assign Assets" />
-            <Tab label="Assigned Asset" />
+            <Tab sx={{borderRight:'1px solid #e4e4e4'}}  label="Add/Assign Assets" />
+            <Tab  label="Assigned Asset" />
           </Tabs>
         </div>
         <div>
@@ -243,7 +243,7 @@ console.log(selectedDepartment);
               <div className="flex justify-between gap-4 pb-4">
                 <div className="flex gap-4">
                   <TextField
-                    label="Search by Name"
+                    label="Search by Brand Name"
                     variant="outlined"
                     size="small"
                     value={searchTerm}
@@ -253,7 +253,7 @@ console.log(selectedDepartment);
                   <FormControl size="small" style={{ minWidth: 220 }}>
                     {/* <InputLabel>Filter by Asset Name</InputLabel> */}
                     <TextField
-                      label="Filter by Asset Name"
+                      label="Filter by Category"
                       variant="outlined"
                       select
                       size="small"
@@ -262,10 +262,8 @@ console.log(selectedDepartment);
                       sx={{ fontSize: "0.5rem" }}
                     >
                       <MenuItem value="">All</MenuItem>
-                      <MenuItem value="Chair">Chair</MenuItem>
-                      <MenuItem value="Carpet Floor">Carpet</MenuItem>
                       {[
-                        ...new Set(laptops.map((laptop) => laptop.assetName)),
+                        ...new Set(assetsData.map((asset) => asset.category)),
                       ].map((assetName) => (
                         <MenuItem key={assetName} value={assetName}>
                           {assetName}
@@ -306,7 +304,7 @@ console.log(selectedDepartment);
               </div>
               <div className="motion-preset-slide-up-md">
                 <AgTable 
-                data={filteredAssets}
+                data={filteredData}
                 columns={laptopColumns}
                 paginationPageSize={10}
                 />
@@ -316,14 +314,9 @@ console.log(selectedDepartment);
 
           {activeTab === 1 && (
             <>
-              <div className="flex justify-between gap-4 bg-white p-2 rounded-md">
-                <h1 className="text-xl font-semibold text-gray-600">
-                  Filter by :
-                </h1>
-              </div>
-              <div className="flex gap-4 bg-white p-2 rounded-md">
+              <div className="flex gap-4 bg-white p-2 rounded-t-md">
                 <TextField
-                  label="Search by Name"
+                  label="Search by Category"
                   variant="outlined"
                   size="small"
                 />
@@ -348,7 +341,9 @@ console.log(selectedDepartment);
                   </TextField>
                 </FormControl>
               </div>
+         
               <AssetsData data={assetsData} />
+              
             </>
           )}
         </div>

@@ -316,7 +316,10 @@ const DepartmentDash = () => {
       heading: "Asset Management",
       subModule: "asset",
       widgets: [
-        <AssetsCount route={'/customer/asset/manage'} count={customerServiceWidgetsData.totalAssets}  />,
+        <AssetsCount
+          route={"/customer/asset/manage"}
+          count={customerServiceWidgetsData.totalAssets}
+        />,
         <MaintenanceRequests
           requests={customerServiceWidgetsData.pendingMaintenance}
         />,
@@ -394,7 +397,8 @@ const DepartmentDash = () => {
                     "& .MuiTabs-indicator": {
                       backgroundColor: "#0db4ea", // Custom indicator color
                     },
-                  }}>
+                  }}
+                >
                   <Tab label="Home" />
                   <Tab label="About" />
                   <Tab label="Gallery" />
@@ -455,7 +459,8 @@ const DepartmentDash = () => {
                   {products.map((product) => (
                     <div
                       key={product.id}
-                      className="bg-gray-100 rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+                      className="bg-gray-100 rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow"
+                    >
                       <img
                         src={product.image}
                         alt={product.name}
@@ -532,7 +537,50 @@ const DepartmentDash = () => {
           <>
             {location.pathname === "/customer" ||
             location.pathname === "/customer/dashboard" ? (
-              <div className="bg-gray-100 p-4 rounded-lg  mt-4 ">
+              <div className="bg-gray-100 p-4 rounded-lg  mt-4 flex flex-col gap-4">
+                <div className="bg-white rounded-md p-2">
+                {customerServiceWidgets
+                  .filter((section) => section.subModule === "asset")
+                  .map((section, index) => (
+                    <WidgetSection
+                      key={index}
+                      heading={section.heading}
+                      widgets={section.widgets}
+                    />
+                  ))}
+
+                <div className="flex w-full flex-1 flex-grow gap-x-4">
+                  <QuantityRemainingWidget
+                    totalStock={100}
+                    remainingStock={30}
+                    assetType="Laptops"
+                  />
+
+                  <QuantityRemainingWidget
+                    totalStock={100}
+                    remainingStock={10}
+                    assetType="Mobiles"
+                  />
+                </div>
+                </div>
+
+                <div className="bg-white rounded-md p-2">
+                {customerServiceWidgets
+                  .filter((section) => section.subModule === "ticket")
+                  .map((section, index) => (
+                    <WidgetSection
+                      key={index}
+                      heading={section.heading}
+                      widgets={section.widgets}
+                    />
+                  ))}
+                </div>
+
+                <div className="bg-white rounded-md p-2">
+                <RoomBookingDash />
+                </div>
+
+               
                 {itWidgets.map((section, index) => (
                   <WidgetSection
                     key={index}
@@ -721,7 +769,8 @@ const DepartmentDash = () => {
           open={openTicket}
           onClose={handleCloseTicket}
           aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description">
+          aria-describedby="modal-modal-description"
+        >
           {/* <Box sx={style}> */}
           <Box sx={style}>
             <AddTicketForm />

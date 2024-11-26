@@ -1,6 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import AgTable from "../../../components/AgTable";
+import { useLocation } from "react-router-dom";
 
 export default function RoomBookingDash() {
   const upcomingBookings = 5;
@@ -61,20 +62,22 @@ export default function RoomBookingDash() {
       },
     },
   ];
-
+  const location = useLocation();
   const navigate = useNavigate();
 
   return (
-    <div className="p-6 bg-gray-100 w-[80vw] md:w-full">
+    <div className="p-2 bg-gray-100 w-[80vw] md:w-full">
       {/* Header */}
       <div className="w-full flex justify-between items-center mb-6">
         <h1 className="text-3xl font-bold">Room Booking Dashboard</h1>
+        {location.pathname === '/customer/meetings' ? (
         <button
           onClick={() => navigate("/customer/meetings/booking")}
           className="px-6 py-2 rounded-lg text-white wono-blue-dark hover:bg-[#3cbce7] transition-shadow shadow-md hover:shadow-lg active:shadow-inner"
         >
           Book a Room
         </button>
+        ) : ''}
       </div>
 
       {/* Widgets */}

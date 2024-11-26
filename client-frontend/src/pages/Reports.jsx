@@ -43,7 +43,7 @@ const Reports = () => {
     <div className="flex min-h-screen">
       <TestSide />
       <ModuleSidebar />
-      <div className=" w-full p-6 motion-preset-blur-right-md">
+      <div className=" w-full p-6 motion-preset-blur-right-md hidden">
         {/* <h2 className="text-4xl  ">Reports</h2> */}
         <h2 className="text-3xl  font-bold  ">Reports</h2>
         <div className="flex h-16">

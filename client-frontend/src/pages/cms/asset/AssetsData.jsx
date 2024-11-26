@@ -143,7 +143,7 @@ const AssetsData = ({ data }) => {
   ];
 
   const columns = [
-    { field: "id", headerName: "ID", width: 50 },
+    { field: "id", headerName: "ID", flex: 1 },
     { field: "department", headerName: "Department", flex: 1 },
     { field: "assigneeName", headerName: "Assignee Name", flex: 1 },
     { field: "assetNumber", headerName: "Asset Number", flex: 1 },
@@ -202,7 +202,7 @@ columns.forEach((column) => {
 });
 
   return (
-    <div className="p-0">
+    <div className="p-2">
       <div className="flex justify-between">
         <div className="content-center"></div>
       </div>

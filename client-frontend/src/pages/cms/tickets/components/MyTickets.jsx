@@ -10,6 +10,7 @@ import { CSVLink } from "react-csv";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import { toast } from "sonner";
+import AgTable from "../../../../components/AgTable";
 
 const MyTickets = () => {
   const columns = [
@@ -41,7 +42,7 @@ const MyTickets = () => {
       field: "viewDetails",
       headerName: "Actions",
       width: 150,
-      renderCell: (params) => {
+      cellRenderer: (params) => {
         const handleActionChange = (event) => {
           const selectedAction = event.target.value;
 
@@ -341,16 +342,16 @@ const MyTickets = () => {
       </div>
 
       {/* Tickets datatable START */}
-      <Paper sx={{ height: 400, width: "100%" }}>
-        <DataGrid
-          rows={filteredRows} // Pass filtered rows
+      
+        {/* <DataGrid
+          rows={filteredRows}
           columns={columns}
           initialState={{ pagination: { paginationModel } }}
           pageSizeOptions={[5, 10]}
-          // checkboxSelection
           sx={{ border: 0, width: "75vw" }}
-        />
-      </Paper>
+        /> */}
+      
+      <AgTable data={filteredRows} columns={columns} />
       {/* Tickets datatable END */}
 
       {/* ADD TICKET MODAL START */}

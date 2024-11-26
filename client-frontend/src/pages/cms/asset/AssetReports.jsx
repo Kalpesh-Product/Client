@@ -88,29 +88,6 @@ const AssetReports = () => {
     { field: "purchaseDate", headerName: "Purchase Date", width: 150 },
     { field: "warranty", headerName: "Warranty (Months)", width: 150 },
     { field: "location", headerName: "Location", width: 150 },
-    {
-      field: "actions",
-      headerName: "Actions",
-      width: 250,
-      renderCell: (params) => (
-        <div className="p-2 mb-2">
-          {/* <button
-            style={{
-              backgroundColor: "#0db4ea",
-              color: "white",
-              border: "none",
-              padding: "0.5rem",
-              borderRadius: "4px",
-              cursor: "pointer",
-              fontFamily: "Popins-Regular",
-            }}
-            onClick={() => handleViewDetails(params.row)}
-          >
-            Assign
-          </button> */}
-        </div>
-      ),
-    },
   ];
 
   //   // Filter laptops based on search term and selected asset name
@@ -132,9 +109,9 @@ const AssetReports = () => {
         Add Asset
       </button> */}
 
-      <h1 className="text-2xl font-semibold mb-4">Asset Reports</h1>
+      <h1 className="text-3xl font-semibold mb-4 motion-preset-expand">Asset Reports</h1>
 
-      <div className="w-[72vw]">
+      <div className="">
         <div className="flex justify-between gap-4 p-2 rounded-md bg-white">
           <div className="flex gap-4 ">
             <TextField
@@ -171,7 +148,7 @@ const AssetReports = () => {
         </div>
 
         <div className="motion-preset-slide-up-md">
-          <AgTable data={filteredData} columns={laptopColumns} paginationPageSize={6} />
+          <AgTable data={filteredData} columns={laptopColumns} paginationPageSize={10} />
         </div>
       </div>
     </div>
