@@ -39,13 +39,21 @@ const TasklistTable = () => {
           width: 130,
           type: "singleSelect",
           valueOptions: ["High", "Medium", "Low"],
-          cellClassName: (params) => {
-            
-            if (params.value === "High") return "bg-red-400 text-white px-4 py-1 rounded-full text-center";
-            if (params.value === "Medium") return "bg-yellow-400 text-black px-4 py-1 rounded-full text-center";
-            if (params.value === "Low") return "bg-green-400 text-white px-4 py-1 rounded-full text-center ";
+          renderCell: (params) => {
+            const statusColors = {
+              High: "text-red-600 bg-red-100",
+              Medium: "text-blue-600 bg-blue-100",
+              Low: "text-yellow-600 bg-yellow-100",
+            };
+            const statusClass = statusColors[params.value] || "";
 
-            return "";
+            return (
+              <span
+                className={`px-3 py-1 rounded-full text-sm font-medium ${statusClass}`}
+              >
+                {params.value}
+              </span>
+            );
           },
           
         },
@@ -61,14 +69,65 @@ const TasklistTable = () => {
           field: "action",
           headerName: "Action",
           width: 150,
-          renderCell: (params) => (
-            <button
-              onClick={() => handleOpenModal(params.row)}
-              className="border-green-950 border-[2px]   px-4 py-1 rounded"
-            >
-              Open Modal
-            </button>
-          ),
+          renderCell: (params) => {
+            const handleActionChange = (event) => {
+              const selectedAction = event.target.value;
+    
+              
+            };
+    
+            return (
+              <FormControl size="small" sx={{ width: "100%" }}>
+                <Select
+                  value="" // Always forces the dropdown to display the SVG
+                  onChange={handleActionChange}
+                  displayEmpty
+                  disableUnderline
+                  IconComponent={() => null} // Removes the dropdown arrow
+                  sx={{
+                    "& .MuiSelect-select": {
+                      padding: "8px 16px",
+                      borderRadius: "0.375rem", // Tailwind rounded
+                      backgroundColor: "transparent",
+                      border: "none", // Removes border
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    },
+                    "& fieldset": {
+                      border: "none", // Removes border in outlined variant
+                    },
+                  }}>
+                  <MenuItem value="" disabled>
+                    <svg
+                      className="flex-none size-4 text-gray-600 dark:text-neutral-500"
+                      xmlns="http://www.w3.org/2000/svg"
+                      width={24}
+                      height={24}
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth={2}
+                      strokeLinecap="round"
+                      strokeLinejoin="round">
+                      <circle cx={12} cy={12} r={1} />
+                      <circle cx={12} cy={5} r={1} />
+                      <circle cx={12} cy={19} r={1} />
+                    </svg>
+                  </MenuItem>
+                  <MenuItem value="view" onClick={()=>handleOpenModal(params.row)}>
+                    View Details
+                  </MenuItem>
+                  <MenuItem value="edit" >
+                    Edit
+                  </MenuItem>
+                  <MenuItem value="delete" >
+                    Delete
+                  </MenuItem>
+                </Select>
+              </FormControl>
+            );
+          },
         },
         
       ];

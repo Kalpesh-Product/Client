@@ -51,9 +51,12 @@ const AssignTaskForm = ({ title, handleClose ,rows, setAllRows,selectedRow,modal
     });
 
     const [projectData, setProjectData] = useState({
+      projectName:"",
+      category:"",
       Department:"",
       Title:"",
-      Description:""
+      description:"",
+      date:""
     });
 
     
@@ -62,6 +65,7 @@ const AssignTaskForm = ({ title, handleClose ,rows, setAllRows,selectedRow,modal
 
       const priorityType = ["High","Low","Medium"];
       const statusTypes = ["Ongoing","Pending","Start","InProgress","Running late"];
+      const Roles = ["Frontend Developer","Backened Developer","Ui/UX Developer","Mentor","Manager","Intern","Trainee","React developer","Java  developer","DBA"]
 
       const projects = ["Website Redesign","Financial Forcastig And Budgeting","Annual Co-orporate and Conference","Launch a New Digital Marketing Campaign","Bussiness process optimization and automation"]
 
@@ -76,6 +80,10 @@ const AssignTaskForm = ({ title, handleClose ,rows, setAllRows,selectedRow,modal
           ...prevData,
           [name]: value,
         }));
+        setProjectData((prevData)=>({
+          ...prevData,
+          [name]:value
+      }))
       };
 
       const hadndleEmployeeChange = (e) =>{
@@ -197,14 +205,14 @@ const AssignTaskForm = ({ title, handleClose ,rows, setAllRows,selectedRow,modal
           </Grid>
           <Grid item xs={12}>
           <TextField
-              label="tasks"
+              label="Assign Role"
               name="Task"
               select
               fullWidth
               value={membersData.Task}
               onChange={hadndleEmployeeChange}
             >
-              {statusTypes.map((type, index) => (
+              {Roles.map((type, index) => (
                 <MenuItem key={index} value={type}>
                   {type}
                 </MenuItem>
@@ -212,6 +220,43 @@ const AssignTaskForm = ({ title, handleClose ,rows, setAllRows,selectedRow,modal
             </TextField>
             
           </Grid>
+          <Grid item xs={12}>
+          <TextField
+              label="Assign Projects"
+              name="Projects"
+              select
+              fullWidth
+              value={membersData.Projects}
+              onChange={hadndleEmployeeChange}
+            >
+              {projects.map((type, index) => (
+                <MenuItem key={index} value={type}>
+                  {type}
+                </MenuItem>
+              ))}
+            </TextField>
+            
+          </Grid>
+          <Grid item xs={12}>
+          <TextField
+              label="Assign Tasks"
+              name="Task"
+              select
+              fullWidth
+              value={membersData.Projects}
+              onChange={hadndleEmployeeChange}
+            >
+              {projects.map((type, index) => (
+                <MenuItem key={index} value={type}>
+                  {type}
+                </MenuItem>
+              ))}
+            </TextField>
+            
+          </Grid>
+
+         
+
 
           </div>
 
@@ -253,13 +298,13 @@ const AssignTaskForm = ({ title, handleClose ,rows, setAllRows,selectedRow,modal
           <Grid item xs={12}>
             <TextField
               label="Select Project"
-              name="Project"
+              name="project"
               select
               fullWidth
               value={formData.project}
               onChange={handleChange}
             >
-              {priorityType.map((type, index) => (
+              {projects.map((type, index) => (
                 <MenuItem key={index} value={type}>
                   {type}
                 </MenuItem>
@@ -287,6 +332,24 @@ const AssignTaskForm = ({ title, handleClose ,rows, setAllRows,selectedRow,modal
               ))}
             </TextField>
           </Grid>
+
+          {/* Due Date */}
+          <Grid item xs={12}>
+            <TextField
+              label="Due date"
+              name="date"
+              type="date"
+              fullWidth
+              value={projectData.purchaseDate}
+              onChange={handleChange}
+              InputLabelProps={{
+                shrink: true,
+              }}
+            />
+          </Grid>
+         
+
+
 
           {/* Asset Name */}
           <Grid item xs={12}>
@@ -316,14 +379,35 @@ const AssignTaskForm = ({ title, handleClose ,rows, setAllRows,selectedRow,modal
           {/* Asset Number */}
           <Grid item xs={12}>
             <TextField
-              name='taskName'
+              name='projectName'
               label="Project Name"
-              value={formData.taskName}
+              value={projectData.taskName}
+              fullWidth
+              onChange={handleChange}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              name='category'
+              label="Project Category"
+              value={projectData.category}
               fullWidth
               onChange={handleChange}
             />
           </Grid>
 
+          {/* Description */}
+          <Grid item xs={12}>
+            <TextField
+              name='description'
+              label="Project Description"
+              value={projectData.description}
+              fullWidth
+              onChange={handleChange}
+              multiline
+              rows={4}
+            />
+          </Grid>
           
 
           {/* Department Dropdown */}
@@ -343,6 +427,22 @@ const AssignTaskForm = ({ title, handleClose ,rows, setAllRows,selectedRow,modal
         />
       )}
       />
+          </Grid>
+          
+
+          {/* Due date of task */}
+          <Grid item xs={12}>
+            <TextField
+              label="Due date"
+              name="date"
+              type="date"
+              fullWidth
+              value={projectData.purchaseDate}
+              onChange={handleChange}
+              InputLabelProps={{
+                shrink: true,
+              }}
+            />
           </Grid>
 
           {/* Asset Type Dropdown */}
@@ -364,7 +464,7 @@ const AssignTaskForm = ({ title, handleClose ,rows, setAllRows,selectedRow,modal
           </Grid>
 
           {/* Asset Name */}
-          <Grid item xs={12}>
+          {/* <Grid item xs={12}>
           <TextField
               label="Status"
               name="status"
@@ -380,7 +480,7 @@ const AssignTaskForm = ({ title, handleClose ,rows, setAllRows,selectedRow,modal
               ))}
             </TextField>
             
-          </Grid>
+          </Grid> */}
 
         </div>
 
