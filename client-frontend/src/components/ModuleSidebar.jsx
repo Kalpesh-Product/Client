@@ -159,20 +159,21 @@ const ModuleSidebar = ({ mainSideBar }) => {
   ];
   const tasks = [
     {
-      title: "Tasks",
-      route: "/tasks",
+      title: "Tasklist",
+      route: "/tasks/tasklistfirstmenu",
       icon: <FaTasks />,
     },
-    {
-      title: "Teams",
-      route: "/tasks/teams",
-      icon: <FaUsers />,
-    },
+   
     {
       title: "Projects",
       route: "/tasks/tasklist",
       icon: <FaProjectDiagram />,
     },
+    {
+      title: "Teams",
+      route: "/tasks/teams",
+      icon: <FaUsers />,
+    }
   ];
 
   // Get the department based on the current path

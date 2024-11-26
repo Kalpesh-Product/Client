@@ -1,25 +1,19 @@
-import React,{useState} from 'react'
-import TestSide from '../components/Sidetest'
-import TaskSidebar from '../components/TaskManagement/TaskSidebar';
+import React , {useState} from 'react'
+
 import AssignTaskForm from '../components/TaskManagement/AssignTaskForm';
 
 import { DataGrid } from "@mui/x-data-grid";
 import Paper from "@mui/material/Paper";
-import Box from "@mui/material/Box";
-import InputLabel from "@mui/material/InputLabel";
+
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import ModuleSidebar from '../components/ModuleSidebar';
-import { alignProperty } from '@mui/material/styles/cssUtils';
+
 import { NewModal } from '../components/NewModal';
 import { useNavigate } from 'react-router-dom';
-import Avatar from "@mui/material/Avatar";
-import Stack from "@mui/material/Stack";
+import { Stack,Avatar } from '@mui/material';
 
-
-
-const Task = () => {
+const Tasklistfirstmenu = () => {
 
     const columns = [
         { field: "id", headerName: "ID", width: 70  },
@@ -27,21 +21,18 @@ const Task = () => {
         { field: "Assignes", headerName: "Assignes", width: 200,
             type: "singleSelect",
             renderCell: (params) => (
-              <Stack spacing={-1} direction="row" sx={{
-                paddingTop:"5%", // Centers horizontally
-                 // Centers vertically
-                width: "100%",
-                // Ensures it takes the full width of the cell
-              }}>
-                {params.row.Assignes.map((assignee, index) => (
-                  <Avatar
-                    key={index}
-                    src={assignee}
-                    sx={{ width: 30, height: 30, border: "1px solid white" }}
-                  />
-                ))}
-              </Stack>
-            ),
+                <Stack spacing={-1} direction="row"  sx={{
+                    marginTop:"5%" // Ensures it takes the full width of the cell
+                  }}>
+                  {params.row.Assignes.map((assignee, index) => (
+                    <Avatar
+                      key={index}
+                      src={assignee}
+                      sx={{ width: 30, height: 30, border: "1px solid white" }}
+                    />
+                  ))}
+                </Stack>
+              ),
             
          },
          { field: "DueDate", headerName: "Due Date", width: 200 },
@@ -94,7 +85,13 @@ const Task = () => {
               const handleActionChange = (event) => {
                 const selectedAction = event.target.value;
       
-                
+                // if (selectedAction === "view") {
+                //   handleViewDetails(params.row);
+                //   // } else if (selectedAction === "edit") {
+                //   //   handleEdit(params.row);
+                // } else if (selectedAction === "delete") {
+                //   handleDelete(params.row);
+                // }
               };
       
               return (
@@ -172,9 +169,9 @@ const Task = () => {
           id: 2,
           ticketTitle: "Payroll Issue",
           Assignes: [
-            "https://i.pravatar.cc/150?img=4",
-            "https://i.pravatar.cc/150?img=5",
-            "https://i.pravatar.cc/150?img=6",
+            "https://i.pravatar.cc/150?img=7",
+            "https://i.pravatar.cc/150?img=8",
+            "https://i.pravatar.cc/150?img=9",
           ],
           DueDate:"12th october 2024",
           priority: "Medium",
@@ -184,7 +181,7 @@ const Task = () => {
         {
           id: 3,
           ticketTitle: "Server Downtime",
-          Assignes: [
+          Assignes:  [
             "https://i.pravatar.cc/150?img=7",
             "https://i.pravatar.cc/150?img=8",
             "https://i.pravatar.cc/150?img=9",
@@ -250,9 +247,9 @@ const Task = () => {
           id: 8,
           ticketTitle: "Office Supplies Request",
           Assignes:[
-            "https://i.pravatar.cc/150?img=1",
-            "https://i.pravatar.cc/150?img=2",
-            "https://i.pravatar.cc/150?img=3",
+            "https://i.pravatar.cc/150?img=7",
+            "https://i.pravatar.cc/150?img=8",
+            "https://i.pravatar.cc/150?img=9",
           ],
           DueDate:"10th November 2024",
           priority: "Low",
@@ -263,9 +260,9 @@ const Task = () => {
           id: 9,
           ticketTitle: "Email Access Issue",
           Assignes:[
-            "https://i.pravatar.cc/150?img=7",
-            "https://i.pravatar.cc/150?img=8",
-            "https://i.pravatar.cc/150?img=9",
+            "https://i.pravatar.cc/150?img=4",
+            "https://i.pravatar.cc/150?img=5",
+            "https://i.pravatar.cc/150?img=6",
           ],
           DueDate:"20th November 2024",
           priority: "Medium",
@@ -318,37 +315,36 @@ const Task = () => {
             navigate('/tasks/tasklist');
             
           }
-    
   return (
     <div className="flex min-h-screen">
         
         <div className='w-full p-6 motion-preset-blur-right-md  max-w-screen-xl mx-auto '>
         <h2 className="text-4xl  ">Tasks</h2>
-        <div className="grid grid-cols-4 gap-4">
-    {/* Total Tasks */}
+        {/* <div className="grid grid-cols-4 gap-4">
+   
     <div className="bg-white p-4 shadow-md rounded-lg flex items-center justify-center flex-col cursor-pointer" onClick={navigateProjectList}>
       <h3 className="text-xl font-semibold" >Ongoing Tasks</h3>
       <div className='items-center justify-center mt-5 font-bold text-cyan-500 text-3xl'>20</div>
     </div>
 
-    {/* Upcoming Tasks */}
+    
     <div className="bg-white p-4 shadow-md rounded-lg flex items-center justify-center flex-col cursor-pointer" onClick={navigateProjectList}>
       <h3 className="text-xl font-semibold" >Upcoming Tasks</h3>
       <div className='items-center justify-center mt-5 font-bold text-purple-500 text-3xl'>10</div>
     </div>
 
-    {/* Tasks in Progress */}
+    
     <div className="bg-white p-4 shadow-md rounded-lg flex items-center justify-center flex-col cursor-pointer" onClick={navigateProjectList}>
       <h3 className="text-xl font-semibold" >Pending</h3>
       <div className='items-center justify-center mt-5 font-bold text-orange-500 text-3xl'>15</div>
     </div>
 
-    {/* Completed Tasks */}
+    
     <div className="bg-white p-4 shadow-md rounded-lg flex items-center justify-center flex-col cursor-pointer" onClick={navigateProjectList}>
       <h3 className="text-xl font-semibold">Completed Tasks</h3>
       <div className='items-center justify-center mt-5 font-bold text-green-500 text-3xl'>10</div>
     </div>
-  </div>
+  </div> */}
 
   <div className="flex flex-wrap items-center justify-between mt-10">
     {/* Left Side: Search, Priority Dropdown, and Date Filter */}
@@ -456,4 +452,4 @@ const Task = () => {
   )
 }
 
-export default Task
+export default Tasklistfirstmenu

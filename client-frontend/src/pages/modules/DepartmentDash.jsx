@@ -81,6 +81,7 @@ import AddRooms from "../cms/room-booking/AddRooms";
 import Teams from "../Teams";
 import Tasklist from "../Tasklist";
 import TasklistTable from "../TasklistTable";
+import Tasklistfirstmenu from "../tasklistfirstmenu";
 
 const DepartmentDash = () => {
   const [user, setUser] = useState("");
@@ -690,9 +691,14 @@ const DepartmentDash = () => {
             )}
           </>
         )}
-        {location.pathname === "/tasks" ? (
+        {location.pathname === "/tasks" ||
+            location.pathname === "/tasks/dashboard" ? (
           <Task />
-        ) : location.pathname === "/tasks/teams" ? (
+        ) 
+        : location.pathname === "/tasks/tasklistfirstmenu" ? (
+          <Tasklistfirstmenu/>
+        )
+         : location.pathname === "/tasks/teams" ? (
           <>
             <Teams />
           </>

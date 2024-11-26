@@ -139,15 +139,9 @@ const Teams = () => {
       const filteredRows =
       searchTerm === ""
         ? allRows // show all rows if no department is selected
-        : allRows.filter((row) => row.Name === searchTerm);
+        : allRows?.filter((row) => row.Name.toLowerCase().includes(searchTerm?.toLowerCase()));
 
-        const filteredTasks = filteredRows.filter((task) =>{
-        const matchesSearch =  task.Name.toLowerCase().includes(searchTerm?.toLowerCase());
-        const matchesPriority = priorityFilter ? task.priority === priorityFilter : true;
-        return matchesPriority && matchesSearch ;
-        }
-
-        );
+        
 
         const addTeamMembersbtn = ()=>{
             SetModalOpen(true);
@@ -161,8 +155,9 @@ const Teams = () => {
        
         <div className='w-full p-6 motion-preset-blur-right-md  max-w-screen-xl mx-auto '>
         {/* <h2 className="text-2xl  ">Team Members</h2> */}
-        <div className="flex flex-wrap items-center justify-between ">
+        {/* <div className="flex flex-wrap items-center justify-between "> */}
         <h2 className="text-2xl  ">Team Members</h2>
+        <div className="flex flex-wrap items-center justify-between mt-10">
     {/* Left Side: Search, Priority Dropdown, and Date Filter */}
     <div className="flex flex-wrap gap-1">
       {/* Search Field */}
@@ -187,7 +182,7 @@ const Teams = () => {
         <div className='mt-5 overflow-auto w-full max-w-screen-xl mx-auto  motion-preset-blur-right-md'>
   <Paper sx={{ height: 400, width: "100%", alignItems:"center" , display:"flex", justifyContent:"center"}}>
         <DataGrid
-          rows={filteredTasks} // Pass filtered rows
+          rows={filteredRows} // Pass filtered rows
           columns={columns}
           initialState={{ pagination: { paginationModel } }}
           pageSizeOptions={[5, 10]}
