@@ -26,6 +26,7 @@
   .wono-opacity {
     opacity: 15%;
   }
+ 
 }
 
 @font-face {
@@ -51,5 +52,17 @@ body {
   background-color: #f5f5f5;
   color: #b0b0b0;
   pointer-events: none; /* Prevent interaction */
+}
+
+.fc .fc-view-harness {
+  background: #ffffff;
+}
+
+.fc-disabled-date {
+  pointer-events: none; /* Disable interactions */
+  opacity: 0.5; /* Make disabled dates appear faded */
+  background-color: #f8d7da; /* Optional: Add a light background */
+  color: #6c757d; /* Optional: Adjust text color for visibility */
+  cursor: not-allowed;
 }
 

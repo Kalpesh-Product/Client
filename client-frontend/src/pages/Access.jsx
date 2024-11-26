@@ -7,7 +7,6 @@ import MemberForm from "../components/MemberForm";
 import { data } from "../utils/data";
 import { motion } from "framer-motion";
 import DepartmentForm from "../components/DepartmentForm";
-import Sidebar from "../components/ClientSidebar";
 import TestSide from "../components/Sidetest";
 
 export default function Access() {

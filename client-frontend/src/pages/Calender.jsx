@@ -56,12 +56,12 @@ const Calender = () => {
   //   );
   //   setSelectedNames(value);
   // };
-  const handleChange = (e) => {
-    const value = Array.from(
-      e.target.selectedOptions,
-      (option) => option.value
-    );
-    setSelectedNames((prevNames) => [...new Set([...prevNames, ...value])]); // Avoid duplicates
+  const dayCellClassNames = (dateInfo) => {
+    const today = new Date();
+    const cellDate = new Date(dateInfo.date);
+
+    // Add custom class for past dates
+    return cellDate < today.setHours(0, 0, 0, 0) ? "fc-disabled-date" : "";
   };
 
   const [events, setEvents] = useState([
@@ -132,6 +132,13 @@ const Calender = () => {
     console.log(names);
   };
   const handleEventClick = (e) => {
+    const today = new Date();
+    const clickedDate = new Date(e.dateStr);
+
+    if (clickedDate < today.setHours(0, 0, 0, 0)) {
+      // Prevent clicks on past dates
+      return;
+    }
     const event = e.event;
     setSelectedEvent({
       // title: info.event.name,
@@ -230,6 +237,7 @@ const Calender = () => {
             initialView="dayGridMonth"
             weekends={true}
             events={filteredEvents}
+            dayCellClassNames={dayCellClassNames}
             eventClick={handleEventClick}
             visibleRange={(currentDate) => {
               return get30DayRange(currentDate); // Restrict to 30 days
