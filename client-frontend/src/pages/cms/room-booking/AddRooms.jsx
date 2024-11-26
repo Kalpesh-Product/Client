@@ -12,6 +12,7 @@ import Modal from "../../../components/Modal";
 import { toast } from "sonner";
 import { motion } from "framer-motion";
 import { IoMdClose } from "react-icons/io";
+import { FiWifi, FiSun, FiMonitor } from "react-icons/fi"; 
 
 export default function AddRooms() {
   const [rooms, setRooms] = useState(allRooms);
@@ -126,18 +127,22 @@ export default function AddRooms() {
                   {room.availability}
                 </span>
               </div>
-              <Typography
-                variant="body2"
-                color="textSecondary"
-                className="mb-2"
-              >
-                Seats: {room.seats}
-              </Typography>
+              <div className="flex items-center space-x-2 mb-4 text-gray-500">
+                <FiWifi />
+                <FiSun />
+                <FiMonitor />
+              </div>
+              <p className="mb-2 text-sm font-medium text-gray-800">
+                <span role="img" aria-label="person">
+                  👥
+                </span>{" "}
+                Fits {room.seats} people
+              </p>
               <Typography variant="body2" color="textSecondary">
                 {room.description}
               </Typography>
               <div className="mt-4">
-                <Button variant="contained" onClick={() => handleEdit(room)}>
+                <Button variant="contained" className="w-full" onClick={() => handleEdit(room)}>
                   Edit Room
                 </Button>
               </div>

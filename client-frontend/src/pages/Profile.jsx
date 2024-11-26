@@ -7,10 +7,12 @@ import Profilepic from "../assets/profile.jpg";
 import { TbCameraPlus } from "react-icons/tb";
 import Modal from "../components/Modal";
 import { closeModal, openModal } from "../redux/features/modalSlice";
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';import { DataGrid } from "@mui/x-data-grid";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import { DataGrid } from "@mui/x-data-grid";
 import SuperAdmin from "../assets/kashif-bg.png";
 import { useDispatch, useSelector } from "react-redux";
 import { Accordion, AccordionDetails, AccordionSummary } from "@mui/material";
+import AgTable from "../components/AgTable";
 // import image from "../profile.jpg";
 
 const Profile = () => {
@@ -250,12 +252,12 @@ const Profile = () => {
                         expandIcon={<ExpandMoreIcon />}
                         aria-controls="panel1-content"
                         id="panel1-header"
-                        sx={{fontFamily:'Popins-SemiBold'}}
+                        sx={{ fontFamily: "Popins-SemiBold" }}
                       >
-                         IT
+                        IT
                       </AccordionSummary>
                       <AccordionDetails>
-                       {userData.assignedAsset}
+                        {userData.assignedAsset}
                       </AccordionDetails>
                     </Accordion>
                     <Accordion>
@@ -263,12 +265,12 @@ const Profile = () => {
                         expandIcon={<ExpandMoreIcon />}
                         aria-controls="panel1-content"
                         id="panel1-header"
-                        sx={{fontFamily:'Popins-SemiBold'}}
+                        sx={{ fontFamily: "Popins-SemiBold" }}
                       >
-                         Maintainance
+                        Maintainance
                       </AccordionSummary>
                       <AccordionDetails>
-                       5001 - Chair - Herman Miller
+                        5001 - Chair - Herman Miller
                       </AccordionDetails>
                     </Accordion>
                   </div>
@@ -316,8 +318,8 @@ const Profile = () => {
                     Room Booking Details
                   </h3>
                   <div style={{ height: 400, width: "100%" }}>
-                    <DataGrid
-                      rows={[
+                    <AgTable
+                      data={[
                         {
                           id: 1,
                           room: "Vatican",
@@ -350,9 +352,6 @@ const Profile = () => {
                         { field: "duration", headerName: "Duration", flex: 1 },
                         { field: "date", headerName: "Date", flex: 1 },
                       ]}
-                      pageSize={5}
-                      rowsPerPageOptions={[5, 10]}
-                      disableSelectionOnClick
                     />
                   </div>
                 </div>

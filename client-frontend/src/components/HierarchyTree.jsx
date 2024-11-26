@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import Modal from "./Modal";
 import EmployeeProfile from "./AccessTabViewModel/EmployeeProfile";
 import AccessHierarchyTab from "./AccessTabViewModel/AccessHierarchyTab";
+import { IoMdClose } from "react-icons/io";
 
 const TreeNode = ({ node }) => {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -35,11 +36,21 @@ const TreeNode = ({ node }) => {
               >
                 {getInitials(node.name)}
               </div>
+
               <div>
                 <h2 className="text-xl font-semibold">{node.name}</h2>
                 <p className="text-gray-500">Active</p>
               </div>
             </div>
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.9 }}
+              type="button"
+              onClick={() => setShowModal(false)}
+              className=" p-2 bg-white text-[red] border border-red-200 hover:border-red-400 text-2xl rounded-md"
+            >
+              <IoMdClose />
+            </motion.button>
           </div>
 
           {/* Tab view */}

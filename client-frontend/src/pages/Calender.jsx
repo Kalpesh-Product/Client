@@ -56,12 +56,12 @@ const Calender = () => {
   //   );
   //   setSelectedNames(value);
   // };
-  const handleChange = (e) => {
-    const value = Array.from(
-      e.target.selectedOptions,
-      (option) => option.value
-    );
-    setSelectedNames((prevNames) => [...new Set([...prevNames, ...value])]); // Avoid duplicates
+  const dayCellClassNames = (dateInfo) => {
+    const today = new Date();
+    const cellDate = new Date(dateInfo.date);
+
+    // Add custom class for past dates
+    return cellDate < today.setHours(0, 0, 0, 0) ? "fc-disabled-date" : "";
   };
 
   const [events, setEvents] = useState([
@@ -132,6 +132,13 @@ const Calender = () => {
     console.log(names);
   };
   const handleEventClick = (e) => {
+    const today = new Date();
+    const clickedDate = new Date(e.dateStr);
+
+    if (clickedDate < today.setHours(0, 0, 0, 0)) {
+      // Prevent clicks on past dates
+      return;
+    }
     const event = e.event;
     setSelectedEvent({
       // title: info.event.name,
@@ -201,15 +208,6 @@ const Calender = () => {
           <div className="flex justify-between items-center">
             <h1 className=" font-bold text-4xl pb-5">Calendar</h1>
             <FormGroup row>
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={eventFilter.length === 0} // "All" is checked if no specific types are selected
-                    onChange={() => setEventFilter([])} // Clear all filters
-                  />
-                }
-                label="All"
-              />
               {["holiday", "meeting"].map((type) => (
                 <FormControlLabel
                   key={type}
@@ -229,7 +227,7 @@ const Calender = () => {
                       value={type} // Provide the value for the checkbox
                     />
                   }
-                  label={type.charAt(0).toUpperCase() + type.slice(1)}
+                  label={type.charAt(0).toUpperCase() + type.slice(1)} // Capitalize the first letter
                 />
               ))}
             </FormGroup>
@@ -239,14 +237,15 @@ const Calender = () => {
             initialView="dayGridMonth"
             weekends={true}
             events={filteredEvents}
+            dayCellClassNames={dayCellClassNames}
             eventClick={handleEventClick}
             visibleRange={(currentDate) => {
               return get30DayRange(currentDate); // Restrict to 30 days
             }}
             headerToolbar={{
-              start: "today prev, next",
+              left: "dayGridMonth,timeGridWeek,timeGridDay",
               center: "title",
-              end: "dayGridMonth,timeGridWeek,timeGridDay",
+              right: "today prev,next",
             }}
             height={"90vh"}
             dateClick={handleDateClick}
