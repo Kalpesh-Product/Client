@@ -111,7 +111,9 @@ export default function BookingDetails({
           sx={{
             marginTop: "1rem",
             width: "100%",
-            background: "white",
+            backgroundColor: "white",
+            borderRadius: "10px",
+            fontFamily: "Popins-Semibold",
           }}
           value={tabIndex}
           onChange={handleTabChange}

@@ -201,15 +201,6 @@ const Calender = () => {
           <div className="flex justify-between items-center">
             <h1 className=" font-bold text-4xl pb-5">Calendar</h1>
             <FormGroup row>
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={eventFilter.length === 0} // "All" is checked if no specific types are selected
-                    onChange={() => setEventFilter([])} // Clear all filters
-                  />
-                }
-                label="All"
-              />
               {["holiday", "meeting"].map((type) => (
                 <FormControlLabel
                   key={type}
@@ -229,7 +220,7 @@ const Calender = () => {
                       value={type} // Provide the value for the checkbox
                     />
                   }
-                  label={type.charAt(0).toUpperCase() + type.slice(1)}
+                  label={type.charAt(0).toUpperCase() + type.slice(1)} // Capitalize the first letter
                 />
               ))}
             </FormGroup>

@@ -1,7 +1,7 @@
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
-import timeGridPlugin from "@fullcalendar/timegrid"; // Fix this typo
+import timeGridPlugin from "@fullcalendar/timegrid"; 
 import Modal from "../../../components/Modal";
 import { useState, useEffect } from "react";
 import { rooms } from "../../../utils/Rooms";

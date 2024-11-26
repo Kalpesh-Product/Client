@@ -414,7 +414,8 @@ const ModuleSidebar = ({ mainSideBar }) => {
                     location.pathname === route
                       ? "wono-blue border-r-4 border-[#0DB4EA] rounded-tl-md rounded-bl-md text-[#0DB4EA]"
                       : "bg-white"
-                  }`}>
+                  }`}
+                >
                   <div className="flex justify-center w-5 text-2xl">{icon}</div>
 
                   {isSidebarOpen && (
@@ -456,14 +457,16 @@ const ModuleSidebar = ({ mainSideBar }) => {
                       <Tooltip
                         title={menu.title}
                         placement="right"
-                        key={subIndex}>
+                        key={subIndex}
+                      >
                         <div
                           onClick={() => navigate(menu.route)}
                           className={`flex items-center border-b-[1px] py-3 gap-3 cursor-pointer hover:wono-blue-dark hover:text-white hover:rounded-md  ${
                             location.pathname === menu.route
                               ? "wono-blue border-r-4 border-b-[0px]  border-[#0DB4EA] rounded-tl-md rounded-bl-md text-[#0DB4EA]"
                               : "bg-white"
-                          } `}>
+                          } `}
+                        >
                           <div className="flex justify-center w-6 text-[1rem]">
                             {menu.icon || <RiAppsLine />}
                           </div>
