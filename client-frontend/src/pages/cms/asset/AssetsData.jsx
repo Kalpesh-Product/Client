@@ -41,15 +41,15 @@ const AssetsData = ({ data }) => {
     handleOpenModal("revoke");
   };
 
-  const handleRevokeAsset = () => {
-    // Update the asset status to "Revoked"
-    const updatedRows = processedData.map((row) =>
-      row.id === asset.id 
+  const handleRevokeAsset = (rowData) => {
+    // Update the status to "Revoked"
+    const updatedRows = processedData.map((item) =>
+      item.id === rowData.id ? { ...item, status: "Revoked" } : item
     );
-    setProcessedData(updatedRows); // Update the state
-    // processedData.status === "Revoked" && setRevoked(true);
-    handleCloseModal(); // Close the modal
-    toast.success(`Asset revoked for: ${asset && asset.assigneeName}`);
+  
+    setProcessedData(updatedRows); // Update the state with the new rows
+    handleCloseModal()
+    toast.success(`Asset revoked for: ${rowData.assigneeName}`);
   };
 
   const handleViewDetails = (row) => {
@@ -190,6 +190,14 @@ const AssetsData = ({ data }) => {
     },
   ];
 
+  // Add cellClassRules to specific columns
+columns.forEach((column) => {
+  column.cellClassRules = {
+    ...column.cellClassRules, // Preserve existing rules if any
+    "row-revoked": (params) => params.data.status === "Revoked",
+  };
+});
+
   return (
     <div className="p-0">
       <div className="flex justify-between">
@@ -252,7 +260,7 @@ const AssetsData = ({ data }) => {
               </button>
 
               <button
-                onClick={handleRevokeAsset}
+                onClick={handleRevokeAsset(asset)}
                 className="p-2 bg-red-600 text-white rounded-md hover:bg-red-700"
               >
                 Revoke

@@ -16,13 +16,14 @@ const AgTable = ({data, columns, paginationPageSize}) => {
     filter: true,
     flex: 1,
     autoHeight :'true',
+    
     cellStyle:{display:'flex', justifyContent:'center', alignItems:'center'}
   };
   return (
     <div>
       <div
         className="ag-theme-alpine"
-        style={{ width: "100%" }}
+        style={{ width: "100%", fontFamily:'Popins-Regular' }}
       >
         <AgGridReact
           rowData={data}
