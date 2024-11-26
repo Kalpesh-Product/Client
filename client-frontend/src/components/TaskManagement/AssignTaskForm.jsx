@@ -53,7 +53,8 @@ const AssignTaskForm = ({ title, handleClose ,rows, setAllRows,selectedRow,modal
     const [projectData, setProjectData] = useState({
       Department:"",
       Title:"",
-      Description:""
+      Description:"",
+      date:""
     });
 
     
@@ -76,6 +77,10 @@ const AssignTaskForm = ({ title, handleClose ,rows, setAllRows,selectedRow,modal
           ...prevData,
           [name]: value,
         }));
+        setProjectData((prevData)=>({
+          ...prevData,
+          [name]:value
+      }))
       };
 
       const hadndleEmployeeChange = (e) =>{
@@ -253,13 +258,13 @@ const AssignTaskForm = ({ title, handleClose ,rows, setAllRows,selectedRow,modal
           <Grid item xs={12}>
             <TextField
               label="Select Project"
-              name="Project"
+              name="project"
               select
               fullWidth
               value={formData.project}
               onChange={handleChange}
             >
-              {priorityType.map((type, index) => (
+              {projects.map((type, index) => (
                 <MenuItem key={index} value={type}>
                   {type}
                 </MenuItem>
@@ -287,6 +292,24 @@ const AssignTaskForm = ({ title, handleClose ,rows, setAllRows,selectedRow,modal
               ))}
             </TextField>
           </Grid>
+
+          {/* Due Date */}
+          <Grid item xs={12}>
+            <TextField
+              label="Due date"
+              name="date"
+              type="date"
+              fullWidth
+              value={projectData.purchaseDate}
+              onChange={handleChange}
+              InputLabelProps={{
+                shrink: true,
+              }}
+            />
+          </Grid>
+         
+
+
 
           {/* Asset Name */}
           <Grid item xs={12}>
@@ -343,6 +366,21 @@ const AssignTaskForm = ({ title, handleClose ,rows, setAllRows,selectedRow,modal
         />
       )}
       />
+          </Grid>
+
+          {/* Due date of task */}
+          <Grid item xs={12}>
+            <TextField
+              label="Due date"
+              name="date"
+              type="date"
+              fullWidth
+              value={projectData.purchaseDate}
+              onChange={handleChange}
+              InputLabelProps={{
+                shrink: true,
+              }}
+            />
           </Grid>
 
           {/* Asset Type Dropdown */}
