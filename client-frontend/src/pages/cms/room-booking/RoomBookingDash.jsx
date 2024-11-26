@@ -1,7 +1,6 @@
-// App.jsx
 import React from "react";
-import { DataGrid } from "@mui/x-data-grid";
 import { useNavigate } from "react-router-dom";
+import AgTable from "../../../components/AgTable";
 
 export default function RoomBookingDash() {
   const upcomingBookings = 5;
@@ -35,31 +34,34 @@ export default function RoomBookingDash() {
     },
   ];
 
-  // Define columns for the DataGrid
+  // Define columns for the AgGrid
   const columns = [
-    { field: "id", headerName: "ID", width: 100 },
-    { field: "name", headerName: "Name", flex: 1 },
-    { field: "room", headerName: "Room", flex: 1 },
-    { field: "date", headerName: "Date", flex: 1 },
+    { headerName: "ID", field: "id", width: 100 },
+    { headerName: "Name", field: "name", flex: 1 },
+    { headerName: "Room", field: "room", flex: 1 },
+    { headerName: "Date", field: "date", flex: 1 },
     {
-      field: "status",
       headerName: "Status",
+      field: "status",
       flex: 1,
-      renderCell: (params) => (
-        <span
-          className={`px-2 py-1 rounded text-white ${
-            params.value === "Confirmed"
-              ? "bg-green-500"
-              : params.value === "Pending"
-              ? "bg-yellow-500"
-              : "bg-red-500"
-          }`}
-        >
-          {params.value}
-        </span>
-      ),
+      cellRenderer: (params) => {
+        const statusColors = {
+          Confirmed: "text-green-600 bg-green-100",
+          Cancelled: "text-red-600 bg-red-100",
+          Pending: "text-yellow-600 bg-yellow-100",
+        };
+        const statusClass = statusColors[params.value] || "";
+        return (
+          <span
+            className={`px-3 py-1 rounded-full text-sm font-medium ${statusClass}`}
+          >
+            {params.value}
+          </span>
+        );
+      },
     },
   ];
+
   const navigate = useNavigate();
 
   return (
@@ -114,18 +116,14 @@ export default function RoomBookingDash() {
         </div>
       </div>
 
-      {/* Recent Bookings DataGrid */}
+      {/* Recent Bookings AgTable */}
       <div className="bg-white shadow-md rounded-lg p-6">
         <h2 className="text-xl font-semibold mb-4">Recent Bookings</h2>
-        <div style={{ height: 400, width: "100%" }}>
-          <DataGrid
-            rows={recentBookings}
-            columns={columns}
-            pageSize={5}
-            rowsPerPageOptions={[5]}
-            disableSelectionOnClick
-          />
-        </div>
+        <AgTable
+          data={recentBookings}
+          columns={columns}
+          paginationPageSize={5}
+        />
       </div>
     </div>
   );

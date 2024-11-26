@@ -67,6 +67,7 @@ const contacts = [
 
 export default function ChatPage() {
   const fileRef = useRef(null);
+  const messageEndRef = useRef(null);
   const [activeContact, setActiveContact] = useState(contacts[0]);
   const [messages, setMessages] = useState(initialChats(activeContact.name));
   const [message, setMessage] = useState("");
@@ -92,6 +93,16 @@ export default function ChatPage() {
       setMessages(initialChats(activeContact.name));
     }
   }, [activeContact]);
+
+  useEffect(() => {
+    // Scroll to the bottom whenever messages change
+    if (messageEndRef.current) {
+      messageEndRef.current.scrollIntoView({
+        behavior: "smooth",
+        block: "nearest", // Ensures minimal movement
+      });
+    }
+  }, [messages]);
 
   const handleSendMessage = () => {
     if (message.trim() === "") return;
@@ -169,8 +180,9 @@ export default function ChatPage() {
   });
 
   return (
-    <div className="flex h-full bg-gray-100 overflow-hidden">
+    <div className="flex h-[calc(100vh-80px)] bg-gray-100 overflow-hidden">
       <TestSide />
+
       <aside className="w-1/4 bg-white p-4 shadow-lg border-r border-gray-300">
         <h2 className="text-3xl font-semibold mb-4">Chat</h2>
         <select
@@ -192,7 +204,7 @@ export default function ChatPage() {
           onChange={(e) => setSearchQuery(e.target.value)}
         />
 
-        <ul className="space-y-2 overflow-y-auto h-[70vh]">
+        <ul className="space-y-2 overflow-y-auto h-full">
           {" "}
           {/* Set scrollable height here */}
           {filteredContacts.map((contact) => (
@@ -265,7 +277,7 @@ export default function ChatPage() {
         </ul>
       </aside>
 
-      <div className="flex-1 flex flex-col justify-around bg-white h-screen">
+      <div className="flex-1 flex flex-col justify-around bg-white h-full">
         <header className="p-4 border-b flex items-center">
           <div
             className={`flex items-center justify-center w-10 h-10 rounded-full text-white font-semibold mr-3 ${getNodeColor(
@@ -281,24 +293,32 @@ export default function ChatPage() {
         </header>
 
         <div className="flex-1 p-4 overflow-y-auto space-y-4">
-          {messages.map((msg) => (
-            <div
-              key={msg.id}
-              className={`flex ${msg.fromMe ? "justify-end" : "justify-start"}`}
-            >
+          {messages.map((msg, index) => {
+            const isLastMessage = index === messages.length - 1;
+            return (
               <div
-                className={`max-w-xs p-3 rounded-lg ${
-                  msg.fromMe ? "bg-blue-200" : "bg-purple-100"
-                } shadow`}
+                key={msg.id}
+                className={`flex ${
+                  msg.fromMe ? "justify-end" : "justify-start"
+                }`}
+                ref={isLastMessage ? messageEndRef : null}
               >
-                <p className="text-sm text-gray-700">
-                  <span className="font-semibold">{msg.sender}</span>
-                  <span className="text-xs text-gray-500 ml-2">{msg.time}</span>
-                </p>
-                <p className="mt-1 whitespace-pre-wrap">{msg.content}</p>
+                <div
+                  className={`max-w-xs p-3 rounded-lg ${
+                    msg.fromMe ? "bg-blue-200" : "bg-purple-100"
+                  } shadow`}
+                >
+                  <p className="text-sm text-gray-700">
+                    <span className="font-semibold">{msg.sender}</span>
+                    <span className="text-xs text-gray-500 ml-2">
+                      {msg.time}
+                    </span>
+                  </p>
+                  <p className="mt-1 whitespace-pre-wrap">{msg.content}</p>
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
 
         <footer className="p-4 border-t flex items-center space-x-2 sticky">

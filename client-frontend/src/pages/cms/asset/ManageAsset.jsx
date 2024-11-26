@@ -16,6 +16,7 @@ import {
   Typography,
 } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
+import AgTable from "../../../components/AgTable";
 import axios from "axios";
 import allAssets from "./temp_db/MaintainanceAssets.json";
 import itAssets from "./temp_db/ItTemp.json";
@@ -121,55 +122,48 @@ const ManageAsset = () => {
     { field: "purchaseDate", headerName: "Purchase Date", flex: 1 },
     { field: "warranty", headerName: "Warranty (Months)", flex: 1 },
     // { field: "location", headerName: "Location", flex: 150 },
-    {
+  {
       field: "actions",
+      filter:false,
       headerName: "Actions",
-      width: 200,
-      renderCell: (params) => (
-        <div className="p-2 mb-2 gap-2 flex">
-          {/* <button
-            style={{
-              backgroundColor: "#0db4ea",
-              color: "white",
-              border: "none",
-              padding: "0.5rem",
-              borderRadius: "4px",
-              cursor: "pointer",
-              fontFamily: "Popins-Regular",
-            }}
-          >
-            Edit
-          </button> */}
-          <button
-            style={{
-              backgroundColor: "#0db4ea",
-              color: "white",
-              border: "none",
-              padding: "0.5rem",
-              borderRadius: "4px",
-              cursor: "pointer",
-              fontFamily: "Popins-Regular",
-            }}
-            onClick={() => handleViewDetails(params.row)}
-          >
-            Details
-          </button>
-          <button
-            style={{
-              backgroundColor: "#0db4ea",
-              color: "white",
-              border: "none",
-              padding: "0.5rem",
-              borderRadius: "4px",
-              cursor: "pointer",
-              fontFamily: "Popins-Regular",
-            }}
-            onClick={() => handleAssignAsset(params.row)}
-          >
-            Assign
-          </button>
-        </div>
-      ),
+      flex: 1,
+      cellRenderer: (params) =>
+        params.data.status !== "Revoked" ? (
+          <div className="p-2 flex gap-2">
+            <button
+              style={{
+                backgroundColor: "#0db4ea",
+                color: "white",
+                border: "none",
+                paddingLeft:'0.5rem',
+                paddingRight:'0.5rem',
+                borderRadius: "4px",
+                cursor: "pointer",
+                height:'100%'
+              }}
+              onClick={() => handleViewDetails(params.data)}
+            >
+              Details
+            </button>
+            <button
+              style={{
+                backgroundColor: "#0db4ea",
+                color: "white",
+                border: "none",
+                paddingLeft:'0.5rem',
+                paddingRight:'0.5rem',
+                borderRadius: "4px",
+                cursor: "pointer",
+                height:'100%'
+              }}
+              onClick={() => handleAssignAsset(params.data)}
+            >
+              Assign
+            </button>
+          </div>
+        ) : (
+          <span style={{ color: "gray", fontStyle: "italic" }}>Revoked</span>
+        ),
     },
   ];
 
@@ -246,9 +240,6 @@ console.log(selectedDepartment);
         <div>
           {activeTab === 0 && (
             <div className="w-[72vw] md:w-full transition-all duration-200 ease-in-out bg-white p-2 rounded-md">
-              <h1 className="text-xl font-semibold py-4 text-gray-600">
-                Filter by :
-              </h1>
               <div className="flex justify-between gap-4 pb-4">
                 <div className="flex gap-4">
                   <TextField
@@ -314,28 +305,10 @@ console.log(selectedDepartment);
                 </button>
               </div>
               <div className="motion-preset-slide-up-md">
-                <DataGrid
-                  rows={filteredData}
-                  columns={laptopColumns}
-                  pageSize={5}
-                  rowsPerPageOptions={[5]}
-                  disableSelectionOnClick
-                  initialState={{ pinnedColumns: { right: ["actions"] } }}
-                  getRowHeight={() => "auto"} // Automatically adjust row height
-                  sx={{
-                    "& .MuiDataGrid-cell": {
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "start", // Center align button content
-                    },
-                    "& .MuiDataGrid-row": {
-                      padding: 0, // Ensure no extra padding
-                    },
-                    width: "100%",
-                    height: "50vh",
-                    fontFamily: "Popins-Regular",
-                    backgroundColor:'white'
-                  }}
+                <AgTable 
+                data={filteredAssets}
+                columns={laptopColumns}
+                paginationPageSize={10}
                 />
               </div>
             </div>
