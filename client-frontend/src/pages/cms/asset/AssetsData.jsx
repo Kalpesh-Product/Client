@@ -156,64 +156,116 @@ const filteredAssets = processedData.filter((asset) => {
     // More rows...
   ];
 
-  const columns = [
-    { field: "id", headerName: "ID", flex: 1 },
-    { field: "department", headerName: "Department", flex: 1 },
-    { field: "assigneeName", headerName: "Assignee Name", flex: 1 },
-    { field: "assetNumber", headerName: "Asset Number", flex: 1 },
-    { field: "assetType", headerName: "Asset Type", flex: 1 },
-    { field: "assetName", headerName: "Asset Name", flex: 1 },
-    { field: "location", headerName: "Location", flex: 1 },
-    { field: "status", headerName: "Status", flex: 1 },
-    { field: "assignmentDate", headerName: "Assignment Date", flex: 1 },
-    {
-      field: "actions",
-      headerName: "Actions",
-      flex: 1,
-      cellRenderer: (params) =>
-        params.data.status !== "Revoked" ? (
-          <div className="p-2 mb-2 flex gap-2">
-          <button
-            style={{
-              backgroundColor: "#0db4ea",
-              color: "white",
-              border: "none",
-              padding: "0.2rem",
-              borderRadius: "4px",
-              cursor: "pointer",
-              fontFamily: "Popins-Regular",
-            }}
-            onClick={() => handleViewDetails(params.data)}
-          >
-            Details
-          </button>
-          <button
-            style={{
-              backgroundColor: "red",
-              color: "white",
-              border: "none",
-              padding: "0.2rem",
-              borderRadius: "4px",
-              cursor: "pointer",
-              fontFamily: "Popins-Regular",
-            }}
-            onClick={() => handleRevoke(params.data)}
-          >
-            Revoke
-          </button>
-        </div>
-        ) :   <span style={{ color: "gray", fontStyle: "italic" }}>Revoked</span>
+  // const columns = [
+  //   { field: "id", headerName: "ID", flex: 1 },
+  //   { field: "department", headerName: "Department", flex: 1 },
+  //   { field: "assigneeName", headerName: "Assignee Name", flex: 1 },
+  //   { field: "assetNumber", headerName: "Asset Number", flex: 1 },
+  //   { field: "assetType", headerName: "Asset Type", flex: 1 },
+  //   { field: "assetName", headerName: "Asset Name", flex: 1 },
+  //   { field: "location", headerName: "Location", flex: 1 },
+  //   { field: "status", headerName: "Status", flex: 1 },
+  //   { field: "assignmentDate", headerName: "Assignment Date", flex: 1 },
+  //   {
+  //     field: "actions",
+  //     headerName: "Actions",
+  //     flex: 1,
+  //     cellRenderer: (params) =>
+  //       params.data.status !== "Revoked" ? (
+  //         <div className="p-2 mb-2 flex gap-2">
+  //         <button
+  //           style={{
+  //             backgroundColor: "#0db4ea",
+  //             color: "white",
+  //             border: "none",
+  //             padding: "0.2rem",
+  //             borderRadius: "4px",
+  //             cursor: "pointer",
+  //             fontFamily: "Popins-Regular",
+  //           }}
+  //           onClick={() => handleViewDetails(params.data)}
+  //         >
+  //           Details
+  //         </button>
+  //         <button
+  //           style={{
+  //             backgroundColor: "red",
+  //             color: "white",
+  //             border: "none",
+  //             padding: "0.2rem",
+  //             borderRadius: "4px",
+  //             cursor: "pointer",
+  //             fontFamily: "Popins-Regular",
+  //           }}
+  //           onClick={() => handleRevoke(params.data)}
+  //         >
+  //           Revoke
+  //         </button>
+  //       </div>
+  //       ) :   <span style={{ color: "gray", fontStyle: "italic" }}>Revoked</span>
         
-    },
-  ];
+  //   },
+  // ];
 
   // Add cellClassRules to specific columns
-columns.forEach((column) => {
-  column.cellClassRules = {
-    ...column.cellClassRules, // Preserve existing rules if any
-    "row-revoked": (params) => params.data.status === "Revoked",
-  };
-});
+// columns.forEach((column) => {
+//   column.cellClassRules = {
+//     ...column.cellClassRules, 
+//     "row-revoked": (params) => params.data.status === "Revoked",
+//   };
+// });
+
+
+const recentBookings = [
+  {
+    id: 1,
+    name: "Kalpesh Naik",
+    room: "Arambol",
+    date: "2024-11-22",
+    status: "Confirmed",
+  },
+  {
+    id: 2,
+    name: "Kashif Shaikh",
+    room: "Sydney",
+    date: "2024-11-23",
+    status: "Pending",
+  },
+  {
+    id: 3,
+    name: "Aiwinraj KS",
+    room: "Zurich",
+    date: "2024-11-20",
+    status: "Cancelled",
+  },
+];
+
+const columns = [
+  { headerName: "ID", field: "id", width: 100 },
+  { headerName: "Name", field: "name", flex: 1 },
+  { headerName: "Room", field: "room", flex: 1 },
+  { headerName: "Date", field: "date", flex: 1 },
+  {
+    headerName: "Status",
+    field: "status",
+    flex: 1,
+    cellRenderer: (params) => {
+      const statusColors = {
+        Confirmed: "text-green-600 bg-green-100",
+        Cancelled: "text-red-600 bg-red-100",
+        Pending: "text-yellow-600 bg-yellow-100",
+      };
+      const statusClass = statusColors[params.value] || "";
+      return (
+        <span
+          className={`px-3 py-1 rounded-full text-sm font-medium ${statusClass}`}
+        >
+          {params.value}
+        </span>
+      );
+    },
+  },
+];
 
   return (
     <div className="p-2">
@@ -252,7 +304,7 @@ columns.forEach((column) => {
               </div>
 
       <div style={{ width: "100%" }}>
-        <AgTable data={filteredAssets} columns={columns} paginationPageSize={10}/>
+        <AgTable data={recentBookings} columns={columns} paginationPageSize={10}/>
       </div>
 
       {/* Modal to show laptop details */}

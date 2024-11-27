@@ -52,6 +52,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { openModal, closeModal } from "../../redux/features/modalSlice";
 import AddAssetForm from "../cms/asset/AddAssetForm";
 import { NewModal } from "../../components/NewModal";
+import MyAssets from "../cms/asset/MyAssets";
 import ViewAssets from "../cms/asset/ViewAssets";
 import AssetsData from "../cms/asset/AssetsData";
 import ViewTickets from "../cms/tickets/ViewTickets";
@@ -358,7 +359,7 @@ const DepartmentDash = () => {
       <TestSide />
       <ModuleSidebar />
 
-      <div className="w-full overflow-y-auto bg-gray-100 h-full">
+      <div className="w-full bg-gray-100 h-[90vh] overflow-y-auto">
         {/* Frontend submodules */}
         {location.pathname.startsWith("/frontend") && (
           <>
@@ -538,8 +539,8 @@ const DepartmentDash = () => {
           <>
             {location.pathname === "/customer" ||
             location.pathname === "/customer/dashboard" ? (
-              <div className="bg-gray-100 p-4 rounded-lg  mt-4 flex flex-col gap-4">
-                <div className="bg-white rounded-md p-2">
+              <div className="bg-gray-100 p-4 rounded-lg  mt-4 gap-4 h-full">
+                <div className="bg-white rounded-md p-2 overflow-y-auto">
                 {customerServiceWidgets
                   .filter((section) => section.subModule === "asset")
                   .map((section, index) => (
@@ -577,9 +578,11 @@ const DepartmentDash = () => {
                   ))}
                 </div>
 
-                <div className="bg-white rounded-md p-2">
+                {/* <div className="bg-white rounded-md p-2">
                 <RoomBookingDash />
-                </div>
+                </div> */}
+
+                {/* <AssetsData /> */}
 
                
                 {itWidgets.map((section, index) => (
@@ -589,6 +592,7 @@ const DepartmentDash = () => {
                     widgets={section.widgets}
                   />
                 ))}
+           
               </div>
             ) : location.pathname === "/customer/kpi" ? (
               <>
@@ -634,7 +638,11 @@ const DepartmentDash = () => {
               <>
                 <ManageAsset />
               </>
-            ) : location.pathname === "/customer/asset/details" ? (
+            ): location.pathname === "/customer/asset/my-assets" ? (
+              <>
+                <MyAssets />
+              </> 
+            ): location.pathname === "/customer/asset/details" ? (
               <>
                 <AssetsData />
               </>

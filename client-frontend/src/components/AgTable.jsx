@@ -30,7 +30,7 @@ const AgTable = React.memo(
     return (
       <div
         className="ag-theme-alpine border-none"
-        style={{ width: "100%", fontFamily: "Popins-Regular", height: "100%" }}>
+        style={{ width: "100%", fontFamily: "Popins-Regular"}}>
         <AgGridReact
           rowData={data}
           columnDefs={columns}

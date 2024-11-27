@@ -4,6 +4,8 @@ import { DataGrid } from "@mui/x-data-grid";
 import { FormControl, MenuItem, TextField } from "@mui/material";
 import allAssets from "./temp_db/MaintainanceAssets.json";
 import AgTable from "../../../components/AgTable";
+import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
 const AssetReports = () => {
   const [user, setUser] = useState("");
@@ -11,6 +13,8 @@ const AssetReports = () => {
   const [selectedAssetName, setSelectedAssetName] = useState("");
   const [selectedDepartment, setSelectedDepartment] = useState("");
   const [assetsData, setAssetsData] = useState([]);
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
   // useEffect(() => {
   //   const fetchITAssets = async () => {
   //     try {
@@ -109,7 +113,9 @@ const AssetReports = () => {
         Add Asset
       </button> */}
 
-      <h1 className="text-3xl font-semibold mb-4 motion-preset-expand">Asset Reports</h1>
+      <h1 className="text-3xl font-semibold mb-4 motion-preset-expand">
+        Asset Reports
+      </h1>
 
       <div className="">
         <div className="flex justify-between gap-4 p-2 rounded-md bg-white">
@@ -130,18 +136,39 @@ const AssetReports = () => {
                 select
                 size="small"
                 value={selectedAssetName}
-                onChange={(e)=>setSelectedAssetName(e.target.value)}
+                onChange={(e) => setSelectedAssetName(e.target.value)}
               >
                 <MenuItem value="">All</MenuItem>
                 {[...new Set(allAssets.map((asset) => asset.brandName))].map(
-                (assetName) => (
-                  <MenuItem key={assetName} value={assetName}>
-                    {assetName}
-                  </MenuItem>
-                )
-              )}
+                  (assetName) => (
+                    <MenuItem key={assetName} value={assetName}>
+                      {assetName}
+                    </MenuItem>
+                  )
+                )}
               </TextField>
             </FormControl>
+            {/* Date Range Filter */}
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <DatePicker
+                label="Start Date"
+                value={startDate}
+                slotProps={{ textField: { size: "small" } }}
+                onChange={(newValue) => setStartDate(newValue)}
+                renderInput={(params) => (
+                  <TextField {...params} className="w-full md:w-1/4" />
+                )}
+              />
+              <DatePicker
+                label="End Date"
+                slotProps={{ textField: { size: "small" } }}
+                value={endDate}
+                onChange={(newValue) => setEndDate(newValue)}
+                renderInput={(params) => (
+                  <TextField {...params} className="w-full md:w-1/4" />
+                )}
+              />
+            </LocalizationProvider>
           </div>
 
           <button className="wono-blue-dark p-2 rounded-md text-white">
@@ -150,7 +177,11 @@ const AssetReports = () => {
         </div>
 
         <div className="motion-preset-slide-up-md">
-          <AgTable data={filteredData} columns={laptopColumns} paginationPageSize={10} />
+          <AgTable
+            data={filteredData}
+            columns={laptopColumns}
+            paginationPageSize={10}
+          />
         </div>
       </div>
     </div>

@@ -103,6 +103,11 @@ const ModuleSidebar = ({ mainSideBar }) => {
           icon: <MdOutlineManageAccounts />,
         },
         {
+          title: "My assets",
+          route: "/customer/asset/my-assets",
+          icon: <MdOutlineManageAccounts />,
+        },
+        {
           title: "Reports",
           route: "/customer/asset/reports",
           icon: <TbReportSearch />,

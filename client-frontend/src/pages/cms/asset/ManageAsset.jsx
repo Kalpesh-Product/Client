@@ -215,26 +215,10 @@ const filteredData =
 
 console.log(selectedDepartment);
   return (
-    <div className="p-4 h-[90vh]">
+    <div className="p-4">
       <h1 className="text-3xl font-semibold mb-4  motion-preset-expand">Manage Assets</h1>
       <div>
         <div className="flex">
-          {/* <button
-             onClick={() => handleOpenModal("add")}
-            className="px-6 py-2 rounded-lg text-white wono-blue-dark hover:bg-[#3cbce7] transition-shadow shadow-md hover:shadow-lg active:shadow-inner"
-          >
-            Add Assets
-          </button>
-          <button
-             onClick={() => handleOpenModal("assign")}
-            className="px-6 py-2 rounded-lg text-white wono-blue-dark hover:bg-[#3cbce7] transition-shadow shadow-md hover:shadow-lg active:shadow-inner"
-          >
-            Assign Asset
-          </button>
-          <button className="px-6 py-2 rounded-lg text-white wono-blue-dark hover:bg-[#3cbce7] transition-shadow shadow-md hover:shadow-lg active:shadow-inner">
-            Revoke Asset
-          </button> */}
-
           <Tabs
             value={activeTab}
             onChange={handleTabChange}
