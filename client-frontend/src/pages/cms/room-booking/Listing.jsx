@@ -217,13 +217,34 @@ export default function Listing() {
         <FullCalendar
           plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
           initialView="dayGridMonth"
-          dateClick={handleDateClick}
+          dateClick={(e) => {
+            const selectedDate = new Date(e.date);
+            const today = new Date();
+
+            // Prevent interaction with past dates
+            if (selectedDate < today.setHours(0, 0, 0, 0)) {
+              toast.error("Past dates cannot be selected.");
+              return;
+            }
+
+            handleDateClick(e);
+          }}
           weekends={true}
           eventClick={handleEventClick}
           headerToolbar={{
             left: "dayGridMonth,timeGridWeek,timeGridDay",
             center: "title",
             right: "today prev,next",
+          }}
+          dayCellClassNames={(arg) => {
+            const date = new Date(arg.date);
+            const today = new Date();
+
+            // Add a custom class to past dates
+            if (date < today.setHours(0, 0, 0, 0)) {
+              return "disabled-date";
+            }
+            return "";
           }}
           eventDisplay="block"
           events={events.map((event) => ({

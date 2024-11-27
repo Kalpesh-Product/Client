@@ -14,6 +14,8 @@ import TestSide from "../components/Sidetest";
 import "../styles/CalenderModal.css";
 import dayjs from "dayjs";
 import { data } from "../utils/data";
+import { toast } from "sonner"; // Import sonner toast
+import { isBefore, parseISO } from "date-fns"; // Import date-fns functions
 
 const customStyles = {
   menu: (base) => ({
@@ -34,7 +36,6 @@ const extractNames = (data) => {
 };
 
 const Calender = () => {
-  // const open = useSelector((state) => state.modal.open);
   const dispatch = useDispatch();
   const [selectedDate, setSelectedDate] = useState(null);
   const [showModal, setShowModal] = useState(false);
@@ -49,20 +50,17 @@ const Calender = () => {
 
   const names = extractNames(data);
 
-  // const handleChange = (event) => {
-  //   const value = Array.from(
-  //     event.target.selectedOptions,
-  //     (option) => option.value
-  //   );
-  //   setSelectedNames(value);
-  // };
   const dayCellClassNames = (dateInfo) => {
     const today = new Date();
     const cellDate = new Date(dateInfo.date);
     today.setHours(0, 0, 0, 0); // Reset time for accurate comparison
 
-    // Add custom class for past dates for styling
-    return cellDate < today ? "fc-disabled-date" : "";
+    // Add custom class for past dates and today
+    if (cellDate < today) return "fc-disabled-date";
+    if (cellDate.toDateString() === today.toDateString()) return "fc-today";
+
+    // Return empty for future dates
+    return "";
   };
 
   const [events, setEvents] = useState([
@@ -130,8 +128,9 @@ const Calender = () => {
     const today = new Date();
     const clickedDate = new Date(args.date);
 
-    // Prevent clicks on past dates
-    if (clickedDate < today.setHours(0, 0, 0, 0)) {
+    // Use date-fns to check if the clicked date is in the past
+    if (isBefore(clickedDate, today)) {
+      toast.error("You cannot select past dates!"); // Show toast for past dates
       return; // Do nothing
     }
 
@@ -217,40 +216,67 @@ const Calender = () => {
                       checked={eventFilter.includes(type)} // Check if the type is in the filter
                       onChange={(e) => {
                         const selectedType = e.target.value;
-                        setEventFilter((prevFilters) =>
-                          prevFilters.includes(selectedType)
-                            ? prevFilters.filter(
-                                (filter) => filter !== selectedType
-                              )
-                            : [...prevFilters, selectedType]
+                        setEventFilter((prevFilter) =>
+                          prevFilter.includes(selectedType)
+                            ? prevFilter.filter((type) => type !== selectedType)
+                            : [...prevFilter, selectedType]
                         );
                       }}
-                      value={type} // Provide the value for the checkbox
+                      value={type}
                     />
                   }
-                  label={type.charAt(0).toUpperCase() + type.slice(1)} // Capitalize the first letter
+                  label={type}
                 />
               ))}
             </FormGroup>
           </div>
-          <FullCalendar
-            plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
-            initialView="dayGridMonth"
-            weekends={true}
-            events={filteredEvents}
-            dayCellClassNames={dayCellClassNames} // For visual clarity
-            eventClick={handleEventClick} // Events always clickable
-            visibleRange={(currentDate) => {
-              return get30DayRange(currentDate); // Restrict to 30 days
-            }}
-            headerToolbar={{
-              left: "dayGridMonth,timeGridWeek,timeGridDay",
-              center: "title",
-              right: "today prev,next",
-            }}
-            height={"90vh"}
-            dateClick={handleDateClick} // Dates click disabled for past dates
-          />
+
+          <div className="relative w-full pt-2">
+            <FullCalendar
+              plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+              initialView="dayGridMonth"
+              dateClick={(e) => {
+                const selectedDate = new Date(e.date);
+                const today = new Date();
+                today.setHours(0, 0, 0, 0); // Reset time for comparison
+
+                // Prevent interaction with past dates
+                if (selectedDate < today) {
+                  toast.error("Past dates cannot be selected.");
+                  return;
+                }
+
+                handleDateClick(e); // Proceed with logic for valid dates
+              }}
+              weekends={true}
+              eventClick={handleEventClick} // Allow event clicks on all dates
+              headerToolbar={{
+                left: "dayGridMonth,timeGridWeek,timeGridDay",
+                center: "title",
+                right: "today prev,next",
+              }}
+              dayCellClassNames={(arg) => {
+                const date = new Date(arg.date);
+                const today = new Date();
+                today.setHours(0, 0, 0, 0); // Reset time for comparison
+
+                // Add a custom class to past dates
+                if (date < today) {
+                  return "disabled-date";
+                }
+                return "";
+              }}
+              eventDisplay="block"
+              events={events.map((event) => ({
+                ...event,
+                backgroundColor:
+                  event.status === "cancelled"
+                    ? "#FF0000"
+                    : event.backgroundColor,
+              }))}
+              timeZone="local"
+            />
+          </div>
         </div>
       </div>
       {showModal && (
