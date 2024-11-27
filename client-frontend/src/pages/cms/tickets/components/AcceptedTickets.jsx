@@ -10,6 +10,7 @@ import { CSVLink } from "react-csv";
 import Button from "@mui/material/Button";
 import { toast } from "sonner";
 import TextField from "@mui/material/TextField";
+import AgTable from "../../../../components/AgTable";
 
 const AcceptedTickets = () => {
   const columns = [
@@ -101,7 +102,8 @@ const AcceptedTickets = () => {
       field: "close",
       headerName: "Close",
       width: 170,
-      renderCell: (params) => (
+      // renderCell: (params) => (
+      cellRenderer: (params) => (
         <Button
           size="small"
           // onClick={() => handleDelete(params.row)}
@@ -125,7 +127,8 @@ const AcceptedTickets = () => {
       field: "escalate",
       headerName: "Escalate",
       width: 170,
-      renderCell: (params) => (
+      // renderCell: (params) => (
+      cellRenderer: (params) => (
         <Button
           size="small"
           // onClick={() => handleDelete(params.row)}
@@ -352,26 +355,27 @@ const AcceptedTickets = () => {
         <br />
       </div> */}
 
-<div className="flex gap-4">
+      <div className="flex gap-4">
         <div className="flex gap-4 mb-4">
-        <div>
-        <FormControl size="small" style={{ minWidth: 220 }}>
-                    {/* <InputLabel>Filter by Asset Name</InputLabel> */}
-                    <TextField
-                      label="Filter by Asset Name"
-                      variant="outlined"
-                      select
-                      size="small"
-                      sx={{ fontSize: "0.5rem" }}
-                    >
-                      <MenuItem value="">All</MenuItem>
-                      <MenuItem value="Chair">Chair</MenuItem>
-                      <MenuItem value="Carpet Floor">Carpet</MenuItem>
-                      
-                    </TextField>
-                  </FormControl>
-        </div>
-        {/* <div className=" flex">
+          <div>
+            <FormControl size="small" style={{ minWidth: 220 }}>
+              <TextField
+                label="Filter by department"
+                variant="outlined"
+                select
+                size="small"
+                onChange={handleChange}
+                value={department}
+                sx={{ fontSize: "0.5rem" }}>
+                <MenuItem value="">All</MenuItem>
+                <MenuItem value="IT">IT</MenuItem>
+                <MenuItem value="HR">HR</MenuItem>
+                <MenuItem value="Tech">Tech</MenuItem>
+                <MenuItem value="Admin">Admin</MenuItem>
+              </TextField>
+            </FormControl>
+          </div>
+          {/* <div className=" flex">
           <CSVLink
             data={filteredRows} // Pass the filtered rows for CSV download
             headers={csvHeaders} // Pass the CSV headers
@@ -380,7 +384,7 @@ const AcceptedTickets = () => {
             Export Report
           </CSVLink>
         </div> */}
-      </div>
+        </div>
         {/* <div className=" flex">
           <CSVLink
             data={filteredRows} // Pass the filtered rows for CSV download
@@ -393,7 +397,7 @@ const AcceptedTickets = () => {
       </div>
 
       {/* Tickets datatable START */}
-      <Paper sx={{ height: 400, width: "100%" }}>
+      {/* <Paper sx={{ height: 400, width: "100%" }}>
         <DataGrid
           rows={filteredRows} // Pass filtered rows
           columns={columns}
@@ -402,7 +406,9 @@ const AcceptedTickets = () => {
           // checkboxSelection
           sx={{ border: 0, width: "75vw" }}
         />
-      </Paper>
+      </Paper> */}
+
+      <AgTable data={filteredRows} columns={columns} />
       {/* Tickets datatable END */}
 
       {/* EDIT TICKET MODAL END */}

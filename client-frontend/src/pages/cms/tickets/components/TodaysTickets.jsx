@@ -10,7 +10,7 @@ import { CSVLink } from "react-csv";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import { toast } from "sonner";
-import AgTable from '../../../../components/AgTable'
+import AgTable from "../../../../components/AgTable";
 
 const TodaysTickets = () => {
   const columns = [
@@ -43,23 +43,23 @@ const TodaysTickets = () => {
       headerName: "Actions",
       width: 160,
       cellRenderer: (params) => {
-        // const handleActionChange = (event) => {
-        //   const selectedAction = event.target.value;
+        const handleActionChange = (event) => {
+          const selectedAction = event.target.value;
 
-        //   if (selectedAction === "view") {
-        //     handleViewDetails(params.row);
-        //   } else if (selectedAction === "edit") {
-        //     handleEdit(params.row);
-        //   } else if (selectedAction === "delete") {
-        //     handleDelete(params.row);
-        //   }
-        // };
+          // if (selectedAction === "view") {
+          //   handleViewDetails(params.row);
+          // } else if (selectedAction === "edit") {
+          //   handleEdit(params.row);
+          // } else if (selectedAction === "delete") {
+          //   handleDelete(params.row);
+          // }
+        };
 
         return (
           <FormControl size="small" sx={{ width: "100%" }}>
             <Select
               value="" // Always forces the dropdown to display the SVG
-              // onChange={handleActionChange}
+              onChange={handleActionChange}
               displayEmpty
               disableUnderline
               IconComponent={() => null} // Removes the dropdown arrow
@@ -199,23 +199,23 @@ const TodaysTickets = () => {
       : allRows.filter((row) => row.department === department);
 
   // Handlers for the buttons
-  const handleViewDetails = (row) => {
-    alert(`Viewing details for: ${row.ticketTitle}`);
-  };
+  // const handleViewDetails = (row) => {
+  //   alert(`Viewing details for: ${row.ticketTitle}`);
+  // };
 
-  const handleEdit = (row) => {
-    alert(`Editing ticket: ${row.ticketTitle}`);
-  };
+  // const handleEdit = (row) => {
+  //   alert(`Editing ticket: ${row.ticketTitle}`);
+  // };
 
-  const handleDelete = (row) => {
-    if (
-      window.confirm(
-        `Are you sure you want to delete ticket: ${row.ticketTitle}?`
-      )
-    ) {
-      alert(`Deleted ticket: ${row.ticketTitle}`);
-    }
-  };
+  // const handleDelete = (row) => {
+  //   if (
+  //     window.confirm(
+  //       `Are you sure you want to delete ticket: ${row.ticketTitle}?`
+  //     )
+  //   ) {
+  //     alert(`Deleted ticket: ${row.ticketTitle}`);
+  //   }
+  // };
 
   const csvHeaders = [
     { label: "ID", key: "id" },
@@ -544,9 +544,9 @@ const TodaysTickets = () => {
               {/* <div>AddT icket Form</div> */}
               <div className="">
                 <div className=" mx-auto">
-                  <h1 className="text-xl text-center my-2 font-bold">
+                  {/* <h1 className="text-xl text-center my-2 font-bold">
                     Edit Ticket
-                  </h1>
+                  </h1> */}
                   <Box
                     sx={{
                       maxWidth: 600,
