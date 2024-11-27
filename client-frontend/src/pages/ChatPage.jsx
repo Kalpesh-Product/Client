@@ -182,8 +182,8 @@ export default function ChatPage() {
   return (
     <div className="flex h-full bg-gray-100">
       <TestSide />
-      <div className="h-full flex flex-col flex-1">
-    <div className="h-[90vh] flex flex-1">
+      <div className="h-full flex flex-col w-full">
+    <div className="h-[90vh] overflow-auto flex flex-1">
       <aside className="w-1/4 bg-white p-4 shadow-lg border-r border-gray-300 h-[90vh] overflow-y-auto">
         <h2 className="text-3xl font-semibold mb-4">Chat</h2>
         <select
