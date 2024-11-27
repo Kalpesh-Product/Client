@@ -59,10 +59,10 @@ body {
 }
 
 .fc-disabled-date {
-  pointer-events: none; /* Disable interactions */
-  opacity: 0.5; /* Make disabled dates appear faded */
-  background-color: #f8d7da; /* Optional: Add a light background */
-  color: #6c757d; /* Optional: Adjust text color for visibility */
-  cursor: not-allowed;
+  pointer-events: none; /* Prevent interaction */
+  background-color: #f0f0f0; /* Gray background for clarity */
+  color: #a0a0a0; /* Light text color */
+  cursor: not-allowed; /* Show "not allowed" cursor */
 }
+
 

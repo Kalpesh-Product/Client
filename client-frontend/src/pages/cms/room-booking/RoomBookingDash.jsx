@@ -137,7 +137,7 @@ export default function RoomBookingDash() {
   }, []);
 
   return (
-    <div className="p-6 bg-gray-100 w-[80vw] md:w-full bottom-0">
+    <div className="p-6 bg-gray-100 w-[80vw] md:w-full">
       {/* Header */}
       <h1 className="text-3xl mb-8 font-bold">Key insights</h1>
       <div className="w-full flex justify-between items-center mb-6">
@@ -170,6 +170,7 @@ export default function RoomBookingDash() {
         </div>
       </div>
 
+      {/* <RoomAvailabilityPieChart rooms={rooms} /> */}
       <RoomAvailabilityPieChart rooms={rooms} />
       <h1 className="text-2xl font-semibold my-3">Available rooms</h1>
       <AvailableRooms rooms={rooms} />

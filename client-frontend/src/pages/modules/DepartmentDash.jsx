@@ -358,7 +358,7 @@ const DepartmentDash = () => {
       <TestSide />
       <ModuleSidebar />
 
-      <div className="w-full overflow-y-auto bg-gray-100">
+      <div className="w-full overflow-y-auto bg-gray-100 h-full">
         {/* Frontend submodules */}
         {location.pathname.startsWith("/frontend") && (
           <>

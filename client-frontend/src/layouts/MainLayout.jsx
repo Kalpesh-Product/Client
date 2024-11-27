@@ -7,10 +7,10 @@ export default function MainLayout() {
   const hideFooter = location.pathname === "/";
   const hideHeader = location.pathname === "/";
   return (
-    <div>
+    <div className="flex flex-col justify-between">
       {!hideHeader && <ClientHeader />}
 
-      <div className="min-h-screen overflow-y-auto">
+      <div className="h-full overflow-y-auto">
         <Outlet />
       </div>
 

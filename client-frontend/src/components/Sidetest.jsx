@@ -83,7 +83,7 @@ const TestSide = () => {
       route: "/hr",
     },
     {
-      name: "CUSTOMER",
+      name: "CMS",
       icon: <RiCustomerService2Line />,
       iconName: "RiCustomerService2Line",
       route: "/customer",
@@ -133,7 +133,7 @@ const TestSide = () => {
       "FINANCE",
       "SALES",
       "HUMAN RESOURCE",
-      "CUSTOMER",
+      "CMS",
       "MARKETING",
       "CAFE (F&B)",
       "IT",
@@ -141,14 +141,14 @@ const TestSide = () => {
       "LEGAL",
     ],
     Tech: ["FRONTEND"],
-    Finance: ["FINANCE", "CUSTOMER"],
+    Finance: ["FINANCE", "CMS"],
     Sales: ["SALES"],
-    HR: ["HUMAN RESOURCE", "CUSTOMER"],
-    CMS: ["CUSTOMER"],
+    HR: ["HUMAN RESOURCE", "CMS"],
+    CMS: ["CMS"],
     Marketing: ["MARKETING"],
     Cafe: ["CAFE (F&B)"],
-    IT: ["IT","CUSTOMER"],
-    Maintainance: ["CUSTOMER"],
+    IT: ["IT","CMS"],
+    Maintainance: ["CMS"],
     Legal: ["LEGAL"],
   };
 
@@ -175,7 +175,7 @@ const TestSide = () => {
     <div
       className={` ${
         isSidebarOpen ? "w-60" : "w-20"
-      } bg-white  border-gray-300 text-black flex-shrink-0  sticky top-10 overflow-y-auto transition-all duration-300 z-[1]`}>
+      } bg-white  border-gray-300 text-black flex-shrink-0  overflow-y-auto transition-all duration-300 z-[1]`}>
       <div className="flex relative w-full">
         {/*Dashboard */}
         <div className="mt-5 px-3 flex flex-col gap-2">
