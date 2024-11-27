@@ -57,7 +57,7 @@ const AssetReports = () => {
       .toLowerCase()
       .includes(searchTerm.toLowerCase());
     const matchesDropdown = selectedAssetName
-      ? asset.assetName === selectedAssetName
+      ? asset.brandName === selectedAssetName
       : true;
     return matchesSearch && matchesDropdown;
   });
@@ -115,7 +115,7 @@ const AssetReports = () => {
         <div className="flex justify-between gap-4 p-2 rounded-md bg-white">
           <div className="flex gap-4 ">
             <TextField
-              label="Search by Name"
+              label="Search by Asset Name"
               variant="outlined"
               size="small"
               value={searchTerm}
@@ -125,19 +125,21 @@ const AssetReports = () => {
             <FormControl size="small" style={{ minWidth: 220 }}>
               {/* <InputLabel>Filter by Asset Name</InputLabel> */}
               <TextField
-                label="Filter by Asset Name"
+                label="Filter by Brand Name"
                 variant="outlined"
                 select
                 size="small"
+                value={selectedAssetName}
+                onChange={(e)=>setSelectedAssetName(e.target.value)}
               >
                 <MenuItem value="">All</MenuItem>
-                {/* {[...new Set(laptops.map((laptop) => laptop.assetName))].map(
+                {[...new Set(allAssets.map((asset) => asset.brandName))].map(
                 (assetName) => (
                   <MenuItem key={assetName} value={assetName}>
                     {assetName}
                   </MenuItem>
                 )
-              )} */}
+              )}
               </TextField>
             </FormControl>
           </div>
