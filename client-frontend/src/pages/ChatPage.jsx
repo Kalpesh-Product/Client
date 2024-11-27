@@ -205,78 +205,78 @@ export default function ChatPage() {
               onChange={(e) => setSearchQuery(e.target.value)}
             />
 
-            <ul className="space-y-2 overflow-y-auto h-full">
-              {" "}
-              {/* Set scrollable height here */}
-              {filteredContacts.map((contact) => (
-                <li key={contact.id} className="space-y-1">
-                  <div
-                    className={`flex items-center justify-between p-3 rounded-lg cursor-pointer transition-all ${
-                      activeContact.id === contact.id ||
-                      (contact.subGroups &&
-                        contact.subGroups.includes(activeContact.name))
-                        ? "bg-blue-100 text-blue-700"
-                        : "hover:bg-gray-100"
-                    }`}
-                    onClick={() => {
-                      if (contact.subGroups) {
-                        setExpandedGroup(
-                          expandedGroup === contact.id ? null : contact.id
-                        );
-                      } else {
-                        setActiveContact(contact);
-                      }
-                    }}
-                  >
-                    <div
-                      className={`flex items-center justify-center w-10 h-10 rounded-full text-white font-semibold mr-3 ${getNodeColor(
-                        contact.name
-                      )}`}
-                    >
-                      {getInitials(contact.name)}
-                    </div>
-                    <div className="flex-1 truncate">
-                      <span className="font-semibold">{contact.name}</span>
-                      <p className="text-sm text-gray-500 truncate">
-                        {contact.previewMessage}
-                      </p>
-                    </div>
-                    {contact.subGroups && (
-                      <span>
-                        {expandedGroup === contact.id ? (
-                          <IoMdArrowDropup />
-                        ) : (
-                          <IoMdArrowDropdown />
-                        )}
-                      </span>
+        <ul className="space-y-2 overflow-y-auto h-[60vh]">
+          {" "}
+          {/* Set scrollable height here */}
+          {filteredContacts.map((contact) => (
+            <li key={contact.id} className="space-y-1">
+              <div
+                className={`flex items-center justify-between p-3 rounded-lg cursor-pointer transition-all ${
+                  activeContact.id === contact.id ||
+                  (contact.subGroups &&
+                    contact.subGroups.includes(activeContact.name))
+                    ? "bg-blue-100 text-blue-700"
+                    : "hover:bg-gray-100"
+                }`}
+                onClick={() => {
+                  if (contact.subGroups) {
+                    setExpandedGroup(
+                      expandedGroup === contact.id ? null : contact.id
+                    );
+                  } else {
+                    setActiveContact(contact);
+                  }
+                }}
+              >
+                <div
+                  className={`flex items-center justify-center w-10 h-10 rounded-full text-white font-semibold mr-3 ${getNodeColor(
+                    contact.name
+                  )}`}
+                >
+                  {getInitials(contact.name)}
+                </div>
+                <div className="flex-1 truncate">
+                  <span className="font-semibold">{contact.name}</span>
+                  <p className="text-sm text-gray-500 truncate">
+                    {contact.previewMessage}
+                  </p>
+                </div>
+                {contact.subGroups && (
+                  <span>
+                    {expandedGroup === contact.id ? (
+                      <IoMdArrowDropup />
+                    ) : (
+                      <IoMdArrowDropdown />
                     )}
-                  </div>
-                  {contact.subGroups && expandedGroup === contact.id && (
-                    <ul className="pl-4 space-y-1">
-                      {contact.subGroups.map((subGroup, idx) => (
-                        <li
-                          key={idx}
-                          className={`p-2 rounded-lg cursor-pointer ${
-                            activeContact.name === subGroup
-                              ? "bg-blue-100 text-blue-700"
-                              : "hover:bg-gray-100"
-                          }`}
-                          onClick={() =>
-                            setActiveContact({
-                              id: `${contact.id}-${idx}`,
-                              name: subGroup,
-                            })
-                          }
-                        >
-                          {subGroup}
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-                </li>
-              ))}
-            </ul>
-          </aside>
+                  </span>
+                )}
+              </div>
+              {contact.subGroups && expandedGroup === contact.id && (
+                <ul className="pl-4 space-y-1">
+                  {contact.subGroups.map((subGroup, idx) => (
+                    <li
+                      key={idx}
+                      className={`p-2 rounded-lg cursor-pointer ${
+                        activeContact.name === subGroup
+                          ? "bg-blue-100 text-blue-700"
+                          : "hover:bg-gray-100"
+                      }`}
+                      onClick={() =>
+                        setActiveContact({
+                          id: `${contact.id}-${idx}`,
+                          name: subGroup,
+                        })
+                      }
+                    >
+                      {subGroup}
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </li>
+          ))}
+        </ul>
+      </aside>
 
       <div className="flex-1 flex flex-col justify-between bg-white">
         <header className="p-4 border-b flex items-center">
