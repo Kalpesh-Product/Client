@@ -172,10 +172,6 @@ export default function RoomBookingDash() {
 
       {/* <RoomAvailabilityPieChart rooms={rooms} /> */}
       <RoomAvailabilityPieChart rooms={rooms} />
-      <h1 className="text-2xl font-semibold my-3">Available rooms</h1>
-      <AvailableRooms rooms={rooms} />
-
-      {/* Recent Bookings */}
       <div className="bg-white shadow-md rounded-lg p-6">
         <h2 className="text-xl font-semibold mb-4">Recent Bookings</h2>
         <AgTable
@@ -184,6 +180,9 @@ export default function RoomBookingDash() {
           paginationPageSize={5}
         />
       </div>
+      <h1 className="text-2xl font-semibold my-3">Available rooms</h1>
+      
+      <AvailableRooms rooms={rooms} />
 
       {/* Booking Modal */}
       {openBookingModal && (
