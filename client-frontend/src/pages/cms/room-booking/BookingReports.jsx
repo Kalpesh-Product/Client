@@ -96,14 +96,14 @@ export default function BookingReports() {
 
   // Column definitions for AgGrid
   const columns = [
-    { headerName: "ID", field: "id" },
-    { headerName: "Department", field: "department" },
-    { headerName: "Name", field: "name" },
-    { headerName: "Date", field: "date" },
-    { headerName: "Start Time", field: "startTime" },
-    { headerName: "End Time", field: "endTime" },
-    { headerName: "Duration", field: "duration" },
-    { headerName: "Credits Used", field: "credits" },
+    { headerName: "ID", field: "id", flex: 1 },
+    { headerName: "Name", field: "name", flex: 1 },
+    { headerName: "Department", field: "department", flex: 1 },
+    { headerName: "Date", field: "date", flex: 1 },
+    { headerName: "Start Time", field: "startTime", flex: 1 },
+    { headerName: "End Time", field: "endTime", flex: 1 },
+    { headerName: "Duration", field: "duration", flex: 1 },
+    { headerName: "Credits Used", field: "credits", flex: 1 },
     {
       headerName: "Status",
       field: "status",
