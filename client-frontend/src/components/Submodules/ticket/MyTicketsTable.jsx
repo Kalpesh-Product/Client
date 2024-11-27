@@ -8,6 +8,7 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { CSVLink } from "react-csv";
 import { TextField } from "@mui/material";
+import AgTable from '../../../components/AgTable'
 
 const MyTicketsTable = () => {
   const columns = [
@@ -134,7 +135,7 @@ const MyTicketsTable = () => {
   ];
 
   return (
-    <div>
+    <div className="p-4 pt-0">
       {/* <div className="flex gap-4 h-16 ">
         <div className="pt-2">Filter by :</div>
         <div>
@@ -324,13 +325,15 @@ const MyTicketsTable = () => {
       </div>
       {/* Tickets datatable START */}
       <div className="w-full">
-        <DataGrid
-          rows={filteredRows} // Pass filtered rows
+        {/* <DataGrid
+          rows={filteredRows} 
           columns={columns}
           initialState={{ pagination: { paginationModel } }}
           pageSizeOptions={[5, 10]}
           checkboxSelection
-        />
+          sx={{backgroundColor:'white'}}
+        /> */}
+       <AgTable data = {filteredRows} columns={columns} /> 
       </div>
       {/* Tickets datatable END */}
     </div>

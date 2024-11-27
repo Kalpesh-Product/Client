@@ -20,28 +20,28 @@ export const AssetsCount = ({ count, route }) =>{
   
 
 export const MaintenanceRequests = ({ requests }) => (
-  <div className="p-4 cursor-pointer hover:bg-slate-300 transition-all">
+  <div className="p-4 cursor-pointer hover:bg-slate-300 transition-all h-full">
     <h3 className="text-lg font-semibold">Pending Maintenance</h3>
     <p className="text-2xl">{requests} Requests</p>
   </div>
 );
 
 export const AssetsAssigned = ({ assigned }) => (
-  <div className="p-4 cursor-pointer hover:bg-slate-300 transition-all">
+  <div className="p-4 cursor-pointer hover:bg-slate-300 transition-all h-full">
     <h3 className="text-lg font-semibold">Assets Assigned</h3>
     <p className="text-2xl">{assigned}</p>
   </div>
 );
 
 export const AssetsInRepair = ({ count }) => (
-  <div className="p-4 cursor-pointer hover:bg-slate-300 transition-all">
+  <div className="p-4 cursor-pointer hover:bg-slate-300 transition-all h-full">
     <h3 className="text-lg font-semibold">Assets In Repair</h3>
     <p className="text-2xl">{count}</p>
   </div>
 );
 
 export const NewAssetsAdded = ({ added }) => (
-  <div className="p-4 cursor-pointer hover:bg-slate-300 transition-all">
+  <div className="p-4 cursor-pointer hover:bg-slate-300 transition-all h-full">
     <h3 className="text-lg font-semibold">New Assets Added</h3>
     <p className="text-2xl">{added}</p>
   </div>

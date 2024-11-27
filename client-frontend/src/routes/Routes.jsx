@@ -191,7 +191,7 @@ const router = createBrowserRouter([
         element: <DropTest />,
       },
       {
-        path: "/tasks",
+        path: "/tasks/tasklistfirstmenu",
         element: <DepartmentDash/>,
       },
       {
@@ -206,7 +206,12 @@ const router = createBrowserRouter([
       {
         path: "/tasks/tasklisttable",
         element: <DepartmentDash/>
+      },
+      {
+        path: "/tasks/dashboard",
+        element: <DepartmentDash/>
       }
+
     ],
   },
 ]);

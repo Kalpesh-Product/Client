@@ -11,6 +11,7 @@
     "vendorName": "ABC Pvt. Ltd",
     "purchaseDate": "11-11-2024",
     "warranty": "12",
+    "category":"something",
     "location": "ST-701B",
     "status": "Active"
   },
@@ -26,6 +27,7 @@
     "vendorName": "XYZ Corp",
     "purchaseDate": "10-10-2024",
     "warranty": "24",
+    "category":"something",
     "location": "ST-702C",
     "status": "Active"
   },
@@ -41,6 +43,7 @@
     "vendorName": "Tech Solutions",
     "purchaseDate": "12-09-2024",
     "warranty": "36",
+    "category":"something",
     "location": "ST-703A",
     "status": "Active"
   },
@@ -56,6 +59,7 @@
     "vendorName": "Digital World",
     "purchaseDate": "01-08-2024",
     "warranty": "12",
+    "category":"something",
     "location": "ST-704D",
     "status": "Active"
   },
@@ -71,6 +75,7 @@
     "vendorName": "Gadget Hub",
     "purchaseDate": "15-07-2024",
     "warranty": "18",
+    "category":"something",
     "location": "ST-705E",
     "status": "Active"
   },
@@ -84,6 +89,7 @@
     "vendorName": "dubaiApple",
     "purchaseDate": "2024-11-27",
     "warranty": "12",
+    "category":"something",
     "location": "ST-701B",
     "status": "active",
     "id": 6,
@@ -100,6 +106,7 @@
     "vendorName": "dubaiApple",
     "purchaseDate": "2024-11-21",
     "warranty": "12",
+    "category":"something",
     "location": "ST-701B",
     "status": "active",
     "id": 7,
@@ -116,6 +123,7 @@
     "vendorName": "ChairsINC",
     "purchaseDate": "2024-11-20",
     "warranty": "12",
+    "category":"something",
     "location": "ST-701A",
     "status": "active",
     "id": 8
@@ -131,6 +139,7 @@
     "vendorName": "jj",
     "purchaseDate": "2024-11-28",
     "warranty": "12",
+    "category":"something",
     "location": "ST-701A",
     "status": "active",
     "department": "IT",

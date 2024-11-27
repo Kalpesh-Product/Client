@@ -10,8 +10,9 @@ import { motion } from "framer-motion";
 import { toast } from "sonner";
 import assignedAssetsData from "./temp_db/AssignedAssets.json";
 import userData from "../../../dummyData/dummyData.json";
+import AgTable from "../../../components/AgTable";
 
-const AssetsData = ({data}) => {
+const AssetsData = ({ data }) => {
   const location = useLocation();
   const [rows, setRows] = useState([]);
   const { brand } = location.state || { brand: "Unknown Brand" };
@@ -22,10 +23,12 @@ const AssetsData = ({data}) => {
   const [formData, setFormData] = useState(assignedAssetsData || {}); // Form data state
   const [revoked, setRevoked] = useState(false);
   const [selectedDepartment, setSelectedDepartment] = useState("");
-  const [processedData, setProcessedData] =useState(assignedAssetsData.IT.map((row, index) => ({
-    ...row,
-    id: index, // Assign a unique id based on the index
-  })))
+  const [processedData, setProcessedData] = useState(
+    assignedAssetsData.IT.map((row, index) => ({
+      ...row,
+      id: index, // Assign a unique id based on the index
+    }))
+  );
 
   const storedUser = localStorage.getItem("user");
 
@@ -38,15 +41,15 @@ const AssetsData = ({data}) => {
     handleOpenModal("revoke");
   };
 
-  const handleRevokeAsset = () => {
-    // Update the asset status to "Revoked"
-    const updatedRows = processedData.map((row) =>
-      row.id === asset.id ? { ...row, status: "Revoked" } : row
+  const handleRevokeAsset = (rowData) => {
+    // Update the status to "Revoked"
+    const updatedRows = processedData.map((item) =>
+      item.id === rowData.id ? { ...item, status: "Revoked" } : item
     );
-    setProcessedData(updatedRows); // Update the state
-    processedData.status === "Revoked" && setRevoked(true);
-    handleCloseModal(); // Close the modal
-    toast.success(`Asset revoked for: ${asset && asset.assigneeName}`);
+  
+    setProcessedData(updatedRows); // Update the state with the new rows
+    handleCloseModal()
+    toast.success(`Asset revoked for: ${rowData.assigneeName}`);
   };
 
   const handleViewDetails = (row) => {
@@ -83,7 +86,6 @@ const AssetsData = ({data}) => {
     setAsset(null);
   };
 
-  
   const AssigneeDepartment = [
     ...new Set(userData.map((user) => user.department)),
   ].map((department, index) => (
@@ -101,7 +103,7 @@ const AssetsData = ({data}) => {
       </MenuItem>
     ));
 
-    console.log(AssigneeOptions)
+  console.log(AssigneeOptions);
 
   // Fetch data from the JSON server
   useEffect(() => {
@@ -125,7 +127,6 @@ const AssetsData = ({data}) => {
     fetchAssignedAssets();
   }, []);
 
-
   const ITUsageData = [
     {
       id: 1,
@@ -142,7 +143,7 @@ const AssetsData = ({data}) => {
   ];
 
   const columns = [
-    { field: "id", headerName: "ID", width: 50 },
+    { field: "id", headerName: "ID", flex: 1 },
     { field: "department", headerName: "Department", flex: 1 },
     { field: "assigneeName", headerName: "Assignee Name", flex: 1 },
     { field: "assetNumber", headerName: "Asset Number", flex: 1 },
@@ -154,75 +155,60 @@ const AssetsData = ({data}) => {
     {
       field: "actions",
       headerName: "Actions",
-      width: 250,
-      renderCell: (params) =>
-        params.row.status !== "Revoked" ? (
+      flex: 1,
+      cellRenderer: (params) =>
+        params.data.status !== "Revoked" ? (
           <div className="p-2 mb-2 flex gap-2">
-            <button
-              style={{
-                backgroundColor: "#0db4ea",
-                color: "white",
-                border: "none",
-                padding: "0.5rem",
-                borderRadius: "4px",
-                cursor: "pointer",
-                fontFamily: "Popins-Regular",
-              }}
-              onClick={() => handleViewDetails(params.row)}
-            >
-              Details
-            </button>
-            <button
-              style={{
-                backgroundColor: "red",
-                color: "white",
-                border: "none",
-                padding: "0.5rem",
-                borderRadius: "4px",
-                cursor: "pointer",
-                fontFamily: "Popins-Regular",
-              }}
-              onClick={() => handleRevoke(params.row)}
-            >
-              Revoke
-            </button>
-          </div>
-        ) : (
-          <span style={{ color: "gray", fontStyle: "italic" }}>Revoked</span>
-        ),
+          <button
+            style={{
+              backgroundColor: "#0db4ea",
+              color: "white",
+              border: "none",
+              padding: "0.2rem",
+              borderRadius: "4px",
+              cursor: "pointer",
+              fontFamily: "Popins-Regular",
+            }}
+            onClick={() => handleViewDetails(params.data)}
+          >
+            Details
+          </button>
+          <button
+            style={{
+              backgroundColor: "red",
+              color: "white",
+              border: "none",
+              padding: "0.2rem",
+              borderRadius: "4px",
+              cursor: "pointer",
+              fontFamily: "Popins-Regular",
+            }}
+            onClick={() => handleRevoke(params.data)}
+          >
+            Revoke
+          </button>
+        </div>
+        ) :   <span style={{ color: "gray", fontStyle: "italic" }}>Revoked</span>
+        
     },
   ];
 
+  // Add cellClassRules to specific columns
+columns.forEach((column) => {
+  column.cellClassRules = {
+    ...column.cellClassRules, // Preserve existing rules if any
+    "row-revoked": (params) => params.data.status === "Revoked",
+  };
+});
+
   return (
-    <div className="p-0">
-      <div className="flex justify-between mb-6">
+    <div className="p-2">
+      <div className="flex justify-between">
         <div className="content-center"></div>
       </div>
 
-      <div style={{ height: 400, width: "100%" }}>
-        <DataGrid
-          // rows={rows ? rows : processedData}
-          rows={processedData}
-          columns={columns}
-          pageSize={5}
-          rowsPerPageOptions={[5]}
-          getRowClassName={(params) =>
-            params.row.status === "Revoked" ? "row-revoked" : ""
-          }
-          getRowHeight={() => "auto"}
-          sx={{
-            "& .MuiDataGrid-cell": {
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "start", // Center align button content
-            },
-            "& .MuiDataGrid-row": {
-              padding: 0, // Ensure no extra padding
-            },
-            fontFamily: "Popins-Regular",
-            width: "100%",
-          }}
-        />
+      <div style={{ width: "100%" }}>
+        <AgTable data={processedData} columns={columns} paginationPageSize={10}/>
       </div>
 
       {/* Modal to show laptop details */}
@@ -277,7 +263,7 @@ const AssetsData = ({data}) => {
               </button>
 
               <button
-                onClick={handleRevokeAsset}
+                onClick={()=>handleRevokeAsset(asset)}
                 className="p-2 bg-red-600 text-white rounded-md hover:bg-red-700"
               >
                 Revoke
@@ -335,9 +321,8 @@ const AssetsData = ({data}) => {
                   fullWidth
                   disabled={!isEditing}
                   variant="outlined"
-                  
                 >
-                 {AssigneeDepartment}
+                  {AssigneeDepartment}
                 </TextField>
 
                 <TextField
@@ -349,10 +334,9 @@ const AssetsData = ({data}) => {
                   fullWidth
                   disabled={!isEditing}
                   variant="outlined"
-                  
                 >
                   {AssigneeOptions}
-                  </TextField>
+                </TextField>
 
                 <TextField
                   label="Asset Number"
@@ -362,9 +346,8 @@ const AssetsData = ({data}) => {
                   fullWidth
                   disabled={!isEditing}
                   variant="outlined"
-                  
                 />
-                
+
                 <TextField
                   label="Asset Type"
                   name="assetType"
@@ -374,7 +357,6 @@ const AssetsData = ({data}) => {
                   fullWidth
                   disabled={!isEditing}
                   variant="outlined"
-                  
                 >
                   {["Laptop", "Monitor", "Keyboard", "Mouse"].map((option) => (
                     <MenuItem key={option} value={option}>
@@ -391,7 +373,6 @@ const AssetsData = ({data}) => {
                   fullWidth
                   disabled={!isEditing}
                   variant="outlined"
-                  
                 />
 
                 <TextField
@@ -402,7 +383,6 @@ const AssetsData = ({data}) => {
                   fullWidth
                   disabled={!isEditing}
                   variant="outlined"
-                  
                 />
 
                 <TextField
@@ -414,7 +394,6 @@ const AssetsData = ({data}) => {
                   fullWidth
                   disabled={!isEditing}
                   variant="outlined"
-                  
                 >
                   {["Active", "Revoked", "Pending"].map((option) => (
                     <MenuItem key={option} value={option}>
@@ -432,7 +411,6 @@ const AssetsData = ({data}) => {
                   fullWidth
                   disabled={!isEditing}
                   variant="outlined"
-                  
                   InputLabelProps={{ shrink: true }}
                 />
 
@@ -445,7 +423,6 @@ const AssetsData = ({data}) => {
                   fullWidth
                   disabled={!isEditing}
                   variant="outlined"
-                  
                   InputLabelProps={{ shrink: true }}
                 />
               </div>

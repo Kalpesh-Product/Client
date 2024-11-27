@@ -40,6 +40,7 @@ const TestSide = () => {
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
+    setIsDepartmentsOpen(false)
   };
 
   // Menu items array (without DASHBOARD)
@@ -64,7 +65,7 @@ const TestSide = () => {
       route: "/frontend",
     },
     {
-      name: "FINANCE & ACCOUNTING",
+      name: "FINANCE",
       icon: <MdAccountBalance />,
       iconName: "MdAccountBalance",
       route: "/finance",
@@ -82,7 +83,7 @@ const TestSide = () => {
       route: "/hr",
     },
     {
-      name: "CUSTOMER SERVICE",
+      name: "CUSTOMER",
       icon: <RiCustomerService2Line />,
       iconName: "RiCustomerService2Line",
       route: "/customer",
@@ -129,10 +130,10 @@ const TestSide = () => {
   const departmentMapping = {
     TopManagement: [
       "FRONTEND",
-      "FINANCE & ACCOUNTING",
+      "FINANCE",
       "SALES",
       "HUMAN RESOURCE",
-      "CUSTOMER SERVICE",
+      "CUSTOMER",
       "MARKETING",
       "CAFE (F&B)",
       "IT",
@@ -140,14 +141,14 @@ const TestSide = () => {
       "LEGAL",
     ],
     Tech: ["FRONTEND"],
-    Finance: ["FINANCE & ACCOUNTING", "CUSTOMER SERVICE"],
+    Finance: ["FINANCE", "CUSTOMER"],
     Sales: ["SALES"],
-    HR: ["HUMAN RESOURCE", "CUSTOMER SERVICE"],
-    CMS: ["CUSTOMER SERVICE"],
+    HR: ["HUMAN RESOURCE", "CUSTOMER"],
+    CMS: ["CUSTOMER"],
     Marketing: ["MARKETING"],
     Cafe: ["CAFE (F&B)"],
-    IT: ["IT","CUSTOMER SERVICE"],
-    Maintainance: ["CUSTOMER SERVICE"],
+    IT: ["IT","CUSTOMER"],
+    Maintainance: ["CUSTOMER"],
     Legal: ["LEGAL"],
   };
 
@@ -172,7 +173,7 @@ const TestSide = () => {
 
   return (
     <div
-      className={`${
+      className={` ${
         isSidebarOpen ? "w-60" : "w-20"
       } bg-white  border-gray-300 text-black flex-shrink-0  sticky top-10 overflow-y-auto transition-all duration-300 z-[1]`}>
       <div className="flex relative w-full">
@@ -203,6 +204,7 @@ const TestSide = () => {
             <button
               onClick={() => {
                 setIsDepartmentsOpen(!isDepartmentsOpen);
+                setIsSidebarOpen(true)
                 handleActive(-2);
               }}
               className={`flex items-center border-b-[1px] px-4 py-3 w-full text-black bg-white hover:wono-blue-dark hover:rounded-md hover:text-white ${

@@ -9,6 +9,7 @@ import Select from "@mui/material/Select";
 import { CSVLink } from "react-csv";
 import Button from "@mui/material/Button";
 import { toast } from "sonner";
+import { TextField } from "@mui/material";
 
 const AssignedTickets = () => {
   const columns = [
@@ -308,43 +309,35 @@ const AssignedTickets = () => {
         <br />
       </div> */}
 
-      <div className="flex gap-4 h-16 ">
-        <div className="pt-2">Filter by department:</div>
+      <div className="flex gap-4">
+        <div className="flex gap-4 mb-4">
         <div>
-          <Box sx={{ minWidth: 140 }}>
-            <FormControl
-              fullWidth
-              sx={{
-                height: "34px", // Adjust height of the select input
-                padding: "10px 8px 4px 2px", // Adjust padding inside
-              }}>
-              <InputLabel
-                id="department-select-label"
-                className=" pt-0 mt-0 mr-3 pr-2 pl-1">
-                Department
-              </InputLabel>
-              <Select
-                labelId="department-select-label"
-                id="department-select"
-                value={department}
-                label="Department"
-                sx={{
-                  height: "32px", // Adjust the height of the select
-                  width: "140px",
-                  padding: "2px 8px 4px 8px", // Adjust the padding inside the select
-                }}
-                className=" pt-0"
-                onChange={handleChange}>
-                <MenuItem value="">All</MenuItem>{" "}
-                {/* Option to show all departments */}
-                <MenuItem value="IT">IT</MenuItem>
-                <MenuItem value="HR">HR</MenuItem>
-                <MenuItem value="Tech">Tech</MenuItem>
-                <MenuItem value="Admin">Admin</MenuItem>
-              </Select>
-            </FormControl>
-          </Box>
+        <FormControl size="small" style={{ minWidth: 220 }}>
+                    {/* <InputLabel>Filter by Asset Name</InputLabel> */}
+                    <TextField
+                      label="Filter by Asset Name"
+                      variant="outlined"
+                      select
+                      size="small"
+                      sx={{ fontSize: "0.5rem" }}
+                    >
+                      <MenuItem value="">All</MenuItem>
+                      <MenuItem value="Chair">Chair</MenuItem>
+                      <MenuItem value="Carpet Floor">Carpet</MenuItem>
+                      
+                    </TextField>
+                  </FormControl>
         </div>
+        {/* <div className=" flex">
+          <CSVLink
+            data={filteredRows} // Pass the filtered rows for CSV download
+            headers={csvHeaders} // Pass the CSV headers
+            filename="tickets_report.csv" // Set the filename for the CSV file
+            className="wono-blue-dark hover:bg-blue-700 text-white text-sm font-bold py-2 px-4 rounded h-9 mt-2">
+            Export Report
+          </CSVLink>
+        </div> */}
+      </div>
         {/* <div className=" flex">
           <CSVLink
             data={filteredRows} // Pass the filtered rows for CSV download

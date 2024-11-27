@@ -1,15 +1,38 @@
-// App.jsx
-import React from "react";
-import { DataGrid } from "@mui/x-data-grid";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import AgTable from "../../../components/AgTable";
+import Modal from "../../../components/Modal";
+import BookingForm from "./components/BookingForm";
+import { rooms } from "../../../utils/Rooms";
+import { format, addMinutes } from "date-fns";
+import { toast } from "sonner";
+import { v4 as uuid } from "uuid";
+import { motion } from "framer-motion";
+import { IoMdClose } from "react-icons/io";
+import RoomAvailabilityPieChart from "./components/RoomCharts";
+import AvailableRooms from "./components/AviliableRooms";
 
 export default function RoomBookingDash() {
+  const [openBookingModal, setOpenBookingModal] = useState(false);
+  const [newMeeting, setNewMeeting] = useState({
+    startTime: "",
+    endTime: "",
+    internal: "BIZNest",
+    room: "",
+    participants: "",
+    subject: "",
+    agenda: "",
+    backgroundColor: "",
+  });
+  const [currentDate, setCurrentDate] = useState("");
+  const [loggedInUser, setLoggedInUser] = useState(null);
+  const [roomList, setRoomList] = useState(rooms);
+  const navigate = useNavigate();
+
   const upcomingBookings = 5;
   const totalBookings = 10;
-  const pendingApprovals = 3;
   const cancellations = 2;
   const Credits = 500;
-  const feedbackScore = 4.5;
 
   const recentBookings = [
     {
@@ -35,40 +58,92 @@ export default function RoomBookingDash() {
     },
   ];
 
-  // Define columns for the DataGrid
   const columns = [
-    { field: "id", headerName: "ID", width: 100 },
-    { field: "name", headerName: "Name", flex: 1 },
-    { field: "room", headerName: "Room", flex: 1 },
-    { field: "date", headerName: "Date", flex: 1 },
+    { headerName: "ID", field: "id", width: 100 },
+    { headerName: "Name", field: "name", flex: 1 },
+    { headerName: "Room", field: "room", flex: 1 },
+    { headerName: "Date", field: "date", flex: 1 },
     {
-      field: "status",
       headerName: "Status",
+      field: "status",
       flex: 1,
-      renderCell: (params) => (
-        <span
-          className={`px-2 py-1 rounded text-white ${
-            params.value === "Confirmed"
-              ? "bg-green-500"
-              : params.value === "Pending"
-              ? "bg-yellow-500"
-              : "bg-red-500"
-          }`}
-        >
-          {params.value}
-        </span>
-      ),
+      cellRenderer: (params) => {
+        const statusColors = {
+          Confirmed: "text-green-600 bg-green-100",
+          Cancelled: "text-red-600 bg-red-100",
+          Pending: "text-yellow-600 bg-yellow-100",
+        };
+        const statusClass = statusColors[params.value] || "";
+        return (
+          <span
+            className={`px-3 py-1 rounded-full text-sm font-medium ${statusClass}`}
+          >
+            {params.value}
+          </span>
+        );
+      },
     },
   ];
-  const navigate = useNavigate();
+
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+    const localStart = `${currentDate}T${newMeeting.startTime}`;
+    const localEnd = `${currentDate}T${newMeeting.endTime}`;
+
+    const newEvent = {
+      id: uuid(),
+      title: newMeeting.subject || "No Subject",
+      start: localStart,
+      end: localEnd,
+      extendedProps: {
+        room: newMeeting.room,
+        participants: newMeeting.participants,
+        agenda: newMeeting.agenda,
+      },
+      backgroundColor: "#5E5F9C",
+      status: "active", // Default status
+    };
+
+    toast.success("Booking completed successfully");
+    setOpenBookingModal(false);
+    navigate("/customer/meetings/booking"); // Redirect after form submission
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setNewMeeting((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  useEffect(() => {
+    // Prefill the start time, end time, and current date
+    const now = new Date();
+    const startTime = format(now, "HH:mm"); // Current local time
+    const endTime = format(addMinutes(now, 30), "HH:mm"); // 30 minutes from now
+    const currentDate = format(now, "yyyy-MM-dd"); // Current date in yyyy-MM-dd format
+
+    setNewMeeting((prev) => ({
+      ...prev,
+      startTime,
+      endTime,
+    }));
+    setCurrentDate(currentDate);
+
+    // Get authenticated user from local storage
+    const authenticatedUser = localStorage.getItem("user");
+    setLoggedInUser(JSON.parse(authenticatedUser));
+  }, []);
 
   return (
-    <div className="p-6 bg-gray-100 w-[80vw] md:w-full">
+    <div className="p-6 bg-gray-100 w-[80vw] md:w-full bottom-0">
       {/* Header */}
+      <h1 className="text-3xl mb-8 font-bold">Key insights</h1>
       <div className="w-full flex justify-between items-center mb-6">
-        <h1 className="text-3xl font-bold">Room Booking Dashboard</h1>
+        <h1 className="text-2xl font-semibold">Room Booking Management</h1>
         <button
-          onClick={() => navigate("/customer/meetings/booking")}
+          onClick={() => setOpenBookingModal(true)} // Open the modal
           className="px-6 py-2 rounded-lg text-white wono-blue-dark hover:bg-[#3cbce7] transition-shadow shadow-md hover:shadow-lg active:shadow-inner"
         >
           Book a Room
@@ -77,44 +152,66 @@ export default function RoomBookingDash() {
 
       {/* Widgets */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
-        {/* Upcoming Bookings */}
-        <div className="bg-white shadow-md rounded-lg p-4">
+        <div className="hover:scale-105 bg-white shadow-md rounded-lg p-4 cursor-pointer transition">
           <h2 className="text-xl font-semibold">Upcoming Bookings</h2>
           <p className="text-4xl font-bold text-blue-600">{upcomingBookings}</p>
         </div>
-
-        {/* Total Bookings */}
-        <div className="bg-white shadow-md rounded-lg p-4">
+        <div className="hover:scale-105 bg-white shadow-md rounded-lg p-4 cursor-pointer transition">
           <h2 className="text-xl font-semibold">Total Bookings</h2>
           <p className="text-4xl font-bold text-green-600">{totalBookings}</p>
         </div>
-
-        {/* Cancellations */}
-        <div className="bg-white shadow-md rounded-lg p-4">
+        <div className="hover:scale-105 bg-white shadow-md rounded-lg p-4 cursor-pointer transition">
           <h2 className="text-xl font-semibold">Cancellations</h2>
           <p className="text-4xl font-bold text-red-600">{cancellations}</p>
         </div>
-
-        {/* Credits */}
-        <div className="bg-white shadow-md rounded-lg p-4">
+        <div className="hover:scale-105 bg-white shadow-md rounded-lg p-4 cursor-pointer transition">
           <h2 className="text-xl font-semibold">Credits</h2>
           <p className="text-4xl font-bold text-purple-600">{Credits}</p>
         </div>
       </div>
 
-      {/* Recent Bookings DataGrid */}
+      <RoomAvailabilityPieChart rooms={rooms} />
+      <h1 className="text-2xl font-semibold my-3">Available rooms</h1>
+      <AvailableRooms rooms={rooms} />
+
+      {/* Recent Bookings */}
       <div className="bg-white shadow-md rounded-lg p-6">
         <h2 className="text-xl font-semibold mb-4">Recent Bookings</h2>
-        <div style={{ height: 400, width: "100%" }}>
-          <DataGrid
-            rows={recentBookings}
-            columns={columns}
-            pageSize={5}
-            rowsPerPageOptions={[5]}
-            disableSelectionOnClick
-          />
-        </div>
+        <AgTable
+          data={recentBookings}
+          columns={columns}
+          paginationPageSize={5}
+        />
       </div>
+
+      {/* Booking Modal */}
+      {openBookingModal && (
+        <Modal
+          open={openBookingModal}
+          onClose={() => setOpenBookingModal(false)}
+        >
+          <div className="flex justify-between items-center p-4">
+            <h1 className="text-2xl font-bold ml-4">Create Booking</h1>
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.9 }}
+              type="button"
+              onClick={() => setOpenBookingModal(false)}
+              className=" p-2 bg-white text-[red] border border-red-200 hover:border-red-400 text-2xl rounded-md"
+            >
+              <IoMdClose />
+            </motion.button>
+          </div>
+          <BookingForm
+            newMeeting={newMeeting}
+            handleChange={handleChange}
+            handleSubmit={handleFormSubmit}
+            currentDate={currentDate}
+            loggedInUser={loggedInUser}
+            roomList={roomList}
+          />
+        </Modal>
+      )}
     </div>
   );
 }

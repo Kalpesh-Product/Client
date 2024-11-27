@@ -16,6 +16,7 @@ import {
   Typography,
 } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
+import AgTable from "../../../components/AgTable";
 import axios from "axios";
 import allAssets from "./temp_db/MaintainanceAssets.json";
 import itAssets from "./temp_db/ItTemp.json";
@@ -113,63 +114,56 @@ const ManageAsset = () => {
     { field: "assetNumber", headerName: "Asset Number", flex: 1 },
     { field: "category", headerName: "Category", flex: 1 },
     // { field: "assetName", headerName: "Asset Name", width: 150 },
-    // { field: "brandName", headerName: "Brand", width: 150 },
-    // { field: "price", headerName: "Price", width: 150 },
+    { field: "brandName", headerName: "Brand", flex:1 },
+    { field: "price", headerName: "Price", flex: 1 },
     { field: "quantity", headerName: "Quantity", flex: 1 },
-    { field: "totalPrice", headerName: "Total Price", flex: 1 },
+    // { field: "totalPrice", headerName: "Total Price", flex: 1 },
     // { field: "vendorName", headerName: "Vendor", flex: 200 },
     { field: "purchaseDate", headerName: "Purchase Date", flex: 1 },
     { field: "warranty", headerName: "Warranty (Months)", flex: 1 },
     // { field: "location", headerName: "Location", flex: 150 },
-    {
+  {
       field: "actions",
+      filter:false,
       headerName: "Actions",
-      width: 200,
-      renderCell: (params) => (
-        <div className="p-2 mb-2 gap-2 flex">
-          {/* <button
-            style={{
-              backgroundColor: "#0db4ea",
-              color: "white",
-              border: "none",
-              padding: "0.5rem",
-              borderRadius: "4px",
-              cursor: "pointer",
-              fontFamily: "Popins-Regular",
-            }}
-          >
-            Edit
-          </button> */}
-          <button
-            style={{
-              backgroundColor: "#0db4ea",
-              color: "white",
-              border: "none",
-              padding: "0.5rem",
-              borderRadius: "4px",
-              cursor: "pointer",
-              fontFamily: "Popins-Regular",
-            }}
-            onClick={() => handleViewDetails(params.row)}
-          >
-            Details
-          </button>
-          <button
-            style={{
-              backgroundColor: "#0db4ea",
-              color: "white",
-              border: "none",
-              padding: "0.5rem",
-              borderRadius: "4px",
-              cursor: "pointer",
-              fontFamily: "Popins-Regular",
-            }}
-            onClick={() => handleAssignAsset(params.row)}
-          >
-            Assign
-          </button>
-        </div>
-      ),
+      flex: 1,
+      cellRenderer: (params) =>
+        params.data.status !== "Revoked" ? (
+          <div className="p-2 flex gap-2">
+            <button
+              style={{
+                backgroundColor: "#0db4ea",
+                color: "white",
+                border: "none",
+                paddingLeft:'0.5rem',
+                paddingRight:'0.5rem',
+                borderRadius: "4px",
+                cursor: "pointer",
+                height:'100%'
+              }}
+              onClick={() => handleViewDetails(params.data)}
+            >
+              Details
+            </button>
+            <button
+              style={{
+                backgroundColor: "#0db4ea",
+                color: "white",
+                border: "none",
+                paddingLeft:'0.5rem',
+                paddingRight:'0.5rem',
+                borderRadius: "4px",
+                cursor: "pointer",
+                height:'100%'
+              }}
+              onClick={() => handleAssignAsset(params.data)}
+            >
+              Assign
+            </button>
+          </div>
+        ) : (
+          <span style={{ color: "gray", fontStyle: "italic" }}>Revoked</span>
+        ),
     },
   ];
 
@@ -187,11 +181,11 @@ const ManageAsset = () => {
 
 // Filter assets based on search term and selected asset name
 const filteredAssets = allAssets.filter((asset) => {
-  const matchesSearch = asset.assetName
+  const matchesSearch = asset.brandName
     .toLowerCase()
     .includes(searchTerm.toLowerCase());
   const matchesDropdown = selectedAssetName
-    ? asset.assetName === selectedAssetName
+    ? asset.category === selectedAssetName
     : true;
   return matchesSearch && matchesDropdown;
 });
@@ -211,8 +205,8 @@ const filteredData =
 
 console.log(selectedDepartment);
   return (
-    <div className="p-6">
-      <h1 className="text-2xl font-semibold mb-4">Manage Assets</h1>
+    <div className="p-4">
+      <h1 className="text-3xl font-semibold mb-4  motion-preset-expand">Manage Assets</h1>
       <div>
         <div className="flex">
           {/* <button
@@ -237,22 +231,19 @@ console.log(selectedDepartment);
             aria-label="asset actions tabs"
             variant="fullWidth"
             TabIndicatorProps={{ style: { transition: "none" } }}
-            sx={{ width: "100%" }}
+            sx={{ width: "100%", marginBottom:'1rem', backgroundColor:'white', borderRadius:'10px', fontFamily:'Popins-Semibold', padding:'0.5rem' }}
           >
-            <Tab label="Add/Assign Assets" />
-            <Tab label="Assigned Asset" />
+            <Tab sx={{borderRight:'1px solid #e4e4e4'}}  label="Add/Assign Assets" />
+            <Tab  label="Assigned Asset" />
           </Tabs>
         </div>
         <div>
           {activeTab === 0 && (
-            <div className="w-[72vw] md:w-full transition-all duration-200 ease-in-out">
-              <h1 className="text-xl font-semibold py-4 text-gray-600">
-                Filter by :
-              </h1>
+            <div className="w-[72vw] md:w-full transition-all duration-200 ease-in-out bg-white p-2 rounded-md">
               <div className="flex justify-between gap-4 pb-4">
                 <div className="flex gap-4">
                   <TextField
-                    label="Search by Name"
+                    label="Search by Brand Name"
                     variant="outlined"
                     size="small"
                     value={searchTerm}
@@ -262,7 +253,7 @@ console.log(selectedDepartment);
                   <FormControl size="small" style={{ minWidth: 220 }}>
                     {/* <InputLabel>Filter by Asset Name</InputLabel> */}
                     <TextField
-                      label="Filter by Asset Name"
+                      label="Filter by Category"
                       variant="outlined"
                       select
                       size="small"
@@ -271,10 +262,8 @@ console.log(selectedDepartment);
                       sx={{ fontSize: "0.5rem" }}
                     >
                       <MenuItem value="">All</MenuItem>
-                      <MenuItem value="Chair">Chair</MenuItem>
-                      <MenuItem value="Carpet Floor">Carpet</MenuItem>
                       {[
-                        ...new Set(laptops.map((laptop) => laptop.assetName)),
+                        ...new Set(assetsData.map((asset) => asset.category)),
                       ].map((assetName) => (
                         <MenuItem key={assetName} value={assetName}>
                           {assetName}
@@ -314,27 +303,10 @@ console.log(selectedDepartment);
                 </button>
               </div>
               <div className="motion-preset-slide-up-md">
-                <DataGrid
-                  rows={filteredData}
-                  columns={laptopColumns}
-                  pageSize={5}
-                  rowsPerPageOptions={[5]}
-                  disableSelectionOnClick
-                  initialState={{ pinnedColumns: { right: ["actions"] } }}
-                  getRowHeight={() => "auto"} // Automatically adjust row height
-                  sx={{
-                    "& .MuiDataGrid-cell": {
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "start", // Center align button content
-                    },
-                    "& .MuiDataGrid-row": {
-                      padding: 0, // Ensure no extra padding
-                    },
-                    width: "100%",
-                    height: "50vh",
-                    fontFamily: "Popins-Regular",
-                  }}
+                <AgTable 
+                data={filteredData}
+                columns={laptopColumns}
+                paginationPageSize={10}
                 />
               </div>
             </div>
@@ -342,14 +314,9 @@ console.log(selectedDepartment);
 
           {activeTab === 1 && (
             <>
-              <div className="flex justify-between gap-4 py-4">
-                <h1 className="text-xl font-semibold text-gray-600">
-                  Filter by :
-                </h1>
-              </div>
-              <div className="flex gap-4">
+              <div className="flex gap-4 bg-white p-2 rounded-t-md">
                 <TextField
-                  label="Search by Name"
+                  label="Search by Category"
                   variant="outlined"
                   size="small"
                 />
@@ -374,7 +341,9 @@ console.log(selectedDepartment);
                   </TextField>
                 </FormControl>
               </div>
+         
               <AssetsData data={assetsData} />
+              
             </>
           )}
         </div>

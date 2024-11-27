@@ -10,6 +10,7 @@ import { CSVLink } from "react-csv";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import { toast } from "sonner";
+import AgTable from "../../../../components/AgTable";
 
 const MyTickets = () => {
   const columns = [
@@ -41,7 +42,7 @@ const MyTickets = () => {
       field: "viewDetails",
       headerName: "Actions",
       width: 150,
-      renderCell: (params) => {
+      cellRenderer: (params) => {
         const handleActionChange = (event) => {
           const selectedAction = event.target.value;
 
@@ -310,43 +311,24 @@ const MyTickets = () => {
         </button>
       </div>
 
-      <div className="flex gap-4 h-16 ">
+      <div className="flex gap-4 mb-4">
         <div className="pt-2">Filter by department:</div>
         <div>
-          <Box sx={{ minWidth: 140 }}>
-            <FormControl
-              fullWidth
-              sx={{
-                height: "34px", // Adjust height of the select input
-                width: "140px",
-                padding: "10px 8px 4px 2px", // Adjust padding inside
-              }}>
-              <InputLabel
-                id="department-select-label"
-                className=" pt-0 mt-0 mr-3 pr-2 pl-1">
-                Department
-              </InputLabel>
-              <Select
-                labelId="department-select-label"
-                id="department-select"
-                value={department}
-                label="Department"
-                sx={{
-                  height: "32px", // Adjust the height of the select
-                  width: "140px",
-                  padding: "2px 8px 4px 8px", // Adjust the padding inside the select
-                }}
-                className=" pt-0"
-                onChange={handleChange}>
-                <MenuItem value="">All</MenuItem>{" "}
-                {/* Option to show all departments */}
-                <MenuItem value="IT">IT</MenuItem>
-                <MenuItem value="HR">HR</MenuItem>
-                <MenuItem value="Tech">Tech</MenuItem>
-                <MenuItem value="Admin">Admin</MenuItem>
-              </Select>
-            </FormControl>
-          </Box>
+        <FormControl size="small" style={{ minWidth: 220 }}>
+                    {/* <InputLabel>Filter by Asset Name</InputLabel> */}
+                    <TextField
+                      label="Filter by Asset Name"
+                      variant="outlined"
+                      select
+                      size="small"
+                      sx={{ fontSize: "0.5rem" }}
+                    >
+                      <MenuItem value="">All</MenuItem>
+                      <MenuItem value="Chair">Chair</MenuItem>
+                      <MenuItem value="Carpet Floor">Carpet</MenuItem>
+                      
+                    </TextField>
+                  </FormControl>
         </div>
         {/* <div className=" flex">
           <CSVLink
@@ -360,16 +342,16 @@ const MyTickets = () => {
       </div>
 
       {/* Tickets datatable START */}
-      <Paper sx={{ height: 400, width: "100%" }}>
-        <DataGrid
-          rows={filteredRows} // Pass filtered rows
+      
+        {/* <DataGrid
+          rows={filteredRows}
           columns={columns}
           initialState={{ pagination: { paginationModel } }}
           pageSizeOptions={[5, 10]}
-          // checkboxSelection
           sx={{ border: 0, width: "75vw" }}
-        />
-      </Paper>
+        /> */}
+      
+      <AgTable data={filteredRows} columns={columns} />
       {/* Tickets datatable END */}
 
       {/* ADD TICKET MODAL START */}

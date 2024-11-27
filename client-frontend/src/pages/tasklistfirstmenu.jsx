@@ -1,175 +1,38 @@
-import React,{useState} from 'react'
-import TestSide from '../components/Sidetest'
-import TaskSidebar from '../components/TaskManagement/TaskSidebar';
+import React , {useState} from 'react'
+
 import AssignTaskForm from '../components/TaskManagement/AssignTaskForm';
 
 import { DataGrid } from "@mui/x-data-grid";
 import Paper from "@mui/material/Paper";
-import Box from "@mui/material/Box";
-import InputLabel from "@mui/material/InputLabel";
+
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import ModuleSidebar from '../components/ModuleSidebar';
-import { alignProperty } from '@mui/material/styles/cssUtils';
+
 import { NewModal } from '../components/NewModal';
 import { useNavigate } from 'react-router-dom';
-import Avatar from "@mui/material/Avatar";
-import Stack from "@mui/material/Stack";
+import { Stack,Avatar } from '@mui/material';
 
-import AgTable from "../components/AgTable";
-
-
-
-
-const Task = () => {
-
-  const [allRows, setAllRows] = useState([
-    {
-      id: 1,
-      ticketTitle: "Website Bug",
-      Assignes: [
-        "https://i.pravatar.cc/150?img=1",
-        "https://i.pravatar.cc/150?img=2",
-        "https://i.pravatar.cc/150?img=3",
-      ],
-      DueDate: "10th october 2024",
-      priority: "High",
-      department: "IT",
-      requestDate: "2024-10-01",
-    },
-    {
-      id: 2,
-      ticketTitle: "Payroll Issue",
-      Assignes: [
-        "https://i.pravatar.cc/150?img=4",
-        "https://i.pravatar.cc/150?img=5",
-        "https://i.pravatar.cc/150?img=6",
-      ],
-      DueDate:"12th october 2024",
-      priority: "Medium",
-      department: "HR",
-      requestDate: "2024-10-03",
-    },
-    {
-      id: 3,
-      ticketTitle: "Server Downtime",
-      Assignes: [
-        "https://i.pravatar.cc/150?img=7",
-        "https://i.pravatar.cc/150?img=8",
-        "https://i.pravatar.cc/150?img=9",
-      ],
-      DueDate:"15th october 2024",
-      priority: "High",
-      department: "Tech",
-      requestDate: "2024-10-05",
-    },
-    {
-      id: 4,
-      ticketTitle: "New Workstation Setup",
-      Assignes:[
-        "https://i.pravatar.cc/150?img=1",
-        "https://i.pravatar.cc/150?img=2",
-        "https://i.pravatar.cc/150?img=3",
-      ], 
-      DueDate:"30th october 2024",
-      priority: "Low",
-      department: "Admin",
-      requestDate: "2024-10-06",
-    },
-    {
-      id: 5,
-      ticketTitle: "Employee Onboarding",
-      Assignes:[
-        "https://i.pravatar.cc/150?img=1",
-        "https://i.pravatar.cc/150?img=2",
-        "https://i.pravatar.cc/150?img=3",
-      ],
-      DueDate:"2th November 2024",
-      priority: "Medium",
-      department: "HR",
-      requestDate: "2024-10-07",
-    },
-    {
-      id: 6,
-      ticketTitle: "Network Issue",
-      Assignes:[
-        "https://i.pravatar.cc/150?img=7",
-        "https://i.pravatar.cc/150?img=8",
-        "https://i.pravatar.cc/150?img=9",
-      ],
-      DueDate:"7th November 2024",
-      priority: "High",
-      department: "IT",
-      requestDate: "2024-10-08",
-    },
-    {
-      id: 7,
-      ticketTitle: "Software Installation",
-      Assignes:[
-        "https://i.pravatar.cc/150?img=7",
-        "https://i.pravatar.cc/150?img=8",
-        "https://i.pravatar.cc/150?img=9",
-      ],
-      DueDate:"9th November 2024",
-      priority: "Low",
-      department: "Tech",
-      requestDate: "2024-10-09",
-    },
-    {
-      id: 8,
-      ticketTitle: "Office Supplies Request",
-      Assignes:[
-        "https://i.pravatar.cc/150?img=1",
-        "https://i.pravatar.cc/150?img=2",
-        "https://i.pravatar.cc/150?img=3",
-      ],
-      DueDate:"10th November 2024",
-      priority: "Low",
-      department: "Admin",
-      requestDate: "2024-10-10",
-    },
-    {
-      id: 9,
-      ticketTitle: "Email Access Issue",
-      Assignes:[
-        "https://i.pravatar.cc/150?img=7",
-        "https://i.pravatar.cc/150?img=8",
-        "https://i.pravatar.cc/150?img=9",
-      ],
-      DueDate:"20th November 2024",
-      priority: "Medium",
-      department: "IT",
-      requestDate: "2024-10-11",
-    }
-   
-  ]);
-  // const [avatars, setAvatars]= useState(allRows.forEach((rows)=>{rows.Assignes}))
-  // console.log(avatars)
-
-
+const Tasklistfirstmenu = () => {
 
     const columns = [
         { field: "id", headerName: "ID", width: 70  },
         { field: "ticketTitle", headerName: "Projects", width: 200 },
         { field: "Assignes", headerName: "Assignes", width: 200,
             type: "singleSelect",
-            cellRenderer: (params) => (
-              <Stack spacing={-1} direction="row" sx={{
-                paddingTop:"5%", // Centers horizontally
-                 // Centers vertically
-                width: "100%",
-                // Ensures it takes the full width of the cell
-              }}>
-                {/* {avatars.map((assignee, index) => (
-            <Avatar
-              key={index}
-              src={assignee}
-              sx={{ width: 30, height: 30, border: "1px solid white" }}
-            />
-          ))} */}
-              </Stack>
-            ),
+            renderCell: (params) => (
+                <Stack spacing={-1} direction="row"  sx={{
+                    marginTop:"5%" // Ensures it takes the full width of the cell
+                  }}>
+                  {params.row.Assignes.map((assignee, index) => (
+                    <Avatar
+                      key={index}
+                      src={assignee}
+                      sx={{ width: 30, height: 30, border: "1px solid white" }}
+                    />
+                  ))}
+                </Stack>
+              ),
             
          },
          { field: "DueDate", headerName: "Due Date", width: 200 },
@@ -187,7 +50,7 @@ const Task = () => {
 
           //   return "";
           // },
-          cellRenderer: (params) => {
+          renderCell: (params) => {
             const statusColors = {
               High: "text-red-600 bg-red-100",
               Medium: "text-blue-600 bg-blue-100",
@@ -222,7 +85,13 @@ const Task = () => {
               const handleActionChange = (event) => {
                 const selectedAction = event.target.value;
       
-                
+                // if (selectedAction === "view") {
+                //   handleViewDetails(params.row);
+                //   // } else if (selectedAction === "edit") {
+                //   //   handleEdit(params.row);
+                // } else if (selectedAction === "delete") {
+                //   handleDelete(params.row);
+                // }
               };
       
               return (
@@ -282,7 +151,126 @@ const Task = () => {
     
     ];
     
-     
+      const [allRows, setAllRows] = useState([
+        {
+          id: 1,
+          ticketTitle: "Website Bug",
+          Assignes: [
+            "https://i.pravatar.cc/150?img=1",
+            "https://i.pravatar.cc/150?img=2",
+            "https://i.pravatar.cc/150?img=3",
+          ],
+          DueDate: "10th october 2024",
+          priority: "High",
+          department: "IT",
+          requestDate: "2024-10-01",
+        },
+        {
+          id: 2,
+          ticketTitle: "Payroll Issue",
+          Assignes: [
+            "https://i.pravatar.cc/150?img=7",
+            "https://i.pravatar.cc/150?img=8",
+            "https://i.pravatar.cc/150?img=9",
+          ],
+          DueDate:"12th october 2024",
+          priority: "Medium",
+          department: "HR",
+          requestDate: "2024-10-03",
+        },
+        {
+          id: 3,
+          ticketTitle: "Server Downtime",
+          Assignes:  [
+            "https://i.pravatar.cc/150?img=7",
+            "https://i.pravatar.cc/150?img=8",
+            "https://i.pravatar.cc/150?img=9",
+          ],
+          DueDate:"15th october 2024",
+          priority: "High",
+          department: "Tech",
+          requestDate: "2024-10-05",
+        },
+        {
+          id: 4,
+          ticketTitle: "New Workstation Setup",
+          Assignes:[
+            "https://i.pravatar.cc/150?img=1",
+            "https://i.pravatar.cc/150?img=2",
+            "https://i.pravatar.cc/150?img=3",
+          ], 
+          DueDate:"30th october 2024",
+          priority: "Low",
+          department: "Admin",
+          requestDate: "2024-10-06",
+        },
+        {
+          id: 5,
+          ticketTitle: "Employee Onboarding",
+          Assignes:[
+            "https://i.pravatar.cc/150?img=1",
+            "https://i.pravatar.cc/150?img=2",
+            "https://i.pravatar.cc/150?img=3",
+          ],
+          DueDate:"2th November 2024",
+          priority: "Medium",
+          department: "HR",
+          requestDate: "2024-10-07",
+        },
+        {
+          id: 6,
+          ticketTitle: "Network Issue",
+          Assignes:[
+            "https://i.pravatar.cc/150?img=7",
+            "https://i.pravatar.cc/150?img=8",
+            "https://i.pravatar.cc/150?img=9",
+          ],
+          DueDate:"7th November 2024",
+          priority: "High",
+          department: "IT",
+          requestDate: "2024-10-08",
+        },
+        {
+          id: 7,
+          ticketTitle: "Software Installation",
+          Assignes:[
+            "https://i.pravatar.cc/150?img=7",
+            "https://i.pravatar.cc/150?img=8",
+            "https://i.pravatar.cc/150?img=9",
+          ],
+          DueDate:"9th November 2024",
+          priority: "Low",
+          department: "Tech",
+          requestDate: "2024-10-09",
+        },
+        {
+          id: 8,
+          ticketTitle: "Office Supplies Request",
+          Assignes:[
+            "https://i.pravatar.cc/150?img=7",
+            "https://i.pravatar.cc/150?img=8",
+            "https://i.pravatar.cc/150?img=9",
+          ],
+          DueDate:"10th November 2024",
+          priority: "Low",
+          department: "Admin",
+          requestDate: "2024-10-10",
+        },
+        {
+          id: 9,
+          ticketTitle: "Email Access Issue",
+          Assignes:[
+            "https://i.pravatar.cc/150?img=4",
+            "https://i.pravatar.cc/150?img=5",
+            "https://i.pravatar.cc/150?img=6",
+          ],
+          DueDate:"20th November 2024",
+          priority: "Medium",
+          department: "IT",
+          requestDate: "2024-10-11",
+        }
+       
+      ]);
 
       const paginationModel = { page: 0, pageSize: 5 };
       const [department, setDepartment] = React.useState("");
@@ -327,39 +315,38 @@ const Task = () => {
             navigate('/tasks/tasklist');
             
           }
-    
   return (
     <div className="flex min-h-screen">
         
         <div className='w-full p-6 motion-preset-blur-right-md  max-w-screen-xl mx-auto '>
         <h2 className="text-4xl  ">Tasks</h2>
-        <div className="grid grid-cols-4 gap-4">
-    {/* Total Tasks */}
+        {/* <div className="grid grid-cols-4 gap-4">
+   
     <div className="bg-white p-4 shadow-md rounded-lg flex items-center justify-center flex-col cursor-pointer" onClick={navigateProjectList}>
       <h3 className="text-xl font-semibold" >Ongoing Tasks</h3>
       <div className='items-center justify-center mt-5 font-bold text-cyan-500 text-3xl'>20</div>
     </div>
 
-    {/* Upcoming Tasks */}
+    
     <div className="bg-white p-4 shadow-md rounded-lg flex items-center justify-center flex-col cursor-pointer" onClick={navigateProjectList}>
       <h3 className="text-xl font-semibold" >Upcoming Tasks</h3>
       <div className='items-center justify-center mt-5 font-bold text-purple-500 text-3xl'>10</div>
     </div>
 
-    {/* Tasks in Progress */}
+    
     <div className="bg-white p-4 shadow-md rounded-lg flex items-center justify-center flex-col cursor-pointer" onClick={navigateProjectList}>
       <h3 className="text-xl font-semibold" >Pending</h3>
       <div className='items-center justify-center mt-5 font-bold text-orange-500 text-3xl'>15</div>
     </div>
 
-    {/* Completed Tasks */}
+    
     <div className="bg-white p-4 shadow-md rounded-lg flex items-center justify-center flex-col cursor-pointer" onClick={navigateProjectList}>
       <h3 className="text-xl font-semibold">Completed Tasks</h3>
       <div className='items-center justify-center mt-5 font-bold text-green-500 text-3xl'>10</div>
     </div>
-  </div>
+  </div> */}
 
-  <div className="flex flex-wrap items-center justify-between mt-10 ">
+  <div className="flex flex-wrap items-center justify-between mt-10">
     {/* Left Side: Search, Priority Dropdown, and Date Filter */}
     <div className="flex flex-wrap gap-4">
       {/* Search Field */}
@@ -419,8 +406,8 @@ const Task = () => {
   {/* Tabular section */}
   <div className='mt-5 overflow-auto w-full max-w-screen-xl mx-auto  motion-preset-blur-right-md'>
   <Paper sx={{ height: 400, width: "100%", alignItems:"center" , display:"flex", justifyContent:"center"}}>
-        <AgTable
-          data={filteredTasks} // Pass filtered rows
+        <DataGrid
+          rows={filteredTasks} // Pass filtered rows
           columns={columns}
           initialState={{ pagination: { paginationModel } }}
           pageSizeOptions={[5, 10]}
@@ -465,4 +452,4 @@ const Task = () => {
   )
 }
 
-export default Task
+export default Tasklistfirstmenu

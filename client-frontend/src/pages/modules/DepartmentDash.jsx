@@ -81,6 +81,7 @@ import AddRooms from "../cms/room-booking/AddRooms";
 import Teams from "../Teams";
 import Tasklist from "../Tasklist";
 import TasklistTable from "../TasklistTable";
+import Tasklistfirstmenu from "../tasklistfirstmenu";
 
 const DepartmentDash = () => {
   const [user, setUser] = useState("");
@@ -316,7 +317,10 @@ const DepartmentDash = () => {
       heading: "Asset Management",
       subModule: "asset",
       widgets: [
-        <AssetsCount route={'/customer/asset/manage'} count={customerServiceWidgetsData.totalAssets}  />,
+        <AssetsCount
+          route={"/customer/asset/manage"}
+          count={customerServiceWidgetsData.totalAssets}
+        />,
         <MaintenanceRequests
           requests={customerServiceWidgetsData.pendingMaintenance}
         />,
@@ -354,14 +358,14 @@ const DepartmentDash = () => {
       <TestSide />
       <ModuleSidebar />
 
-      <div className="w-full h-[90vh] overflow-y-auto">
+      <div className="w-full overflow-y-auto bg-gray-100">
         {/* Frontend submodules */}
         {location.pathname.startsWith("/frontend") && (
           <>
             {location.pathname === "/frontend" ||
             location.pathname === "/frontend/dashboard" ? (
               <div>
-                <div className="bg-white p-4 rounded-lg">
+                <div className="bg-gray-100 p-4 rounded-lg">
                   <h1 className="text-3xl font-bold mb-4">
                     Frontend Dashboard
                   </h1>
@@ -394,7 +398,8 @@ const DepartmentDash = () => {
                     "& .MuiTabs-indicator": {
                       backgroundColor: "#0db4ea", // Custom indicator color
                     },
-                  }}>
+                  }}
+                >
                   <Tab label="Home" />
                   <Tab label="About" />
                   <Tab label="Gallery" />
@@ -455,7 +460,8 @@ const DepartmentDash = () => {
                   {products.map((product) => (
                     <div
                       key={product.id}
-                      className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+                      className="bg-gray-100 rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow"
+                    >
                       <img
                         src={product.image}
                         alt={product.name}
@@ -486,7 +492,7 @@ const DepartmentDash = () => {
           <>
             {(location.pathname === "/hr" ||
               location.pathname === "/hr/dashboard") && (
-              <div className="bg-white p-4 rounded-lg  mt-4">
+              <div className="bg-gray-100 p-4 rounded-lg  mt-4">
                 {hrWidgets.map((section, index) => (
                   <WidgetSection
                     key={index}
@@ -504,7 +510,7 @@ const DepartmentDash = () => {
           <>
             {(location.pathname === "/finance" ||
               location.pathname === "/finance/dashboard") && (
-              <div className="bg-white p-4 rounded-lg  mt-4">
+              <div className="bg-gray-100 p-4 rounded-lg  mt-4">
                 <WidgetSection heading="Finance" widgets={financeWidgets} />
               </div>
             )}
@@ -515,7 +521,7 @@ const DepartmentDash = () => {
           <>
             {(location.pathname === "/sales" ||
               location.pathname === "/sales/dashboard") && (
-              <div className="bg-white p-4 rounded-lg  mt-4">
+              <div className="bg-gray-100 p-4 rounded-lg  mt-4">
                 {salesWidgets.map((section, index) => (
                   <WidgetSection
                     key={index}
@@ -532,7 +538,50 @@ const DepartmentDash = () => {
           <>
             {location.pathname === "/customer" ||
             location.pathname === "/customer/dashboard" ? (
-              <div className="bg-white p-4 rounded-lg  mt-4 ">
+              <div className="bg-gray-100 p-4 rounded-lg  mt-4 flex flex-col gap-4">
+                <div className="bg-white rounded-md p-2">
+                {customerServiceWidgets
+                  .filter((section) => section.subModule === "asset")
+                  .map((section, index) => (
+                    <WidgetSection
+                      key={index}
+                      heading={section.heading}
+                      widgets={section.widgets}
+                    />
+                  ))}
+
+                <div className="flex w-full flex-1 flex-grow gap-x-4">
+                  <QuantityRemainingWidget
+                    totalStock={100}
+                    remainingStock={30}
+                    assetType="Laptops"
+                  />
+
+                  <QuantityRemainingWidget
+                    totalStock={100}
+                    remainingStock={10}
+                    assetType="Mobiles"
+                  />
+                </div>
+                </div>
+
+                <div className="bg-white rounded-md p-2">
+                {customerServiceWidgets
+                  .filter((section) => section.subModule === "ticket")
+                  .map((section, index) => (
+                    <WidgetSection
+                      key={index}
+                      heading={section.heading}
+                      widgets={section.widgets}
+                    />
+                  ))}
+                </div>
+
+                <div className="bg-white rounded-md p-2">
+                <RoomBookingDash />
+                </div>
+
+               
                 {itWidgets.map((section, index) => (
                   <WidgetSection
                     key={index}
@@ -543,9 +592,9 @@ const DepartmentDash = () => {
               </div>
             ) : location.pathname === "/customer/kpi" ? (
               <>
-                <div className="bg-white p-4 rounded-lg  mt-4 h-[90vh] overflow-y-auto">
+                <div className="bg-gray-100 p-4 rounded-lg  mt-4 h-[90vh] overflow-y-auto">
                   <div className="mb-8 flex justify-between">
-                    <h1 className="text-3xl font-semibold">Key insights</h1>
+                    <h1 className="text-3xl font-semibold">Key Insights</h1>
                   </div>
                   {customerServiceWidgets
                     .filter((section) => section.subModule === "asset")
@@ -591,7 +640,7 @@ const DepartmentDash = () => {
               </>
             ) : location.pathname === "/customer/tickets" ? (
               <>
-                <div className="bg-white p-4 rounded-lg mt-4">
+                <div className="bg-gray-100 p-4 rounded-lg mt-4">
                   <div className="mb-8 flex justify-between">
                     <h1 className="text-3xl  font-bold">Key Insights</h1>
                     {/* <div className=" flex gap-4">
@@ -690,9 +739,14 @@ const DepartmentDash = () => {
             )}
           </>
         )}
-        {location.pathname === "/tasks" ? (
+        {location.pathname === "/tasks" ||
+            location.pathname === "/tasks/dashboard" ? (
           <Task />
-        ) : location.pathname === "/tasks/teams" ? (
+        ) 
+        : location.pathname === "/tasks/tasklistfirstmenu" ? (
+          <Tasklistfirstmenu/>
+        )
+         : location.pathname === "/tasks/teams" ? (
           <>
             <Teams />
           </>
@@ -721,7 +775,8 @@ const DepartmentDash = () => {
           open={openTicket}
           onClose={handleCloseTicket}
           aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description">
+          aria-describedby="modal-modal-description"
+        >
           {/* <Box sx={style}> */}
           <Box sx={style}>
             <AddTicketForm />

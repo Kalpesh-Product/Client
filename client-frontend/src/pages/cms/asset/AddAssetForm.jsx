@@ -11,12 +11,13 @@ import { motion } from "framer-motion";
 import { IoMdClose } from "react-icons/io";
 import { toast } from "sonner";
 import axios from "axios";
+import assetsData from "../../../pages/cms/asset/temp_db/MaintainanceAssets.json"
 
 const AddAssetForm = ({ title, handleClose, user }) => {
   const [formData, setFormData] = useState({
     assetNumber: "0001",
     department : "",
-    assetType: "",
+    category: "",
     brandName: "",
     modelName: "",
     quantity: "",
@@ -55,28 +56,11 @@ const AddAssetForm = ({ title, handleClose, user }) => {
   const handleSubmit = async (e) => {
     try {
       e.preventDefault();
-      // Fetch the existing data for the IT department
-      const response = await axios.get("http://localhost:5000/IT");
-
-      if (response.data.length > 0) {
-        const itData = response.data[0]; // Extract IT department data
-
-        // Get the last ID and increment it for the new entry
-        const lastLaptop = itData.laptops[itData.laptops.length - 1];
-        const newId = lastLaptop ? lastLaptop.id + 1 : 1; // Start with 1 if no data exists
-
-        // Add the new id to formData
-        const newAsset = { ...formData, id: newId };
-
-        // Update the laptops array
-        const updatedLaptops = [...(itData.laptops || []), newAsset];
-        const updatedData = { ...itData, laptops: updatedLaptops };
-
-        // Update the IT department with the new laptops array
-        await axios.put(`http://localhost:5000/IT/${itData.id}`, updatedData);
-
+        console.log(formData)
+        const newAsset = {...formData, id:assetsData.length + 1}
+        assetsData.push(newAsset)
         toast.success("Asset added successfully!");
-      }
+      
     } catch {
       toast.error("Error adding asset");
     } finally {
@@ -151,11 +135,11 @@ const AddAssetForm = ({ title, handleClose, user }) => {
           {/* Asset Type Dropdown */}
           <Grid item xs={12}>
             <TextField
-              label="Asset Type"
-              name="assetType"
+              label="Category"
+              name="category"
               select
               fullWidth
-              value={formData.assetType}
+              value={formData.category}
               onChange={handleChange}
             >
               {assetTypes.map((type, index) => (

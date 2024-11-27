@@ -1,7 +1,7 @@
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
-import timeGridPlugin from "@fullcalendar/timegrid"; // Fix this typo
+import timeGridPlugin from "@fullcalendar/timegrid";
 import Modal from "../../../components/Modal";
 import { useState, useEffect } from "react";
 import { rooms } from "../../../utils/Rooms";
@@ -10,6 +10,8 @@ import BookingDetails from "./components/BookingDetails";
 import { format, addMinutes } from "date-fns";
 import { v4 as uuid } from "uuid";
 import { toast } from "sonner";
+import { motion } from "framer-motion";
+import { IoMdClose } from "react-icons/io";
 
 export default function Listing() {
   const [openBookingModal, setOpenBookingModal] = useState(false);
@@ -219,9 +221,9 @@ export default function Listing() {
           weekends={true}
           eventClick={handleEventClick}
           headerToolbar={{
-            start: "today prev,next", // Controls the 'today' and navigation buttons
-            center: "title", // Centered title of the calendar
-            end: "dayGridMonth,timeGridWeek,timeGridDay", // Adds Month, Week, and Day view buttons
+            left: "dayGridMonth,timeGridWeek,timeGridDay",
+            center: "title",
+            right: "today prev,next",
           }}
           eventDisplay="block"
           events={events.map((event) => ({
@@ -241,12 +243,15 @@ export default function Listing() {
         >
           <div className="flex justify-between items-center p-4">
             <h1 className="text-2xl font-bold ml-4">Create Booking</h1>
-            <button
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.9 }}
+              type="button"
               onClick={() => setOpenBookingModal(false)}
-              className="px-4 py-2 text-red-500 border-2 border-red-500 font-bold rounded-md"
+              className=" p-2 bg-white text-[red] border border-red-200 hover:border-red-400 text-2xl rounded-md"
             >
-              X
-            </button>
+              <IoMdClose />
+            </motion.button>
           </div>
           <BookingForm
             newMeeting={newMeeting}
@@ -265,7 +270,6 @@ export default function Listing() {
           open={openEventDetailsModal}
           onClose={() => setOpenEventDetailsModal(false)}
         >
-          <div className="flex w-full justify-end items-center"></div>
           <BookingDetails
             handleModalClose={() => setOpenEventDetailsModal(false)}
             selectedEvent={selectedEvent}

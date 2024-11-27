@@ -8,7 +8,7 @@ import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import { useDispatch } from "react-redux";
 import { motion } from "framer-motion";
-import { FormControl, MenuItem, Select } from "@mui/material";
+import { Checkbox, FormControlLabel, FormGroup } from "@mui/material";
 import ReactSelect from "react-select";
 import TestSide from "../components/Sidetest";
 import "../styles/CalenderModal.css";
@@ -25,7 +25,7 @@ const customStyles = {
 const extractNames = (data) => {
   const names = [];
   data.forEach((item) => {
-    names.push(item.name);;
+    names.push(item.name);
     if (item.reports && item.reports.length > 0) {
       names.push(...extractNames(item.reports));
     }
@@ -45,7 +45,7 @@ const Calender = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isEditModal, setIsEditModal] = useState(false);
   const [selectedNames, setSelectedNames] = useState([]);
-  const [eventFilter, setEventFilter] = useState("All");
+  const [eventFilter, setEventFilter] = useState([]);
 
   const names = extractNames(data);
 
@@ -56,12 +56,12 @@ const Calender = () => {
   //   );
   //   setSelectedNames(value);
   // };
-  const handleChange = (e) => {
-    const value = Array.from(
-      e.target.selectedOptions,
-      (option) => option.value
-    );
-    setSelectedNames((prevNames) => [...new Set([...prevNames, ...value])]); // Avoid duplicates
+  const dayCellClassNames = (dateInfo) => {
+    const today = new Date();
+    const cellDate = new Date(dateInfo.date);
+
+    // Add custom class for past dates
+    return cellDate < today.setHours(0, 0, 0, 0) ? "fc-disabled-date" : "";
   };
 
   const [events, setEvents] = useState([
@@ -91,10 +91,12 @@ const Calender = () => {
   ]);
   const [filteredEvents, setFilteredEvents] = useState(events);
   useEffect(() => {
-    if (eventFilter === "All") {
+    if (eventFilter.length === 0) {
       setFilteredEvents(events);
     } else {
-      const filtered = events.filter((event) => event.type === eventFilter);
+      const filtered = events.filter((event) =>
+        eventFilter.includes(event.type)
+      );
       setFilteredEvents(filtered);
     }
   }, [eventFilter, events]);
@@ -130,6 +132,13 @@ const Calender = () => {
     console.log(names);
   };
   const handleEventClick = (e) => {
+    const today = new Date();
+    const clickedDate = new Date(e.dateStr);
+
+    if (clickedDate < today.setHours(0, 0, 0, 0)) {
+      // Prevent clicks on past dates
+      return;
+    }
     const event = e.event;
     setSelectedEvent({
       // title: info.event.name,
@@ -198,32 +207,45 @@ const Calender = () => {
         <div class="flex-1 p-6 bg-gray-100">
           <div className="flex justify-between items-center">
             <h1 className=" font-bold text-4xl pb-5">Calendar</h1>
-            <FormControl className="w-[10%]">
-              <Select
-                labelId="event-filter-label"
-                value={eventFilter}
-                onChange={(e) => setEventFilter(e.target.value)}
-                className="bg-white"
-              >
-                <MenuItem value="All">All</MenuItem>
-                <MenuItem value="holiday">Holidays</MenuItem>
-                <MenuItem value="meeting">Meetings</MenuItem>
-              </Select>
-            </FormControl>
+            <FormGroup row>
+              {["holiday", "meeting"].map((type) => (
+                <FormControlLabel
+                  key={type}
+                  control={
+                    <Checkbox
+                      checked={eventFilter.includes(type)} // Check if the type is in the filter
+                      onChange={(e) => {
+                        const selectedType = e.target.value;
+                        setEventFilter((prevFilters) =>
+                          prevFilters.includes(selectedType)
+                            ? prevFilters.filter(
+                                (filter) => filter !== selectedType
+                              )
+                            : [...prevFilters, selectedType]
+                        );
+                      }}
+                      value={type} // Provide the value for the checkbox
+                    />
+                  }
+                  label={type.charAt(0).toUpperCase() + type.slice(1)} // Capitalize the first letter
+                />
+              ))}
+            </FormGroup>
           </div>
           <FullCalendar
             plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
             initialView="dayGridMonth"
             weekends={true}
             events={filteredEvents}
+            dayCellClassNames={dayCellClassNames}
             eventClick={handleEventClick}
             visibleRange={(currentDate) => {
               return get30DayRange(currentDate); // Restrict to 30 days
             }}
             headerToolbar={{
-              start: "today prev, next",
+              left: "dayGridMonth,timeGridWeek,timeGridDay",
               center: "title",
-              end: "dayGridMonth,timeGridWeek,timeGridDay",
+              right: "today prev,next",
             }}
             height={"90vh"}
             dateClick={handleDateClick}

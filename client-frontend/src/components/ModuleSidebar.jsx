@@ -59,6 +59,7 @@ const ModuleSidebar = ({ mainSideBar }) => {
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
+    // setIsDepartmentsOpen(false)
   };
 
   const { department } = useParams();
@@ -92,6 +93,7 @@ const ModuleSidebar = ({ mainSideBar }) => {
   const itModules = [
     {
       title: "Assets",
+      index: 0,
       route: "/customer/kpi",
       icon: <AiOutlineProduct />,
       subMenus: [
@@ -109,6 +111,7 @@ const ModuleSidebar = ({ mainSideBar }) => {
     },
     {
       title: "Tickets",
+      index:1,
       route: "/customer/tickets",
       icon: <HiOutlineClipboardList />,
       subMenus: [
@@ -136,6 +139,78 @@ const ModuleSidebar = ({ mainSideBar }) => {
     },
     {
       title: "Meetings",
+      index:2,
+      route: "/customer/meetings",
+      icon: <MdMeetingRoom />,
+      subMenus: [
+        {
+          title: "Calendar",
+          route: "/customer/meetings/booking",
+          icon: <FaRegCalendarAlt />,
+        },
+        {
+          title: "Add new Room",
+          route: "/customer/meetings/add-room",
+          icon: <FaPlus />,
+        },
+        {
+          title: "Reports",
+          route: "/customer/meetings/reports",
+          icon: <TbReportSearch />,
+        },
+      ],
+    },
+  ];
+  const finance = [
+    {
+      title: "Assets",
+      index: 0,
+      route: "/customer/kpi",
+      icon: <AiOutlineProduct />,
+      subMenus: [
+        {
+          title: "Manage asset",
+          route: "/customer/asset/manage",
+          icon: <MdOutlineManageAccounts />,
+        },
+        {
+          title: "Reports",
+          route: "/customer/asset/reports",
+          icon: <TbReportSearch />,
+        },
+      ],
+    },
+    {
+      title: "Tickets",
+      index:1,
+      route: "/customer/tickets",
+      icon: <HiOutlineClipboardList />,
+      subMenus: [
+        {
+          title: "View Tickets",
+          route: "/customer/tickets/view-tickets",
+          icon: <HiOutlineClipboardList />,
+        },
+        {
+          title: "My Tickets",
+          route: "/customer/tickets/my-tickets",
+          icon: <HiOutlineClipboardList />,
+        },
+        // {
+        //   title: "Members",
+        //   route: "/customer/tickets/members",
+        //  icon: <MdOutlineManageAccounts />,
+        // },
+        {
+          title: "Ticket Reports",
+          route: "/customer/tickets/ticket-reports",
+          icon: <HiOutlineClipboardList />,
+        },
+      ],
+    },
+    {
+      title: "Meetings",
+      index:2,
       route: "/customer/meetings",
       icon: <MdMeetingRoom />,
       subMenus: [
@@ -159,29 +234,27 @@ const ModuleSidebar = ({ mainSideBar }) => {
   ];
   const tasks = [
     {
-      title: "Tasks",
-      route: "/tasks",
+      title: "Tasklist",
+      route: "/tasks/tasklistfirstmenu",
       icon: <FaTasks />,
     },
-    {
-      title: "Teams",
-      route: "/tasks/teams",
-      icon: <FaUsers />,
-    },
+   
     {
       title: "Projects",
       route: "/tasks/tasklist",
       icon: <FaProjectDiagram />,
     },
+    {
+      title: "Teams",
+      route: "/tasks/teams",
+      icon: <FaUsers />,
+    }
   ];
 
   // Get the department based on the current path
   let passedDepartment = location.pathname.split("/")[1];
 
   // Replace "customer" with "cms"
-  if (passedDepartment === "customer") {
-    passedDepartment = "cms";
-  }
 
   // Determine which module array to render based on the department in the URL
   let modules = [];
@@ -190,18 +263,20 @@ const ModuleSidebar = ({ mainSideBar }) => {
     modules = frontendModules;
   } else if (passedDepartment === "hr") {
     modules = hrModules;
-  } else if (passedDepartment === "cms") {
+  } else if (passedDepartment === "customer") {
     modules = itModules;
   } else if (passedDepartment === "tasks") {
     taskModules = tasks;
+  } else if (passedDepartment === "finance") {
+    taskModules = finance;
   }
 
   const departments = [
     { name: "FRONTEND", icon: <FaCode /> },
-    { name: "FINANCE & ACCOUNTING", icon: <MdAccountBalance /> },
+    { name: "FINANCE", icon: <MdAccountBalance /> },
     { name: "SALES", icon: <FaMoneyBillTrendUp /> },
     { name: "HUMAN RESOURCE", icon: <FaBuildingUser /> },
-    { name: "CUSTOMER SERVICE", icon: <RiCustomerService2Line /> },
+    { name: "CUSTOMER", icon: <RiCustomerService2Line /> },
     { name: "MARKETING", icon: <SiMarketo /> },
     { name: "CAFE (F&B)", icon: <MdLocalCafe /> },
     { name: "IT", icon: <MdOutlineWifiTethering /> },
@@ -230,10 +305,10 @@ const ModuleSidebar = ({ mainSideBar }) => {
   const departmentMapping = {
     TopManagement: [
       "FRONTEND",
-      "FINANCE & ACCOUNTING",
+      "FINANCE",
       "SALES",
       "HUMAN RESOURCE",
-      "CUSTOMER SERVICE",
+      "CUSTOMER",
       "MARKETING",
       "CAFE (F&B)",
       "IT",
@@ -241,14 +316,14 @@ const ModuleSidebar = ({ mainSideBar }) => {
       "LEGAL",
     ],
     Tech: ["FRONTEND"],
-    Finance: ["FINANCE & ACCOUNTING"],
+    Finance: ["FINANCE"],
     Sales: ["SALES"],
-    HR: ["HUMAN RESOURCE", "CUSTOMER SERVICE"],
-    CMS: ["CUSTOMER SERVICE"],
+    HR: ["HUMAN RESOURCE", "CUSTOMER"],
+    CMS: ["CUSTOMER"],
     Marketing: ["MARKETING"],
     Cafe: ["CAFE (F&B)"],
     IT: ["IT"],
-    Maintenance: ["MAINTENANCE"],
+    Maintenance: ["MAINTENANCE", "CUSTOMER"],
     Legal: ["LEGAL"],
   };
 
@@ -261,6 +336,14 @@ const ModuleSidebar = ({ mainSideBar }) => {
     setIsActive(index);
     console.log("Menu clicked");
   };
+// Handle manual toggling of dropdowns
+const handleMenuClick = (index) => {
+  // If the clicked menu is already open, close it; otherwise, open it
+  setIsDepartmentsOpen(isDepartmentsOpen === index ? false : index);
+  setIsSidebarOpen(true)
+};
+
+  // Use useEffect to update dropdown open state based on the route
 
   return (
     <div className="">
@@ -283,7 +366,7 @@ const ModuleSidebar = ({ mainSideBar }) => {
             </div>
             {isSidebarOpen && (
               <span className="pl-5 font-bold uppercase">
-                {passedDepartment}
+                {passedDepartment === "customer" ? "CMS" : passedDepartment}
               </span>
             )}
           </div>
@@ -305,7 +388,101 @@ const ModuleSidebar = ({ mainSideBar }) => {
 
           {/* SubModules-Items */}
 
-          {modules.map(({ title, route, icon, subMenus }, index) => (
+          {modules.map(({ title, route, icon, subMenus }, index) => {
+           
+            return (
+              <div key={index}>
+                {/* Main Menu Item */}
+                <Tooltip title={title} placement="right">
+                  <div
+                    onClick={() => {
+                      navigate(route);
+
+                      handleMenuClick(index); // Toggle the dropdown on click
+                    }}
+                    className={`flex border-b-[1px] ${
+                      isSidebarOpen ? "pl-[1rem]" : "justify-center"
+                    } items-center cursor-pointer py-2 hover:wono-blue-dark hover:text-white hover:rounded-md ${
+                      location.pathname === route
+                        ? "wono-blue border-r-4 border-[#0DB4EA] rounded-tl-md rounded-bl-md text-[#0DB4EA]"
+                        : "bg-white"
+                    }`}
+                  >
+                    <div className="flex justify-center w-5 text-2xl">
+                      {icon}
+                    </div>
+
+                    {isSidebarOpen && (
+                      <div className="flex w-full justify-between pr-3">
+                        <span className="pl-5 text-[0.8rem]">{title}</span>
+                        <div>
+                          {isSidebarOpen ? (
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke="currentColor"
+                              className={`w-4 h-4 transform ${
+                                isDepartmentsOpen ? "rotate-180" : ""
+                              }`}
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth="2"
+                                d="M19 9l-7 7-7-7"
+                              />
+                            </svg>
+                          ) : (
+                            ""
+                          )}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </Tooltip>
+
+                {/* Submenu Items */}
+                {subMenus && isDepartmentsOpen === index && (
+                  <div className="ml-4">
+                    {" "}
+                    {/* Submenu container */}
+                    <div className="flex flex-col py-2">
+                      {subMenus.map((menu, subIndex) => (
+                        <Tooltip
+                          title={menu.title}
+                          placement="right"
+                          key={subIndex}
+                        >
+                          <div
+                            onClick={() => navigate(menu.route)}
+                            className={`flex items-center border-b-[1px] p-3 gap-3 cursor-pointer hover:wono-blue-dark hover:text-white hover:rounded-md  ${
+                              location.pathname === menu.route
+                                ? "wono-blue border-r-4 border-b-[0px]  border-[#0DB4EA] rounded-tl-md rounded-bl-md text-[#0DB4EA]"
+                                : "bg-white"
+                            } `}
+                          >
+                            <div className="flex justify-center w-6 text-[1rem]">
+                              {menu.icon || <RiAppsLine />}
+                            </div>
+                            {isSidebarOpen && (
+                              <span className="pl-5 text-[0.8rem]">
+                                {menu.title}
+                              </span>
+                            )}
+                          </div>
+                        </Tooltip>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            );
+          })}
+
+          {/* Tasks */}
+
+          {taskModules.map(({ title, route, icon, subMenus }, index) => (
             <div key={index}>
               {/* Main Menu Item */}
               <Tooltip title={title} placement="right">
@@ -331,26 +508,25 @@ const ModuleSidebar = ({ mainSideBar }) => {
                     <div className="flex w-full gap-x-10">
                       <span className="pl-5 text-[0.8rem]">{title}</span>
                       <div>
-                        {isSidebarOpen ? (
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
-                            className={`w-4 h-4 ml-3 transform ${
-                              isDepartmentsOpen ? "rotate-180" : ""
-                            }`}
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth="2"
-                              d="M19 9l-7 7-7-7"
-                            />
-                          </svg>
-                        ) : (
-                          ""
-                        )}
+                        {/* {isSidebarOpen ? (
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke="currentColor"
+                              className={`w-4 h-4 ml-3 transform ${
+                                isDepartmentsOpen ? "rotate-180" : ""
+                              }`}>
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth="2"
+                                d="M19 9l-7 7-7-7"
+                              />
+                            </svg>
+                          ) : (
+                            ""
+                          )} */}
                       </div>
                     </div>
                   )}
@@ -394,95 +570,8 @@ const ModuleSidebar = ({ mainSideBar }) => {
             </div>
           ))}
 
-          {/* Tasks */}
-
-          {taskModules.map(({ title, route, icon, subMenus }, index) => (
-            <div key={index}>
-              {/* Main Menu Item */}
-              <Tooltip title={title} placement="right">
-                <div
-                  onClick={() => {
-                    navigate(route);
-
-                    setIsDepartmentsOpen(
-                      isDepartmentsOpen === index ? null : index
-                    ); // Toggle specific dropdown
-                  }}
-                  className={`flex border-b-[1px] ${
-                    isSidebarOpen ? "pl-[1rem]" : "justify-center"
-                  } items-center cursor-pointer py-2 hover:wono-blue-dark hover:text-white hover:rounded-md ${
-                    location.pathname === route
-                      ? "wono-blue border-r-4 border-[#0DB4EA] rounded-tl-md rounded-bl-md text-[#0DB4EA]"
-                      : "bg-white"
-                  }`}>
-                  <div className="flex justify-center w-5 text-2xl">{icon}</div>
-
-                  {isSidebarOpen && (
-                    <div className="flex w-full gap-x-10">
-                      <span className="pl-5 text-[0.8rem]">{title}</span>
-                      <div>
-                        {/* {isSidebarOpen ? (
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              stroke="currentColor"
-                              className={`w-4 h-4 ml-3 transform ${
-                                isDepartmentsOpen ? "rotate-180" : ""
-                              }`}>
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth="2"
-                                d="M19 9l-7 7-7-7"
-                              />
-                            </svg>
-                          ) : (
-                            ""
-                          )} */}
-                      </div>
-                    </div>
-                  )}
-                </div>
-              </Tooltip>
-
-              {/* Submenu Items */}
-              {subMenus && isDepartmentsOpen === index && (
-                <div className="ml-4">
-                  {" "}
-                  {/* Submenu container */}
-                  <div className="flex flex-col p-2">
-                    {subMenus.map((menu, subIndex) => (
-                      <Tooltip
-                        title={menu.title}
-                        placement="right"
-                        key={subIndex}>
-                        <div
-                          onClick={() => navigate(menu.route)}
-                          className={`flex items-center border-b-[1px] py-3 gap-3 cursor-pointer hover:wono-blue-dark hover:text-white hover:rounded-md  ${
-                            location.pathname === menu.route
-                              ? "wono-blue border-r-4 border-b-[0px]  border-[#0DB4EA] rounded-tl-md rounded-bl-md text-[#0DB4EA]"
-                              : "bg-white"
-                          } `}>
-                          <div className="flex justify-center w-6 text-[1rem]">
-                            {menu.icon || <RiAppsLine />}
-                          </div>
-                          {isSidebarOpen && (
-                            <span className="pl-5 text-[0.8rem]">
-                              {menu.title}
-                            </span>
-                          )}
-                        </div>
-                      </Tooltip>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
-          ))}
-
           {/* Common-submodules-menu */}
-          <Tooltip title={"Reports"} placement="right">
+          {/* <Tooltip title={"Reports"} placement="right">
             <div
               onClick={() => {
                 navigate("#dashboard");
@@ -502,7 +591,7 @@ const ModuleSidebar = ({ mainSideBar }) => {
                 <span className="pl-5 text-[0.8rem]">Reports</span>
               )}
             </div>
-          </Tooltip>
+          </Tooltip> */}
 
           {/* Menu Items only for reports */}
           {location.pathname === "/reports" && (
@@ -738,7 +827,7 @@ const ModuleSidebar = ({ mainSideBar }) => {
             </>
           )}
 
-          <Tooltip title={"Reports"} placement="right">
+          {/* <Tooltip title={"Reports"} placement="right">
             <div
               onClick={() => {
                 navigate("#dashboard");
@@ -758,7 +847,7 @@ const ModuleSidebar = ({ mainSideBar }) => {
                 <span className="pl-5 text-[0.8rem]"> Frontend Reports</span>
               )}
             </div>
-          </Tooltip>
+          </Tooltip> */}
         </div>
       </div>
     </div>
