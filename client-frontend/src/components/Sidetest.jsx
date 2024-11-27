@@ -175,7 +175,7 @@ const TestSide = () => {
     <div
       className={` ${
         isSidebarOpen ? "w-60" : "w-20"
-      } bg-white  border-gray-300 text-black flex-shrink-0  sticky top-10 overflow-y-auto transition-all duration-300 z-[1]`}>
+      } bg-white  border-gray-300 text-black flex-shrink-0  overflow-y-auto transition-all duration-300 z-[1]`}>
       <div className="flex relative w-full">
         {/*Dashboard */}
         <div className="mt-5 px-3 flex flex-col gap-2">
