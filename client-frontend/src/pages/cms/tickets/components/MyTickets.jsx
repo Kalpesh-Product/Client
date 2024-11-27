@@ -11,8 +11,11 @@ import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import { toast } from "sonner";
 import AgTable from "../../../../components/AgTable";
+import { useLocation } from "react-router-dom";
 
 const MyTickets = () => {
+  const location = useLocation();
+
   const columns = [
     { field: "id", headerName: "ID", width: 100 },
     { field: "ticketTitle", headerName: "Ticket Title", width: 200 },
@@ -338,7 +341,8 @@ const MyTickets = () => {
             Export Report
           </CSVLink>
         </div> */}
-        <div className=" flex">
+
+        {/* <div className=" flex">
           <div className="mb-2 flex justify-between">
             <h1 className="text-3xl"></h1>
             <button
@@ -347,7 +351,20 @@ const MyTickets = () => {
               Raise Ticket
             </button>
           </div>
-        </div>
+        </div> */}
+
+        {location.pathname === "/customer/tickets/my-tickets" && (
+          <div className="flex">
+            <div className="mb-2 flex justify-between">
+              <h1 className="text-3xl"></h1>
+              <button
+                onClick={openModal}
+                className="px-6 py-2 rounded-lg text-white wono-blue-dark hover:bg-[#3cbce7] transition-shadow shadow-md hover:shadow-lg active:shadow-inner">
+                Raise Ticket
+              </button>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Tickets datatable START */}

@@ -22,7 +22,8 @@ const AgTable = React.memo(
     // Define the row style conditionally
     const getRowStyle = (params) => {
       if (highlightFirstRow && params.node.rowIndex === 0) {
-        return { backgroundColor: "grey" };
+        // return { backgroundColor: "grey" };
+        return { backgroundColor: "#f5f5f5", color: "#b0b0b0" };
       }
       return null;
     };

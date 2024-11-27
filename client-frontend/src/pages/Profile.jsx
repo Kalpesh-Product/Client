@@ -13,6 +13,7 @@ import SuperAdmin from "../assets/kashif-bg.png";
 import { useDispatch, useSelector } from "react-redux";
 import { Accordion, AccordionDetails, AccordionSummary } from "@mui/material";
 import AgTable from "../components/AgTable";
+import MyTickets from "./cms/tickets/components/MyTickets";
 // import image from "../profile.jpg";
 
 const Profile = () => {
@@ -102,7 +103,7 @@ const Profile = () => {
   return (
     <div class="flex min-h-screen ">
       {/* Sidebar */}
-      <TestSide  />
+      <TestSide />
 
       {/* Main Content */}
       <div class="flex-1 p-6  motion-preset-blur-right-md">
@@ -111,8 +112,7 @@ const Profile = () => {
           <div class="flex flex-row gap-3 relative">
             <div
               className="w-16 h-16 rounded-full overflow-hidden bg-gray-200 cursor-pointer"
-              onClick={() => dispatch(openModal())}
-            >
+              onClick={() => dispatch(openModal())}>
               <img
                 src={
                   userData?.role === "Master Admin"
@@ -122,13 +122,11 @@ const Profile = () => {
                     : Profilepic
                 }
                 alt="Profile Logo"
-                class="w-16 h-16 rounded-full border-4 border-[#0DB4EA] mr-4"
-              ></img>
+                class="w-16 h-16 rounded-full border-4 border-[#0DB4EA] mr-4"></img>
             </div>
             <span
               className="p-1 absolute left-11 top-10 cursor-pointer rounded-full bg-p wono-blue-dark"
-              onClick={() => dispatch(openModal())}
-            >
+              onClick={() => dispatch(openModal())}>
               <TbCameraPlus size={15} color="white" />
             </span>
             <div>
@@ -149,8 +147,7 @@ const Profile = () => {
                     ? "border-b-4 border-[#0DB4EA] text-blue-600"
                     : ""
                 }`}
-                onClick={() => setActiveTab("tab-1")}
-              >
+                onClick={() => setActiveTab("tab-1")}>
                 Profile
               </button>
             </li>
@@ -161,8 +158,7 @@ const Profile = () => {
                     ? "border-b-4 border-[#0DB4EA] text-blue-600"
                     : ""
                 }`}
-                onClick={() => setActiveTab("tab-2")}
-              >
+                onClick={() => setActiveTab("tab-2")}>
                 Access
               </button>
             </li>
@@ -173,8 +169,7 @@ const Profile = () => {
                     ? "border-b-4 border-[#0DB4EA] text-blue-600"
                     : ""
                 }`}
-                onClick={() => setActiveTab("tab-3")}
-              >
+                onClick={() => setActiveTab("tab-3")}>
                 Assets
               </button>
             </li>
@@ -185,9 +180,19 @@ const Profile = () => {
                     ? "border-b-4 border-[#0DB4EA] text-blue-600"
                     : ""
                 }`}
-                onClick={() => setActiveTab("tab-4")}
-              >
+                onClick={() => setActiveTab("tab-4")}>
                 Credits
+              </button>
+            </li>
+            <li className=" text-center w-1/2" role="presentation">
+              <button
+                className={`text-md py-2 w-full hover:bg-gray-100 ${
+                  activeTab === "tab-5"
+                    ? "border-b-4 border-[#0DB4EA] text-blue-600"
+                    : ""
+                }`}
+                onClick={() => setActiveTab("tab-5")}>
+                Tickets
               </button>
             </li>
           </ul>
@@ -196,13 +201,11 @@ const Profile = () => {
               <div
                 className="tab-pane motion-preset-slide-up show active"
                 id="tab-1"
-                role="tabpanel"
-              >
+                role="tabpanel">
                 <div
                   className="flex flex-col  mt-3"
                   data-aos="fade-up"
-                  data-aos-delay="100"
-                >
+                  data-aos-delay="100">
                   <EmployeeProfile
                     data={{
                       name: "Abrar Shaikh",
@@ -223,13 +226,11 @@ const Profile = () => {
               <div
                 className="tab-pane motion-preset-slide-up-sm show"
                 id="tab-2"
-                role="tabpanel"
-              >
+                role="tabpanel">
                 <div
                   className="flex flex-col  mt-3"
                   data-aos="fade-up"
-                  data-aos-delay="100"
-                >
+                  data-aos-delay="100">
                   {/* Tab 2 Content */}
                   <AccessHierarchyTab />
                 </div>
@@ -239,21 +240,18 @@ const Profile = () => {
               <div
                 className="tab-pane motion-preset-slide-up-sm show"
                 id="tab-2"
-                role="tabpanel"
-              >
+                role="tabpanel">
                 <div
                   className="flex flex-col"
                   data-aos="fade-up"
-                  data-aos-delay="100"
-                >
+                  data-aos-delay="100">
                   <div className="bg-white shadow-lg rounded-lg overflow-hidden inline-block">
                     <Accordion>
                       <AccordionSummary
                         expandIcon={<ExpandMoreIcon />}
                         aria-controls="panel1-content"
                         id="panel1-header"
-                        sx={{ fontFamily: "Popins-SemiBold" }}
-                      >
+                        sx={{ fontFamily: "Popins-SemiBold" }}>
                         IT
                       </AccordionSummary>
                       <AccordionDetails>
@@ -265,8 +263,7 @@ const Profile = () => {
                         expandIcon={<ExpandMoreIcon />}
                         aria-controls="panel1-content"
                         id="panel1-header"
-                        sx={{ fontFamily: "Popins-SemiBold" }}
-                      >
+                        sx={{ fontFamily: "Popins-SemiBold" }}>
                         Maintainance
                       </AccordionSummary>
                       <AccordionDetails>
@@ -281,8 +278,7 @@ const Profile = () => {
               <div
                 className="tab-pane motion-preset-slide-up-sm show"
                 id="tab-4"
-                role="tabpanel"
-              >
+                role="tabpanel">
                 {/* Credits Summary Section */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6 w-full">
                   {/* Total Credits Widget */}
@@ -357,6 +353,84 @@ const Profile = () => {
                 </div>
               </div>
             )}
+            {activeTab === "tab-5" && (
+              <div
+                className="tab-pane motion-preset-slide-up-sm show"
+                id="tab-5"
+                role="tabpanel">
+                {/* Credits Summary Section */}
+                {/* <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6 w-full">
+          
+                  <div className="p-4 bg-blue-50 rounded-lg shadow">
+                    <h4 className="text-lg font-semibold text-blue-600">
+                      Total Credits
+                    </h4>
+                    <p className="text-2xl font-bold text-blue-800">1000</p>
+                  </div>
+
+         
+                  <div className="p-4 bg-green-50 rounded-lg shadow">
+                    <h4 className="text-lg font-semibold text-green-600">
+                      Remaining Credits
+                    </h4>
+                    <p className="text-2xl font-bold text-green-800">450</p>
+                  </div>
+
+         
+                  <div className="p-4 bg-yellow-50 rounded-lg shadow">
+                    <h4 className="text-lg font-semibold text-yellow-600">
+                      Rooms Booked
+                    </h4>
+                    <p className="text-2xl font-bold text-yellow-800">
+                      15 Bookings
+                    </p>
+                  </div>
+                </div> */}
+
+                {/* Data Grid Section */}
+                <div className="bg-white p-4 w-full">
+                  <h3 className="text-xl font-bold mb-4">My Tickets</h3>
+                  <div style={{ height: 400, width: "100%" }}>
+                    {/* <AgTable
+                      data={[
+                        {
+                          id: 1,
+                          room: "Vatican",
+                          creditsUsed: 50,
+                          duration: "2 hours",
+                          date: "2024-11-21",
+                        },
+                        {
+                          id: 2,
+                          room: "Arambol",
+                          creditsUsed: 20,
+                          duration: "1 hour",
+                          date: "2024-11-20",
+                        },
+                        {
+                          id: 3,
+                          room: "Sydney",
+                          creditsUsed: 100,
+                          duration: "3 hours",
+                          date: "2024-11-19",
+                        },
+                      ]}
+                      columns={[
+                        { field: "room", headerName: "Room", flex: 1 },
+                        {
+                          field: "creditsUsed",
+                          headerName: "Credits Used",
+                          flex: 1,
+                        },
+                        { field: "duration", headerName: "Duration", flex: 1 },
+                        { field: "date", headerName: "Date", flex: 1 },
+                      ]}
+                    /> */}
+                    <MyTickets />
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -375,8 +449,7 @@ const Profile = () => {
             />
             <button
               onClick={() => dispatch(closeModal())}
-              className="mt-4 w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600"
-            >
+              className="mt-4 w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600">
               Close
             </button>
           </div>
@@ -412,16 +485,14 @@ const Profile = () => {
                 <li className="w-1/2 text-center" role="presentation">
                   <button
                     className="text-lg py-2 w-full font-semibold hover:bg-gray-100 focus:bg-gray-200 "
-                    onClick={() => setActiveTab("tab-1")}
-                  >
+                    onClick={() => setActiveTab("tab-1")}>
                     PROFILE
                   </button>
                 </li>
                 <li className="w-1/2 text-center" role="presentation">
                   <button
                     className="text-lg py-2 w-full font-semibold hover:bg-gray-100 focus:bg-gray-200 "
-                    onClick={() => setActiveTab("tab-2")}
-                  >
+                    onClick={() => setActiveTab("tab-2")}>
                     ACCESS
                   </button>
                 </li>
@@ -431,13 +502,11 @@ const Profile = () => {
                   <div
                     className="tab-pane fade show active"
                     id="tab-1"
-                    role="tabpanel"
-                  >
+                    role="tabpanel">
                     <div
                       className="flex flex-col items-center justify-center mt-3"
                       data-aos="fade-up"
-                      data-aos-delay="100"
-                    >
+                      data-aos-delay="100">
                       <EmployeeProfile />
                     </div>
                   </div>
@@ -446,13 +515,11 @@ const Profile = () => {
                   <div
                     className="tab-pane fade show"
                     id="tab-2"
-                    role="tabpanel"
-                  >
+                    role="tabpanel">
                     <div
                       className="flex flex-col items-center justify-center mt-3"
                       data-aos="fade-up"
-                      data-aos-delay="100"
-                    >
+                      data-aos-delay="100">
                       {/* Tab 2 Content */}
                       <p>Your Apply Now content here...</p>
                     </div>
@@ -463,8 +530,7 @@ const Profile = () => {
 
             <button
               onClick={() => setIsAccessModalOpen(false)}
-              className="w-full bg-[#0DB4EA] text-white py-2 rounded-lg hover:bg-blue-600"
-            >
+              className="w-full bg-[#0DB4EA] text-white py-2 rounded-lg hover:bg-blue-600">
               Save & Close
             </button>
           </div>
@@ -479,8 +545,7 @@ const Profile = () => {
             </h3>
             <button
               onClick={() => setIsUpdateModalOpen(false)}
-              className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600"
-            >
+              className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600">
               Save & Close
             </button>
           </div>

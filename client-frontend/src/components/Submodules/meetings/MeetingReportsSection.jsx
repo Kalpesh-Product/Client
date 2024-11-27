@@ -20,7 +20,7 @@ const MeetingReportsSection = () => {
 
   return (
     <div>
-      <div className="pt-3 pb-7">
+      <div className="pt-3 pb-7 hidden">
         <span className="text-xl">Meeting Reports</span>&nbsp;&nbsp;
         {/* <button>View Service</button> */}
         <button class="wono-blue-dark hover:bg-blue-700 text-white font-bold text-xs py-1 px-3 rounded-full">

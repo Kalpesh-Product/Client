@@ -20,7 +20,7 @@ const TaskReportsSection = () => {
 
   return (
     <div>
-      <div>
+      <div className="hidden">
         <span className="text-2xl">Task Reports</span>&nbsp;&nbsp;
         {/* <button>View Service</button> */}
         <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold text-xs py-1 px-3 rounded-full">
@@ -32,7 +32,10 @@ const TaskReportsSection = () => {
       {/* Tabs Material UI Start*/}
       <TabContext value={value}>
         <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-          <TabList onChange={handleChange} aria-label="Departments">
+          <TabList
+            onChange={handleChange}
+            aria-label="Departments"
+            variant="fullWidth">
             <Tab
               label="My Tasks"
               value="1"
