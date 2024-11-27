@@ -5,6 +5,7 @@ import AssignTaskForm from '../components/TaskManagement/AssignTaskForm';
 
 import { DataGrid } from "@mui/x-data-grid";
 import Paper from "@mui/material/Paper";
+import { TextField } from '@mui/material';
 import Box from "@mui/material/Box";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
@@ -16,6 +17,7 @@ import { NewModal } from '../components/NewModal';
 import { useNavigate } from 'react-router-dom';
 import Avatar from "@mui/material/Avatar";
 import Stack from "@mui/material/Stack";
+
 
 import AgTable from "../components/AgTable";
 
@@ -362,40 +364,74 @@ const Task = () => {
     </div>
   </div>
 
-  <div className="flex flex-wrap items-center justify-between mt-10 ">
+  <div className="flex flex-wrap items-center justify-between mt-10 gap-4">
     {/* Left Side: Search, Priority Dropdown, and Date Filter */}
-    <div className="flex flex-wrap gap-4">
+   
       {/* Search Field */}
-      <input
+      {/* <input
         type="text"
         placeholder="Search tasks..."
         className="p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
+      /> */}
+       <FormControl  style={{ minWidth: 220 }}>
+      <TextField
+              variant="outlined"
+              size="small"
+              label="Search"
+              value={searchTerm
+              }
+             
+              onChange={(e) => setSearchTerm(e.target.value)}
+
       />
+      </FormControl>
 
       {/* Priority Dropdown */}
-      <select
-        className="p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
-        value={priorityFilter}
-        onChange={(e) => setPriorityFilter(e.target.value)}
-      >
-         
+      
+        <FormControl size="small" style={{ minWidth: 220 }}>
+          {/* <InputLabel>Filter by Asset Name</InputLabel> */}
+          <TextField label="Priority" variant="outlined" select size="small" onChange={(e) => setPriorityFilter(e.target.value)} >
+            <MenuItem value="">All</MenuItem>
+            <MenuItem value="High">High</MenuItem>
+            <MenuItem value="Low">Low</MenuItem>
+            <MenuItem value="Medium">Medium</MenuItem>
+          </TextField>
+        </FormControl>
 
-        <option value="">All Priorities</option>
-        <option value="High">High</option>
-        <option value="Medium">Medium</option>
-        <option value="Low">Low</option>
-      </select>
+
+      
 
       {/* Date Filter */}
-      <input
+      <TextField
+              label="Date"
+              name="date"
+              type="date"
+              variant="outlined"
+              size="small"
+              InputLabelProps={{
+                shrink: true,
+              }}
+            />
+      {/* <input
         type="date"
         className="p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
-      />
+      /> */}
 
       {/* Department Dropdown */}
-      <select
+
+      <FormControl size="small" style={{ minWidth: 220 }}>
+          {/* <InputLabel>Filter by Asset Name</InputLabel> */}
+          <TextField label="Department" variant="outlined" select size="small" onChange={(e) => setDepartmentFilter(e.target.value)}>
+            <MenuItem value="">All Departments</MenuItem>
+            <MenuItem value="High">IT</MenuItem>
+            <MenuItem value="Low">HR</MenuItem>
+            <MenuItem value="Medium">TECH</MenuItem>
+            <MenuItem value="Medium">ADMIN</MenuItem>
+          </TextField>
+        </FormControl>
+      {/* <select
         className="p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
         value={departmentFilter}
         onChange={(e) => setDepartmentFilter(e.target.value)}
@@ -408,16 +444,11 @@ const Task = () => {
         <option value="TECH">TECH</option>
         <option value="ADMIN">ADMIN</option>
         
-      </select>
+      </select> */}
       
     </div>
 
-    {/* Right Side: Assign Task Button */}
-    {/* <button className="px-4 py-2 bg-blue-500 text-white font-semibold rounded-md shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400"
-    onClick={assignTaskbtnClick}>
-     + Assign Task
-    </button> */}
-  </div>
+  
 
   {/* Tabular section */}
   <div className='mt-5 overflow-auto w-full max-w-screen-xl mx-auto  motion-preset-blur-right-md font-semibold' style={{fontFamily:"Popins-Regular"}}>
@@ -431,8 +462,6 @@ const Task = () => {
     {/* </Paper> */}
 
 </div>
-
-
         </div>
         
         

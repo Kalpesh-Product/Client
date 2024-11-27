@@ -16,6 +16,7 @@ import ModuleSidebar from '../components/ModuleSidebar';
 import { alignProperty } from '@mui/material/styles/cssUtils';
 import { NewModal } from '../components/NewModal';
 import { useLocation } from 'react-router-dom';
+import AgTable from '../components/AgTable';
 
 const TasklistTable = () => {
     const location = useLocation();
@@ -39,7 +40,7 @@ const TasklistTable = () => {
           width: 130,
           type: "singleSelect",
           valueOptions: ["High", "Medium", "Low"],
-          renderCell: (params) => {
+          cellRenderer: (params) => {
             const statusColors = {
               High: "text-red-600 bg-red-100",
               Medium: "text-blue-600 bg-blue-100",
@@ -69,7 +70,7 @@ const TasklistTable = () => {
           field: "action",
           headerName: "Action",
           width: 150,
-          renderCell: (params) => {
+          cellRenderer: (params) => {
             const handleActionChange = (event) => {
               const selectedAction = event.target.value;
     
@@ -265,8 +266,8 @@ const TasklistTable = () => {
     </div>
          <div className='mt-5 overflow-auto w-full max-w-screen-xl mx-auto  motion-preset-blur-right-md'>
   <Paper sx={{ height: 400, width: "100%", alignItems:"center" , display:"flex", justifyContent:"center"}}>
-        <DataGrid
-          rows={filteredTasks} // Pass filtered rows
+        <AgTable
+          data={filteredTasks} // Pass filtered rows
           columns={columns}
           initialState={{ pagination: { paginationModel } }}
           pageSizeOptions={[5, 10]}

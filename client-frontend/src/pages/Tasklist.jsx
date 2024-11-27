@@ -6,10 +6,11 @@ import { NewModal } from '../components/NewModal';
 import { useNavigate } from 'react-router-dom';
 
 
+
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import { Stack,Avatar } from '@mui/material';
+import { Stack,Avatar,TextField,Button,Box } from '@mui/material';
 
 
 const Tasklist = () => {
@@ -95,12 +96,12 @@ const Tasklist = () => {
       };
 
       const TaskCard = ({ title, description,department, Assignes = [] }) => (
-        <div className="bg-gray-100 shadow-md rounded-lg p-3 mb-4" onClick={()=>handleClick(title)}>
+        <div className="bg-gray-100 shadow-md bg-white rounded-lg p-3 mb-4" onClick={()=>handleClick(title)}>
           <div className='flex justify-between gap-5'>
             <div>
           <p className='text-xs  py-2 px-2 bg-white rounded-full  my-2'>{department}</p>
           </div>
-          <div className='flex items-center justify-center w-max'>
+          <div className='flex items-center justify-center w-max p-0'>
           <FormControl size="small" 
           >
                 <Select
@@ -123,7 +124,7 @@ const Tasklist = () => {
                   }}>
                   <MenuItem value="" disabled>
                     <svg
-                      className="flex-none size-4 text-gray-600 dark:text-neutral-500"
+                      className="flex-none size-4 text-gray-600 dark:text-neutral-500 "
                       xmlns="http://www.w3.org/2000/svg"
                       width={24}
                       height={24}
@@ -207,30 +208,39 @@ const Tasklist = () => {
     <div className='flex min-h-screen'>
        
         <div className='w-full p-6 motion-preset-blur-right-md  max-w-screen-xl mx-auto '>
-        <div className="flex flex-wrap items-center justify-between ">
-        <h2 className="text-2xl  ">TaskLists</h2>
+        <h2 className="text-2xl  ">Projects</h2>
+        <div className="flex flex-wrap items-center justify-between mt-5">
+       
     {/* Left Side: Search, Priority Dropdown, and Date Filter */}
     <div className="flex flex-wrap gap-1">
       {/* Search Field */}
-      <input
-        type="text"
-        placeholder="Search tasks..."
-        className="p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
+
+    
+      <TextField
+              
+              label="Search"
+              value={searchTerm
+              }
+              fullWidth
+              onChange={(e) => setSearchTerm(e.target.value)}
+              sx={{backgroundColor:"white"}}
       />
 
+      
+    
+
+      
      
     </div>
 
     {/* Right Side: Assign Task Button */}
     <div className='flex space-x-4'>
-    <button className="px-4 py-2 bg-blue-500 text-white font-semibold rounded-md shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400"
+    <button className="px-4 py-2 bg-[#0db4ea] text-white font-semibold rounded-md shadow-md focus:outline-none focus:ring-2 focus:ring-blue-400"
      onClick={()=>AddProjectbtn('Add Task')}>
      + Add Tasks
     </button>
     
-    <button className="px-4 py-2 bg-blue-500 text-white font-semibold rounded-md shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400"
+    <button className="px-4 py-2 bg-[#0db4ea] text-white font-semibold rounded-md shadow-md  focus:outline-none focus:ring-2 focus:ring-blue-400"
      onClick={()=>AddProjectbtn('Add Project')}>
      + Add Projects
     </button>

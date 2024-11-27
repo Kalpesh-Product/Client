@@ -243,7 +243,7 @@ const AssignTaskForm = ({ title, handleClose ,rows, setAllRows,selectedRow,modal
               name="Task"
               select
               fullWidth
-              value={membersData.Projects}
+              value={membersData.Task}
               onChange={hadndleEmployeeChange}
             >
               {projects.map((type, index) => (
