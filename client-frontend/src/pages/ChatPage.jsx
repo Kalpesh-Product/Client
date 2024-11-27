@@ -182,20 +182,20 @@ export default function ChatPage() {
   return (
     <div className="flex h-full bg-gray-100">
       <TestSide />
-      <div className="h-full flex flex-col flex-1">
-        <div className="h-[90vh] flex flex-1">
-          <aside className="w-1/4 bg-white p-4 shadow-lg border-r border-gray-300 h-[90vh] overflow-y-auto">
-            <h2 className="text-3xl font-semibold mb-4">Chat</h2>
-            <select
-              className="mt-2 mb-4 w-full p-2 rounded-lg border border-gray-300 bg-gray-50"
-              value={contactFilter}
-              onChange={(e) => setContactFilter(e.target.value)}
-            >
-              <option value="All">All</option>
-              <option value="BIZNest">BIZNest</option>
-              <option value="WoNo">WoNo</option>
-              <option value="Companies">Companies</option>
-            </select>
+      <div className="h-full flex flex-col w-full">
+    <div className="h-[90vh] overflow-auto flex flex-1">
+      <aside className="w-1/4 bg-white p-4 shadow-lg border-r border-gray-300 h-[90vh] overflow-y-auto">
+        <h2 className="text-3xl font-semibold mb-4">Chat</h2>
+        <select
+          className="mt-2 mb-4 w-full p-2 rounded-lg border border-gray-300 bg-gray-50"
+          value={contactFilter}
+          onChange={(e) => setContactFilter(e.target.value)}
+        >
+          <option value="All">All</option>
+          <option value="BIZNest">BIZNest</option>
+          <option value="WoNo">WoNo</option>
+          <option value="Companies">Companies</option>
+        </select>
 
             <input
               type="search"
@@ -278,49 +278,49 @@ export default function ChatPage() {
             </ul>
           </aside>
 
-          <div className="flex-1 flex flex-col justify-between bg-white">
-            <header className="p-4 border-b flex items-center">
-              <div
-                className={`flex items-center justify-center w-10 h-10 rounded-full text-white font-semibold mr-3 ${getNodeColor(
-                  activeContact.name
-                )}`}
-              >
-                {getInitials(activeContact.name)}
-              </div>
-              <div>
-                <h3 className="font-semibold">{activeContact.name}</h3>
-                <p>{activeContact.status}</p>
-              </div>
-            </header>
+      <div className="flex-1 flex flex-col justify-between bg-white">
+        <header className="p-4 border-b flex items-center">
+          <div
+            className={`flex items-center justify-center w-10 h-10 rounded-full text-white font-semibold mr-3 ${getNodeColor(
+              activeContact.name
+            )}`}
+          >
+            {getInitials(activeContact.name)}
+          </div>
+          <div>
+            <h3 className="font-semibold">{activeContact.name}</h3>
+            <p>{activeContact.status}</p>
+          </div>
+        </header>
 
-            <div className="flex-1 p-4 overflow-y-auto space-y-4 h-[80vh]">
-              {messages.map((msg, index) => {
-                const isLastMessage = index === messages.length - 1;
-                return (
-                  <div
-                    key={msg.id}
-                    className={`flex ${
-                      msg.fromMe ? "justify-end" : "justify-start"
-                    }`}
-                    ref={isLastMessage ? messageEndRef : null}
-                  >
-                    <div
-                      className={`max-w-xs p-3 rounded-lg ${
-                        msg.fromMe ? "bg-blue-200" : "bg-purple-100"
-                      } shadow`}
-                    >
-                      <p className="text-sm text-gray-700">
-                        <span className="font-semibold">{msg.sender}</span>
-                        <span className="text-xs text-gray-500 ml-2">
-                          {msg.time}
-                        </span>
-                      </p>
-                      <p className="mt-1 whitespace-pre-wrap">{msg.content}</p>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
+        <div className="flex-1 p-4 overflow-y-auto space-y-4 h-[80vh]">
+          {messages.map((msg, index) => {
+            const isLastMessage = index === messages.length - 1;
+            return (
+              <div
+                key={msg.id}
+                className={`flex ${
+                  msg.fromMe ? "justify-end" : "justify-start"
+                }`}
+                ref={isLastMessage ? messageEndRef : null}
+              >
+                <div
+                  className={`max-w-xs p-3 rounded-lg ${
+                    msg.fromMe ? "bg-blue-200" : "bg-purple-100"
+                  } shadow`}
+                >
+                  <p className="text-sm text-gray-700">
+                    <span className="font-semibold">{msg.sender}</span>
+                    <span className="text-xs text-gray-500 ml-2">
+                      {msg.time}
+                    </span>
+                  </p>
+                  <p className="mt-1 whitespace-pre-wrap">{msg.content}</p>
+                </div>
+              </div>
+            );
+          })}
+        </div>
 
             <footer className="p-4 border-t flex items-center space-x-2">
               <MdOutlineEmojiEmotions size={20} className="cursor-pointer" />
