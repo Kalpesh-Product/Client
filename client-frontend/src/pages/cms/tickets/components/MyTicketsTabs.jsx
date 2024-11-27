@@ -28,21 +28,14 @@ const MyTicketsTabs = () => {
         {/* Tabs Material UI Start*/}
         <TabContext value={value} sx={{ backgroundColor: "red" }}>
           <Box
-            sx={{
-              borderBottom: 1,
-              borderColor: "divider",
-              width: "100%",
-            }}>
-            <TabList
-              onChange={handleChange}
-              aria-label="Departments"
-              variant="fullWidth">
-              <Tab
+           >
+           
+              {/* <Tab
                 label="My Tickets"
                 value="1"
                 className="wono-blue"
                 sx={{ textTransform: "capitalize" }}
-              />
+              /> */}
               {/* <Tab
                 label="External Tickets"
                 value="2"
@@ -58,7 +51,7 @@ const MyTicketsTabs = () => {
                 value="4"
                 sx={{ textTransform: "capitalize" }}
               /> */}
-            </TabList>
+        
           </Box>
           <TabPanel value="1">
             {/* <div className="flex gap-4">

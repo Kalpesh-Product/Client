@@ -11,7 +11,7 @@ import Select from "@mui/material/Select";
 
 import { NewModal } from '../components/NewModal';
 import { useNavigate } from 'react-router-dom';
-import { Stack,Avatar } from '@mui/material';
+import { Stack,Avatar,TextField } from '@mui/material';
 
 const Tasklistfirstmenu = () => {
 
@@ -350,27 +350,31 @@ const Tasklistfirstmenu = () => {
     {/* Left Side: Search, Priority Dropdown, and Date Filter */}
     <div className="flex flex-wrap gap-4">
       {/* Search Field */}
-      <input
-        type="text"
-        placeholder="Search tasks..."
-        className="p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-      />
+      <TextField
+              
+              label="Search"
+              value={searchTerm
+              }
+              
+              onChange={(e) => setSearchTerm(e.target.value)}
+              sx={{backgroundColor:"white"}}
+            />
+    
+     
 
       {/* Priority Dropdown */}
+      
       <select
         className="p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
         value={priorityFilter}
         onChange={(e) => setPriorityFilter(e.target.value)}
       >
-         
-
         <option value="">All Priorities</option>
         <option value="High">High</option>
         <option value="Medium">Medium</option>
         <option value="Low">Low</option>
       </select>
+
 
       {/* Date Filter */}
       <input

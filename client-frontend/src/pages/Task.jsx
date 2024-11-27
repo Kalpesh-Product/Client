@@ -5,6 +5,7 @@ import AssignTaskForm from '../components/TaskManagement/AssignTaskForm';
 
 import { DataGrid } from "@mui/x-data-grid";
 import Paper from "@mui/material/Paper";
+import { TextField } from '@mui/material';
 import Box from "@mui/material/Box";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
@@ -17,7 +18,14 @@ import { useNavigate } from 'react-router-dom';
 import Avatar from "@mui/material/Avatar";
 import Stack from "@mui/material/Stack";
 
+
 import AgTable from "../components/AgTable";
+
+
+import { AgGridReact } from "ag-grid-react";
+import "ag-grid-community/styles/ag-grid.css";
+import "ag-grid-community/styles/ag-theme-alpine.css";
+import AvatarCellRenderer from '../components/AvatarCellRenderer';
 
 
 
@@ -32,6 +40,11 @@ const Task = () => {
         "https://i.pravatar.cc/150?img=1",
         "https://i.pravatar.cc/150?img=2",
         "https://i.pravatar.cc/150?img=3",
+      ],
+      AssigneeNames :[
+        "Riya",
+        "Piya",
+        "Siya"
       ],
       DueDate: "10th october 2024",
       priority: "High",
@@ -157,19 +170,18 @@ const Task = () => {
             cellRenderer: (params) => (
               <Stack spacing={-1} direction="row" sx={{
                 paddingTop:"5%", // Centers horizontally
-                 // Centers vertically
-                width: "100%",
-                // Ensures it takes the full width of the cell
+                width: "100%"
               }}>
-                {/* {avatars.map((assignee, index) => (
+                {params.data.Assignes.map((assignee, index) => (
             <Avatar
               key={index}
               src={assignee}
               sx={{ width: 30, height: 30, border: "1px solid white" }}
             />
-          ))} */}
+          ))}
               </Stack>
             ),
+          
             
          },
          { field: "DueDate", headerName: "Due Date", width: 200 },
@@ -179,14 +191,7 @@ const Task = () => {
           width: 130,
           type: "singleSelect",
           valueOptions: ["High", "Medium", "Low"],
-          // cellClassName: (params) => {
-            
-          //   if (params.value === "High") return "px-10 py-5 rounded-full text-white text-sx font-medium bg-red-500";
-          //   if (params.value === "Medium") return "bg-yellow-400 text-black px-4 py-1 rounded-full text-center";
-          //   if (params.value === "Low") return "bg-green-400 text-white px-4 py-1 rounded-full text-center ";
-
-          //   return "";
-          // },
+          
           cellRenderer: (params) => {
             const statusColors = {
               High: "text-red-600 bg-red-100",
@@ -218,7 +223,7 @@ const Task = () => {
             field: "viewDetails",
             headerName: "Actions",
             width: 150,
-            renderCell: (params) => {
+            cellRenderer: (params) => {
               const handleActionChange = (event) => {
                 const selectedAction = event.target.value;
       
@@ -264,7 +269,7 @@ const Task = () => {
                         <circle cx={12} cy={19} r={1} />
                       </svg>
                     </MenuItem>
-                    <MenuItem value="view" onClick={()=>handleOpenModal(params.row)}>
+                    <MenuItem value="view" onClick={()=>handleOpenModal(params.data)}>
                       View Details
                     </MenuItem>
                     <MenuItem value="edit" >
@@ -359,40 +364,74 @@ const Task = () => {
     </div>
   </div>
 
-  <div className="flex flex-wrap items-center justify-between mt-10 ">
+  <div className="flex flex-wrap items-center justify-between mt-10 gap-4">
     {/* Left Side: Search, Priority Dropdown, and Date Filter */}
-    <div className="flex flex-wrap gap-4">
+   
       {/* Search Field */}
-      <input
+      {/* <input
         type="text"
         placeholder="Search tasks..."
         className="p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
+      /> */}
+       <FormControl  style={{ minWidth: 220 }}>
+      <TextField
+              variant="outlined"
+              size="small"
+              label="Search"
+              value={searchTerm
+              }
+             
+              onChange={(e) => setSearchTerm(e.target.value)}
+
       />
+      </FormControl>
 
       {/* Priority Dropdown */}
-      <select
-        className="p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
-        value={priorityFilter}
-        onChange={(e) => setPriorityFilter(e.target.value)}
-      >
-         
+      
+        <FormControl size="small" style={{ minWidth: 220 }}>
+          {/* <InputLabel>Filter by Asset Name</InputLabel> */}
+          <TextField label="Priority" variant="outlined" select size="small" onChange={(e) => setPriorityFilter(e.target.value)} >
+            <MenuItem value="">All</MenuItem>
+            <MenuItem value="High">High</MenuItem>
+            <MenuItem value="Low">Low</MenuItem>
+            <MenuItem value="Medium">Medium</MenuItem>
+          </TextField>
+        </FormControl>
 
-        <option value="">All Priorities</option>
-        <option value="High">High</option>
-        <option value="Medium">Medium</option>
-        <option value="Low">Low</option>
-      </select>
+
+      
 
       {/* Date Filter */}
-      <input
+      <TextField
+              label="Date"
+              name="date"
+              type="date"
+              variant="outlined"
+              size="small"
+              InputLabelProps={{
+                shrink: true,
+              }}
+            />
+      {/* <input
         type="date"
         className="p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
-      />
+      /> */}
 
       {/* Department Dropdown */}
-      <select
+
+      <FormControl size="small" style={{ minWidth: 220 }}>
+          {/* <InputLabel>Filter by Asset Name</InputLabel> */}
+          <TextField label="Department" variant="outlined" select size="small" onChange={(e) => setDepartmentFilter(e.target.value)}>
+            <MenuItem value="">All Departments</MenuItem>
+            <MenuItem value="High">IT</MenuItem>
+            <MenuItem value="Low">HR</MenuItem>
+            <MenuItem value="Medium">TECH</MenuItem>
+            <MenuItem value="Medium">ADMIN</MenuItem>
+          </TextField>
+        </FormControl>
+      {/* <select
         className="p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
         value={departmentFilter}
         onChange={(e) => setDepartmentFilter(e.target.value)}
@@ -405,50 +444,24 @@ const Task = () => {
         <option value="TECH">TECH</option>
         <option value="ADMIN">ADMIN</option>
         
-      </select>
+      </select> */}
       
     </div>
 
-    {/* Right Side: Assign Task Button */}
-    {/* <button className="px-4 py-2 bg-blue-500 text-white font-semibold rounded-md shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400"
-    onClick={assignTaskbtnClick}>
-     + Assign Task
-    </button> */}
-  </div>
+  
 
   {/* Tabular section */}
-  <div className='mt-5 overflow-auto w-full max-w-screen-xl mx-auto  motion-preset-blur-right-md'>
-  <Paper sx={{ height: 400, width: "100%", alignItems:"center" , display:"flex", justifyContent:"center"}}>
-        <AgTable
-          data={filteredTasks} // Pass filtered rows
-          columns={columns}
-          initialState={{ pagination: { paginationModel } }}
-          pageSizeOptions={[5, 10]}
-          
-          
-          sx={{
-            "& .MuiDataGrid-root": {
-              backgroundColor: "#f9fafb",
-              borderRadius: "0.5rem",
-              border: "none",
-            },
-            "& .MuiDataGrid-cell": {
-              color: "#374151",
-              fontSize: "0.875rem",
-            },
-            "& .MuiDataGrid-columnHeaders": {
-              backgroundColor: "#f3f4f6",
-              fontSize: "0.875rem",
-              fontWeight: "bold",
-              color: "#1f2937",
-            },
-          }}
-        />
-    </Paper>
+  <div className='mt-5 overflow-auto w-full max-w-screen-xl mx-auto  motion-preset-blur-right-md font-semibold' style={{fontFamily:"Popins-Regular"}}>
+  {/* <Paper sx={{ height: 400, width: "100%", alignItems:"center" , display:"flex", justifyContent:"center"}}> */}
+  <AgTable
+      data={filteredTasks}
+      columns={columns}
+      paginationPageSize={5}
+     
+    />
+    {/* </Paper> */}
 
 </div>
-
-
         </div>
         
         

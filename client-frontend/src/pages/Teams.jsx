@@ -13,6 +13,7 @@ import Select from "@mui/material/Select";
 import ModuleSidebar from '../components/ModuleSidebar';
 import { alignProperty } from '@mui/material/styles/cssUtils';
 import { NewModal } from '../components/NewModal';
+import AgTable from '../components/AgTable';
 
 const Teams = () => {
 
@@ -34,7 +35,7 @@ const Teams = () => {
          { field: "Role", headerName: "Role", width: 200 },
         {
           field: "Task",
-          headerName: "Task",
+          headerName: "Tasks",
           width: 130,
           type: "singleSelect",
           valueOptions: ["High", "Medium", "Low"],
@@ -50,7 +51,7 @@ const Teams = () => {
         },
         {
           field: "Project",
-          headerName: "Project",
+          headerName: "Projects",
           width: 150,
           type: "singleSelect",
           valueOptions: ["IT", "HR", "Tech", "Admin"],
@@ -65,8 +66,8 @@ const Teams = () => {
           Name: "Anushri Bhagat",
           Email:"anushri.wono@gmail.com",
           Role: "Backend",
-          Task: "3d Globe",
-          Project: "wono frontend"
+          Task: "2",
+          Project: "1"
           
         },
         {
@@ -74,8 +75,8 @@ const Teams = () => {
           Name: "Aiwinraj",
           Email:"aiwin.wono@gmail.com",
           Role: "Frontend",
-          Task: "Hordings",
-          Project: "wono frontend"
+          Task: "3",
+          Project: "4"
           
         },
         {
@@ -83,56 +84,56 @@ const Teams = () => {
           Name: "Allen Disousa",
           Email:"allen.wono@gmail.com",
           Role: "Frontend",
-          Task: "Data entry form",
-          Project: "wono frontend"
+          Task: "4",
+          Project: "2"
         },
         {
           id: 4,
           Name: "Sankalp Kalangutkar",
           Email:"sankalp.wono@gmail.com",
           Role: "Backend",
-          Task: "data fetching from database",
-          Project: "wono frontend"
+          Task: "4",
+          Project: "1"
         },
         {
           id: 5,
           Name: "Anushri Bhagat",
           Email:"anushri.wono@gmail.com",
           Role: "Frontend",
-          Task: "3d Globe",
-          Project: "wono frontend"
+          Task: "5",
+          Project: "3"
         },
         {
           id: 6,
           Name: "Aron Pires",
           Email:"Aron@biznest.co.in",
           Role: "Frontend",
-          Task: "3d Globe",
-          Project: "wono frontend"
+          Task: "7",
+          Project: "2"
         },
         {
           id: 7,
           Name: "Narshiva Naik",
           Email:"Narshiva@biznest.co.in",
           Role: "Backend",
-          Task: "3d Globe",
-          Project: "wono frontend"
+          Task: "8",
+          Project: "1"
         },
         {
           id: 8,
           Name: "Amol kakade",
           Email:"amol@biznest.co.in",
           Role: "Frontend",
-          Task: "3d Globe",
-          Project: "wono frontend"
+          Task: "10",
+          Project: "2"
         },
         {
           id: 9,
           Name: "Anushri Bhagat",
           Email:"anushri.wono@gmail.com",
           Role: "Frontend",
-          Task: "3d Globe",
-          Project: "wono frontend"
+          Task: "12",
+          Project: "2"
         }
        
       ]);
@@ -173,7 +174,7 @@ const Teams = () => {
     </div>
 
     {/* Right Side: Assign Task Button */}
-    <button className="px-4 py-2 bg-blue-500 text-white font-semibold rounded-md shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400"
+    <button className="px-4 py-2 bg-[#0db4ea] text-white font-semibold rounded-md shadow-md focus:outline-none focus:ring-2 focus:ring-blue-400"
      onClick={addTeamMembersbtn}>
      + Add Team Member
     </button>
@@ -181,8 +182,8 @@ const Teams = () => {
         <div className='w-full motion-preset-blur-right-md  max-w-screen-xl mx-auto '>
         <div className='mt-5 overflow-auto w-full max-w-screen-xl mx-auto  motion-preset-blur-right-md'>
   <Paper sx={{ height: 400, width: "100%", alignItems:"center" , display:"flex", justifyContent:"center"}}>
-        <DataGrid
-          rows={filteredRows} // Pass filtered rows
+        <AgTable
+          data={filteredRows} // Pass filtered rows
           columns={columns}
           initialState={{ pagination: { paginationModel } }}
           pageSizeOptions={[5, 10]}
