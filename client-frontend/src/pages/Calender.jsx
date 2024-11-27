@@ -59,9 +59,10 @@ const Calender = () => {
   const dayCellClassNames = (dateInfo) => {
     const today = new Date();
     const cellDate = new Date(dateInfo.date);
+    today.setHours(0, 0, 0, 0); // Reset time for accurate comparison
 
-    // Add custom class for past dates
-    return cellDate < today.setHours(0, 0, 0, 0) ? "fc-disabled-date" : "";
+    // Add custom class for past dates for styling
+    return cellDate < today ? "fc-disabled-date" : "";
   };
 
   const [events, setEvents] = useState([
@@ -126,24 +127,24 @@ const Calender = () => {
   };
 
   const handleDateClick = (args) => {
+    const today = new Date();
+    const clickedDate = new Date(args.date);
+
+    // Prevent clicks on past dates
+    if (clickedDate < today.setHours(0, 0, 0, 0)) {
+      return; // Do nothing
+    }
+
     setSelectedDate(args.dateStr);
     setShowModal(true);
     console.log("Date is selected");
-    console.log(names);
   };
-  const handleEventClick = (e) => {
-    const today = new Date();
-    const clickedDate = new Date(e.dateStr);
 
-    if (clickedDate < today.setHours(0, 0, 0, 0)) {
-      // Prevent clicks on past dates
-      return;
-    }
+  const handleEventClick = (e) => {
     const event = e.event;
+
+    // Allow clicking on events regardless of the date
     setSelectedEvent({
-      // title: info.event.name,
-      // date: info.event.date.toDateString(),
-      // description: info.event.extendedProps.description,
       title: event.title,
       start: event.startStr,
       end: event.endStr || null,
@@ -237,8 +238,8 @@ const Calender = () => {
             initialView="dayGridMonth"
             weekends={true}
             events={filteredEvents}
-            dayCellClassNames={dayCellClassNames}
-            eventClick={handleEventClick}
+            dayCellClassNames={dayCellClassNames} // For visual clarity
+            eventClick={handleEventClick} // Events always clickable
             visibleRange={(currentDate) => {
               return get30DayRange(currentDate); // Restrict to 30 days
             }}
@@ -248,7 +249,7 @@ const Calender = () => {
               right: "today prev,next",
             }}
             height={"90vh"}
-            dateClick={handleDateClick}
+            dateClick={handleDateClick} // Dates click disabled for past dates
           />
         </div>
       </div>
