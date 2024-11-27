@@ -205,7 +205,7 @@ export default function ChatPage() {
           onChange={(e) => setSearchQuery(e.target.value)}
         />
 
-        <ul className="space-y-2 overflow-y-auto h-full">
+        <ul className="space-y-2 overflow-y-auto h-[60vh]">
           {" "}
           {/* Set scrollable height here */}
           {filteredContacts.map((contact) => (
