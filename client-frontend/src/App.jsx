@@ -2,6 +2,7 @@ import { RouterProvider } from "react-router-dom";
 import router from "./routes/Routes";
 import { Toaster } from "sonner";
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { GlobalContext } from "./components/GlobalContext";
 
 const theme = createTheme({
   typography: {
@@ -19,10 +20,12 @@ function App() {
 
   return (
     <>
+        <GlobalContext>
       <ThemeProvider theme={theme}>
         <Toaster richColors duration={3000} position="top-center" />
         <RouterProvider router={router} />
       </ThemeProvider>
+        </GlobalContext>
     </>
   );
 }

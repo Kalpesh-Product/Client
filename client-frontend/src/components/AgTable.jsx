@@ -19,7 +19,7 @@ const AgTable = React.memo(({ data, columns, paginationPageSize }) => {
   };
 
   return (
-    <div className="ag-theme-alpine border-none" style={{ width: "100%", fontFamily:'Popins-Regular', height: "100%" }}>
+    <div className="ag-theme-alpine border-none min-h-screen" style={{ width: "100%", fontFamily:'Popins-Regular' }}>
       <AgGridReact
         rowData={data}
         columnDefs={columns}
