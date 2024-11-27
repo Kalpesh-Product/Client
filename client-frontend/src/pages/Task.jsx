@@ -20,6 +20,12 @@ import Stack from "@mui/material/Stack";
 import AgTable from "../components/AgTable";
 
 
+import { AgGridReact } from "ag-grid-react";
+import "ag-grid-community/styles/ag-grid.css";
+import "ag-grid-community/styles/ag-theme-alpine.css";
+import AvatarCellRenderer from '../components/AvatarCellRenderer';
+
+
 
 
 const Task = () => {
@@ -32,6 +38,11 @@ const Task = () => {
         "https://i.pravatar.cc/150?img=1",
         "https://i.pravatar.cc/150?img=2",
         "https://i.pravatar.cc/150?img=3",
+      ],
+      AssigneeNames :[
+        "Riya",
+        "Piya",
+        "Siya"
       ],
       DueDate: "10th october 2024",
       priority: "High",
@@ -157,19 +168,18 @@ const Task = () => {
             cellRenderer: (params) => (
               <Stack spacing={-1} direction="row" sx={{
                 paddingTop:"5%", // Centers horizontally
-                 // Centers vertically
-                width: "100%",
-                // Ensures it takes the full width of the cell
+                width: "100%"
               }}>
-                {/* {avatars.map((assignee, index) => (
+                {params.data.Assignes.map((assignee, index) => (
             <Avatar
               key={index}
               src={assignee}
               sx={{ width: 30, height: 30, border: "1px solid white" }}
             />
-          ))} */}
+          ))}
               </Stack>
             ),
+          
             
          },
          { field: "DueDate", headerName: "Due Date", width: 200 },
@@ -179,14 +189,7 @@ const Task = () => {
           width: 130,
           type: "singleSelect",
           valueOptions: ["High", "Medium", "Low"],
-          // cellClassName: (params) => {
-            
-          //   if (params.value === "High") return "px-10 py-5 rounded-full text-white text-sx font-medium bg-red-500";
-          //   if (params.value === "Medium") return "bg-yellow-400 text-black px-4 py-1 rounded-full text-center";
-          //   if (params.value === "Low") return "bg-green-400 text-white px-4 py-1 rounded-full text-center ";
-
-          //   return "";
-          // },
+          
           cellRenderer: (params) => {
             const statusColors = {
               High: "text-red-600 bg-red-100",
@@ -218,7 +221,7 @@ const Task = () => {
             field: "viewDetails",
             headerName: "Actions",
             width: 150,
-            renderCell: (params) => {
+            cellRenderer: (params) => {
               const handleActionChange = (event) => {
                 const selectedAction = event.target.value;
       
@@ -264,7 +267,7 @@ const Task = () => {
                         <circle cx={12} cy={19} r={1} />
                       </svg>
                     </MenuItem>
-                    <MenuItem value="view" onClick={()=>handleOpenModal(params.row)}>
+                    <MenuItem value="view" onClick={()=>handleOpenModal(params.data)}>
                       View Details
                     </MenuItem>
                     <MenuItem value="edit" >
@@ -417,34 +420,15 @@ const Task = () => {
   </div>
 
   {/* Tabular section */}
-  <div className='mt-5 overflow-auto w-full max-w-screen-xl mx-auto  motion-preset-blur-right-md'>
-  <Paper sx={{ height: 400, width: "100%", alignItems:"center" , display:"flex", justifyContent:"center"}}>
-        <AgTable
-          data={filteredTasks} // Pass filtered rows
-          columns={columns}
-          initialState={{ pagination: { paginationModel } }}
-          pageSizeOptions={[5, 10]}
-          
-          
-          sx={{
-            "& .MuiDataGrid-root": {
-              backgroundColor: "#f9fafb",
-              borderRadius: "0.5rem",
-              border: "none",
-            },
-            "& .MuiDataGrid-cell": {
-              color: "#374151",
-              fontSize: "0.875rem",
-            },
-            "& .MuiDataGrid-columnHeaders": {
-              backgroundColor: "#f3f4f6",
-              fontSize: "0.875rem",
-              fontWeight: "bold",
-              color: "#1f2937",
-            },
-          }}
-        />
-    </Paper>
+  <div className='mt-5 overflow-auto w-full max-w-screen-xl mx-auto  motion-preset-blur-right-md font-semibold' style={{fontFamily:"Popins-Regular"}}>
+  {/* <Paper sx={{ height: 400, width: "100%", alignItems:"center" , display:"flex", justifyContent:"center"}}> */}
+  <AgTable
+      data={filteredTasks}
+      columns={columns}
+      paginationPageSize={5}
+     
+    />
+    {/* </Paper> */}
 
 </div>
 

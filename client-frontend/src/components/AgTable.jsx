@@ -3,7 +3,12 @@ import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
 
-const AgTable = React.memo(({ data, columns, paginationPageSize }) => {
+const AgTable = React.memo(({ 
+  data, 
+  columns, 
+  paginationPageSize, 
+  frameworkComponents 
+}) => {
   const defaultColDef = {
     resizable: true,
     sortable: true,
@@ -14,12 +19,14 @@ const AgTable = React.memo(({ data, columns, paginationPageSize }) => {
       display: "flex",
       justifyContent: "center",
       alignItems: "center",
-      padding: "px", // Add padding for spacing
     },
   };
 
   return (
-    <div className="ag-theme-alpine border-none" style={{ width: "100%", fontFamily:'Popins-Regular', height: "100%" }}>
+    <div
+      className="ag-theme-alpine border-none"
+      style={{ width: "100%", fontFamily: "Popins-Regular", height: "100%" }}
+    >
       <AgGridReact
         rowData={data}
         columnDefs={columns}
@@ -27,10 +34,11 @@ const AgTable = React.memo(({ data, columns, paginationPageSize }) => {
         pagination={true}
         paginationPageSize={paginationPageSize}
         domLayout="autoHeight"
-        rowHeight={50} // Increased row height for better spacing
+        cellRender
+        rowHeight={50} // Adjust row height if needed
       />
     </div>
   );
-}) 
+});
 
 export default AgTable;

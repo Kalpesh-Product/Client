@@ -540,7 +540,7 @@ const AssignTaskForm = ({ title, handleClose ,rows, setAllRows,selectedRow,modal
           <div>
             <p><strong>ID:</strong> {selectedRow.id}</p>
             <p><strong>Task:</strong> {selectedRow.ticketTitle}</p>
-            <p><strong>Assignee:</strong> {selectedRow.Assignes}</p>
+            <p><strong>Assignee:</strong> {selectedRow.AssigneeNames}</p>
             <p><strong>Due Date:</strong> {selectedRow.DueDate}</p>
             <p><strong>Priority:</strong> {selectedRow.priority}</p>
             <p><strong>Department:</strong> {selectedRow.department}</p>
