@@ -180,177 +180,177 @@ export default function ChatPage() {
   });
 
   return (
-    <div className="flex h-full bg-gray-100 overflow-auto">
+    <div className="flex h-full bg-gray-100">
       <TestSide />
       <div className="h-full flex flex-col flex-1">
-    <div className="h-[90vh] flex flex-1">
-      <aside className="w-1/4 bg-white p-4 shadow-lg border-r border-gray-300 h-[90vh] overflow-y-auto">
-        <h2 className="text-3xl font-semibold mb-4">Chat</h2>
-        <select
-          className="mt-2 mb-4 w-full p-2 rounded-lg border border-gray-300 bg-gray-50"
-          value={contactFilter}
-          onChange={(e) => setContactFilter(e.target.value)}
-        >
-          <option value="All">All</option>
-          <option value="BIZNest">BIZNest</option>
-          <option value="WoNo">WoNo</option>
-          <option value="Companies">Companies</option>
-        </select>
+        <div className="h-[90vh] flex flex-1">
+          <aside className="w-1/4 bg-white p-4 shadow-lg border-r border-gray-300 h-[90vh] overflow-y-auto">
+            <h2 className="text-3xl font-semibold mb-4">Chat</h2>
+            <select
+              className="mt-2 mb-4 w-full p-2 rounded-lg border border-gray-300 bg-gray-50"
+              value={contactFilter}
+              onChange={(e) => setContactFilter(e.target.value)}
+            >
+              <option value="All">All</option>
+              <option value="BIZNest">BIZNest</option>
+              <option value="WoNo">WoNo</option>
+              <option value="Companies">Companies</option>
+            </select>
 
-        <input
-          type="search"
-          placeholder="Search"
-          className="w-full p-2 mb-4 rounded-lg bg-gray-200 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-        />
+            <input
+              type="search"
+              placeholder="Search"
+              className="w-full p-2 mb-4 rounded-lg bg-gray-200 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
 
-        <ul className="space-y-2 overflow-y-auto h-full">
-          {" "}
-          {/* Set scrollable height here */}
-          {filteredContacts.map((contact) => (
-            <li key={contact.id} className="space-y-1">
-              <div
-                className={`flex items-center justify-between p-3 rounded-lg cursor-pointer transition-all ${
-                  activeContact.id === contact.id ||
-                  (contact.subGroups &&
-                    contact.subGroups.includes(activeContact.name))
-                    ? "bg-blue-100 text-blue-700"
-                    : "hover:bg-gray-100"
-                }`}
-                onClick={() => {
-                  if (contact.subGroups) {
-                    setExpandedGroup(
-                      expandedGroup === contact.id ? null : contact.id
-                    );
-                  } else {
-                    setActiveContact(contact);
-                  }
-                }}
-              >
-                <div
-                  className={`flex items-center justify-center w-10 h-10 rounded-full text-white font-semibold mr-3 ${getNodeColor(
-                    contact.name
-                  )}`}
-                >
-                  {getInitials(contact.name)}
-                </div>
-                <div className="flex-1 truncate">
-                  <span className="font-semibold">{contact.name}</span>
-                  <p className="text-sm text-gray-500 truncate">
-                    {contact.previewMessage}
-                  </p>
-                </div>
-                {contact.subGroups && (
-                  <span>
-                    {expandedGroup === contact.id ? (
-                      <IoMdArrowDropup />
-                    ) : (
-                      <IoMdArrowDropdown />
-                    )}
-                  </span>
-                )}
-              </div>
-              {contact.subGroups && expandedGroup === contact.id && (
-                <ul className="pl-4 space-y-1">
-                  {contact.subGroups.map((subGroup, idx) => (
-                    <li
-                      key={idx}
-                      className={`p-2 rounded-lg cursor-pointer ${
-                        activeContact.name === subGroup
-                          ? "bg-blue-100 text-blue-700"
-                          : "hover:bg-gray-100"
-                      }`}
-                      onClick={() =>
-                        setActiveContact({
-                          id: `${contact.id}-${idx}`,
-                          name: subGroup,
-                        })
+            <ul className="space-y-2 overflow-y-auto h-full">
+              {" "}
+              {/* Set scrollable height here */}
+              {filteredContacts.map((contact) => (
+                <li key={contact.id} className="space-y-1">
+                  <div
+                    className={`flex items-center justify-between p-3 rounded-lg cursor-pointer transition-all ${
+                      activeContact.id === contact.id ||
+                      (contact.subGroups &&
+                        contact.subGroups.includes(activeContact.name))
+                        ? "bg-blue-100 text-blue-700"
+                        : "hover:bg-gray-100"
+                    }`}
+                    onClick={() => {
+                      if (contact.subGroups) {
+                        setExpandedGroup(
+                          expandedGroup === contact.id ? null : contact.id
+                        );
+                      } else {
+                        setActiveContact(contact);
                       }
+                    }}
+                  >
+                    <div
+                      className={`flex items-center justify-center w-10 h-10 rounded-full text-white font-semibold mr-3 ${getNodeColor(
+                        contact.name
+                      )}`}
                     >
-                      {subGroup}
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </li>
-          ))}
-        </ul>
-      </aside>
+                      {getInitials(contact.name)}
+                    </div>
+                    <div className="flex-1 truncate">
+                      <span className="font-semibold">{contact.name}</span>
+                      <p className="text-sm text-gray-500 truncate">
+                        {contact.previewMessage}
+                      </p>
+                    </div>
+                    {contact.subGroups && (
+                      <span>
+                        {expandedGroup === contact.id ? (
+                          <IoMdArrowDropup />
+                        ) : (
+                          <IoMdArrowDropdown />
+                        )}
+                      </span>
+                    )}
+                  </div>
+                  {contact.subGroups && expandedGroup === contact.id && (
+                    <ul className="pl-4 space-y-1">
+                      {contact.subGroups.map((subGroup, idx) => (
+                        <li
+                          key={idx}
+                          className={`p-2 rounded-lg cursor-pointer ${
+                            activeContact.name === subGroup
+                              ? "bg-blue-100 text-blue-700"
+                              : "hover:bg-gray-100"
+                          }`}
+                          onClick={() =>
+                            setActiveContact({
+                              id: `${contact.id}-${idx}`,
+                              name: subGroup,
+                            })
+                          }
+                        >
+                          {subGroup}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </aside>
 
-      <div className="flex-1 flex flex-col justify-between bg-white">
-        <header className="p-4 border-b flex items-center">
-          <div
-            className={`flex items-center justify-center w-10 h-10 rounded-full text-white font-semibold mr-3 ${getNodeColor(
-              activeContact.name
-            )}`}
-          >
-            {getInitials(activeContact.name)}
-          </div>
-          <div>
-            <h3 className="font-semibold">{activeContact.name}</h3>
-            <p>{activeContact.status}</p>
-          </div>
-        </header>
-
-        <div className="flex-1 p-4 overflow-y-auto space-y-4 h-[80vh]">
-          {messages.map((msg, index) => {
-            const isLastMessage = index === messages.length - 1;
-            return (
+          <div className="flex-1 flex flex-col justify-between bg-white">
+            <header className="p-4 border-b flex items-center">
               <div
-                key={msg.id}
-                className={`flex ${
-                  msg.fromMe ? "justify-end" : "justify-start"
-                }`}
-                ref={isLastMessage ? messageEndRef : null}
+                className={`flex items-center justify-center w-10 h-10 rounded-full text-white font-semibold mr-3 ${getNodeColor(
+                  activeContact.name
+                )}`}
               >
-                <div
-                  className={`max-w-xs p-3 rounded-lg ${
-                    msg.fromMe ? "bg-blue-200" : "bg-purple-100"
-                  } shadow`}
-                >
-                  <p className="text-sm text-gray-700">
-                    <span className="font-semibold">{msg.sender}</span>
-                    <span className="text-xs text-gray-500 ml-2">
-                      {msg.time}
-                    </span>
-                  </p>
-                  <p className="mt-1 whitespace-pre-wrap">{msg.content}</p>
-                </div>
+                {getInitials(activeContact.name)}
               </div>
-            );
-          })}
-        </div>
+              <div>
+                <h3 className="font-semibold">{activeContact.name}</h3>
+                <p>{activeContact.status}</p>
+              </div>
+            </header>
 
-        <footer className="p-4 border-t flex items-center space-x-2">
-          <MdOutlineEmojiEmotions size={20} className="cursor-pointer" />
-          <FaPaperclip
-            className="cursor-pointer bg-gray-200"
-            onClick={handleFileSelect}
-          />
-          <input
-            type="file"
-            className="hidden"
-            ref={fileRef}
-            onChange={handleFileChange}
-          />
-          <textarea
-            className="flex-1 px-4 py-2 border rounded-xl resize-none bg-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            rows="1"
-            placeholder="Enter a message"
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
-            onKeyDown={handleKeyDown}
-          />
-          <button
-            className="p-[0.7rem] bg-blue-500 text-white rounded-full"
-            onClick={handleSendMessage}
-          >
-            <IoMdSend />
-          </button>
-        </footer>
-      </div>
-    </div>
+            <div className="flex-1 p-4 overflow-y-auto space-y-4 h-[80vh]">
+              {messages.map((msg, index) => {
+                const isLastMessage = index === messages.length - 1;
+                return (
+                  <div
+                    key={msg.id}
+                    className={`flex ${
+                      msg.fromMe ? "justify-end" : "justify-start"
+                    }`}
+                    ref={isLastMessage ? messageEndRef : null}
+                  >
+                    <div
+                      className={`max-w-xs p-3 rounded-lg ${
+                        msg.fromMe ? "bg-blue-200" : "bg-purple-100"
+                      } shadow`}
+                    >
+                      <p className="text-sm text-gray-700">
+                        <span className="font-semibold">{msg.sender}</span>
+                        <span className="text-xs text-gray-500 ml-2">
+                          {msg.time}
+                        </span>
+                      </p>
+                      <p className="mt-1 whitespace-pre-wrap">{msg.content}</p>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+
+            <footer className="p-4 border-t flex items-center space-x-2">
+              <MdOutlineEmojiEmotions size={20} className="cursor-pointer" />
+              <FaPaperclip
+                className="cursor-pointer bg-gray-200"
+                onClick={handleFileSelect}
+              />
+              <input
+                type="file"
+                className="hidden"
+                ref={fileRef}
+                onChange={handleFileChange}
+              />
+              <textarea
+                className="flex-1 px-4 py-2 border rounded-xl resize-none bg-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                rows="1"
+                placeholder="Enter a message"
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
+                onKeyDown={handleKeyDown}
+              />
+              <button
+                className="p-[0.7rem] bg-blue-500 text-white rounded-full"
+                onClick={handleSendMessage}
+              >
+                <IoMdSend />
+              </button>
+            </footer>
+          </div>
+        </div>
       </div>
     </div>
   );
