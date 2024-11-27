@@ -189,6 +189,16 @@ const filteredAssets = allAssets.filter((asset) => {
     : true;
   return matchesSearch && matchesDropdown;
 });
+// Filter assets based on search term and selected asset name for assignee table
+const filteredAssigneeAssets = allAssets.filter((asset) => {
+  const matchesSearch = asset.category
+    .toLowerCase()
+    .includes(searchTerm.toLowerCase());
+  const matchesDropdown = selectedAssetName
+    ? asset.category === selectedAssetName
+    : true;
+  return matchesSearch && matchesDropdown;
+});
 // Filter assets based on department
 const filteredByDepartment =
   user?.department === "TopManagement"
@@ -314,36 +324,7 @@ console.log(selectedDepartment);
 
           {activeTab === 1 && (
             <>
-              <div className="flex gap-4 bg-white p-2 rounded-t-md">
-                <TextField
-                  label="Search by Category"
-                  variant="outlined"
-                  size="small"
-                />
-
-                <FormControl size="small" style={{ minWidth: 200 }}>
-                  <TextField
-                    label="Asset Name"
-                    variant="outlined"
-                    select
-                    size="small"
-                    value={selectedAssetName}
-                    onChange={(e) => setSelectedAssetName(e.target.value)}
-                  >
-                    <MenuItem value="">All</MenuItem>
-                    {[
-                      ...new Set(assetsData.map((laptop) => laptop.assetName)),
-                    ].map((assetName) => (
-                      <MenuItem key={assetName} value={assetName}>
-                        {assetName}
-                      </MenuItem>
-                    ))}
-                  </TextField>
-                </FormControl>
-              </div>
-         
-              <AssetsData data={assetsData} />
-              
+              <AssetsData data={filteredAssigneeAssets} />
             </>
           )}
         </div>

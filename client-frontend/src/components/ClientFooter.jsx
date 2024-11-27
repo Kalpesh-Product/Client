@@ -4,7 +4,7 @@ import WonoLogo from "../assets/BIZNest/biznest_logo.jpg";
 const ClientFooter = () => {
   return (
     <footer className="bg-black text-white py-6 ">
-      <div className="container mx-auto flex flex-col items-center space-y-4">
+      <div className="container mx-auto flex flex-col items-center">
         {/* Logo */}
         {/* <div className="text-3xl font-bold flex">
           <span>Powered by W<span className="wono-blue-text">o</span>N<span className="wono-blue-text">o</span></span> 

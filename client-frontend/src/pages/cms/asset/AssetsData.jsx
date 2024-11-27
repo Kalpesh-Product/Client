@@ -4,7 +4,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { NewModal } from "../../../components/NewModal";
 import AssignAssetForm from "./AssignAssetForm";
 import axios from "axios";
-import { Box, Button, MenuItem, TextField, Typography } from "@mui/material";
+import { Box, Button, FormControl, MenuItem, TextField, Typography } from "@mui/material";
 import { IoMdClose } from "react-icons/io";
 import { motion } from "framer-motion";
 import { toast } from "sonner";
@@ -23,12 +23,15 @@ const AssetsData = ({ data }) => {
   const [formData, setFormData] = useState(assignedAssetsData || {}); // Form data state
   const [revoked, setRevoked] = useState(false);
   const [selectedDepartment, setSelectedDepartment] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedAssetName, setSelectedAssetName] = useState("");
   const [processedData, setProcessedData] = useState(
     assignedAssetsData.IT.map((row, index) => ({
       ...row,
       id: index, // Assign a unique id based on the index
     }))
   );
+
 
   const storedUser = localStorage.getItem("user");
 
@@ -104,6 +107,17 @@ const AssetsData = ({ data }) => {
     ));
 
   console.log(AssigneeOptions);
+
+  // Filter assets based on search term and selected asset name
+const filteredAssets = processedData.filter((asset) => {
+  const matchesSearch = asset.assigneeName
+    .toLowerCase()
+    .includes(searchTerm.toLowerCase());
+  const matchesDropdown = selectedAssetName
+    ? asset.assetName === selectedAssetName
+    : true;
+  return matchesSearch && matchesDropdown;
+});
 
   // Fetch data from the JSON server
   useEffect(() => {
@@ -207,8 +221,38 @@ columns.forEach((column) => {
         <div className="content-center"></div>
       </div>
 
+      <div className="flex gap-4 bg-white p-2 rounded-t-md">
+                <TextField
+                  label="Search by Assignee"
+                  variant="outlined"
+                  size="small"
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                />
+
+                <FormControl size="small" style={{ minWidth: 200 }}>
+                  <TextField
+                    label="Asset Name"
+                    variant="outlined"
+                    select
+                    size="small"
+                    value={selectedAssetName}
+                    onChange={(e) => setSelectedAssetName(e.target.value)}
+                  >
+                    <MenuItem value="">All</MenuItem>
+                    {[
+                      ...new Set(processedData.map((asset) => asset.assetName)),
+                    ].map((assetName) => (
+                      <MenuItem key={assetName} value={assetName}>
+                        {assetName}
+                      </MenuItem>
+                    ))}
+                  </TextField>
+                </FormControl>
+              </div>
+
       <div style={{ width: "100%" }}>
-        <AgTable data={processedData} columns={columns} paginationPageSize={10}/>
+        <AgTable data={filteredAssets} columns={columns} paginationPageSize={10}/>
       </div>
 
       {/* Modal to show laptop details */}
