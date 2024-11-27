@@ -29,7 +29,7 @@ const Reports = () => {
     { value: "Tasks", label: "Tasks" },
     { value: "Tickets", label: "Tickets" },
     { value: "Meetings", label: "Meetings" },
-    { value: "Customer Service", label: "Customer Service" },
+    // { value: "Customer Service", label: "Customer Service" },
   ];
 
   const handleSelectChange = (selected) => {
@@ -43,7 +43,7 @@ const Reports = () => {
     <div className="flex min-h-screen">
       <TestSide />
       <ModuleSidebar />
-      <div className=" w-full p-6 motion-preset-blur-right-md hidden">
+      <div className=" w-full p-6 motion-preset-blur-right-md ">
         {/* <h2 className="text-4xl  ">Reports</h2> */}
         <h2 className="text-3xl  font-bold  ">Reports</h2>
         <div className="flex h-16">
@@ -52,13 +52,13 @@ const Reports = () => {
           </div>
 
           {/* Select Tag To Select Submodule START */}
-          <div className="grid grid-cols-3 sm:grid-cols-6 pt-5 h-8">
+          <div className="grid pt-5 h-8 w-full pr-[1rem]">
             <Select
               options={options}
               onChange={handleSelectChange} // Handle select option change
               placeholder="Select a report"
               value={options.find((option) => option.value === selectedOption)} // Set default selected value
-              className="min-w-52"
+              className="min-w-52 w-full"
             />
           </div>
         </div>

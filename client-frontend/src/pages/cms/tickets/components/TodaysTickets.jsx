@@ -11,8 +11,11 @@ import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import { toast } from "sonner";
 import AgTable from "../../../../components/AgTable";
+import { useNavigate } from "react-router-dom";
 
 const TodaysTickets = () => {
+  const navigate = useNavigate();
+
   const columns = [
     { field: "id", headerName: "ID", width: 100 },
     { field: "ticketTitle", headerName: "Ticket Title", width: 220 },
@@ -238,6 +241,9 @@ const TodaysTickets = () => {
   const handleAddTicket = () => {
     toast.success("New Ticket Created");
     closeModal(); // Optionally close the modal after the alert
+
+    // Navigate to my tickets
+    navigate("/customer/tickets/my-tickets");
   };
   // ADD TICKET MODAL END
 

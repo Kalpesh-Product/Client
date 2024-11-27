@@ -276,7 +276,7 @@ const MyTicketsTable = () => {
       </div> */}
 
       <div className="flex justify-between p-2 items-center">
-        <div className="">Filter by :</div>
+        {/* <div className="">Filter by :</div> */}
         <FormControl size="small" style={{ minWidth: 220 }}>
           {/* <InputLabel>Filter by Asset Name</InputLabel> */}
           <TextField
