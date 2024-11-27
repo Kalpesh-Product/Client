@@ -118,6 +118,10 @@ const router = createBrowserRouter([
         element: <DepartmentDash />,
       },
       {
+        path: "/customer/meetings/my-bookings",
+        element: <DepartmentDash />,
+      },
+      {
         path: "/customer/meetings/add-room",
         element: <DepartmentDash />,
       },
@@ -196,26 +200,24 @@ const router = createBrowserRouter([
       },
       {
         path: "/tasks/tasklistfirstmenu",
-        element: <DepartmentDash/>,
+        element: <DepartmentDash />,
       },
       {
         path: "/tasks/teams",
-        element: <DepartmentDash/>,
+        element: <DepartmentDash />,
       },
       {
         path: "/tasks/tasklist",
-        element: <DepartmentDash/>
-
+        element: <DepartmentDash />,
       },
       {
         path: "/tasks/tasklisttable",
-        element: <DepartmentDash/>
+        element: <DepartmentDash />,
       },
       {
         path: "/tasks/dashboard",
-        element: <DepartmentDash/>
-      }
-
+        element: <DepartmentDash />,
+      },
     ],
   },
 ]);

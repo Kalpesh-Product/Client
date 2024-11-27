@@ -83,6 +83,7 @@ import Teams from "../Teams";
 import Tasklist from "../Tasklist";
 import TasklistTable from "../TasklistTable";
 import Tasklistfirstmenu from "../tasklistfirstmenu";
+import MyBookings from "../cms/room-booking/MyBookings";
 
 const DepartmentDash = () => {
   const [user, setUser] = useState("");
@@ -359,7 +360,7 @@ const DepartmentDash = () => {
       <TestSide />
       <ModuleSidebar />
 
-      <div className="w-full bg-gray-100 h-[90vh] overflow-y-auto">
+      <div className="w-full overflow-y-auto bg-gray-100 h-[90vh]">
         {/* Frontend submodules */}
         {location.pathname.startsWith("/frontend") && (
           <>
@@ -539,52 +540,49 @@ const DepartmentDash = () => {
           <>
             {location.pathname === "/customer" ||
             location.pathname === "/customer/dashboard" ? (
-              <div className="bg-gray-100 p-4 rounded-lg  mt-4 gap-4 h-full">
-                <div className="bg-white rounded-md p-2 overflow-y-auto">
-                {customerServiceWidgets
-                  .filter((section) => section.subModule === "asset")
-                  .map((section, index) => (
-                    <WidgetSection
-                      key={index}
-                      heading={section.heading}
-                      widgets={section.widgets}
+              <div className="bg-gray-100 p-4 rounded-lg  mt-4 flex flex-col gap-4">
+                <div className="bg-white rounded-md p-2">
+                  {customerServiceWidgets
+                    .filter((section) => section.subModule === "asset")
+                    .map((section, index) => (
+                      <WidgetSection
+                        key={index}
+                        heading={section.heading}
+                        widgets={section.widgets}
+                      />
+                    ))}
+
+                  <div className="flex w-full flex-1 flex-grow gap-x-4">
+                    <QuantityRemainingWidget
+                      totalStock={100}
+                      remainingStock={30}
+                      assetType="Laptops"
                     />
-                  ))}
 
-                <div className="flex w-full flex-1 flex-grow gap-x-4">
-                  <QuantityRemainingWidget
-                    totalStock={100}
-                    remainingStock={30}
-                    assetType="Laptops"
-                  />
-
-                  <QuantityRemainingWidget
-                    totalStock={100}
-                    remainingStock={10}
-                    assetType="Mobiles"
-                  />
-                </div>
+                    <QuantityRemainingWidget
+                      totalStock={100}
+                      remainingStock={10}
+                      assetType="Mobiles"
+                    />
+                  </div>
                 </div>
 
                 <div className="bg-white rounded-md p-2">
-                {customerServiceWidgets
-                  .filter((section) => section.subModule === "ticket")
-                  .map((section, index) => (
-                    <WidgetSection
-                      key={index}
-                      heading={section.heading}
-                      widgets={section.widgets}
-                    />
-                  ))}
+                  {customerServiceWidgets
+                    .filter((section) => section.subModule === "ticket")
+                    .map((section, index) => (
+                      <WidgetSection
+                        key={index}
+                        heading={section.heading}
+                        widgets={section.widgets}
+                      />
+                    ))}
                 </div>
 
-                {/* <div className="bg-white rounded-md p-2">
-                <RoomBookingDash />
-                </div> */}
+                <div className="bg-white rounded-md p-2">
+                  <RoomBookingDash />
+                </div>
 
-                {/* <AssetsData /> */}
-
-               
                 {itWidgets.map((section, index) => (
                   <WidgetSection
                     key={index}
@@ -742,19 +740,21 @@ const DepartmentDash = () => {
               <>
                 <BookingReports />
               </>
+            ) : location.pathname === "/customer/meetings/my-bookings" ? (
+              <>
+                <MyBookings />
+              </>
             ) : (
               <></>
             )}
           </>
         )}
         {location.pathname === "/tasks" ||
-            location.pathname === "/tasks/dashboard" ? (
+        location.pathname === "/tasks/dashboard" ? (
           <Task />
-        ) 
-        : location.pathname === "/tasks/tasklistfirstmenu" ? (
-          <Tasklistfirstmenu/>
-        )
-         : location.pathname === "/tasks/teams" ? (
+        ) : location.pathname === "/tasks/tasklistfirstmenu" ? (
+          <Tasklistfirstmenu />
+        ) : location.pathname === "/tasks/teams" ? (
           <>
             <Teams />
           </>

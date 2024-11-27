@@ -13,6 +13,7 @@ import SuperAdmin from "../assets/kashif-bg.png";
 import { useDispatch, useSelector } from "react-redux";
 import { Accordion, AccordionDetails, AccordionSummary } from "@mui/material";
 import AgTable from "../components/AgTable";
+import MyBookings from "./cms/room-booking/MyBookings";
 // import image from "../profile.jpg";
 
 const Profile = () => {
@@ -102,7 +103,7 @@ const Profile = () => {
   return (
     <div class="flex min-h-screen ">
       {/* Sidebar */}
-      <TestSide  />
+      <TestSide />
 
       {/* Main Content */}
       <div class="flex-1 p-6  motion-preset-blur-right-md">
@@ -314,46 +315,7 @@ const Profile = () => {
 
                 {/* Data Grid Section */}
                 <div className="bg-white p-4 w-full">
-                  <h3 className="text-xl font-bold mb-4">
-                    Room Booking Details
-                  </h3>
-                  <div style={{ height: 400, width: "100%" }}>
-                    <AgTable
-                      data={[
-                        {
-                          id: 1,
-                          room: "Vatican",
-                          creditsUsed: 50,
-                          duration: "2 hours",
-                          date: "2024-11-21",
-                        },
-                        {
-                          id: 2,
-                          room: "Arambol",
-                          creditsUsed: 20,
-                          duration: "1 hour",
-                          date: "2024-11-20",
-                        },
-                        {
-                          id: 3,
-                          room: "Sydney",
-                          creditsUsed: 100,
-                          duration: "3 hours",
-                          date: "2024-11-19",
-                        },
-                      ]}
-                      columns={[
-                        { field: "room", headerName: "Room", flex: 1 },
-                        {
-                          field: "creditsUsed",
-                          headerName: "Credits Used",
-                          flex: 1,
-                        },
-                        { field: "duration", headerName: "Duration", flex: 1 },
-                        { field: "date", headerName: "Date", flex: 1 },
-                      ]}
-                    />
-                  </div>
+                  <MyBookings />
                 </div>
               </div>
             )}

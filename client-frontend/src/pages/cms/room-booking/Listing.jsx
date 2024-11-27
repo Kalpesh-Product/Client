@@ -86,6 +86,71 @@ export default function Listing() {
         room: "Hawai",
       },
     },
+    {
+      id: "e7b6c8d4-88c4-4b53-ae9e-4b3d948392f1",
+      title: "Marketing Brainstorming Session",
+      start: "2024-11-12T09:00",
+      end: "2024-11-12T10:30",
+      backgroundColor: "#F7B801",
+      status: "active",
+      extendedProps: {
+        agenda: "Generating ideas for the new marketing campaign",
+        participants: "Kashif Shaikh, Hema Natalkar",
+        room: "Madrid",
+      },
+    },
+    {
+      id: "f5c891d5-234b-4e9a-a746-09c4a1d76d53",
+      title: "Team Lunch Discussion",
+      start: "2024-11-20T12:00",
+      end: "2024-11-20T13:00",
+      backgroundColor: "#2B8EAD",
+      status: "scheduled",
+      extendedProps: {
+        agenda: "Team bonding and project status update",
+        participants: "Abrar Shaikh, Faizan, Siddhi Vernekar",
+        room: "Vatican",
+      },
+    },
+    {
+      id: "4a70d1e3-3f46-4728-b85f-75c3a3e4d2c8",
+      title: "Year-End Budget Planning",
+      start: "2024-11-29T11:30",
+      end: "2024-11-29T13:00",
+      backgroundColor: "#8E44AD",
+      status: "scheduled",
+      extendedProps: {
+        agenda: "Discussing and finalizing the year-end budget",
+        participants: "Allan Silveira, Kalpesh Naik, Narshiva Naik",
+        room: "Sydney",
+      },
+    },
+    {
+      id: "afe5b12e-5bc7-4e14-a5b6-31cfa8b67a1d",
+      title: "Product Demo to Clients",
+      start: "2024-11-25T14:00",
+      end: "2024-11-25T15:30",
+      backgroundColor: "#C0392B",
+      status: "active",
+      extendedProps: {
+        agenda: "Presenting the new product features to clients",
+        participants: "Kalpesh Naik, Abrar Shaikh",
+        room: "Arambol",
+      },
+    },
+    {
+      id: "f92a3c51-32f5-4b2b-89f1-36b0cfae3f68",
+      title: "Leadership Quarterly Review",
+      start: "2024-11-28T10:00",
+      end: "2024-11-28T12:00",
+      backgroundColor: "#1ABC9C",
+      status: "scheduled",
+      extendedProps: {
+        agenda: "High-level strategic planning and review",
+        participants: "Faizan, Jill, Siddhi Vernekar",
+        room: "Colosseum",
+      },
+    },
   ]);
   const [roomList, setRoomList] = useState(rooms);
   const [newMeeting, setNewMeeting] = useState({
@@ -215,6 +280,8 @@ export default function Listing() {
       <h1 className="font-bold text-4xl mt-4 mb-3 ml-2">Booking Calendar</h1>
       <div className="w-full overflow-x-auto">
         <FullCalendar
+          displayEventTime={false} 
+          displayEventEnd={false} 
           plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
           initialView="dayGridMonth"
           dateClick={(e) => {

@@ -14,6 +14,7 @@ import {
   FaUsers,
   FaProjectDiagram,
 } from "react-icons/fa";
+import { CiBookmarkCheck } from "react-icons/ci";
 import { MdMeetingRoom } from "react-icons/md";
 import { BsArrowLeftSquare } from "react-icons/bs";
 import { TbReportSearch, TbSection } from "react-icons/tb";
@@ -116,7 +117,7 @@ const ModuleSidebar = ({ mainSideBar }) => {
     },
     {
       title: "Tickets",
-      index:1,
+      index: 1,
       route: "/customer/tickets",
       icon: <HiOutlineClipboardList />,
       subMenus: [
@@ -144,7 +145,7 @@ const ModuleSidebar = ({ mainSideBar }) => {
     },
     {
       title: "Meetings",
-      index:2,
+      index: 2,
       route: "/customer/meetings",
       icon: <MdMeetingRoom />,
       subMenus: [
@@ -157,6 +158,11 @@ const ModuleSidebar = ({ mainSideBar }) => {
           title: "Add new Room",
           route: "/customer/meetings/add-room",
           icon: <FaPlus />,
+        },
+        {
+          title: "My Bookings",
+          route: "/customer/meetings/my-bookings",
+          icon: <CiBookmarkCheck />,
         },
         {
           title: "Reports",
@@ -187,7 +193,7 @@ const ModuleSidebar = ({ mainSideBar }) => {
     },
     {
       title: "Tickets",
-      index:1,
+      index: 1,
       route: "/customer/tickets",
       icon: <HiOutlineClipboardList />,
       subMenus: [
@@ -215,7 +221,7 @@ const ModuleSidebar = ({ mainSideBar }) => {
     },
     {
       title: "Meetings",
-      index:2,
+      index: 2,
       route: "/customer/meetings",
       icon: <MdMeetingRoom />,
       subMenus: [
@@ -243,7 +249,7 @@ const ModuleSidebar = ({ mainSideBar }) => {
       route: "/tasks/tasklistfirstmenu",
       icon: <FaTasks />,
     },
-   
+
     {
       title: "Projects",
       route: "/tasks/tasklist",
@@ -253,7 +259,7 @@ const ModuleSidebar = ({ mainSideBar }) => {
       title: "Teams",
       route: "/tasks/teams",
       icon: <FaUsers />,
-    }
+    },
   ];
 
   // Get the department based on the current path
@@ -341,12 +347,12 @@ const ModuleSidebar = ({ mainSideBar }) => {
     setIsActive(index);
     console.log("Menu clicked");
   };
-// Handle manual toggling of dropdowns
-const handleMenuClick = (index) => {
-  // If the clicked menu is already open, close it; otherwise, open it
-  setIsDepartmentsOpen(isDepartmentsOpen === index ? false : index);
-  setIsSidebarOpen(true)
-};
+  // Handle manual toggling of dropdowns
+  const handleMenuClick = (index) => {
+    // If the clicked menu is already open, close it; otherwise, open it
+    setIsDepartmentsOpen(isDepartmentsOpen === index ? false : index);
+    setIsSidebarOpen(true);
+  };
 
   // Use useEffect to update dropdown open state based on the route
 
@@ -394,7 +400,6 @@ const handleMenuClick = (index) => {
           {/* SubModules-Items */}
 
           {modules.map(({ title, route, icon, subMenus }, index) => {
-           
             return (
               <div key={index}>
                 {/* Main Menu Item */}

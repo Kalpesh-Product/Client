@@ -87,6 +87,20 @@ const Calender = () => {
     { title: "Innovation Jam", date: "2024-12-01", type: "meeting" },
     { title: "Project Kickoff", date: "2024-12-05", type: "meeting" },
     { title: "Feedback Loop", date: "2024-12-10", type: "meeting" },
+    { title: "Team Bonding Event", date: "2024-11-10", type: "event" },
+    { title: "Marketing Strategy Review", date: "2024-11-15", type: "meeting" },
+    { title: "Quarterly Sales Planning", date: "2024-11-20", type: "meeting" },
+    { title: "Employee Wellness Workshop", date: "2024-11-22", type: "event" },
+    { title: "Tech Conference", date: "2024-11-25", type: "event" },
+    { title: "End of Month Wrap-up", date: "2024-11-30", type: "meeting" },
+    { title: "Deep Dive into Q1 Goals", date: "2024-11-18", type: "meeting" },
+    { title: "Product Launch Briefing", date: "2024-11-08", type: "meeting" },
+    {
+      title: "Corporate Social Responsibility Planning",
+      date: "2024-11-05",
+      type: "event",
+    },
+    { title: "HR Policy Review", date: "2024-11-13", type: "meeting" },
   ]);
   const [filteredEvents, setFilteredEvents] = useState(events);
   useEffect(() => {
@@ -208,7 +222,7 @@ const Calender = () => {
           <div className="flex justify-between items-center">
             <h1 className=" font-bold text-4xl pb-5">Calendar</h1>
             <FormGroup row>
-              {["holiday", "meeting"].map((type) => (
+              {["Holiday", "Meeting"].map((type) => (
                 <FormControlLabel
                   key={type}
                   control={
