@@ -96,14 +96,14 @@ export default function BookingReports() {
 
   // Column definitions for AgGrid
   const columns = [
-    { headerName: "ID", field: "id" },
-    { headerName: "Department", field: "department" },
-    { headerName: "Name", field: "name" },
-    { headerName: "Date", field: "date" },
-    { headerName: "Start Time", field: "startTime" },
-    { headerName: "End Time", field: "endTime" },
-    { headerName: "Duration", field: "duration" },
-    { headerName: "Credits Used", field: "credits" },
+    { headerName: "ID", field: "id", flex: 1 },
+    { headerName: "Name", field: "name", flex: 1 },
+    { headerName: "Department", field: "department", flex: 1 },
+    { headerName: "Date", field: "date", flex: 1 },
+    { headerName: "Start Time", field: "startTime", flex: 1 },
+    { headerName: "End Time", field: "endTime", flex: 1 },
+    { headerName: "Duration", field: "duration", flex: 1 },
+    { headerName: "Credits Used", field: "credits", flex: 1 },
     {
       headerName: "Status",
       field: "status",
@@ -139,7 +139,7 @@ export default function BookingReports() {
   ];
 
   return (
-    <section className="p-6 bg-gray-100 min-h-screen w-[80vw] md:w-full">
+    <section className="p-6 bg-gray-100 w-[80vw] md:w-full">
       <h1 className="text-4xl font-bold text-gray-800 mb-6">Booking Reports</h1>
 
       <div className="bg-white shadow-md rounded-lg p-6 h-full">
