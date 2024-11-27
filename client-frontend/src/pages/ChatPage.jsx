@@ -182,8 +182,8 @@ export default function ChatPage() {
   return (
     <div className="flex h-full bg-gray-100 overflow-auto">
       <TestSide />
-      <div className="h-full flex flex-col flex-1">
-    <div className="h-[90vh] flex flex-1">
+      <div className="h-full flex flex-col w-full">
+    <div className="h-[90vh] overflow-auto flex flex-1">
       <aside className="w-1/4 bg-white p-4 shadow-lg border-r border-gray-300 h-[90vh] overflow-y-auto">
         <h2 className="text-3xl font-semibold mb-4">Chat</h2>
         <select
@@ -278,7 +278,7 @@ export default function ChatPage() {
         </ul>
       </aside>
 
-      <div className="flex-1 flex flex-col justify-between bg-white">
+      <div className="w-full flex flex-col justify-between bg-white">
         <header className="p-4 border-b flex items-center">
           <div
             className={`flex items-center justify-center w-10 h-10 rounded-full text-white font-semibold mr-3 ${getNodeColor(
@@ -293,7 +293,7 @@ export default function ChatPage() {
           </div>
         </header>
 
-        <div className="flex-1 p-4 overflow-y-auto space-y-4 h-[80vh]">
+        <div className="w-full p-4 overflow-y-scroll space-y-4 h-[60vh]">
           {messages.map((msg, index) => {
             const isLastMessage = index === messages.length - 1;
             return (
