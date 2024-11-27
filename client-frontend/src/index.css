@@ -26,7 +26,6 @@
   .wono-opacity {
     opacity: 15%;
   }
- 
 }
 
 @font-face {
@@ -65,4 +64,3 @@ body {
   color: #6c757d; /* Optional: Adjust text color for visibility */
   cursor: not-allowed;
 }
-

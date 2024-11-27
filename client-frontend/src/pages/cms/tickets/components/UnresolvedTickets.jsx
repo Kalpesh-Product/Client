@@ -9,6 +9,7 @@ import Select from "@mui/material/Select";
 import { CSVLink } from "react-csv";
 import Button from "@mui/material/Button";
 import { TextField } from "@mui/material";
+import AgTable from "../../../../components/AgTable";
 
 const UnresolvedTickets = () => {
   const columns = [
@@ -130,7 +131,8 @@ const UnresolvedTickets = () => {
       field: "viewDetails",
       headerName: "Actions",
       width: 150,
-      renderCell: (params) => {
+      // renderCell: (params) => {
+      cellRenderer: (params) => {
         const handleActionChange = (event) => {
           const selectedAction = event.target.value;
 
@@ -318,26 +320,27 @@ const UnresolvedTickets = () => {
         <br />
       </div> */}
 
-<div className="flex gap-4">
+      <div className="flex gap-4">
         <div className="flex gap-4 mb-4">
-        <div>
-        <FormControl size="small" style={{ minWidth: 220 }}>
-                    {/* <InputLabel>Filter by Asset Name</InputLabel> */}
-                    <TextField
-                      label="Filter by Asset Name"
-                      variant="outlined"
-                      select
-                      size="small"
-                      sx={{ fontSize: "0.5rem" }}
-                    >
-                      <MenuItem value="">All</MenuItem>
-                      <MenuItem value="Chair">Chair</MenuItem>
-                      <MenuItem value="Carpet Floor">Carpet</MenuItem>
-                      
-                    </TextField>
-                  </FormControl>
-        </div>
-        {/* <div className=" flex">
+          <div>
+            <FormControl size="small" style={{ minWidth: 220 }}>
+              <TextField
+                label="Filter by department"
+                variant="outlined"
+                select
+                size="small"
+                onChange={handleChange}
+                value={department}
+                sx={{ fontSize: "0.5rem" }}>
+                <MenuItem value="">All</MenuItem>
+                <MenuItem value="IT">IT</MenuItem>
+                <MenuItem value="HR">HR</MenuItem>
+                <MenuItem value="Tech">Tech</MenuItem>
+                <MenuItem value="Admin">Admin</MenuItem>
+              </TextField>
+            </FormControl>
+          </div>
+          {/* <div className=" flex">
           <CSVLink
             data={filteredRows} // Pass the filtered rows for CSV download
             headers={csvHeaders} // Pass the CSV headers
@@ -346,7 +349,7 @@ const UnresolvedTickets = () => {
             Export Report
           </CSVLink>
         </div> */}
-      </div>
+        </div>
         {/* <div className=" flex">
           <CSVLink
             data={filteredRows} // Pass the filtered rows for CSV download
@@ -359,7 +362,7 @@ const UnresolvedTickets = () => {
       </div>
 
       {/* Tickets datatable START */}
-      <Paper sx={{ height: 400, width: "100%" }}>
+      {/* <Paper sx={{ height: 400, width: "100%" }}>
         <DataGrid
           rows={filteredRows} // Pass filtered rows
           columns={columns}
@@ -368,7 +371,8 @@ const UnresolvedTickets = () => {
           // checkboxSelection
           sx={{ border: 0, width: "75vw" }}
         />
-      </Paper>
+      </Paper> */}
+      <AgTable data={filteredRows} columns={columns} />
       {/* Tickets datatable END */}
     </div>
   );

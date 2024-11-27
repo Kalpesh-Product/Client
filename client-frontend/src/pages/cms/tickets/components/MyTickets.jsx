@@ -46,13 +46,13 @@ const MyTickets = () => {
         const handleActionChange = (event) => {
           const selectedAction = event.target.value;
 
-          if (selectedAction === "view") {
-            handleViewDetails(params.row);
-            // } else if (selectedAction === "edit") {
-            //   handleEdit(params.row);
-          } else if (selectedAction === "delete") {
-            handleDelete(params.row);
-          }
+          // if (selectedAction === "view") {
+          //   handleViewDetails(params.row);
+          // } else if (selectedAction === "edit") {
+          //   handleEdit(params.row);
+          // } else if (selectedAction === "delete") {
+          //   handleDelete(params.row);
+          // }
         };
 
         return (
@@ -199,23 +199,23 @@ const MyTickets = () => {
       : allRows.filter((row) => row.department === department);
 
   // Handlers for the buttons
-  const handleViewDetails = (row) => {
-    alert(`Viewing details for: ${row.ticketTitle}`);
-  };
+  // const handleViewDetails = (row) => {
+  //   alert(`Viewing details for: ${row.ticketTitle}`);
+  // };
 
   // const handleEdit = (row) => {
   //   alert(`Editing ticket: ${row.ticketTitle}`);
   // };
 
-  const handleDelete = (row) => {
-    if (
-      window.confirm(
-        `Are you sure you want to delete ticket: ${row.ticketTitle}?`
-      )
-    ) {
-      alert(`Deleted ticket: ${row.ticketTitle}`);
-    }
-  };
+  // const handleDelete = (row) => {
+  //   if (
+  //     window.confirm(
+  //       `Are you sure you want to delete ticket: ${row.ticketTitle}?`
+  //     )
+  //   ) {
+  //     alert(`Deleted ticket: ${row.ticketTitle}`);
+  //   }
+  // };
 
   const csvHeaders = [
     { label: "ID", key: "id" },
@@ -300,35 +300,34 @@ const MyTickets = () => {
         <br />
       </div> */}
 
-      <div className="mb-2 flex justify-between">
-        {/* <h1 className="text-3xl">My Tickets</h1> */}
+      {/* <div className="mb-2 flex justify-between">
         <h1 className="text-3xl"></h1>
         <button
-          //   onClick={handleOpenTicket}
           onClick={openModal}
           className="px-6 py-2 rounded-lg text-white wono-blue-dark hover:bg-[#3cbce7] transition-shadow shadow-md hover:shadow-lg active:shadow-inner">
           Raise Ticket
         </button>
-      </div>
+      </div> */}
 
-      <div className="flex gap-4 mb-4">
-        <div className="pt-2">Filter by department:</div>
+      <div className="flex gap-4 mb-4 justify-between">
+        {/* <div className="pt-2">Filter :</div> */}
         <div>
-        <FormControl size="small" style={{ minWidth: 220 }}>
-                    {/* <InputLabel>Filter by Asset Name</InputLabel> */}
-                    <TextField
-                      label="Filter by Asset Name"
-                      variant="outlined"
-                      select
-                      size="small"
-                      sx={{ fontSize: "0.5rem" }}
-                    >
-                      <MenuItem value="">All</MenuItem>
-                      <MenuItem value="Chair">Chair</MenuItem>
-                      <MenuItem value="Carpet Floor">Carpet</MenuItem>
-                      
-                    </TextField>
-                  </FormControl>
+          <FormControl size="small" style={{ minWidth: 220 }}>
+            <TextField
+              label="Filter by department"
+              variant="outlined"
+              select
+              size="small"
+              onChange={handleChange}
+              value={department}
+              sx={{ fontSize: "0.5rem" }}>
+              <MenuItem value="">All</MenuItem>
+              <MenuItem value="IT">IT</MenuItem>
+              <MenuItem value="HR">HR</MenuItem>
+              <MenuItem value="Tech">Tech</MenuItem>
+              <MenuItem value="Admin">Admin</MenuItem>
+            </TextField>
+          </FormControl>
         </div>
         {/* <div className=" flex">
           <CSVLink
@@ -339,19 +338,30 @@ const MyTickets = () => {
             Export Report
           </CSVLink>
         </div> */}
+        <div className=" flex">
+          <div className="mb-2 flex justify-between">
+            <h1 className="text-3xl"></h1>
+            <button
+              onClick={openModal}
+              className="px-6 py-2 rounded-lg text-white wono-blue-dark hover:bg-[#3cbce7] transition-shadow shadow-md hover:shadow-lg active:shadow-inner">
+              Raise Ticket
+            </button>
+          </div>
+        </div>
       </div>
 
       {/* Tickets datatable START */}
-      
-        {/* <DataGrid
+
+      {/* <DataGrid
           rows={filteredRows}
           columns={columns}
           initialState={{ pagination: { paginationModel } }}
           pageSizeOptions={[5, 10]}
           sx={{ border: 0, width: "75vw" }}
         /> */}
-      
-      <AgTable data={filteredRows} columns={columns} />
+
+      <AgTable data={filteredRows} columns={columns} highlightFirstRow={true} />
+
       {/* Tickets datatable END */}
 
       {/* ADD TICKET MODAL START */}

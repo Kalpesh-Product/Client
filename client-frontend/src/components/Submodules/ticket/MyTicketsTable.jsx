@@ -8,7 +8,7 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { CSVLink } from "react-csv";
 import { TextField } from "@mui/material";
-import AgTable from '../../../components/AgTable'
+import AgTable from "../../../components/AgTable";
 
 const MyTicketsTable = () => {
   const columns = [
@@ -279,35 +279,47 @@ const MyTicketsTable = () => {
         <div className="">Filter by :</div>
         <FormControl size="small" style={{ minWidth: 220 }}>
           {/* <InputLabel>Filter by Asset Name</InputLabel> */}
-          <TextField label="Department" variant="outlined" select size="small">
-            <MenuItem value="">All</MenuItem>
+          <TextField
+            label="Department"
+            variant="outlined"
+            select
+            size="small"
+            onChange={handleChange}
+            value={department}>
+            {/* <MenuItem value="">All</MenuItem>
             <MenuItem value="Chair">Chair</MenuItem>
             <MenuItem value="Carpet Floor">Carpet</MenuItem>
-            <MenuItem value="Carpet Floor">Carpet</MenuItem>
+            <MenuItem value="Carpet Floor">Carpet</MenuItem> */}
+            <MenuItem value="">All</MenuItem>
+            <MenuItem value="IT">IT</MenuItem>
+            <MenuItem value="HR">HR</MenuItem>
+            <MenuItem value="Tech">Tech</MenuItem>
+            <MenuItem value="Admin">Admin</MenuItem>
           </TextField>
         </FormControl>
         <FormControl size="small" style={{ minWidth: 220 }}>
           {/* <InputLabel>Filter by Asset Name</InputLabel> */}
           <TextField label="Priority" variant="outlined" select size="small">
             <MenuItem value="">All</MenuItem>
-            <MenuItem value="Chair">Chair</MenuItem>
-            <MenuItem value="Carpet Floor">Carpet</MenuItem>
+            <MenuItem value="Chair">High</MenuItem>
+            <MenuItem value="Carpet Floor">Medium</MenuItem>
+            <MenuItem value="Carpet Floor">Low</MenuItem>
           </TextField>
         </FormControl>
         <FormControl size="small" style={{ minWidth: 220 }}>
           {/* <InputLabel>Filter by Asset Name</InputLabel> */}
           <TextField label="Start Date" variant="outlined" select size="small">
-            <MenuItem value="">All</MenuItem>
-            <MenuItem value="Chair">Chair</MenuItem>
-            <MenuItem value="Carpet Floor">Carpet</MenuItem>
+            <MenuItem value="">.</MenuItem>
+            <MenuItem value="Chair">.</MenuItem>
+            <MenuItem value="Carpet Floor">.</MenuItem>
           </TextField>
         </FormControl>
         <FormControl size="small" style={{ minWidth: 220 }}>
           {/* <InputLabel>Filter by Asset Name</InputLabel> */}
           <TextField label="End Date" variant="outlined" select size="small">
-            <MenuItem value="">All</MenuItem>
-            <MenuItem value="Chair">Chair</MenuItem>
-            <MenuItem value="Carpet Floor">Carpet</MenuItem>
+            <MenuItem value="">.</MenuItem>
+            <MenuItem value="Chair">.</MenuItem>
+            <MenuItem value="Carpet Floor">.</MenuItem>
           </TextField>
         </FormControl>
         <div className="h-full">
@@ -333,7 +345,7 @@ const MyTicketsTable = () => {
           checkboxSelection
           sx={{backgroundColor:'white'}}
         /> */}
-       <AgTable data = {filteredRows} columns={columns} /> 
+        <AgTable data={filteredRows} columns={columns} />
       </div>
       {/* Tickets datatable END */}
     </div>
