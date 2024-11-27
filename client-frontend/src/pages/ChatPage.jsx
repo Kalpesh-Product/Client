@@ -180,10 +180,10 @@ export default function ChatPage() {
   });
 
   return (
-    <div className="flex h-full bg-gray-100">
+    <div className="flex h-full bg-gray-100 overflow-auto">
       <TestSide />
-      <div className="h-full flex flex-col flex-1">
-    <div className="h-[90vh] flex flex-1">
+      <div className="h-full flex flex-col w-full">
+    <div className="h-[90vh] overflow-auto flex flex-1">
       <aside className="w-1/4 bg-white p-4 shadow-lg border-r border-gray-300 h-[90vh] overflow-y-auto">
         <h2 className="text-3xl font-semibold mb-4">Chat</h2>
         <select
@@ -197,13 +197,13 @@ export default function ChatPage() {
           <option value="Companies">Companies</option>
         </select>
 
-            <input
-              type="search"
-              placeholder="Search"
-              className="w-full p-2 mb-4 rounded-lg bg-gray-200 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-            />
+        <input
+          type="search"
+          placeholder="Search"
+          className="w-full p-2 mb-4 rounded-lg bg-gray-200 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+        />
 
         <ul className="space-y-2 overflow-y-auto h-[60vh]">
           {" "}
@@ -278,7 +278,7 @@ export default function ChatPage() {
         </ul>
       </aside>
 
-      <div className="flex flex-col justify-between bg-white w-full">
+      <div className="w-full flex flex-col justify-between bg-white">
         <header className="p-4 border-b flex items-center">
           <div
             className={`flex items-center justify-center w-10 h-10 rounded-full text-white font-semibold mr-3 ${getNodeColor(
@@ -293,7 +293,7 @@ export default function ChatPage() {
           </div>
         </header>
 
-        <div className="w-full p-4 overflow-y-auto space-y-4 h-[80vh]">
+        <div className="w-full p-4 overflow-y-scroll space-y-4 h-[60vh]">
           {messages.map((msg, index) => {
             const isLastMessage = index === messages.length - 1;
             return (
@@ -322,35 +322,35 @@ export default function ChatPage() {
           })}
         </div>
 
-            <footer className="p-4 border-t flex items-center space-x-2">
-              <MdOutlineEmojiEmotions size={20} className="cursor-pointer" />
-              <FaPaperclip
-                className="cursor-pointer bg-gray-200"
-                onClick={handleFileSelect}
-              />
-              <input
-                type="file"
-                className="hidden"
-                ref={fileRef}
-                onChange={handleFileChange}
-              />
-              <textarea
-                className="flex-1 px-4 py-2 border rounded-xl resize-none bg-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                rows="1"
-                placeholder="Enter a message"
-                value={message}
-                onChange={(e) => setMessage(e.target.value)}
-                onKeyDown={handleKeyDown}
-              />
-              <button
-                className="p-[0.7rem] bg-blue-500 text-white rounded-full"
-                onClick={handleSendMessage}
-              >
-                <IoMdSend />
-              </button>
-            </footer>
-          </div>
-        </div>
+        <footer className="p-4 border-t flex items-center space-x-2">
+          <MdOutlineEmojiEmotions size={20} className="cursor-pointer" />
+          <FaPaperclip
+            className="cursor-pointer bg-gray-200"
+            onClick={handleFileSelect}
+          />
+          <input
+            type="file"
+            className="hidden"
+            ref={fileRef}
+            onChange={handleFileChange}
+          />
+          <textarea
+            className="flex-1 px-4 py-2 border rounded-xl resize-none bg-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            rows="1"
+            placeholder="Enter a message"
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+            onKeyDown={handleKeyDown}
+          />
+          <button
+            className="p-[0.7rem] bg-blue-500 text-white rounded-full"
+            onClick={handleSendMessage}
+          >
+            <IoMdSend />
+          </button>
+        </footer>
+      </div>
+    </div>
       </div>
     </div>
   );
