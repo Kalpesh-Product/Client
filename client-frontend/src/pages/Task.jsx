@@ -429,7 +429,7 @@ const Task = () => {
   
 
   {/* Tabular section */}
-  <div className='mt-5 overflow-auto w-full max-w-screen-xl mx-auto  motion-preset-blur-right-md font-semibold' style={{fontFamily:"Popins-Regular"}}>
+  <div className='mt-5 overflow-auto w-full max-w-screen-xl mx-auto  motion-preset-blur-right-md' style={{fontFamily:"Popins-Regular"}}>
   {/* <Paper sx={{ height: 400, width: "100%", alignItems:"center" , display:"flex", justifyContent:"center"}}> */}
   <AgTable
       data={filteredTasks}

@@ -153,7 +153,7 @@ const ManageAsset = () => {
                 cursor: "pointer",
                 height: "100%",
               }}
-              onClick={() => handleAssignAsset(params.data)}
+              onClick={()=> handleAssignAsset(params.data)}
             >
               Assign
             </button>
@@ -216,8 +216,8 @@ const ManageAsset = () => {
       <h1 className="text-2xl font-semibold mb-4  motion-preset-expand">
         Manage Assets
       </h1>
-      <div>
-        <div className="flex">
+      <div className="rounded-md">
+        <div className="flex ">
           <Tabs
             value={activeTab}
             onChange={handleTabChange}
@@ -226,9 +226,9 @@ const ManageAsset = () => {
             TabIndicatorProps={{ style: { transition: "none" } }}
             sx={{
               width: "100%",
-              marginBottom: "1rem",
               backgroundColor: "white",
-              borderRadius: "10px",
+              borderTopLeftRadius:'10px',
+              borderTopRightRadius:'10px',
               fontFamily: "Popins-Semibold",
               padding: "0.5rem",
             }}
@@ -247,7 +247,7 @@ const ManageAsset = () => {
         </div>
         <div>
           {activeTab === 0 && (
-            <div className="w-[72vw] md:w-full transition-all duration-200 ease-in-out bg-white p-2 rounded-md">
+            <div className="w-[72vw] md:w-full transition-all duration-200 ease-in-out bg-white p-2">
               <div className="flex justify-between gap-4 pb-4">
                 <div className="flex gap-4">
                   <TextField

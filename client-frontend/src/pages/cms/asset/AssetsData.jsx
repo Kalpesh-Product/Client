@@ -183,12 +183,12 @@ columns.forEach((column) => {
 
 
   return (
-    <div className="p-2">
+    <div className="">
       <div className="flex justify-between">
         <div className="content-center"></div>
       </div>
 
-      <div className="flex gap-4 bg-white p-2 rounded-t-md">
+      <div className="flex gap-4 bg-white p-2">
                 <TextField
                   label="Search by Assignee"
                   variant="outlined"
@@ -218,7 +218,7 @@ columns.forEach((column) => {
                 </FormControl>
               </div>
 
-      <div style={{ width: "100%" }}>
+      <div className="w-full p-2 bg-white">
         <AgTable data={filteredAssets} columns={columns} paginationPageSize={10}/>
       </div>
 

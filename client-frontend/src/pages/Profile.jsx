@@ -15,6 +15,7 @@ import { Accordion, AccordionDetails, AccordionSummary } from "@mui/material";
 import AgTable from "../components/AgTable";
 import MyTickets from "./cms/tickets/components/MyTickets";
 import MyBookings from "./cms/room-booking/MyBookings";
+import MyAssets from '../pages/cms/asset/MyAssets'
 // import image from "../profile.jpg";
 
 const Profile = () => {
@@ -107,7 +108,7 @@ const Profile = () => {
       <TestSide />
 
       {/* Main Content */}
-      <div class="flex-1 p-6 h-screen overflow-y-auto motion-preset-blur-right-md">
+      <div class="flex-1 p-6 h-screen overflow-y-auto motion-preset-blur-right-md bg-gray-100">
         <h1 class="text-3xl font-bold mb-4">Profile</h1>
         <div class="flex items-center p-4 bg-white rounded-lg shadow-md justify-between">
           <div class="flex flex-row gap-3 relative">
@@ -140,7 +141,7 @@ const Profile = () => {
         <hr class="border-t border-gray-300 my-4" />
 
         <div className="mx-auto">
-          <ul className="flex  border-b mb-4 gap-4">
+          <ul className="flex  border-b mb-4 gap-4 bg-white p-2 rounded-md">
             <li className=" text-center w-1/2" role="presentation">
               <button
                 className={`text-md py-2 w-full hover:bg-gray-100  ${
@@ -197,7 +198,7 @@ const Profile = () => {
               </button>
             </li>
           </ul>
-          <div className="tab-content">
+          <div className="tab-content bg-white rounded-md pb-4">
             {activeTab === "tab-1" && (
               <div
                 className="tab-pane motion-preset-slide-up show active"
@@ -243,11 +244,11 @@ const Profile = () => {
                 id="tab-2"
                 role="tabpanel">
                 <div
-                  className="flex flex-col"
+                  className="flex flex-col h-full"
                   data-aos="fade-up"
                   data-aos-delay="100">
-                  <div className="bg-white shadow-lg rounded-lg overflow-hidden inline-block">
-                    <Accordion>
+                  <div className="bg-white rounded-lg overflow-hidden inline-block">
+                    {/* <Accordion>
                       <AccordionSummary
                         expandIcon={<ExpandMoreIcon />}
                         aria-controls="panel1-content"
@@ -258,8 +259,9 @@ const Profile = () => {
                       <AccordionDetails>
                         {userData.assignedAsset}
                       </AccordionDetails>
-                    </Accordion>
-                    <Accordion>
+                    </Accordion> */}
+                    <MyAssets />
+                    {/* <Accordion>
                       <AccordionSummary
                         expandIcon={<ExpandMoreIcon />}
                         aria-controls="panel1-content"
@@ -270,7 +272,7 @@ const Profile = () => {
                       <AccordionDetails>
                         5001 - Chair - Herman Miller
                       </AccordionDetails>
-                    </Accordion>
+                    </Accordion> */}
                   </div>
                 </div>
               </div>
@@ -281,7 +283,7 @@ const Profile = () => {
                 id="tab-4"
                 role="tabpanel">
                 {/* Credits Summary Section */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6 w-full">
+                <div className="grid p-2 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6 w-full">
                   {/* Total Credits Widget */}
                   <div className="p-4 bg-blue-50 rounded-lg shadow">
                     <h4 className="text-lg font-semibold text-blue-600">

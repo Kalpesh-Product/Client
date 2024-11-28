@@ -117,7 +117,7 @@ const AssetReports = () => {
         Asset Reports
       </h1>
 
-      <div className="">
+      <div className="bg-white rounded-md">
         <div className="flex justify-between gap-4 p-2 rounded-md bg-white">
           <div className="flex gap-4 ">
             <TextField
@@ -176,7 +176,7 @@ const AssetReports = () => {
           </button>
         </div>
 
-        <div className="motion-preset-slide-up-md">
+        <div className="motion-preset-slide-up-md p-2">
           <AgTable
             data={filteredData}
             columns={laptopColumns}

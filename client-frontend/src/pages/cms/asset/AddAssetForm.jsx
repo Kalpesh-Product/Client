@@ -56,18 +56,29 @@ const AddAssetForm = ({ title, handleClose, user }) => {
     }));
   };
 
+  const requests = []
+
   const handleSubmit = async (e) => {
     try {
       e.preventDefault();
+
+      if(user.role === 'Admin'){
         console.log(formData)
         const newAsset = {...formData, id:assetsData.length + 1}
         assetsData.push(newAsset)
         toast.success("Asset added successfully!");
+      }else if(user.role === 'Employee'){
+        toast.success("Request sent to admin")
+        const addRequest = {...formData, id:requests.length + 1}
+        requests.push(addRequest)
+        localStorage.setItem("asset", JSON.stringify(requests))
+      }
       
     } catch {
       toast.error("Error adding asset");
     } finally {
       handleClose();
+      console.log(requests)
     }
   };
 
