@@ -51,7 +51,6 @@ import { BsCashCoin } from "react-icons/bs";
 import { AiOutlineProduct, AiOutlineSecurityScan } from "react-icons/ai";
 
 const ModuleSidebar = ({ mainSideBar }) => {
-
   useEffect(() => {
     const storedUser = JSON.parse(localStorage.getItem("user"));
     setUser(storedUser);
@@ -103,13 +102,17 @@ const ModuleSidebar = ({ mainSideBar }) => {
       route: "/customer/kpi",
       icon: <AiOutlineProduct />,
       subMenus: [
-        ...(user.role === "Admin" || user.role === "Master Admin" || user.role === "Super Admin" ? [
-          {
-            title: "Manage asset",
-            route: "/customer/asset/manage",
-            icon: <MdOutlineManageAccounts />,
-          }
-        ] :[]),
+        ...(user.role === "Admin" ||
+        user.role === "Master Admin" ||
+        user.role === "Super Admin"
+          ? [
+              {
+                title: "Manage asset",
+                route: "/customer/asset/manage",
+                icon: <MdOutlineManageAccounts />,
+              },
+            ]
+          : []),
         {
           title: "My assets",
           route: "/customer/asset/my-assets",
@@ -128,28 +131,40 @@ const ModuleSidebar = ({ mainSideBar }) => {
       route: "/customer/tickets",
       icon: <HiOutlineClipboardList />,
       subMenus: [
-        {
-          title: "View Tickets",
-          route: "/customer/tickets/view-tickets",
-          icon: <HiOutlineClipboardList />,
-        },
+        ...(user.role === "Employee" && user.department === "Finance"
+          ? []
+          : [
+              {
+                title: "View Tickets",
+                route: "/customer/tickets/view-tickets",
+                icon: <HiOutlineClipboardList />,
+              },
+            ]),
+        ,
         {
           title: "My Tickets",
           route: "/customer/tickets/my-tickets",
           icon: <HiOutlineClipboardList />,
         },
-        ...(user.role === 'Employee' ? [] : [
-          {
-            title: "Members",
-            route: "/customer/tickets/members",
-           icon: <MdOutlineManageAccounts />,
-          },
-        ]),
-        {
-          title: "Ticket Reports",
-          route: "/customer/tickets/ticket-reports",
-          icon: <HiOutlineClipboardList />,
-        },
+        ...(user.role === "Employee"
+          ? []
+          : [
+              {
+                title: "Members",
+                route: "/customer/tickets/members",
+                icon: <MdOutlineManageAccounts />,
+              },
+            ]),
+
+        ...(user.role === "Employee" && user.department === "Finance"
+          ? []
+          : [
+              {
+                title: "Ticket Reports",
+                route: "/customer/tickets/ticket-reports",
+                icon: <HiOutlineClipboardList />,
+              },
+            ]),
       ],
     },
     {
@@ -163,12 +178,16 @@ const ModuleSidebar = ({ mainSideBar }) => {
           route: "/customer/meetings/booking",
           icon: <FaRegCalendarAlt />,
         },
-        ...(user.department === 'Tech' ? [] : [ {
-          title: "Add new Room",
-          route: "/customer/meetings/add-room",
-          icon: <FaPlus />,
-        },] ),
-       
+        ...(user.department === "Tech"
+          ? []
+          : [
+              {
+                title: "Add new Room",
+                route: "/customer/meetings/add-room",
+                icon: <FaPlus />,
+              },
+            ]),
+
         {
           title: "My Bookings",
           route: "/customer/meetings/my-bookings",
@@ -317,8 +336,6 @@ const ModuleSidebar = ({ mainSideBar }) => {
   }, [location.pathname]);
 
   const { departmentName } = location.state || {};
-
-
 
   const departmentMapping = {
     TopManagement: [

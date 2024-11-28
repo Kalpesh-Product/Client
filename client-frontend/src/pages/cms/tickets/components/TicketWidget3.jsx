@@ -5,7 +5,7 @@ const TicketWidget3 = () => {
     <div>
       <div className="p-4">
         <h3 className="text-lg font-semibold">Unresolved Tickets</h3>
-        <p className="text-3xl font-bold">20</p>
+        <p className="text-3xl font-bold">100</p>
       </div>
     </div>
   );

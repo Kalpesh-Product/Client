@@ -193,7 +193,7 @@ const AssignedTickets = () => {
   const allRows = [
     {
       id: 1,
-      ticketTitle: "Website Bug",
+      ticketTitle: "Wifi is not working",
       priority: "High",
       department: "IT",
       requestDate: "2024-10-01",

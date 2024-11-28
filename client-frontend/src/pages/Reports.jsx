@@ -40,34 +40,57 @@ const Reports = () => {
   //   setSelectedOption(selected ? selected.value : "Tickets"); // Set the selected option
   // };
 
-  const widgetsData = [
+  const myReportWidgetsData = [
     {
-      title: "Ticket Reports",
+      title: "Ticket",
       subtitle: "View and manage all ticket-related reports",
       link: "/customer/tickets/ticket-reports",
     },
     {
-      title: "Task Reports",
+      title: "Task",
       subtitle: "Analyze your task performance",
       link: "/reports/tasks",
     },
     {
-      title: "Meeting Reports",
+      title: "Meeting",
       subtitle: "Track meeting analytics and outcomes",
       link: "/customer/meetings/reports",
     },
     {
-      title: "Assets Reports",
+      title: "Assets",
+      subtitle: "Insights into all the assets",
+      link: "/customer/asset/reports",
+    },
+  ];
+
+  const externalReportWidgetsData = [
+    {
+      title: "Ticket",
+      subtitle: "View and manage all ticket-related reports",
+      link: "/customer/tickets/ticket-reports",
+    },
+    {
+      title: "Task",
+      subtitle: "Analyze your task performance",
+      link: "/reports/tasks",
+    },
+    {
+      title: "Meeting",
+      subtitle: "Track meeting analytics and outcomes",
+      link: "/customer/meetings/reports",
+    },
+    {
+      title: "Assets",
       subtitle: "Insights into all the assets",
       link: "/customer/asset/reports",
     },
     {
-      title: "Finance Reports",
+      title: "Finance",
       subtitle: "Insights into all the finances",
       link: "/customer/asset/reports",
     },
     {
-      title: "Sales Reports",
+      title: "Sales",
       subtitle: "Insights into all the sales",
       link: "/customer/asset/reports",
     },
@@ -80,12 +103,37 @@ const Reports = () => {
       <div className="w-full p-6 motion-preset-blur-right-md">
         <h2 className="text-3xl font-bold">Reports</h2>
 
+        <h2 className="text-2xl py-6">My Reports</h2>
+
         {/* Reports widgets START */}
 
         <div className="mt-0">
           <h2 className="text-2xl font-semibold"></h2>
-          <div className={`grid gap-4 grid-cols-3`}>
-            {widgetsData.map((widget, index) => (
+          <div className={`grid gap-4 grid-cols-4`}>
+            {myReportWidgetsData.map((widget, index) => (
+              <div
+                key={index}
+                className="bg-white p-0 shadow-md rounded-lg h-full overflow-auto">
+                <ReportWidget1
+                  title={widget.title}
+                  subtitle={widget.subtitle}
+                  link={widget.link}
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Reports widgets END */}
+
+        <h2 className="text-2xl pt-10 pb-6">Department Reports</h2>
+
+        {/* Reports widgets START */}
+
+        <div className="mt-0">
+          <h2 className="text-2xl font-semibold"></h2>
+          <div className={`grid gap-4 grid-cols-4`}>
+            {externalReportWidgetsData.map((widget, index) => (
               <div
                 key={index}
                 className="bg-white p-0 shadow-md rounded-lg h-full overflow-auto">

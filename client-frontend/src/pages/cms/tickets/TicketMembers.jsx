@@ -10,6 +10,7 @@ import { CSVLink } from "react-csv";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import { toast } from "sonner";
+import AgTable from "../../../components/AgTable";
 
 const TicketMembers = () => {
   const columns = [
@@ -234,9 +235,9 @@ const TicketMembers = () => {
         <h2>Today's Tickets</h2>
       </div> */}
 
-      <div className="py-10 pr-3">
+      <div className="pt-10  pr-6">
         <div className="mb-8 flex justify-between">
-          <h1 className="text-3xl">All Members</h1>
+          <h1 className="text-3xl font-bold px-6">All Members</h1>
           <button
             //   onClick={handleOpenTicket}
             onClick={openModal}
@@ -247,7 +248,7 @@ const TicketMembers = () => {
       </div>
 
       {/* Tickets datatable START */}
-      <Paper sx={{ height: 400, width: "100%" }}>
+      {/* <Paper sx={{ height: 400, width: "100%" }}>
         <DataGrid
           rows={filteredRows} // Pass filtered rows
           columns={columns}
@@ -256,7 +257,11 @@ const TicketMembers = () => {
           // checkboxSelection
           sx={{ border: 0, width: "75vw" }}
         />
-      </Paper>
+      </Paper> */}
+
+      <div className="px-6">
+        <AgTable data={filteredRows} columns={columns} />
+      </div>
       {/* Tickets datatable END */}
 
       {isModalOpen && (
@@ -288,9 +293,9 @@ const TicketMembers = () => {
               {/* <div>AddT icket Form</div> */}
               <div className="">
                 <div className=" mx-auto">
-                  <h1 className="text-xl text-center my-2 font-bold">
+                  {/* <h1 className="text-xl text-center my-2 font-bold">
                     Add Member
-                  </h1>
+                  </h1> */}
                   <Box
                     sx={{
                       maxWidth: 600,
@@ -441,9 +446,9 @@ const TicketMembers = () => {
             {/* Modal Footer */}
 
             <div className="sticky bottom-0 bg-white py-6 z-20 flex justify-center">
-              <div className="flex justify-center items-center">
+              <div className="flex justify-center items-center w-full">
                 <button
-                  className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600"
+                  className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 w-full mx-6"
                   onClick={handleAddTicket}>
                   Save
                 </button>

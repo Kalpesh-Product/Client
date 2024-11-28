@@ -682,7 +682,7 @@ const DepartmentDash = () => {
                       />
                     ))}
 
-                  <div className="flex w-full flex-1 flex-grow gap-x-4">
+                  {/* <div className="flex w-full flex-1 flex-grow gap-x-4">
                     <QuantityRemainingWidget
                       totalStock={100}
                       remainingStock={30}
@@ -694,7 +694,7 @@ const DepartmentDash = () => {
                       remainingStock={10}
                       assetType="Available Members"
                     />
-                  </div>
+                  </div> */}
 
                   {/* <AssetAllocationWidget /> */}
 

@@ -50,83 +50,91 @@ const ViewTicketsTabs = () => {
                 label="My Tickets"
                 value="1"
                 className="wono-blue"
-                sx={{ textTransform: "capitalize" }}
+                sx={{ textTransform: "uppercase" }}
               />
 
               {user.role === "Admin" && user.department === "IT" && (
                 <Tab
                   label="External Tickets"
                   value="2"
-                  sx={{ textTransform: "capitalize" }}
+                  sx={{ textTransform: "uppercase" }}
                 />
               )}
               {user.role === "Employee" && user.department === "IT" && (
                 <Tab
                   label="Closed Tickets"
                   value="3"
-                  sx={{ textTransform: "capitalize" }}
+                  sx={{ textTransform: "uppercase" }}
                 />
               )}
               {user.role === "Admin" && user.department === "IT" && (
                 <Tab
                   label="Unresolved Tickets"
                   value="4"
-                  sx={{ textTransform: "capitalize" }}
+                  sx={{ textTransform: "uppercase" }}
                 />
               )}
               {user.role === "Employee" && user.department === "IT" && (
                 <Tab
                   label="Assigned Tickets"
                   value="5"
-                  sx={{ textTransform: "capitalize" }}
+                  sx={{ textTransform: "uppercase" }}
                 />
               )}
               {user.role === "Employee" && user.department === "IT" && (
                 <Tab
                   label="Accepted Tickets"
                   value="6"
-                  sx={{ textTransform: "capitalize" }}
+                  sx={{ textTransform: "uppercase" }}
                 />
               )}
             </TabList> */}
             <TabList
               onChange={handleChange}
               aria-label="Departments"
-              variant="fullWidth">
+              variant="fullWidth"
+              sx={{
+                backgroundColor: "white",
+                borderRadius: "10px",
+                fontFamily: "Popins-Semibold",
+                marginLeft: "2rem",
+                marginRight: "2rem",
+                textTransform: "uppercase",
+              }}>
               {/* <Tab
                 label="My Tickets"
                 value="1"
                 className="wono-blue"
-                sx={{ textTransform: "capitalize" }}
+                sx={{ textTransform: "uppercase" }}
               /> */}
 
               {user.role !== "Employee" && (
                 <Tab
                   label="External Tickets"
                   value="2"
-                  sx={{ textTransform: "capitalize" }}
+                  sx={{ textTransform: "uppercase" }}
                 />
               )}
               <Tab
                 label="Assigned Tickets"
                 value="5"
-                sx={{ textTransform: "capitalize" }}
+                sx={{ textTransform: "uppercase" }}
               />
 
               <Tab
                 label="Accepted Tickets"
                 value="6"
-                sx={{ textTransform: "capitalize" }}
+                sx={{ textTransform: "uppercase" }}
               />
               <Tab
                 label="Unresolved Tickets"
                 value="4"
-                sx={{ textTransform: "capitalize" }}
+                sx={{ textTransform: "uppercase" }}
               />
               <Tab
                 label="Closed Tickets"
                 value="3"
-                sx={{ textTransform: "capitalize" }}
+                sx={{ textTransform: "uppercase" }}
               />
             </TabList>
           </Box>
