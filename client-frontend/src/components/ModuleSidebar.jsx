@@ -161,11 +161,12 @@ const ModuleSidebar = ({ mainSideBar }) => {
           route: "/customer/meetings/booking",
           icon: <FaRegCalendarAlt />,
         },
-        {
+        ...(user.department === 'Tech' ? [] : [ {
           title: "Add new Room",
           route: "/customer/meetings/add-room",
           icon: <FaPlus />,
-        },
+        },] ),
+       
         {
           title: "My Bookings",
           route: "/customer/meetings/my-bookings",
