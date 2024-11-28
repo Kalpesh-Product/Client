@@ -45,7 +45,7 @@ const TicketMembers = () => {
       field: "viewDetails",
       headerName: "Actions",
       width: 150,
-      renderCell: (params) => {
+      cellRenderer: (params) => {
         const handleActionChange = (event) => {
           const selectedAction = event.target.value;
 
@@ -235,9 +235,9 @@ const TicketMembers = () => {
         <h2>Today's Tickets</h2>
       </div> */}
 
-      <div className="pt-10  pr-6">
-        <div className="mb-8 flex justify-between">
-          <h1 className="text-3xl font-bold px-6">All Members</h1>
+      <div className="p-4 pb-0">
+        <div className="mb-4 flex justify-between">
+          <h1 className="text-3xl font-bold ">All Members</h1>
           <button
             //   onClick={handleOpenTicket}
             onClick={openModal}
@@ -259,7 +259,7 @@ const TicketMembers = () => {
         />
       </Paper> */}
 
-      <div className="px-6">
+      <div className="p-2 bg-white mx-4">
         <AgTable data={filteredRows} columns={columns} />
       </div>
       {/* Tickets datatable END */}

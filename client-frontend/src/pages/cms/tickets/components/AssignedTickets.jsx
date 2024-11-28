@@ -22,6 +22,20 @@ const AssignedTickets = () => {
       width: 170,
       type: "singleSelect",
       valueOptions: ["High", "Medium", "Low"],
+      cellRenderer: (params) => {
+        const statusColors = {
+          Medium: "text-blue-600 bg-blue-100",
+          High: "text-red-600 bg-red-100",
+          Low: "text-yellow-600 bg-yellow-100",
+        };
+        const statusClass = statusColors[params.value] || "";
+        return (
+          <span
+            className={`px-3 py-1 rounded-full text-sm font-medium ${statusClass}`}>
+            {params.value}
+          </span>
+        );
+      },
     },
     {
       field: "department",
@@ -312,7 +326,7 @@ const AssignedTickets = () => {
         <br />
       </div> */}
 
-      <div className="flex gap-4">
+      <div className="flex gap-4 pt-2">
         <div className="flex gap-4 mb-4">
           <div>
             <FormControl size="small" style={{ minWidth: 220 }}>

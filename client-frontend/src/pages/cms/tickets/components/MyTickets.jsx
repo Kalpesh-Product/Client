@@ -25,14 +25,22 @@ const MyTickets = () => {
       width: 150,
       type: "singleSelect",
       valueOptions: ["High", "Medium", "Low"],
+      cellRenderer: (params) => {
+        const statusColors = {
+          Medium: "text-blue-600 bg-blue-100",
+          High: "text-red-600 bg-red-100",
+          Low: "text-yellow-600 bg-yellow-100",
+        };
+        const statusClass = statusColors[params.value] || "";
+        return (
+          <span
+            className={`px-3 py-1 rounded-full text-sm font-medium ${statusClass}`}>
+            {params.value}
+          </span>
+        );
+      },
     },
-    {
-      field: "status",
-      headerName: "Status",
-      width: 150,
-      type: "singleSelect",
-      valueOptions: ["Pending", "In Process", "Resolved"],
-    },
+
     {
       field: "department",
       headerName: "Department",
@@ -41,6 +49,27 @@ const MyTickets = () => {
       valueOptions: ["IT", "HR", "Tech", "Admin"],
     },
     { field: "requestDate", headerName: "Request Date", width: 150 },
+    {
+      field: "status",
+      headerName: "Status",
+      width: 150,
+      type: "singleSelect",
+      valueOptions: ["Pending", "In Process", "Resolved"],
+      cellRenderer: (params) => {
+        const statusColors = {
+          "In Process": "text-blue-600 bg-blue-100",
+          Pending: "text-red-600 bg-red-100",
+          Resolved: "text-yellow-600 bg-yellow-100",
+        };
+        const statusClass = statusColors[params.value] || "";
+        return (
+          <span
+            className={`px-3 py-1 rounded-full text-sm font-medium ${statusClass}`}>
+            {params.value}
+          </span>
+        );
+      },
+    },
     {
       field: "viewDetails",
       headerName: "Actions",
@@ -293,7 +322,7 @@ const MyTickets = () => {
   // EDIT TICKET DETAILS MODAL END
 
   return (
-    <div>
+    <div className="w-[72vw] md:w-full transition-all duration-200 ease-in-out bg-white p-2">
       {/* <div className="bg-green-500">
         <h2>Today's Tickets</h2>
       </div> */}
