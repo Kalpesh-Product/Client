@@ -14,6 +14,7 @@ import ModuleSidebar from '../components/ModuleSidebar';
 import { alignProperty } from '@mui/material/styles/cssUtils';
 import { NewModal } from '../components/NewModal';
 import AgTable from '../components/AgTable';
+import { Stack, Avatar, TextField, Button } from "@mui/material";
 
 const Teams = () => {
 
@@ -162,13 +163,25 @@ const Teams = () => {
     {/* Left Side: Search, Priority Dropdown, and Date Filter */}
     <div className="flex flex-wrap gap-1">
       {/* Search Field */}
-      <input
+      <FormControl  style={{ minWidth: 220 }}>
+      <TextField
+              variant="outlined"
+              size="small"
+              label="Search"
+              value={searchTerm
+              }
+             
+              onChange={(e) => setSearchTerm(e.target.value)}
+
+      />
+      </FormControl>
+      {/* <input
         type="text"
         placeholder="Search tasks..."
         className="p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
-      />
+      /> */}
 
      
     </div>
@@ -179,9 +192,9 @@ const Teams = () => {
      + Add Team Member
     </button>
   </div>
-        <div className='w-full motion-preset-blur-right-md  max-w-screen-xl mx-auto '>
-        <div className='mt-5 overflow-auto w-full max-w-screen-xl mx-auto  motion-preset-blur-right-md'>
-  <Paper sx={{ height: 400, width: "100%", alignItems:"center" , display:"flex", justifyContent:"center"}}>
+        <div className='mt-5 overflow-auto w-full max-w-screen-xl mx-auto  motion-preset-blur-right-md font-semibold '>
+        {/* <div className='mt-5 overflow-auto w-full max-w-screen-xl mx-auto  motion-preset-blur-right-md'> */}
+  
         <AgTable
           data={filteredRows} // Pass filtered rows
           columns={columns}
@@ -196,8 +209,8 @@ const Teams = () => {
             // Make header bold
     },width: "75vw" }}
         />
-    </Paper>
-</div>
+   
+{/* </div> */}
         </div>
         </div>
 

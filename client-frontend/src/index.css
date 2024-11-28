@@ -63,8 +63,11 @@ body {
   color: #a0a0a0; /* Light text color */
   cursor: not-allowed; /* Show "not allowed" cursor */
 }
-.css-si86to-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input.css-si86to-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input.css-si86to-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input {
-  padding-right: 0px;
+/* .css-si86to-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input.css-si86to-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input.css-si86to-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input  {
+  padding-right: 0px !important;
 
+} */
+.css-si86to-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input.css-si86to-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input.css-si86to-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input {
+  padding-right: 0px !important;
 }
 

@@ -28,7 +28,7 @@ import {
 
   
 
-const AssignTaskForm = ({ title, handleClose ,rows, setAllRows,selectedRow,modalType}) => {
+const AssignTaskForm = ({ title, handleClose ,rows, setAllRows,selectedRow,modalType, EditValue,department,description,Title}) => {
 
   
   const [selectedOptions, setSelectedOptions] = useState([]);
@@ -151,6 +151,7 @@ const AssignTaskForm = ({ title, handleClose ,rows, setAllRows,selectedRow,modal
 
   return (
     <div>
+     
 
         <Box
       sx={{
@@ -486,7 +487,51 @@ const AssignTaskForm = ({ title, handleClose ,rows, setAllRows,selectedRow,modal
 
 
           </>
-        ):
+        ): EditValue ? (<>
+        
+
+        <div className="grid grid-cols-1 gap-4 top-5">
+          {/* Asset Number */}
+          <Grid item xs={12}>
+            <TextField
+            
+              label="Department"
+              value={department}
+              fullWidth
+              
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+             
+              label="Title"
+              value={Title
+              }
+              fullWidth
+             
+            />
+          </Grid>
+          <Grid item xs={12}>
+          <TextField
+              
+             
+              label="description"
+              fullWidth
+              multiline
+              rows={4}
+              value={description}
+             
+            >
+              
+            </TextField>
+            
+          </Grid>
+
+          </div>
+
+
+
+        </>):
 
         location.pathname === "/tasks/teams" ? (
           <>
@@ -533,7 +578,7 @@ const AssignTaskForm = ({ title, handleClose ,rows, setAllRows,selectedRow,modal
           </div>
 
 
-        </>):
+        </>): 
         (<>
          <h2>Row Details</h2>
         {selectedRow && (

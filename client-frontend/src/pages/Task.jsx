@@ -18,6 +18,9 @@ import { useNavigate } from 'react-router-dom';
 import Avatar from "@mui/material/Avatar";
 import Stack from "@mui/material/Stack";
 
+import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+
 
 import AgTable from "../components/AgTable";
 
@@ -337,8 +340,8 @@ const Task = () => {
     <div className="flex min-h-screen">
         
         <div className='w-full p-6 motion-preset-blur-right-md  max-w-screen-xl mx-auto '>
-        <h2 className="text-4xl  ">Tasks</h2>
-        <div className="grid grid-cols-4 gap-4">
+        <h2 className="text-2xl  ">Tasks</h2>
+        <div className="grid grid-cols-4 gap-4 mt-5">
     {/* Total Tasks */}
     <div className="bg-white p-4 shadow-md rounded-lg flex items-center justify-center flex-col cursor-pointer" onClick={navigateProjectList}>
       <h3 className="text-xl font-semibold" >Ongoing Tasks</h3>
@@ -368,13 +371,7 @@ const Task = () => {
     {/* Left Side: Search, Priority Dropdown, and Date Filter */}
    
       {/* Search Field */}
-      {/* <input
-        type="text"
-        placeholder="Search tasks..."
-        className="p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-      /> */}
+     
        <FormControl  style={{ minWidth: 220 }}>
       <TextField
               variant="outlined"
@@ -389,7 +386,7 @@ const Task = () => {
       </FormControl>
 
       {/* Priority Dropdown */}
-      
+
         <FormControl size="small" style={{ minWidth: 220 }}>
           {/* <InputLabel>Filter by Asset Name</InputLabel> */}
           <TextField label="Priority" variant="outlined" select size="small" onChange={(e) => setPriorityFilter(e.target.value)} >
@@ -400,24 +397,20 @@ const Task = () => {
           </TextField>
         </FormControl>
 
-
-      
-
       {/* Date Filter */}
-      <TextField
-              label="Date"
-              name="date"
-              type="date"
-              variant="outlined"
-              size="small"
-              InputLabelProps={{
-                shrink: true,
-              }}
-            />
-      {/* <input
-        type="date"
-        className="p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
-      /> */}
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <DatePicker
+                label="Date"
+                
+                slotProps={{ textField: { size: "small" } }}
+                
+                renderInput={(params) => (
+                  <TextField {...params} className="w-full md:w-1/4" />
+                )}
+              />
+             
+            </LocalizationProvider>
+      
 
       {/* Department Dropdown */}
 
@@ -430,22 +423,7 @@ const Task = () => {
             <MenuItem value="Medium">TECH</MenuItem>
             <MenuItem value="Medium">ADMIN</MenuItem>
           </TextField>
-        </FormControl>
-      {/* <select
-        className="p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
-        value={departmentFilter}
-        onChange={(e) => setDepartmentFilter(e.target.value)}
-      >
-         
-
-        <option value="">All Departments</option>
-        <option value="IT">IT</option>
-        <option value="HR">HR</option>
-        <option value="TECH">TECH</option>
-        <option value="ADMIN">ADMIN</option>
-        
-      </select> */}
-      
+      </FormControl>
     </div>
 
   
@@ -467,9 +445,7 @@ const Task = () => {
         
         {modalOpen &&
 (<NewModal open={modalOpen} onClose={closeModal}>
-      
-  
-      <AssignTaskForm title="Add Task" handleClose={closeModal} rows={allRows} setAllRows={setAllRows} selectedRow={selectedRow} /> 
+    <AssignTaskForm title="Add Task" handleClose={closeModal} rows={allRows} setAllRows={setAllRows} selectedRow={selectedRow} /> 
   </NewModal>)}
 
 

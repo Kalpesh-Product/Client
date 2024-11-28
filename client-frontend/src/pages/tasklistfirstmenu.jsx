@@ -12,6 +12,10 @@ import Select from "@mui/material/Select";
 import { NewModal } from '../components/NewModal';
 import { useNavigate } from 'react-router-dom';
 import { Stack,Avatar,TextField } from '@mui/material';
+import AgTable from '../components/AgTable';
+
+import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
 const Tasklistfirstmenu = () => {
 
@@ -20,11 +24,11 @@ const Tasklistfirstmenu = () => {
         { field: "ticketTitle", headerName: "Projects", width: 200 },
         { field: "Assignes", headerName: "Assignes", width: 200,
             type: "singleSelect",
-            renderCell: (params) => (
+            cellRenderer: (params) => (
                 <Stack spacing={-1} direction="row"  sx={{
                     marginTop:"5%" // Ensures it takes the full width of the cell
                   }}>
-                  {params.row.Assignes.map((assignee, index) => (
+                  {params.data.Assignes.map((assignee, index) => (
                     <Avatar
                       key={index}
                       src={assignee}
@@ -50,7 +54,7 @@ const Tasklistfirstmenu = () => {
 
           //   return "";
           // },
-          renderCell: (params) => {
+          cellRenderer: (params) => {
             const statusColors = {
               High: "text-red-600 bg-red-100",
               Medium: "text-blue-600 bg-blue-100",
@@ -81,7 +85,7 @@ const Tasklistfirstmenu = () => {
             field: "viewDetails",
             headerName: "Actions",
             width: 150,
-            renderCell: (params) => {
+            cellRenderer: (params) => {
               const handleActionChange = (event) => {
                 const selectedAction = event.target.value;
       
@@ -319,84 +323,68 @@ const Tasklistfirstmenu = () => {
     <div className="flex min-h-screen">
         
         <div className='w-full p-6 motion-preset-blur-right-md  max-w-screen-xl mx-auto '>
-        <h2 className="text-4xl  ">Tasks</h2>
+        <h2 className="text-2xl  ">TasksList</h2>
         {/* <div className="grid grid-cols-4 gap-4">
    
-    <div className="bg-white p-4 shadow-md rounded-lg flex items-center justify-center flex-col cursor-pointer" onClick={navigateProjectList}>
-      <h3 className="text-xl font-semibold" >Ongoing Tasks</h3>
-      <div className='items-center justify-center mt-5 font-bold text-cyan-500 text-3xl'>20</div>
-    </div>
-
     
-    <div className="bg-white p-4 shadow-md rounded-lg flex items-center justify-center flex-col cursor-pointer" onClick={navigateProjectList}>
-      <h3 className="text-xl font-semibold" >Upcoming Tasks</h3>
-      <div className='items-center justify-center mt-5 font-bold text-purple-500 text-3xl'>10</div>
-    </div>
-
-    
-    <div className="bg-white p-4 shadow-md rounded-lg flex items-center justify-center flex-col cursor-pointer" onClick={navigateProjectList}>
-      <h3 className="text-xl font-semibold" >Pending</h3>
-      <div className='items-center justify-center mt-5 font-bold text-orange-500 text-3xl'>15</div>
-    </div>
-
-    
-    <div className="bg-white p-4 shadow-md rounded-lg flex items-center justify-center flex-col cursor-pointer" onClick={navigateProjectList}>
-      <h3 className="text-xl font-semibold">Completed Tasks</h3>
-      <div className='items-center justify-center mt-5 font-bold text-green-500 text-3xl'>10</div>
-    </div>
   </div> */}
 
-  <div className="flex flex-wrap items-center justify-between mt-10">
+  <div className="flex flex-wrap items-center justify-between mt-10 gap-4">
     {/* Left Side: Search, Priority Dropdown, and Date Filter */}
-    <div className="flex flex-wrap gap-4">
+    
       {/* Search Field */}
+      <FormControl  style={{ minWidth: 220 }}>
       <TextField
-              
+              variant="outlined"
+              size="small"
               label="Search"
               value={searchTerm
               }
-              
+             
               onChange={(e) => setSearchTerm(e.target.value)}
-              sx={{backgroundColor:"white"}}
-            />
-    
-     
+
+      />
+      </FormControl>
 
       {/* Priority Dropdown */}
-      
-      <select
-        className="p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
-        value={priorityFilter}
-        onChange={(e) => setPriorityFilter(e.target.value)}
-      >
-        <option value="">All Priorities</option>
-        <option value="High">High</option>
-        <option value="Medium">Medium</option>
-        <option value="Low">Low</option>
-      </select>
 
+        <FormControl size="small" style={{ minWidth: 220 }}>
+          {/* <InputLabel>Filter by Asset Name</InputLabel> */}
+          <TextField label="Priority" variant="outlined" select size="small" onChange={(e) => setPriorityFilter(e.target.value)} >
+            <MenuItem value="">All</MenuItem>
+            <MenuItem value="High">High</MenuItem>
+            <MenuItem value="Low">Low</MenuItem>
+            <MenuItem value="Medium">Medium</MenuItem>
+          </TextField>
+        </FormControl>
 
       {/* Date Filter */}
-      <input
-        type="date"
-        className="p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
-      />
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <DatePicker
+                label="Date"
+                
+                slotProps={{ textField: { size: "small" } }}
+                
+                renderInput={(params) => (
+                  <TextField {...params} className="w-full md:w-1/4" />
+                )}
+              />
+             
+            </LocalizationProvider>
+      
 
       {/* Department Dropdown */}
-      <select
-        className="p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
-        value={departmentFilter}
-        onChange={(e) => setDepartmentFilter(e.target.value)}
-      >
-         
 
-        <option value="">All Departments</option>
-        <option value="IT">IT</option>
-        <option value="HR">HR</option>
-        <option value="TECH">TECH</option>
-        <option value="ADMIN">ADMIN</option>
-        
-      </select>
+      <FormControl size="small" style={{ minWidth: 220 }}>
+          {/* <InputLabel>Filter by Asset Name</InputLabel> */}
+          <TextField label="Department" variant="outlined" select size="small" onChange={(e) => setDepartmentFilter(e.target.value)}>
+            <MenuItem value="">All Departments</MenuItem>
+            <MenuItem value="High">IT</MenuItem>
+            <MenuItem value="Low">HR</MenuItem>
+            <MenuItem value="Medium">TECH</MenuItem>
+            <MenuItem value="Medium">ADMIN</MenuItem>
+          </TextField>
+      </FormControl>
       
     </div>
 
@@ -405,13 +393,13 @@ const Tasklistfirstmenu = () => {
     onClick={assignTaskbtnClick}>
      + Assign Task
     </button> */}
-  </div>
+ 
 
   {/* Tabular section */}
   <div className='mt-5 overflow-auto w-full max-w-screen-xl mx-auto  motion-preset-blur-right-md'>
-  <Paper sx={{ height: 400, width: "100%", alignItems:"center" , display:"flex", justifyContent:"center"}}>
-        <DataGrid
-          rows={filteredTasks} // Pass filtered rows
+  
+        <AgTable
+          data={filteredTasks} // Pass filtered rows
           columns={columns}
           initialState={{ pagination: { paginationModel } }}
           pageSizeOptions={[5, 10]}
@@ -435,8 +423,7 @@ const Tasklistfirstmenu = () => {
             },
           }}
         />
-    </Paper>
-
+    
 </div>
 
 
