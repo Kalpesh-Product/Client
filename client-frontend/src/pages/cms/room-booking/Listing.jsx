@@ -12,6 +12,7 @@ import { toast } from "sonner";
 import { motion } from "framer-motion";
 import { IoMdClose } from "react-icons/io";
 import { NewModal } from "../../../components/NewModal";
+import { Checkbox, FormControlLabel } from "@mui/material";
 
 export default function Listing() {
   const [openBookingModal, setOpenBookingModal] = useState(false);
@@ -20,6 +21,14 @@ export default function Listing() {
   const [currentTime, setCurrentTime] = useState("");
   const [timePlus30, setTimePlus30] = useState("");
   const [currentDate, setCurrentDate] = useState("");
+  const [filters, setFilters] = useState({
+    active: true,
+    new: true,
+    ongoing: true,
+    done: true,
+    cancelled: true,
+  });
+
   const [events, setEvents] = useState([
     {
       id: "2a07c1a4-27f5-4f81-8af7-4c8ec2a35d7b",
@@ -277,8 +286,31 @@ export default function Listing() {
   }, []);
 
   return (
-    <section className="h-screen overflow-y-auto top-0 p-6">
-      <h1 className="font-bold text-4xl mt-4 mb-3 ml-2">Booking Calendar</h1>
+    <section className="h-screen overflow-y-auto top-0 p-4">
+      <div className="flex justify-between items-center">
+        <h1 className="font-bold text-2xl mb-2">Booking Calendar</h1>
+        <div className="flex gap-4 mb-4">
+          {Object.keys(filters).map((status) => (
+            <FormControlLabel
+              key={status}
+              control={
+                <Checkbox
+                  checked={filters[status]}
+                  onChange={(e) =>
+                    setFilters((prev) => ({
+                      ...prev,
+                      [status]: e.target.checked,
+                    }))
+                  }
+                  color="primary"
+                />
+              }
+              label={status.charAt(0).toUpperCase() + status.slice(1)}
+            />
+          ))}
+        </div>
+      </div>
+
       <div className="w-full overflow-x-auto">
         <FullCalendar
           displayEventTime={false}
@@ -315,11 +347,16 @@ export default function Listing() {
             return "";
           }}
           eventDisplay="block"
-          events={events.map((event) => ({
-            ...event,
-            backgroundColor:
-              event.status === "cancelled" ? "#E71D36" : event.backgroundColor,
-          }))} // Apply red color for cancelled events
+          events={events
+            .filter((event) => filters[event.status])
+            .map((event) => ({
+              ...event,
+              backgroundColor:
+                event.status === "cancelled"
+                  ? "#E71D36"
+                  : event.backgroundColor,
+            }))}
+          // Apply red color for cancelled events
           timeZone="local"
         />
       </div>

@@ -56,7 +56,7 @@ const Calender = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isEditModal, setIsEditModal] = useState(false);
   const [selectedNames, setSelectedNames] = useState([]);
-  const [eventFilter, setEventFilter] = useState([]);
+  const [eventFilter, setEventFilter] = useState(["holiday", "meeting", "event"]);
 
   const names = extractNames(data);
 
@@ -372,7 +372,7 @@ const Calender = () => {
       {isEditModal && (
         <NewModal open={isEditModal} onClose={() => setIsEditModal(false)}>
           <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <div className="flex align-middle justify-center flex-col gap-10 w-[600px]">
+            <div className="flex align-middle justify-center flex-col gap-2 w-[600px]">
               <div className="flex justify-between items-center w-full mb-4">
                 <Typography variant="h5" fontWeight="bold">
                   Edit Event
@@ -406,16 +406,12 @@ const Calender = () => {
                 sx={{ mb: 2 }}
               />
 
-              <TextField
+              <DatePicker
                 label="Date"
-                type="date"
-                value={selectedEvent?.date || ""}
-                fullWidth
-                variant="outlined"
-                InputLabelProps={{
-                  shrink: true,
-                }}
-                sx={{ mb: 2 }}
+                value={selectedEvent?.date || null}
+                renderInput={(params) => (
+                  <TextField {...params} fullWidth sx={{ mb: 2 }} />
+                )}
               />
 
               <Button
