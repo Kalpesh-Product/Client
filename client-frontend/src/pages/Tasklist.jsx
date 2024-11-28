@@ -14,6 +14,11 @@ const Tasklist = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [modalOpen, SetModalOpen] = useState(false);
   const [btnclicked, setbtnclicked] = useState("");
+  const [Editvalue,SetEditValue] = useState(false);
+  const [title,SetTitle] = useState("");
+  const [description,SetDescription] = useState("");
+  const [department,SetDepartment] = useState("");
+  
 
   const navigate = useNavigate();
 
@@ -159,10 +164,19 @@ const Tasklist = () => {
     ],
   };
 
+  const setEditModalOpen =(value,title,description,department)=>{
+    SetModalOpen(true);
+    SetEditValue(true);
+    SetDepartment(department);
+    SetDescription(description);
+    SetTitle(title);
+    console.log("Opening MOdal of Edit");
+  }
+
   const TaskCard = ({ title, description, department, Assignes = [] }) => (
     <div
       className="bg-gray-100 shadow-md bg-white rounded-lg p-3 mb-4"
-      onClick={() => handleClick(title)}
+      
     >
       <div className="flex justify-between gap-5">
         <div>
@@ -208,8 +222,8 @@ const Tasklist = () => {
                   <circle cx={12} cy={19} r={1} />
                 </svg>
               </MenuItem>
-              <MenuItem value="view">View Details</MenuItem>
-              <MenuItem value="edit">Edit</MenuItem>
+              <MenuItem value="view" onClick={(value) => handleClick(title)}>View Details</MenuItem>
+              <MenuItem value="edit" onClick={(value,titlee,descriptions,department)=>setEditModalOpen("Edit",title,description,department)}>Edit</MenuItem>
               <MenuItem value="delete">Delete</MenuItem>
             </Select>
           </FormControl>
@@ -244,6 +258,8 @@ const Tasklist = () => {
       </div>
     </div>
   );
+
+ 
 
   const Column = ({ title, tasks, titleColor }) => (
     <div className="w-full lg:w-1/4 px-3">
@@ -282,7 +298,7 @@ const Tasklist = () => {
               value={searchTerm}
               fullWidth
               onChange={(e) => setSearchTerm(e.target.value)}
-              sx={{ backgroundColor: "white" }}
+             
               size="small"
             />
           </div>
@@ -333,7 +349,11 @@ const Tasklist = () => {
       {modalOpen && (
         <NewModal open={modalOpen} onClose={closeModal}>
           <AssignTaskForm
-            title={btnclicked === "Add Task" ? "Add Task" : "Add Project"}
+            department={department}
+            description={description}
+            Title={title}
+            EditValue={Editvalue}
+            title={btnclicked === "Add Task" ? "Add Task" : Editvalue ? "Edit Field" : "Add Project"}
             handleClose={closeModal}
             modalType={btnclicked}
           />

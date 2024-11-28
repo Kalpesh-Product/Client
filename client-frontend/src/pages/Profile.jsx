@@ -496,25 +496,7 @@ const Profile = () => {
         </Modal>
       )}
 
-      {/* {isModelOpen && (
-        <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center">
-          <div className="bg-white p-6 rounded-lg shadow-lg w-80">
-            <h3 className="text-xl font-semibold mb-4">Upload Profile Image</h3>
-            <input
-              type="file"
-              accept="image/*"
-              onChange={handleImageChange}
-              className="block w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer focus:outline-none"
-            />
-            <button
-              onClick={() => setIsModalOpen(false)}
-              className="mt-4 w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600"
-            >
-              Close
-            </button>
-          </div>
-        </div>
-      )} */}
+      
 
       {/* modal for service access */}
       {IsAccessModalOpen && (

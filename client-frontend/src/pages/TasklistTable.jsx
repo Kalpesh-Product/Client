@@ -119,7 +119,7 @@ const TasklistTable = () => {
                   <MenuItem value="view" onClick={()=>handleOpenModal(params.row)}>
                     View Details
                   </MenuItem>
-                  <MenuItem value="edit" >
+                  <MenuItem value="edit"  >
                     Edit
                   </MenuItem>
                   <MenuItem value="delete" >
@@ -258,14 +258,14 @@ const TasklistTable = () => {
          <div className='w-full p-6 motion-preset-blur-right-md  max-w-screen-xl mx-auto '>
         <div className='flex flex-row justify-between'>
          <h2 className="text-2xl  ">{taskTitle}</h2>
-         <button className="px-4 py-2 bg-blue-500 text-white font-semibold rounded-md shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400"
+         <button className="px-4 py-2 bg-[#0db4ea] text-white font-semibold rounded-md shadow-md focus:outline-none focus:ring-2 focus:ring-blue-400"
          onClick={assignTaskbtnClick}
     >
      + Assign Task
     </button>
     </div>
          <div className='mt-5 overflow-auto w-full max-w-screen-xl mx-auto  motion-preset-blur-right-md'>
-  <Paper sx={{ height: 400, width: "100%", alignItems:"center" , display:"flex", justifyContent:"center"}}>
+ 
         <AgTable
           data={filteredTasks} // Pass filtered rows
           columns={columns}
@@ -279,8 +279,7 @@ const TasklistTable = () => {
             // Make header bold
     },width: "75vw" }}
         />
-    </Paper>
-
+   
 </div>
 
         </div>
