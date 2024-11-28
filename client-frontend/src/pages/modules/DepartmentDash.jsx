@@ -48,8 +48,6 @@ import {
   NewAssetsAdded,
   QuantityRemainingWidget,
 } from "../../Widgets/CMS/customerServiceWidgets";
-import { useDispatch, useSelector } from "react-redux";
-import { openModal, closeModal } from "../../redux/features/modalSlice";
 import AddAssetForm from "../cms/asset/AddAssetForm";
 import { NewModal } from "../../components/NewModal";
 import MyAssets from "../cms/asset/MyAssets";
@@ -92,7 +90,6 @@ const DepartmentDash = () => {
     setUser(storedUser);
   }, []);
 
-  const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
   const [openTicket, setOpenTicket] = useState(false);
   const location = useLocation();

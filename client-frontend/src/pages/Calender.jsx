@@ -57,7 +57,6 @@ const Calender = () => {
   const [isEditModal, setIsEditModal] = useState(false);
   const [selectedNames, setSelectedNames] = useState([]);
   const [eventFilter, setEventFilter] = useState([]);
-  
 
   const names = extractNames(data);
 
@@ -254,10 +253,21 @@ const Calender = () => {
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             {selectedEvent && isEditModal ? (
               <>
-                <div className="flex align-middle justify-center flex-col gap-10">
-                  <Typography variant="h5" align="center" gutterBottom>
-                    Edit Event
-                  </Typography>
+                <div className="flex align-middle justify-center flex-col gap-10 w-[600px]">
+                  <div className="flex justify-between items-center w-full mb-4">
+                    <Typography variant="h5" fontWeight="bold">
+                      Edit Event
+                    </Typography>
+                    <motion.button
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.9 }}
+                      type="button"
+                      onClick={() => setShowModal(false)}
+                      className=" p-2 bg-white text-[red] border border-red-200 hover:border-red-400 text-2xl rounded-md"
+                    >
+                      <IoMdClose />
+                    </motion.button>
+                  </div>
 
                   <TextField
                     label="Event Title"
@@ -289,27 +299,15 @@ const Calender = () => {
                     sx={{ mb: 2 }}
                   />
 
-                  <div className="col-span-2 flex gap-4 mt-4">
-                    <motion.button
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.9 }}
-                      className="w-full py-2 px-4 bg-blue-600 text-white rounded-lg"
-                      onClick={handleSaveEvent}
-                    >
-                      Save Changes
-                    </motion.button>
-                    <motion.button
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.9 }}
-                      className="w-full py-2 px-4 bg-red-600 text-white rounded-lg"
-                      onClick={() => {
-                        setShowModal(false);
-                        setIsEditModal(false);
-                      }}
-                    >
-                      Cancel
-                    </motion.button>
-                  </div>
+                  <Button
+                    className="w-full"
+                    onClick={handleSaveEvent}
+                    type="submit"
+                    variant="contained"
+                    color="primary"
+                  >
+                   Update Event
+                  </Button>
                 </div>
               </>
             ) : (

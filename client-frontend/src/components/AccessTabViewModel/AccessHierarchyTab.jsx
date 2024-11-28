@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { toast } from "sonner";
-import { useDispatch } from "react-redux";
-import { closeModal } from "../../redux/features/modalSlice";
 import {
   Accordion,
   AccordionSummary,
@@ -15,7 +13,6 @@ import {
 import { MdOutlineExpandMore } from "react-icons/md";
 
 const AccessHierarchyTab = () => {
-  const dispatch = useDispatch();
   const [checkedItems, setCheckedItems] = useState({});
   const [userData, setUserData] = useState(null);
   const location = useLocation();
@@ -209,7 +206,6 @@ const AccessHierarchyTab = () => {
   };
 
   const handleSaveAccess = () => {
-    dispatch(closeModal());
     toast.success("Access updated successfully");
   };
 

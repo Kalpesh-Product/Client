@@ -1,15 +1,12 @@
 import React, { useState } from "react";
 import TextField from "@mui/material/TextField";
 import { motion } from "framer-motion";
-import { useDispatch } from "react-redux";
-import { closeModal } from "../redux/features/modalSlice";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { toast } from "sonner";
 import { IoMdClose, IoMdCloseCircleOutline } from "react-icons/io";
 
-export default function DepartmentForm({ formTitle }) {
-  const dispatch = useDispatch();
+export default function DepartmentForm({ formTitle, onClose }) {
   const [department, setDepartment] = useState({
     name: "",
     description: "",
@@ -25,7 +22,7 @@ export default function DepartmentForm({ formTitle }) {
       return response.data;
     },
     onSuccess: function () {
-      dispatch(closeModal());
+      onClose();
       toast.success("Successfully created Department");
     },
     onError: function (err) {
@@ -51,7 +48,8 @@ export default function DepartmentForm({ formTitle }) {
   return (
     <form
       onSubmit={handleSubmit}
-      className="p-0 w-full max-w-md sm:max-w-lg mx-auto bg-white rounded">
+      className="p-0 w-full max-w-md sm:max-w-lg mx-auto bg-white rounded"
+    >
       <div className="flex justify-between mb-5">
         <h1 className="text-xl text-center my-2 font-bold w-full">
           {formTitle}
@@ -60,8 +58,9 @@ export default function DepartmentForm({ formTitle }) {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.9 }}
           type="button"
-          onClick={() => dispatch(closeModal())}
-          className=" p-2 bg-white text-[red] border border-red-200 hover:border-red-400 text-2xl rounded-md">
+          onClick={onClose}
+          className=" p-2 bg-white text-[red] border border-red-200 hover:border-red-400 text-2xl rounded-md"
+        >
           <IoMdClose />
         </motion.button>
       </div>
@@ -97,7 +96,8 @@ export default function DepartmentForm({ formTitle }) {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.9 }}
             type="submit"
-            className="w-full py-2 px-4 wono-blue-dark hover:bg-[#3cbce7] text-white rounded mt-4">
+            className="w-full py-2 px-4 wono-blue-dark hover:bg-[#3cbce7] text-white rounded mt-4"
+          >
             Submit
           </motion.button>
         </div>
