@@ -271,15 +271,14 @@ const ModuleSidebar = ({ mainSideBar }) => {
   ];
   const tasks = [
     {
-      title: "Tasklist",
-      route: "/tasks/tasklistfirstmenu",
-      icon: <FaTasks />,
-    },
-
-    {
       title: "Projects",
       route: "/tasks/tasklist",
       icon: <FaProjectDiagram />,
+    },
+    {
+      title: "Tasklist",
+      route: "/tasks/tasklistfirstmenu",
+      icon: <FaTasks />,
     },
     {
       title: "Teams",
