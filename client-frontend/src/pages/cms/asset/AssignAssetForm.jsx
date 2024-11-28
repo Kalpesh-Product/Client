@@ -15,6 +15,9 @@ import { IoMdClose } from "react-icons/io";
 import { toast } from "sonner";
 import axios from "axios";
 import userData from "../../../dummyData/dummyData.json";
+import { LocalizationProvider, TimePicker } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import dayjs from "dayjs";
 
 const departments = ["HR", "Tech", "Sales", "Marketing"];
 const categories = ["Laptop", "Monitor", "Headphones", "Keyboard", "Mice"];
@@ -27,8 +30,10 @@ const models = [
 ];
 
 export default function AssignAssetForm({ handleCloseModal, selectedAsset }) {
-
-  const assignmentTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  const assignmentTime = new Date().toLocaleTimeString([], {
+    hour: "2-digit",
+    minute: "2-digit",
+  });
 
   const [formData, setFormData] = useState({
     department: "",
@@ -85,7 +90,7 @@ export default function AssignAssetForm({ handleCloseModal, selectedAsset }) {
         IT: updatedITArray,
       });
 
-      assetUpdate()
+      assetUpdate();
 
       handleCloseModal();
       toast.success(`Asset assigned to ${formData.name}`);
@@ -285,7 +290,7 @@ export default function AssignAssetForm({ handleCloseModal, selectedAsset }) {
             />
           </Grid>
           <Grid item xs={12} sm={6}>
-            <TextField
+            {/* <TextField
               label="Assignment Time"
               name="assignment time"
               value={formData.assignmentTime}
@@ -293,7 +298,21 @@ export default function AssignAssetForm({ handleCloseModal, selectedAsset }) {
               disabled
               fullWidth
               required
+            /> */}
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <TimePicker
+              label="Assignment Time"
+              name="assignment time"
+              value={dayjs()}
+              onChange={handleAssetChange}
+              disabled
+              fullWidth
+              required
+              renderInput={(params) => (
+                <TextField {...params} className="w-full md:w-1/4" />
+              )}
             />
+            </LocalizationProvider>
           </Grid>
         </Grid>
 
