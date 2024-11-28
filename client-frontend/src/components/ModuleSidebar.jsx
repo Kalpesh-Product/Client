@@ -105,13 +105,13 @@ const ModuleSidebar = ({ mainSideBar }) => {
       subMenus: [
         ...(user.role === "Admin" || user.role === "Master Admin" || user.role === "Super Admin" ? [
           {
-            title: "Manage asset",
+            title: "Manage Asset",
             route: "/customer/asset/manage",
             icon: <MdOutlineManageAccounts />,
           }
         ] :[]),
         {
-          title: "My assets",
+          title: "My Assets",
           route: "/customer/asset/my-assets",
           icon: <MdOutlineManageAccounts />,
         },

@@ -64,7 +64,7 @@ const MyAssets = () => {
 
   return (
     <div className="p-6">
-      <h1 className="text-3xl font-semibold mb-4">My Assets</h1>
+      <h1 className="text-2xl font-semibold mb-4">My Assets</h1>
       <AgTable data={tableData} columns={columns} />
     </div>
   );
