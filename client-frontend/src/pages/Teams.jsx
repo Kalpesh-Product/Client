@@ -158,41 +158,34 @@ const Teams = () => {
         <div className='w-full p-6 motion-preset-blur-right-md  max-w-screen-xl mx-auto '>
         {/* <h2 className="text-2xl  ">Team Members</h2> */}
         {/* <div className="flex flex-wrap items-center justify-between "> */}
-        <h2 className="text-2xl  ">Team Members</h2>
-        <div className="flex flex-wrap items-center justify-between mt-10">
+        <h2 className="text-2xl mb-4">Team Members</h2>
+
+        <div className='bg-white p-2'>
+        <div className="flex flex-wrap items-center justify-between mt-4 ">
     {/* Left Side: Search, Priority Dropdown, and Date Filter */}
-    <div className="flex flex-wrap gap-1">
+   
+    
       {/* Search Field */}
+      
       <FormControl  style={{ minWidth: 220 }}>
       <TextField
               variant="outlined"
               size="small"
-              label="Search"
+              label="Search Team Member"
               value={searchTerm
-              }
-             
+              }  
               onChange={(e) => setSearchTerm(e.target.value)}
-
       />
       </FormControl>
-      {/* <input
-        type="text"
-        placeholder="Search tasks..."
-        className="p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-      /> */}
-
-     
-    </div>
-
     {/* Right Side: Assign Task Button */}
     <button className="px-4 py-2 bg-[#0db4ea] text-white font-semibold rounded-md shadow-md focus:outline-none focus:ring-2 focus:ring-blue-400"
      onClick={addTeamMembersbtn}>
      + Add Team Member
     </button>
-  </div>
-        <div className='mt-5 overflow-auto w-full max-w-screen-xl mx-auto  motion-preset-blur-right-md font-semibold '>
+    
+    </div>
+  
+        <div className='mt-5 overflow-auto w-full max-w-screen-xl mx-auto  motion-preset-blur-right-md '>
         {/* <div className='mt-5 overflow-auto w-full max-w-screen-xl mx-auto  motion-preset-blur-right-md'> */}
   
         <AgTable
@@ -200,8 +193,6 @@ const Teams = () => {
           columns={columns}
           initialState={{ pagination: { paginationModel } }}
           pageSizeOptions={[5, 10]}
-          
-          
           sx={{ "& .MuiDataGrid-columnHeaders": {
       backgroundColor: "#fff", // Optional, background for the header
       color: "black",          // Text color
@@ -212,6 +203,9 @@ const Teams = () => {
    
 {/* </div> */}
         </div>
+        
+        </div>
+        
         </div>
 
         {modalOpen &&

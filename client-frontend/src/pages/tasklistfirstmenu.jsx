@@ -326,13 +326,14 @@ const Tasklistfirstmenu = () => {
     <div className="flex min-h-screen">
         
         <div className='w-full p-6 motion-preset-blur-right-md  max-w-screen-xl mx-auto '>
-        <h2 className="text-2xl  ">TasksList</h2>
+        <h2 className="text-2xl mb-4 ">TasksList</h2>
         {/* <div className="grid grid-cols-4 gap-4">
    
     
   </div> */}
 
-  <div className="flex flex-wrap items-center justify-between mt-10 gap-4">
+<div className='bg-white p-2'>
+  <div className="flex flex-wrap items-center justify-between  gap-4 mt-4">
     {/* Left Side: Search, Priority Dropdown, and Date Filter */}
     
       {/* Search Field */}
@@ -340,10 +341,8 @@ const Tasklistfirstmenu = () => {
       <TextField
               variant="outlined"
               size="small"
-              label="Search"
-              value={searchTerm
-              }
-             
+              label="Search Projects"
+              value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
 
       />
@@ -428,7 +427,7 @@ const Tasklistfirstmenu = () => {
         />
     
 </div>
-
+</div>
 
         </div>
         

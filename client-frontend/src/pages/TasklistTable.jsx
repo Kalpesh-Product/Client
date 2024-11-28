@@ -21,6 +21,8 @@ import AgTable from '../components/AgTable';
 const TasklistTable = () => {
     const location = useLocation();
   const { taskTitle } = location.state || {};
+  const [modalType, SetModalType] = useState("");
+  const [projectTitle,SetProjectTitle] = useState("");
 
 
     
@@ -245,12 +247,16 @@ const TasklistTable = () => {
       const handleOpenModal = (row)=>{
         SetselectedRow(row);
         SetModalOpen(true);
+
       }
 
       const closeModal = () => SetModalOpen(false);
 
-      const assignTaskbtnClick =()=>{
+      const assignTaskbtnClick =(value,taskTitle)=>{
         SetModalOpen(true);
+        SetModalType(value);
+        SetProjectTitle(taskTitle);
+
       }
   return (
     <div className='flex min-h-screen'>
@@ -259,7 +265,7 @@ const TasklistTable = () => {
         <div className='flex flex-row justify-between'>
          <h2 className="text-2xl  ">{taskTitle}</h2>
          <button className="px-4 py-2 bg-[#0db4ea] text-white font-semibold rounded-md shadow-md focus:outline-none focus:ring-2 focus:ring-blue-400"
-         onClick={assignTaskbtnClick}
+         onClick={()=>assignTaskbtnClick("task2",taskTitle)}
     >
      + Assign Task
     </button>
@@ -287,7 +293,7 @@ const TasklistTable = () => {
 (<NewModal open={modalOpen} onClose={closeModal}>
       
   
-      <AssignTaskForm title="Add Task" handleClose={closeModal} rows={allRows} setAllRows={setAllRows} selectedRow={selectedRow} /> 
+      <AssignTaskForm title="Add Task" handleClose={closeModal} rows={allRows} setAllRows={setAllRows} selectedRow={selectedRow} modalType={modalType} projectTitle={projectTitle} /> 
   </NewModal>)}
         
     </div>
