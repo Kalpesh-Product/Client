@@ -103,7 +103,7 @@ const ModuleSidebar = ({ mainSideBar }) => {
       route: "/customer/kpi",
       icon: <AiOutlineProduct />,
       subMenus: [
-        ...(user.role === "Admin" || user.role === "Master Admin" ? [
+        ...(user.role === "Admin" || user.role === "Master Admin" || user.role === "Super Admin" ? [
           {
             title: "Manage asset",
             route: "/customer/asset/manage",
