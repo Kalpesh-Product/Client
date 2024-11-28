@@ -63,6 +63,9 @@ body {
 .fc .fc-toolbar {
   background-color: white;
 }
+.fc .fc-button-primary::first-letter {
+  text-transform: uppercase;
+}
 .fc .fc-button-primary:disabled {
   background-color: rgba(176, 235, 255, 0.36);
   color: gray;
