@@ -19,7 +19,7 @@ const MyTicketsTabs = () => {
 
   return (
     <div>
-      <div className=" w-full p-6 text-lg">
+      <div className=" w-full p-4 pb-0 text-lg border-b-0">
         {/* <h2 className="text-2xl font-bold">My Tickets</h2> */}
         <h2 className="text-3xl  font-bold">My Tickets</h2>
       </div>
@@ -28,15 +28,18 @@ const MyTicketsTabs = () => {
         {/* Tabs Material UI Start*/}
         <TabContext value={value} sx={{ backgroundColor: "red" }}>
           <Box
-           >
-           
-              {/* <Tab
+            sx={{
+              borderBottom: 0,
+              borderColor: "divider",
+              width: "100%",
+            }}>
+            {/* <Tab
                 label="My Tickets"
                 value="1"
                 className="wono-blue"
                 sx={{ textTransform: "capitalize" }}
               /> */}
-              {/* <Tab
+            {/* <Tab
                 label="External Tickets"
                 value="2"
                 sx={{ textTransform: "capitalize" }}
@@ -51,9 +54,8 @@ const MyTicketsTabs = () => {
                 value="4"
                 sx={{ textTransform: "capitalize" }}
               /> */}
-        
           </Box>
-          <TabPanel value="1">
+          <TabPanel value="1" sx={{ padding: "1rem" }}>
             {/* <div className="flex gap-4">
               <div>My Tickets</div>
             </div>

@@ -132,8 +132,7 @@ const ManageAsset = () => {
                 cursor: "pointer",
                 height: "100%",
               }}
-              onClick={() => handleViewDetails(params.data)}
-            >
+              onClick={() => handleViewDetails(params.data)}>
               Details
             </button>
             <button
@@ -325,7 +324,7 @@ const ManageAsset = () => {
         );
   return (
     <div className="p-4">
-      <h1 className="text-2xl font-semibold mb-4  motion-preset-expand">
+      <h1 className="text-2xl font-semibold mb-4 motion-preset-expand">
         Manage Assets
       </h1>
       <div className="rounded-md">
@@ -343,8 +342,7 @@ const ManageAsset = () => {
               borderTopRightRadius: "10px",
               fontFamily: "Popins-Semibold",
               padding: "0.5rem",
-            }}
-          >
+            }}>
             <Tab
               sx={{ borderRight: "1px solid #e4e4e4" }}
               label="Add/Assign Assets"
@@ -382,8 +380,7 @@ const ManageAsset = () => {
                       size="small"
                       value={selectedAssetName}
                       onChange={(e) => setSelectedAssetName(e.target.value)}
-                      sx={{ fontSize: "0.5rem" }}
-                    >
+                      sx={{ fontSize: "0.5rem" }}>
                       <MenuItem value="">All</MenuItem>
                       {[
                         ...new Set(assetsData.map((asset) => asset.category)),
@@ -407,8 +404,7 @@ const ManageAsset = () => {
                           value={selectedDepartment}
                           onChange={(e) =>
                             setSelectedDepartment(e.target.value)
-                          }
-                        >
+                          }>
                           <MenuItem value="">All</MenuItem>
                           <MenuItem value="IT">IT</MenuItem>
                           <MenuItem value="Maintainance">Maintainance</MenuItem>
@@ -420,8 +416,7 @@ const ManageAsset = () => {
 
                 <button
                   onClick={() => handleOpenModal("add")}
-                  className="wono-blue-dark p-2 rounded-md text-white"
-                >
+                  className="wono-blue-dark p-2 rounded-md text-white">
                   Add Asset
                 </button>
               </div>
@@ -489,8 +484,7 @@ const ManageAsset = () => {
                   whileTap={{ scale: 0.9 }}
                   type="button"
                   onClick={handleCloseModal}
-                  className=" p-2 bg-white text-[red] border border-red-200 hover:border-red-400 text-2xl rounded-md"
-                >
+                  className=" p-2 bg-white text-[red] border border-red-200 hover:border-red-400 text-2xl rounded-md">
                   <IoMdClose />
                 </motion.button>
               </div>
@@ -499,8 +493,7 @@ const ManageAsset = () => {
                   variant="contained"
                   onClick={handleEdit}
                   disabled={isEditing}
-                  sx={{ backgroundColor: "#0db4ea", color: "#fff" }}
-                >
+                  sx={{ backgroundColor: "#0db4ea", color: "#fff" }}>
                   Edit
                 </Button>
                 {isEditing && <div className="motion-preset-expand"></div>}
@@ -527,8 +520,7 @@ const ManageAsset = () => {
                     backgroundColor: "#0db4ea",
                     color: "#fff",
                     width: "full",
-                  }}
-                >
+                  }}>
                   Save
                 </Button>
               )}
