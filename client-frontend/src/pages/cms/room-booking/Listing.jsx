@@ -277,7 +277,7 @@ export default function Listing() {
   }, []);
 
   return (
-    <section className="h-screen overflow-y-auto top-0">
+    <section className="h-screen overflow-y-auto top-0 p-6">
       <h1 className="font-bold text-4xl mt-4 mb-3 ml-2">Booking Calendar</h1>
       <div className="w-full overflow-x-auto">
         <FullCalendar
