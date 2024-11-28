@@ -138,11 +138,13 @@ const ModuleSidebar = ({ mainSideBar }) => {
           route: "/customer/tickets/my-tickets",
           icon: <HiOutlineClipboardList />,
         },
-        // {
-        //   title: "Members",
-        //   route: "/customer/tickets/members",
-        //  icon: <MdOutlineManageAccounts />,
-        // },
+        ...(user.role === 'Employee' ? [] : [
+          {
+            title: "Members",
+            route: "/customer/tickets/members",
+           icon: <MdOutlineManageAccounts />,
+          },
+        ]),
         {
           title: "Ticket Reports",
           route: "/customer/tickets/ticket-reports",
