@@ -2,7 +2,6 @@ import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import timeGridPlugin from "@fullcalendar/timegrid";
-import Modal from "../../../components/Modal";
 import { useState, useEffect } from "react";
 import { rooms } from "../../../utils/Rooms";
 import BookingForm from "./components/BookingForm";
@@ -155,21 +154,22 @@ export default function Listing() {
   ]);
   const [roomList, setRoomList] = useState(rooms);
   const [newMeeting, setNewMeeting] = useState({
-    startTime: "",
-    endTime: "",
+    startTime: null,
+    endTime: null,
     internal: "BIZNest",
     room: "",
     participants: "",
     subject: "",
     agenda: "",
     backgroundColor: "",
-  });
+});
+
   const [loggedInUser, setLoggedInUser] = useState(null);
 
   const handleDateClick = (e) => {
     const now = new Date();
 
-    const formattedTime = format(now, "HH:mm"); // 24-hour format
+    const formattedTime = format(now, "HH:mm");
     const timePlus30 = format(addMinutes(now, 30), "HH:mm");
 
     setCurrentTime(formattedTime);
@@ -281,8 +281,8 @@ export default function Listing() {
       <h1 className="font-bold text-4xl mt-4 mb-3 ml-2">Booking Calendar</h1>
       <div className="w-full overflow-x-auto">
         <FullCalendar
-          displayEventTime={false} 
-          displayEventEnd={false} 
+          displayEventTime={false}
+          displayEventEnd={false}
           plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
           initialView="dayGridMonth"
           dateClick={(e) => {
@@ -355,7 +355,7 @@ export default function Listing() {
 
       {/* Event Details Modal */}
       {openEventDetailsModal && selectedEvent && (
-        <Modal
+        <NewModal
           open={openEventDetailsModal}
           onClose={() => setOpenEventDetailsModal(false)}
         >
@@ -366,7 +366,7 @@ export default function Listing() {
             handleExtendTime={handleExtendTime}
             handleCancel={handleCancel}
           />
-        </Modal>
+        </NewModal>
       )}
     </section>
   );

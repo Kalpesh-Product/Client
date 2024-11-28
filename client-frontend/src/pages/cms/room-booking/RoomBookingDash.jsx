@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import AgTable from "../../../components/AgTable";
-import Modal from "../../../components/Modal";
+import { NewModal } from "../../../components/NewModal";
 import BookingForm from "./components/BookingForm";
 import { rooms } from "../../../utils/Rooms";
 import { format, addMinutes } from "date-fns";
@@ -186,7 +186,7 @@ export default function RoomBookingDash() {
 
       {/* Booking Modal */}
       {openBookingModal && (
-        <Modal
+        <NewModal
           open={openBookingModal}
           onClose={() => setOpenBookingModal(false)}
         >
@@ -210,7 +210,7 @@ export default function RoomBookingDash() {
             loggedInUser={loggedInUser}
             roomList={roomList}
           />
-        </Modal>
+        </NewModal>
       )}
     </div>
   );
