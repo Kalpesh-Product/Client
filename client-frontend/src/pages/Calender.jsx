@@ -150,7 +150,6 @@ const Calender = () => {
       agenda: event.extendedProps.agenda,
       color: event.backgroundColor || "default",
     });
-    setShowModal(true);
     setIsEditModal(true);
   };
 
@@ -248,57 +247,176 @@ const Calender = () => {
           </div>
         </div>
       </div>
+
+      {isEditModal && (
+        <NewModal open={isEditModal} onClose={() => setIsEditModal(false)}>
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <div className="flex align-middle justify-center flex-col gap-10 w-[600px]">
+              <div className="flex justify-between items-center w-full mb-4">
+                <Typography variant="h5" fontWeight="bold">
+                  Edit Event
+                </Typography>
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.9 }}
+                  type="button"
+                  onClick={() => setIsEditModal(false)}
+                  className=" p-2 bg-white text-[red] border border-red-200 hover:border-red-400 text-2xl rounded-md"
+                >
+                  <IoMdClose />
+                </motion.button>
+              </div>
+
+              <TextField
+                label="Event Title"
+                value={selectedEvent?.title}
+                fullWidth
+                variant="outlined"
+                sx={{ mb: 2 }}
+              />
+
+              <TextField
+                label="Description"
+                value={selectedEvent?.description}
+                fullWidth
+                multiline
+                rows={3}
+                variant="outlined"
+                sx={{ mb: 2 }}
+              />
+
+              <TextField
+                label="Date"
+                type="date"
+                value={selectedEvent?.date || ""}
+                fullWidth
+                variant="outlined"
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                sx={{ mb: 2 }}
+              />
+
+              <Button
+                className="w-full"
+                onClick={handleSaveEvent}
+                type="submit"
+                variant="contained"
+                color="primary"
+              >
+                Update Event
+              </Button>
+            </div>
+          </LocalizationProvider>
+        </NewModal>
+      )}
       {showModal && (
         <NewModal open={showModal} onClose={() => setShowModal(false)}>
           <LocalizationProvider dateAdapter={AdapterDayjs}>
-            {selectedEvent && isEditModal ? (
-              <>
-                <div className="flex align-middle justify-center flex-col gap-10 w-[600px]">
-                  <div className="flex justify-between items-center w-full mb-4">
-                    <Typography variant="h5" fontWeight="bold">
-                      Edit Event
-                    </Typography>
-                    <motion.button
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.9 }}
-                      type="button"
-                      onClick={() => setShowModal(false)}
-                      className=" p-2 bg-white text-[red] border border-red-200 hover:border-red-400 text-2xl rounded-md"
-                    >
-                      <IoMdClose />
-                    </motion.button>
-                  </div>
+            <Box
+              sx={{
+                maxWidth: 600,
+                padding: 2,
+                bgcolor: "background.paper",
+                borderRadius: 3,
+              }}
+              className="bg-white mx-auto"
+            >
+              <div className="flex justify-between items-center w-full mb-4">
+                <Typography variant="h5" fontWeight="bold">
+                  Add Event
+                </Typography>
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.9 }}
+                  type="button"
+                  onClick={() => setShowModal(false)}
+                  className=" p-2 bg-white text-[red] border border-red-200 hover:border-red-400 text-2xl rounded-md"
+                >
+                  <IoMdClose />
+                </motion.button>
+              </div>
 
+              <Grid container spacing={3}>
+                {/* Event Title */}
+                <Grid item xs={12}>
                   <TextField
                     label="Event Title"
-                    value={selectedEvent?.title}
+                    value={newEvent.name || ""}
+                    onChange={(e) =>
+                      setnewEvent({ ...newEvent, name: e.target.value })
+                    }
                     fullWidth
                     variant="outlined"
-                    sx={{ mb: 2 }}
                   />
+                </Grid>
 
-                  <TextField
-                    label="Description"
-                    value={selectedEvent?.description}
-                    fullWidth
-                    multiline
-                    rows={3}
-                    variant="outlined"
-                    sx={{ mb: 2 }}
-                  />
-
-                  <TextField
+                {/* Date and Time */}
+                <Grid item xs={6}>
+                  <DatePicker
                     label="Date"
-                    type="date"
-                    value={selectedEvent?.date || ""}
+                    value={dayjs(selectedDate)}
+                    onChange={(newDate) => setSelectedDate(newDate)}
+                    renderInput={(params) => (
+                      <TextField {...params} fullWidth />
+                    )}
+                  />
+                </Grid>
+                <Grid item xs={6}>
+                  <TimePicker
+                    label="Time"
+                    onChange={(newTime) =>
+                      setnewEvent({ ...newEvent, time: newTime })
+                    }
+                    renderInput={(params) => (
+                      <TextField {...params} fullWidth />
+                    )}
+                  />
+                </Grid>
+
+                {/* React Select */}
+                <Grid item xs={12}>
+                  <Typography variant="subtitle1" gutterBottom>
+                    Select Participants
+                  </Typography>
+                  <ReactSelect
+                    id="name-select"
+                    options={names.map((name) => ({
+                      value: name,
+                      label: name,
+                    }))}
+                    isMulti
+                    styles={customStyles}
+                    value={selectedNames.map((name) => ({
+                      value: name,
+                      label: name,
+                    }))}
+                    onChange={(selectedOptions) =>
+                      setSelectedNames(
+                        selectedOptions.map((option) => option.value)
+                      )
+                    }
+                    placeholder="Select names..."
+                  />
+                </Grid>
+
+                {/* Agenda */}
+                <Grid item xs={12}>
+                  <TextField
+                    label="Agenda"
+                    value={newEvent.Agenda}
+                    onChange={(e) =>
+                      setnewEvent({ ...newEvent, Agenda: e.target.value })
+                    }
+                    multiline
+                    rows={2}
                     fullWidth
                     variant="outlined"
-                    InputLabelProps={{
-                      shrink: true,
-                    }}
-                    sx={{ mb: 2 }}
                   />
+                </Grid>
 
+                {/* Save and Cancel Buttons */}
+                <Grid item xs={12} sx={{ mt: 3 }}>
                   <Button
                     className="w-full"
                     onClick={handleSaveEvent}
@@ -306,128 +424,11 @@ const Calender = () => {
                     variant="contained"
                     color="primary"
                   >
-                   Update Event
+                    Create Event
                   </Button>
-                </div>
-              </>
-            ) : (
-              <Box
-                sx={{
-                  maxWidth: 600,
-                  padding: 2,
-                  bgcolor: "background.paper",
-                  borderRadius: 3,
-                }}
-                className="bg-white mx-auto"
-              >
-                <div className="flex justify-between items-center w-full mb-4">
-                  <Typography variant="h5" fontWeight="bold">
-                    Add Event
-                  </Typography>
-                  <motion.button
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.9 }}
-                    type="button"
-                    onClick={() => setShowModal(false)}
-                    className=" p-2 bg-white text-[red] border border-red-200 hover:border-red-400 text-2xl rounded-md"
-                  >
-                    <IoMdClose />
-                  </motion.button>
-                </div>
-
-                <Grid container spacing={3}>
-                  {/* Event Title */}
-                  <Grid item xs={12}>
-                    <TextField
-                      label="Event Title"
-                      value={newEvent.name || ""}
-                      onChange={(e) =>
-                        setnewEvent({ ...newEvent, name: e.target.value })
-                      }
-                      fullWidth
-                      variant="outlined"
-                    />
-                  </Grid>
-
-                  {/* Date and Time */}
-                  <Grid item xs={6}>
-                    <DatePicker
-                      label="Date"
-                      value={dayjs(selectedDate)}
-                      onChange={(newDate) => setSelectedDate(newDate)}
-                      renderInput={(params) => (
-                        <TextField {...params} fullWidth />
-                      )}
-                    />
-                  </Grid>
-                  <Grid item xs={6}>
-                    <TimePicker
-                      label="Time"
-                      onChange={(newTime) =>
-                        setnewEvent({ ...newEvent, time: newTime })
-                      }
-                      renderInput={(params) => (
-                        <TextField {...params} fullWidth />
-                      )}
-                    />
-                  </Grid>
-
-                  {/* React Select */}
-                  <Grid item xs={12}>
-                    <Typography variant="subtitle1" gutterBottom>
-                      Select Participants
-                    </Typography>
-                    <ReactSelect
-                      id="name-select"
-                      options={names.map((name) => ({
-                        value: name,
-                        label: name,
-                      }))}
-                      isMulti
-                      styles={customStyles}
-                      value={selectedNames.map((name) => ({
-                        value: name,
-                        label: name,
-                      }))}
-                      onChange={(selectedOptions) =>
-                        setSelectedNames(
-                          selectedOptions.map((option) => option.value)
-                        )
-                      }
-                      placeholder="Select names..."
-                    />
-                  </Grid>
-
-                  {/* Agenda */}
-                  <Grid item xs={12}>
-                    <TextField
-                      label="Agenda"
-                      value={newEvent.Agenda}
-                      onChange={(e) =>
-                        setnewEvent({ ...newEvent, Agenda: e.target.value })
-                      }
-                      multiline
-                      rows={2}
-                      fullWidth
-                      variant="outlined"
-                    />
-                  </Grid>
-
-                  {/* Save and Cancel Buttons */}
-                  <Grid item xs={12} sx={{ mt: 3 }}>
-                    <Button
-                      className="w-full"
-                      onClick={handleSaveEvent}
-                      type="submit"
-                      variant="contained"
-                      color="primary"
-                    >
-                      Create Event
-                    </Button>
-                  </Grid>
                 </Grid>
-              </Box>
-            )}
+              </Grid>
+            </Box>
           </LocalizationProvider>
         </NewModal>
       )}
