@@ -241,9 +241,6 @@ const TodaysTickets = () => {
   const handleAddTicket = () => {
     toast.success("New Ticket Created");
     closeModal(); // Optionally close the modal after the alert
-
-    // Navigate to my tickets
-    navigate("/customer/tickets/my-tickets");
   };
   // ADD TICKET MODAL END
 
@@ -292,6 +289,9 @@ const TodaysTickets = () => {
   const handleDeleteTicket = () => {
     toast.success("Ticket Deleted");
     closeDeleteTicket(); // Optionally close the modal after the alert
+
+    // Navigate to my tickets
+    navigate("/customer/tickets/my-tickets");
   };
   // EDIT TICKET DETAILS MODAL END
 

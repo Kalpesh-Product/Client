@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
@@ -9,8 +9,13 @@ import Select from "@mui/material/Select";
 import { CSVLink } from "react-csv";
 import { TextField } from "@mui/material";
 import AgTable from "../../../components/AgTable";
+import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
 const MyTicketsTable = () => {
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
+
   const columns = [
     { field: "id", headerName: "ID", flex: 1 },
     { field: "ticketTitle", headerName: "Ticket Title", flex: 1 },
@@ -306,8 +311,7 @@ const MyTicketsTable = () => {
             <MenuItem value="Carpet Floor">Low</MenuItem>
           </TextField>
         </FormControl>
-        <FormControl size="small" style={{ minWidth: 220 }}>
-          {/* <InputLabel>Filter by Asset Name</InputLabel> */}
+        {/* <FormControl size="small" style={{ minWidth: 220 }}>
           <TextField label="Start Date" variant="outlined" select size="small">
             <MenuItem value="">.</MenuItem>
             <MenuItem value="Chair">.</MenuItem>
@@ -315,13 +319,33 @@ const MyTicketsTable = () => {
           </TextField>
         </FormControl>
         <FormControl size="small" style={{ minWidth: 220 }}>
-          {/* <InputLabel>Filter by Asset Name</InputLabel> */}
           <TextField label="End Date" variant="outlined" select size="small">
             <MenuItem value="">.</MenuItem>
             <MenuItem value="Chair">.</MenuItem>
             <MenuItem value="Carpet Floor">.</MenuItem>
           </TextField>
-        </FormControl>
+        </FormControl> */}
+        {/* Date Range Filter */}
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <DatePicker
+            label="Start Date"
+            value={startDate}
+            slotProps={{ textField: { size: "small" } }}
+            onChange={(newValue) => setStartDate(newValue)}
+            renderInput={(params) => (
+              <TextField {...params} className="w-full md:w-1/4" />
+            )}
+          />
+          <DatePicker
+            label="End Date"
+            slotProps={{ textField: { size: "small" } }}
+            value={endDate}
+            onChange={(newValue) => setEndDate(newValue)}
+            renderInput={(params) => (
+              <TextField {...params} className="w-full md:w-1/4" />
+            )}
+          />
+        </LocalizationProvider>
         <div className="h-full">
           {/* <button className="bg-blue-500 hover:bg-blue-700 text-white text-sm font-bold py-2 px-4 rounded">
             Export Report

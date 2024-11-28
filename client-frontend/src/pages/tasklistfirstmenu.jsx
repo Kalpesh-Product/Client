@@ -1,6 +1,6 @@
-import React , {useState} from 'react'
+import React, { useState } from "react";
 
-import AssignTaskForm from '../components/TaskManagement/AssignTaskForm';
+import AssignTaskForm from "../components/TaskManagement/AssignTaskForm";
 
 import { DataGrid } from "@mui/x-data-grid";
 import Paper from "@mui/material/Paper";
@@ -276,49 +276,52 @@ const Tasklistfirstmenu = () => {
        
       ]);
 
-      const paginationModel = { page: 0, pageSize: 5 };
-      const [department, setDepartment] = React.useState("");
-      const [searchTerm, setSearchTerm] = useState("");
-      const [priorityFilter, setPriorityFilter] = useState("");
-      const [modalOpen,SetModalOpen] = useState(false);
-      const [departmentFilter,setDepartmentFilter] = useState("");
-      const [selectedRow,SetselectedRow] = useState(null);
-      const navigate = useNavigate();
-    
-      const handleChange = (event) => {
-        setDepartment(event.target.value);
-      };
-    
-      // Filter rows based on selected department
-      const filteredRows =
-        department === ""
-          ? allRows // show all rows if no department is selected
-          : allRows.filter((row) => row.department === department);
+  const paginationModel = { page: 0, pageSize: 5 };
+  const [department, setDepartment] = React.useState("");
+  const [searchTerm, setSearchTerm] = useState("");
+  const [priorityFilter, setPriorityFilter] = useState("");
+  const [modalOpen, SetModalOpen] = useState(false);
+  const [departmentFilter, setDepartmentFilter] = useState("");
+  const [selectedRow, SetselectedRow] = useState(null);
+  const navigate = useNavigate();
 
-          const filteredTasks = filteredRows.filter((task) =>{
-          const matchesSearch =  task.ticketTitle.toLowerCase().includes(searchTerm?.toLowerCase());
-          const matchesPriority = priorityFilter ? task.priority === priorityFilter : true;
-          const matchesDepartment = departmentFilter ? task.department === departmentFilter :true;
-          return matchesPriority && matchesSearch  && matchesDepartment;
-          }
+  const handleChange = (event) => {
+    setDepartment(event.target.value);
+  };
 
-          );
+  // Filter rows based on selected department
+  const filteredRows =
+    department === ""
+      ? allRows // show all rows if no department is selected
+      : allRows.filter((row) => row.department === department);
 
-          const assignTaskbtnClick =()=>{
-            SetModalOpen(true);
-          }
+  const filteredTasks = filteredRows.filter((task) => {
+    const matchesSearch = task.ticketTitle
+      .toLowerCase()
+      .includes(searchTerm?.toLowerCase());
+    const matchesPriority = priorityFilter
+      ? task.priority === priorityFilter
+      : true;
+    const matchesDepartment = departmentFilter
+      ? task.department === departmentFilter
+      : true;
+    return matchesPriority && matchesSearch && matchesDepartment;
+  });
 
-          const handleOpenModal = (row)=>{
-            SetselectedRow(row);
-            SetModalOpen(true);
-          }
+  const assignTaskbtnClick = () => {
+    SetModalOpen(true);
+  };
 
-          const closeModal = () => SetModalOpen(false);
+  const handleOpenModal = (row) => {
+    SetselectedRow(row);
+    SetModalOpen(true);
+  };
 
-          const navigateProjectList = ()=>{
-            navigate('/tasks/tasklist');
-            
-          }
+  const closeModal = () => SetModalOpen(false);
+
+  const navigateProjectList = () => {
+    navigate("/tasks/tasklist");
+  };
   return (
     <div className="flex min-h-screen">
         
@@ -388,8 +391,8 @@ const Tasklistfirstmenu = () => {
       
     </div>
 
-    {/* Right Side: Assign Task Button */}
-    {/* <button className="px-4 py-2 bg-blue-500 text-white font-semibold rounded-md shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400"
+          {/* Right Side: Assign Task Button */}
+          {/* <button className="px-4 py-2 bg-blue-500 text-white font-semibold rounded-md shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400"
     onClick={assignTaskbtnClick}>
      + Assign Task
     </button> */}
@@ -439,8 +442,7 @@ const Tasklistfirstmenu = () => {
 
 
     </div>
-    
-  )
-}
+  );
+};
 
-export default Tasklistfirstmenu
+export default Tasklistfirstmenu;

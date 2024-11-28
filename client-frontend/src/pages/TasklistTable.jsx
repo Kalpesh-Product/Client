@@ -1,9 +1,8 @@
-import React,{useState} from 'react'
+import React, { useState } from "react";
 
-import TestSide from '../components/Sidetest'
-import TaskSidebar from '../components/TaskManagement/TaskSidebar';
-import AssignTaskForm from '../components/TaskManagement/AssignTaskForm';
-
+import TestSide from "../components/Sidetest";
+import TaskSidebar from "../components/TaskManagement/TaskSidebar";
+import AssignTaskForm from "../components/TaskManagement/AssignTaskForm";
 
 import { DataGrid } from "@mui/x-data-grid";
 import Paper from "@mui/material/Paper";
@@ -12,41 +11,50 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import ModuleSidebar from '../components/ModuleSidebar';
-import { alignProperty } from '@mui/material/styles/cssUtils';
-import { NewModal } from '../components/NewModal';
-import { useLocation } from 'react-router-dom';
-import AgTable from '../components/AgTable';
+import ModuleSidebar from "../components/ModuleSidebar";
+import { alignProperty } from "@mui/material/styles/cssUtils";
+import { NewModal } from "../components/NewModal";
+import { useLocation } from "react-router-dom";
+import AgTable from "../components/AgTable";
 
 const TasklistTable = () => {
-    const location = useLocation();
+  const location = useLocation();
   const { taskTitle } = location.state || {};
 
-
-    
-
-    const columns = [
-        { field: "id", headerName: "ID", width: 70  },
-        { field: "ticketTitle", headerName: "Tasks", width: 200 },
-        { field: "Assignes", headerName: "Assignes", width: 200,
-            type: "singleSelect",
-            valueOptions: ["shreya","Aditi","Pallavi","Silva","Saloni","Jayesh","Pratap","Kamlesh","vaibhav"],
-            
-         },
-         { field: "DueDate", headerName: "Due Date", width: 200 },
-        {
-          field: "priority",
-          headerName: "Priority",
-          width: 130,
-          type: "singleSelect",
-          valueOptions: ["High", "Medium", "Low"],
-          cellRenderer: (params) => {
-            const statusColors = {
-              High: "text-red-600 bg-red-100",
-              Medium: "text-blue-600 bg-blue-100",
-              Low: "text-yellow-600 bg-yellow-100",
-            };
-            const statusClass = statusColors[params.value] || "";
+  const columns = [
+    { field: "id", headerName: "ID", width: 70 },
+    { field: "ticketTitle", headerName: "Tasks", width: 200 },
+    {
+      field: "Assignes",
+      headerName: "Assignes",
+      width: 200,
+      type: "singleSelect",
+      valueOptions: [
+        "shreya",
+        "Aditi",
+        "Pallavi",
+        "Silva",
+        "Saloni",
+        "Jayesh",
+        "Pratap",
+        "Kamlesh",
+        "vaibhav",
+      ],
+    },
+    { field: "DueDate", headerName: "Due Date", width: 200 },
+    {
+      field: "priority",
+      headerName: "Priority",
+      width: 130,
+      type: "singleSelect",
+      valueOptions: ["High", "Medium", "Low"],
+      cellRenderer: (params) => {
+        const statusColors = {
+          High: "text-red-600 bg-red-100",
+          Medium: "text-blue-600 bg-blue-100",
+          Low: "text-yellow-600 bg-yellow-100",
+        };
+        const statusClass = statusColors[params.value] || "";
 
             return (
               <span
@@ -221,37 +229,41 @@ const TasklistTable = () => {
       ]);
     const paginationModel = { page: 0, pageSize: 5 };
 
-    const [department, setDepartment] = React.useState("");
-      const [searchTerm, setSearchTerm] = useState("");
-      const [priorityFilter, setPriorityFilter] = useState("");
-      const [modalOpen,SetModalOpen] = useState(false);
-      const [departmentFilter,setDepartmentFilter] = useState("");
-      const [selectedRow,SetselectedRow] = useState(null);
+  const [department, setDepartment] = React.useState("");
+  const [searchTerm, setSearchTerm] = useState("");
+  const [priorityFilter, setPriorityFilter] = useState("");
+  const [modalOpen, SetModalOpen] = useState(false);
+  const [departmentFilter, setDepartmentFilter] = useState("");
+  const [selectedRow, SetselectedRow] = useState(null);
 
-    const filteredRows =
+  const filteredRows =
     department === ""
       ? allRows // show all rows if no department is selected
       : allRows.filter((row) => row.department === department);
 
-      const filteredTasks = filteredRows.filter((task) =>{
-      const matchesSearch =  task.ticketTitle.toLowerCase().includes(searchTerm?.toLowerCase());
-      const matchesPriority = priorityFilter ? task.priority === priorityFilter : true;
-      const matchesDepartment = departmentFilter ? task.department === departmentFilter :true;
-      return matchesPriority && matchesSearch  && matchesDepartment;
-      }
+  const filteredTasks = filteredRows.filter((task) => {
+    const matchesSearch = task.ticketTitle
+      .toLowerCase()
+      .includes(searchTerm?.toLowerCase());
+    const matchesPriority = priorityFilter
+      ? task.priority === priorityFilter
+      : true;
+    const matchesDepartment = departmentFilter
+      ? task.department === departmentFilter
+      : true;
+    return matchesPriority && matchesSearch && matchesDepartment;
+  });
 
-      );
+  const handleOpenModal = (row) => {
+    SetselectedRow(row);
+    SetModalOpen(true);
+  };
 
-      const handleOpenModal = (row)=>{
-        SetselectedRow(row);
-        SetModalOpen(true);
-      }
+  const closeModal = () => SetModalOpen(false);
 
-      const closeModal = () => SetModalOpen(false);
-
-      const assignTaskbtnClick =()=>{
-        SetModalOpen(true);
-      }
+  const assignTaskbtnClick = () => {
+    SetModalOpen(true);
+  };
   return (
     <div className='flex min-h-screen'>
         
@@ -283,15 +295,20 @@ const TasklistTable = () => {
 </div>
 
         </div>
-        {modalOpen &&
-(<NewModal open={modalOpen} onClose={closeModal}>
-      
-  
-      <AssignTaskForm title="Add Task" handleClose={closeModal} rows={allRows} setAllRows={setAllRows} selectedRow={selectedRow} /> 
-  </NewModal>)}
-        
+      </div>
+      {modalOpen && (
+        <NewModal open={modalOpen} onClose={closeModal}>
+          <AssignTaskForm
+            title="Add Task"
+            handleClose={closeModal}
+            rows={allRows}
+            setAllRows={setAllRows}
+            selectedRow={selectedRow}
+          />
+        </NewModal>
+      )}
     </div>
-  )
-}
+  );
+};
 
-export default TasklistTable
+export default TasklistTable;

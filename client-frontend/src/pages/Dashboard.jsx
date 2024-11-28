@@ -45,13 +45,11 @@ export const WidgetSection = ({ heading, widgets }) => (
     md:grid-cols-${Math.min(widgets.length, 3)}
     lg:grid-cols-${Math.min(widgets.length, 4)}
     
-  `}
-    >
+  `}>
       {widgets.map((Widget, index) => (
         <div
           key={index}
-          className="bg-white p-0 shadow-md rounded-lg h-full overflow-auto motion-preset-expand"
-        >
+          className="bg-white p-0 shadow-md rounded-lg h-full overflow-auto motion-preset-expand">
           {Widget}
         </div>
       ))}
@@ -65,7 +63,7 @@ const Dashboard = () => {
   useEffect(() => {
     const storedUser = JSON.parse(localStorage.getItem("user"));
     setUser(storedUser);
-    console.log(user); 
+    console.log(user);
     console.log(user.name);
   }, []);
 
@@ -109,9 +107,7 @@ const Dashboard = () => {
       <PendingTasks count={techWidgetsData.pendingTasks} />,
       <ResolvedIssues count={techWidgetsData.resolvedIssues} />,
     ],
-    IT:[
-      <PCFixesLineGraph />
-    ]
+    IT: [<PCFixesLineGraph />],
   };
 
   const salesWidgets = [
@@ -201,7 +197,9 @@ const Dashboard = () => {
 
       <div className="flex-1 bg-gray-100 p-8 overflow-y-auto">
         {/* Heading 1 */}
-        <h1 className="text-3xl motion-preset-slide-right-md font-bold">{user.name}'s Dashboard</h1>
+        <h1 className="text-3xl motion-preset-slide-right-md font-bold">
+          {user.name}'s Dashboard
+        </h1>
         <h2 className="my-5 motion-preset-slide-right-md">
           BIZ Nest-{user.role}-{user.department}
         </h2>

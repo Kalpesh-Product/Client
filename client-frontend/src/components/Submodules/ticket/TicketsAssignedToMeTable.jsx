@@ -32,7 +32,7 @@ const TicketsAssignedToMeTable = () => {
   const allRows = [
     {
       id: 1,
-      ticketTitle: "Website Bug",
+      ticketTitle: "Wifi is not working",
       status: "Pending",
       department: "IT",
       requestDate: "2024-10-01",

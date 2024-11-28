@@ -166,7 +166,7 @@ const ExternalTickets = () => {
   const allRows = [
     {
       id: 1,
-      ticketTitle: "Website Bug",
+      ticketTitle: "Wifi is not working",
       priority: "High",
       department: "IT",
       requestDate: "2024-10-01",
@@ -282,21 +282,19 @@ const ExternalTickets = () => {
 
       <div className="flex gap-4 mb-4">
         <div>
-        <FormControl size="small" style={{ minWidth: 220 }}>
-                    {/* <InputLabel>Filter by Asset Name</InputLabel> */}
-                    <TextField
-                      label="Filter by Asset Name"
-                      variant="outlined"
-                      select
-                      size="small"
-                      sx={{ fontSize: "0.5rem" }}
-                    >
-                      <MenuItem value="">All</MenuItem>
-                      <MenuItem value="Chair">Chair</MenuItem>
-                      <MenuItem value="Carpet Floor">Carpet</MenuItem>
-                      
-                    </TextField>
-                  </FormControl>
+          <FormControl size="small" style={{ minWidth: 220 }}>
+            {/* <InputLabel>Filter by Asset Name</InputLabel> */}
+            <TextField
+              label="Filter by Asset Name"
+              variant="outlined"
+              select
+              size="small"
+              sx={{ fontSize: "0.5rem" }}>
+              <MenuItem value="">All</MenuItem>
+              <MenuItem value="Chair">Chair</MenuItem>
+              <MenuItem value="Carpet Floor">Carpet</MenuItem>
+            </TextField>
+          </FormControl>
         </div>
         {/* <div className=" flex">
           <CSVLink

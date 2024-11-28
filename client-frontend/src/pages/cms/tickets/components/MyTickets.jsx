@@ -379,6 +379,15 @@ const MyTickets = () => {
 
       <AgTable data={filteredRows} columns={columns} highlightFirstRow={true} />
 
+      {/* {location.pathname === "/customer/tickets/my-tickets" && (
+        <div>
+          <br />
+          <br />
+          <br />
+          <br />
+        </div>
+      )} */}
+
       {/* Tickets datatable END */}
 
       {/* ADD TICKET MODAL START */}

@@ -136,8 +136,7 @@ const AssetReports = () => {
                 select
                 size="small"
                 value={selectedAssetName}
-                onChange={(e) => setSelectedAssetName(e.target.value)}
-              >
+                onChange={(e) => setSelectedAssetName(e.target.value)}>
                 <MenuItem value="">All</MenuItem>
                 {[...new Set(allAssets.map((asset) => asset.brandName))].map(
                   (assetName) => (
