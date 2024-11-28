@@ -12,7 +12,7 @@ const ReportWidget1 = ({ title, subtitle, link }) => {
     >
       <h3 className="text-lg font-semibold">{title}</h3>
       {subtitle && <p className="text-sm text-gray-600">{subtitle}</p>}
-      <p className="pt-2">Click here to view report</p>
+      <p className="pt-2 text-xs wono-blue-text">Click here to view report</p>
     </div>
   );
 };
