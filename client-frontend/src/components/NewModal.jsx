@@ -18,7 +18,7 @@ export const NewModal = ({ open, onClose, children }) => {
         },
       }}
     >
-      <DialogContent>{children}</DialogContent>
+      <DialogContent className="motion-preset-fade-sm">{children}</DialogContent>
     </Dialog>
   );
 };

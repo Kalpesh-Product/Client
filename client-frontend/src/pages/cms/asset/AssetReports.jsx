@@ -113,7 +113,7 @@ const AssetReports = () => {
         Add Asset
       </button> */}
 
-      <h1 className="text-3xl font-semibold mb-4 motion-preset-expand">
+      <h1 className="text-2xl font-semibold mb-4 motion-preset-expand">
         Asset Reports
       </h1>
 

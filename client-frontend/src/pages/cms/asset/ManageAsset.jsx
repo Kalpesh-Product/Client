@@ -216,7 +216,7 @@ const filteredData =
 console.log(selectedDepartment);
   return (
     <div className="p-4">
-      <h1 className="text-3xl font-semibold mb-4  motion-preset-expand">Manage Assets</h1>
+      <h1 className="text-2xl font-semibold mb-4  motion-preset-expand">Manage Assets</h1>
       <div>
         <div className="flex">
           <Tabs

@@ -12,6 +12,9 @@ import { IoMdClose } from "react-icons/io";
 import { toast } from "sonner";
 import axios from "axios";
 import assetsData from "../../../pages/cms/asset/temp_db/MaintainanceAssets.json"
+import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import dayjs from "dayjs";
 
 const AddAssetForm = ({ title, handleClose, user }) => {
   const [formData, setFormData] = useState({
@@ -24,7 +27,7 @@ const AddAssetForm = ({ title, handleClose, user }) => {
     price: "",
     totalPrice: "",
     vendorName: "",
-    purchaseDate: "",
+    purchaseDate: dayjs(),
     warranty: "",
     location: "",
     status: "active",
@@ -224,17 +227,24 @@ const AddAssetForm = ({ title, handleClose, user }) => {
 
           {/* Purchase Date */}
           <Grid item xs={12}>
-            <TextField
-              label="Purchase Date"
-              name="purchaseDate"
-              type="date"
-              fullWidth
-              value={formData.purchaseDate}
-              onChange={handleChange}
-              InputLabelProps={{
-                shrink: true,
-              }}
-            />
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <DatePicker
+                label="Purchase Date"
+                value={formData.purchaseDate}
+                onChange={(newDate)=>{
+                  if (newDate) {
+                    setFormData({
+                      ...formData,
+                      purchaseDate: newDate, // Store the Dayjs object
+                    });
+                  }
+                }}
+                format="DD/MM/YYYY" // Display format in the DatePicker
+                renderInput={(params) => (
+                  <TextField {...params} className="w-full md:w-1/4" />
+                )}
+              />
+            </LocalizationProvider>
           </Grid>
 
           {/* Warranty */}

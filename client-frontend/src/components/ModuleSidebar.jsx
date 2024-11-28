@@ -51,6 +51,11 @@ import { BsCashCoin } from "react-icons/bs";
 import { AiOutlineProduct, AiOutlineSecurityScan } from "react-icons/ai";
 
 const ModuleSidebar = ({ mainSideBar }) => {
+
+  useEffect(() => {
+    const storedUser = JSON.parse(localStorage.getItem("user"));
+    setUser(storedUser);
+  }, []);
   const location = useLocation();
   const navigate = useNavigate();
   const [user, setUser] = useState("");
@@ -98,13 +103,15 @@ const ModuleSidebar = ({ mainSideBar }) => {
       route: "/customer/kpi",
       icon: <AiOutlineProduct />,
       subMenus: [
+        ...(user.role === "Admin" || user.role === "Master Admin" || user.role === "Super Admin" ? [
+          {
+            title: "Manage Asset",
+            route: "/customer/asset/manage",
+            icon: <MdOutlineManageAccounts />,
+          }
+        ] :[]),
         {
-          title: "Manage asset",
-          route: "/customer/asset/manage",
-          icon: <MdOutlineManageAccounts />,
-        },
-        {
-          title: "My assets",
+          title: "My Assets",
           route: "/customer/asset/my-assets",
           icon: <MdOutlineManageAccounts />,
         },
@@ -131,11 +138,13 @@ const ModuleSidebar = ({ mainSideBar }) => {
           route: "/customer/tickets/my-tickets",
           icon: <HiOutlineClipboardList />,
         },
-        // {
-        //   title: "Members",
-        //   route: "/customer/tickets/members",
-        //  icon: <MdOutlineManageAccounts />,
-        // },
+        ...(user.role === 'Employee' ? [] : [
+          {
+            title: "Members",
+            route: "/customer/tickets/members",
+           icon: <MdOutlineManageAccounts />,
+          },
+        ]),
         {
           title: "Ticket Reports",
           route: "/customer/tickets/ticket-reports",
@@ -154,11 +163,12 @@ const ModuleSidebar = ({ mainSideBar }) => {
           route: "/customer/meetings/booking",
           icon: <FaRegCalendarAlt />,
         },
-        {
+        ...(user.department === 'Tech' ? [] : [ {
           title: "Add new Room",
           route: "/customer/meetings/add-room",
           icon: <FaPlus />,
-        },
+        },] ),
+       
         {
           title: "My Bookings",
           route: "/customer/meetings/my-bookings",
@@ -308,10 +318,7 @@ const ModuleSidebar = ({ mainSideBar }) => {
 
   const { departmentName } = location.state || {};
 
-  useEffect(() => {
-    const storedUser = JSON.parse(localStorage.getItem("user"));
-    setUser(storedUser);
-  }, []);
+
 
   const departmentMapping = {
     TopManagement: [
