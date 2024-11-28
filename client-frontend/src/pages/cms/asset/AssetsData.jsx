@@ -302,17 +302,6 @@ columns.forEach((column) => {
                 >
                   Edit
                 </Button>
-                {isEditing && (
-                  <div className="motion-preset-expand">
-                    <Button
-                      variant="contained"
-                      onClick={handleSave}
-                      sx={{ backgroundColor: "#4caf50", color: "#fff" }}
-                    >
-                      Save
-                    </Button>
-                  </div>
-                )}
               </div>
               <div className="grid grid-cols-2 gap-4">
                 {/* Separate Input Fields */}
@@ -441,6 +430,17 @@ columns.forEach((column) => {
                   InputLabelProps={{ shrink: true }}
                 />
               </div>
+              {isEditing && (
+                  <div className="motion-preset-expand">
+                    <Button
+                      variant="contained"
+                      onClick={handleSave}
+                      sx={{ backgroundColor: "#4caf50", color: "#fff", width:'100%' }}
+                    >
+                      Save
+                    </Button>
+                  </div>
+                )}
             </div>
           </>
         )}

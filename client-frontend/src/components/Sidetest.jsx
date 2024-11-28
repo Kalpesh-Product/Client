@@ -169,7 +169,7 @@ const TestSide = () => {
       "MAINTENANCE",
       "LEGAL",
     ],
-    Tech: ["FRONTEND"],
+    Tech: ["FRONTEND", "CMS"],
     Finance: ["FINANCE", "CMS"],
     Sales: ["SALES"],
     HR: ["HUMAN RESOURCE", "CMS"],

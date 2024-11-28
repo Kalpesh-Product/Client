@@ -324,10 +324,13 @@ const DepartmentDash = () => {
           count={customerServiceWidgetsData.totalAssets}
         />,
         <MaintenanceRequests
+          route={"/customer/asset/manage"}
           requests={customerServiceWidgetsData.pendingMaintenance}
         />,
-        <AssetsAssigned assigned={customerServiceWidgetsData.assignedAssets} />,
-        <AssetsInRepair count={customerServiceWidgetsData.assetsInRepair} />,
+        <AssetsAssigned 
+        route={"/customer/asset/manage"} 
+        assigned={customerServiceWidgetsData.assignedAssets} />,
+        <AssetsInRepair route={"/customer/asset/manage"}  count={customerServiceWidgetsData.assetsInRepair} />,
       ],
     },
     {

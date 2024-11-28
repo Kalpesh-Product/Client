@@ -5,6 +5,7 @@ import {
   FaCode,
   FaMoneyBillTrendUp,
   FaPlus,
+  FaRegUser,
 } from "react-icons/fa6";
 import {
   FaArrowLeft,
@@ -103,7 +104,7 @@ const ModuleSidebar = ({ mainSideBar }) => {
       route: "/customer/kpi",
       icon: <AiOutlineProduct />,
       subMenus: [
-        ...(user.role === "Admin" || user.role === "Master Admin" || user.role === "Super Admin" ? [
+        ...(((user.department === 'IT' || user.department === 'Maintainance' ) && user.role === "Admin") || user.role === "Master Admin" || user.role === "Super Admin" ? [
           {
             title: "Manage Asset",
             route: "/customer/asset/manage",
@@ -113,7 +114,7 @@ const ModuleSidebar = ({ mainSideBar }) => {
         {
           title: "My Assets",
           route: "/customer/asset/my-assets",
-          icon: <MdOutlineManageAccounts />,
+          icon: <FaRegUser />,
         },
         {
           title: "Reports",
@@ -333,7 +334,7 @@ const ModuleSidebar = ({ mainSideBar }) => {
       "MAINTENANCE",
       "LEGAL",
     ],
-    Tech: ["FRONTEND"],
+    Tech: ["FRONTEND","CMS"],
     Finance: ["FINANCE"],
     Sales: ["SALES"],
     HR: ["HUMAN RESOURCE", "CMS"],

@@ -75,25 +75,8 @@ export default function AssignAssetForm({ handleCloseModal, selectedAsset }) {
     console.log(payload);
 
     try {
-      // Fetch the current data at "0"
-      const response = await axios.get("http://localhost:5001/IT");
-      const assignedAsset = response.data;
-
-      // Update the IT array by appending the new payload
-      const updatedITArray = assignedAsset.IT
-        ? [...assignedAsset.IT, payload]
-        : [payload];
-
-      // Save the updated IT array back to the server
-      await axios.put("http://localhost:5001/IT", {
-        ...assignedAsset,
-        IT: updatedITArray,
-      });
-
-      assetUpdate();
-
       handleCloseModal();
-      toast.success(`Asset assigned to ${formData.name}`);
+      toast.success(`Asset assigned`);
     } catch (error) {
       console.error("Error assigning asset:", error);
       toast.error("Failed to assign asset. Please try again.");

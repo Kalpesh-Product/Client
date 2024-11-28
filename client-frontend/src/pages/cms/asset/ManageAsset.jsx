@@ -60,9 +60,6 @@ const ManageAsset = () => {
       console.log("Filtered Assets:", assetsData);
     }
   }, [user]);
-  
-  
-  
 
   const handleAssignAsset = (row) => {
     setSelectedLaptop(row);
@@ -114,7 +111,7 @@ const ManageAsset = () => {
     { field: "assetNumber", headerName: "Asset Number", flex: 1 },
     { field: "category", headerName: "Category", flex: 1 },
     // { field: "assetName", headerName: "Asset Name", width: 150 },
-    { field: "brandName", headerName: "Brand", flex:1 },
+    { field: "brandName", headerName: "Brand", flex: 1 },
     { field: "price", headerName: "Price", flex: 1 },
     { field: "quantity", headerName: "Quantity", flex: 1 },
     // { field: "totalPrice", headerName: "Total Price", flex: 1 },
@@ -122,9 +119,9 @@ const ManageAsset = () => {
     { field: "purchaseDate", headerName: "Purchase Date", flex: 1 },
     { field: "warranty", headerName: "Warranty (Months)", flex: 1 },
     // { field: "location", headerName: "Location", flex: 150 },
-  {
+    {
       field: "actions",
-      filter:false,
+      filter: false,
       headerName: "Actions",
       flex: 1,
       cellRenderer: (params) =>
@@ -135,11 +132,11 @@ const ManageAsset = () => {
                 backgroundColor: "#0db4ea",
                 color: "white",
                 border: "none",
-                paddingLeft:'0.5rem',
-                paddingRight:'0.5rem',
+                paddingLeft: "0.5rem",
+                paddingRight: "0.5rem",
                 borderRadius: "4px",
                 cursor: "pointer",
-                height:'100%'
+                height: "100%",
               }}
               onClick={() => handleViewDetails(params.data)}
             >
@@ -150,11 +147,11 @@ const ManageAsset = () => {
                 backgroundColor: "#0db4ea",
                 color: "white",
                 border: "none",
-                paddingLeft:'0.5rem',
-                paddingRight:'0.5rem',
+                paddingLeft: "0.5rem",
+                paddingRight: "0.5rem",
                 borderRadius: "4px",
                 cursor: "pointer",
-                height:'100%'
+                height: "100%",
               }}
               onClick={() => handleAssignAsset(params.data)}
             >
@@ -179,44 +176,46 @@ const ManageAsset = () => {
     setActiveTab(newValue);
   };
 
-// Filter assets based on search term and selected asset name
-const filteredAssets = allAssets.filter((asset) => {
-  const matchesSearch = asset.brandName
-    .toLowerCase()
-    .includes(searchTerm.toLowerCase());
-  const matchesDropdown = selectedAssetName
-    ? asset.category === selectedAssetName
-    : true;
-  return matchesSearch && matchesDropdown;
-});
-// Filter assets based on search term and selected asset name for assignee table
-const filteredAssigneeAssets = allAssets.filter((asset) => {
-  const matchesSearch = asset.category
-    .toLowerCase()
-    .includes(searchTerm.toLowerCase());
-  const matchesDropdown = selectedAssetName
-    ? asset.category === selectedAssetName
-    : true;
-  return matchesSearch && matchesDropdown;
-});
-// Filter assets based on department
-const filteredByDepartment =
-  user?.department === "TopManagement"
-    ? filteredAssets // Include all assets for TopManagement
-    : filteredAssets.filter((asset) => asset.department === user?.department);
+  // Filter assets based on search term and selected asset name
+  const filteredAssets = allAssets.filter((asset) => {
+    const matchesSearch = asset.brandName
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase());
+    const matchesDropdown = selectedAssetName
+      ? asset.category === selectedAssetName
+      : true;
+    return matchesSearch && matchesDropdown;
+  });
+  // Filter assets based on search term and selected asset name for assignee table
+  const filteredAssigneeAssets = allAssets.filter((asset) => {
+    const matchesSearch = asset.category
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase());
+    const matchesDropdown = selectedAssetName
+      ? asset.category === selectedAssetName
+      : true;
+    return matchesSearch && matchesDropdown;
+  });
+  // Filter assets based on department
+  const filteredByDepartment =
+    user?.department === "TopManagement"
+      ? filteredAssets // Include all assets for TopManagement
+      : filteredAssets.filter((asset) => asset.department === user?.department);
 
-// Further filter by selected department if applicable
-const filteredData =
-  selectedDepartment === ""
-    ? filteredByDepartment
-    : filteredByDepartment.filter(
-        (item) => item.department === selectedDepartment
-      );
+  // Further filter by selected department if applicable
+  const filteredData =
+    selectedDepartment === ""
+      ? filteredByDepartment
+      : filteredByDepartment.filter(
+          (item) => item.department === selectedDepartment
+        );
 
-console.log(selectedDepartment);
+  console.log(selectedDepartment);
   return (
     <div className="p-4">
-      <h1 className="text-2xl font-semibold mb-4  motion-preset-expand">Manage Assets</h1>
+      <h1 className="text-2xl font-semibold mb-4  motion-preset-expand">
+        Manage Assets
+      </h1>
       <div>
         <div className="flex">
           <Tabs
@@ -225,10 +224,25 @@ console.log(selectedDepartment);
             aria-label="asset actions tabs"
             variant="fullWidth"
             TabIndicatorProps={{ style: { transition: "none" } }}
-            sx={{ width: "100%", marginBottom:'1rem', backgroundColor:'white', borderRadius:'10px', fontFamily:'Popins-Semibold', padding:'0.5rem' }}
+            sx={{
+              width: "100%",
+              marginBottom: "1rem",
+              backgroundColor: "white",
+              borderRadius: "10px",
+              fontFamily: "Popins-Semibold",
+              padding: "0.5rem",
+            }}
           >
-            <Tab sx={{borderRight:'1px solid #e4e4e4'}}  label="Add/Assign Assets" />
-            <Tab  label="Assigned Asset" />
+            <Tab
+              sx={{ borderRight: "1px solid #e4e4e4" }}
+              label="Add/Assign Assets"
+            />
+            <Tab  sx={{ borderRight: "1px solid #e4e4e4" }} label="Assigned Asset" />
+            {user.role === "Employee" ? (
+              <Tab label="Requests" />
+            ) : (
+              <Tab label="Approvals" />
+            )}
           </Tabs>
         </div>
         <div>
@@ -297,10 +311,10 @@ console.log(selectedDepartment);
                 </button>
               </div>
               <div className="motion-preset-slide-up-md">
-                <AgTable 
-                data={filteredData}
-                columns={laptopColumns}
-                paginationPageSize={10}
+                <AgTable
+                  data={filteredData}
+                  columns={laptopColumns}
+                  paginationPageSize={10}
                 />
               </div>
             </div>
@@ -326,7 +340,7 @@ console.log(selectedDepartment);
         )}
         {openModal === "view" && (
           <>
-            <div className="flex flex-col gap-4 p-6 bg-white rounded-md w-full">
+            <div className="flex flex-col gap-4 bg-white rounded-md w-full">
               <div className="flex justify-between mb-4">
                 <Typography sx={{ fontFamily: "Popins-Semibold" }} variant="h4">
                   Details
@@ -350,17 +364,7 @@ console.log(selectedDepartment);
                 >
                   Edit
                 </Button>
-                {isEditing && (
-                  <div className="motion-preset-expand">
-                    <Button
-                      variant="contained"
-                      onClick={handleSave}
-                      sx={{ backgroundColor: "#4caf50", color: "#fff" }}
-                    >
-                      Save
-                    </Button>
-                  </div>
-                )}
+                {isEditing && <div className="motion-preset-expand"></div>}
               </div>
               <div className="grid grid-cols-2 gap-4">
                 {/* Render Form Fields */}
@@ -376,6 +380,18 @@ console.log(selectedDepartment);
                   />
                 ))}
               </div>
+              {isEditing && (
+                <Button
+                  variant="contained"
+                  onClick={handleSave}
+                  sx={{
+                    backgroundColor: "#0db4ea", color: "#fff" ,
+                    width: "full",
+                  }}
+                >
+                  Save
+                </Button>
+              )}
             </div>
           </>
         )}
