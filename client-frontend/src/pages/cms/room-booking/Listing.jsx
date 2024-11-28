@@ -12,6 +12,7 @@ import { v4 as uuid } from "uuid";
 import { toast } from "sonner";
 import { motion } from "framer-motion";
 import { IoMdClose } from "react-icons/io";
+import { NewModal } from "../../../components/NewModal";
 
 export default function Listing() {
   const [openBookingModal, setOpenBookingModal] = useState(false);
@@ -325,7 +326,7 @@ export default function Listing() {
 
       {/* Booking Modal */}
       {openBookingModal && (
-        <Modal
+        <NewModal
           open={openBookingModal}
           onClose={() => setOpenBookingModal(false)}
         >
@@ -349,7 +350,7 @@ export default function Listing() {
             loggedInUser={loggedInUser}
             roomList={roomList}
           />
-        </Modal>
+        </NewModal>
       )}
 
       {/* Event Details Modal */}

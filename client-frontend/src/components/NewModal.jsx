@@ -1,13 +1,24 @@
-import React, { useState } from "react";
+import React from "react";
+import Dialog from "@mui/material/Dialog";
+import DialogContent from "@mui/material/DialogContent";
 
 export const NewModal = ({ open, onClose, children }) => {
-    if (!open) return null;
-  
-    return (
-      <div className="fixed inset-0 bg-gray-900 bg-opacity-50 flex justify-center items-center z-50 ">
-        <div className="bg-white motion-preset-expand motion-duration-200 w-full max-w-lg p-0 rounded-lg relative">
-          {children}
-        </div>
-      </div>
-    );
-  };
+  return (
+    <Dialog
+      open={open}
+      onClose={onClose}
+      PaperProps={{
+        style: {
+          width: "auto",
+          height: "auto",
+          maxWidth: "90%", // Prevents it from being too wide
+          maxHeight: "90%", // Prevents it from being too tall
+          overflow: "auto", // Adds scroll if the content overflows
+          borderRadius: "8px",
+        },
+      }}
+    >
+      <DialogContent>{children}</DialogContent>
+    </Dialog>
+  );
+};
