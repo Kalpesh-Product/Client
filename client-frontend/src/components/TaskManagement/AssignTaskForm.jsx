@@ -465,31 +465,13 @@ const AssignTaskForm = ({ title, handleClose ,rows, setAllRows,selectedRow,modal
           </Grid>
 
           {/* Asset Name */}
-          {/* <Grid item xs={12}>
-          <TextField
-              label="Status"
-              name="status"
-              select
-              fullWidth
-              value={formData.status}
-              onChange={handleChange}
-            >
-              {statusTypes.map((type, index) => (
-                <MenuItem key={index} value={type}>
-                  {type}
-                </MenuItem>
-              ))}
-            </TextField>
-            
-          </Grid> */}
-
+          
         </div>
 
 
           </>
         ): EditValue ? (<>
-        
-
+    
         <div className="grid grid-cols-1 gap-4 top-5">
           {/* Asset Number */}
           <Grid item xs={12}>
@@ -503,24 +485,19 @@ const AssignTaskForm = ({ title, handleClose ,rows, setAllRows,selectedRow,modal
           </Grid>
           <Grid item xs={12}>
             <TextField
-             
               label="Title"
-              value={Title
-              }
+              value={Title}
               fullWidth
              
             />
           </Grid>
           <Grid item xs={12}>
           <TextField
-              
-             
               label="description"
               fullWidth
               multiline
               rows={4}
               value={description}
-             
             >
               
             </TextField>
