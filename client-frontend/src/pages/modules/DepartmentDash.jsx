@@ -400,8 +400,7 @@ const DepartmentDash = () => {
                     "& .MuiTabs-indicator": {
                       backgroundColor: "#0db4ea", // Custom indicator color
                     },
-                  }}
-                >
+                  }}>
                   <Tab label="Home" />
                   <Tab label="About" />
                   <Tab label="Gallery" />
@@ -462,8 +461,7 @@ const DepartmentDash = () => {
                   {products.map((product) => (
                     <div
                       key={product.id}
-                      className="bg-gray-100 rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow"
-                    >
+                      className="bg-gray-100 rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
                       <img
                         src={product.image}
                         alt={product.name}
@@ -590,7 +588,6 @@ const DepartmentDash = () => {
                     widgets={section.widgets}
                   />
                 ))}
-           
               </div>
             ) : location.pathname === "/customer/kpi" ? (
               <>
@@ -636,11 +633,11 @@ const DepartmentDash = () => {
               <>
                 <ManageAsset />
               </>
-            ): location.pathname === "/customer/asset/my-assets" ? (
+            ) : location.pathname === "/customer/asset/my-assets" ? (
               <>
                 <MyAssets />
-              </> 
-            ): location.pathname === "/customer/asset/details" ? (
+              </>
+            ) : location.pathname === "/customer/asset/details" ? (
               <>
                 <AssetsData />
               </>
@@ -783,8 +780,7 @@ const DepartmentDash = () => {
           open={openTicket}
           onClose={handleCloseTicket}
           aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
-        >
+          aria-describedby="modal-modal-description">
           {/* <Box sx={style}> */}
           <Box sx={style}>
             <AddTicketForm />

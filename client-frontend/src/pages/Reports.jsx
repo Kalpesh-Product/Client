@@ -13,6 +13,7 @@ import TicketReportsSection from "../components/Submodules/ticket/TicketReportsS
 import MeetingReportsSection from "../components/Submodules/meetings/MeetingReportsSection";
 import CustomerServiceReportsSection from "../components/Submodules/customer-service/CustomerServiceReportsSection";
 import ModuleSidebar from "../components/ModuleSidebar";
+import ReportWidget1 from "../components/reportWidgets/ReportWidget1";
 
 const Reports = () => {
   // For Departments
@@ -39,19 +40,72 @@ const Reports = () => {
   //   setSelectedOption(selected ? selected.value : "Tickets"); // Set the selected option
   // };
 
+  const widgetsData = [
+    {
+      title: "Ticket Reports",
+      subtitle: "View and manage all ticket-related reports",
+      link: "/customer/tickets/ticket-reports",
+    },
+    {
+      title: "Task Reports",
+      subtitle: "Analyze your task performance",
+      link: "/reports/tasks",
+    },
+    {
+      title: "Meeting Reports",
+      subtitle: "Track meeting analytics and outcomes",
+      link: "/customer/meetings/reports",
+    },
+    {
+      title: "Assets Reports",
+      subtitle: "Insights into all the assets",
+      link: "/customer/asset/reports",
+    },
+    {
+      title: "Finance Reports",
+      subtitle: "Insights into all the finances",
+      link: "/customer/asset/reports",
+    },
+    {
+      title: "Sales Reports",
+      subtitle: "Insights into all the sales",
+      link: "/customer/asset/reports",
+    },
+  ];
+
   return (
     <div className="flex min-h-screen">
       <TestSide />
-      <ModuleSidebar />
-      <div className=" w-full p-6 motion-preset-blur-right-md ">
-        {/* <h2 className="text-4xl  ">Reports</h2> */}
-        <h2 className="text-3xl  font-bold  ">Reports</h2>
-        <div className="flex h-16">
+      {/* <ModuleSidebar /> */}
+      <div className="w-full p-6 motion-preset-blur-right-md">
+        <h2 className="text-3xl font-bold">Reports</h2>
+
+        {/* Reports widgets START */}
+
+        <div className="mt-0">
+          <h2 className="text-2xl font-semibold"></h2>
+          <div className={`grid gap-4 grid-cols-3`}>
+            {widgetsData.map((widget, index) => (
+              <div
+                key={index}
+                className="bg-white p-0 shadow-md rounded-lg h-full overflow-auto">
+                <ReportWidget1
+                  title={widget.title}
+                  subtitle={widget.subtitle}
+                  link={widget.link}
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Reports widgets END */}
+
+        {/* <div className="flex h-16">
           <div className="w-60">
             <h3 className="text-2xl pt-5 pb-4 ">Select Report: &nbsp;&nbsp;</h3>
           </div>
 
-          {/* Select Tag To Select Submodule START */}
           <div className="grid pt-5 h-8 w-full pr-[1rem]">
             <Select
               options={options}
@@ -61,36 +115,31 @@ const Reports = () => {
               className="min-w-52 w-full"
             />
           </div>
-        </div>
-        {/* Select Tag To Select Submodule END */}
+        </div> */}
 
-        {selectedOption === "Tasks" && (
+        {/* {selectedOption === "Tasks" && (
           <div>
             <TaskReportsSection />
-            {/* Add your Tasks section content here */}
           </div>
         )}
 
         {selectedOption === "Tickets" && (
           <div>
             <TicketReportsSection />
-            {/* Add your Tickets section content here */}
           </div>
         )}
 
         {selectedOption === "Meetings" && (
           <div>
             <MeetingReportsSection />
-            {/* Add your Meetings section content here */}
           </div>
         )}
 
         {selectedOption === "Customer Service" && (
           <div>
             <CustomerServiceReportsSection />
-            {/* Add your Customer Service section content here */}
           </div>
-        )}
+        )} */}
       </div>
     </div>
   );
