@@ -2,7 +2,6 @@ import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import timeGridPlugin from "@fullcalendar/timegrid";
-import Modal from "../../../components/Modal";
 import { useState, useEffect } from "react";
 import { rooms } from "../../../utils/Rooms";
 import BookingForm from "./components/BookingForm";
@@ -27,8 +26,8 @@ export default function Listing() {
       title: "Innovation Strategy Discussion",
       start: "2024-11-10T10:00",
       end: "2024-11-10T11:30",
-      backgroundColor: "#FF5733",
-      status: "active",
+      backgroundColor: "#008000",
+      status: "done",
       extendedProps: {
         agenda: "Discussing ideas for upcoming product launches",
         participants: "Abrar Shaikh, Kashif Shaikh, Farzeen",
@@ -40,8 +39,8 @@ export default function Listing() {
       title: "Tech Sprint Planning",
       start: "2024-11-15T14:00",
       end: "2024-11-15T15:00",
-      backgroundColor: "#33C1FF",
-      status: "scheduled",
+      backgroundColor: "#3454D1",
+      status: "new",
       extendedProps: {
         agenda: "Finalizing the next sprint tasks",
         participants: "Kalpesh Naik, Allan Silveira, Aiwinraj KS",
@@ -53,8 +52,8 @@ export default function Listing() {
       title: "Finance Quarterly Review",
       start: "2024-11-22T11:00",
       end: "2024-11-22T12:30",
-      backgroundColor: "#5E9C5F",
-      status: "active",
+      backgroundColor: "#FFA500",
+      status: "ongoing",
       extendedProps: {
         agenda: "Reviewing quarterly financial reports",
         participants: "Narshiva Naik, Hema Natalkar, Siddhi Vernekar",
@@ -66,8 +65,8 @@ export default function Listing() {
       title: "Maintenance Equipment Training",
       start: "2024-11-18T13:00",
       end: "2024-11-18T14:30",
-      backgroundColor: "#FFC300",
-      status: "pending",
+      backgroundColor: "#E71D36",
+      status: "cancelled",
       extendedProps: {
         agenda: "Training on the new maintenance equipment",
         participants: "Amol Kakade, Jill",
@@ -79,8 +78,8 @@ export default function Listing() {
       title: "HR Policy Announcement",
       start: "2024-11-27T15:00",
       end: "2024-11-27T16:00",
-      backgroundColor: "#9C5E7F",
-      status: "scheduled",
+      backgroundColor: "#3454D1",
+      status: "new",
       extendedProps: {
         agenda: "Announcing updates to HR policies",
         participants: "Farzeen, Urjita Sangodkar, Faizan",
@@ -92,8 +91,8 @@ export default function Listing() {
       title: "Marketing Brainstorming Session",
       start: "2024-11-12T09:00",
       end: "2024-11-12T10:30",
-      backgroundColor: "#F7B801",
-      status: "active",
+      backgroundColor: "#008000",
+      status: "done",
       extendedProps: {
         agenda: "Generating ideas for the new marketing campaign",
         participants: "Kashif Shaikh, Hema Natalkar",
@@ -105,8 +104,8 @@ export default function Listing() {
       title: "Team Lunch Discussion",
       start: "2024-11-20T12:00",
       end: "2024-11-20T13:00",
-      backgroundColor: "#2B8EAD",
-      status: "scheduled",
+      backgroundColor: "#3454D1",
+      status: "new",
       extendedProps: {
         agenda: "Team bonding and project status update",
         participants: "Abrar Shaikh, Faizan, Siddhi Vernekar",
@@ -118,8 +117,8 @@ export default function Listing() {
       title: "Year-End Budget Planning",
       start: "2024-11-29T11:30",
       end: "2024-11-29T13:00",
-      backgroundColor: "#8E44AD",
-      status: "scheduled",
+      backgroundColor: "#3454D1",
+      status: "new",
       extendedProps: {
         agenda: "Discussing and finalizing the year-end budget",
         participants: "Allan Silveira, Kalpesh Naik, Narshiva Naik",
@@ -131,8 +130,8 @@ export default function Listing() {
       title: "Product Demo to Clients",
       start: "2024-11-25T14:00",
       end: "2024-11-25T15:30",
-      backgroundColor: "#C0392B",
-      status: "active",
+      backgroundColor: "#FFA500",
+      status: "ongoing",
       extendedProps: {
         agenda: "Presenting the new product features to clients",
         participants: "Kalpesh Naik, Abrar Shaikh",
@@ -144,8 +143,8 @@ export default function Listing() {
       title: "Leadership Quarterly Review",
       start: "2024-11-28T10:00",
       end: "2024-11-28T12:00",
-      backgroundColor: "#1ABC9C",
-      status: "scheduled",
+      backgroundColor: "#E71D36",
+      status: "cancelled",
       extendedProps: {
         agenda: "High-level strategic planning and review",
         participants: "Faizan, Jill, Siddhi Vernekar",
@@ -155,8 +154,8 @@ export default function Listing() {
   ]);
   const [roomList, setRoomList] = useState(rooms);
   const [newMeeting, setNewMeeting] = useState({
-    startTime: "",
-    endTime: "",
+    startTime: null,
+    endTime: null,
     internal: "BIZNest",
     room: "",
     participants: "",
@@ -164,12 +163,13 @@ export default function Listing() {
     agenda: "",
     backgroundColor: "",
   });
+
   const [loggedInUser, setLoggedInUser] = useState(null);
 
   const handleDateClick = (e) => {
     const now = new Date();
 
-    const formattedTime = format(now, "HH:mm"); // 24-hour format
+    const formattedTime = format(now, "HH:mm");
     const timePlus30 = format(addMinutes(now, 30), "HH:mm");
 
     setCurrentTime(formattedTime);
@@ -195,7 +195,7 @@ export default function Listing() {
     setEvents((prevEvents) =>
       prevEvents.map((event) =>
         event.id === eventId
-          ? { ...event, status: "cancelled", backgroundColor: "#FF0000" }
+          ? { ...event, status: "cancelled", backgroundColor: "#E71D36" }
           : event
       )
     );
@@ -277,12 +277,12 @@ export default function Listing() {
   }, []);
 
   return (
-    <section className="h-screen overflow-y-auto top-0">
+    <section className="h-screen overflow-y-auto top-0 p-6">
       <h1 className="font-bold text-4xl mt-4 mb-3 ml-2">Booking Calendar</h1>
       <div className="w-full overflow-x-auto">
         <FullCalendar
-          displayEventTime={false} 
-          displayEventEnd={false} 
+          displayEventTime={false}
+          displayEventEnd={false}
           plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
           initialView="dayGridMonth"
           dateClick={(e) => {
@@ -318,7 +318,7 @@ export default function Listing() {
           events={events.map((event) => ({
             ...event,
             backgroundColor:
-              event.status === "cancelled" ? "#FF0000" : event.backgroundColor,
+              event.status === "cancelled" ? "#E71D36" : event.backgroundColor,
           }))} // Apply red color for cancelled events
           timeZone="local"
         />
@@ -355,7 +355,7 @@ export default function Listing() {
 
       {/* Event Details Modal */}
       {openEventDetailsModal && selectedEvent && (
-        <Modal
+        <NewModal
           open={openEventDetailsModal}
           onClose={() => setOpenEventDetailsModal(false)}
         >
@@ -366,7 +366,7 @@ export default function Listing() {
             handleExtendTime={handleExtendTime}
             handleCancel={handleCancel}
           />
-        </Modal>
+        </NewModal>
       )}
     </section>
   );

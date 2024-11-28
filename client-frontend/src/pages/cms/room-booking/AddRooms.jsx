@@ -8,11 +8,11 @@ import {
 } from "@mui/material";
 import { rooms as allRooms } from "../../../utils/Rooms";
 import { useState } from "react";
-import Modal from "../../../components/Modal";
+import { NewModal } from "../../../components/NewModal";
 import { toast } from "sonner";
 import { motion } from "framer-motion";
 import { IoMdClose } from "react-icons/io";
-import { FiWifi, FiSun, FiMonitor } from "react-icons/fi"; 
+import { FiWifi, FiSun, FiMonitor } from "react-icons/fi";
 
 export default function AddRooms() {
   const [rooms, setRooms] = useState(allRooms);
@@ -142,7 +142,11 @@ export default function AddRooms() {
                 {room.description}
               </Typography>
               <div className="mt-4">
-                <Button variant="contained" className="w-full" onClick={() => handleEdit(room)}>
+                <Button
+                  variant="contained"
+                  className="w-full"
+                  onClick={() => handleEdit(room)}
+                >
                   Edit Room
                 </Button>
               </div>
@@ -151,7 +155,7 @@ export default function AddRooms() {
         ))}
       </div>
       {showModal && (
-        <Modal open={showModal} onClose={() => setShowModal(false)}>
+        <NewModal open={showModal} onClose={() => setShowModal(false)}>
           <form
             onSubmit={handleSubmit}
             className="flex flex-col gap-4 p-4 w-[50vw] mx-auto"
@@ -224,7 +228,7 @@ export default function AddRooms() {
               </Button>
             </div>
           </form>
-        </Modal>
+        </NewModal>
       )}
     </section>
   );

@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import Modal from "./Modal";
 import EmployeeProfile from "./AccessTabViewModel/EmployeeProfile";
 import AccessHierarchyTab from "./AccessTabViewModel/AccessHierarchyTab";
 import { IoMdClose } from "react-icons/io";
+import { NewModal } from "./NewModal";
 
 const TreeNode = ({ node }) => {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -25,7 +25,7 @@ const TreeNode = ({ node }) => {
   return (
     <div className="flex flex-col items-start mb-6 space-y-4 w-full max-w-[600px]">
       {/* Modal to show the user's details */}
-      <Modal open={showModal} onClose={closeModal}>
+      <NewModal open={showModal} onClose={closeModal}>
         <div className="relative w-[58rem] max-w-4xl h-[90vh] overflow-hidden p-2 bg-white  ">
           <div className="flex items-center p-1 bg-white rounded-lg  justify-between mb-4">
             <div className="flex flex-row gap-3">
@@ -95,7 +95,7 @@ const TreeNode = ({ node }) => {
             </div>
           </div>
         </div>
-      </Modal>
+      </NewModal>
 
       <div
         className="flex items-center border border-gray-300 rounded-lg p-4 shadow-md w-full cursor-pointer transition-transform duration-300 ease-in-out"

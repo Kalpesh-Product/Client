@@ -6,9 +6,9 @@
     "department": "TopManagement",
     "password": "123",
     "designation": "Founder & CEO",
-    "company" : "Biznest",
-    "Phone" : "1234523456",
-    "assignedAsset" : ""
+    "company": "Biznest",
+    "Phone": "1234523456",
+    "assignedAsset": ""
   },
   {
     "name": "Kashif Shaikh",
@@ -17,9 +17,9 @@
     "department": "TopManagement",
     "password": "123",
     "designation": "Co-Founder",
-    "company" : "Biznest",
-    "Phone" : "1234523456",
-    "assignedAsset" : ""
+    "company": "Biznest",
+    "Phone": "1234523456",
+    "assignedAsset": ""
   },
   {
     "name": "Farzeen",
@@ -28,9 +28,9 @@
     "department": "HR",
     "password": "123",
     "designation": "Co-Founder",
-    "company" : "Biznest",
-    "Phone" : "1234523456",
-    "assignedAsset" : ""
+    "company": "Biznest",
+    "Phone": "1234523456",
+    "assignedAsset": ""
   },
   {
     "name": "Kalpesh Naik",
@@ -39,9 +39,20 @@
     "department": "Tech",
     "password": "123",
     "designation": "Admin",
-    "company" : "Biznest",
-    "Phone" : "1234523456",
-    "assignedAsset" : ""
+    "company": "Biznest",
+    "Phone": "1234523456",
+    "assignedAsset": ""
+  },
+  {
+    "name": "Pranali Kandolkar",
+    "email": "pranali@biznest.co.in",
+    "role": "Admin",
+    "department": "Administration",
+    "password": "123",
+    "designation": "Admin",
+    "company": "Biznest",
+    "Phone": "1234523456",
+    "assignedAsset": ""
   },
   {
     "name": "Allan Silveira",
@@ -50,9 +61,9 @@
     "department": "Tech",
     "password": "123",
     "designation": "Employee",
-    "company" : "Biznest",
-    "Phone" : "1234523456",
-    "assignedAsset" : ""
+    "company": "Biznest",
+    "Phone": "1234523456",
+    "assignedAsset": ""
   },
   {
     "name": "Aiwinraj KS",
@@ -61,9 +72,9 @@
     "department": "Tech",
     "password": "123",
     "designation": "Employee",
-    "company" : "Biznest",
-    "Phone" : "1234523456",
-    "assignedAsset" : ""
+    "company": "Biznest",
+    "Phone": "1234523456",
+    "assignedAsset": ""
   },
   {
     "name": "Anushri Bhagat",
@@ -72,9 +83,9 @@
     "department": "Tech",
     "password": "123",
     "designation": "CEO",
-    "company" : "Biznest",
-    "Phone" : "1234523456",
-    "assignedAsset" : ""
+    "company": "Biznest",
+    "Phone": "1234523456",
+    "assignedAsset": ""
   },
   {
     "name": "Sankalp Kalangutkar",
@@ -83,9 +94,9 @@
     "department": "Tech",
     "password": "123",
     "designation": "CEO",
-    "company" : "Biznest",
-    "Phone" : "1234523456",
-    "assignedAsset" : ""
+    "company": "Biznest",
+    "Phone": "1234523456",
+    "assignedAsset": ""
   },
   {
     "name": "Narshiva Naik",
@@ -94,9 +105,9 @@
     "department": "Finance",
     "password": "123",
     "designation": "CEO",
-    "company" : "Biznest",
-    "Phone" : "1234523456",
-    "assignedAsset" : ""
+    "company": "Biznest",
+    "Phone": "1234523456",
+    "assignedAsset": ""
   },
   {
     "name": "Hema Natalkar",
@@ -105,9 +116,9 @@
     "department": "Finance",
     "password": "123",
     "designation": "CEO",
-    "company" : "Biznest",
-    "Phone" : "1234523456",
-    "assignedAsset" : ""
+    "company": "Biznest",
+    "Phone": "1234523456",
+    "assignedAsset": ""
   },
   {
     "name": "Rhutvik Sawant",
@@ -116,9 +127,9 @@
     "department": "Finance",
     "password": "123",
     "designation": "CEO",
-    "company" : "Biznest",
-    "Phone" : "1234523456",
-    "assignedAsset" : ""
+    "company": "Biznest",
+    "Phone": "1234523456",
+    "assignedAsset": ""
   },
   {
     "name": "Siddhi Vernekar",
@@ -127,9 +138,9 @@
     "department": "Finance",
     "password": "123",
     "designation": "CEO",
-    "company" : "Biznest",
-    "Phone" : "1234523456",
-    "assignedAsset" : ""
+    "company": "Biznest",
+    "Phone": "1234523456",
+    "assignedAsset": ""
   },
 
   {
@@ -139,8 +150,8 @@
     "department": "IT",
     "password": "123",
     "designation": "CEO",
-    "company" : "Biznest",
-    "assignedAsset" : ""
+    "company": "Biznest",
+    "assignedAsset": ""
   },
   {
     "name": "Faizan",
@@ -149,37 +160,37 @@
     "department": "IT",
     "password": "123",
     "designation": "CEO",
-    "company" : "Biznest",
-    "assignedAsset" : ""
+    "company": "Biznest",
+    "assignedAsset": ""
   },
   {
     "name": "Amol Kakade",
     "email": "amol@biznest.co.in",
     "role": "Admin",
     "department": "Maintainance",
-   "password": "123",
+    "password": "123",
     "designation": "Admin",
-    "company" : "Biznest",
-    "assignedAsset" : ""
+    "company": "Biznest",
+    "assignedAsset": ""
   },
   {
     "name": "Jill",
     "email": "jill@biznest.co.in",
     "role": "Employee",
     "department": "Maintainance",
-   "password": "123",
+    "password": "123",
     "designation": "CEO",
-    "company" : "Biznest",
-    "assignedAsset" : ""
+    "company": "Biznest",
+    "assignedAsset": ""
   },
   {
     "name": "Urjita Sangodkar",
     "email": "urjita@biznest.co.in",
     "role": "Admin",
     "department": "Admin",
-   "password": "123",
+    "password": "123",
     "designation": "CEO",
-    "company" : "Biznest",
-    "assignedAsset" : ""
+    "company": "Biznest",
+    "assignedAsset": ""
   }
 ]

@@ -1,21 +1,33 @@
 import React, { useState, useEffect } from "react";
-import Modal from "../components/Modal";
+import { NewModal } from "../components/NewModal";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
-import { useDispatch } from "react-redux";
+import { IoMdClose } from "react-icons/io";
 import { motion } from "framer-motion";
-import { Checkbox, FormControlLabel, FormGroup } from "@mui/material";
+import {
+  DatePicker,
+  TimePicker,
+  LocalizationProvider,
+} from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import {
+  Checkbox,
+  FormControlLabel,
+  FormGroup,
+  Typography,
+  Grid,
+  Button,
+} from "@mui/material";
 import ReactSelect from "react-select";
 import TestSide from "../components/Sidetest";
 import "../styles/CalenderModal.css";
 import dayjs from "dayjs";
 import { data } from "../utils/data";
-import { toast } from "sonner"; // Import sonner toast
-import { isBefore, parseISO } from "date-fns"; // Import date-fns functions
+import { toast } from "sonner";
 
 const customStyles = {
   menu: (base) => ({
@@ -36,10 +48,8 @@ const extractNames = (data) => {
 };
 
 const Calender = () => {
-  const dispatch = useDispatch();
   const [selectedDate, setSelectedDate] = useState(null);
   const [showModal, setShowModal] = useState(false);
-  const [value, setValue] = useState(dayjs());
   const [eventColor, setEventColor] = useState("");
   const [userData, setUserData] = useState(null);
   const [selectedEvent, setSelectedEvent] = useState(null);
@@ -49,19 +59,6 @@ const Calender = () => {
   const [eventFilter, setEventFilter] = useState([]);
 
   const names = extractNames(data);
-
-  const dayCellClassNames = (dateInfo) => {
-    const today = new Date();
-    const cellDate = new Date(dateInfo.date);
-    today.setHours(0, 0, 0, 0); // Reset time for accurate comparison
-
-    // Add custom class for past dates and today
-    if (cellDate < today) return "fc-disabled-date";
-    if (cellDate.toDateString() === today.toDateString()) return "fc-today";
-
-    // Return empty for future dates
-    return "";
-  };
 
   const [events, setEvents] = useState([
     { title: "New Year 2024", date: "2024-01-01", type: "holiday" },
@@ -123,34 +120,22 @@ const Calender = () => {
     color: "",
   });
 
-  const get30DayRange = (date) => {
-    const start = new Date(date.getFullYear(), date.getMonth(), 1);
-    const daysInMonth = new Date(
-      date.getFullYear(),
-      date.getMonth() + 1,
-      0
-    ).getDate();
-    const end = new Date(
-      date.getFullYear(),
-      date.getMonth(),
-      Math.min(30, daysInMonth)
-    );
-    return { start, end };
-  };
-
   const handleDateClick = (args) => {
     const today = new Date();
     const clickedDate = new Date(args.date);
 
-    // Use date-fns to check if the clicked date is in the past
-    if (isBefore(clickedDate, today)) {
+    // Reset time to start of the day for accurate comparison
+    today.setHours(0, 0, 0, 0);
+    clickedDate.setHours(0, 0, 0, 0);
+
+    // Check if the clicked date is in the past
+    if (clickedDate < today) {
       toast.error("You cannot select past dates!"); // Show toast for past dates
-      return; // Do nothing
+      return;
     }
 
     setSelectedDate(args.dateStr);
     setShowModal(true);
-    console.log("Date is selected");
   };
 
   const handleEventClick = (e) => {
@@ -165,7 +150,6 @@ const Calender = () => {
       agenda: event.extendedProps.agenda,
       color: event.backgroundColor || "default",
     });
-    setShowModal(true);
     setIsEditModal(true);
   };
 
@@ -249,19 +233,7 @@ const Calender = () => {
             <FullCalendar
               plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
               initialView="dayGridMonth"
-              dateClick={(e) => {
-                const selectedDate = new Date(e.date);
-                const today = new Date();
-                today.setHours(0, 0, 0, 0); // Reset time for comparison
-
-                // Prevent interaction with past dates
-                if (selectedDate < today) {
-                  toast.error("Past dates cannot be selected.");
-                  return;
-                }
-
-                handleDateClick(e); // Proceed with logic for valid dates
-              }}
+              dateClick={handleDateClick} // Use directly
               weekends={true}
               eventClick={handleEventClick} // Allow event clicks on all dates
               headerToolbar={{
@@ -269,279 +241,196 @@ const Calender = () => {
                 center: "title",
                 right: "today prev,next",
               }}
-              dayCellClassNames={(arg) => {
-                const date = new Date(arg.date);
-                const today = new Date();
-                today.setHours(0, 0, 0, 0); // Reset time for comparison
-
-                // Add a custom class to past dates
-                if (date < today) {
-                  return "disabled-date";
-                }
-                return "";
-              }}
-              eventDisplay="block"
-              events={events.map((event) => ({
-                ...event,
-                backgroundColor:
-                  event.status === "cancelled"
-                    ? "#FF0000"
-                    : event.backgroundColor,
-              }))}
+              events={filteredEvents}
               timeZone="local"
             />
           </div>
         </div>
       </div>
-      {showModal && (
-        <Modal open={showModal} onClose={() => setShowModal(false)}>
-          {selectedEvent && isEditModal ? (
-            <>
-              <div className="flex align-middle justify-center flex-col gap-10">
-                <TextField
-                  label="Event And Title"
-                  value={selectedEvent?.title}
-                  fullWidth
-                />
-                <div className="container">
-                  <div className="flex-row justify-evenly gap-10">
-                    <TextField
-                      label="Description"
-                      value={selectedEvent?.description}
-                      fullWidth
-                      multiline
-                      rows={1}
-                    />
-                  </div>
-                </div>
-                <div className="relative w-full">
-                  <label
-                    htmlFor="time-input"
-                    className="absolute left-2 transition-all bg-white px-1 pointer-events-none 
-         text-xs -top-2 text-blue-300 " //text-base top-4
-                  >
-                    Date
-                  </label>
 
-                  {/* Input Field */}
-                  <input
-                    type="text"
-                    id="text"
-                    value={selectedEvent?.date}
-                    className="w-full py-2 px-2 text-gray-900 bg-transparent border border-gray-300 rounded-md outline-none focus:border-blue-500 focus:ring focus:ring-blue-200 peer"
-                  />
-                </div>
-              </div>
-              <div className="col-span-2 flex gap-4">
+      {isEditModal && (
+        <NewModal open={isEditModal} onClose={() => setIsEditModal(false)}>
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <div className="flex align-middle justify-center flex-col gap-10 w-[600px]">
+              <div className="flex justify-between items-center w-full mb-4">
+                <Typography variant="h5" fontWeight="bold">
+                  Edit Event
+                </Typography>
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.9 }}
-                  className="w-full py-2 px-4 bg-blue-600 text-white rounded mt-4"
-                  onClick={handleSaveEvent}
+                  type="button"
+                  onClick={() => setIsEditModal(false)}
+                  className=" p-2 bg-white text-[red] border border-red-200 hover:border-red-400 text-2xl rounded-md"
                 >
-                  Edit
-                </motion.button>
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.9 }}
-                  className="w-full py-2 px-4 bg-red-600 text-white rounded mt-4"
-                  onClick={() => {
-                    setShowModal(false);
-                    setIsEditModal(false);
-                  }}
-                >
-                  Cancel
+                  <IoMdClose />
                 </motion.button>
               </div>
-            </>
-          ) : (
-            <div>
-              <h1 className="text-xl text-center my-2 font-bold">Add Events</h1>
-              <Box
-                sx={{
-                  maxWidth: 600,
-                  padding: 3,
-                  bgcolor: "background.paper",
-                  borderRadius: 2,
+
+              <TextField
+                label="Event Title"
+                value={selectedEvent?.title}
+                fullWidth
+                variant="outlined"
+                sx={{ mb: 2 }}
+              />
+
+              <TextField
+                label="Description"
+                value={selectedEvent?.description}
+                fullWidth
+                multiline
+                rows={3}
+                variant="outlined"
+                sx={{ mb: 2 }}
+              />
+
+              <TextField
+                label="Date"
+                type="date"
+                value={selectedEvent?.date || ""}
+                fullWidth
+                variant="outlined"
+                InputLabelProps={{
+                  shrink: true,
                 }}
-                className="bg-white p-6 rounded-lg shadow-md mx-auto"
+                sx={{ mb: 2 }}
+              />
+
+              <Button
+                className="w-full"
+                onClick={handleSaveEvent}
+                type="submit"
+                variant="contained"
+                color="primary"
               >
-                {/* Personal Information */}
-                <h2 className="text-lg font-semibold mb-4">Add Events</h2>
-                <div className="grid grid-cols-1  gap-4">
-                  {/* Name, Mobile, Email, DOB fields */}
-                  <div className="grid grid-cols-1 gap-4">
-                    <TextField
-                      label="Event And Title"
-                      value={newEvent.name}
-                      onChange={(e) =>
-                        setnewEvent({ ...newEvent, name: e.target.value })
-                      }
-                      fullWidth
-                    />
-                  </div>
+                Update Event
+              </Button>
+            </div>
+          </LocalizationProvider>
+        </NewModal>
+      )}
+      {showModal && (
+        <NewModal open={showModal} onClose={() => setShowModal(false)}>
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <Box
+              sx={{
+                maxWidth: 600,
+                padding: 2,
+                bgcolor: "background.paper",
+                borderRadius: 3,
+              }}
+              className="bg-white mx-auto"
+            >
+              <div className="flex justify-between items-center w-full mb-4">
+                <Typography variant="h5" fontWeight="bold">
+                  Add Event
+                </Typography>
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.9 }}
+                  type="button"
+                  onClick={() => setShowModal(false)}
+                  className=" p-2 bg-white text-[red] border border-red-200 hover:border-red-400 text-2xl rounded-md"
+                >
+                  <IoMdClose />
+                </motion.button>
+              </div>
 
-                  <div className="grid grid-cols-2 gap-4">
-                    {/* <label className="text-gray-700 text-sm">{selectedDate}</label> */}
-                    <div className="relative w-full">
-                      <label
-                        htmlFor="time-input"
-                        className="absolute left-2 transition-all bg-white px-1 pointer-events-none 
-                        text-xs -top-2 text-blue-300 " //text-base top-4
-                      >
-                        Date
-                      </label>
+              <Grid container spacing={3}>
+                {/* Event Title */}
+                <Grid item xs={12}>
+                  <TextField
+                    label="Event Title"
+                    value={newEvent.name || ""}
+                    onChange={(e) =>
+                      setnewEvent({ ...newEvent, name: e.target.value })
+                    }
+                    fullWidth
+                    variant="outlined"
+                  />
+                </Grid>
 
-                      {/* Input Field */}
-                      <input
-                        type="text"
-                        id="text"
-                        value={selectedDate}
-                        className="w-full py-2 px-2 text-gray-900 bg-transparent border border-gray-300 rounded-md outline-none focus:border-blue-500 focus:ring focus:ring-blue-200 peer"
-                      />
-                    </div>
+                {/* Date and Time */}
+                <Grid item xs={6}>
+                  <DatePicker
+                    label="Date"
+                    value={dayjs(selectedDate)}
+                    onChange={(newDate) => setSelectedDate(newDate)}
+                    renderInput={(params) => (
+                      <TextField {...params} fullWidth />
+                    )}
+                  />
+                </Grid>
+                <Grid item xs={6}>
+                  <TimePicker
+                    label="Time"
+                    onChange={(newTime) =>
+                      setnewEvent({ ...newEvent, time: newTime })
+                    }
+                    renderInput={(params) => (
+                      <TextField {...params} fullWidth />
+                    )}
+                  />
+                </Grid>
 
-                    <div className="relative w-full">
-                      <label
-                        htmlFor="time-input"
-                        className="absolute left-2 transition-all bg-white px-1 pointer-events-none 
-                    text-xs -top-2 text-blue-300" //text-base top-4
-                      >
-                        Time
-                      </label>
+                {/* React Select */}
+                <Grid item xs={12}>
+                  <Typography variant="subtitle1" gutterBottom>
+                    Select Participants
+                  </Typography>
+                  <ReactSelect
+                    id="name-select"
+                    options={names.map((name) => ({
+                      value: name,
+                      label: name,
+                    }))}
+                    isMulti
+                    styles={customStyles}
+                    value={selectedNames.map((name) => ({
+                      value: name,
+                      label: name,
+                    }))}
+                    onChange={(selectedOptions) =>
+                      setSelectedNames(
+                        selectedOptions.map((option) => option.value)
+                      )
+                    }
+                    placeholder="Select names..."
+                  />
+                </Grid>
 
-                      {/* Input Field */}
-                      <input
-                        type="time"
-                        id="time-input"
-                        value={newEvent.time}
-                        onChange={(e) =>
-                          setnewEvent({ ...newEvent, time: e.target.value })
-                        }
-                        className="w-full py-2 px-2 text-gray-900 bg-transparent border border-gray-300 rounded-md outline-none focus:border-blue-500 focus:ring focus:ring-blue-200 peer"
-                      />
-                    </div>
-                  </div>
-                  <div className="grid grid-cols-1 gap-4">
-                    <div className="relative w-full">
-                      <label
-                        htmlFor="name-select"
-                        className="block text-sm font-medium text-gray-600"
-                      >
-                        Select Names
-                      </label>
-                      <ReactSelect
-                        id="name-select"
-                        options={names.map((name) => ({
-                          value: name,
-                          label: name,
-                        }))}
-                        isMulti
-                        styles={customStyles}
-                        value={selectedNames.map((name) => ({
-                          value: name,
-                          label: name,
-                        }))}
-                        onChange={(selectedOptions) =>
-                          setSelectedNames(
-                            selectedOptions.map((option) => option.value)
-                          )
-                        }
-                        placeholder="Select names..."
-                      />
-                    </div>
-                  </div>
-
+                {/* Agenda */}
+                <Grid item xs={12}>
                   <TextField
                     label="Agenda"
-                    style={{ textAlign: "left", width: "100%" }}
                     value={newEvent.Agenda}
                     onChange={(e) =>
                       setnewEvent({ ...newEvent, Agenda: e.target.value })
                     }
-                    hintText="Message Field"
-                    floatingLabelText="MultiLine and FloatingLabel"
                     multiline
-                    fullWidth
                     rows={2}
+                    fullWidth
+                    variant="outlined"
                   />
+                </Grid>
 
-                  <div className="grid grid-cols-2 gap-4 items-center">
-                    <label>{userData?.name}</label>
-
-                    <div style={{ position: "relative", width: "200px" }}>
-                      <div
-                        onClick={toggleDropdown}
-                        style={{
-                          border: "1px solid #ccc",
-                          padding: "10px",
-                          borderRadius: "5px",
-                          cursor: "pointer",
-                          backgroundColor: eventColor || "#fff",
-                        }}
-                      >
-                        {"Select a color "}
-                      </div>
-                      {isOpen && (
-                        <div
-                          style={{
-                            position: "absolute",
-                            top: "100%",
-                            left: 0,
-                            border: "1px solid #ccc",
-                            background: "#fff",
-                            borderRadius: "5px",
-                            display: "grid",
-                            gridTemplateColumns: "repeat(2, 1fr)",
-                            gap: "10px",
-                            padding: "10px",
-                            zIndex: 10,
-                          }}
-                        >
-                          {colors.map((color, index) => (
-                            <div
-                              key={index}
-                              onClick={() => selectColor(color)}
-                              style={{
-                                backgroundColor: color,
-                                width: "20px",
-                                height: "20px",
-                                borderRadius: "50%",
-                                cursor: "pointer",
-                                border: "1px solid #ccc",
-                              }}
-                            />
-                          ))}
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                </div>
-
-                {/* Role & Department fields */}
-
-                <div className="col-span-2 flex gap-4">
-                  <motion.button
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.9 }}
-                    className="w-full py-2 px-4 bg-blue-600 text-white rounded mt-4"
+                {/* Save and Cancel Buttons */}
+                <Grid item xs={12} sx={{ mt: 3 }}>
+                  <Button
+                    className="w-full"
                     onClick={handleSaveEvent}
+                    type="submit"
+                    variant="contained"
+                    color="primary"
                   >
-                    Save
-                  </motion.button>
-                  <motion.button
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.9 }}
-                    className="w-full py-2 px-4 bg-red-600 text-white rounded mt-4"
-                    onClick={() => setShowModal(false)}
-                  >
-                    Cancel
-                  </motion.button>
-                </div>
-              </Box>
-            </div>
-          )}
-        </Modal>
+                    Create Event
+                  </Button>
+                </Grid>
+              </Grid>
+            </Box>
+          </LocalizationProvider>
+        </NewModal>
       )}
     </>
   );

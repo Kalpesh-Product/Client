@@ -5,8 +5,6 @@ import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormLabel from "@mui/material/FormLabel";
-import { useDispatch } from "react-redux";
-import { closeModal } from "../redux/features/modalSlice";
 import { Country, State, City } from "country-state-city";
 import { motion } from "framer-motion";
 import { useQuery } from "@tanstack/react-query";
@@ -14,8 +12,7 @@ import axios from "axios";
 import { toast } from "sonner";
 import { IoMdClose } from "react-icons/io";
 
-export default function MemberForm({formTitle}) {
-  const dispatch = useDispatch();
+export default function MemberForm({ formTitle, onClose }) {
   const [formData, setFormData] = useState({
     personalInfo: {
       name: "",
@@ -152,7 +149,7 @@ export default function MemberForm({formTitle}) {
 
   const handleSubmit = () => {
     if (validate()) {
-      dispatch(closeModal());
+      onClose();
       toast.success("Successfully created user");
       console.log("Form submitted successfully:", formData);
     }
@@ -170,16 +167,18 @@ export default function MemberForm({formTitle}) {
     >
       {/* Personal Information */}
       <div className="flex justify-between mb-5">
-      <h1 className="text-xl text-center my-2 font-bold w-full">{formTitle}</h1>
-      <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.9 }}
-            type="button"
-            onClick={() => dispatch(closeModal())}
-            className=" p-2 bg-white text-[red] border border-red-200 hover:border-red-400 text-2xl rounded-md"
-          >
-            <IoMdClose />
-          </motion.button>
+        <h1 className="text-xl text-center my-2 font-bold w-full">
+          {formTitle}
+        </h1>
+        <motion.button
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.9 }}
+          type="button"
+          onClick={onClose}
+          className=" p-2 bg-white text-[red] border border-red-200 hover:border-red-400 text-2xl rounded-md"
+        >
+          <IoMdClose />
+        </motion.button>
       </div>
       <h2 className="text-lg font-semibold mb-4">Personal Information</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -357,7 +356,6 @@ export default function MemberForm({formTitle}) {
         >
           Submit
         </motion.button>
-
       </div>
     </Box>
   );
