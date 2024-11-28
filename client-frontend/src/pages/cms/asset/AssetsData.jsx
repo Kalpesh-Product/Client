@@ -11,6 +11,9 @@ import { toast } from "sonner";
 import assignedAssetsData from "./temp_db/AssignedAssets.json";
 import userData from "../../../dummyData/dummyData.json";
 import AgTable from "../../../components/AgTable";
+import dayjs from "dayjs";
+import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
 const AssetsData = ({ data }) => {
   const location = useLocation();
@@ -222,7 +225,7 @@ columns.forEach((column) => {
       {/* Modal to show laptop details */}
       <NewModal open={!!openModal} onClose={handleCloseModal}>
         {openModal === "revoke" && (
-          <Box sx={{ p: 3, maxWidth: 600, mx: "auto" }}>
+          <div className="w-[25vw]">
             <div className="flex justify-between mb-4">
               <Typography sx={{ fontFamily: "Popins-Semibold" }} variant="h4">
                 Revoke Asset
@@ -264,25 +267,18 @@ columns.forEach((column) => {
             {/* Button Group */}
             <div className="flex justify-start gap-x-3 mt-4">
               <button
-                onClick={handleCloseModal}
-                className="p-2 bg-gray-300 text-black rounded-md hover:bg-gray-400"
-              >
-                Cancel
-              </button>
-
-              <button
                 onClick={()=>handleRevokeAsset(asset)}
-                className="p-2 bg-red-600 text-white rounded-md hover:bg-red-700"
+                className="p-2 bg-red-600 text-white rounded-md hover:bg-red-700 flex-1"
               >
                 Revoke
               </button>
             </div>
-          </Box>
+          </div>
         )}
 
         {openModal === "view" && (
           <>
-            <div className="flex flex-col gap-4 p-6 bg-white rounded-md w-full">
+            <div className="flex flex-col gap-4 bg-white rounded-md w-full">
               <div className="flex justify-between mb-4">
                 <Typography sx={{ fontFamily: "Popins-Semibold" }} variant="h4">
                   Details
@@ -410,17 +406,28 @@ columns.forEach((column) => {
                   ))}
                 </TextField>
 
-                <TextField
-                  label="Assignment Date"
-                  name="assignmentDate"
-                  type="date"
-                  value={formData.assignmentDate || ""}
-                  onChange={handleInputChange}
-                  fullWidth
-                  disabled={!isEditing}
-                  variant="outlined"
-                  InputLabelProps={{ shrink: true }}
-                />
+          {/* Purchase Date */}
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <DatePicker
+                label="Assigned Date"
+                value = {dayjs()}
+                disabled={!isEditing}
+                // value={formData.purchaseDate}
+                // onChange={(newDate)=>{
+                //   if (newDate) {
+                //     setFormData({
+                //       ...formData,
+                //       purchaseDate: newDate, 
+                //     });
+                //   }
+                // }}
+                format="DD/MM/YYYY" // Display format in the DatePicker
+                renderInput={(params) => (
+                  <TextField {...params} className="w-full md:w-1/4" />
+                )}
+              />
+            </LocalizationProvider>
+  
 
                 <TextField
                   label="Assignment Time"

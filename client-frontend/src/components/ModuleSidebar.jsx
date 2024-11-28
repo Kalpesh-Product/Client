@@ -51,6 +51,11 @@ import { BsCashCoin } from "react-icons/bs";
 import { AiOutlineProduct, AiOutlineSecurityScan } from "react-icons/ai";
 
 const ModuleSidebar = ({ mainSideBar }) => {
+
+  useEffect(() => {
+    const storedUser = JSON.parse(localStorage.getItem("user"));
+    setUser(storedUser);
+  }, []);
   const location = useLocation();
   const navigate = useNavigate();
   const [user, setUser] = useState("");
@@ -98,11 +103,13 @@ const ModuleSidebar = ({ mainSideBar }) => {
       route: "/customer/kpi",
       icon: <AiOutlineProduct />,
       subMenus: [
-        {
-          title: "Manage asset",
-          route: "/customer/asset/manage",
-          icon: <MdOutlineManageAccounts />,
-        },
+        ...(user.role === "Admin" || user.role === "Master Admin" ? [
+          {
+            title: "Manage asset",
+            route: "/customer/asset/manage",
+            icon: <MdOutlineManageAccounts />,
+          }
+        ] :[]),
         {
           title: "My assets",
           route: "/customer/asset/my-assets",
@@ -308,10 +315,7 @@ const ModuleSidebar = ({ mainSideBar }) => {
 
   const { departmentName } = location.state || {};
 
-  useEffect(() => {
-    const storedUser = JSON.parse(localStorage.getItem("user"));
-    setUser(storedUser);
-  }, []);
+
 
   const departmentMapping = {
     TopManagement: [
