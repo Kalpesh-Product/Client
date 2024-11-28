@@ -139,7 +139,7 @@ const Profile = () => {
         <hr class="border-t border-gray-300 my-4" />
 
         <div className="mx-auto">
-          <ul className="flex  border-b mb-4 gap-4 bg-white p-2 rounded-md">
+          <ul className="flex  gap-4 bg-white p-2 rounded-t-md">
             <li className=" text-center w-1/2" role="presentation">
               <button
                 className={`text-md py-2 w-full hover:bg-gray-100  ${
@@ -201,7 +201,7 @@ const Profile = () => {
               </button>
             </li>
           </ul>
-          <div className="tab-content bg-white rounded-md pb-4">
+          <div className="tab-content bg-white rounded-b-md pb-4">
             {activeTab === "tab-1" && (
               <div
                 className="tab-pane motion-preset-slide-up show active"
@@ -209,7 +209,7 @@ const Profile = () => {
                 role="tabpanel"
               >
                 <div
-                  className="flex flex-col  mt-3"
+                  className="flex flex-col"
                   data-aos="fade-up"
                   data-aos-delay="100"
                 >
@@ -236,7 +236,7 @@ const Profile = () => {
                 role="tabpanel"
               >
                 <div
-                  className="flex flex-col  mt-3"
+                  className="flex flex-col"
                   data-aos="fade-up"
                   data-aos-delay="100"
                 >
@@ -398,7 +398,7 @@ const Profile = () => {
                     role="tabpanel"
                   >
                     <div
-                      className="flex flex-col items-center justify-center mt-3"
+                      className="flex flex-col items-center justify-center"
                       data-aos="fade-up"
                       data-aos-delay="100"
                     >
@@ -413,7 +413,7 @@ const Profile = () => {
                     role="tabpanel"
                   >
                     <div
-                      className="flex flex-col items-center justify-center mt-3"
+                      className="flex flex-col items-center justify-center"
                       data-aos="fade-up"
                       data-aos-delay="100"
                     >

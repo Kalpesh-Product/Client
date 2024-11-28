@@ -30,7 +30,7 @@ const AddAssetForm = ({ title, handleClose, user }) => {
     purchaseDate: dayjs(),
     warranty: "",
     location: "",
-    status: "active",
+    status: 'active',
   });
 
   const storedUser = user;
@@ -61,26 +61,36 @@ const AddAssetForm = ({ title, handleClose, user }) => {
   const handleSubmit = async (e) => {
     try {
       e.preventDefault();
-
-      if(user.role === 'Admin'){
-        console.log(formData)
-        const newAsset = {...formData, id:assetsData.length + 1}
-        assetsData.push(newAsset)
+  
+      // Retrieve the existing requests from localStorage or initialize an empty array
+      const storedRequests = JSON.parse(localStorage.getItem("asset")) || [];
+  
+      if (user.role === 'Admin') {
+        console.log(formData);
+        const newAsset = { ...formData, id: assetsData.length + 1 };
+        assetsData.push(newAsset);
         toast.success("Asset added successfully!");
-      }else if(user.role === 'Employee'){
-        toast.success("Request sent to admin")
-        const addRequest = {...formData, id:requests.length + 1}
-        requests.push(addRequest)
-        localStorage.setItem("asset", JSON.stringify(requests))
+      } else if (user.role === 'Employee') {
+        toast.success("Request sent to admin");
+        
+        // Create a new request and add it to the stored requests array
+        const addRequest = { ...formData, id: storedRequests.length + 1 };
+        const updatedRequests = [...storedRequests, addRequest];
+  
+        // Save the updated requests array back to localStorage
+        localStorage.setItem("asset", JSON.stringify(updatedRequests));
       }
-      
-    } catch {
+    } catch (error) {
       toast.error("Error adding asset");
     } finally {
       handleClose();
-      console.log(requests)
+      
+      // For debugging
+      const currentRequests = JSON.parse(localStorage.getItem("asset"));
+      console.log(currentRequests);
     }
   };
+  
 
   return (
     <Box
