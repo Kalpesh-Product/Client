@@ -493,9 +493,9 @@ const TodaysTickets = () => {
               {/* <div>AddT icket Form</div> */}
               <div className="">
                 <div className=" mx-auto">
-                  <h1 className="text-xl text-center my-2 font-bold">
+                  {/* <h1 className="text-xl text-center my-2 font-bold">
                     Ticket Details
-                  </h1>
+                  </h1> */}
 
                   <p>
                     <span className="font-bold">Ticket Title : </span>
