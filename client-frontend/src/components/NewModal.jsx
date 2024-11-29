@@ -2,11 +2,10 @@ import React from "react";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 
-export const NewModal = ({ open, onClose, children }) => {
+export const NewModal = ({ open, children }) => {
   return (
     <Dialog
       open={open}
-      onClose={onClose}
       PaperProps={{
         style: {
           width: "auto",
@@ -18,7 +17,9 @@ export const NewModal = ({ open, onClose, children }) => {
         },
       }}
     >
-      <DialogContent className="motion-preset-fade-sm">{children}</DialogContent>
+      <DialogContent className="motion-preset-fade-sm">
+        {children}
+      </DialogContent>
     </Dialog>
   );
 };
