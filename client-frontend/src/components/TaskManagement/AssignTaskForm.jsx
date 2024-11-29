@@ -184,8 +184,9 @@ const AssignTaskForm = ({
       <Box
         sx={{
           maxWidth: 600,
+          minWidth:600,
           mx: "auto",
-          p: 3,
+          p: 2,
           borderRadius: 2,
           fontFamily: "Popins-SemiBold",
         }}
