@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Box, FormControl, Select, MenuItem, TextField } from "@mui/material";
 import { CSVLink } from "react-csv";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -11,6 +11,7 @@ export default function BookingReports() {
   const [selectedStatus, setSelectedStatus] = useState("All");
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
+  const [loggedInUser, setLoggedInUser] = useState("");
 
   // Dummy data for bookings
   const bookings = [
@@ -80,17 +81,61 @@ export default function BookingReports() {
       credits: 20,
       status: "Ongoing",
     },
+    {
+      id: 7,
+      department: "Tech",
+      name: "Kalpesh Naik",
+      date: "2024-11-22",
+      startTime: "10:00 AM",
+      endTime: "12:00 PM",
+      duration: "2h",
+      credits: 25,
+      status: "Upcoming",
+    },
+    {
+      id: 8,
+      department: "Tech",
+      name: "Aiwinraj KS",
+      date: "2024-11-23",
+      startTime: "01:00 PM",
+      endTime: "03:00 PM",
+      duration: "2h",
+      credits: 30,
+      status: "Ongoing",
+    },
+    {
+      id: 9,
+      department: "Tech",
+      name: "Anushri Bhagat",
+      date: "2024-11-24",
+      startTime: "09:30 AM",
+      endTime: "11:00 AM",
+      duration: "1h 30m",
+      credits: 20,
+      status: "Cancelled",
+    },
   ];
+
+  useEffect(() => {
+    const storedUser = JSON.parse(localStorage.getItem("user"));
+    setLoggedInUser(storedUser || { role: "Guest", department: "All" });
+  }, []);
 
   // Filtering logic
   const filteredBookings = bookings.filter((booking) => {
     const isDepartmentMatch =
-      selectedDepartment === "All" || booking.department === selectedDepartment;
+      loggedInUser?.role === "Employee"
+        ? booking.department === loggedInUser.department // Employees see only their department's bookings
+        : selectedDepartment === "All" ||
+          booking.department === selectedDepartment;
+
     const isStatusMatch =
       selectedStatus === "All" || booking.status === selectedStatus;
+
     const isDateMatch =
       (!startDate || new Date(booking.date) >= new Date(startDate)) &&
       (!endDate || new Date(booking.date) <= new Date(endDate));
+
     return isDepartmentMatch && isStatusMatch && isDateMatch;
   });
 
@@ -148,17 +193,21 @@ export default function BookingReports() {
           {/* Department Filter */}
           <FormControl className="w-full md:w-1/4">
             <Select
-              labelId="department-filter-label"
+              disabled={loggedInUser.role === "Employee"}
               value={selectedDepartment}
               onChange={(e) => setSelectedDepartment(e.target.value)}
               size="small"
-              className="bg-white"
             >
-              <MenuItem value="All">All Departments</MenuItem>
+              <MenuItem value="All">
+                {loggedInUser.role === "Employee"
+                  ? loggedInUser.department
+                  : "All Departments"}
+              </MenuItem>
               <MenuItem value="IT">IT</MenuItem>
               <MenuItem value="Admin">Admin</MenuItem>
               <MenuItem value="HR">HR</MenuItem>
               <MenuItem value="Finance">Finance</MenuItem>
+              <MenuItem value="Tech">Tech</MenuItem>
             </Select>
           </FormControl>
 
