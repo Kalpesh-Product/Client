@@ -56,12 +56,20 @@ body {
 .fc .fc-view-harness {
   background: #ffffff;
 }
-
-.fc-disabled-date {
-  pointer-events: none; /* Prevent interaction */
-  background-color: #f0f0f0; /* Gray background for clarity */
-  color: #a0a0a0; /* Light text color */
-  cursor: not-allowed; /* Show "not allowed" cursor */
+.fc .fc-toolbar.fc-header-toolbar {
+  padding: 0.5em 0em 1em 0em;
+  margin-bottom: 0;
+}
+.fc .fc-toolbar {
+  background-color: white;
+}
+.fc .fc-button-primary::first-letter {
+  text-transform: uppercase;
+}
+.fc .fc-button-primary:disabled {
+  background-color: rgba(176, 235, 255, 0.36);
+  color: gray;
+  cursor: no-drop;
 }
 /* .css-si86to-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input.css-si86to-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input.css-si86to-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input  {
   padding-right: 0px !important;
@@ -70,4 +78,3 @@ body {
 .css-si86to-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input.css-si86to-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input.css-si86to-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input {
   padding-right: 0px !important;
 }
-

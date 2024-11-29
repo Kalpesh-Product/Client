@@ -56,48 +56,167 @@ const Calender = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isEditModal, setIsEditModal] = useState(false);
   const [selectedNames, setSelectedNames] = useState([]);
-  const [eventFilter, setEventFilter] = useState([]);
+  const [eventFilter, setEventFilter] = useState(["holiday", "meeting", "event"]);
 
   const names = extractNames(data);
 
   const [events, setEvents] = useState([
-    { title: "New Year 2024", date: "2024-01-01", type: "holiday" },
-    { title: "Republic Day", date: "2024-01-26", type: "holiday" },
-    { title: "Good Friday", date: "2024-03-29", type: "holiday" },
-    { title: "Gudi Padva", date: "2024-04-09", type: "holiday" },
-    { title: "Eid Al-Fitr (Ramadan)", date: "2024-01-26", type: "holiday" },
-    { title: "Labor Day", date: "2024-05-01", type: "holiday" },
-    { title: "Eid Al-Adha (Bakri Eid)", date: "2024-06-17", type: "holiday" },
-    { title: "Independance Day", date: "2024-08-15", type: "holiday" },
-    { title: "Ganesh Chaturthi", date: "2024-09-07", type: "holiday" },
-    { title: "Gandhi Jayanti", date: "2024-10-02", type: "holiday" },
-    { title: "Diwali", date: "2024-10-31", type: "holiday" },
+    {
+      title: "New Year 2024",
+      date: "2024-01-01",
+      type: "holiday",
+      backgroundColor: "green",
+    },
+    {
+      title: "Republic Day",
+      date: "2024-01-26",
+      type: "holiday",
+      backgroundColor: "green",
+    },
+    {
+      title: "Strategy Sync",
+      date: "2024-11-27",
+      type: "meeting",
+      backgroundColor: "#3454D1",
+    },
+    {
+      title: "Innovation Jam",
+      date: "2024-12-01",
+      type: "meeting",
+      backgroundColor: "#3454D1",
+    },
+    {
+      title: "Team Bonding Event",
+      date: "2024-11-10",
+      type: "event",
+      backgroundColor: "rebeccapurple",
+    },
+    {
+      title: "Tech Conference",
+      date: "2024-11-25",
+      type: "event",
+      backgroundColor: "rebeccapurple",
+    },
+    {
+      title: "Eid Al-Adha (Bakri Eid)",
+      date: "2024-06-17",
+      type: "holiday",
+      backgroundColor: "green",
+    },
+    {
+      title: "Independance Day",
+      date: "2024-08-15",
+      type: "holiday",
+      backgroundColor: "green",
+    },
+    {
+      title: "Ganesh Chaturthi",
+      date: "2024-09-07",
+      type: "holiday",
+      backgroundColor: "green",
+    },
+    {
+      title: "Gandhi Jayanti",
+      date: "2024-10-02",
+      type: "holiday",
+      backgroundColor: "green",
+    },
+    {
+      title: "Diwali",
+      date: "2024-10-31",
+      type: "holiday",
+      backgroundColor: "green",
+    },
     {
       title: "Feast Of Saint Fransis Xavior",
       date: "2024-12-03",
-      backgroundColor: "#FFC300",
       type: "holiday",
+      backgroundColor: "green",
     },
-    { title: "Goa Liberation Day", date: "2024-12-03" },
-    { title: "Christmas", date: "2024-12-25" },
-    { title: "Strategy Sync", date: "2024-11-27", type: "meeting" },
-    { title: "Innovation Jam", date: "2024-12-01", type: "meeting" },
-    { title: "Project Kickoff", date: "2024-12-05", type: "meeting" },
-    { title: "Feedback Loop", date: "2024-12-10", type: "meeting" },
-    { title: "Team Bonding Event", date: "2024-11-10", type: "event" },
-    { title: "Marketing Strategy Review", date: "2024-11-15", type: "meeting" },
-    { title: "Quarterly Sales Planning", date: "2024-11-20", type: "meeting" },
-    { title: "Employee Wellness Workshop", date: "2024-11-22", type: "event" },
-    { title: "Tech Conference", date: "2024-11-25", type: "event" },
-    { title: "End of Month Wrap-up", date: "2024-11-30", type: "meeting" },
-    { title: "Deep Dive into Q1 Goals", date: "2024-11-18", type: "meeting" },
-    { title: "Product Launch Briefing", date: "2024-11-08", type: "meeting" },
+    {
+      title: "Goa Liberation Day",
+      date: "2024-12-03",
+      type: "holiday",
+      backgroundColor: "green",
+    },
+    {
+      title: "Christmas",
+      date: "2024-12-25",
+      type: "holiday",
+      backgroundColor: "green",
+    },
+    {
+      title: "Strategy Sync",
+      date: "2024-11-27",
+      type: "meeting",
+      backgroundColor: "#3454D1",
+    },
+    {
+      title: "Innovation Jam",
+      date: "2024-12-01",
+      type: "meeting",
+      backgroundColor: "#3454D1",
+    },
+    {
+      title: "Project Kickoff",
+      date: "2024-12-05",
+      type: "meeting",
+      backgroundColor: "#3454D1",
+    },
+    {
+      title: "Feedback Loop",
+      date: "2024-12-10",
+      type: "meeting",
+      backgroundColor: "#3454D1",
+    },
+    {
+      title: "Marketing Strategy Review",
+      date: "2024-11-15",
+      type: "meeting",
+      backgroundColor: "#3454D1",
+    },
+    {
+      title: "Quarterly Sales Planning",
+      date: "2024-11-20",
+      type: "meeting",
+      backgroundColor: "#3454D1",
+    },
+    {
+      title: "Employee Wellness Workshop",
+      date: "2024-11-22",
+      type: "event",
+      backgroundColor: "rebeccapurple",
+    },
+    {
+      title: "End of Month Wrap-up",
+      date: "2024-11-30",
+      type: "meeting",
+      backgroundColor: "#3454D1",
+    },
+    {
+      title: "Deep Dive into Q1 Goals",
+      date: "2024-11-18",
+      type: "meeting",
+      backgroundColor: "#3454D1",
+    },
+    {
+      title: "Product Launch Briefing",
+      date: "2024-11-08",
+      type: "meeting",
+      backgroundColor: "#3454D1",
+    },
     {
       title: "Corporate Social Responsibility Planning",
       date: "2024-11-05",
       type: "event",
+      backgroundColor: "rebeccapurple",
     },
-    { title: "HR Policy Review", date: "2024-11-13", type: "meeting" },
+    {
+      title: "HR Policy Review",
+      date: "2024-11-13",
+      type: "meeting",
+      backgroundColor: "#3454D1",
+    },
   ]);
   const [filteredEvents, setFilteredEvents] = useState(events);
   useEffect(() => {
@@ -154,7 +273,12 @@ const Calender = () => {
   };
 
   const handleSaveEvent = () => {
-    if (newEvent.name) {
+    if (newEvent.name && newEvent.type) {
+      let color = "gray"; // Default color
+      if (newEvent.type === "holiday") color = "green";
+      if (newEvent.type === "meeting") color = "#3454D1";
+      if (newEvent.type === "event") color = "rebeccapurple";
+
       setEvents([
         ...events,
         {
@@ -163,11 +287,13 @@ const Calender = () => {
           description: newEvent.description,
           time: newEvent.time,
           agenda: newEvent.Agenda,
-          backgroundColor: eventColor,
+          backgroundColor: color,
         },
       ]);
+      setShowModal(false);
+    } else {
+      toast.error("Please provide a valid event name and type!");
     }
-    setShowModal(false);
   };
 
   const colors = [
@@ -189,15 +315,6 @@ const Calender = () => {
     }
   }, []);
 
-  const toggleDropdown = () => setIsOpen(!isOpen);
-  const selectColor = (color) => {
-    setEventColor(color);
-    setIsOpen(false);
-  };
-  const removeChip = (name) => {
-    setSelectedNames(selectedNames.filter((selected) => selected !== name));
-  };
-
   return (
     <>
       <div class="flex ">
@@ -206,7 +323,7 @@ const Calender = () => {
           <div className="flex justify-between items-center">
             <h1 className=" font-bold text-4xl pb-5">Calendar</h1>
             <FormGroup row>
-              {["Holiday", "Meeting"].map((type) => (
+              {["holiday", "meeting", "event"].map((type) => (
                 <FormControlLabel
                   key={type}
                   control={
@@ -215,15 +332,15 @@ const Calender = () => {
                       onChange={(e) => {
                         const selectedType = e.target.value;
                         setEventFilter((prevFilter) =>
-                          prevFilter.includes(selectedType)
-                            ? prevFilter.filter((type) => type !== selectedType)
-                            : [...prevFilter, selectedType]
+                          e.target.checked
+                            ? [...prevFilter, selectedType]
+                            : prevFilter.filter((t) => t !== selectedType)
                         );
                       }}
-                      value={type}
+                      value={type} // Ensure the value matches the event type
                     />
                   }
-                  label={type}
+                  label={type.charAt(0).toUpperCase() + type.slice(1)} // Capitalize the label
                 />
               ))}
             </FormGroup>
@@ -233,25 +350,29 @@ const Calender = () => {
             <FullCalendar
               plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
               initialView="dayGridMonth"
-              dateClick={handleDateClick} // Use directly
+              dateClick={handleDateClick}
               weekends={true}
-              eventClick={handleEventClick} // Allow event clicks on all dates
+              eventClick={handleEventClick}
               headerToolbar={{
                 left: "dayGridMonth,timeGridWeek,timeGridDay",
                 center: "title",
                 right: "today prev,next",
               }}
-              events={filteredEvents}
+              events={filteredEvents} // Already filtered by type
+              eventContent={(eventInfo) => (
+                <div>
+                  <b>{eventInfo.event.title}</b>
+                </div>
+              )}
               timeZone="local"
             />
           </div>
         </div>
       </div>
-
       {isEditModal && (
         <NewModal open={isEditModal} onClose={() => setIsEditModal(false)}>
           <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <div className="flex align-middle justify-center flex-col gap-10 w-[600px]">
+            <div className="flex align-middle justify-center flex-col gap-2 w-[600px]">
               <div className="flex justify-between items-center w-full mb-4">
                 <Typography variant="h5" fontWeight="bold">
                   Edit Event
@@ -285,16 +406,12 @@ const Calender = () => {
                 sx={{ mb: 2 }}
               />
 
-              <TextField
+              <DatePicker
                 label="Date"
-                type="date"
-                value={selectedEvent?.date || ""}
-                fullWidth
-                variant="outlined"
-                InputLabelProps={{
-                  shrink: true,
-                }}
-                sx={{ mb: 2 }}
+                value={selectedEvent?.date || null}
+                renderInput={(params) => (
+                  <TextField {...params} fullWidth sx={{ mb: 2 }} />
+                )}
               />
 
               <Button

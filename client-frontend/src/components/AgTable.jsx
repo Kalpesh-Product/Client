@@ -11,6 +11,8 @@ const AgTable = React.memo(
       filter: true,
       flex: 1,
       autoHeight: true,
+      filter: "agTextColumnFilter",
+      floatingFilter: true,
       cellStyle: {
         display: "flex",
         justifyContent: "center",
@@ -31,7 +33,8 @@ const AgTable = React.memo(
     return (
       <div
         className="ag-theme-alpine border-none"
-        style={{ width: "100%", fontFamily: "Popins-Regular"}}>
+        style={{ width: "100%", fontFamily: "Popins-Regular" }}
+      >
         <AgGridReact
           rowData={data}
           columnDefs={columns}

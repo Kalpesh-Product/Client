@@ -137,7 +137,7 @@ export default function RoomBookingDash() {
   }, []);
 
   return (
-    <div className="p-6 bg-gray-100 w-[80vw] md:w-full">
+    <div className="p-4 bg-gray-100 w-[80vw] md:w-full">
       {/* Header */}
       <h1 className="text-3xl mb-8 font-bold">Key insights</h1>
       <div className="w-full flex justify-between items-center mb-6">

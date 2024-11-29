@@ -9,7 +9,6 @@ import {
   Select as MuiSelect,
   MenuItem,
   FormControl,
-  InputLabel,
 } from "@mui/material";
 import Select from "react-select";
 import {

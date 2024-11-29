@@ -237,7 +237,7 @@ const TicketMembers = () => {
 
       <div className="p-4 pb-0">
         <div className="mb-4 flex justify-between">
-          <h1 className="text-3xl font-bold ">All Members</h1>
+          <h1 className="text-2xl font-bold ">All Members</h1>
           <button
             //   onClick={handleOpenTicket}
             onClick={openModal}

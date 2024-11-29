@@ -80,15 +80,9 @@ export default function AddRooms() {
 
   return (
     <section className="p-4 flex flex-col justify-center gap-4">
-      <div className="flex justify-between items-center p-4">
-        <Typography
-          variant="h4"
-          component="h1"
-          className="mb-6"
-          fontWeight="bold"
-        >
-          Meeting Rooms
-        </Typography>
+      <div className="flex justify-between items-center">
+        <h1 className="font-bold text-2xl mb-2">Meeting Rooms</h1>
+          
         <button
           onClick={() => {
             resetForm();

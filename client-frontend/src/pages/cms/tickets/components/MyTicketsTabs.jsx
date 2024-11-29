@@ -21,7 +21,7 @@ const MyTicketsTabs = () => {
     <div>
       <div className=" w-full p-4 pb-0 text-lg border-b-0">
         {/* <h2 className="text-2xl font-bold">My Tickets</h2> */}
-        <h2 className="text-3xl  font-bold">My Tickets</h2>
+        <h2 className="text-2xl  font-bold">My Tickets</h2>
       </div>
 
       <div>

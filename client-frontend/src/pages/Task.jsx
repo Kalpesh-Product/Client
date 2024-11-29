@@ -323,7 +323,7 @@ const Task = () => {
     <div className="flex min-h-screen">
         
         <div className='w-full p-6 motion-preset-blur-right-md  max-w-screen-xl mx-auto '>
-        <h2 className="text-2xl  ">Tasks</h2>
+        <h2 className="text-2xl mb-4">Tasks</h2>
         <div className="grid grid-cols-4 gap-4 mt-5">
     {/* Total Tasks */}
     <div className="bg-white p-4 shadow-md rounded-lg flex items-center justify-center flex-col cursor-pointer" onClick={navigateProjectList}>
@@ -362,7 +362,8 @@ const Task = () => {
           </div>
         </div>
 
-  <div className="flex flex-wrap items-center justify-between mt-10 gap-4">
+<div className='bg-white px-2 p-2'>
+  <div className="flex flex-wrap items-center justify-between mt-5 gap-4">
     {/* Left Side: Search, Priority Dropdown, and Date Filter */}
    
       {/* Search Field */}
@@ -421,7 +422,7 @@ const Task = () => {
   
 
   {/* Tabular section */}
-  <div className='mt-5 overflow-auto w-full max-w-screen-xl mx-auto  motion-preset-blur-right-md' style={{fontFamily:"Popins-Regular"}}>
+  <div className='mt-5 overflow-auto w-full max-w-screen-xl mx-auto  motion-preset-blur-right-md ' style={{fontFamily:"Popins-Regular"}}>
   {/* <Paper sx={{ height: 400, width: "100%", alignItems:"center" , display:"flex", justifyContent:"center"}}> */}
   <AgTable
       data={filteredTasks}
@@ -431,6 +432,7 @@ const Task = () => {
     />
     {/* </Paper> */}
 
+</div>
 </div>
         </div>
         
