@@ -81,6 +81,25 @@ import { Card } from "@mui/material";
 const Services = () => {
   const [user, setUser]=useState("")
 
+  // const handleSelect = (title) => {
+  //   setSelectedCards((prev) => {
+
+  //     const isInQuickLaunch = quickLaunchIcons.some(
+  //       (icon) => icon.title === title
+  //     );
+
+  //     if (isInQuickLaunch) {
+  //       return prev.filter((t) => t !== title);
+  //     } else {
+     
+  //       return prev.includes(title)
+  //         ? prev.filter((t) => t !== title)
+  //         : [...prev, title];
+  //     }
+  //   });
+  // };
+
+
   const services_frontend = [
     {
       id: 1,
@@ -690,15 +709,15 @@ const Services = () => {
               <div className="grid grid-cols-2 sm:grid-cols-6 gap-8 mb-12">
                 {services_frontend.map((service) => (
                   <div className="flex justify-center items-center">
-                    {/* <Card
+                    <Card
                       key={service.id}
                       title={service.title}
                       iconSrc={service.image}
-                      isSelected={
-                        selectedCards.includes(service.title) ||
-                      }
-                      handleSelect={handleSelect}
-                    /> */}
+                      // isSelected={
+                      //   selectedCards.includes(service.title) ||
+                      // }
+                      // handleSelect={handleSelect}
+                    />
                   </div>
                 ))}
               </div>
