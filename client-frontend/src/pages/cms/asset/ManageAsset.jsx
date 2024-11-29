@@ -39,9 +39,6 @@ const ManageAsset = () => {
   const [activeTab, setActiveTab] = useState(0);
   const [requests, setRequests] = useState([]);
 
-
-  console.log("Approval is : ",approval)
-
   useEffect(() => {
     const storedUser = JSON.parse(localStorage.getItem("user"));
     setUser(storedUser); // Set user here
@@ -135,6 +132,63 @@ const ManageAsset = () => {
               onClick={() => handleViewDetails(params.data)}>
               Details
             </button>
+            {/* <button
+              style={{
+                backgroundColor: "#0db4ea",
+                color: "white",
+                border: "none",
+                paddingLeft: "0.5rem",
+                paddingRight: "0.5rem",
+                borderRadius: "4px",
+                cursor: "pointer",
+                height: "100%",
+              }}
+              onClick={() => handleAssignAsset(params.data)}
+            >
+              Assign
+            </button> */}
+          </div>
+        ) : (
+          <span style={{ color: "gray", fontStyle: "italic" }}>Revoked</span>
+        ),
+    },
+  ];
+  const assignAssetsColumns = [
+    { field: "id", headerName: "ID", flex: 1 },
+    { field: "department", headerName: "Department", flex: 1 },
+    { field: "assetNumber", headerName: "Asset Number", flex: 1 },
+    { field: "category", headerName: "Category", flex: 1 },
+    // { field: "assetName", headerName: "Asset Name", width: 150 },
+    { field: "brandName", headerName: "Brand", flex: 1 },
+    { field: "price", headerName: "Price", flex: 1 },
+    { field: "quantity", headerName: "Quantity", flex: 1 },
+    // { field: "totalPrice", headerName: "Total Price", flex: 1 },
+    // { field: "vendorName", headerName: "Vendor", flex: 200 },
+    { field: "purchaseDate", headerName: "Purchase Date", flex: 1 },
+    { field: "warranty", headerName: "Warranty (Months)", flex: 1 },
+    // { field: "location", headerName: "Location", flex: 150 },
+    {
+      field: "actions",
+      filter: false,
+      headerName: "Actions",
+      flex: 1,
+      cellRenderer: (params) =>
+        params.data.status !== "Revoked" ? (
+          <div className="p-2 flex gap-2">
+            {/* <button
+              style={{
+                backgroundColor: "#0db4ea",
+                color: "white",
+                border: "none",
+                paddingLeft: "0.5rem",
+                paddingRight: "0.5rem",
+                borderRadius: "4px",
+                cursor: "pointer",
+                height: "100%",
+              }}
+              onClick={() => handleViewDetails(params.data)}>
+              Details
+            </button> */}
             <button
               style={{
                 backgroundColor: "#0db4ea",
@@ -174,38 +228,8 @@ const ManageAsset = () => {
       filter: false,
       headerName: "Status",
       flex: 1,
-      cellRenderer: (params) => (
+      cellRenderer: () => (
         <div className="p-2 flex gap-2">
-          {/* <button
-            style={{
-              backgroundColor: "#0db4ea",
-              color: "white",
-              border: "none",
-              paddingLeft: "0.5rem",
-              paddingRight: "0.5rem",
-              borderRadius: "4px",
-              cursor: "pointer",
-              height: "100%",
-            }}
-            onClick={() => handleViewDetails(params.data)}
-          >
-            Details
-          </button>
-          <button
-            style={{
-              backgroundColor: "#0db4ea",
-              color: "white",
-              border: "none",
-              paddingLeft: "0.5rem",
-              paddingRight: "0.5rem",
-              borderRadius: "4px",
-              cursor: "pointer",
-              height: "100%",
-            }}
-            onClick={() => handleAssignAsset(params.data)}
-          >
-            Assign
-          </button> */}
           <span className="text-yellow-600 italic">Requested</span>
         </div>
       ),
@@ -343,14 +367,22 @@ const ManageAsset = () => {
               fontFamily: "Popins-Semibold",
               padding: "0.5rem",
             }}>
+              {/* 0 */}
             <Tab
               sx={{ borderRight: "1px solid #e4e4e4" }}
-              label="Add/Assign Assets"
+              label="Add Assets"
             />
+            {/* 1 */}
+            <Tab
+              sx={{ borderRight: "1px solid #e4e4e4" }}
+              label="Assign Assets"
+            />
+            {/* 2 */}
             <Tab
               sx={{ borderRight: "1px solid #e4e4e4" }}
               label="Assigned Asset"
             />
+            {/* 3 */}
             {user.role === "Employee" ? (
               <Tab label="Requests" />
             ) : (
@@ -429,14 +461,78 @@ const ManageAsset = () => {
               </div>
             </div>
           )}
-
           {activeTab === 1 && (
+            <div className="w-[72vw] md:w-full transition-all duration-200 ease-in-out bg-white p-2">
+              <div className="flex justify-between gap-4 pb-4">
+                <div className="flex gap-4">
+                  <TextField
+                    label="Search by Brand Name"
+                    variant="outlined"
+                    size="small"
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                  />
+
+                  <FormControl size="small" style={{ minWidth: 220 }}>
+                    {/* <InputLabel>Filter by Asset Name</InputLabel> */}
+                    <TextField
+                      label="Filter by Category"
+                      variant="outlined"
+                      select
+                      size="small"
+                      value={selectedAssetName}
+                      onChange={(e) => setSelectedAssetName(e.target.value)}
+                      sx={{ fontSize: "0.5rem" }}>
+                      <MenuItem value="">All</MenuItem>
+                      {[
+                        ...new Set(assetsData.map((asset) => asset.category)),
+                      ].map((assetName) => (
+                        <MenuItem key={assetName} value={assetName}>
+                          {assetName}
+                        </MenuItem>
+                      ))}
+                    </TextField>
+                  </FormControl>
+
+                  {user.department === "TopManagement" && (
+                    <>
+                      <FormControl size="small" style={{ minWidth: 220 }}>
+                        {/* <InputLabel>Filter by Asset Name</InputLabel> */}
+                        <TextField
+                          label="Filter by Department"
+                          variant="outlined"
+                          select
+                          size="small"
+                          value={selectedDepartment}
+                          onChange={(e) =>
+                            setSelectedDepartment(e.target.value)
+                          }>
+                          <MenuItem value="">All</MenuItem>
+                          <MenuItem value="IT">IT</MenuItem>
+                          <MenuItem value="Maintainance">Maintainance</MenuItem>
+                        </TextField>
+                      </FormControl>
+                    </>
+                  )}
+                </div>
+              </div>
+              <div className="motion-preset-slide-up-md">
+                <AgTable
+                  data={filteredData}
+                  columns={assignAssetsColumns}
+                  paginationPageSize={10}
+                />
+              </div>
+            </div>
+          )}
+
+          {activeTab === 2 && (
             <>
               <AssetsData data={filteredAssigneeAssets} />
             </>
           )}
 
-          {activeTab === 2 && (
+          {activeTab === 3 && (
             <>
               {user.role === "Employee" ? (
                 <div className="w-full p-2 bg-white">

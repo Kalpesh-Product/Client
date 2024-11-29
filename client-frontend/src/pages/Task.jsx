@@ -21,7 +21,6 @@ import Stack from "@mui/material/Stack";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
-
 import AgTable from "../components/AgTable";
 
 import { AgGridReact } from "ag-grid-react";
@@ -168,7 +167,8 @@ const Task = () => {
           sx={{
             paddingTop: "5%", // Centers horizontally
             width: "100%",
-          }}>
+          }}
+        >
           {params.data.Assignes.map((assignee, index) => (
             <Avatar
               key={index}
@@ -197,7 +197,8 @@ const Task = () => {
 
         return (
           <span
-            className={`px-3 py-1 rounded-full text-sm font-medium ${statusClass}`}>
+            className={`px-3 py-1 rounded-full text-sm font-medium ${statusClass}`}
+          >
             {params.value}
           </span>
         );
@@ -240,7 +241,8 @@ const Task = () => {
                 "& fieldset": {
                   border: "none", // Removes border in outlined variant
                 },
-              }}>
+              }}
+            >
               <MenuItem value="" disabled>
                 <svg
                   className="flex-none size-4 text-gray-600 dark:text-neutral-500"
@@ -252,7 +254,8 @@ const Task = () => {
                   stroke="currentColor"
                   strokeWidth={2}
                   strokeLinecap="round"
-                  strokeLinejoin="round">
+                  strokeLinejoin="round"
+                >
                   <circle cx={12} cy={12} r={1} />
                   <circle cx={12} cy={5} r={1} />
                   <circle cx={12} cy={19} r={1} />
@@ -260,7 +263,8 @@ const Task = () => {
               </MenuItem>
               <MenuItem
                 value="view"
-                onClick={() => handleOpenModal(params.data)}>
+                onClick={() => handleOpenModal(params.data)}
+              >
                 View Details
               </MenuItem>
               <MenuItem value="edit">Edit</MenuItem>
@@ -321,20 +325,25 @@ const Task = () => {
 
   return (
     <div className="flex min-h-screen">
-        
-        <div className='w-full p-6 motion-preset-blur-right-md  max-w-screen-xl mx-auto '>
+      <div className="w-full p-6 motion-preset-blur-right-md  max-w-screen-xl mx-auto ">
         <h2 className="text-2xl mb-4">Tasks</h2>
-        <div className="grid grid-cols-4 gap-4 mt-5">
-    {/* Total Tasks */}
-    <div className="bg-white p-4 shadow-md rounded-lg flex items-center justify-center flex-col cursor-pointer" onClick={navigateProjectList}>
-      <h3 className="text-xl font-semibold" >Ongoing Tasks</h3>
-      <div className='items-center justify-center mt-5 font-bold text-cyan-500 text-3xl'>20</div>
-    </div>
+        <div className="grid grid-cols-4 gap-4 my-5">
+          {/* Total Tasks */}
+          <div
+            className="bg-white p-4 shadow-md rounded-lg flex items-center justify-center flex-col cursor-pointer"
+            onClick={navigateProjectList}
+          >
+            <h3 className="text-xl font-semibold">Ongoing Tasks</h3>
+            <div className="items-center justify-center mt-5 font-bold text-cyan-500 text-3xl">
+              20
+            </div>
+          </div>
 
           {/* Upcoming Tasks */}
           <div
             className="bg-white p-4 shadow-md rounded-lg flex items-center justify-center flex-col cursor-pointer"
-            onClick={navigateProjectList}>
+            onClick={navigateProjectList}
+          >
             <h3 className="text-xl font-semibold">Upcoming Tasks</h3>
             <div className="items-center justify-center mt-5 font-bold text-purple-500 text-3xl">
               10
@@ -344,8 +353,9 @@ const Task = () => {
           {/* Tasks in Progress */}
           <div
             className="bg-white p-4 shadow-md rounded-lg flex items-center justify-center flex-col cursor-pointer"
-            onClick={navigateProjectList}>
-            <h3 className="text-xl font-semibold">Pending</h3>
+            onClick={navigateProjectList}
+          >
+            <h3 className="text-xl font-semibold">Pending Tasks</h3>
             <div className="items-center justify-center mt-5 font-bold text-orange-500 text-3xl">
               15
             </div>
@@ -354,7 +364,8 @@ const Task = () => {
           {/* Completed Tasks */}
           <div
             className="bg-white p-4 shadow-md rounded-lg flex items-center justify-center flex-col cursor-pointer"
-            onClick={navigateProjectList}>
+            onClick={navigateProjectList}
+          >
             <h3 className="text-xl font-semibold">Completed Tasks</h3>
             <div className="items-center justify-center mt-5 font-bold text-green-500 text-3xl">
               10
@@ -362,87 +373,98 @@ const Task = () => {
           </div>
         </div>
 
-<div className='bg-white px-2 p-2'>
-  <div className="flex flex-wrap items-center justify-between mt-5 gap-4">
-    {/* Left Side: Search, Priority Dropdown, and Date Filter */}
-   
-      {/* Search Field */}
-     
-       <FormControl  style={{ minWidth: 220 }}>
-      <TextField
-              variant="outlined"
-              size="small"
-              label="Search"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
-          </FormControl>
+        <div className="bg-white px-2 p-2">
+          <div className="flex flex-wrap items-center justify-between mt-0 gap-4">
+            {/* Left Side: Search, Priority Dropdown, and Date Filter */}
 
-      {/* Priority Dropdown */}
+            {/* Search Field */}
 
-        <FormControl size="small" style={{ minWidth: 220 }}>
-          {/* <InputLabel>Filter by Asset Name</InputLabel> */}
-          <TextField label="Priority" variant="outlined" select size="small" onChange={(e) => setPriorityFilter(e.target.value)} >
-            <MenuItem value="">All</MenuItem>
-            <MenuItem value="High">High</MenuItem>
-            <MenuItem value="Low">Low</MenuItem>
-            <MenuItem value="Medium">Medium</MenuItem>
-          </TextField>
-        </FormControl>
+            <FormControl style={{ minWidth: 220 }}>
+              <TextField
+                variant="outlined"
+                size="small"
+                label="Search by Projects"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+            </FormControl>
 
-      {/* Date Filter */}
-      <LocalizationProvider dateAdapter={AdapterDayjs}>
+            {/* Priority Dropdown */}
+
+            <FormControl size="small" style={{ minWidth: 220 }}>
+              {/* <InputLabel>Filter by Asset Name</InputLabel> */}
+              <TextField
+                label="Priority"
+                variant="outlined"
+                select
+                size="small"
+                onChange={(e) => setPriorityFilter(e.target.value)}
+              >
+                <MenuItem value="">All</MenuItem>
+                <MenuItem value="High">High</MenuItem>
+                <MenuItem value="Low">Low</MenuItem>
+                <MenuItem value="Medium">Medium</MenuItem>
+              </TextField>
+            </FormControl>
+
+            {/* Date Filter */}
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DatePicker
                 label="Date"
-                
                 slotProps={{ textField: { size: "small" } }}
-                
                 renderInput={(params) => (
                   <TextField {...params} className="w-full md:w-1/4" />
                 )}
               />
-             
             </LocalizationProvider>
-      
 
-          {/* Department Dropdown */}
+            {/* Department Dropdown */}
 
-      <FormControl size="small" style={{ minWidth: 220 }}>
-          {/* <InputLabel>Filter by Asset Name</InputLabel> */}
-          <TextField label="Department" variant="outlined" select size="small" onChange={(e) => setDepartmentFilter(e.target.value)}>
-            <MenuItem value="">All Departments</MenuItem>
-            <MenuItem value="High">IT</MenuItem>
-            <MenuItem value="Low">HR</MenuItem>
-            <MenuItem value="Medium">TECH</MenuItem>
-            <MenuItem value="Medium">ADMIN</MenuItem>
-          </TextField>
-      </FormControl>
-    </div>
+            <FormControl size="small" style={{ minWidth: 220 }}>
+              {/* <InputLabel>Filter by Asset Name</InputLabel> */}
+              <TextField
+                label="Department"
+                variant="outlined"
+                select
+                size="small"
+                onChange={(e) => setDepartmentFilter(e.target.value)}
+              >
+                <MenuItem value="">All Departments</MenuItem>
+                <MenuItem value="High">IT</MenuItem>
+                <MenuItem value="Low">HR</MenuItem>
+                <MenuItem value="Medium">TECH</MenuItem>
+                <MenuItem value="Medium">ADMIN</MenuItem>
+              </TextField>
+            </FormControl>
+          </div>
 
-  
-
-  {/* Tabular section */}
-  <div className='mt-5 overflow-auto w-full max-w-screen-xl mx-auto  motion-preset-blur-right-md ' style={{fontFamily:"Popins-Regular"}}>
-  {/* <Paper sx={{ height: 400, width: "100%", alignItems:"center" , display:"flex", justifyContent:"center"}}> */}
-  <AgTable
-      data={filteredTasks}
-      columns={columns}
-      paginationPageSize={5}
-     
-    />
-    {/* </Paper> */}
-
-</div>
-</div>
+          {/* Tabular section */}
+          <div
+            className="mt-5 overflow-auto w-full max-w-screen-xl mx-auto  motion-preset-blur-right-md "
+            style={{ fontFamily: "Popins-Regular" }}
+          >
+            {/* <Paper sx={{ height: 400, width: "100%", alignItems:"center" , display:"flex", justifyContent:"center"}}> */}
+            <AgTable
+              data={filteredTasks}
+              columns={columns}
+              paginationPageSize={5}
+            />
+            {/* </Paper> */}
+          </div>
         </div>
-        
-        
-        {modalOpen &&
-(<NewModal open={modalOpen} onClose={closeModal}>
-    <AssignTaskForm title="Add Task" handleClose={closeModal} rows={allRows} setAllRows={setAllRows} selectedRow={selectedRow} /> 
-  </NewModal>)}
+      </div>
 
-
+      {modalOpen && (
+        <NewModal open={modalOpen} onClose={closeModal}>
+          <AssignTaskForm
+            title="Add Task"
+            handleClose={closeModal}
+            rows={allRows}
+            setAllRows={setAllRows}
+            selectedRow={selectedRow}
+          />
+        </NewModal>
+      )}
     </div>
   );
 };

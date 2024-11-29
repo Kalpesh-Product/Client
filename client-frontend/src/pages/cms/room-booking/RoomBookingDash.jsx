@@ -137,7 +137,7 @@ export default function RoomBookingDash() {
   }, []);
 
   return (
-    <div className="p-4 bg-gray-100 w-[80vw] md:w-full">
+    <div className="p-4 bg-gray-100 w-[80vw] md:w-full mt-4">
       {/* Header */}
       <h1 className="text-3xl mb-8 font-bold">Key insights</h1>
       <div className="w-full flex justify-between items-center mb-6">
@@ -152,19 +152,19 @@ export default function RoomBookingDash() {
 
       {/* Widgets */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
-        <div className="hover:scale-105 bg-white shadow-md rounded-lg p-4 cursor-pointer transition">
+        <div className="hover:bg-slate-100 bg-white shadow-md rounded-lg p-4 cursor-pointer transition">
           <h2 className="text-xl font-semibold">Upcoming Bookings</h2>
           <p className="text-4xl font-bold text-blue-600">{upcomingBookings}</p>
         </div>
-        <div className="hover:scale-105 bg-white shadow-md rounded-lg p-4 cursor-pointer transition">
+        <div className="hover:bg-slate-100 bg-white shadow-md rounded-lg p-4 cursor-pointer transition">
           <h2 className="text-xl font-semibold">Total Bookings</h2>
           <p className="text-4xl font-bold text-green-600">{totalBookings}</p>
         </div>
-        <div className="hover:scale-105 bg-white shadow-md rounded-lg p-4 cursor-pointer transition">
+        <div className="hover:bg-slate-100 bg-white shadow-md rounded-lg p-4 cursor-pointer transition">
           <h2 className="text-xl font-semibold">Cancellations</h2>
           <p className="text-4xl font-bold text-red-600">{cancellations}</p>
         </div>
-        <div className="hover:scale-105 bg-white shadow-md rounded-lg p-4 cursor-pointer transition">
+        <div className="hover:bg-slate-100 bg-white shadow-md rounded-lg p-4 cursor-pointer transition">
           <h2 className="text-xl font-semibold">Credits</h2>
           <p className="text-4xl font-bold text-purple-600">{Credits}</p>
         </div>
