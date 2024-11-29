@@ -139,7 +139,7 @@ export default function BookingReports() {
   ];
 
   return (
-    <section className="p-6 bg-gray-100 w-[80vw] md:w-full">
+    <section className="p-4 bg-gray-100 w-[80vw] md:w-full">
       <h1 className="text-2xl font-bold text-gray-800 mb-6">Booking Reports</h1>
 
       <div className="bg-white rounded-md p-2">

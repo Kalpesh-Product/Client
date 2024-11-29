@@ -27,18 +27,18 @@ const ViewTicketsTabs = () => {
 
   return (
     <div>
-      <div className=" w-full p-6 text-lg">
+      <div className=" w-full p-4 text-lg">
         {/* <h2 className="text-2xl font-bold">View Tickets</h2> */}
         {/* <h2 className="text-3xl motion-preset-slide-right-md font-bold"> */}
-        <h2 className="text-3xl  font-bold">View Tickets</h2>
+        <h2 className="text-2xl  font-bold">View Tickets</h2>
       </div>
 
-      <div>
+      <div className="bg-white mx-4 rounded-md">
         {/* Tabs Material UI Start*/}
         <TabContext value={value} sx={{ backgroundColor: "red" }}>
           <Box
             sx={{
-              borderBottom: 1,
+              borderBottom: 0,
               borderColor: "divider",
               width: "100%",
             }}>
@@ -93,13 +93,22 @@ const ViewTicketsTabs = () => {
               onChange={handleChange}
               aria-label="Departments"
               variant="fullWidth"
+              // sx={{
+              //   backgroundColor: "white",
+              //   borderRadius: "10px",
+              //   fontFamily: "Popins-Semibold",
+              //   marginLeft: "2rem",
+              //   marginRight: "2rem",
+              //   textTransform: "uppercase",
+              // }}
+
               sx={{
+                width: "100%",
                 backgroundColor: "white",
-                borderRadius: "10px",
+                borderTopLeftRadius: "10px",
+                borderTopRightRadius: "10px",
                 fontFamily: "Popins-Semibold",
-                marginLeft: "2rem",
-                marginRight: "2rem",
-                textTransform: "uppercase",
+                padding: "0.5rem",
               }}>
               {/* <Tab
                 label="My Tickets"
@@ -112,33 +121,48 @@ const ViewTicketsTabs = () => {
                 <Tab
                   label="External Tickets"
                   value="2"
-                  sx={{ textTransform: "uppercase" }}
+                  sx={{
+                    textTransform: "uppercase",
+                    borderRight: "1px solid #e4e4e4",
+                  }}
                 />
               )}
               <Tab
                 label="Assigned Tickets"
                 value="5"
-                sx={{ textTransform: "uppercase" }}
+                sx={{
+                  textTransform: "uppercase",
+                  borderRight: "1px solid #e4e4e4",
+                }}
               />
 
               <Tab
                 label="Accepted Tickets"
                 value="6"
-                sx={{ textTransform: "uppercase" }}
+                sx={{
+                  textTransform: "uppercase",
+                  borderRight: "1px solid #e4e4e4",
+                }}
               />
               <Tab
                 label="Unresolved Tickets"
                 value="4"
-                sx={{ textTransform: "uppercase" }}
+                sx={{
+                  textTransform: "uppercase",
+                  borderRight: "1px solid #e4e4e4",
+                }}
               />
               <Tab
                 label="Closed Tickets"
                 value="3"
-                sx={{ textTransform: "uppercase" }}
+                sx={{
+                  textTransform: "uppercase",
+                  borderRight: "1px solid #e4e4e4",
+                }}
               />
             </TabList>
           </Box>
-          <TabPanel value="1">
+          <TabPanel value="1" className="p-2">
             <MyTickets />
           </TabPanel>
 
@@ -169,7 +193,7 @@ const ViewTicketsTabs = () => {
             <UnresolvedTickets />
           </TabPanel>
 
-          <TabPanel value="5">
+          <TabPanel value="5" className="" sx={{ padding: "0.5rem" }}>
             {/* <div className="flex gap-4">
               <div>Assigned Tickets</div>
             </div>

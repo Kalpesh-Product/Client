@@ -19,7 +19,7 @@ export default function MyBookings() {
   ];
 
   return (
-    <div className="p-4 bg-gray-50 min-h-screen">
+    <div className="p-4 bg-gray-100 min-h-screen">
       <h1 className="text-2xl font-semibold mb-4  motion-preset-expand">
         My Bookings
       </h1>

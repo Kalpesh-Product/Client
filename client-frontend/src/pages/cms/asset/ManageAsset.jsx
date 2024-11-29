@@ -35,12 +35,23 @@ const ManageAsset = () => {
   const [assetsData, setAssetsData] = useState([]);
   const [isEditing, setIsEditing] = useState(false); // Editing state
   const [formData, setFormData] = useState(assetsData || {}); // Form data state
-
+  const [approval, setApproval] = useState(null)
   const [activeTab, setActiveTab] = useState(0);
+  const [requests, setRequests] = useState([]);
+
+
+  console.log("Approval is : ",approval)
 
   useEffect(() => {
     const storedUser = JSON.parse(localStorage.getItem("user"));
     setUser(storedUser); // Set user here
+  }, []);
+
+  useEffect(() => {
+    const storedRequests = localStorage.getItem("asset");
+    if (storedRequests) {
+      setRequests(JSON.parse(storedRequests));
+    }
   }, []);
 
   useEffect(() => {
@@ -88,23 +99,6 @@ const ManageAsset = () => {
     toast.success("Asset data updated"); // Log updated data
   };
 
-  useEffect(() => {
-    const fetchITAssets = async () => {
-      try {
-        const response = await axios.get("http://localhost:5000/IT");
-
-        if (response.data.length > 0) {
-          const itData = response.data[0];
-          setLaptops(itData.laptops || []);
-          setChargers(itData.chargers || []);
-        }
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    fetchITAssets();
-  }, []);
-
   const laptopColumns = [
     { field: "id", headerName: "ID", flex: 1 },
     { field: "department", headerName: "Department", flex: 1 },
@@ -138,8 +132,7 @@ const ManageAsset = () => {
                 cursor: "pointer",
                 height: "100%",
               }}
-              onClick={() => handleViewDetails(params.data)}
-            >
+              onClick={() => handleViewDetails(params.data)}>
               Details
             </button>
             <button
@@ -153,7 +146,7 @@ const ManageAsset = () => {
                 cursor: "pointer",
                 height: "100%",
               }}
-              onClick={()=> handleAssignAsset(params.data)}
+              onClick={() => handleAssignAsset(params.data)}
             >
               Assign
             </button>
@@ -161,6 +154,126 @@ const ManageAsset = () => {
         ) : (
           <span style={{ color: "gray", fontStyle: "italic" }}>Revoked</span>
         ),
+    },
+  ];
+  const assetRequestColumns = [
+    { field: "department", headerName: "Department" },
+    { field: "assetNumber", headerName: "Asset Number" , filter: 'agNumberColumnFilter'},
+    { field: "category", headerName: "Category" },
+    // { field: "assetName", headerName: "Asset Name", : 1 },
+    { field: "brandName", headerName: "Brand" },
+    { field: "price", headerName: "Price" },
+    { field: "quantity", headerName: "Quantity" },
+    // { field: "totalPrice", headerName: "Total Price",  },
+    { field: "vendorName", headerName: "Vendor" },
+    // { field: "purchaseDate", headerName: "Purchase Date",  },
+    { field: "warranty", headerName: "Warranty (Months)" },
+    { field: "location", headerName: "Location" },
+    {
+      field: "actions",
+      filter: false,
+      headerName: "Status",
+      flex: 1,
+      cellRenderer: (params) => (
+        <div className="p-2 flex gap-2">
+          {/* <button
+            style={{
+              backgroundColor: "#0db4ea",
+              color: "white",
+              border: "none",
+              paddingLeft: "0.5rem",
+              paddingRight: "0.5rem",
+              borderRadius: "4px",
+              cursor: "pointer",
+              height: "100%",
+            }}
+            onClick={() => handleViewDetails(params.data)}
+          >
+            Details
+          </button>
+          <button
+            style={{
+              backgroundColor: "#0db4ea",
+              color: "white",
+              border: "none",
+              paddingLeft: "0.5rem",
+              paddingRight: "0.5rem",
+              borderRadius: "4px",
+              cursor: "pointer",
+              height: "100%",
+            }}
+            onClick={() => handleAssignAsset(params.data)}
+          >
+            Assign
+          </button> */}
+          <span className="text-yellow-600 italic">Requested</span>
+        </div>
+      ),
+    },
+  ];
+  const assetApprovalColumns = [
+    { field: "department", headerName: "Department" },
+    { field: "assetNumber", headerName: "Asset Number" },
+    { field: "category", headerName: "Category" },
+    // { field: "assetName", headerName: "Asset Name", : 1 },
+    { field: "brandName", headerName: "Brand" },
+    { field: "price", headerName: "Price" },
+    { field: "quantity", headerName: "Quantity" },
+    // { field: "totalPrice", headerName: "Total Price",  },
+    { field: "vendorName", headerName: "Vendor" },
+    // { field: "purchaseDate", headerName: "Purchase Date",  },
+    // { field: "warranty", headerName: "Warranty (Months)" },
+    // { field: "location", headerName: "Location" },
+    {
+      field: "actions",
+      filter: false,
+      headerName: "Actions",
+      flex: 1,
+      cellRenderer: (params) =>(
+        <>
+        {approval === null && (
+          <div className="p-2 flex gap-2">
+          <button
+            style={{
+              backgroundColor: "#0db4ea",
+              color: "white",
+              border: "none",
+              paddingLeft: "0.5rem",
+              paddingRight: "0.5rem",
+              borderRadius: "4px",
+              cursor: "pointer",
+              height: "100%",
+            }}
+            onClick={() => setApproval(true)}
+          >
+            Approve
+          </button>
+          <button
+            style={{
+              backgroundColor: "#0db4ea",
+              color: "white",
+              border: "none",
+              paddingLeft: "0.5rem",
+              paddingRight: "0.5rem",
+              borderRadius: "4px",
+              cursor: "pointer",
+              height: "100%",
+            }}
+            onClick={()=>setApproval(false)}
+          >
+            Reject
+          </button>
+        </div>
+        )}
+        {approval === true && (
+          <span className="text-green-700 font-semibold">Approved</span>
+        )}
+        {approval === false && (
+          <span className="text-red-700 font-semibold">Rejected</span>
+        )}
+        </>
+      )
+      
     },
   ];
 
@@ -209,11 +322,9 @@ const ManageAsset = () => {
       : filteredByDepartment.filter(
           (item) => item.department === selectedDepartment
         );
-
-  console.log(selectedDepartment);
   return (
     <div className="p-4">
-      <h1 className="text-2xl font-semibold mb-4  motion-preset-expand">
+      <h1 className="text-2xl font-semibold mb-4 motion-preset-expand">
         Manage Assets
       </h1>
       <div className="rounded-md">
@@ -227,17 +338,19 @@ const ManageAsset = () => {
             sx={{
               width: "100%",
               backgroundColor: "white",
-              borderTopLeftRadius:'10px',
-              borderTopRightRadius:'10px',
+              borderTopLeftRadius: "10px",
+              borderTopRightRadius: "10px",
               fontFamily: "Popins-Semibold",
               padding: "0.5rem",
-            }}
-          >
+            }}>
             <Tab
               sx={{ borderRight: "1px solid #e4e4e4" }}
               label="Add/Assign Assets"
             />
-            <Tab  sx={{ borderRight: "1px solid #e4e4e4" }} label="Assigned Asset" />
+            <Tab
+              sx={{ borderRight: "1px solid #e4e4e4" }}
+              label="Assigned Asset"
+            />
             {user.role === "Employee" ? (
               <Tab label="Requests" />
             ) : (
@@ -267,8 +380,7 @@ const ManageAsset = () => {
                       size="small"
                       value={selectedAssetName}
                       onChange={(e) => setSelectedAssetName(e.target.value)}
-                      sx={{ fontSize: "0.5rem" }}
-                    >
+                      sx={{ fontSize: "0.5rem" }}>
                       <MenuItem value="">All</MenuItem>
                       {[
                         ...new Set(assetsData.map((asset) => asset.category)),
@@ -292,8 +404,7 @@ const ManageAsset = () => {
                           value={selectedDepartment}
                           onChange={(e) =>
                             setSelectedDepartment(e.target.value)
-                          }
-                        >
+                          }>
                           <MenuItem value="">All</MenuItem>
                           <MenuItem value="IT">IT</MenuItem>
                           <MenuItem value="Maintainance">Maintainance</MenuItem>
@@ -305,8 +416,7 @@ const ManageAsset = () => {
 
                 <button
                   onClick={() => handleOpenModal("add")}
-                  className="wono-blue-dark p-2 rounded-md text-white"
-                >
+                  className="wono-blue-dark p-2 rounded-md text-white">
                   Add Asset
                 </button>
               </div>
@@ -323,6 +433,30 @@ const ManageAsset = () => {
           {activeTab === 1 && (
             <>
               <AssetsData data={filteredAssigneeAssets} />
+            </>
+          )}
+
+          {activeTab === 2 && (
+            <>
+              {user.role === "Employee" ? (
+                <div className="w-full p-2 bg-white">
+                  <AgTable
+                    data={requests}
+                    columns={assetRequestColumns}
+                    paginationPageSize={10}
+                  />
+                </div>
+              ) : (
+                <>
+                  <div className="w-full p-2 bg-white">
+                    <AgTable
+                      data={requests}
+                      columns={assetApprovalColumns}
+                      paginationPageSize={10}
+                    />
+                  </div>
+                </>
+              )}
             </>
           )}
         </div>
@@ -350,8 +484,7 @@ const ManageAsset = () => {
                   whileTap={{ scale: 0.9 }}
                   type="button"
                   onClick={handleCloseModal}
-                  className=" p-2 bg-white text-[red] border border-red-200 hover:border-red-400 text-2xl rounded-md"
-                >
+                  className=" p-2 bg-white text-[red] border border-red-200 hover:border-red-400 text-2xl rounded-md">
                   <IoMdClose />
                 </motion.button>
               </div>
@@ -360,8 +493,7 @@ const ManageAsset = () => {
                   variant="contained"
                   onClick={handleEdit}
                   disabled={isEditing}
-                  sx={{ backgroundColor: "#0db4ea", color: "#fff" }}
-                >
+                  sx={{ backgroundColor: "#0db4ea", color: "#fff" }}>
                   Edit
                 </Button>
                 {isEditing && <div className="motion-preset-expand"></div>}
@@ -385,10 +517,10 @@ const ManageAsset = () => {
                   variant="contained"
                   onClick={handleSave}
                   sx={{
-                    backgroundColor: "#0db4ea", color: "#fff" ,
+                    backgroundColor: "#0db4ea",
+                    color: "#fff",
                     width: "full",
-                  }}
-                >
+                  }}>
                   Save
                 </Button>
               )}

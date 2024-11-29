@@ -103,13 +103,18 @@ const ModuleSidebar = ({ mainSideBar }) => {
       route: "/customer/kpi",
       icon: <AiOutlineProduct />,
       subMenus: [
-        ...(user.department === 'IT' || user.department === 'Maintainance' || user.role === "Master Admin" || user.role === "Super Admin" ? [
-          {
-            title: "Manage Asset",
-            route: "/customer/asset/manage",
-            icon: <MdOutlineManageAccounts />,
-          }
-        ] :[]),
+        ...(user.department === "IT" ||
+        user.department === "Maintainance" ||
+        user.role === "Master Admin" ||
+        user.role === "Super Admin"
+          ? [
+              {
+                title: "Manage Asset",
+                route: "/customer/asset/manage",
+                icon: <MdOutlineManageAccounts />,
+              },
+            ]
+          : []),
         {
           title: "My Assets",
           route: "/customer/asset/my-assets",
@@ -157,7 +162,7 @@ const ModuleSidebar = ({ mainSideBar }) => {
           ? []
           : [
               {
-                title: "Ticket Reports",
+                title: "Reports",
                 route: "/customer/tickets/ticket-reports",
                 icon: <HiOutlineClipboardList />,
               },
@@ -346,7 +351,7 @@ const ModuleSidebar = ({ mainSideBar }) => {
       "MAINTENANCE",
       "LEGAL",
     ],
-    Tech: ["FRONTEND","CMS"],
+    Tech: ["FRONTEND", "CMS"],
     Finance: ["FINANCE"],
     Sales: ["SALES"],
     HR: ["HUMAN RESOURCE", "CMS"],

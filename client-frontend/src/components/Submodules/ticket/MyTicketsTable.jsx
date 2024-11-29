@@ -25,14 +25,22 @@ const MyTicketsTable = () => {
       flex: 1,
       type: "singleSelect",
       valueOptions: ["High", "Medium", "Low"],
+      cellRenderer: (params) => {
+        const statusColors = {
+          Medium: "text-blue-600 bg-blue-100",
+          High: "text-red-600 bg-red-100",
+          Low: "text-yellow-600 bg-yellow-100",
+        };
+        const statusClass = statusColors[params.value] || "";
+        return (
+          <span
+            className={`px-3 py-1 rounded-full text-sm font-medium ${statusClass}`}>
+            {params.value}
+          </span>
+        );
+      },
     },
-    {
-      field: "status",
-      headerName: "Status",
-      flex: 1,
-      type: "singleSelect",
-      valueOptions: ["Pending", "In Process", "Resolved"],
-    },
+
     {
       field: "department",
       headerName: "Department",
@@ -41,6 +49,27 @@ const MyTicketsTable = () => {
       valueOptions: ["IT", "HR", "Tech", "Admin"],
     },
     { field: "requestDate", headerName: "Request Date", flex: 1 },
+    {
+      field: "status",
+      headerName: "Status",
+      flex: 1,
+      type: "singleSelect",
+      valueOptions: ["Pending", "In Process", "Resolved"],
+      cellRenderer: (params) => {
+        const statusColors = {
+          "In Process": "text-blue-600 bg-blue-100",
+          Pending: "text-red-600 bg-red-100",
+          Resolved: "text-yellow-600 bg-yellow-100",
+        };
+        const statusClass = statusColors[params.value] || "";
+        return (
+          <span
+            className={`px-3 py-1 rounded-full text-sm font-medium ${statusClass}`}>
+            {params.value}
+          </span>
+        );
+      },
+    },
   ];
 
   const allRows = [
@@ -140,7 +169,7 @@ const MyTicketsTable = () => {
   ];
 
   return (
-    <div className="p-4 pt-0">
+    <div className="px-2 pb-2 pt-0 bg-white mx-4">
       {/* <div className="flex gap-4 h-16 ">
         <div className="pt-2">Filter by :</div>
         <div>
@@ -280,7 +309,7 @@ const MyTicketsTable = () => {
         </div>
       </div> */}
 
-      <div className="flex justify-between p-2 items-center">
+      <div className="flex justify-between p-2 pl-0 items-center">
         {/* <div className="">Filter by :</div> */}
         <FormControl size="small" style={{ minWidth: 220 }}>
           {/* <InputLabel>Filter by Asset Name</InputLabel> */}
@@ -355,7 +384,7 @@ const MyTicketsTable = () => {
             headers={csvHeaders} // Pass the CSV headers
             filename="tickets_report.csv" // Set the filename for the CSV file
             className="wono-blue-dark hover:bg-blue-700 text-white text-sm font-bold p-2 rounded ">
-            Export Report
+            Export
           </CSVLink>
         </div>
       </div>
