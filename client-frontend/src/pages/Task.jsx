@@ -356,7 +356,7 @@ const Task = () => {
 
     {/* Tasks in Progress */}
     <div className="bg-white p-4 shadow-md rounded-lg flex items-center justify-center flex-col cursor-pointer" onClick={navigateProjectList}>
-      <h3 className="text-xl font-semibold" >Pending</h3>
+      <h3 className="text-xl font-semibold" >Pending Tasks</h3>
       <div className='items-center justify-center mt-5 font-bold text-orange-500 text-3xl'>15</div>
     </div>
 
@@ -377,7 +377,7 @@ const Task = () => {
       <TextField
               variant="outlined"
               size="small"
-              label="Search"
+              label="Search by Projects"
               value={searchTerm
               }
              

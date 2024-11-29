@@ -324,11 +324,6 @@ const Tasklist = () => {
         <div className=" mt-10">
           <div className="flex flex-wrap -mx-4">
             <Column
-              title="Ongoing"
-              tasks={tasks.ongoing}
-              titleColor="text-orange-600"
-            />
-            <Column
               title="Upcoming"
               tasks={tasks.upcoming}
               titleColor="text-blue-600"
@@ -337,6 +332,11 @@ const Tasklist = () => {
               title="Pending"
               tasks={tasks.pending}
               titleColor="text-red-600"
+            />
+            <Column
+              title="Ongoing"
+              tasks={tasks.ongoing}
+              titleColor="text-orange-600"
             />
             <Column
               title="Completed"

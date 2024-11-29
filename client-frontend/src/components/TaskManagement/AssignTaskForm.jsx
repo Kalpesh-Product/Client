@@ -67,6 +67,7 @@ const AssignTaskForm = ({
     Title: "",
     description: "",
     date: "",
+    status:""
   });
 
   const [insideAddTask, SetInsideAddTask] = useState({
@@ -82,9 +83,8 @@ const AssignTaskForm = ({
   const statusTypes = [
     "Ongoing",
     "Pending",
-    "Start",
-    "InProgress",
-    "Running late",
+    "Upcomming",
+    "Completed"
   ];
   const Roles = [
     "Frontend Developer",
@@ -234,10 +234,10 @@ const AssignTaskForm = ({
                 <Grid item xs={12}>
                   <TextField
                     label="Assign Role"
-                    name="Task"
+                    name="Role"
                     select
                     fullWidth
-                    value={membersData.Task}
+                    value={membersData.Role}
                     onChange={hadndleEmployeeChange}
                   >
                     {Roles.map((type, index) => (
@@ -549,14 +549,14 @@ const AssignTaskForm = ({
                 {/* Asset Type Dropdown */}
                 <Grid item xs={12}>
                   <TextField
-                    label="Priority"
-                    name="priority"
+                    label="Status"
+                    name="status"
                     select
                     fullWidth
-                    value={formData.priority}
+                    value={projectData.status}
                     onChange={handleChange}
                   >
-                    {priorityType.map((type, index) => (
+                    {statusTypes.map((type, index) => (
                       <MenuItem key={index} value={type}>
                         {type}
                       </MenuItem>
