@@ -37,8 +37,7 @@ const TodaysTickets = () => {
         const statusClass = statusColors[params.value] || "";
         return (
           <span
-            className={`px-3 py-1 rounded-full text-sm font-medium ${statusClass}`}
-          >
+            className={`px-3 py-1 rounded-full text-sm font-medium ${statusClass}`}>
             {params.value}
           </span>
         );
@@ -68,8 +67,7 @@ const TodaysTickets = () => {
         const statusClass = statusColors[params.value] || "";
         return (
           <span
-            className={`px-3 py-1 rounded-full text-sm font-medium ${statusClass}`}
-          >
+            className={`px-3 py-1 rounded-full text-sm font-medium ${statusClass}`}>
             {params.value}
           </span>
         );
@@ -113,8 +111,7 @@ const TodaysTickets = () => {
                 "& fieldset": {
                   border: "none", // Removes border in outlined variant
                 },
-              }}
-            >
+              }}>
               <MenuItem value="" disabled>
                 <svg
                   className="flex-none size-4 text-gray-600 dark:text-neutral-500"
@@ -126,8 +123,7 @@ const TodaysTickets = () => {
                   stroke="currentColor"
                   strokeWidth={2}
                   strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
+                  strokeLinejoin="round">
                   <circle cx={12} cy={12} r={1} />
                   <circle cx={12} cy={5} r={1} />
                   <circle cx={12} cy={19} r={1} />
@@ -340,10 +336,8 @@ const TodaysTickets = () => {
       <div className="mb-2 flex justify-between">
         <h2 className="text-lg">Today's Tickets</h2>
         <button
-          //   onClick={handleOpenTicket}
           onClick={openModal}
-          className="px-6 py-2 rounded-lg text-white wono-blue-dark hover:bg-[#3cbce7] transition-shadow shadow-md hover:shadow-lg active:shadow-inner"
-        >
+          className="px-6 py-2 rounded-lg text-white wono-blue-dark hover:bg-[#3cbce7] transition-shadow shadow-md hover:shadow-lg active:shadow-inner">
           Raise Ticket
         </button>
       </div>
@@ -372,8 +366,7 @@ const TodaysTickets = () => {
                 whileTap={{ scale: 0.9 }}
                 type="button"
                 onClick={closeModal}
-                className=" p-2 bg-white text-[red] border border-red-200 hover:border-red-400 text-2xl rounded-md mr-1"
-              >
+                className=" p-2 bg-white text-[red] border border-red-200 hover:border-red-400 text-2xl rounded-md mr-1">
                 <IoMdClose />
               </motion.button>
             </div>
@@ -395,8 +388,7 @@ const TodaysTickets = () => {
                     borderRadius: 2,
                   }}
                   // className="bg-white p-6 rounded-lg shadow-md mx-auto">
-                  className="bg-white py-6 rounded-lg"
-                >
+                  className="bg-white py-6 rounded-lg">
                   {/* Personal Information */}
                   {/* <h2 className="text-lg font-semibold mb-4">Add Ticket</h2> */}
                   <div className="grid grid-cols-1 gap-4">
@@ -457,8 +449,7 @@ const TodaysTickets = () => {
             <div className="flex justify-center items-center w-full">
               <button
                 className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 w-full"
-                onClick={handleAddTicket}
-              >
+                onClick={handleAddTicket}>
                 Save
               </button>
             </div>
@@ -475,90 +466,88 @@ const TodaysTickets = () => {
       {/* ADD TICKET MODAL END */}
 
       {/* TICKET DETAILS MODAL START */}
-      {isDetailsModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="absolute inset-0" onClick={closeDetailsModal}></div>
+      <NewModal open={isDetailsModalOpen} onClose={closeDetailsModal}>
+        <div className="bg-white  w-[31vw] rounded-lg z-10 relative overflow-y-auto max-h-[80vh]">
+          {/* DetailsModal Content */}
 
-          <div className="bg-white w-11/12 max-w-[90%] lg:max-w-[40%] pl-8 pr-8  rounded-lg shadow-lg z-10 relative overflow-y-auto max-h-[80vh]">
-            {/* DetailsModal Content */}
-
-            {/* DetailsModal Header */}
-            <div className="sticky top-0 bg-white py-6 z-20 flex justify-between">
-              <div>
-                <h2 className="text-3xl font-bold mb-4 uppercase">
-                  Ticket Details
-                </h2>
-              </div>
-              <div>
-                {/* Close button */}
-                <button
-                  className="bg-blue-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-600"
-                  onClick={closeDetailsModal}
-                >
-                  X
-                </button>
-              </div>
+          {/* DetailsModal Header */}
+          <div className="sticky top-0 bg-white py-6 z-20 flex justify-between">
+            <div>
+              <h2 className="text-3xl font-bold mb-4 uppercase">
+                Ticket Details
+              </h2>
             </div>
+            <div>
+              {/* Close button */}
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.9 }}
+                type="button"
+                onClick={closeDetailsModal}
+                className=" p-2 bg-white text-[red] border border-red-200 hover:border-red-400 text-2xl rounded-md mr-1">
+                <IoMdClose />
+              </motion.button>
+            </div>
+          </div>
 
-            {/* DetailsModal Body START */}
-            <div className=" w-full">
-              {/* <div>AddT icket Form</div> */}
-              <div className="">
-                <div className=" mx-auto">
-                  {/* <h1 className="text-xl text-center my-2 font-bold">
+          {/* DetailsModal Body START */}
+          <div className=" w-full">
+            {/* <div>AddT icket Form</div> */}
+            <div className="">
+              <div className=" mx-auto">
+                {/* <h1 className="text-xl text-center my-2 font-bold">
                     Ticket Details
                   </h1> */}
 
-                  <p>
-                    <span className="font-bold">Ticket Title : </span>
-                    <span>Wifi is not working</span>
-                  </p>
-                  <br />
-                  <p>
-                    <span className="font-bold">Ticket Priority : </span>
-                    <span>High</span>
-                  </p>
-                  <br />
-                  <p>
-                    <span className="font-bold">Ticket Status : </span>
-                    <span>Pending</span>
-                  </p>
-                  <br />
-                  <p>
-                    <span className="font-bold">Ticket Department : </span>
-                    <span>IT</span>
-                  </p>
-                  <br />
-                  <p>
-                    <span className="font-bold">Request Date : </span>
-                    <span>2024-10-01</span>
-                  </p>
-                </div>
+                <p>
+                  <span className="font-bold">Ticket Title : </span>
+                  <span>Wifi is not working</span>
+                </p>
+                <br />
+                <p>
+                  <span className="font-bold">Ticket Priority : </span>
+                  <span>High</span>
+                </p>
+                <br />
+                <p>
+                  <span className="font-bold">Ticket Status : </span>
+                  <span>Pending</span>
+                </p>
+                <br />
+                <p>
+                  <span className="font-bold">Ticket Department : </span>
+                  <span>IT</span>
+                </p>
+                <br />
+                <p>
+                  <span className="font-bold">Request Date : </span>
+                  <span>2024-10-01</span>
+                </p>
               </div>
             </div>
-            {/* DetailsModal Body END */}
+          </div>
+          {/* DetailsModal Body END */}
 
-            {/* DetailsModal Footer */}
+          {/* DetailsModal Footer */}
 
-            <div className="sticky bottom-0 bg-white py-6 z-20 flex justify-center">
-              <div className="flex justify-center items-center">
-                <button
+          <div className="sticky bottom-0 bg-white py-6 z-20 flex justify-center">
+            <div className="flex justify-center items-center">
+              {/* <button
                   className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600"
                   onClick={handleTicketDetails}
                 >
                   Close
-                </button>
-              </div>
+                </button> */}
             </div>
-            {/* Close button */}
-            {/* <button
+          </div>
+          {/* Close button */}
+          {/* <button
                 className="bg-blue-500 text-white py-2 px-4 my-4 rounded-lg hover:bg-blue-600"
                 onClick={closeDetailsModal}>
                 Close
               </button> */}
-          </div>
         </div>
-      )}
+      </NewModal>
 
       {/* TICKET DETAILS MODAL END */}
 
@@ -579,12 +568,14 @@ const TodaysTickets = () => {
               </div>
               <div>
                 {/* Close button */}
-                <button
-                  className="bg-blue-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-600"
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.9 }}
+                  type="button"
                   onClick={closeEditTicket}
-                >
-                  X
-                </button>
+                  className=" p-2 bg-white text-[red] border border-red-200 hover:border-red-400 text-2xl rounded-md mr-1">
+                  <IoMdClose />
+                </motion.button>
               </div>
             </div>
 
@@ -604,8 +595,7 @@ const TodaysTickets = () => {
                       borderRadius: 2,
                     }}
                     // className="bg-white p-6 rounded-lg shadow-md mx-auto">
-                    className="bg-white p-6 rounded-lg mx-auto"
-                  >
+                    className="bg-white p-6 rounded-lg mx-auto">
                     {/* Personal Information */}
                     {/* <h2 className="text-lg font-semibold mb-4">Add Ticket</h2> */}
                     <div className="grid grid-cols-1 gap-4">
@@ -665,11 +655,10 @@ const TodaysTickets = () => {
             {/* EditTicket Footer */}
 
             <div className="sticky bottom-0 bg-white py-6 z-20 flex justify-center">
-              <div className="flex justify-center items-center">
+              <div className="flex justify-center items-center w-full">
                 <button
-                  className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600"
-                  onClick={handleEditTicket}
-                >
+                  className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 w-full"
+                  onClick={handleEditTicket}>
                   Save
                 </button>
               </div>
@@ -705,8 +694,7 @@ const TodaysTickets = () => {
                 {/* Close button */}
                 <button
                   className="bg-blue-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-600"
-                  onClick={closeDeleteTicket}
-                >
+                  onClick={closeDeleteTicket}>
                   X
                 </button>
               </div>
@@ -728,8 +716,7 @@ const TodaysTickets = () => {
                       borderRadius: 2,
                     }}
                     // className="bg-white p-6 rounded-lg shadow-md mx-auto">
-                    className="bg-white p-6 rounded-lg mx-auto"
-                  >
+                    className="bg-white p-6 rounded-lg mx-auto">
                     {/* Personal Information */}
                     {/* <h2 className="text-lg font-semibold mb-4">Add Ticket</h2> */}
                     <div className="grid grid-cols-1 gap-4">
@@ -774,8 +761,7 @@ const TodaysTickets = () => {
                 <button
                   // className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600"
                   className="bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600"
-                  onClick={handleDeleteTicket}
-                >
+                  onClick={handleDeleteTicket}>
                   Delete
                 </button>
               </div>
@@ -783,8 +769,7 @@ const TodaysTickets = () => {
                 <button
                   // className="bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600"
                   className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600"
-                  onClick={closeDeleteTicket}
-                >
+                  onClick={closeDeleteTicket}>
                   Cancel
                 </button>
               </div>

@@ -780,9 +780,76 @@ const ClientLandingPage = () => {
     { id: 10, title: "Customer Service", iconSrc: customerServiceImage },
   ]);
 
+  // useEffect(() => {
+  //   if (user) {
+  //     const additionalIcons = [
+  //       ...(user.role === "Employee"
+  //         ? [
+  //             {
+  //               id: 11,
+  //               title: "Attendance",
+  //               iconSrc: services_hrSupport[0].image,
+  //             },
+  //             {
+  //               id: 12,
+  //               title: "Payroll",
+  //               iconSrc: services_hrSupport[1].image,
+  //             },
+  //             {
+  //               id: 13,
+  //               title: "Leaves",
+  //               iconSrc: services_hrSupport[3].image,
+  //             },
+  //             {
+  //               id: 14,
+  //               title: "Performance",
+  //               iconSrc: services_hrSupport[8].image,
+  //             },
+  //           ]
+  //         : []),
+  //       ...(user.role === "Employee" && user.department === "Tech"
+  //         ? [
+  //             {
+  //               id: 15,
+  //               title: "Website",
+  //               iconSrc: websiteImage,
+  //             },
+  //             {
+  //               id: 16,
+  //               title: "Notifications",
+  //               iconSrc: services_frontend[7].image,
+  //             },
+  //           ]
+  //         : []),
+  //       ...(user.role === "Employee" && user.department === "Finance"
+  //         ? [
+  //             {
+  //               id: 17,
+  //               title: "Invoicing",
+  //               iconSrc: customerServiceImage,
+  //             },
+  //             {
+  //               id: 18,
+  //               title: "Budget",
+  //               iconSrc: customerServiceImage,
+  //             },
+  //             {
+  //               id: 19,
+  //               title: "Financial Reports",
+  //               iconSrc: customerServiceImage,
+  //             },
+  //           ]
+  //         : []),
+  //     ];
+
+  //     setQuickLaunchIcons((prevIcons) => [...prevIcons, ...additionalIcons]);
+  //   }
+  // }, [user]);
+
   // Toggle drag-and-drop functionality
   const toggleDragAndDrop = () => {
     setIsDragEnabled((prev) => !prev);
+    console.log(quickLaunchIcons);
   };
 
   // Handle drag end to swap items
@@ -945,7 +1012,7 @@ const ClientLandingPage = () => {
           )}
 
           {/* Conditional rendering for employee-specific cards */}
-          <div className="grid grid-cols-2 sm:grid-cols-5 gap-8 mb-12">
+          {/* <div className="grid grid-cols-2 sm:grid-cols-5 gap-8 mb-12">
             {user.role === "Employee" && (
               <>
                 <CardNS
@@ -987,7 +1054,7 @@ const ClientLandingPage = () => {
                 />
               </>
             )}
-          </div>
+          </div> */}
         </div>
 
         {/* Add More Button */}

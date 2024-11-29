@@ -238,12 +238,6 @@ const TicketMembers = () => {
       <div className="p-4 pb-0">
         <div className="mb-4 flex justify-between">
           <h1 className="text-2xl font-bold ">All Members</h1>
-          <button
-            //   onClick={handleOpenTicket}
-            onClick={openModal}
-            className="px-6 py-2 rounded-lg text-white wono-blue-dark hover:bg-[#3cbce7] transition-shadow shadow-md hover:shadow-lg active:shadow-inner">
-            Add Member
-          </button>
         </div>
       </div>
 
@@ -259,7 +253,14 @@ const TicketMembers = () => {
         />
       </Paper> */}
 
-      <div className="p-2 bg-white mx-4">
+      <div className="p-2 bg-white mx-4 rounded-md">
+        <div className="text-right pb-4">
+          <button
+            onClick={openModal}
+            className="px-6 py-2 rounded-lg text-white wono-blue-dark hover:bg-[#3cbce7] transition-shadow shadow-md hover:shadow-lg active:shadow-inner">
+            Add Member
+          </button>
+        </div>
         <AgTable data={filteredRows} columns={columns} />
       </div>
       {/* Tickets datatable END */}
@@ -403,7 +404,7 @@ const TicketMembers = () => {
                         />
                       </div> */}
 
-                      <div className="grid grid-cols-1 gap-4">
+                      {/* <div className="grid grid-cols-1 gap-4">
                         <FormControl fullWidth>
                           <InputLabel id="department-select-label">
                             Role
@@ -421,7 +422,7 @@ const TicketMembers = () => {
                             <MenuItem value="Admin">Admin</MenuItem>
                           </Select>
                         </FormControl>
-                      </div>
+                      </div> */}
                     </div>
 
                     {/* Role & Department fields */}
