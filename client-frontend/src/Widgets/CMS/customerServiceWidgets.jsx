@@ -11,7 +11,7 @@ ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
 export const AssetsCount = ({ count, route }) =>{
     const navigate = useNavigate();
   return(
-    <div onClick={()=>navigate(route)} className="p-4 cursor-pointer hover:bg-slate-300 transition-all">
+    <div onClick={()=>navigate(route)} className="p-4 cursor-pointer hover:bg-slate-100 transition-all">
       <h3 className="text-lg font-semibold">Total Assets</h3>
       <p className="text-3xl font-bold">{count}</p>
     </div>
@@ -22,7 +22,7 @@ export const AssetsCount = ({ count, route }) =>{
 export const MaintenanceRequests = ({ requests, route }) => {
   const navigate = useNavigate();
   return(
-  <div onClick={()=>navigate(route)} className="p-4 cursor-pointer hover:bg-slate-300 transition-all h-full">
+  <div onClick={()=>navigate(route)} className="p-4 cursor-pointer hover:bg-slate-100 transition-all h-full">
     <h3 className="text-lg font-semibold">Pending Maintenance</h3>
     <p className="text-2xl">{requests} Requests</p>
   </div>
@@ -32,7 +32,7 @@ export const MaintenanceRequests = ({ requests, route }) => {
 export const AssetsAssigned = ({ assigned, route }) => {
   const navigate = useNavigate();
   return(
-    <div onClick={()=>navigate(route)} className="p-4 cursor-pointer hover:bg-slate-300 transition-all h-full">
+    <div onClick={()=>navigate(route)} className="p-4 cursor-pointer hover:bg-slate-100 transition-all h-full">
       <h3 className="text-lg font-semibold">Assets Assigned</h3>
       <p className="text-2xl">{assigned}</p>
     </div>
@@ -42,7 +42,7 @@ export const AssetsAssigned = ({ assigned, route }) => {
 export const AssetsInRepair = ({ count, route }) => {
   const navigate = useNavigate();
   return(
-    <div onClick={()=>navigate(route)} className="p-4 cursor-pointer hover:bg-slate-300 transition-all h-full">
+    <div onClick={()=>navigate(route)} className="p-4 cursor-pointer hover:bg-slate-100 transition-all h-full">
       <h3 className="text-lg font-semibold">Assets In Repair</h3>
       <p className="text-2xl">{count}</p>
     </div>
@@ -52,7 +52,7 @@ export const AssetsInRepair = ({ count, route }) => {
 export const NewAssetsAdded = ({ added, route }) => {
   const navigate = useNavigate();
   (
-    <div onClick={()=>navigate(route)} className="p-4 cursor-pointer hover:bg-slate-300 transition-all h-full">
+    <div onClick={()=>navigate(route)} className="p-4 cursor-pointer hover:bg-slate-100 transition-all h-full">
       <h3 className="text-lg font-semibold">New Assets Added</h3>
       <p className="text-2xl">{added}</p>
     </div>
@@ -72,7 +72,7 @@ export const QuantityRemainingWidget = ({ totalStock, remainingStock, assetType 
   }
 
   return (
-    <div className="bg-white shadow-lg rounded-lg p-4 my-4 w-full cursor-pointer hover:bg-slate-300 transition-all">
+    <div className="bg-white shadow-lg rounded-lg p-4 my-4 w-full cursor-pointer hover:bg-slate-100 transition-all">
       <div className="flex items-center justify-between mb-4">
         <div className="flex">
           {/* Asset Icon */}
@@ -168,7 +168,7 @@ export const AssetAllocationWidget = () => {
   };
 
   return (
-    <div className="bg-white shadow-lg rounded-lg p-6 w-full cursor-pointer hover:bg-slate-300 transition-all">
+    <div className="bg-white shadow-lg rounded-lg p-6 w-full cursor-pointer hover:bg-slate-100 transition-all">
       <div className="flex items-center justify-between mb-4">
         <h2 className="text-xl font-semibold text-gray-800">Asset Allocation</h2>
       </div>
