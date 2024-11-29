@@ -285,11 +285,15 @@ const ModuleSidebar = ({ mainSideBar }) => {
       route: "/tasks/tasklistfirstmenu",
       icon: <FaTasks />,
     },
-    {
-      title: "Teams",
-      route: "/tasks/teams",
-      icon: <FaUsers />,
-    },
+    ...(user?.role === "Master Admin" || user?.role === "Admin"
+      ? [
+          {
+            title: "Teams",
+            route: "/tasks/teams",
+            icon: <FaUsers />,
+          },
+        ]
+      : [])
   ];
 
   // Get the department based on the current path
