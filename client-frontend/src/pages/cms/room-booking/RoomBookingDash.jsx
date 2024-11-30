@@ -6,7 +6,6 @@ import BookingForm from "./components/BookingForm";
 import { rooms } from "../../../utils/Rooms";
 import { format, addMinutes } from "date-fns";
 import { toast } from "sonner";
-import { v4 as uuid } from "uuid";
 import { motion } from "framer-motion";
 import { IoMdClose } from "react-icons/io";
 import RoomAvailabilityPieChart from "./components/RoomCharts";
@@ -87,22 +86,6 @@ export default function RoomBookingDash() {
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    const localStart = `${currentDate}T${newMeeting.startTime}`;
-    const localEnd = `${currentDate}T${newMeeting.endTime}`;
-
-    const newEvent = {
-      id: uuid(),
-      title: newMeeting.subject || "No Subject",
-      start: localStart,
-      end: localEnd,
-      extendedProps: {
-        room: newMeeting.room,
-        participants: newMeeting.participants,
-        agenda: newMeeting.agenda,
-      },
-      backgroundColor: "#5E5F9C",
-      status: "active", // Default status
-    };
 
     toast.success("Booking completed successfully");
     setOpenBookingModal(false);

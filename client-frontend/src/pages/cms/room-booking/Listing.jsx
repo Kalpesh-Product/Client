@@ -7,7 +7,6 @@ import { rooms } from "../../../utils/Rooms";
 import BookingForm from "./components/BookingForm";
 import BookingDetails from "./components/BookingDetails";
 import { format, addMinutes } from "date-fns";
-import { v4 as uuid } from "uuid";
 import { toast } from "sonner";
 import { motion } from "framer-motion";
 import { IoMdClose } from "react-icons/io";
@@ -226,7 +225,7 @@ export default function Listing() {
     const localEnd = `${newMeeting.date}T${newMeeting.endTime}`;
 
     const newEvent = {
-      id: uuid(),
+      id: events.length + 1,
       title: newMeeting.subject || "No Subject",
       start: localStart,
       end: localEnd,
@@ -367,19 +366,8 @@ export default function Listing() {
           open={openBookingModal}
           onClose={() => setOpenBookingModal(false)}
         >
-          <div className="flex justify-between items-center p-4">
-            <h1 className="text-2xl font-bold ml-4">Create Booking</h1>
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.9 }}
-              type="button"
-              onClick={() => setOpenBookingModal(false)}
-              className=" p-2 bg-white text-[red] border border-red-200 hover:border-red-400 text-2xl rounded-md"
-            >
-              <IoMdClose />
-            </motion.button>
-          </div>
           <BookingForm
+            handleClose={() => setOpenBookingModal(false)}
             newMeeting={newMeeting}
             handleChange={handleChange}
             handleSubmit={handleSubmit}

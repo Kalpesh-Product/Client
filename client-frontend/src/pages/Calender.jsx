@@ -7,6 +7,8 @@ import interactionPlugin from "@fullcalendar/interaction";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import { IoMdClose } from "react-icons/io";
+import FormStepper from "../components/FormStepper";
+import { calendarEvents } from "../utils/calendarEvents";
 import { motion } from "framer-motion";
 import {
   DatePicker,
@@ -50,174 +52,20 @@ const extractNames = (data) => {
 const Calender = () => {
   const [selectedDate, setSelectedDate] = useState(null);
   const [showModal, setShowModal] = useState(false);
-  const [eventColor, setEventColor] = useState("");
   const [userData, setUserData] = useState(null);
   const [selectedEvent, setSelectedEvent] = useState(null);
-  const [isOpen, setIsOpen] = useState(false);
   const [isEditModal, setIsEditModal] = useState(false);
   const [selectedNames, setSelectedNames] = useState([]);
-  const [eventFilter, setEventFilter] = useState(["holiday", "meeting", "event"]);
+  const [activeStep, setActiveStep] = useState(0);
+  const [eventFilter, setEventFilter] = useState([
+    "holiday",
+    "meeting",
+    "event",
+  ]);
 
   const names = extractNames(data);
 
-  const [events, setEvents] = useState([
-    {
-      title: "New Year 2024",
-      date: "2024-01-01",
-      type: "holiday",
-      backgroundColor: "green",
-    },
-    {
-      title: "Republic Day",
-      date: "2024-01-26",
-      type: "holiday",
-      backgroundColor: "green",
-    },
-    {
-      title: "Strategy Sync",
-      date: "2024-11-27",
-      type: "meeting",
-      backgroundColor: "#3454D1",
-    },
-    {
-      title: "Innovation Jam",
-      date: "2024-12-01",
-      type: "meeting",
-      backgroundColor: "#3454D1",
-    },
-    {
-      title: "Team Bonding Event",
-      date: "2024-11-10",
-      type: "event",
-      backgroundColor: "rebeccapurple",
-    },
-    {
-      title: "Tech Conference",
-      date: "2024-11-25",
-      type: "event",
-      backgroundColor: "rebeccapurple",
-    },
-    {
-      title: "Eid Al-Adha (Bakri Eid)",
-      date: "2024-06-17",
-      type: "holiday",
-      backgroundColor: "green",
-    },
-    {
-      title: "Independance Day",
-      date: "2024-08-15",
-      type: "holiday",
-      backgroundColor: "green",
-    },
-    {
-      title: "Ganesh Chaturthi",
-      date: "2024-09-07",
-      type: "holiday",
-      backgroundColor: "green",
-    },
-    {
-      title: "Gandhi Jayanti",
-      date: "2024-10-02",
-      type: "holiday",
-      backgroundColor: "green",
-    },
-    {
-      title: "Diwali",
-      date: "2024-10-31",
-      type: "holiday",
-      backgroundColor: "green",
-    },
-    {
-      title: "Feast Of Saint Fransis Xavior",
-      date: "2024-12-03",
-      type: "holiday",
-      backgroundColor: "green",
-    },
-    {
-      title: "Goa Liberation Day",
-      date: "2024-12-03",
-      type: "holiday",
-      backgroundColor: "green",
-    },
-    {
-      title: "Christmas",
-      date: "2024-12-25",
-      type: "holiday",
-      backgroundColor: "green",
-    },
-    {
-      title: "Strategy Sync",
-      date: "2024-11-27",
-      type: "meeting",
-      backgroundColor: "#3454D1",
-    },
-    {
-      title: "Innovation Jam",
-      date: "2024-12-01",
-      type: "meeting",
-      backgroundColor: "#3454D1",
-    },
-    {
-      title: "Project Kickoff",
-      date: "2024-12-05",
-      type: "meeting",
-      backgroundColor: "#3454D1",
-    },
-    {
-      title: "Feedback Loop",
-      date: "2024-12-10",
-      type: "meeting",
-      backgroundColor: "#3454D1",
-    },
-    {
-      title: "Marketing Strategy Review",
-      date: "2024-11-15",
-      type: "meeting",
-      backgroundColor: "#3454D1",
-    },
-    {
-      title: "Quarterly Sales Planning",
-      date: "2024-11-20",
-      type: "meeting",
-      backgroundColor: "#3454D1",
-    },
-    {
-      title: "Employee Wellness Workshop",
-      date: "2024-11-22",
-      type: "event",
-      backgroundColor: "rebeccapurple",
-    },
-    {
-      title: "End of Month Wrap-up",
-      date: "2024-11-30",
-      type: "meeting",
-      backgroundColor: "#3454D1",
-    },
-    {
-      title: "Deep Dive into Q1 Goals",
-      date: "2024-11-18",
-      type: "meeting",
-      backgroundColor: "#3454D1",
-    },
-    {
-      title: "Product Launch Briefing",
-      date: "2024-11-08",
-      type: "meeting",
-      backgroundColor: "#3454D1",
-    },
-    {
-      title: "Corporate Social Responsibility Planning",
-      date: "2024-11-05",
-      type: "event",
-      backgroundColor: "rebeccapurple",
-    },
-    {
-      title: "HR Policy Review",
-      date: "2024-11-13",
-      type: "meeting",
-      backgroundColor: "#3454D1",
-    },
-  ]);
+  const [events, setEvents] = useState(calendarEvents);
   const [filteredEvents, setFilteredEvents] = useState(events);
   useEffect(() => {
     if (eventFilter.length === 0) {
@@ -296,18 +144,6 @@ const Calender = () => {
     }
   };
 
-  const colors = [
-    "#FF5733",
-    "#33FF57",
-    "#3357FF",
-    "#FF33A1",
-    "#A1FF33",
-    "#FF8C00",
-    "#800080",
-    "#FFC0CB",
-    "#FFD700",
-  ];
-
   useEffect(() => {
     const storedUser = JSON.parse(localStorage.getItem("user"));
     if (storedUser) {
@@ -372,180 +208,289 @@ const Calender = () => {
       {isEditModal && (
         <NewModal open={isEditModal} onClose={() => setIsEditModal(false)}>
           <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <div className="flex align-middle justify-center flex-col gap-2 w-[600px]">
-              <div className="flex justify-between items-center w-full mb-4">
-                <Typography variant="h5" fontWeight="bold">
-                  Edit Event
-                </Typography>
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.9 }}
-                  type="button"
-                  onClick={() => setIsEditModal(false)}
-                  className=" p-2 bg-white text-[red] border border-red-200 hover:border-red-400 text-2xl rounded-md"
-                >
-                  <IoMdClose />
-                </motion.button>
-              </div>
-
-              <TextField
-                label="Event Title"
-                value={selectedEvent?.title}
-                fullWidth
-                variant="outlined"
-                sx={{ mb: 2 }}
-              />
-
-              <TextField
-                label="Description"
-                value={selectedEvent?.description}
-                fullWidth
-                multiline
-                rows={3}
-                variant="outlined"
-                sx={{ mb: 2 }}
-              />
-
-              <DatePicker
-                label="Date"
-                value={selectedEvent?.date || null}
-                renderInput={(params) => (
-                  <TextField {...params} fullWidth sx={{ mb: 2 }} />
-                )}
-              />
-
-              <Button
-                className="w-full"
-                onClick={handleSaveEvent}
-                type="submit"
-                variant="contained"
-                color="primary"
-              >
-                Update Event
-              </Button>
-            </div>
+            <FormStepper
+              steps={["Edit Event", "Preview & Submit"]}
+              handleClose={() => setIsEditModal(false)}
+            >
+              {(activeStep, handleNext) => {
+                switch (activeStep) {
+                  case 0: // Form Step
+                    return (
+                      <div className="flex flex-col gap-2 w-[600px]">
+                        <TextField
+                          label="Event Title"
+                          value={selectedEvent?.title}
+                          onChange={(e) =>
+                            setSelectedEvent({
+                              ...selectedEvent,
+                              title: e.target.value,
+                            })
+                          }
+                          fullWidth
+                          variant="outlined"
+                          sx={{ mb: 2 }}
+                        />
+                        <TextField
+                          label="Description"
+                          value={selectedEvent?.description}
+                          onChange={(e) =>
+                            setSelectedEvent({
+                              ...selectedEvent,
+                              description: e.target.value,
+                            })
+                          }
+                          fullWidth
+                          multiline
+                          rows={3}
+                          variant="outlined"
+                          sx={{ mb: 2 }}
+                        />
+                        <DatePicker
+                          label="Date"
+                          value={selectedEvent?.date || null}
+                          onChange={(date) =>
+                            setSelectedEvent({
+                              ...selectedEvent,
+                              date,
+                            })
+                          }
+                          renderInput={(params) => (
+                            <TextField {...params} fullWidth sx={{ mb: 2 }} />
+                          )}
+                        />
+                        <Button
+                          className="w-full"
+                          onClick={handleNext}
+                          variant="contained"
+                          color="primary"
+                        >
+                          Next
+                        </Button>
+                      </div>
+                    );
+                  case 1: // Preview Step
+                    return (
+                      <div className="flex flex-col gap-4 w-[600px]">
+                        <div>
+                          <h3 className="text-xl font-semibold">
+                            Preview Details
+                          </h3>
+                          <p>
+                            <strong>Title:</strong>{" "}
+                            {selectedEvent?.title || "N/A"}
+                          </p>
+                          <p>
+                            <strong>Description:</strong>{" "}
+                            {selectedEvent?.description || "N/A"}
+                          </p>
+                          <p>
+                            <strong>Date:</strong>{" "}
+                            {selectedEvent?.date
+                              ? selectedEvent.date.format("DD MMM YYYY")
+                              : "N/A"}
+                          </p>
+                        </div>
+                        <div className="flex gap-2 w-full">
+                          <Button
+                            onClick={handleSaveEvent} // Final submission
+                            variant="contained"
+                            color="primary"
+                            fullWidth
+                          >
+                            Submit
+                          </Button>
+                        </div>
+                      </div>
+                    );
+                  default:
+                    return null;
+                }
+              }}
+            </FormStepper>
           </LocalizationProvider>
         </NewModal>
       )}
+
       {showModal && (
         <NewModal open={showModal} onClose={() => setShowModal(false)}>
           <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <Box
-              sx={{
-                maxWidth: 600,
-                padding: 2,
-                bgcolor: "background.paper",
-                borderRadius: 3,
-              }}
-              className="bg-white mx-auto"
+            <FormStepper
+              steps={["Add Event Details", "Preview & Submit"]}
+              handleClose={() => setShowModal(false)}
             >
-              <div className="flex justify-between items-center w-full mb-4">
-                <Typography variant="h5" fontWeight="bold">
-                  Add Event
-                </Typography>
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.9 }}
-                  type="button"
-                  onClick={() => setShowModal(false)}
-                  className=" p-2 bg-white text-[red] border border-red-200 hover:border-red-400 text-2xl rounded-md"
-                >
-                  <IoMdClose />
-                </motion.button>
-              </div>
+              {(activeStep, handleNext) => {
+                switch (activeStep) {
+                  case 0: // Form Step
+                    return (
+                      <Box
+                        sx={{
+                          maxWidth: 600,
+                          padding: 2,
+                          bgcolor: "background.paper",
+                          borderRadius: 3,
+                        }}
+                        className="bg-white mx-auto"
+                      >
+                        <Grid container spacing={3}>
+                          {/* Event Title */}
+                          <Grid item xs={12}>
+                            <TextField
+                              label="Event Title"
+                              value={newEvent.name || ""}
+                              onChange={(e) =>
+                                setnewEvent({
+                                  ...newEvent,
+                                  name: e.target.value,
+                                })
+                              }
+                              fullWidth
+                              variant="outlined"
+                            />
+                          </Grid>
 
-              <Grid container spacing={3}>
-                {/* Event Title */}
-                <Grid item xs={12}>
-                  <TextField
-                    label="Event Title"
-                    value={newEvent.name || ""}
-                    onChange={(e) =>
-                      setnewEvent({ ...newEvent, name: e.target.value })
-                    }
-                    fullWidth
-                    variant="outlined"
-                  />
-                </Grid>
+                          {/* Date and Time */}
+                          <Grid item xs={6}>
+                            <DatePicker
+                              label="Date"
+                              value={dayjs(selectedDate)}
+                              onChange={(newDate) => setSelectedDate(newDate)}
+                              renderInput={(params) => (
+                                <TextField {...params} fullWidth />
+                              )}
+                            />
+                          </Grid>
+                          <Grid item xs={6}>
+                            <TimePicker
+                              label="Time"
+                              value={newEvent.time || null}
+                              onChange={(newTime) =>
+                                setnewEvent({ ...newEvent, time: newTime })
+                              }
+                              renderInput={(params) => (
+                                <TextField {...params} fullWidth />
+                              )}
+                            />
+                          </Grid>
 
-                {/* Date and Time */}
-                <Grid item xs={6}>
-                  <DatePicker
-                    label="Date"
-                    value={dayjs(selectedDate)}
-                    onChange={(newDate) => setSelectedDate(newDate)}
-                    renderInput={(params) => (
-                      <TextField {...params} fullWidth />
-                    )}
-                  />
-                </Grid>
-                <Grid item xs={6}>
-                  <TimePicker
-                    label="Time"
-                    onChange={(newTime) =>
-                      setnewEvent({ ...newEvent, time: newTime })
-                    }
-                    renderInput={(params) => (
-                      <TextField {...params} fullWidth />
-                    )}
-                  />
-                </Grid>
+                          {/* React Select */}
+                          <Grid item xs={12}>
+                            <Typography variant="subtitle1" gutterBottom>
+                              Select Participants
+                            </Typography>
+                            <ReactSelect
+                              id="name-select"
+                              options={names.map((name) => ({
+                                value: name,
+                                label: name,
+                              }))}
+                              isMulti
+                              styles={customStyles}
+                              value={selectedNames.map((name) => ({
+                                value: name,
+                                label: name,
+                              }))}
+                              onChange={(selectedOptions) =>
+                                setSelectedNames(
+                                  selectedOptions.map((option) => option.value)
+                                )
+                              }
+                              placeholder="Select names..."
+                            />
+                          </Grid>
 
-                {/* React Select */}
-                <Grid item xs={12}>
-                  <Typography variant="subtitle1" gutterBottom>
-                    Select Participants
-                  </Typography>
-                  <ReactSelect
-                    id="name-select"
-                    options={names.map((name) => ({
-                      value: name,
-                      label: name,
-                    }))}
-                    isMulti
-                    styles={customStyles}
-                    value={selectedNames.map((name) => ({
-                      value: name,
-                      label: name,
-                    }))}
-                    onChange={(selectedOptions) =>
-                      setSelectedNames(
-                        selectedOptions.map((option) => option.value)
-                      )
-                    }
-                    placeholder="Select names..."
-                  />
-                </Grid>
+                          {/* Agenda */}
+                          <Grid item xs={12}>
+                            <TextField
+                              label="Agenda"
+                              value={newEvent.Agenda || ""}
+                              onChange={(e) =>
+                                setnewEvent({
+                                  ...newEvent,
+                                  Agenda: e.target.value,
+                                })
+                              }
+                              multiline
+                              rows={2}
+                              fullWidth
+                              variant="outlined"
+                            />
+                          </Grid>
 
-                {/* Agenda */}
-                <Grid item xs={12}>
-                  <TextField
-                    label="Agenda"
-                    value={newEvent.Agenda}
-                    onChange={(e) =>
-                      setnewEvent({ ...newEvent, Agenda: e.target.value })
-                    }
-                    multiline
-                    rows={2}
-                    fullWidth
-                    variant="outlined"
-                  />
-                </Grid>
+                          {/* Next Button */}
+                          <Grid item xs={12} sx={{ mt: 3 }}>
+                            <Button
+                              fullWidth
+                              className="w-full"
+                              onClick={handleNext}
+                              variant="contained"
+                              color="primary"
+                            >
+                              Next
+                            </Button>
+                          </Grid>
+                        </Grid>
+                      </Box>
+                    );
 
-                {/* Save and Cancel Buttons */}
-                <Grid item xs={12} sx={{ mt: 3 }}>
-                  <Button
-                    className="w-full"
-                    onClick={handleSaveEvent}
-                    type="submit"
-                    variant="contained"
-                    color="primary"
-                  >
-                    Create Event
-                  </Button>
-                </Grid>
-              </Grid>
-            </Box>
+                  case 1: // Preview Step
+                    return (
+                      <Box
+                        sx={{
+                          maxWidth: 600,
+                          padding: 2,
+                          bgcolor: "background.paper",
+                          borderRadius: 3,
+                        }}
+                        className="bg-white mx-auto"
+                      >
+                        <Typography variant="h5" fontWeight="bold" gutterBottom>
+                          Preview Event
+                        </Typography>
+                        <div>
+                          <p>
+                            <strong>Title:</strong> {newEvent.name || "N/A"}
+                          </p>
+                          <p>
+                            <strong>Date:</strong>{" "}
+                            {selectedDate
+                              ? dayjs(selectedDate).format("DD MMM YYYY")
+                              : "N/A"}
+                          </p>
+                          <p>
+                            <strong>Time:</strong>{" "}
+                            {newEvent.time
+                              ? dayjs(newEvent.time).format("hh:mm A")
+                              : "N/A"}
+                          </p>
+                          <p>
+                            <strong>Participants:</strong>{" "}
+                            {selectedNames.length
+                              ? selectedNames.join(", ")
+                              : "None selected"}
+                          </p>
+                          <p>
+                            <strong>Agenda:</strong> {newEvent.Agenda || "N/A"}
+                          </p>
+                        </div>
+
+                        <div className="flex gap-2 mt-4 w-full">
+                          <Button
+                            fullWidth
+                            onClick={handleSaveEvent} // Final submission
+                            variant="contained"
+                            color="primary"
+                          >
+                            Submit
+                          </Button>
+                        </div>
+                      </Box>
+                    );
+
+                  default:
+                    return null;
+                }
+              }}
+            </FormStepper>
           </LocalizationProvider>
         </NewModal>
       )}

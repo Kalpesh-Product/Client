@@ -10,15 +10,15 @@ import { rooms as allRooms } from "../../../utils/Rooms";
 import { useState } from "react";
 import { NewModal } from "../../../components/NewModal";
 import { toast } from "sonner";
-import { motion } from "framer-motion";
-import { IoMdClose } from "react-icons/io";
 import { FiWifi, FiSun, FiMonitor } from "react-icons/fi";
+import FormStepper from "../../../components/FormStepper";
 
 export default function AddRooms() {
   const [rooms, setRooms] = useState(allRooms);
   const [showModal, setShowModal] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [selectedRoomId, setSelectedRoomId] = useState(null);
+  const [activeStep, setActiveStep] = useState(0);
 
   const [newRoom, setNewRoom] = useState({
     name: "",
@@ -82,7 +82,7 @@ export default function AddRooms() {
     <section className="p-4 flex flex-col justify-center gap-4">
       <div className="flex justify-between items-center">
         <h1 className="font-bold text-2xl mb-2">Meeting Rooms</h1>
-          
+
         <button
           onClick={() => {
             resetForm();
@@ -150,78 +150,151 @@ export default function AddRooms() {
       </div>
       {showModal && (
         <NewModal open={showModal} onClose={() => setShowModal(false)}>
-          <form
-            onSubmit={handleSubmit}
-            className="flex flex-col gap-4 p-4 w-[50vw] mx-auto"
-          >
-            <div className="flex w-full justify-between items-center mb-3">
-              <Typography variant="h5" fontWeight="bold">
-                {isEditing ? "Edit Room" : "Add New Room"}
-              </Typography>
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.9 }}
-                type="button"
-                onClick={() => setShowModal(false)}
-                className=" p-2 bg-white text-[red] border border-red-200 hover:border-red-400 text-2xl rounded-md"
-              >
-                <IoMdClose />
-              </motion.button>
-            </div>
-            <TextField
-              label="Room Name"
-              name="name"
-              value={newRoom.name}
-              onChange={handleChange}
-              fullWidth
-              required
-            />
-            <TextField
-              label="Description"
-              name="description"
-              value={newRoom.description}
-              onChange={handleChange}
-              multiline
-              rows={3}
-              fullWidth
-              required
-            />
-            <TextField
-              label="Seats"
-              name="seats"
-              type="number"
-              value={newRoom.seats}
-              onChange={handleChange}
-              fullWidth
-              required
-            />
-            {/* File Upload Input */}
-            <div>
-              <label
-                htmlFor="room-image"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Upload Room Image
-              </label>
-              <input
-                id="room-image"
-                type="file"
-                name="image"
-                accept="image/*"
-                className="border-none mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
-              />
-            </div>
-            <div className="flex justify-center w-full">
-              <Button
-                className="w-full"
-                type="submit"
-                variant="contained"
-                color="primary"
-              >
-                {isEditing ? "Update Room" : "Add Room"}
-              </Button>
-            </div>
-          </form>
+          <div className="flex flex-col gap-4 w-[50vw] mx-auto">
+            <FormStepper
+              steps={["Room Details", "Confirmation"]}
+              handleClose={() => setShowModal(false)}
+            >
+              {(activeStep, handleNext) => {
+                const handleBack = () => {
+                  // Set activeStep to the previous step
+                  setActiveStep((prevStep) => Math.max(prevStep - 1, 0));
+                };
+
+                switch (activeStep) {
+                  case 0:
+                    return (
+                      <form
+                        onSubmit={(e) => {
+                          e.preventDefault();
+                          handleNext();
+                        }}
+                        className="flex flex-col gap-4"
+                      >
+                        <div className="flex flex-col gap-4">
+                          <TextField
+                            label="Room Name"
+                            name="name"
+                            value={newRoom.name}
+                            onChange={handleChange}
+                            fullWidth
+                            required
+                          />
+                          <TextField
+                            label="Description"
+                            name="description"
+                            value={newRoom.description}
+                            onChange={handleChange}
+                            multiline
+                            rows={3}
+                            fullWidth
+                            required
+                          />
+                          <TextField
+                            label="Seats"
+                            name="seats"
+                            type="number"
+                            value={newRoom.seats}
+                            onChange={handleChange}
+                            fullWidth
+                            required
+                          />
+                          <div>
+                            <label
+                              htmlFor="room-image"
+                              className="block text-sm font-medium text-gray-700"
+                            >
+                              Upload Room Image
+                            </label>
+                            <input
+                              id="room-image"
+                              type="file"
+                              name="image"
+                              accept="image/*"
+                              className="border-none mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+                            />
+                          </div>
+                        </div>
+                        <div className="flex justify-end">
+                          <Button
+                            fullWidth
+                            type="submit"
+                            variant="contained"
+                            color="primary"
+                          >
+                            Next
+                          </Button>
+                        </div>
+                      </form>
+                    );
+                    return (
+                      <form
+                        onSubmit={(e) => {
+                          e.preventDefault();
+                          handleNext();
+                        }}
+                        className="flex flex-col gap-4"
+                      >
+                        <div className="flex justify-between">
+                          <Button
+                            onClick={handleBack}
+                            type="button"
+                            variant="outlined"
+                            color="secondary"
+                          >
+                            Back
+                          </Button>
+                          <Button
+                            type="submit"
+                            variant="contained"
+                            color="primary"
+                          >
+                            Next
+                          </Button>
+                        </div>
+                      </form>
+                    );
+                  case 1:
+                    return (
+                      <div className="flex flex-col gap-4">
+                        <Typography variant="h6" fontWeight="bold">
+                          Confirm Room Details
+                        </Typography>
+                        <p>
+                          <strong>Name:</strong> {newRoom.name}
+                        </p>
+                        <p>
+                          <strong>Description:</strong> {newRoom.description}
+                        </p>
+                        <p>
+                          <strong>Seats:</strong> {newRoom.seats}
+                        </p>
+                        <div className="flex justify-between">
+                          <Button
+                            onClick={handleBack}
+                            type="button"
+                            variant="outlined"
+                            color="secondary"
+                          >
+                            Back
+                          </Button>
+                          <Button
+                            type="button"
+                            variant="contained"
+                            color="primary"
+                            onClick={handleSubmit}
+                          >
+                            {isEditing ? "Update Room" : "Add Room"}
+                          </Button>
+                        </div>
+                      </div>
+                    );
+                  default:
+                    return null;
+                }
+              }}
+            </FormStepper>
+          </div>
         </NewModal>
       )}
     </section>
