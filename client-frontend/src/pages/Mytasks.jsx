@@ -20,6 +20,8 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
 const Mytasks = () => {
 
+  const [selectedValue, setSelectedValue] = useState("");
+
     const columns = [
         { field: "id", headerName: "ID", width: 70 },
         { field: "Tasks", headerName: "Tasks", width: 200 },
@@ -31,14 +33,7 @@ const Mytasks = () => {
           width: 130,
           type: "singleSelect",
           valueOptions: ["High", "Medium", "Low"],
-          // cellClassName: (params) => {
-    
-          //   if (params.value === "High") return "px-10 py-5 rounded-full text-white text-sx font-medium bg-red-500";
-          //   if (params.value === "Medium") return "bg-yellow-400 text-black px-4 py-1 rounded-full text-center";
-          //   if (params.value === "Low") return "bg-green-400 text-white px-4 py-1 rounded-full text-center ";
-    
-          //   return "";
-          // },
+         
           cellRenderer: (params) => {
             const statusColors = {
               High: "text-red-600 bg-red-100",
@@ -70,20 +65,17 @@ const Mytasks = () => {
           cellRenderer: (params) => {
             const handleActionChange = (event) => {
               const selectedAction = event.target.value;
-    
-              // if (selectedAction === "view") {
-              //   handleViewDetails(params.row);
-              //   // } else if (selectedAction === "edit") {
-              //   //   handleEdit(params.row);
-              // } else if (selectedAction === "delete") {
-              //   handleDelete(params.row);
-              // }
+              setSelectedValue(selectedAction); // Update the selected value dynamically
+      console.log("Selected Action:", selectedAction);
+
+              
+  
             };
     
             return (
               <FormControl size="small" sx={{ width: "100%" }}>
                 <Select
-                  value="" // Always forces the dropdown to display the SVG
+                  value={selectedValue} // Always forces the dropdown to display the SVG
                   onChange={handleActionChange}
                   displayEmpty
                   disableUnderline
@@ -103,32 +95,12 @@ const Mytasks = () => {
                     },
                   }}
                 >
-                  <MenuItem value="" disabled>
-                    <svg
-                      className="flex-none size-4 text-gray-600 dark:text-neutral-500"
-                      xmlns="http://www.w3.org/2000/svg"
-                      width={24}
-                      height={24}
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth={2}
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    >
-                      <circle cx={12} cy={12} r={1} />
-                      <circle cx={12} cy={5} r={1} />
-                      <circle cx={12} cy={19} r={1} />
-                    </svg>
-                  </MenuItem>
-                  <MenuItem
-                    value="view"
-                    onClick={() => handleOpenModal(params.row)}
-                  >
-                    View Details
-                  </MenuItem>
-                  <MenuItem value="edit">Edit</MenuItem>
-                  <MenuItem value="delete">Delete</MenuItem>
+                 <MenuItem value="" disabled>
+            Select Status
+          </MenuItem>
+          <MenuItem value="start">Start</MenuItem>
+          <MenuItem value="pending">Pending</MenuItem>
+          <MenuItem value="done">Done</MenuItem>
                 </Select>
               </FormControl>
             );
@@ -263,6 +235,8 @@ const Mytasks = () => {
       const [modalOpen, SetModalOpen] = useState(false);
       const [departmentFilter, setDepartmentFilter] = useState("");
       const [selectedRow, SetselectedRow] = useState(null);
+
+      const [status,setStatus] = useState("");
       const navigate = useNavigate();
     
       const handleChange = (event) => {

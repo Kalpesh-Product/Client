@@ -26,14 +26,15 @@ import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
 import AvatarCellRenderer from "../AvatarCellRenderer";
+import { px } from 'framer-motion';
 
 
 const TasklistGrid = () => {
     const [allRows, setAllRows] = useState([
         {
           id: 1,
-          ticketTitle: "Wifi is not working",
-          Assignes: [
+          ticketTitle: "Financial Forcasting And Budgeting",
+          Assignees: [
             "https://i.pravatar.cc/150?img=1",
             "https://i.pravatar.cc/150?img=2",
             "https://i.pravatar.cc/150?img=3",
@@ -47,8 +48,8 @@ const TasklistGrid = () => {
         },
         {
           id: 2,
-          ticketTitle: "Payroll Issue",
-          Assignes: [
+          ticketTitle: "Annual Co-orporate Network And Networking Events",
+          Assignees: [
             "https://i.pravatar.cc/150?img=4",
             "https://i.pravatar.cc/150?img=5",
             "https://i.pravatar.cc/150?img=6",
@@ -61,8 +62,8 @@ const TasklistGrid = () => {
         },
         {
           id: 3,
-          ticketTitle: "Server Downtime",
-          Assignes: [
+          ticketTitle: "Website Redesign",
+          Assignees: [
             "https://i.pravatar.cc/150?img=7",
             "https://i.pravatar.cc/150?img=8",
             "https://i.pravatar.cc/150?img=9",
@@ -75,8 +76,8 @@ const TasklistGrid = () => {
         },
         {
           id: 4,
-          ticketTitle: "New Workstation Setup",
-          Assignes: [
+          ticketTitle: "Bussiness Process optimizations and Automations",
+          Assignees: [
             "https://i.pravatar.cc/150?img=1",
             "https://i.pravatar.cc/150?img=2",
             "https://i.pravatar.cc/150?img=3",
@@ -89,8 +90,8 @@ const TasklistGrid = () => {
         },
         {
           id: 5,
-          ticketTitle: "Employee Onboarding",
-          Assignes: [
+          ticketTitle: "Data Privacy and GDPR Compliance Initiative",
+          Assignees: [
             "https://i.pravatar.cc/150?img=1",
             "https://i.pravatar.cc/150?img=2",
             "https://i.pravatar.cc/150?img=3",
@@ -103,8 +104,8 @@ const TasklistGrid = () => {
         },
         {
           id: 6,
-          ticketTitle: "Network Issue",
-          Assignes: [
+          ticketTitle: "Launch a New Digital Marketing Initiative ",
+          Assignees: [
             "https://i.pravatar.cc/150?img=7",
             "https://i.pravatar.cc/150?img=8",
             "https://i.pravatar.cc/150?img=9",
@@ -117,8 +118,8 @@ const TasklistGrid = () => {
         },
         {
           id: 7,
-          ticketTitle: "Software Installation",
-          Assignes: [
+          ticketTitle: "Data Privacy And GDPR Compliance Initiative",
+          Assignees: [
             "https://i.pravatar.cc/150?img=7",
             "https://i.pravatar.cc/150?img=8",
             "https://i.pravatar.cc/150?img=9",
@@ -131,8 +132,8 @@ const TasklistGrid = () => {
         },
         {
           id: 8,
-          ticketTitle: "Office Supplies Request",
-          Assignes: [
+          ticketTitle: "",
+          Assignees: [
             "https://i.pravatar.cc/150?img=1",
             "https://i.pravatar.cc/150?img=2",
             "https://i.pravatar.cc/150?img=3",
@@ -146,7 +147,7 @@ const TasklistGrid = () => {
         {
           id: 9,
           ticketTitle: "Email Access Issue",
-          Assignes: [
+          Assignees: [
             "https://i.pravatar.cc/150?img=7",
             "https://i.pravatar.cc/150?img=8",
             "https://i.pravatar.cc/150?img=9",
@@ -162,11 +163,11 @@ const TasklistGrid = () => {
       // console.log(avatars)
     
       const columns = [
-        { field: "id", headerName: "ID", width: 70 },
-        { field: "ticketTitle", headerName: "Projects", width: 200 },
+        { field: "id", headerName: "ID", width: "100%" },
+        { field: "ticketTitle", headerName: "Projects", width:"100%" },
         {
-          field: "Assignes",
-          headerName: "Assignes",
+          field: "Assignees",
+          headerName: "Assignees",
           width: 200,
           type: "singleSelect",
           cellRenderer: (params) => (
@@ -178,7 +179,7 @@ const TasklistGrid = () => {
                 width: "100%",
               }}
             >
-              {params.data.Assignes.map((assignee, index) => (
+              {params.data.Assignees.map((assignee, index) => (
                 <Avatar
                   key={index}
                   src={assignee}

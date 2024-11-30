@@ -1,19 +1,14 @@
 import React,{useState} from 'react'
 
-import TestSide from '../components/Sidetest'
-import TaskSidebar from '../components/TaskManagement/TaskSidebar';
+
 import AssignTaskForm from '../components/TaskManagement/AssignTaskForm';
 
 
-import { DataGrid } from "@mui/x-data-grid";
-import Paper from "@mui/material/Paper";
-import Box from "@mui/material/Box";
-import InputLabel from "@mui/material/InputLabel";
+
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import ModuleSidebar from '../components/ModuleSidebar';
-import { alignProperty } from '@mui/material/styles/cssUtils';
+
 import { NewModal } from '../components/NewModal';
 import { useLocation } from 'react-router-dom';
 import AgTable from '../components/AgTable';
@@ -140,7 +135,7 @@ const TasklistTable = () => {
       const [allRows, setAllRows] = useState([
         {
           id: 1,
-          ticketTitle: "Website Bug",
+          ticketTitle: "Financial Forcasting And Budgeting",
           Assignes:"shreya",
           DueDate: "10th october 2024",
           priority: "High",
@@ -149,7 +144,7 @@ const TasklistTable = () => {
         },
         {
           id: 2,
-          ticketTitle: "Payroll Issue",
+          ticketTitle: "Annual Co-orporate Conference and Networking Events",
           Assignes:"Aditi",
           DueDate:"12th october 2024",
           priority: "Medium",
@@ -158,7 +153,7 @@ const TasklistTable = () => {
         },
         {
           id: 3,
-          ticketTitle: "Server Downtime",
+          ticketTitle: "Website Redesign",
           Assignes: "Pallavi",
           DueDate:"15th october 2024",
           priority: "High",
@@ -167,7 +162,7 @@ const TasklistTable = () => {
         },
         {
           id: 4,
-          ticketTitle: "New Workstation Setup",
+          ticketTitle: "Annual Co-orporate Conference and Networking Events",
           Assignes: "Silva",
           DueDate:"30th october 2024",
           priority: "Low",
@@ -176,7 +171,7 @@ const TasklistTable = () => {
         },
         {
           id: 5,
-          ticketTitle: "Employee Onboarding",
+          ticketTitle: "Business Process Optimizations and Automations",
           Assignes:"Jayesh",
           DueDate:"2th November 2024",
           priority: "Medium",
@@ -185,7 +180,7 @@ const TasklistTable = () => {
         },
         {
           id: 6,
-          ticketTitle: "Network Issue",
+          ticketTitle: "Data Privacy And GDPR Compliance initiative",
           Assignes:"Pratab",
           DueDate:"7th November 2024",
           priority: "High",
@@ -194,7 +189,7 @@ const TasklistTable = () => {
         },
         {
           id: 7,
-          ticketTitle: "Software Installation",
+          ticketTitle: "Launch a New Digital Marketing Campaign",
           Assignes:"Kamlesh",
           DueDate:"9th November 2024",
           priority: "Low",
@@ -212,11 +207,11 @@ const TasklistTable = () => {
         },
         {
           id: 9,
-          ticketTitle: "Email Access Issue",
+          ticketTitle: "Data Privacy And GDPR Compliance Initiative",
           Assignes:"Divya",
           DueDate:"20th November 2024",
           priority: "Medium",
-          department: "IT",
+          department: "Event Management",
           requestDate: "2024-10-11",
         }
        
