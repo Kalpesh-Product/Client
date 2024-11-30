@@ -35,7 +35,7 @@ const ManageAsset = () => {
   const [assetsData, setAssetsData] = useState([]);
   const [isEditing, setIsEditing] = useState(false); // Editing state
   const [formData, setFormData] = useState(assetsData || {}); // Form data state
-  const [approval, setApproval] = useState(null)
+  const [approval, setApproval] = useState(null);
   const [activeTab, setActiveTab] = useState(0);
   const [requests, setRequests] = useState([]);
 
@@ -200,8 +200,7 @@ const ManageAsset = () => {
                 cursor: "pointer",
                 height: "100%",
               }}
-              onClick={() => handleAssignAsset(params.data)}
-            >
+              onClick={() => handleAssignAsset(params.data)}>
               Assign
             </button>
           </div>
@@ -212,7 +211,11 @@ const ManageAsset = () => {
   ];
   const assetRequestColumns = [
     { field: "department", headerName: "Department" },
-    { field: "assetNumber", headerName: "Asset Number" , filter: 'agNumberColumnFilter'},
+    {
+      field: "assetNumber",
+      headerName: "Asset Number",
+      filter: "agNumberColumnFilter",
+    },
     { field: "category", headerName: "Category" },
     // { field: "assetName", headerName: "Asset Name", : 1 },
     { field: "brandName", headerName: "Brand" },
@@ -253,51 +256,48 @@ const ManageAsset = () => {
       filter: false,
       headerName: "Actions",
       flex: 1,
-      cellRenderer: (params) =>(
+      cellRenderer: (params) => (
         <>
-        {approval === null && (
-          <div className="p-2 flex gap-2">
-          <button
-            style={{
-              backgroundColor: "#0db4ea",
-              color: "white",
-              border: "none",
-              paddingLeft: "0.5rem",
-              paddingRight: "0.5rem",
-              borderRadius: "4px",
-              cursor: "pointer",
-              height: "100%",
-            }}
-            onClick={() => setApproval(true)}
-          >
-            Approve
-          </button>
-          <button
-            style={{
-              backgroundColor: "#0db4ea",
-              color: "white",
-              border: "none",
-              paddingLeft: "0.5rem",
-              paddingRight: "0.5rem",
-              borderRadius: "4px",
-              cursor: "pointer",
-              height: "100%",
-            }}
-            onClick={()=>setApproval(false)}
-          >
-            Reject
-          </button>
-        </div>
-        )}
-        {approval === true && (
-          <span className="text-green-700 font-semibold">Approved</span>
-        )}
-        {approval === false && (
-          <span className="text-red-700 font-semibold">Rejected</span>
-        )}
+          {approval === null && (
+            <div className="p-2 flex gap-2">
+              <button
+                style={{
+                  backgroundColor: "#0db4ea",
+                  color: "white",
+                  border: "none",
+                  paddingLeft: "0.5rem",
+                  paddingRight: "0.5rem",
+                  borderRadius: "4px",
+                  cursor: "pointer",
+                  height: "100%",
+                }}
+                onClick={() => setApproval(true)}>
+                Approve
+              </button>
+              <button
+                style={{
+                  backgroundColor: "#0db4ea",
+                  color: "white",
+                  border: "none",
+                  paddingLeft: "0.5rem",
+                  paddingRight: "0.5rem",
+                  borderRadius: "4px",
+                  cursor: "pointer",
+                  height: "100%",
+                }}
+                onClick={() => setApproval(false)}>
+                Reject
+              </button>
+            </div>
+          )}
+          {approval === true && (
+            <span className="text-green-700 font-semibold">Approved</span>
+          )}
+          {approval === false && (
+            <span className="text-red-700 font-semibold">Rejected</span>
+          )}
         </>
-      )
-      
+      ),
     },
   ];
 
@@ -367,11 +367,8 @@ const ManageAsset = () => {
               fontFamily: "Popins-Semibold",
               padding: "0.5rem",
             }}>
-              {/* 0 */}
-            <Tab
-              sx={{ borderRight: "1px solid #e4e4e4" }}
-              label="Add Assets"
-            />
+            {/* 0 */}
+            <Tab sx={{ borderRight: "1px solid #e4e4e4" }} label="Add Assets" />
             {/* 1 */}
             <Tab
               sx={{ borderRight: "1px solid #e4e4e4" }}

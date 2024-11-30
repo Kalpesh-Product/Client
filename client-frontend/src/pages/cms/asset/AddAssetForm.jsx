@@ -113,8 +113,7 @@ const AddAssetForm = ({ title, handleClose, user }) => {
                   sx={{
                     borderRadius: 2,
                     fontFamily: "Popins-SemiBold",
-                  }}
-                >
+                  }}>
                   <div className="flex justify-end align-middle mb-4">
                     {/* <Typography
                       sx={{ fontFamily: "Popins-SemiBold" }}
@@ -144,8 +143,7 @@ const AddAssetForm = ({ title, handleClose, user }) => {
                           select
                           fullWidth
                           value={formData.department}
-                          onChange={handleChange}
-                        >
+                          onChange={handleChange}>
                           {user.department === "TopManagement"
                             ? departments.map((dept, index) => {
                                 return (
@@ -171,8 +169,7 @@ const AddAssetForm = ({ title, handleClose, user }) => {
                           fullWidth
                           value={formData.category}
                           onChange={handleChange}
-                          sx={{ textAlign: "start" }}
-                        >
+                          sx={{ textAlign: "start" }}>
                           {assetTypes.map((type, index) => (
                             <MenuItem key={index} value={type}>
                               {type}
@@ -296,8 +293,7 @@ const AddAssetForm = ({ title, handleClose, user }) => {
                           name="location"
                           fullWidth
                           value={formData.location}
-                          onChange={handleChange}
-                        >
+                          onChange={handleChange}>
                           {locations.map((location, index) => (
                             <MenuItem key={index} value={location}>
                               {location}
@@ -310,8 +306,7 @@ const AddAssetForm = ({ title, handleClose, user }) => {
                     <div className="mt-4">
                       <button
                         type="submit"
-                        className="p-2 wono-blue-dark text-white rounded-md w-full"
-                      >
+                        className="p-2 wono-blue-dark text-white rounded-md w-full">
                         Next
                       </button>
                     </div>
@@ -339,8 +334,7 @@ const AddAssetForm = ({ title, handleClose, user }) => {
                             columns[0].push(
                               <div
                                 key={key}
-                                className="flex justify-between py-2 border-b"
-                              >
+                                className="flex justify-between py-2 border-b">
                                 <h1 className="font-semibold">
                                   {formattedKey}
                                 </h1>
@@ -351,8 +345,7 @@ const AddAssetForm = ({ title, handleClose, user }) => {
                             columns[1].push(
                               <div
                                 key={key}
-                                className="flex justify-between py-2 border-b"
-                              >
+                                className="flex justify-between py-2 border-b">
                                 <h1 className="font-semibold">
                                   {formattedKey}
                                 </h1>

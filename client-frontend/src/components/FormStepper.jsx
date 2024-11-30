@@ -20,22 +20,20 @@ const FormStepper = ({ steps, children, handleClose }) => {
   return (
     <div>
       <div className="flex justify-between items-center">
-        <div >
+        <div>
           {activeStep > 0 && ( // Render the Back button only if not on the first step
             <button
               onClick={handleBack}
-              className="p-3 wono-blue-dark rounded-md text-white flex items-center gap-2"
-            >
-             <IoMdArrowRoundBack />
-             Back
+              className="p-3 wono-blue-dark rounded-md text-white flex items-center gap-2">
+              <IoMdArrowRoundBack />
+              Back
             </button>
           )}
         </div>
         <Stepper
           activeStep={activeStep}
           alternativeLabel
-          sx={{ width: "100%" }}
-        >
+          sx={{ width: "100%" }}>
           {steps.map((label) => (
             <Step key={label}>
               <StepLabel>{label}</StepLabel>
@@ -48,8 +46,7 @@ const FormStepper = ({ steps, children, handleClose }) => {
             whileTap={{ scale: 0.9 }}
             type="button"
             onClick={handleClose}
-            className=" p-2 bg-white text-[red] border border-red-200 hover:border-red-400 text-2xl rounded-md"
-          >
+            className=" p-2 bg-white text-[red] border border-red-200 hover:border-red-400 text-2xl rounded-md">
             <IoMdClose />
           </motion.button>
         </div>
