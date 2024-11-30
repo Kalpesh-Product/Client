@@ -271,14 +271,7 @@ export default function AddRooms() {
                         </p>
                         <div className="flex justify-between">
                           <Button
-                            onClick={handleBack}
-                            type="button"
-                            variant="outlined"
-                            color="secondary"
-                          >
-                            Back
-                          </Button>
-                          <Button
+                          fullWidth
                             type="button"
                             variant="contained"
                             color="primary"
