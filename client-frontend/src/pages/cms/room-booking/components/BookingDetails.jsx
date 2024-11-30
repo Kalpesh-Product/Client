@@ -16,6 +16,7 @@ import { toast } from "sonner";
 import Select from "react-select";
 import { motion } from "framer-motion";
 import { IoMdClose } from "react-icons/io";
+import FormStepper from "../../../../components/FormStepper";
 import {
   DatePicker,
   TimePicker,
@@ -63,14 +64,6 @@ export default function BookingDetails({
   const handleUpdateChange = (e) => {
     const { name, value } = e.target;
     setUpdatedMeeting((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-
-  const handleExtendTimeChange = (e) => {
-    const { name, value } = e.target;
-    setExtendedTime((prev) => ({
       ...prev,
       [name]: value,
     }));

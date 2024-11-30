@@ -17,7 +17,9 @@ export const NewModal = ({ open,  children }) => {
         },
       }}
     >
-      <DialogContent className="motion-preset-fade-sm">{children}</DialogContent>
+      <DialogContent className="motion-preset-fade-sm">
+        {children}
+      </DialogContent>
     </Dialog>
   );
 };
