@@ -37,7 +37,9 @@ export default function BookingDetails({
   const [tabIndex, setTabIndex] = useState(0);
   const [updatedMeeting, setUpdatedMeeting] = useState({
     room: selectedEvent.extendedProps.room || "",
-    participants: selectedEvent.extendedProps.participants || "",
+    participants: selectedEvent.extendedProps.participants
+      ? selectedEvent.extendedProps.participants.split(",").map((p) => p.trim())
+      : [],
     subject: selectedEvent.title || "",
     agenda: selectedEvent.extendedProps.agenda || "",
   });
@@ -281,7 +283,12 @@ export default function BookingDetails({
                 </Typography>
                 <Typography variant="body1">
                   <strong>Participants:</strong>{" "}
-                  {updatedMeeting.participants.join(", ")}
+                  <Typography variant="body1">
+                    <strong>Participants:</strong>{" "}
+                    {updatedMeeting.participants.length
+                      ? updatedMeeting.participants.join(", ")
+                      : "No participants"}
+                  </Typography>
                 </Typography>
                 <Typography variant="body1">
                   <strong>Agenda:</strong> {updatedMeeting.agenda}
