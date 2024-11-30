@@ -20,19 +20,22 @@ const Tasklist = () => {
   
   const [view,SetView] = useState("Grid View");
 
-  const navigate = useNavigate();
+  const [projectData, setProjectData] = useState({
+    projectName: "",
+    category: "",
+    Department: "",
+    assignees: [],
+    Title: "",
+    description: "",
+    date: "",
+    status:""
+  });
 
-  const handleClick = (title) => {
-    navigate("/tasks/tasklisttable", { state: { taskTitle: title } });
-  };
-
-  const handleActionChange = () => {};
-
-  const tasks = {
+  const [tasks, setTasks] = useState({
     ongoing: [
       {
-        title: "Website Redesign",
-        department: "IT",
+        Title: "Website Redesign",
+        Department: "IT",
         description:
           "To discuss about the details of the projects which is important",
         Assignes: [
@@ -42,8 +45,8 @@ const Tasklist = () => {
         ],
       },
       {
-        title: "Launch a new digital marketing Campaign",
-        department: "Marketing",
+        Title: "Launch a new digital marketing Campaign",
+        Department: "Marketing",
         description:
           "To enhance the productivity and the materials of the projects which is very much effetives.",
         Assignes: [
@@ -53,8 +56,8 @@ const Tasklist = () => {
         ],
       },
       {
-        title: "Market Expansion strategy for new Product line",
-        department: "Finance",
+        Title: "Market Expansion strategy for new Product line",
+        Department: "Finance",
         description:
           "To entertain the peacefull understanding anf training for the ppeople around us.",
         Assignes: [
@@ -66,8 +69,8 @@ const Tasklist = () => {
     ],
     upcoming: [
       {
-        title: "Financial forcasting and Budgeting",
-        department: "Sales",
+        Title: "Financial forcasting and Budgeting",
+        Department: "Sales",
         description:
           "To discuss about the details of the projects which is important",
         Assignes: [
@@ -77,8 +80,8 @@ const Tasklist = () => {
         ],
       },
       {
-        title: "Bussiness Process optimizations and Automation",
-        department: "Operation",
+        Title: "Bussiness Process optimizations and Automation",
+        Department: "Operation",
         description:
           "To enhance the productivity and the materials of the projects which is very much effetives.",
         Assignes: [
@@ -88,16 +91,16 @@ const Tasklist = () => {
         ],
       },
       {
-        title: "Employee Onboarding and training programme",
-        department: "Human Resources and Training",
+        Title: "Employee Onboarding and training programme",
+        Department: "Human Resources and Training",
         description:
           "To entertain the peacefull understanding anf training for the ppeople around us",
       },
     ],
     pending: [
       {
-        title: "Annual Co-operate Conference and Networking Evets",
-        department: "Event Management",
+        Title: "Annual Co-operate Conference and Networking Evets",
+        Department: "Event Management",
         description: "Details about Task 7",
         Assignes: [
           "https://i.pravatar.cc/150?img=1",
@@ -106,8 +109,8 @@ const Tasklist = () => {
         ],
       },
       {
-        title: "Data Privacy And GDPR Compliance initiative",
-        department: "Compliance and Regulatory",
+        Title: "Data Privacy And GDPR Compliance initiative",
+        Department: "Compliance and Regulatory",
         description:
           "To enhance the productivity and the materials of the projects which is very much effetives.",
         Assignes: [
@@ -117,8 +120,8 @@ const Tasklist = () => {
         ],
       },
       {
-        title: "Reducing Environmental impact and promoting Sustainability",
-        department: "Corporate Sustainability and Compliance",
+        Title: "Reducing Environmental impact and promoting Sustainability",
+        Department: "Corporate Sustainability and Compliance",
         description:
           "To enhance the productivity and the materials of the projects which is very much effetives.",
         Assignes: [
@@ -130,8 +133,8 @@ const Tasklist = () => {
     ],
     completed: [
       {
-        title: "Annual Co-operate Conference and Networking Evets",
-        department: "Event Management",
+        Title: "Annual Co-operate Conference and Networking Evets",
+        Department: "Event Management",
         description: "Details about Task 7",
         Assignes: [
           "https://i.pravatar.cc/150?img=1",
@@ -140,8 +143,8 @@ const Tasklist = () => {
         ],
       },
       {
-        title: "Data Privacy And GDPR Compliance initiative",
-        department: "Compliance and Regulatory",
+        Title: "Data Privacy And GDPR Compliance initiative",
+        Department: "Compliance and Regulatory",
         description:
           "To enhance the productivity and the materials of the projects which is very much effetives.",
         Assignes: [
@@ -151,8 +154,8 @@ const Tasklist = () => {
         ],
       },
       {
-        title: "Reducing Environmental impact and promoting Sustainability",
-        department: "Corporate Sustainability and Compliance",
+        Title: "Reducing Environmental impact and promoting Sustainability",
+        Department: "Corporate Sustainability and Compliance",
         description:
           "To enhance the productivity and the materials of the projects which is very much effetives.",
         Assignes: [
@@ -162,7 +165,153 @@ const Tasklist = () => {
         ],
       },
     ],
+  });
+
+  const navigate = useNavigate();
+
+  const handleClick = (title) => {
+    navigate("/tasks/tasklisttable", { state: { taskTitle: title } });
   };
+
+
+
+  const handleActionChange = () => {};
+
+  // const tasks = {
+  //   ongoing: [
+  //     {
+  //       title: "Website Redesign",
+  //       department: "IT",
+  //       description:
+  //         "To discuss about the details of the projects which is important",
+  //       Assignes: [
+  //         "https://i.pravatar.cc/150?img=1",
+  //         "https://i.pravatar.cc/150?img=2",
+  //         "https://i.pravatar.cc/150?img=3",
+  //       ],
+  //     },
+  //     {
+  //       title: "Launch a new digital marketing Campaign",
+  //       department: "Marketing",
+  //       description:
+  //         "To enhance the productivity and the materials of the projects which is very much effetives.",
+  //       Assignes: [
+  //         "https://i.pravatar.cc/150?img=4",
+  //         "https://i.pravatar.cc/150?img=5",
+  //         "https://i.pravatar.cc/150?img=6",
+  //       ],
+  //     },
+  //     {
+  //       title: "Market Expansion strategy for new Product line",
+  //       department: "Finance",
+  //       description:
+  //         "To entertain the peacefull understanding anf training for the ppeople around us.",
+  //       Assignes: [
+  //         "https://i.pravatar.cc/150?img=7",
+  //         "https://i.pravatar.cc/150?img=8",
+  //         "https://i.pravatar.cc/150?img=9",
+  //       ],
+  //     },
+  //   ],
+  //   upcoming: [
+  //     {
+  //       title: "Financial forcasting and Budgeting",
+  //       department: "Sales",
+  //       description:
+  //         "To discuss about the details of the projects which is important",
+  //       Assignes: [
+  //         "https://i.pravatar.cc/150?img=7",
+  //         "https://i.pravatar.cc/150?img=8",
+  //         "https://i.pravatar.cc/150?img=9",
+  //       ],
+  //     },
+  //     {
+  //       title: "Bussiness Process optimizations and Automation",
+  //       department: "Operation",
+  //       description:
+  //         "To enhance the productivity and the materials of the projects which is very much effetives.",
+  //       Assignes: [
+  //         "https://i.pravatar.cc/150?img=1",
+  //         "https://i.pravatar.cc/150?img=2",
+  //         "https://i.pravatar.cc/150?img=3",
+  //       ],
+  //     },
+  //     {
+  //       title: "Employee Onboarding and training programme",
+  //       department: "Human Resources and Training",
+  //       description:
+  //         "To entertain the peacefull understanding anf training for the ppeople around us",
+  //     },
+  //   ],
+  //   pending: [
+  //     {
+  //       title: "Annual Co-operate Conference and Networking Evets",
+  //       department: "Event Management",
+  //       description: "Details about Task 7",
+  //       Assignes: [
+  //         "https://i.pravatar.cc/150?img=1",
+  //         "https://i.pravatar.cc/150?img=2",
+  //         "https://i.pravatar.cc/150?img=3",
+  //       ],
+  //     },
+  //     {
+  //       title: "Data Privacy And GDPR Compliance initiative",
+  //       department: "Compliance and Regulatory",
+  //       description:
+  //         "To enhance the productivity and the materials of the projects which is very much effetives.",
+  //       Assignes: [
+  //         "https://i.pravatar.cc/150?img=7",
+  //         "https://i.pravatar.cc/150?img=8",
+  //         "https://i.pravatar.cc/150?img=9",
+  //       ],
+  //     },
+  //     {
+  //       title: "Reducing Environmental impact and promoting Sustainability",
+  //       department: "Corporate Sustainability and Compliance",
+  //       description:
+  //         "To enhance the productivity and the materials of the projects which is very much effetives.",
+  //       Assignes: [
+  //         "https://i.pravatar.cc/150?img=7",
+  //         "https://i.pravatar.cc/150?img=8",
+  //         "https://i.pravatar.cc/150?img=9",
+  //       ],
+  //     },
+  //   ],
+  //   completed: [
+  //     {
+  //       title: "Annual Co-operate Conference and Networking Evets",
+  //       department: "Event Management",
+  //       description: "Details about Task 7",
+  //       Assignes: [
+  //         "https://i.pravatar.cc/150?img=1",
+  //         "https://i.pravatar.cc/150?img=2",
+  //         "https://i.pravatar.cc/150?img=3",
+  //       ],
+  //     },
+  //     {
+  //       title: "Data Privacy And GDPR Compliance initiative",
+  //       department: "Compliance and Regulatory",
+  //       description:
+  //         "To enhance the productivity and the materials of the projects which is very much effetives.",
+  //       Assignes: [
+  //         "https://i.pravatar.cc/150?img=7",
+  //         "https://i.pravatar.cc/150?img=8",
+  //         "https://i.pravatar.cc/150?img=9",
+  //       ],
+  //     },
+  //     {
+  //       title: "Reducing Environmental impact and promoting Sustainability",
+  //       department: "Corporate Sustainability and Compliance",
+  //       description:
+  //         "To enhance the productivity and the materials of the projects which is very much effetives.",
+  //       Assignes: [
+  //         "https://i.pravatar.cc/150?img=1",
+  //         "https://i.pravatar.cc/150?img=2",
+  //         "https://i.pravatar.cc/150?img=3",
+  //       ],
+  //     },
+  //   ],
+  // };
 
   const setEditModalOpen =(value,title,description,department)=>{
     SetModalOpen(true);
@@ -173,7 +322,7 @@ const Tasklist = () => {
     console.log("Opening MOdal of Edit");
   }
 
-  const TaskCard = ({ title, description, department, Assignes = [] }) => (
+  const TaskCard = ({ Title, Description, Department, Assignes = [] }) => (
     <div
       className="bg-gray-100 shadow-md bg-white rounded-lg p-3 mb-4"
       
@@ -229,8 +378,8 @@ const Tasklist = () => {
           </FormControl>
         </div>
       </div>
-      <h4 className="text-sm font-semibold">{title}</h4>
-      <p className="text-gray-600 my-5 text-xs">{description}</p>
+      <h4 className="text-sm font-semibold">{Title}</h4>
+      <p className="text-gray-600 my-5 text-xs">{Description}</p>
       <div>
         <p className="text-xs font-bold">Assignees</p>
         <Stack
@@ -380,6 +529,10 @@ const Tasklist = () => {
             title={btnclicked === "Add Task" ? "Add Task" : Editvalue ? "Edit Field" : "Add Project"}
             handleClose={closeModal}
             modalType={btnclicked}
+            projectData ={projectData}
+            setProjectData={setProjectData}
+            setTasks = {setTasks}
+            tasks={tasks}
           />
         </NewModal>
       )}
