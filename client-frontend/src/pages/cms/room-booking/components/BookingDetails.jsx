@@ -12,11 +12,13 @@ import {
   InputLabel,
 } from "@mui/material";
 import { format } from "date-fns";
+import Stepper from "@mui/material/Stepper";
+import Step from "@mui/material/Step";
+import StepLabel from "@mui/material/StepLabel";
 import { toast } from "sonner";
 import Select from "react-select";
 import { motion } from "framer-motion";
 import { IoMdClose } from "react-icons/io";
-import FormStepper from "../../../../components/FormStepper";
 import {
   DatePicker,
   TimePicker,
@@ -56,6 +58,19 @@ export default function BookingDetails({
     : [];
 
   const [cancelReason, setCancelReason] = useState("");
+  const [customCancel, setCustomCancel] = useState("");
+  const [activeSteps, setActiveSteps] = useState({
+    edit: 0,
+    extend: 0,
+    cancel: 0,
+  });
+
+  const handleStepChange = (tab, step) => {
+    setActiveSteps((prev) => ({
+      ...prev,
+      [tab]: step,
+    }));
+  };
 
   const handleTabChange = (event, newIndex) => {
     setTabIndex(newIndex);
@@ -196,144 +211,205 @@ export default function BookingDetails({
 
         {/* Edit Tab */}
         {tabIndex === 1 && (
-          <div className="p-6">
-            <form onSubmit={handleUpdateSubmit} className="flex flex-col gap-4">
-              <TextField
-                label="Subject"
-                type="text"
-                name="subject"
-                value={updatedMeeting.subject}
-                onChange={handleUpdateChange}
-                placeholder="Enter meeting subject"
-                fullWidth
-              />
-              <Select
-                isMulti
-                options={participantOptions}
-                value={participantOptions.filter((option) =>
-                  updatedMeeting.participants.includes(option.value)
-                )}
-                onChange={(selectedOptions) => {
-                  setUpdatedMeeting((prev) => ({
-                    ...prev,
-                    participants: selectedOptions.map((option) => option.value),
-                  }));
-                }}
-                placeholder="Select participants"
-              />
-
-              <TextField
-                label="Agenda"
-                name="agenda"
-                value={updatedMeeting.agenda}
-                onChange={handleUpdateChange}
-                placeholder="Enter meeting agenda"
-                multiline
-                rows={4}
-                fullWidth
-              />
-              <Button
-                type="submit"
-                variant="contained"
-                color="primary"
-                className="w-full py-2 font-bold"
+          <Box p={3}>
+            <div className="w-full mb-8">
+              <Stepper activeStep={activeSteps.edit}>
+                <Step>
+                  <StepLabel>Edit Details</StepLabel>
+                </Step>
+                <Step>
+                  <StepLabel>Confirm Changes</StepLabel>
+                </Step>
+              </Stepper>
+            </div>
+            {activeSteps.edit === 0 && (
+              <form
+                onSubmit={(e) => e.preventDefault()}
+                className="flex flex-col gap-4"
               >
-                Update Booking
-              </Button>
-            </form>
-          </div>
+                <TextField
+                  label="Subject"
+                  type="text"
+                  name="subject"
+                  value={updatedMeeting.subject}
+                  onChange={handleUpdateChange}
+                  placeholder="Enter meeting subject"
+                  fullWidth
+                />
+                <Select
+                  isMulti
+                  options={participantOptions}
+                  value={participantOptions.filter((option) =>
+                    updatedMeeting.participants.includes(option.value)
+                  )}
+                  onChange={(selectedOptions) => {
+                    setUpdatedMeeting((prev) => ({
+                      ...prev,
+                      participants: selectedOptions.map(
+                        (option) => option.value
+                      ),
+                    }));
+                  }}
+                  placeholder="Select participants"
+                />
+                <TextField
+                  label="Agenda"
+                  name="agenda"
+                  value={updatedMeeting.agenda}
+                  onChange={handleUpdateChange}
+                  placeholder="Enter meeting agenda"
+                  multiline
+                  rows={4}
+                  fullWidth
+                />
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={() => handleStepChange("edit", 1)}
+                >
+                  Next
+                </Button>
+              </form>
+            )}
+            {activeSteps.edit === 1 && (
+              <Box>
+                <Typography variant="h6" gutterBottom>
+                  Confirm Changes
+                </Typography>
+                <Typography variant="body1">
+                  <strong>Subject:</strong> {updatedMeeting.subject}
+                </Typography>
+                <Typography variant="body1">
+                  <strong>Participants:</strong>{" "}
+                  {updatedMeeting.participants.join(", ")}
+                </Typography>
+                <Typography variant="body1">
+                  <strong>Agenda:</strong> {updatedMeeting.agenda}
+                </Typography>
+                <Box display="flex" justifyContent="space-between" mt={2}>
+                  <Button
+                    variant="outlined"
+                    onClick={() => handleStepChange("edit", 0)}
+                  >
+                    Back
+                  </Button>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={handleUpdateSubmit}
+                  >
+                    Submit
+                  </Button>
+                </Box>
+              </Box>
+            )}
+          </Box>
         )}
 
         {/* Extend Time Tab */}
         {tabIndex === 2 && (
           <Box p={3}>
-            <form onSubmit={handleExtendTimeSubmit} className="space-y-4">
-              {/* Date Picker */}
-              <DatePicker
-                sx={{ width: "100%" }}
-                label="Date"
-                value={dayjs(extendedTime.date)}
-                onChange={(newValue) =>
-                  setExtendedTime((prev) => ({
-                    ...prev,
-                    date: format(new Date(newValue), "yyyy-MM-dd"),
-                  }))
-                }
-                disabled
-                renderInput={(params) => <TextField {...params} fullWidth />}
-              />
-
-              {/* Start Time Picker */}
-              <TimePicker
-                sx={{ width: "100%" }}
-                label="Start Time"
-                value={dayjs(`${extendedTime.date}T${extendedTime.startTime}`)}
-                onChange={(newValue) =>
-                  setExtendedTime((prev) => ({
-                    ...prev,
-                    startTime: format(new Date(newValue), "HH:mm"),
-                  }))
-                }
-                disabled
-                renderInput={(params) => <TextField {...params} fullWidth />}
-              />
-
-              {/* End Time Picker */}
-              <TimePicker
-                sx={{ width: "100%" }}
-                label="End Time"
-                value={dayjs(`${extendedTime.date}T${extendedTime.endTime}`)}
-                onChange={(newValue) =>
-                  setExtendedTime((prev) => ({
-                    ...prev,
-                    endTime: format(new Date(newValue), "HH:mm"),
-                  }))
-                }
-                renderInput={(params) => <TextField {...params} fullWidth />}
-              />
-
-              {/* Buttons for predefined durations */}
-              <Box display="flex" justifyContent="space-between" mt={2}>
+            <div className="w-full mb-8">
+              <Stepper activeStep={activeSteps.extend}>
+                <Step>
+                  <StepLabel>Extend Time</StepLabel>
+                </Step>
+                <Step>
+                  <StepLabel>Confirm Extension</StepLabel>
+                </Step>
+              </Stepper>
+            </div>
+            {activeSteps.extend === 0 && (
+              <form onSubmit={(e) => e.preventDefault()} className="space-y-4">
+                <TimePicker
+                  sx={{ width: "100%" }}
+                  label="End Time"
+                  value={dayjs(`${extendedTime.date}T${extendedTime.endTime}`)}
+                  onChange={(newValue) =>
+                    setExtendedTime((prev) => ({
+                      ...prev,
+                      endTime: format(new Date(newValue), "HH:mm"),
+                    }))
+                  }
+                  renderInput={(params) => <TextField {...params} fullWidth />}
+                />
+                <Box display="flex" justifyContent="space-between" mt={2}>
+                  <Button
+                    variant="outlined"
+                    onClick={() => handleDurationExtension(30)}
+                  >
+                    Extend 30 mins
+                  </Button>
+                  <Button
+                    variant="outlined"
+                    onClick={() => handleDurationExtension(60)}
+                  >
+                    Extend 1 hour
+                  </Button>
+                </Box>
                 <Button
-                  variant="outlined"
-                  onClick={() => handleDurationExtension(30)}
+                  fullWidth
+                  variant="contained"
+                  color="primary"
+                  onClick={() => handleStepChange("extend", 1)}
                 >
-                  Extend 30 mins
+                  Next
                 </Button>
-                <Button
-                  variant="outlined"
-                  onClick={() => handleDurationExtension(60)}
+              </form>
+            )}
+            {activeSteps.extend === 1 && (
+              <Box>
+                <Typography variant="h6" gutterBottom>
+                  Confirm Time Extension
+                </Typography>
+                <Typography variant="body1">
+                  <strong>New End Time:</strong> {extendedTime.endTime}
+                </Typography>
+                <Box
+                  display="flex"
+                  justifyContent="center"
+                  flexDirection="column"
+                  width="100%"
+                  alignItems="center"
+                  gap="1rem"
+                  mt={2}
                 >
-                  Extend 1 hour
-                </Button>
-                <Button
-                  variant="outlined"
-                  onClick={() => handleDurationExtension(120)}
-                >
-                  Extend 2 hours
-                </Button>
+                  <Button
+                    fullWidth
+                    variant="outlined"
+                    onClick={() => handleStepChange("extend", 0)}
+                  >
+                    Back
+                  </Button>
+                  <Button
+                    fullWidth
+                    variant="contained"
+                    color="primary"
+                    onClick={handleExtendTimeSubmit}
+                  >
+                    Submit
+                  </Button>
+                </Box>
               </Box>
-              <Button
-                type="submit"
-                variant="contained"
-                color="primary"
-                className="w-full py-2 font-bold"
-                sx={{ mt: 2 }}
-              >
-                Extend Time
-              </Button>
-            </form>
+            )}
           </Box>
         )}
+
         {/* Cancel Booking Tab */}
         {tabIndex === 3 && (
           <Box p={3}>
-            <form
-              onSubmit={handleCancelSubmit}
-              className="flex flex-col justify-center items-center gap-8"
-            >
-              {/* Dropdown for Reasons */}
-              <div className="w-full">
+            <div className="w-full mb-8">
+              <Stepper activeStep={activeSteps.cancel}>
+                <Step>
+                  <StepLabel>Reason for Cancellation</StepLabel>
+                </Step>
+                <Step>
+                  <StepLabel>Confirm Cancellation</StepLabel>
+                </Step>
+              </Stepper>
+            </div>
+            {activeSteps.cancel === 0 && (
+              <form onSubmit={(e) => e.preventDefault()} className="space-y-4">
                 <FormControl fullWidth>
                   <InputLabel id="cancel-reason-label">
                     Select a reason
@@ -359,31 +435,64 @@ export default function BookingDetails({
                     <MenuItem value="Other">Other</MenuItem>
                   </MuiSelect>
                 </FormControl>
-              </div>
-
-              {/* Show TextField when "Other" is selected */}
-              {cancelReason === "Other" && (
-                <TextField
-                  label="Specify the reason"
-                  name="reason"
-                  value={cancelReason === "Other" ? "" : cancelReason}
-                  onChange={(e) => setCancelReason(e.target.value)}
-                  placeholder="Enter your reason"
-                  multiline
-                  rows={4}
+                {cancelReason === "Other" && (
+                  <TextField
+                    label="Specify the reason"
+                    name="reason"
+                    value={customCancel}
+                    onChange={(e) => setCustomCancel(e.target.value)}
+                    placeholder="Enter your reason"
+                    multiline
+                    rows={4}
+                    fullWidth
+                  />
+                )}
+                <Button
                   fullWidth
-                />
-              )}
-
-              <Button
-                type="submit"
-                variant="contained"
-                color="error"
-                className="w-full py-2 font-bold"
-              >
-                Cancel Booking
-              </Button>
-            </form>
+                  variant="contained"
+                  color="primary"
+                  onClick={() => handleStepChange("cancel", 1)}
+                >
+                  Next
+                </Button>
+              </form>
+            )}
+            {activeSteps.cancel === 1 && (
+              <Box>
+                <Typography variant="h6" gutterBottom>
+                  Confirm Cancellation
+                </Typography>
+                <Typography variant="body1">
+                  <strong>Reason:</strong>{" "}
+                  {cancelReason === "Other" ? customCancel : cancelReason}
+                </Typography>
+                <Box
+                  display="flex"
+                  justifyContent="center"
+                  flexDirection="column"
+                  width="100%"
+                  alignItems="center"
+                  gap="1rem"
+                  mt={2}
+                >
+                  <Button
+                    fullWidth
+                    variant="outlined"
+                    onClick={() => handleStepChange("cancel", 0)}
+                  >
+                    Back
+                  </Button>
+                  <Button
+                    fullWidth
+                    variant="contained"
+                    color="error"
+                    onClick={handleCancelSubmit}
+                  >
+                    Cancel Meeting
+                  </Button>
+                </Box>
+              </Box>
+            )}
           </Box>
         )}
       </Box>
