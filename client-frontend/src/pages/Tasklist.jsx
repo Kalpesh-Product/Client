@@ -1,14 +1,13 @@
 import React, { useState } from "react";
-import TestSide from "../components/Sidetest";
-import ModuleSidebar from "../components/ModuleSidebar";
 import AssignTaskForm from "../components/TaskManagement/AssignTaskForm";
 import { NewModal } from "../components/NewModal";
 import { useNavigate } from "react-router-dom";
+import TasklistGrid from "../components/TaskManagement/TasklistGrid";
 
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import { Stack, Avatar, TextField, Button, Box } from "@mui/material";
+import { Stack, Avatar, TextField } from "@mui/material";
 
 const Tasklist = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -19,6 +18,7 @@ const Tasklist = () => {
   const [description,SetDescription] = useState("");
   const [department,SetDepartment] = useState("");
   
+  const [view,SetView] = useState("Grid View");
 
   const navigate = useNavigate();
 
@@ -32,7 +32,7 @@ const Tasklist = () => {
     ongoing: [
       {
         title: "Website Redesign",
-        department: "Technology and IT",
+        department: "IT",
         description:
           "To discuss about the details of the projects which is important",
         Assignes: [
@@ -43,7 +43,7 @@ const Tasklist = () => {
       },
       {
         title: "Launch a new digital marketing Campaign",
-        department: "Marketing and Branding",
+        department: "Marketing",
         description:
           "To enhance the productivity and the materials of the projects which is very much effetives.",
         Assignes: [
@@ -67,7 +67,7 @@ const Tasklist = () => {
     upcoming: [
       {
         title: "Financial forcasting and Budgeting",
-        department: "Strategy",
+        department: "Sales",
         description:
           "To discuss about the details of the projects which is important",
         Assignes: [
@@ -290,7 +290,25 @@ const Tasklist = () => {
         <h2 className="text-2xl  ">Projects</h2>
         <div className="flex flex-wrap items-center justify-between mt-5">
           {/* Left Side: Search, Priority Dropdown, and Date Filter */}
-          <div className="flex flex-wrap gap-1">
+
+
+        {/* Grid View and Table View dropdown */}
+          <div>
+          <TextField
+                    label="Select View"
+                    value={view}
+                    select
+                    size="large"
+                    onChange={(e) => SetView(e.target.value)}
+                  >
+                    {["Grid View","Table View"].map((type, index) => (
+                      <MenuItem key={index} value={type}>
+                        {type}
+                      </MenuItem>
+                    ))}
+                  </TextField>
+          </div>
+          <div className="flex flex-wrap gap-1 ">
             {/* Search Field */}
 
             <TextField
@@ -301,7 +319,10 @@ const Tasklist = () => {
              
               size="small"
             />
+            
+
           </div>
+         
 
           {/* Right Side: Assign Task Button */}
           <div className="flex space-x-4">
@@ -320,8 +341,8 @@ const Tasklist = () => {
             </button>
           </div>
         </div>
-
-        <div className=" mt-10">
+{view === "Grid View" ? (<>
+  <div className=" mt-10">
           <div className="flex flex-wrap -mx-4">
             <Column
               title="Upcoming"
@@ -345,6 +366,9 @@ const Tasklist = () => {
             ></Column>
           </div>
         </div>
+</>):
+(<TasklistGrid/>)}
+       
       </div>
       {modalOpen && (
         <NewModal open={modalOpen} onClose={closeModal}>

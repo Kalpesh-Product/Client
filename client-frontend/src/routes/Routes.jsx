@@ -215,6 +215,10 @@ const router = createBrowserRouter([
         element: <DepartmentDash />,
       },
       {
+        path:"/tasks/mytasks",
+        element: <DepartmentDash/>
+      },
+      {
         path: "/tasks/dashboard",
         element: <DepartmentDash />,
       },

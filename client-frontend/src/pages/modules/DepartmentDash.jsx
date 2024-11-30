@@ -81,6 +81,7 @@ import Teams from "../Teams";
 import Tasklist from "../Tasklist";
 import TasklistTable from "../TasklistTable";
 import Tasklistfirstmenu from "../tasklistfirstmenu";
+import Mytasks from "../Mytasks";
 import MyBookings from "../cms/room-booking/MyBookings";
 
 const DepartmentDash = () => {
@@ -341,7 +342,7 @@ const DepartmentDash = () => {
         <TicketWidget />,
         <TicketWidget2 />,
         <TicketWidget3 />,
-        <TicketWidget4 />,
+        // <TicketWidget4 />,
         // <AssetsCount count={customerServiceWidgetsData.totalAssets} />,
         // <MaintenanceRequests
         //   requests={customerServiceWidgetsData.pendingMaintenance}
@@ -759,7 +760,12 @@ const DepartmentDash = () => {
           <>
             <Teams />
           </>
-        ) : location.pathname === "/tasks/tasklist" ? (
+        ) : location.pathname === "/tasks/mytasks" ? (
+          <>
+          <Mytasks/>
+          </>
+        ):
+         location.pathname === "/tasks/tasklist" ? (
           <>
             <Tasklist />
           </>

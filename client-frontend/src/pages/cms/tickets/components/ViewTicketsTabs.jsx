@@ -117,7 +117,7 @@ const ViewTicketsTabs = () => {
                 sx={{ textTransform: "uppercase" }}
               /> */}
 
-              {user.role !== "Employee" && (
+              {user.role !== "Employee" && user.role !== "Admin" && (
                 <Tab
                   label="External Tickets"
                   value="2"

@@ -15,8 +15,9 @@ import {
   FaUsers,
   FaProjectDiagram,
 } from "react-icons/fa";
+
 import { CiBookmarkCheck } from "react-icons/ci";
-import { MdMeetingRoom } from "react-icons/md";
+import { MdMeetingRoom , MdTask} from "react-icons/md";
 import { BsArrowLeftSquare } from "react-icons/bs";
 import { TbReportSearch, TbSection } from "react-icons/tb";
 import { IoIosChatboxes } from "react-icons/io";
@@ -293,7 +294,12 @@ const ModuleSidebar = ({ mainSideBar }) => {
             icon: <FaUsers />,
           },
         ]
-      : [])
+      : []),
+      {
+        title:"My Tasks",
+        route: "/tasks/mytasks",
+        icon: <MdTask/>
+      }
   ];
 
   // Get the department based on the current path

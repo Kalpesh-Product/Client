@@ -18,6 +18,8 @@ import userData from "../../../dummyData/dummyData.json";
 import { LocalizationProvider, TimePicker } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
+import FormStepper from "../../../components/FormStepper";
+import WonoButton from "../../../components/Buttons/WonoButton";
 
 const departments = ["HR", "Tech", "Sales", "Marketing"];
 const categories = ["Laptop", "Monitor", "Headphones", "Keyboard", "Mice"];
@@ -129,185 +131,191 @@ export default function AssignAssetForm({ handleCloseModal, selectedAsset }) {
     return <Typography>Loading...</Typography>; // Show loading or nothing
   }
 
+  const steps = ["Assign Asset", "Verify Details"];
+  const handleNextStep = (e, handleNext) => {
+    e.preventDefault();
+    handleNext();
+  };
+
   return (
-    <Box sx={{ p: 3, maxWidth: 600, mx: "auto" }}>
-      <div className="flex justify-between mb-4">
-        <Typography sx={{ fontFamily: "Popins-Semibold" }} variant="h4">
-          Assign Asset
-        </Typography>
-        <motion.button
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.9 }}
-          type="button"
-          onClick={handleCloseModal}
-          className=" p-2 bg-white text-[red] border border-red-200 hover:border-red-400 text-2xl rounded-md"
-        >
-          <IoMdClose />
-        </motion.button>
-      </div>
-      <form onSubmit={handleSubmit}>
-        {/* Section 1: Assignee Details */}
-        <Typography
-          variant="h6"
-          sx={{ mb: 2, fontFamily: "Popins-Semibold", color: "gray" }}
-        >
-          Assignee Details
-        </Typography>
-        <Grid container spacing={3}>
-          <Grid item xs={12} sm={6}>
-            <FormControl fullWidth>
-              <InputLabel>Department</InputLabel>
-              <Select
-                label="Department"
-                name="department"
-                value={selectedDepartment}
-                onChange={(e) => setSelectedDepartment(e.target.value)}
-              >
-                {AssigneeDepartment}
-              </Select>
-            </FormControl>
-          </Grid>
+    <>
+      <FormStepper
+        steps={steps}
+        handleClose={handleCloseModal}
+        children={(activeStep, handleNext) => {
+          if (activeStep === 0) {
+            return (
+              <>
+                <Typography
+                  variant="h6"
+                  sx={{
+                    fontFamily: "Popins-Semibold",
+                    color: "gray",
+                  }}
+                >
+                  Asset Details
+                </Typography>
+                <div className="grid grid-cols-2 gap-7 mb-10 mt-5">
+                  {/* Asset Number */}
+                  <div className="flex justify-between py-2 border-b">
+                    <h1 className="font-semibold">Asset Number</h1>
+                    <span>{formData.assetNumber || "N/A"}</span>
+                  </div>
 
-          <Grid item xs={12} sm={6}>
-            <TextField
-              label="Assignee Name"
-              name="name"
-              value={formData.name || ""}
-              onChange={handleAssigneeChange}
-              fullWidth
-              select
-            >
-              {AssigneeOptions}
-            </TextField>
-          </Grid>
-        </Grid>
+                  {/* Asset Type */}
+                  <div className="flex justify-between py-2 border-b">
+                    <h1 className="font-semibold">Asset Type</h1>
+                    <span>{formData.assetType || "N/A"}</span>
+                  </div>
 
-        {/* Section 2: Asset Details */}
-        <Typography
-          variant="h6"
-          sx={{ my: 2, fontFamily: "Popins-Semibold", color: "gray" }}
-        >
-          Asset Details
-        </Typography>
-        <Grid container spacing={3}>
-          <Grid item xs={12} sm={6}>
-            <TextField
-              label="Asset Number"
-              name="assetNumber"
-              value={formData.assetNumber}
-              onChange={handleAssetChange}
-              fullWidth
-              required
-            />
-          </Grid>
+                  {/* Asset Name */}
+                  <div className="flex justify-between py-2 border-b">
+                    <h1 className="font-semibold">Asset Name</h1>
+                    <span>{formData.assetName || "N/A"}</span>
+                  </div>
 
-          <Grid item xs={12} sm={6}>
-            <TextField
-              label="Asset Type"
-              name="assetType"
-              value={formData.assetType}
-              onChange={handleAssetChange}
-              fullWidth
-              required
-            />
-          </Grid>
+                  {/* Brand Name */}
+                  <div className="flex justify-between py-2 border-b">
+                    <h1 className="font-semibold">Brand Name</h1>
+                    <span>{formData.brandName || "N/A"}</span>
+                  </div>
 
-          <Grid item xs={12} sm={6}>
-            <TextField
-              label="Asset Name"
-              name="assetName"
-              value={formData.assetName}
-              onChange={handleAssetChange}
-              fullWidth
-              required
-            />
-          </Grid>
+                  {/* Location */}
+                  <div className="flex justify-between py-2 border-b">
+                    <h1 className="font-semibold">Location</h1>
+                    <span>{formData.location || "N/A"}</span>
+                  </div>
 
-          <Grid item xs={12} sm={6}>
-            <TextField
-              label="Brand Name"
-              name="brandName"
-              value={formData.brandName}
-              onChange={handleAssetChange}
-              fullWidth
-              required
-            />
-          </Grid>
+                  {/* Status */}
+                  <div className="flex justify-between py-2 border-b">
+                    <h1 className="font-semibold">Status</h1>
+                    <span>{formData.status || "N/A"}</span>
+                  </div>
 
-          <Grid item xs={12} sm={6}>
-            <TextField
-              label="Location"
-              name="location"
-              value={formData.location}
-              onChange={handleAssetChange}
-              fullWidth
-              required
-            />
-          </Grid>
+                  {/* Assignment Date */}
+                  <div className="flex justify-between py-2 border-b">
+                    <h1 className="font-semibold">Assignment Date</h1>
+                    <span className="pl-4">{formData.assignmentDate || "N/A"}</span>
+                  </div>
 
-          <Grid item xs={12} sm={6}>
-            <FormControl fullWidth>
-              <InputLabel>Status</InputLabel>
-              <Select
-                label="Status"
-                name="status"
-                value={formData.status}
-                onChange={handleAssetChange}
-                required
-              >
-                <MenuItem value="active">Active</MenuItem>
-                <MenuItem value="inactive">Inactive</MenuItem>
-              </Select>
-            </FormControl>
-          </Grid>
+                  {/* Assignment Time */}
+                  <div className="flex justify-between py-2 border-b">
+                    <h1 className="font-semibold">Assignment Time</h1>
+                    <span>{formData.assignmentTime || "N/A"}</span>
+                  </div>
+                </div>
 
-          <Grid item xs={12} sm={6}>
-            <TextField
-              label="Assignment Date"
-              name="assignmentDate"
-              value={formData.assignmentDate}
-              onChange={handleAssetChange}
-              disabled
-              fullWidth
-              required
-            />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            {/* <TextField
-              label="Assignment Time"
-              name="assignment time"
-              value={formData.assignmentTime}
-              onChange={handleAssetChange}
-              disabled
-              fullWidth
-              required
-            /> */}
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <TimePicker
-              label="Assignment Time"
-              name="assignment time"
-              value={dayjs()}
-              onChange={handleAssetChange}
-              disabled
-              fullWidth
-              required
-              renderInput={(params) => (
-                <TextField {...params} className="w-full md:w-1/4" />
-              )}
-            />
-            </LocalizationProvider>
-          </Grid>
-        </Grid>
+                <Box sx={{ maxWidth: 600, mx: "auto" }}>
+                  <form onSubmit={(e) => handleNextStep(e, handleNext)}>
+                    {/* Section 1: Assignee Details */}
+                    <Typography
+                      variant="h6"
+                      sx={{
+                        fontFamily: "Popins-Semibold",
+                        color: "gray",
+                      }}
+                    >
+                      Assignee Details
+                    </Typography>
+                    <Grid
+                      container
+                      spacing={3}
+                      sx={{ marginBottom: 3, marginTop: 1 }}
+                    >
+                      <Grid item xs={12} sm={6}>
+                        <FormControl fullWidth>
+                          <InputLabel>Department</InputLabel>
+                          <Select
+                            label="Department"
+                            name="department"
+                            value={selectedDepartment}
+                            onChange={(e) =>
+                              setSelectedDepartment(e.target.value)
+                            }
+                          >
+                            {AssigneeDepartment}
+                          </Select>
+                        </FormControl>
+                      </Grid>
 
-        <Box sx={{ mt: 3 }}>
-          <button
-            type="submit"
-            className="px-6 w-full py-2 rounded-lg text-white wono-blue-dark hover:bg-[#3cbce7] transition-shadow shadow-md hover:shadow-lg active:shadow-inner"
-          >
-            Assign
-          </button>
-        </Box>
-      </form>
-    </Box>
+                      <Grid item xs={12} sm={6}>
+                        <TextField
+                          label="Assignee Name"
+                          name="name"
+                          value={formData.name || ""}
+                          onChange={handleAssigneeChange}
+                          fullWidth
+                          select
+                        >
+                          {AssigneeOptions}
+                        </TextField>
+                      </Grid>
+                    </Grid>
+
+                    <Box sx={{ mt: 3 }}>
+                      <button
+                        type="submit"
+                        className="px-6 w-full py-2 rounded-lg text-white wono-blue-dark hover:bg-[#3cbce7] transition-shadow shadow-md hover:shadow-lg active:shadow-inner"
+                      >
+                        Next
+                      </button>
+                    </Box>
+                  </form>
+                </Box>
+              </>
+            );
+          } else if (activeStep === 1) {
+            return (
+              <>
+                <div className="grid grid-cols-2 gap-7 my-10">
+                  {Object.entries(formData)
+                    .reduce(
+                      (columns, [key, value], index) => {
+                        const formattedKey = key
+                          .replace(/([A-Z])/g, " $1")
+                          .replace(/^./, (str) => str.toUpperCase());
+
+                        // Alternate between the two columns
+                        if (index % 2 === 0) {
+                          columns[0].push(
+                            <div
+                              key={key}
+                              className="flex justify-between  py-2 border-b"
+                            >
+                              <h1 className="font-semibold">{formattedKey}</h1>
+                              <span className="pl-4">
+                                {value ? value.toString() : "N/A"}
+                              </span>
+                            </div>
+                          );
+                        } else {
+                          columns[1].push(
+                            <div
+                              key={key}
+                              className="flex justify-between py-2 border-b"
+                            >
+                              <h1 className="font-semibold">{formattedKey}</h1>
+                              <span className="pl-4">
+                                {value ? value.toString() : "N/A"}
+                              </span>
+                            </div>
+                          );
+                        }
+                        return columns;
+                      },
+                      [[], []] // Initial columns: two empty arrays
+                    )
+                    .map((column, colIndex) => (
+                      <div key={colIndex}>{column}</div>
+                    ))}
+                </div>
+
+                <WonoButton content={"Submit"} onClick={handleSubmit} />
+              </>
+            );
+          }
+        }}
+      />
+    </>
   );
 }
