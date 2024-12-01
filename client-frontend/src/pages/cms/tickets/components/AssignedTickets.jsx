@@ -350,7 +350,7 @@ const AssignedTickets = () => {
   };
 
   const handleAssign = () => {
-    toast.success("Ticket Assigned To Available Employee");
+    toast.success("Ticket Assigned To Available Employee: Faizan Shaikh");
     //   closeDeleteTicket();
   };
 

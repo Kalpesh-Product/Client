@@ -12,9 +12,17 @@ import TextField from "@mui/material/TextField";
 import { toast } from "sonner";
 import AgTable from "../../../../components/AgTable";
 import { useLocation } from "react-router-dom";
+import { NewModal } from "../../../../components/NewModal";
+import FormStepper from "../../../../components/FormStepper";
+import WonoButton from "../../../../components/Buttons/WonoButton";
+import { motion } from "framer-motion";
+import { IoMdClose } from "react-icons/io";
 
 const MyTickets = () => {
   const location = useLocation();
+
+  const [highlightFirstRow, setHighlightFirstRow] = React.useState(false);
+  const [highlightEditedRow, setHighlightEditedRow] = React.useState(false);
 
   const columns = [
     { field: "id", headerName: "ID", width: 100 },
@@ -142,10 +150,12 @@ const MyTickets = () => {
     },
   ];
 
+  // const [tickets, setTickets] = useState(allRows);
+
   const allRows = [
     {
       id: 1,
-      ticketTitle: "Wifi is not working",
+      ticketTitle: "Wifi is slow",
       priority: "High",
       status: "Pending",
       department: "IT",
@@ -153,7 +163,7 @@ const MyTickets = () => {
     },
     {
       id: 2,
-      ticketTitle: "Payroll Issue",
+      ticketTitle: "Laptop screen malfunctioning",
       priority: "Medium",
       status: "In Process",
       department: "HR",
@@ -217,6 +227,8 @@ const MyTickets = () => {
     },
   ];
 
+  const [rows, setRows] = React.useState(allRows);
+
   const paginationModel = { page: 0, pageSize: 5 };
   const [department, setDepartment] = React.useState("");
 
@@ -257,6 +269,15 @@ const MyTickets = () => {
     { label: "Request Date", key: "requestDate" },
   ];
 
+  const newTicket = {
+    id: rows.length + 1,
+    ticketTitle: "Wifi is not working",
+    priority: "Medium",
+    status: "Pending",
+    department: "IT",
+    requestDate: new Date().toISOString().split("T")[0], // Today's date
+  };
+
   // ADD TICKET MODAL START
   // State to manage modal visibility
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -267,10 +288,16 @@ const MyTickets = () => {
   // Function to close the modal
   const closeModal = () => setIsModalOpen(false);
 
-  const handleAddTicket = () => {
+  // const handleAddTicket = () => {
+  //   toast.success("New Ticket Created");
+  //   closeModal(); // Optionally close the modal after the alert
+  // };
+  const handleAddTicket = (newTicket) => {
+    setRows((prevRows) => [newTicket, ...prevRows]); // Update the state
     toast.success("New Ticket Created");
     closeModal(); // Optionally close the modal after the alert
   };
+
   // ADD TICKET MODAL END
 
   // VIEW TICKET DETAILS MODAL START
@@ -300,6 +327,7 @@ const MyTickets = () => {
   const closeEditTicket = () => setIsEditTicketOpen(false);
 
   const handleEditTicket = () => {
+    setHighlightEditedRow(true); // Highlight the first row after editing a ticket
     toast.success("Ticket Updated");
     closeEditTicket(); // Optionally close the modal after the alert
   };
@@ -316,13 +344,21 @@ const MyTickets = () => {
   const closeDeleteTicket = () => setIsDeleteTicketOpen(false);
 
   const handleDeleteTicket = () => {
+    setHighlightFirstRow(true); // Highlight the first row after editing a ticket
     toast.success("Ticket Deleted");
     closeDeleteTicket(); // Optionally close the modal after the alert
   };
   // EDIT TICKET DETAILS MODAL END
 
+  const steps = ["Raise Ticket", "Verify Details"];
+
+  const handleNextStep = (handleNext) => {
+    // e.preventDefault();
+    handleNext();
+  };
+
   return (
-    <div className="w-[72vw] md:w-full transition-all duration-200 ease-in-out bg-white p-2">
+    <div className="w-[72vw] md:w-full transition-all duration-200 ease-in-out bg-white p-2 rounded-md">
       {/* <div className="bg-green-500">
         <h2>Today's Tickets</h2>
       </div> */}
@@ -382,7 +418,7 @@ const MyTickets = () => {
           </div>
         </div> */}
 
-        {location.pathname === "/customer/tickets/my-tickets" && (
+        {location.pathname !== "/profile" && (
           <div className="flex">
             <div className="mb-2 flex justify-between">
               <h1 className="text-3xl"></h1>
@@ -406,7 +442,19 @@ const MyTickets = () => {
           sx={{ border: 0, width: "75vw" }}
         /> */}
 
-      <AgTable data={filteredRows} columns={columns} highlightFirstRow={true} />
+      {/* <AgTable data={filteredRows} columns={columns} highlightFirstRow={true} /> */}
+      {/* <AgTable
+        data={filteredRows}
+        columns={columns}
+        highlightFirstRow={false}
+      /> */}
+
+      <AgTable
+        data={rows} // Use the state here
+        columns={columns}
+        highlightFirstRow={highlightFirstRow} // Bind the state here
+        highlightEditedRow={highlightEditedRow} // Bind the state here
+      />
 
       {/* {location.pathname === "/customer/tickets/my-tickets" && (
         <div>
@@ -420,85 +468,95 @@ const MyTickets = () => {
       {/* Tickets datatable END */}
 
       {/* ADD TICKET MODAL START */}
-      {isModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="absolute inset-0" onClick={closeModal}></div>
+      {/* Stepper form start */}
 
-          <div className="bg-white w-11/12 max-w-[90%] lg:max-w-[40%] pl-8 pr-8  rounded-lg shadow-lg z-10 relative overflow-y-auto max-h-[80vh]">
-            {/* Modal Content */}
+      <NewModal open={isModalOpen} onClose={closeModal}>
+        <>
+          <FormStepper
+            steps={steps}
+            handleClose={closeModal}
+            children={(activeStep, handleNext) => {
+              if (activeStep === 0) {
+                return (
+                  <>
+                    <div className="bg-white  w-[31vw] rounded-lg z-10 relative overflow-y-auto max-h-[80vh]">
+                      {/* Modal Content */}
 
-            {/* Modal Header */}
-            <div className="sticky top-0 bg-white pt-6 z-20 flex justify-between">
-              <div>
-                <h2 className="text-3xl font-bold mb-4 uppercase">
-                  Raise Ticket
-                </h2>
-              </div>
-              <div>
-                {/* Close button */}
-                <button
-                  className="text-red-500 border border-red-500 bg-white font-bold py-1 px-3 rounded-lg hover:bg-red-600 hover:text-white text-2xl"
-                  onClick={closeModal}>
-                  X
-                </button>
-              </div>
-            </div>
+                      {/* Modal Header */}
+                      {/* <div className="sticky top-0 bg-white pt-6 z-20 flex justify-between">
+                        <div>
+                          <h2 className="text-3xl font-bold mb-4 uppercase">
+                            Raise Ticket
+                          </h2>
+                        </div>
+                        <div>
+                      
+                          <motion.button
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.9 }}
+                            type="button"
+                            onClick={closeModal}
+                            className=" p-2 bg-white text-[red] border border-red-200 hover:border-red-400 text-2xl rounded-md mr-1">
+                            <IoMdClose />
+                          </motion.button>
+                        </div>
+                      </div> */}
 
-            {/* Modal Body START */}
-            <div className=" w-full">
-              {/* <div>AddT icket Form</div> */}
-              <div className="">
-                <div className=" mx-auto">
-                  {/* <h1 className="text-xl text-center my-2 font-bold">
+                      {/* Modal Body START */}
+                      <div className=" w-full">
+                        {/* <div>AddT icket Form</div> */}
+                        <div className="">
+                          <div className=" mx-auto">
+                            {/* <h1 className="text-xl text-center my-2 font-bold">
                     Add Ticket
                   </h1> */}
-                  <Box
-                    sx={{
-                      maxWidth: 600,
-                      padding: 3,
-                      bgcolor: "background.paper",
-                      borderRadius: 2,
-                    }}
-                    // className="bg-white p-6 rounded-lg shadow-md mx-auto">
-                    className="bg-white p-6 rounded-lg mx-auto">
-                    {/* Personal Information */}
-                    {/* <h2 className="text-lg font-semibold mb-4">Add Ticket</h2> */}
-                    <div className="grid grid-cols-1 gap-4">
-                      {/* Name, Mobile, Email, DOB fields */}
-                      <div className="grid grid-cols-1 gap-4">
-                        <FormControl fullWidth>
-                          <InputLabel id="department-select-label">
-                            Department
-                          </InputLabel>
-                          <Select
-                            labelId="department-select-label"
-                            id="department-select"
-                            // value={department}
-                            label="Department"
-                            // onChange={handleChange}
-                          >
-                            <MenuItem value="IT">IT</MenuItem>
-                            <MenuItem value="HR">HR</MenuItem>
-                            <MenuItem value="Tech">Tech</MenuItem>
-                            <MenuItem value="Admin">Admin</MenuItem>
-                          </Select>
-                        </FormControl>
-                      </div>
-                      <div className="grid grid-cols-1 gap-4">
-                        <TextField
-                          label="Ticket Title"
-                          // value={newEvent.name}
-                          // onChange={(e) =>
-                          //   setnewEvent({ ...newEvent, name: e.target.value })
-                          // }
-                          fullWidth
-                        />
-                      </div>
-                    </div>
+                            <Box
+                              sx={{
+                                maxWidth: 600,
+                                paddingY: 3,
+                                bgcolor: "background.paper",
+                                borderRadius: 2,
+                              }}
+                              // className="bg-white p-6 rounded-lg shadow-md mx-auto">
+                              className="bg-white py-6 rounded-lg">
+                              {/* Personal Information */}
+                              {/* <h2 className="text-lg font-semibold mb-4">Add Ticket</h2> */}
+                              <div className="grid grid-cols-1 gap-4">
+                                {/* Name, Mobile, Email, DOB fields */}
+                                <div className="grid grid-cols-1 gap-4">
+                                  <FormControl fullWidth>
+                                    <InputLabel id="department-select-label">
+                                      Department
+                                    </InputLabel>
+                                    <Select
+                                      labelId="department-select-label"
+                                      id="department-select"
+                                      // value={department}
+                                      label="Department"
+                                      // onChange={handleChange}
+                                    >
+                                      <MenuItem value="IT">IT</MenuItem>
+                                      <MenuItem value="HR">HR</MenuItem>
+                                      <MenuItem value="Tech">Tech</MenuItem>
+                                      <MenuItem value="Admin">Admin</MenuItem>
+                                    </Select>
+                                  </FormControl>
+                                </div>
+                                <div className="grid grid-cols-1 gap-4">
+                                  <TextField
+                                    label="Ticket Title"
+                                    // value={newEvent.name}
+                                    // onChange={(e) =>
+                                    //   setnewEvent({ ...newEvent, name: e.target.value })
+                                    // }
+                                    fullWidth
+                                  />
+                                </div>
+                              </div>
 
-                    {/* Role & Department fields */}
+                              {/* Role & Department fields */}
 
-                    {/* <div className="col-span-2 flex gap-4">
+                              {/* <div className="col-span-2 flex gap-4">
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.9 }}
@@ -509,118 +567,154 @@ const MyTickets = () => {
                 </motion.button>
           
               </div> */}
-                  </Box>
-                </div>
-              </div>
-            </div>
-            {/* Modal Body END */}
+                            </Box>
+                          </div>
+                        </div>
+                      </div>
+                      {/* Modal Body END */}
 
-            {/* Modal Footer */}
+                      {/* Modal Footer */}
 
-            <div className="sticky bottom-0 bg-white py-6 z-20 flex justify-center">
-              <div className="flex justify-center items-center w-full">
-                <button
-                  className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 w-full mx-6"
-                  onClick={handleAddTicket}>
-                  Save
-                </button>
-              </div>
-            </div>
-            {/* Close button */}
-            {/* <button
+                      <div className="sticky bottom-0 bg-white py-6 z-20 flex justify-center">
+                        <div className="flex justify-center items-center w-full">
+                          <button
+                            className="wono-blue-dark text-white py-2 px-4 rounded-md hover:bg-blue-600 w-full"
+                            // onClick={handleAddTicket}>
+                            onClick={() => handleNextStep(handleNext)}>
+                            Next
+                          </button>
+                        </div>
+                      </div>
+                      {/* Close button */}
+                      {/* <button
                 className="bg-blue-500 text-white py-2 px-4 my-4 rounded-lg hover:bg-blue-600"
                 onClick={closeModal}>
                 Close
               </button> */}
-          </div>
-        </div>
-      )}
+                    </div>
+                  </>
+                );
+              } else if (activeStep === 1) {
+                return (
+                  <>
+                    <h1 className="text-2xl mb-4 font-semibold text-center">
+                      Are the provided details correct ?
+                    </h1>
+                    <div>
+                      <div className="flex justify-between py-2 border-b">
+                        <h1 className="font-semibold">Department</h1>
+                        <span>IT</span>
+                      </div>
+                    </div>
+                    <div>
+                      <div className="flex justify-between py-2 border-b">
+                        <h1 className="font-semibold">Ticket title</h1>
+                        <span>Wifi is not working</span>
+                      </div>
+                    </div>
+                    <div>
+                      {/* <p>details</p> */}
+
+                      <WonoButton
+                        content={"Submit"}
+                        onClick={() => handleAddTicket(newTicket)}
+                      />
+                    </div>
+                  </>
+                );
+              }
+            }}
+          />
+        </>
+      </NewModal>
+
+      {/* Stepper form end */}
 
       {/* ADD TICKET MODAL END */}
 
       {/* TICKET DETAILS MODAL START */}
-      {isDetailsModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="absolute inset-0" onClick={closeDetailsModal}></div>
+      <NewModal open={isDetailsModalOpen} onClose={closeDetailsModal}>
+        <div className="bg-white  w-[31vw] rounded-lg z-10 relative overflow-y-auto max-h-[80vh]">
+          {/* DetailsModal Content */}
 
-          <div className="bg-white w-11/12 max-w-[90%] lg:max-w-[40%] pl-8 pr-8  rounded-lg shadow-lg z-10 relative overflow-y-auto max-h-[80vh]">
-            {/* DetailsModal Content */}
-
-            {/* DetailsModal Header */}
-            <div className="sticky top-0 bg-white py-6 z-20 flex justify-between">
-              <div>
-                <h2 className="text-3xl font-bold mb-4 uppercase">
-                  Ticket Details
-                </h2>
-              </div>
-              <div>
-                {/* Close button */}
-                <button
-                  className="bg-blue-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-600"
-                  onClick={closeDetailsModal}>
-                  X
-                </button>
-              </div>
+          {/* DetailsModal Header */}
+          <div className="sticky top-0 bg-white py-6 z-20 flex justify-between">
+            <div>
+              <h2 className="text-3xl font-bold mb-4 uppercase">
+                Ticket Details
+              </h2>
             </div>
+            <div>
+              {/* Close button */}
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.9 }}
+                type="button"
+                onClick={closeDetailsModal}
+                className=" p-2 bg-white text-[red] border border-red-200 hover:border-red-400 text-2xl rounded-md mr-1">
+                <IoMdClose />
+              </motion.button>
+            </div>
+          </div>
 
-            {/* DetailsModal Body START */}
-            <div className=" w-full">
-              {/* <div>AddT icket Form</div> */}
-              <div className="">
-                <div className=" mx-auto">
-                  <h1 className="text-xl text-center my-2 font-bold">
+          {/* DetailsModal Body START */}
+          <div className=" w-full">
+            {/* <div>AddT icket Form</div> */}
+            <div className="">
+              <div className=" mx-auto">
+                {/* <h1 className="text-xl text-center my-2 font-bold">
                     Ticket Details
-                  </h1>
+                  </h1> */}
 
-                  <p>
-                    <span className="font-bold">Ticket Title : </span>
-                    <span>Wifi is not working</span>
-                  </p>
-                  <br />
-                  <p>
-                    <span className="font-bold">Ticket Priority : </span>
-                    <span>High</span>
-                  </p>
-                  <br />
-                  <p>
-                    <span className="font-bold">Ticket Status : </span>
-                    <span>Pending</span>
-                  </p>
-                  <br />
-                  <p>
-                    <span className="font-bold">Ticket Department : </span>
-                    <span>IT</span>
-                  </p>
-                  <br />
-                  <p>
-                    <span className="font-bold">Request Date : </span>
-                    <span>2024-10-01</span>
-                  </p>
-                </div>
+                <p>
+                  <span className="font-bold">Ticket Title : </span>
+                  <span>Wifi is not working</span>
+                </p>
+                <br />
+                <p>
+                  <span className="font-bold">Ticket Priority : </span>
+                  <span>High</span>
+                </p>
+                <br />
+                <p>
+                  <span className="font-bold">Ticket Status : </span>
+                  <span>Pending</span>
+                </p>
+                <br />
+                <p>
+                  <span className="font-bold">Ticket Department : </span>
+                  <span>IT</span>
+                </p>
+                <br />
+                <p>
+                  <span className="font-bold">Request Date : </span>
+                  <span>2024-10-01</span>
+                </p>
               </div>
             </div>
-            {/* DetailsModal Body END */}
+          </div>
+          {/* DetailsModal Body END */}
 
-            {/* DetailsModal Footer */}
+          {/* DetailsModal Footer */}
 
-            <div className="sticky bottom-0 bg-white py-6 z-20 flex justify-center">
-              <div className="flex justify-center items-center">
-                <button
+          <div className="sticky bottom-0 bg-white py-6 z-20 flex justify-center">
+            <div className="flex justify-center items-center">
+              {/* <button
                   className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600"
-                  onClick={handleTicketDetails}>
+                  onClick={handleTicketDetails}
+                >
                   Close
-                </button>
-              </div>
+                </button> */}
             </div>
-            {/* Close button */}
-            {/* <button
+          </div>
+          {/* Close button */}
+          {/* <button
                 className="bg-blue-500 text-white py-2 px-4 my-4 rounded-lg hover:bg-blue-600"
                 onClick={closeDetailsModal}>
                 Close
               </button> */}
-          </div>
         </div>
-      )}
+      </NewModal>
 
       {/* TICKET DETAILS MODAL END */}
 
@@ -641,11 +735,14 @@ const MyTickets = () => {
               </div>
               <div>
                 {/* Close button */}
-                <button
-                  className="bg-blue-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-600"
-                  onClick={closeEditTicket}>
-                  X
-                </button>
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.9 }}
+                  type="button"
+                  onClick={closeEditTicket}
+                  className=" p-2 bg-white text-[red] border border-red-200 hover:border-red-400 text-2xl rounded-md mr-1">
+                  <IoMdClose />
+                </motion.button>
               </div>
             </div>
 
@@ -670,6 +767,18 @@ const MyTickets = () => {
                     {/* <h2 className="text-lg font-semibold mb-4">Add Ticket</h2> */}
                     <div className="grid grid-cols-1 gap-4">
                       {/* Name, Mobile, Email, DOB fields */}
+
+                      <div className="grid grid-cols-1 gap-4">
+                        <TextField
+                          label="Reason For Editing"
+                          // value={newEvent.name}
+                          // value="Wifi is not working" // Hardcoded value for ticket title
+                          // onChange={(e) =>
+                          //   setnewEvent({ ...newEvent, name: e.target.value })
+                          // }
+                          fullWidth
+                        />
+                      </div>
                       <div className="grid grid-cols-1 gap-4">
                         <FormControl fullWidth>
                           <InputLabel id="department-select-label">
@@ -694,7 +803,7 @@ const MyTickets = () => {
                         <TextField
                           label="Ticket Title"
                           // value={newEvent.name}
-                          value="Wifi is not working" // Hardcoded value for ticket title
+                          value="Laptop screen malfunctioning" // Hardcoded value for ticket title
                           // onChange={(e) =>
                           //   setnewEvent({ ...newEvent, name: e.target.value })
                           // }
@@ -724,10 +833,10 @@ const MyTickets = () => {
 
             {/* EditTicket Footer */}
 
-            <div className="sticky bottom-0 bg-white py-6 z-20 flex justify-center">
-              <div className="flex justify-center items-center">
+            <div className="sticky bottom-0 bg-white p-6 z-20 flex justify-center">
+              <div className="flex justify-center items-center w-full">
                 <button
-                  className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600"
+                  className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 w-full"
                   onClick={handleEditTicket}>
                   Save
                 </button>

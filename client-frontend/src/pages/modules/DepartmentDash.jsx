@@ -83,6 +83,8 @@ import TasklistTable from "../TasklistTable";
 import Tasklistfirstmenu from "../tasklistfirstmenu";
 import Mytasks from "../Mytasks";
 import MyBookings from "../cms/room-booking/MyBookings";
+import { TicketsRemainingWidget } from "../cms/tickets/components/TicketWidgets/TicketsRemainingWidget";
+import MyTickets from "../cms/tickets/components/MyTickets";
 
 const DepartmentDash = () => {
   const [user, setUser] = useState("");
@@ -687,25 +689,32 @@ const DepartmentDash = () => {
                       />
                     ))}
 
-                  {/* <div className="flex w-full flex-1 flex-grow gap-x-4">
-                    <QuantityRemainingWidget
-                      totalStock={100}
-                      remainingStock={30}
-                      assetType="Tickets"
-                    />
+                  {user.role === "Admin" && (
+                    <div className="flex w-full flex-1 flex-grow gap-x-4">
+                      <TicketsRemainingWidget
+                        totalStock={120}
+                        remainingStock={100}
+                        assetType="Tickets"
+                      />
 
-                    <QuantityRemainingWidget
-                      totalStock={100}
-                      remainingStock={10}
-                      assetType="Available Members"
-                    />
-                  </div> */}
+                      <TicketsRemainingWidget
+                        totalStock={3}
+                        remainingStock={1}
+                        assetType="Available Members"
+                      />
+                    </div>
+                  )}
 
                   {/* <AssetAllocationWidget /> */}
 
-                  <div className=" py-10">
+                  <div className=" ">
+                    <div className=" w-full p-4 pb-4 pl-0 text-lg border-b-0">
+                      {/* <h2 className="text-2xl font-bold">My Tickets</h2> */}
+                      <h2 className="text-2xl  font-bold">My Tickets</h2>
+                    </div>
                     {/* <p>Today's tickets Table Component</p> */}
-                    <TodaysTickets />
+                    {/* <TodaysTickets /> */}
+                    <MyTickets />
                   </div>
                   {/* <p>x</p> */}
                 </div>
@@ -762,10 +771,9 @@ const DepartmentDash = () => {
           </>
         ) : location.pathname === "/tasks/mytasks" ? (
           <>
-          <Mytasks/>
+            <Mytasks />
           </>
-        ):
-         location.pathname === "/tasks/tasklist" ? (
+        ) : location.pathname === "/tasks/tasklist" ? (
           <>
             <Tasklist />
           </>
