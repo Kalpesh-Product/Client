@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
-import Button from "@mui/material/Button";
 import { IoMdArrowRoundBack, IoMdClose } from "react-icons/io";
 import { motion } from "framer-motion";
 

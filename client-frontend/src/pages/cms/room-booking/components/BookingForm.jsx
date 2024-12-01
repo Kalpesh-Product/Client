@@ -18,6 +18,7 @@ import {
 } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
+import FormStepper from "../../../../components/FormStepper";
 
 const selectStyles = {
   menu: (base) => ({
@@ -40,11 +41,19 @@ export default function BookingForm({
   currentDate,
   loggedInUser,
   roomList,
+  handleClose,
 }) {
   const [selectedSeats, setSelectedSeats] = useState("");
   const [filteredRooms, setFilteredRooms] = useState([]);
   const [selectedParticipants, setSelectedParticipants] = useState([]);
   const [credits, setCredits] = useState(500);
+
+  const steps = [
+    "Select Time",
+    "Select Room",
+    "Add Details",
+    "Preview & Submit",
+  ];
 
   const handleSeatsChange = (event) => {
     const selectedValue = event.target.value;
@@ -57,8 +66,6 @@ export default function BookingForm({
 
     setFilteredRooms(filtered);
     setCredits(500 - Number(selectedValue));
-
-    console.log("Filtered Rooms:", filtered); // Debugging log
   };
 
   const handleParticipantsChange = (selectedOptions) => {
@@ -74,158 +81,256 @@ export default function BookingForm({
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <div className="mx-auto p-6 bg-white w-[50vw]">
-        <form onSubmit={handleSubmit} className="space-y-4">
-          {/* Start Time */}
-          <TimePicker
-            sx={{ width: "100%" }}
-            label="Start Time"
-            value={dayjs(newMeeting.startTime, "HH:mm") || null}
-            onChange={(newValue) =>
-              handleChange({
-                target: { name: "startTime", value: newValue.format("HH:mm") },
-              })
+        <FormStepper steps={steps} handleClose={handleClose}>
+          {(activeStep, handleNext) => {
+            switch (activeStep) {
+              case 0:
+                return (
+                  <div className="flex flex-col justify-center items-center gap-4">
+                    {/* Start Time */}
+                    <TimePicker
+                      sx={{ width: "100%" }}
+                      label="Start Time"
+                      value={dayjs(newMeeting.startTime, "HH:mm") || null}
+                      onChange={(newValue) =>
+                        handleChange({
+                          target: {
+                            name: "startTime",
+                            value: newValue.format("HH:mm"),
+                          },
+                        })
+                      }
+                      renderInput={(params) => (
+                        <TextField {...params} fullWidth />
+                      )}
+                    />
+
+                    {/* End Time */}
+                    <TimePicker
+                      sx={{ width: "100%" }}
+                      label="End Time"
+                      value={dayjs(newMeeting.endTime, "HH:mm") || null}
+                      onChange={(newValue) =>
+                        handleChange({
+                          target: {
+                            name: "endTime",
+                            value: newValue.format("HH:mm"),
+                          },
+                        })
+                      }
+                      renderInput={(params) => (
+                        <TextField {...params} fullWidth />
+                      )}
+                    />
+
+                    {/* Date */}
+                    <DatePicker
+                      sx={{ width: "100%" }}
+                      label="Date"
+                      value={dayjs(newMeeting.date) || dayjs(currentDate)}
+                      onChange={(newValue) =>
+                        handleChange({
+                          target: {
+                            name: "date",
+                            value: newValue.format("YYYY-MM-DD"),
+                          },
+                        })
+                      }
+                      renderInput={(params) => (
+                        <TextField {...params} fullWidth />
+                      )}
+                    />
+                    <TextField
+                      label="Name"
+                      type="text"
+                      name="name"
+                      value={loggedInUser.name}
+                      onChange={handleChange}
+                      placeholder="Enter your name"
+                      fullWidth
+                    />
+
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={handleNext}
+                      className="w-full py-2 font-bold mt-4"
+                    >
+                      Next
+                    </Button>
+                  </div>
+                );
+              case 1:
+                return (
+                  <div className="flex flex-col justify-center items-center gap-4 w-full">
+                    {/* Room Seats */}
+                    <div className="w-full">
+                      <FormControl fullWidth>
+                        <MuiSelect
+                          labelId="seat-dropdown-label"
+                          value={selectedSeats}
+                          onChange={handleSeatsChange}
+                          displayEmpty
+                          inputProps={{ "aria-label": "Select Seat Count" }}
+                        >
+                          <MenuItem value="">
+                            <em>Select Seat Count</em>
+                          </MenuItem>
+                          {[...new Set(roomList.map((room) => room.seats))].map(
+                            (seat) => (
+                              <MenuItem key={seat} value={seat}>
+                                {seat} seats
+                              </MenuItem>
+                            )
+                          )}
+                        </MuiSelect>
+                      </FormControl>
+                    </div>
+
+                    {/* Room Selection */}
+                    {filteredRooms.length > 0 && (
+                      <div className="mt-4 w-full">
+                        <Typography variant="subtitle1" className="mb-2">
+                          Select a Room:
+                        </Typography>
+                        <RadioGroup
+                          name="room"
+                          value={newMeeting.room || ""}
+                          onChange={handleChange}
+                        >
+                          {filteredRooms.map((room) => (
+                            <FormControlLabel
+                              key={room.id}
+                              value={room.name}
+                              control={<Radio />}
+                              label={room.name}
+                            />
+                          ))}
+                        </RadioGroup>
+                      </div>
+                    )}
+
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={handleNext}
+                      className="w-full py-2 font-bold mt-4"
+                    >
+                      Next
+                    </Button>
+                  </div>
+                );
+              case 2:
+                return (
+                  <div className="flex flex-col justify-center items-center gap-4">
+                    {/* Participants */}
+                    <div className="w-full">
+                      <label className="block mb-2 font-medium">
+                        Participants
+                      </label>
+                      <Select
+                        isMulti
+                        options={participantsList}
+                        value={selectedParticipants}
+                        onChange={handleParticipantsChange}
+                        placeholder="Select participants"
+                        className="basic-multi-select"
+                        classNamePrefix="select"
+                        styles={selectStyles}
+                      />
+                    </div>
+
+                    {/* Subject */}
+                    <TextField
+                      label="Subject"
+                      type="text"
+                      name="subject"
+                      value={newMeeting.subject}
+                      onChange={handleChange}
+                      placeholder="Enter meeting subject"
+                      fullWidth
+                    />
+
+                    {/* Agenda */}
+                    <TextField
+                      label="Agenda"
+                      name="agenda"
+                      value={newMeeting.agenda}
+                      onChange={handleChange}
+                      placeholder="Enter meeting agenda"
+                      multiline
+                      rows={4}
+                      fullWidth
+                    />
+                    {credits !== 500 ? (
+                      <p className="text-center text-red-500 font-bold">{`you will have ${credits} remaining`}</p>
+                    ) : null}
+                    <Button
+                      type="submit"
+                      variant="contained"
+                      color="primary"
+                      className="w-full py-2 font-bold mt-4"
+                      onClick={handleNext}
+                    >
+                      Next
+                    </Button>
+                  </div>
+                );
+              case 3:
+                return (
+                  <div className="flex flex-col justify-center items-start gap-4 w-full">
+                    <Typography variant="h6" className="mb-2">
+                      Preview Your Booking
+                    </Typography>
+                    <div className="w-full">
+                      <Typography>
+                        <strong>Date:</strong> {newMeeting.date || "N/A"}
+                      </Typography>
+                      <Typography>
+                        <strong>Start Time:</strong>{" "}
+                        {newMeeting.startTime || "N/A"}
+                      </Typography>
+                      <Typography>
+                        <strong>End Time:</strong> {newMeeting.endTime || "N/A"}
+                      </Typography>
+                      <Typography>
+                        <strong>Room:</strong> {newMeeting.room || "N/A"}
+                      </Typography>
+                      <Typography>
+                        <strong>Participants:</strong>{" "}
+                        {selectedParticipants.map((p) => p.label).join(", ") ||
+                          "N/A"}
+                      </Typography>
+                      <Typography>
+                        <strong>Subject:</strong> {newMeeting.subject || "N/A"}
+                      </Typography>
+                      <Typography>
+                        <strong>Agenda:</strong> {newMeeting.agenda || "N/A"}
+                      </Typography>
+                      {credits !== 500 ? (
+                        <Typography className="text-red-500">
+                          You will have <strong>{credits}</strong> remaining.
+                        </Typography>
+                      ) : null}
+                    </div>
+                    <div className="flex gap-4 w-full mt-4">
+                      <Button
+                        type="submit"
+                        variant="contained"
+                        color="primary"
+                        className="w-full py-2 font-bold"
+                        onClick={handleSubmit}
+                      >
+                        Confirm & Submit
+                      </Button>
+                    </div>
+                  </div>
+                );
+              default:
+                return null;
             }
-            renderInput={(params) => <TextField {...params} fullWidth />}
-          />
-
-          {/* End Time */}
-          <TimePicker
-            sx={{ width: "100%" }}
-            label="End Time"
-            value={dayjs(newMeeting.endTime, "HH:mm") || null}
-            onChange={(newValue) =>
-              handleChange({
-                target: { name: "endTime", value: newValue.format("HH:mm") },
-              })
-            }
-            renderInput={(params) => <TextField {...params} fullWidth />}
-          />
-
-          {/* Date */}
-          <DatePicker
-            sx={{ width: "100%" }}
-            label="Date"
-            value={dayjs(newMeeting.date) || dayjs(currentDate)}
-            onChange={(newValue) =>
-              handleChange({
-                target: { name: "date", value: newValue.format("YYYY-MM-DD") },
-              })
-            }
-            renderInput={(params) => <TextField {...params} fullWidth />}
-          />
-
-          {/* Name */}
-          <TextField
-            label="Name"
-            type="text"
-            name="name"
-            value={loggedInUser?.name || ""}
-            InputProps={{ readOnly: true }}
-            fullWidth
-          />
-
-          {/* Room Seats */}
-          <div>
-            <FormControl fullWidth>
-              <MuiSelect
-                labelId="seat-dropdown-label"
-                value={selectedSeats}
-                onChange={handleSeatsChange}
-                displayEmpty
-                inputProps={{ "aria-label": "Select Seat Count" }}
-              >
-                <MenuItem value="">
-                  <em>Select Seat Count</em>
-                </MenuItem>
-                {[...new Set(roomList.map((room) => room.seats))].map(
-                  (seat) => (
-                    <MenuItem key={seat} value={seat}>
-                      {seat} seats
-                    </MenuItem>
-                  )
-                )}
-              </MuiSelect>
-            </FormControl>
-          </div>
-
-          {/* Room Selection */}
-          {filteredRooms.length > 0 && (
-            <div className="mt-4">
-              <Typography variant="subtitle1" className="mb-2">
-                Select a Room:
-              </Typography>
-              <RadioGroup
-                name="room"
-                value={newMeeting.room || ""}
-                onChange={handleChange}
-              >
-                {filteredRooms.map((room) => (
-                  <FormControlLabel
-                    key={room.id}
-                    value={room.name} // Use room.name as value
-                    control={<Radio />}
-                    label={room.name} // Show room name & description
-                  />
-                ))}
-              </RadioGroup>
-            </div>
-          )}
-
-          {/* Participants */}
-          <div>
-            <label className="block mb-2 font-medium">Participants</label>
-            <Select
-              isMulti
-              options={participantsList}
-              value={selectedParticipants}
-              onChange={handleParticipantsChange}
-              placeholder="Select participants"
-              className="basic-multi-select"
-              classNamePrefix="select"
-              styles={selectStyles}
-            />
-          </div>
-
-          {/* Subject */}
-          <TextField
-            label="Subject"
-            type="text"
-            name="subject"
-            value={newMeeting.subject}
-            onChange={handleChange}
-            placeholder="Enter meeting subject"
-            fullWidth
-          />
-
-          {/* Agenda */}
-          <TextField
-            label="Agenda"
-            name="agenda"
-            value={newMeeting.agenda}
-            onChange={handleChange}
-            placeholder="Enter meeting agenda"
-            multiline
-            rows={4}
-            fullWidth
-          />
-
-          {/* Submit Button */}
-          {selectedSeats.length !== 0 && (
-            <p className="text-red-500 font-bold text-center">
-              You will have {credits} credits remaining
-            </p>
-          )}
-          <div>
-            <Button
-              type="submit"
-              variant="contained"
-              color="primary"
-              className="w-full py-2 font-bold"
-            >
-              Create Booking
-            </Button>
-          </div>
-        </form>
+          }}
+        </FormStepper>
       </div>
     </LocalizationProvider>
   );

@@ -41,6 +41,11 @@ const AssignTaskForm = ({
   description,
   Title,
   projectTitle,
+  projectData,
+  setProjectData,
+  setTasks,
+  tasks
+
 }) => {
   const [selectedOptions, setSelectedOptions] = useState([]);
 
@@ -60,16 +65,7 @@ const AssignTaskForm = ({
     Projects: "",
   });
 
-  const [projectData, setProjectData] = useState({
-    projectName: "",
-    category: "",
-    Department: "",
-    Title: "",
-    description: "",
-    date: "",
-    status:""
-  });
-
+  
   const [insideAddTask, SetInsideAddTask] = useState({
     taskName: "",
     date: "",
@@ -79,11 +75,13 @@ const AssignTaskForm = ({
 
   })
 
+  
+
   const priorityType = ["High", "Low", "Medium"];
   const statusTypes = [
     "Ongoing",
     "Pending",
-    "Upcomming",
+    "Upcoming",
     "Completed"
   ];
   const Roles = [
@@ -170,8 +168,18 @@ const AssignTaskForm = ({
       setAllRows([...rows, newTeamsMembers]);
 
       toast("Members Added successfully");
+    }else if (modalType === "Add Project")
+    {
+      setTasks((prev)=> ({
+        ...prev,
+        upcoming: [
+          ...prev.upcoming,
+          { ...projectData, assignees: projectData.assignees.map((name) => `/path/to/${name}.jpg`) },
+        ],
+      }));
+      setProjectData({ title: "", description: "", department: "",category: "",Title:"" });
     }
-
+    console.log(tasks);
     handleClose();
   };
 
@@ -520,8 +528,8 @@ const AssignTaskForm = ({
                   <Autocomplete
                     multiple
                     options={names}
-                    value={selectedOptions}
-                    onChange={(event, newValue) => setSelectedOptions(newValue)}
+                    value={projectData.assignees}
+                    onChange={(e) => setProjectData({ ...projectData, assignes: e.target.value })}
                     renderInput={(params) => (
                       <TextField
                         {...params}
@@ -677,6 +685,7 @@ const AssignTaskForm = ({
                 variant="contained"
                 color="primary"
                 fullWidth
+
               >
                 Submit
               </Button>

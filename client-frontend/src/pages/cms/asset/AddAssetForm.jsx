@@ -52,10 +52,19 @@ const AddAssetForm = ({ title, handleClose, user }) => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
+  
+    setFormData((prevData) => {
+      const updatedData = { ...prevData, [name]: value };
+  
+      // Update totalPrice if price or quantity changes
+      if (name === "price" || name === "quantity") {
+        const price = name === "price" ? value : prevData.price; // Get the updated price
+        const quantity = name === "quantity" ? value : prevData.quantity; // Get the updated quantity
+        updatedData.totalPrice = price && quantity ? price * quantity : ""; // Calculate totalPrice
+      }
+  
+      return updatedData;
+    });
   };
 
   const requests = [];
@@ -234,8 +243,7 @@ const AddAssetForm = ({ title, handleClose, user }) => {
                           type="number"
                           fullWidth
                           disabled
-                          value={formData.price * formData.quantity}
-                          onChange={handleChange}
+                          value={formData.totalPrice}
                         />
                       </Grid>
 

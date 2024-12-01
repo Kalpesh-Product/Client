@@ -51,6 +51,8 @@ export default function AssignAssetForm({ handleCloseModal, selectedAsset }) {
   });
   const [user, setUser] = useState("");
   const [selectedDepartment, setSelectedDepartment] = useState("");
+  console.log(selectedDepartment);
+  console.log(formData.department);
 
   const assetUpdate = () => {
     // Fetch the user from localStorage and update the assignedAsset field
@@ -64,7 +66,7 @@ export default function AssignAssetForm({ handleCloseModal, selectedAsset }) {
     e.preventDefault();
 
     const payload = {
-      department: selectedDepartment,
+      department: formData.department,
       assigneeName: formData.name,
       assetNumber: formData.assetNumber,
       assetType: formData.assetType,
@@ -100,6 +102,12 @@ export default function AssignAssetForm({ handleCloseModal, selectedAsset }) {
     }
   }, [selectedAsset]); // Runs when selectedAsset changes
 
+  // Update both `formData.department` and `selectedDepartment`
+  const handleDepartmentChange = (e) => {
+    const department = e.target.value;
+    setFormData((prev) => ({ ...prev, department })); // Update formData
+  };
+
   const handleAssigneeChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevState) => ({ ...prevState, [name]: value }));
@@ -110,14 +118,15 @@ export default function AssignAssetForm({ handleCloseModal, selectedAsset }) {
     setFormData((prevState) => ({ ...prevState, [name]: value }));
   };
 
-  //User names
+  // User names
   const AssigneeOptions = userData
-    .filter((user) => user.department === selectedDepartment) // Filter by selected department
+    .filter((user) => user.department === formData.department) // Use formData.department here
     .map((user) => (
       <MenuItem key={user.email} value={user.name}>
         {user.name}
       </MenuItem>
     ));
+
   const AssigneeDepartment = [
     ...new Set(userData.map((user) => user.department)),
   ].map((department, index) => (
@@ -195,7 +204,9 @@ export default function AssignAssetForm({ handleCloseModal, selectedAsset }) {
                   {/* Assignment Date */}
                   <div className="flex justify-between py-2 border-b">
                     <h1 className="font-semibold">Assignment Date</h1>
-                    <span className="pl-4">{formData.assignmentDate || "N/A"}</span>
+                    <span className="pl-4">
+                      {formData.assignmentDate || "N/A"}
+                    </span>
                   </div>
 
                   {/* Assignment Time */}
@@ -228,10 +239,8 @@ export default function AssignAssetForm({ handleCloseModal, selectedAsset }) {
                           <Select
                             label="Department"
                             name="department"
-                            value={selectedDepartment}
-                            onChange={(e) =>
-                              setSelectedDepartment(e.target.value)
-                            }
+                            value={formData.department} // Use formData.department as the value
+                            onChange={handleDepartmentChange} // Call the handler
                           >
                             {AssigneeDepartment}
                           </Select>
