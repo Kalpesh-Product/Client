@@ -240,14 +240,14 @@ const UnresolvedTickets = () => {
     //   escalatedTo: "Machindranath Parkar",
     //   requestDate: "2024-10-06",
     // },
-    // {
-    //   id: 5,
-    //   ticketTitle: "Employee Onboarding",
-    //   priority: "Medium",
-    //   department: "HR",
-    //   escalatedTo: "Machindranath Parkar",
-    //   requestDate: "2024-10-07",
-    // },
+    {
+      id: 5,
+      ticketTitle: "Wifi is not working",
+      priority: "Medium",
+      department: "IT",
+      escalatedTo: "Machindranath Parkar",
+      requestDate: "2024-10-07",
+    },
     {
       id: 6,
       ticketTitle: "Network Issue",
