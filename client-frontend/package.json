@@ -49,6 +49,7 @@
     "sonner": "^1.7.0",
     "sweetalert2": "^11.14.5",
     "tailwindcss-motion": "^0.4.1-beta",
+    "uuid": "^11.0.3",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

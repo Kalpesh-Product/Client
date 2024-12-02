@@ -10,6 +10,7 @@ import { format, addMinutes } from "date-fns";
 import { toast } from "sonner";
 import { NewModal } from "../../../components/NewModal";
 import { Checkbox, FormControlLabel } from "@mui/material";
+import { v4 as uuid } from "uuid";
 
 export default function Listing() {
   const [openBookingModal, setOpenBookingModal] = useState(false);
@@ -198,6 +199,7 @@ export default function Listing() {
   };
 
   const handleCancel = (eventId) => {
+    console.log(eventId);
     setEvents((prevEvents) =>
       prevEvents.map((event) =>
         event.id === eventId
@@ -223,7 +225,7 @@ export default function Listing() {
     const localEnd = `${newMeeting.date}T${newMeeting.endTime}`;
 
     const newEvent = {
-      id: events.length + 1,
+      id: uuid(),
       title: newMeeting.subject || "No Subject",
       start: localStart,
       end: localEnd,
@@ -235,6 +237,8 @@ export default function Listing() {
       backgroundColor: "#5E5F9C",
       status: "active", // Default status
     };
+
+    console.log(newEvent);
 
     toast.success("Booking completed successfully");
     setEvents((prev) => [...prev, newEvent]);
