@@ -47,8 +47,7 @@ const AssignTaskForm = ({
   projectData,
   setProjectData,
   setTasks,
-  tasks
-
+  tasks,
 }) => {
   const [selectedOptions, setSelectedOptions] = useState([]);
 
@@ -68,25 +67,16 @@ const AssignTaskForm = ({
     Projects: "",
   });
 
-  
   const [insideAddTask, SetInsideAddTask] = useState({
     taskName: "",
     date: "",
     priority: "",
     status: "",
     project: "",
-
-  })
-
-  
+  });
 
   const priorityType = ["High", "Low", "Medium"];
-  const statusTypes = [
-    "Ongoing",
-    "Pending",
-    "Upcoming",
-    "Completed"
-  ];
+  const statusTypes = ["Ongoing", "Pending", "Upcoming", "Completed"];
   const Roles = [
     "Frontend Developer",
     "Backened Developer",
@@ -171,9 +161,8 @@ const AssignTaskForm = ({
       setAllRows([...rows, newTeamsMembers]);
 
       toast("Members Added successfully");
-    }else if (modalType === "Add Project")
-    {
-      setTasks((prev)=> ({
+    } else if (modalType === "Add Project") {
+      setTasks((prev) => ({
         ...prev,
         upcoming: [
           ...prev.upcoming,
@@ -181,7 +170,12 @@ const AssignTaskForm = ({
           // { ...projectData, assignees: projectData.assignees.map((name) => `/path/to/${name}.jpg`) },
         ],
       }));
-      setProjectData({ Title: "", description: "", Department: "",category: "" });
+      setProjectData({
+        Title: "",
+        description: "",
+        Department: "",
+        category: "",
+      });
     }
     console.log(tasks);
     console.log(projectData);
@@ -193,6 +187,8 @@ const AssignTaskForm = ({
   };
 
   const steps = ["Add Projects", "Verify Details"];
+  
+  const steps2 = ["Add Tasks","Verify Details"];
   const handleNextStep = (e, handleNext) => {
     e.preventDefault();
     handleNext();
@@ -203,7 +199,7 @@ const AssignTaskForm = ({
       <Box
         sx={{
           maxWidth: 600,
-          minWidth:600,
+          minWidth: 600,
           mx: "auto",
           p: 2,
           borderRadius: 2,
@@ -216,9 +212,9 @@ const AssignTaskForm = ({
             variant="h5"
             gutterBottom
           >
-            {title}
+            {/* {title} */}
           </Typography>
-          <motion.button
+          {/* <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.9 }}
             type="button"
@@ -226,7 +222,7 @@ const AssignTaskForm = ({
             className=" p-2 bg-white text-[red] border border-red-200 hover:border-red-400 text-2xl rounded-md"
           >
             <IoMdClose />
-          </motion.button>
+          </motion.button> */}
         </div>
         <form onSubmit={handleSubmit}>
           {location.pathname === "/tasks/teams" ? (
@@ -303,7 +299,13 @@ const AssignTaskForm = ({
             </>
           ) : modalType === "Add Task" ? (
             <>
-              <div className="grid grid-cols-1 gap-4">
+            <FormStepper
+                steps={steps2}
+                handleClose={handleClose}
+                children={(activeStep, handleNext) => {
+                  if (activeStep === 0) {
+                    return (<>
+                     <div className="grid grid-cols-1 gap-4">
                 {/* Asset Number */}
                 <Grid item xs={12}>
                   <TextField
@@ -332,23 +334,23 @@ const AssignTaskForm = ({
                     )}
                   />
                 </Grid>
-               
-                  <Grid item xs={12}>
-                    <TextField
-                      label="Select Project"
-                      name="project"
-                      select
-                      fullWidth
-                      value={formData.project}
-                      onChange={handleChange}
-                    >
-                      {projects.map((type, index) => (
-                        <MenuItem key={index} value={type}>
-                          {type}
-                        </MenuItem>
-                      ))}
-                    </TextField>
-                  </Grid>
+
+                <Grid item xs={12}>
+                  <TextField
+                    label="Select Project"
+                    name="project"
+                    select
+                    fullWidth
+                    value={formData.project}
+                    onChange={handleChange}
+                  >
+                    {projects.map((type, index) => (
+                      <MenuItem key={index} value={type}>
+                        {type}
+                      </MenuItem>
+                    ))}
+                  </TextField>
+                </Grid>
 
                 {/* Asset Type Dropdown */}
                 <Grid item xs={12}>
@@ -400,10 +402,26 @@ const AssignTaskForm = ({
                   </TextField>
                 </Grid>
               </div>
+
+                    </>)
+                  }
+                  else if (activeStep === 1) {
+                    <h1>View Details</h1>
+                  }
+                }
+                }
+                ></FormStepper>
+             
             </>
           ) : modalType === "task2" ? (
-          <>
-          <div className="grid grid-cols-1 gap-4">
+            <>
+            <FormStepper
+                steps={steps2}
+                handleClose={handleClose}
+                children={(activeStep, handleNext) => {
+                  if (activeStep === 0) {
+                    return (<>
+                     <div className="grid grid-cols-1 gap-4">
                 {/* Asset Number */}
                 <Grid item xs={12}>
                   <TextField
@@ -432,18 +450,16 @@ const AssignTaskForm = ({
                     )}
                   />
                 </Grid>
-               
-                  <Grid item xs={12}>
-                    <TextField
-                      label="Project Name"
-                      name="project"
-                      fullWidth
-                      value={projectTitle}
-                      onChange={handleChange}
-                    >
-                      
-                    </TextField>
-                  </Grid>
+
+                <Grid item xs={12}>
+                  <TextField
+                    label="Project Name"
+                    name="project"
+                    fullWidth
+                    value={projectTitle}
+                    onChange={handleChange}
+                  ></TextField>
+                </Grid>
 
                 {/* Asset Type Dropdown */}
                 <Grid item xs={12}>
@@ -495,104 +511,136 @@ const AssignTaskForm = ({
                   </TextField>
                 </Grid>
               </div>
-
-          </>)
-          :
-          modalType === "Add Project" ? (
+                    </>);
+                  }
+                  else if (activeStep === 1) {
+                    return (<>
+                    <h1>View Details</h1>
+                    </>);
+                  }
+                }}
+                ></FormStepper>
+             
+            </>
+          ) : modalType === "Add Project" ? (
             <>
               <FormStepper
-              steps={steps}
-              
-              children={(activeStep,handleNext) => {
+                steps={steps}
+                handleClose={handleClose}
+                children={(activeStep, handleNext) => {
+                  if (activeStep === 0) {
+                    return (
+                      <>
+                        <div className="grid grid-cols-1 gap-4">
+                          {/* Asset Number */}
+                          <Grid item xs={12}>
+                            <TextField
+                              name="Title"
+                              label="Project Name"
+                              value={projectData.Title}
+                              fullWidth
+                              onChange={handleChange}
+                            />
+                          </Grid>
+                          <Grid item xs={12}>
+                            <TextField
+                              name="Department"
+                              label="Project Category"
+                              value={projectData.Department}
+                              fullWidth
+                              onChange={handleChange}
+                            />
+                          </Grid>
 
-              }}
+                          {/* Description */}
+                          <Grid item xs={12}>
+                            <TextField
+                              name="description"
+                              label="Project Description"
+                              value={projectData.description}
+                              fullWidth
+                              onChange={handleChange}
+                              multiline
+                              rows={4}
+                            />
+                          </Grid>
+
+                          {/* Department Dropdown */}
+                          <Grid item xs={12}>
+                            <Autocomplete
+                              multiple
+                              options={names}
+                              value={projectData.assignees}
+                              onChange={(e) =>
+                                setProjectData({
+                                  ...projectData,
+                                  assignes: e.target.value,
+                                })
+                              }
+                              renderInput={(params) => (
+                                <TextField
+                                  {...params}
+                                  variant="outlined"
+                                  label="Assignes"
+                                  placeholder="Choose..."
+                                />
+                              )}
+                            />
+                          </Grid>
+
+                          {/* Due date of task */}
+                          <Grid item xs={12}>
+                            <LocalizationProvider dateAdapter={AdapterDayjs}>
+                              <DatePicker
+                                label="Date"
+                                // slotProps={{ textField: { size: "small" } }}
+                                sx={{ width: "-webkit-fill-available" }}
+                                renderInput={(params) => (
+                                  <TextField
+                                    {...params}
+                                    className="w-full md:w-1/4"
+                                  />
+                                )}
+                              />
+                            </LocalizationProvider>
+                          </Grid>
+
+                          {/* Asset Type Dropdown */}
+                          <Grid item xs={12}>
+                            <TextField
+                              label="Status"
+                              name="status"
+                              select
+                              fullWidth
+                              value={projectData.status}
+                              onChange={handleChange}
+                            >
+                              {statusTypes.map((type, index) => (
+                                <MenuItem key={index} value={type}>
+                                  {type}
+                                </MenuItem>
+                              ))}
+                            </TextField>
+                          </Grid>
+
+                          {/* Asset Name */}
+
+                          {/* <Box sx={{ mt: 3 }}>
+                        <button
+                        onClick={handleNextStep}
+                        className="px-6 w-full py-2 rounded-lg text-white wono-blue-dark hover:bg-[#3cbce7] transition-shadow shadow-md hover:shadow-lg active:shadow-inner"
+                      >
+                        Next
+                      </button>
+                      </Box> */}
+                        </div>
+                      </>
+                    );
+                  } else if (activeStep === 1) {
+                    return <div>hello</div>;
+                  }
+                }}
               ></FormStepper>
-              <div className="grid grid-cols-1 gap-4">
-                {/* Asset Number */}
-                <Grid item xs={12}>
-                  <TextField
-                    name="Title"
-                    label="Project Name"
-                    value={projectData.Title}
-                    fullWidth
-                    onChange={handleChange}
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    name="Department"
-                    label="Project Category"
-                    value={projectData.Department}
-                    fullWidth
-                    onChange={handleChange}
-                  />
-                </Grid>
-
-                {/* Description */}
-                <Grid item xs={12}>
-                  <TextField
-                    name="description"
-                    label="Project Description"
-                    value={projectData.description}
-                    fullWidth
-                    onChange={handleChange}
-                    multiline
-                    rows={4}
-                  />
-                </Grid>
-
-                {/* Department Dropdown */}
-                <Grid item xs={12}>
-                  <Autocomplete
-                    multiple
-                    options={names}
-                    value={projectData.assignees}
-                    onChange={(e) => setProjectData({ ...projectData, assignes: e.target.value })}
-                    renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        variant="outlined"
-                        label="Assignes"
-                        placeholder="Choose..."
-                      />
-                    )}
-                  />
-                </Grid>
-
-                {/* Due date of task */}
-                <Grid item xs={12}>
-                  <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <DatePicker
-                      label="Date"
-                      // slotProps={{ textField: { size: "small" } }}
-                      sx={{ width: "-webkit-fill-available" }}
-                      renderInput={(params) => (
-                        <TextField {...params} className="w-full md:w-1/4" />
-                      )}
-                    />
-                  </LocalizationProvider>
-                </Grid>
-
-                {/* Asset Type Dropdown */}
-                <Grid item xs={12}>
-                  <TextField
-                    label="Status"
-                    name="status"
-                    select
-                    fullWidth
-                    value={projectData.status}
-                    onChange={handleChange}
-                  >
-                    {statusTypes.map((type, index) => (
-                      <MenuItem key={index} value={type}>
-                        {type}
-                      </MenuItem>
-                    ))}
-                  </TextField>
-                </Grid>
-
-                {/* Asset Name */}
-              </div>
             </>
           ) : EditValue ? (
             <>
@@ -703,7 +751,6 @@ const AssignTaskForm = ({
                 variant="contained"
                 color="primary"
                 fullWidth
-
               >
                 Submit
               </Button>
