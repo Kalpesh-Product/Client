@@ -565,7 +565,7 @@ const MyTickets = () => {
                                         Wifi is not working
                                       </MenuItem>
                                       <MenuItem value="HR">
-                                        Wifi is not working
+                                        Wifi is slow
                                       </MenuItem>
                                       <MenuItem value="Tech">
                                         Laptop screen malfunctioning
