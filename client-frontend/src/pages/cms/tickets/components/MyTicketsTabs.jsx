@@ -8,6 +8,7 @@ import MyTickets from "./MyTickets";
 import ExternalTickets from "./ExternalTickets";
 import ClosedTickets from "./ClosedTickets";
 import UnresolvedTickets from "./UnresolvedTickets";
+import TodaysTickets from "./TodaysTickets";
 
 const MyTicketsTabs = () => {
   // For Departments
@@ -63,6 +64,7 @@ const MyTicketsTabs = () => {
 
             {/* <MyTicketsTable /> */}
             <MyTickets />
+            {/* <TodaysTickets /> */}
           </TabPanel>
 
           <TabPanel value="2">
