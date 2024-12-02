@@ -18,6 +18,9 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
+import FormStepper from "../../components/FormStepper";
+import WonoButton from "../../components/Buttons/WonoButton";
+
 const extractNames = (data) => {
   const names = [];
   data.forEach((item) => {
@@ -174,17 +177,25 @@ const AssignTaskForm = ({
         ...prev,
         upcoming: [
           ...prev.upcoming,
-          { ...projectData, assignees: projectData.assignees.map((name) => `/path/to/${name}.jpg`) },
+          { ...projectData },
+          // { ...projectData, assignees: projectData.assignees.map((name) => `/path/to/${name}.jpg`) },
         ],
       }));
-      setProjectData({ title: "", description: "", department: "",category: "",Title:"" });
+      setProjectData({ Title: "", description: "", Department: "",category: "" });
     }
     console.log(tasks);
+    console.log(projectData);
     handleClose();
   };
 
   const navigateProject = () => {
     navigate("/tasks/tasklist");
+  };
+
+  const steps = ["Add Projects", "Verify Details"];
+  const handleNextStep = (e, handleNext) => {
+    e.preventDefault();
+    handleNext();
   };
 
   return (
@@ -489,22 +500,29 @@ const AssignTaskForm = ({
           :
           modalType === "Add Project" ? (
             <>
+              <FormStepper
+              steps={steps}
+              
+              children={(activeStep,handleNext) => {
+
+              }}
+              ></FormStepper>
               <div className="grid grid-cols-1 gap-4">
                 {/* Asset Number */}
                 <Grid item xs={12}>
                   <TextField
-                    name="projectName"
+                    name="Title"
                     label="Project Name"
-                    value={projectData.taskName}
+                    value={projectData.Title}
                     fullWidth
                     onChange={handleChange}
                   />
                 </Grid>
                 <Grid item xs={12}>
                   <TextField
-                    name="category"
+                    name="Department"
                     label="Project Category"
-                    value={projectData.category}
+                    value={projectData.Department}
                     fullWidth
                     onChange={handleChange}
                   />

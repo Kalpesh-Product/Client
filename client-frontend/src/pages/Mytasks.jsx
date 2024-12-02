@@ -65,6 +65,11 @@ const Mytasks = () => {
           cellRenderer: (params) => {
             const handleActionChange = (event) => {
               const selectedAction = event.target.value;
+
+              const updatedData = params.api.getRowNode(params.node.id).data;
+      updatedData.viewDetails = selectedAction;
+      params.api.applyTransaction({ update: [updatedData] });
+      
               setSelectedValue(selectedAction); // Update the selected value dynamically
       console.log("Selected Action:", selectedAction);
 
@@ -75,7 +80,7 @@ const Mytasks = () => {
             return (
               <FormControl size="small" sx={{ width: "100%" }}>
                 <Select
-                  value={selectedValue} // Always forces the dropdown to display the SVG
+                  value={params.data.viewDetails || ""} // Always forces the dropdown to display the SVG
                   onChange={handleActionChange}
                   displayEmpty
                   disableUnderline
@@ -362,6 +367,7 @@ const Mytasks = () => {
               columns={columns}
               initialState={{ pagination: { paginationModel } }}
               pageSizeOptions={[5, 10]}
+
               sx={{
                 "& .MuiDataGrid-root": {
                   backgroundColor: "#f9fafb",

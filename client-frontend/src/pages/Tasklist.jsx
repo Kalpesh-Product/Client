@@ -322,7 +322,7 @@ const Tasklist = () => {
     console.log("Opening MOdal of Edit");
   }
 
-  const TaskCard = ({ Title, Description, Department, Assignes = [] }) => (
+  const TaskCard = ({ Title, description, Department, Assignes = [] }) => (
     <div
       className="bg-gray-100 shadow-md bg-white rounded-lg p-3 mb-4"
       
@@ -330,7 +330,7 @@ const Tasklist = () => {
       <div className="flex justify-between gap-5">
         <div>
           <p className="text-xs  py-2 px-2 bg-white rounded-full  my-2">
-            {department}
+            {Department}
           </p>
         </div>
         <div className="flex items-center justify-center w-max p-0">
@@ -378,8 +378,9 @@ const Tasklist = () => {
           </FormControl>
         </div>
       </div>
+     
       <h4 className="text-sm font-semibold">{Title}</h4>
-      <p className="text-gray-600 my-5 text-xs">{Description}</p>
+      <p className="text-gray-600 my-5 text-xs">{description}</p>
       <div>
         <p className="text-xs font-bold">Assignees</p>
         <Stack
