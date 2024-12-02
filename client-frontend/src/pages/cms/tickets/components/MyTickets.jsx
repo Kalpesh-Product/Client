@@ -577,7 +577,7 @@ const MyTickets = () => {
                                 {ticketTitle === "Other" && (
                                   <div className="grid grid-cols-1 gap-4">
                                     <TextField
-                                      label="Ticket Title"
+                                      label="Specify"
                                       // value={newEvent.name}
                                       // onChange={(e) =>
                                       //   setnewEvent({ ...newEvent, name: e.target.value })
