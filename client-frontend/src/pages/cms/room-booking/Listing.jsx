@@ -31,8 +31,8 @@ export default function Listing() {
     {
       id: "2a07c1a4-27f5-4f81-8af7-4c8ec2a35d7b",
       title: "Innovation Strategy Discussion",
-      start: "2024-11-10T10:00",
-      end: "2024-11-10T11:30",
+      start: "2024-12-10T10:00",
+      end: "2024-12-10T11:30",
       backgroundColor: "#008000",
       status: "done",
       extendedProps: {
@@ -44,8 +44,8 @@ export default function Listing() {
     {
       id: "d5f8ecab-45f1-47a5-bd62-4d1b93890861",
       title: "Tech Sprint Planning",
-      start: "2024-11-15T14:00",
-      end: "2024-11-15T15:00",
+      start: "2024-12-15T14:00",
+      end: "2024-12-15T15:00",
       backgroundColor: "#3454D1",
       status: "new",
       extendedProps: {
@@ -57,8 +57,8 @@ export default function Listing() {
     {
       id: "4973c51e-46b8-4f8f-8c52-8891a741cd6f",
       title: "Finance Quarterly Review",
-      start: "2024-11-22T11:00",
-      end: "2024-11-22T12:30",
+      start: "2024-12-22T11:00",
+      end: "2024-12-22T12:30",
       backgroundColor: "#FFA500",
       status: "ongoing",
       extendedProps: {
@@ -70,8 +70,8 @@ export default function Listing() {
     {
       id: "79f5c23e-72df-45c4-8d51-bf3d10a3d5f2",
       title: "Maintenance Equipment Training",
-      start: "2024-11-18T13:00",
-      end: "2024-11-18T14:30",
+      start: "2024-12-18T13:00",
+      end: "2024-12-18T14:30",
       backgroundColor: "#E71D36",
       status: "cancelled",
       extendedProps: {
@@ -83,8 +83,8 @@ export default function Listing() {
     {
       id: "1e3d8f1b-0ed6-4e5e-9cc4-8f1c5a7b8f39",
       title: "HR Policy Announcement",
-      start: "2024-11-27T15:00",
-      end: "2024-11-27T16:00",
+      start: "2024-12-27T15:00",
+      end: "2024-12-27T16:00",
       backgroundColor: "#3454D1",
       status: "new",
       extendedProps: {
@@ -96,8 +96,8 @@ export default function Listing() {
     {
       id: "e7b6c8d4-88c4-4b53-ae9e-4b3d948392f1",
       title: "Marketing Brainstorming Session",
-      start: "2024-11-12T09:00",
-      end: "2024-11-12T10:30",
+      start: "2024-12-12T09:00",
+      end: "2024-12-12T10:30",
       backgroundColor: "#008000",
       status: "done",
       extendedProps: {
@@ -109,8 +109,8 @@ export default function Listing() {
     {
       id: "f5c891d5-234b-4e9a-a746-09c4a1d76d53",
       title: "Team Lunch Discussion",
-      start: "2024-11-20T12:00",
-      end: "2024-11-20T13:00",
+      start: "2024-12-20T12:00",
+      end: "2024-12-20T13:00",
       backgroundColor: "#3454D1",
       status: "new",
       extendedProps: {
@@ -122,8 +122,8 @@ export default function Listing() {
     {
       id: "4a70d1e3-3f46-4728-b85f-75c3a3e4d2c8",
       title: "Year-End Budget Planning",
-      start: "2024-11-29T11:30",
-      end: "2024-11-29T13:00",
+      start: "2024-12-29T11:30",
+      end: "2024-12-29T13:00",
       backgroundColor: "#3454D1",
       status: "new",
       extendedProps: {
@@ -194,8 +194,9 @@ export default function Listing() {
   };
 
   const handleEventClick = (clickInfo) => {
-    setSelectedEvent(clickInfo.event); // Get event details
-    setOpenEventDetailsModal(true); // Open event details modal
+    setSelectedEvent(clickInfo.event);
+    console.log(clickInfo.event) 
+    setOpenEventDetailsModal(true);
   };
 
   const handleCancel = (eventId) => {
