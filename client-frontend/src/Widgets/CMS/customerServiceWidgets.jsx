@@ -23,7 +23,7 @@ export const MaintenanceRequests = ({ requests, route }) => {
   const navigate = useNavigate();
   return(
   <div onClick={()=>navigate(route)} className="p-4 cursor-pointer hover:bg-slate-100 transition-all h-full">
-    <h3 className="text-lg font-semibold">Pending Maintenance</h3>
+    <h3 className="text-lg font-semibold">Asset Tickets</h3>
     <p className="text-2xl">{requests} Requests</p>
   </div>
 );
