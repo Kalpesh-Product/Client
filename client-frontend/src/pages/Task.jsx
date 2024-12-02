@@ -33,7 +33,7 @@ const Task = () => {
     {
       id: 1,
       ticketTitle: "Wifi is not working",
-      Assignes: [
+      Assignees: [
         "https://i.pravatar.cc/150?img=1",
         "https://i.pravatar.cc/150?img=2",
         "https://i.pravatar.cc/150?img=3",
@@ -47,7 +47,7 @@ const Task = () => {
     {
       id: 2,
       ticketTitle: "Payroll Issue",
-      Assignes: [
+      Assignees: [
         "https://i.pravatar.cc/150?img=4",
         "https://i.pravatar.cc/150?img=5",
         "https://i.pravatar.cc/150?img=6",
@@ -60,7 +60,7 @@ const Task = () => {
     {
       id: 3,
       ticketTitle: "Server Downtime",
-      Assignes: [
+      Assignees: [
         "https://i.pravatar.cc/150?img=7",
         "https://i.pravatar.cc/150?img=8",
         "https://i.pravatar.cc/150?img=9",
@@ -73,7 +73,7 @@ const Task = () => {
     {
       id: 4,
       ticketTitle: "New Workstation Setup",
-      Assignes: [
+      Assignees: [
         "https://i.pravatar.cc/150?img=1",
         "https://i.pravatar.cc/150?img=2",
         "https://i.pravatar.cc/150?img=3",
@@ -86,7 +86,7 @@ const Task = () => {
     {
       id: 5,
       ticketTitle: "Employee Onboarding",
-      Assignes: [
+      Assignees: [
         "https://i.pravatar.cc/150?img=1",
         "https://i.pravatar.cc/150?img=2",
         "https://i.pravatar.cc/150?img=3",
@@ -99,7 +99,7 @@ const Task = () => {
     {
       id: 6,
       ticketTitle: "Network Issue",
-      Assignes: [
+      Assignees: [
         "https://i.pravatar.cc/150?img=7",
         "https://i.pravatar.cc/150?img=8",
         "https://i.pravatar.cc/150?img=9",
@@ -112,7 +112,7 @@ const Task = () => {
     {
       id: 7,
       ticketTitle: "Software Installation",
-      Assignes: [
+      Assignees: [
         "https://i.pravatar.cc/150?img=7",
         "https://i.pravatar.cc/150?img=8",
         "https://i.pravatar.cc/150?img=9",
@@ -125,7 +125,7 @@ const Task = () => {
     {
       id: 8,
       ticketTitle: "Office Supplies Request",
-      Assignes: [
+      Assignees: [
         "https://i.pravatar.cc/150?img=1",
         "https://i.pravatar.cc/150?img=2",
         "https://i.pravatar.cc/150?img=3",
@@ -138,7 +138,7 @@ const Task = () => {
     {
       id: 9,
       ticketTitle: "Email Access Issue",
-      Assignes: [
+      Assignees: [
         "https://i.pravatar.cc/150?img=7",
         "https://i.pravatar.cc/150?img=8",
         "https://i.pravatar.cc/150?img=9",
@@ -156,8 +156,8 @@ const Task = () => {
     { field: "id", headerName: "ID", width: 70 },
     { field: "ticketTitle", headerName: "Projects", width: 200 },
     {
-      field: "Assignes",
-      headerName: "Assignes",
+      field: "Assignees",
+      headerName: "Assignees",
       width: 200,
       type: "singleSelect",
       cellRenderer: (params) => (
@@ -169,7 +169,7 @@ const Task = () => {
             width: "100%",
           }}
         >
-          {params.data.Assignes.map((assignee, index) => (
+          {params.data.Assignees?.map((assignee, index) => (
             <Avatar
               key={index}
               src={assignee}

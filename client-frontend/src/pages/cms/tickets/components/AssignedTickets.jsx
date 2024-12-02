@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
@@ -13,6 +13,12 @@ import { TextField } from "@mui/material";
 import AgTable from "../../../../components/AgTable";
 
 const AssignedTickets = () => {
+  const [user, setUser] = useState("");
+  useEffect(() => {
+    const storedUser = JSON.parse(localStorage.getItem("user"));
+    setUser(storedUser);
+  }, []);
+
   const columns = [
     { field: "id", headerName: "ID", width: 100 },
     { field: "ticketTitle", headerName: "Ticket Title", width: 200 },
@@ -70,6 +76,34 @@ const AssignedTickets = () => {
         </Button>
       ),
     },
+    ...(user.role !== "Employee"
+      ? [
+          {
+            field: "assign",
+            headerName: "Assign",
+            width: 170,
+            // renderCell: (params) => (
+            cellRenderer: (params) => (
+              <Button
+                size="small"
+                // onClick={() => handleDelete(params.row)}
+                onClick={handleAssign}
+                variant="contained"
+                sx={{
+                  backgroundColor: "#EF4444",
+                  color: "white",
+                  "&:hover": {
+                    backgroundColor: "#DC2626",
+                  },
+                  padding: "4px 8px",
+                  borderRadius: "0.375rem",
+                }}>
+                Assign
+              </Button>
+            ),
+          },
+        ]
+      : []),
 
     // {
     //   field: "viewDetails",
@@ -312,6 +346,11 @@ const AssignedTickets = () => {
 
   const handleAccept = () => {
     toast.success("Ticket Accepted");
+    //   closeDeleteTicket();
+  };
+
+  const handleAssign = () => {
+    toast.success("Ticket Assigned To Available Employee: Faizan Shaikh");
     //   closeDeleteTicket();
   };
 

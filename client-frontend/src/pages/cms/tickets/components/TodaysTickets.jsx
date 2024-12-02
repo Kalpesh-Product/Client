@@ -15,6 +15,8 @@ import { useNavigate } from "react-router-dom";
 import { NewModal } from "../../../../components/NewModal";
 import { motion } from "framer-motion";
 import { IoMdClose } from "react-icons/io";
+import FormStepper from "../../../../components/FormStepper";
+import WonoButton from "../../../../components/Buttons/WonoButton";
 
 const TodaysTickets = () => {
   const navigate = useNavigate();
@@ -327,6 +329,8 @@ const TodaysTickets = () => {
   };
   // EDIT TICKET DETAILS MODAL END
 
+  const steps = ["Raise Ticket", "Verify Details"];
+
   return (
     <div className="bg-white p-2 rounded-lg">
       {/* <div className="bg-green-500">
@@ -348,85 +352,95 @@ const TodaysTickets = () => {
 
       {/* ADD TICKET MODAL START */}
 
+      {/* Stepper form start */}
+
       <NewModal open={isModalOpen} onClose={closeModal}>
-        <div className="bg-white  w-[31vw] rounded-lg z-10 relative overflow-y-auto max-h-[80vh]">
-          {/* Modal Content */}
+        <>
+          <FormStepper
+            steps={steps}
+            handleClose={closeModal}
+            children={(activeStep, handleNext) => {
+              if (activeStep === 0) {
+                return (
+                  <>
+                    <div className="bg-white  w-[31vw] rounded-lg z-10 relative overflow-y-auto max-h-[80vh]">
+                      {/* Modal Content */}
 
-          {/* Modal Header */}
-          <div className="sticky top-0 bg-white pt-6 z-20 flex justify-between">
-            <div>
-              <h2 className="text-3xl font-bold mb-4 uppercase">
-                Raise Ticket
-              </h2>
-            </div>
-            <div>
-              {/* Close button */}
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.9 }}
-                type="button"
-                onClick={closeModal}
-                className=" p-2 bg-white text-[red] border border-red-200 hover:border-red-400 text-2xl rounded-md mr-1">
-                <IoMdClose />
-              </motion.button>
-            </div>
-          </div>
+                      {/* Modal Header */}
+                      {/* <div className="sticky top-0 bg-white pt-6 z-20 flex justify-between">
+                        <div>
+                          <h2 className="text-3xl font-bold mb-4 uppercase">
+                            Raise Ticket
+                          </h2>
+                        </div>
+                        <div>
+                      
+                          <motion.button
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.9 }}
+                            type="button"
+                            onClick={closeModal}
+                            className=" p-2 bg-white text-[red] border border-red-200 hover:border-red-400 text-2xl rounded-md mr-1">
+                            <IoMdClose />
+                          </motion.button>
+                        </div>
+                      </div> */}
 
-          {/* Modal Body START */}
-          <div className=" w-full">
-            {/* <div>AddT icket Form</div> */}
-            <div className="">
-              <div className=" mx-auto">
-                {/* <h1 className="text-xl text-center my-2 font-bold">
+                      {/* Modal Body START */}
+                      <div className=" w-full">
+                        {/* <div>AddT icket Form</div> */}
+                        <div className="">
+                          <div className=" mx-auto">
+                            {/* <h1 className="text-xl text-center my-2 font-bold">
                     Add Ticket
                   </h1> */}
-                <Box
-                  sx={{
-                    maxWidth: 600,
-                    paddingY: 3,
-                    bgcolor: "background.paper",
-                    borderRadius: 2,
-                  }}
-                  // className="bg-white p-6 rounded-lg shadow-md mx-auto">
-                  className="bg-white py-6 rounded-lg">
-                  {/* Personal Information */}
-                  {/* <h2 className="text-lg font-semibold mb-4">Add Ticket</h2> */}
-                  <div className="grid grid-cols-1 gap-4">
-                    {/* Name, Mobile, Email, DOB fields */}
-                    <div className="grid grid-cols-1 gap-4">
-                      <FormControl fullWidth>
-                        <InputLabel id="department-select-label">
-                          Department
-                        </InputLabel>
-                        <Select
-                          labelId="department-select-label"
-                          id="department-select"
-                          // value={department}
-                          label="Department"
-                          // onChange={handleChange}
-                        >
-                          <MenuItem value="IT">IT</MenuItem>
-                          <MenuItem value="HR">HR</MenuItem>
-                          <MenuItem value="Tech">Tech</MenuItem>
-                          <MenuItem value="Admin">Admin</MenuItem>
-                        </Select>
-                      </FormControl>
-                    </div>
-                    <div className="grid grid-cols-1 gap-4">
-                      <TextField
-                        label="Ticket Title"
-                        // value={newEvent.name}
-                        // onChange={(e) =>
-                        //   setnewEvent({ ...newEvent, name: e.target.value })
-                        // }
-                        fullWidth
-                      />
-                    </div>
-                  </div>
+                            <Box
+                              sx={{
+                                maxWidth: 600,
+                                paddingY: 3,
+                                bgcolor: "background.paper",
+                                borderRadius: 2,
+                              }}
+                              // className="bg-white p-6 rounded-lg shadow-md mx-auto">
+                              className="bg-white py-6 rounded-lg">
+                              {/* Personal Information */}
+                              {/* <h2 className="text-lg font-semibold mb-4">Add Ticket</h2> */}
+                              <div className="grid grid-cols-1 gap-4">
+                                {/* Name, Mobile, Email, DOB fields */}
+                                <div className="grid grid-cols-1 gap-4">
+                                  <FormControl fullWidth>
+                                    <InputLabel id="department-select-label">
+                                      Department
+                                    </InputLabel>
+                                    <Select
+                                      labelId="department-select-label"
+                                      id="department-select"
+                                      // value={department}
+                                      label="Department"
+                                      // onChange={handleChange}
+                                    >
+                                      <MenuItem value="IT">IT</MenuItem>
+                                      <MenuItem value="HR">HR</MenuItem>
+                                      <MenuItem value="Tech">Tech</MenuItem>
+                                      <MenuItem value="Admin">Admin</MenuItem>
+                                    </Select>
+                                  </FormControl>
+                                </div>
+                                <div className="grid grid-cols-1 gap-4">
+                                  <TextField
+                                    label="Ticket Title"
+                                    // value={newEvent.name}
+                                    // onChange={(e) =>
+                                    //   setnewEvent({ ...newEvent, name: e.target.value })
+                                    // }
+                                    fullWidth
+                                  />
+                                </div>
+                              </div>
 
-                  {/* Role & Department fields */}
+                              {/* Role & Department fields */}
 
-                  {/* <div className="col-span-2 flex gap-4">
+                              {/* <div className="col-span-2 flex gap-4">
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.9 }}
@@ -437,31 +451,56 @@ const TodaysTickets = () => {
                 </motion.button>
           
               </div> */}
-                </Box>
-              </div>
-            </div>
-          </div>
-          {/* Modal Body END */}
+                            </Box>
+                          </div>
+                        </div>
+                      </div>
+                      {/* Modal Body END */}
 
-          {/* Modal Footer */}
+                      {/* Modal Footer */}
 
-          <div className="sticky bottom-0 bg-white py-6 z-20 flex justify-center">
-            <div className="flex justify-center items-center w-full">
-              <button
-                className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 w-full"
-                onClick={handleAddTicket}>
-                Save
-              </button>
-            </div>
-          </div>
-          {/* Close button */}
-          {/* <button
+                      <div className="sticky bottom-0 bg-white py-6 z-20 flex justify-center">
+                        <div className="flex justify-center items-center w-full">
+                          <button
+                            className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 w-full"
+                            onClick={handleAddTicket}>
+                            Save
+                          </button>
+                        </div>
+                      </div>
+                      {/* Close button */}
+                      {/* <button
                 className="bg-blue-500 text-white py-2 px-4 my-4 rounded-lg hover:bg-blue-600"
                 onClick={closeModal}>
                 Close
               </button> */}
-        </div>
+                    </div>
+                  </>
+                );
+              } else if (activeStep === 1) {
+                return (
+                  <>
+                    <h1 className="text-2xl mb-4 font-semibold text-center">
+                      Are the provided details correct ?
+                    </h1>
+                    <div>details</div>
+                    <div>
+                      <p>details</p>
+
+                      <WonoButton
+                        content={"Submit"}
+                        onClick={handleAddTicket}
+                      />
+                    </div>
+                  </>
+                );
+              }
+            }}
+          />
+        </>
       </NewModal>
+
+      {/* Stepper form end */}
 
       {/* ADD TICKET MODAL END */}
 
@@ -600,6 +639,18 @@ const TodaysTickets = () => {
                     {/* <h2 className="text-lg font-semibold mb-4">Add Ticket</h2> */}
                     <div className="grid grid-cols-1 gap-4">
                       {/* Name, Mobile, Email, DOB fields */}
+
+                      <div className="grid grid-cols-1 gap-4">
+                        <TextField
+                          label="Reason For Editing"
+                          // value={newEvent.name}
+                          // value="Wifi is not working" // Hardcoded value for ticket title
+                          // onChange={(e) =>
+                          //   setnewEvent({ ...newEvent, name: e.target.value })
+                          // }
+                          fullWidth
+                        />
+                      </div>
                       <div className="grid grid-cols-1 gap-4">
                         <FormControl fullWidth>
                           <InputLabel id="department-select-label">

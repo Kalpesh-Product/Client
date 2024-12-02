@@ -349,7 +349,7 @@ const AcceptedTickets = () => {
   const closeDeleteTicket = () => setIsDeleteTicketOpen(false);
 
   const handleDeleteTicket = () => {
-    toast.success("Ticket Closed");
+    toast.success("Ticket Escalated");
     closeDeleteTicket(); // Optionally close the modal after the alert
   };
   const handleNotResolved = () => {
@@ -500,6 +500,37 @@ const AcceptedTickets = () => {
                           // }
                           fullWidth
                         />
+                      </div>
+                      <div className="grid grid-cols-1 gap-4">
+                        <TextField
+                          label="Reason For Escalation"
+                          // value={newEvent.name}
+                          //   value="Wifi is not working" // Hardcoded value for ticket title
+                          // onChange={(e) =>
+                          //   setnewEvent({ ...newEvent, name: e.target.value })
+                          // }
+                          fullWidth
+                        />
+                      </div>
+                      <div className="grid grid-cols-1 gap-4">
+                        <FormControl fullWidth>
+                          <InputLabel id="department-select-label">
+                            Escalate To
+                          </InputLabel>
+                          <Select
+                            labelId="department-select-label"
+                            id="department-select"
+                            // value={department}
+                            // value="IT" // Hardcoded value for department
+                            label="Escalate To"
+                            // onChange={handleChange}
+                          >
+                            <MenuItem value="IT">IT</MenuItem>
+                            <MenuItem value="HR">HR</MenuItem>
+                            <MenuItem value="Tech">Tech</MenuItem>
+                            <MenuItem value="Admin">Admin</MenuItem>
+                          </Select>
+                        </FormControl>
                       </div>
                     </div>
 

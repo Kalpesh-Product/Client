@@ -11,6 +11,8 @@ import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import { toast } from "sonner";
 import AgTable from "../../../components/AgTable";
+import { motion } from "framer-motion";
+import { IoMdClose } from "react-icons/io";
 
 const TicketMembers = () => {
   const columns = [
@@ -281,11 +283,19 @@ const TicketMembers = () => {
               </div>
               <div>
                 {/* Close button */}
-                <button
+                {/* <button
                   className="bg-blue-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-600"
                   onClick={closeModal}>
                   X
-                </button>
+                </button> */}
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.9 }}
+                  type="button"
+                  onClick={closeModal}
+                  className=" p-2 bg-white text-[red] border border-red-200 hover:border-red-400 text-2xl rounded-md mr-1">
+                  <IoMdClose />
+                </motion.button>
               </div>
             </div>
 
@@ -446,10 +456,19 @@ const TicketMembers = () => {
 
             {/* Modal Footer */}
 
-            <div className="sticky bottom-0 bg-white py-6 z-20 flex justify-center">
+            {/* <div className="sticky bottom-0 bg-white py-6 z-20 flex justify-center">
               <div className="flex justify-center items-center w-full">
                 <button
                   className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 w-full mx-6"
+                  onClick={handleAddTicket}>
+                  Save
+                </button>
+              </div>
+            </div> */}
+            <div className="sticky bottom-0 bg-white p-6 z-20 flex justify-center">
+              <div className="flex justify-center items-center w-full">
+                <button
+                  className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 w-full"
                   onClick={handleAddTicket}>
                   Save
                 </button>

@@ -1,74 +1,99 @@
 // customerServiceWidgets.jsx
 import React from "react";
-import { Bar } from 'react-chartjs-2';
-import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js';
+import { Bar } from "react-chartjs-2";
+import {
+  Chart as ChartJS,
+  Title,
+  Tooltip,
+  Legend,
+  BarElement,
+  CategoryScale,
+  LinearScale,
+} from "chart.js";
 import { useNavigate } from "react-router-dom";
 
 // Register necessary Chart.js components for Bar Chart
-ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale);
+ChartJS.register(
+  Title,
+  Tooltip,
+  Legend,
+  BarElement,
+  CategoryScale,
+  LinearScale
+);
 
-
-export const AssetsCount = ({ count, route }) =>{
-    const navigate = useNavigate();
-  return(
-    <div onClick={()=>navigate(route)} className="p-4 cursor-pointer hover:bg-slate-100 transition-all">
+export const AssetsCount = ({ count, route }) => {
+  const navigate = useNavigate();
+  return (
+    <div
+      onClick={() => navigate(route)}
+      className="p-4 cursor-pointer hover:bg-slate-100 transition-all">
       <h3 className="text-lg font-semibold">Total Assets</h3>
       <p className="text-3xl font-bold">{count}</p>
     </div>
   );
-} 
-  
+};
 
 export const MaintenanceRequests = ({ requests, route }) => {
   const navigate = useNavigate();
-  return(
-  <div onClick={()=>navigate(route)} className="p-4 cursor-pointer hover:bg-slate-100 transition-all h-full">
-    <h3 className="text-lg font-semibold">Pending Maintenance</h3>
-    <p className="text-2xl">{requests} Requests</p>
-  </div>
-);
-}
+  return (
+    <div
+      onClick={() => navigate(route)}
+      className="p-4 cursor-pointer hover:bg-slate-100 transition-all h-full">
+      <h3 className="text-lg font-semibold">Pending Maintenance</h3>
+      <p className="text-2xl">{requests} Requests</p>
+    </div>
+  );
+};
 
 export const AssetsAssigned = ({ assigned, route }) => {
   const navigate = useNavigate();
-  return(
-    <div onClick={()=>navigate(route)} className="p-4 cursor-pointer hover:bg-slate-100 transition-all h-full">
+  return (
+    <div
+      onClick={() => navigate(route)}
+      className="p-4 cursor-pointer hover:bg-slate-100 transition-all h-full">
       <h3 className="text-lg font-semibold">Assets Assigned</h3>
       <p className="text-2xl">{assigned}</p>
     </div>
   );
-}
+};
 
 export const AssetsInRepair = ({ count, route }) => {
   const navigate = useNavigate();
-  return(
-    <div onClick={()=>navigate(route)} className="p-4 cursor-pointer hover:bg-slate-100 transition-all h-full">
+  return (
+    <div
+      onClick={() => navigate(route)}
+      className="p-4 cursor-pointer hover:bg-slate-100 transition-all h-full">
       <h3 className="text-lg font-semibold">Assets In Repair</h3>
       <p className="text-2xl">{count}</p>
     </div>
   );
-}
+};
 
 export const NewAssetsAdded = ({ added, route }) => {
   const navigate = useNavigate();
-  (
-    <div onClick={()=>navigate(route)} className="p-4 cursor-pointer hover:bg-slate-100 transition-all h-full">
-      <h3 className="text-lg font-semibold">New Assets Added</h3>
-      <p className="text-2xl">{added}</p>
-    </div>
-  );
-}
+  <div
+    onClick={() => navigate(route)}
+    className="p-4 cursor-pointer hover:bg-slate-100 transition-all h-full">
+    <h3 className="text-lg font-semibold">New Assets Added</h3>
+    <p className="text-2xl">{added}</p>
+  </div>;
+};
 
-export const QuantityRemainingWidget = ({ totalStock, remainingStock, assetType }) => {
+export const QuantityRemainingWidget = ({
+  totalStock,
+  remainingStock,
+  assetType,
+}) => {
   // Calculate the percentage of remaining stock
   const percentageRemaining = (remainingStock / totalStock) * 100;
 
   // Determine color based on the remaining stock
-  let progressColor = 'bg-green-500'; // Default color: Green (high stock)
+  let progressColor = "bg-green-500"; // Default color: Green (high stock)
   if (percentageRemaining <= 50 && percentageRemaining > 20) {
-    progressColor = 'bg-yellow-500'; // Moderate stock
+    progressColor = "bg-yellow-500"; // Moderate stock
   } else if (percentageRemaining <= 20) {
-    progressColor = 'bg-red-500'; // Low stock
+    progressColor = "bg-red-500"; // Low stock
   }
 
   return (
@@ -76,7 +101,9 @@ export const QuantityRemainingWidget = ({ totalStock, remainingStock, assetType 
       <div className="flex items-center justify-between mb-4">
         <div className="flex">
           {/* Asset Icon */}
-          <h2 className="text-lg font-semibold text-gray-800">{assetType} Remaining</h2>
+          <h2 className="text-lg font-semibold text-gray-800">
+            {assetType} Remaining
+          </h2>
         </div>
         <div className="text-xl font-bold text-gray-800">
           {remainingStock}/{totalStock}
@@ -86,15 +113,18 @@ export const QuantityRemainingWidget = ({ totalStock, remainingStock, assetType 
       {/* Progress Bar */}
       <div className="relative pt-1 ">
         <div className="flex mb-2 items-center justify-between">
-          <span className="text-sm font-medium text-gray-500">Stock Remaining</span>
-          <span className="text-sm font-medium text-gray-500">{Math.round(percentageRemaining)}%</span>
+          <span className="text-sm font-medium text-gray-500">
+            Stock Remaining
+          </span>
+          <span className="text-sm font-medium text-gray-500">
+            {Math.round(percentageRemaining)}%
+          </span>
         </div>
         <div className="flex mb-2">
           <div className="w-full bg-gray-200 h-2.5 rounded-full">
             <div
               className={`h-2.5 rounded-full ${progressColor}`}
-              style={{ width: `${percentageRemaining}%` }}
-            ></div>
+              style={{ width: `${percentageRemaining}%` }}></div>
           </div>
         </div>
       </div>
@@ -104,15 +134,18 @@ export const QuantityRemainingWidget = ({ totalStock, remainingStock, assetType 
         {percentageRemaining <= 20 ? (
           <p className="text-red-500 font-medium">Warning: Stock is low!</p>
         ) : percentageRemaining <= 50 ? (
-          <p className="text-yellow-500 font-medium">Moderate Stock: Order soon!</p>
+          <p className="text-yellow-500 font-medium">
+            Moderate Stock: Order soon!
+          </p>
         ) : (
-          <p className="text-green-500 font-medium">Sufficient Stock Available</p>
+          <p className="text-green-500 font-medium">
+            Sufficient Stock Available
+          </p>
         )}
       </div>
     </div>
   );
 };
-
 
 export const AssetAllocationWidget = () => {
   const assetData = [
@@ -125,19 +158,21 @@ export const AssetAllocationWidget = () => {
   ];
 
   // Extract asset allocation data
-  const assetTypes = assetData.map(asset => asset.assetType);
+  const assetTypes = assetData.map((asset) => asset.assetType);
   const uniqueAssetTypes = [...new Set(assetTypes)]; // Get unique asset types
-  const assetCounts = uniqueAssetTypes.map(type => assetData.filter(asset => asset.assetType === type).length);
+  const assetCounts = uniqueAssetTypes.map(
+    (type) => assetData.filter((asset) => asset.assetType === type).length
+  );
 
   // Chart.js Data for Bar Chart
   const data = {
     labels: uniqueAssetTypes,
     datasets: [
       {
-        label: 'Asset Allocation',
+        label: "Asset Allocation",
         data: assetCounts,
-        backgroundColor: '#36A2EB', // Blue bars for the dataset
-        borderColor: '#36A2EB',
+        backgroundColor: "#36A2EB", // Blue bars for the dataset
+        borderColor: "#36A2EB",
         borderWidth: 1,
       },
     ],
@@ -148,7 +183,7 @@ export const AssetAllocationWidget = () => {
     responsive: true,
     plugins: {
       legend: {
-        position: 'top',
+        position: "top",
       },
       tooltip: {
         callbacks: {
@@ -170,7 +205,9 @@ export const AssetAllocationWidget = () => {
   return (
     <div className="bg-white shadow-lg rounded-lg p-6 w-full cursor-pointer hover:bg-slate-100 transition-all">
       <div className="flex items-center justify-between mb-4">
-        <h2 className="text-xl font-semibold text-gray-800">Asset Allocation</h2>
+        <h2 className="text-xl font-semibold text-gray-800">
+          Asset Allocation
+        </h2>
       </div>
 
       {/* Bar Chart */}
@@ -180,7 +217,9 @@ export const AssetAllocationWidget = () => {
 
       {/* Additional Info */}
       <div className="text-center mt-4">
-        <p className="text-gray-600">View the distribution of assets by type.</p>
+        <p className="text-gray-600">
+          View the distribution of assets by type.
+        </p>
       </div>
     </div>
   );
