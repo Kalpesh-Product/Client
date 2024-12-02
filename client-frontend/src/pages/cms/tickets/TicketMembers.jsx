@@ -99,8 +99,8 @@ const TicketMembers = () => {
                   <circle cx={12} cy={19} r={1} />
                 </svg>
               </MenuItem>
-              <MenuItem value="view">View Details</MenuItem>
-              <MenuItem value="edit">Edit</MenuItem>
+              {/* <MenuItem value="view">View Details</MenuItem>
+              <MenuItem value="edit">Edit</MenuItem> */}
               <MenuItem value="delete">Delete</MenuItem>
             </Select>
           </FormControl>
