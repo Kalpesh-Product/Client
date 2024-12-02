@@ -318,6 +318,7 @@ const DepartmentDash = () => {
       subModule: "asset",
       widgets: [
         <AssetsCount
+          title={user.department === "TopManagement" ? "Total Assets" : (user.department === "IT" ? "IT Assets" : "Maintainence As")}
           route={"/customer/asset/manage"}
           count={customerServiceWidgetsData.totalAssets}
         />,

@@ -8,11 +8,13 @@ import { useNavigate } from "react-router-dom";
 ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale);
 
 
-export const AssetsCount = ({ count, route }) =>{
+export const AssetsCount = ({ count, route, title }) =>{
     const navigate = useNavigate();
+
+
   return(
     <div onClick={()=>navigate(route)} className="p-4 cursor-pointer hover:bg-slate-100 transition-all">
-      <h3 className="text-lg font-semibold">Total Assets</h3>
+      <h3 className="text-lg font-semibold">{title}</h3>
       <p className="text-3xl font-bold">{count}</p>
     </div>
   );
