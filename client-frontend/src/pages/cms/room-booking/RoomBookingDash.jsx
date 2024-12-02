@@ -164,7 +164,7 @@ export default function RoomBookingDash() {
         />
       </div>
       <h1 className="text-2xl font-semibold my-3">Available rooms</h1>
-      
+
       <AvailableRooms rooms={rooms} />
 
       {/* Booking Modal */}
@@ -173,18 +173,6 @@ export default function RoomBookingDash() {
           open={openBookingModal}
           onClose={() => setOpenBookingModal(false)}
         >
-          <div className="flex justify-between items-center p-4">
-            <h1 className="text-2xl font-bold ml-4">Create Booking</h1>
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.9 }}
-              type="button"
-              onClick={() => setOpenBookingModal(false)}
-              className=" p-2 bg-white text-[red] border border-red-200 hover:border-red-400 text-2xl rounded-md"
-            >
-              <IoMdClose />
-            </motion.button>
-          </div>
           <BookingForm
             newMeeting={newMeeting}
             handleChange={handleChange}
@@ -192,6 +180,7 @@ export default function RoomBookingDash() {
             currentDate={currentDate}
             loggedInUser={loggedInUser}
             roomList={roomList}
+            handleClose={() => setOpenBookingModal(false)}
           />
         </NewModal>
       )}
