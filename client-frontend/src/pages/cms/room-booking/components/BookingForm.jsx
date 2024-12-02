@@ -86,10 +86,9 @@ export default function BookingForm({
             switch (activeStep) {
               case 0:
                 return (
-                  <div className="flex flex-col justify-center items-center gap-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {/* Start Time */}
                     <TimePicker
-                      sx={{ width: "100%" }}
                       label="Start Time"
                       value={dayjs(newMeeting.startTime, "HH:mm") || null}
                       onChange={(newValue) =>
@@ -107,7 +106,6 @@ export default function BookingForm({
 
                     {/* End Time */}
                     <TimePicker
-                      sx={{ width: "100%" }}
                       label="End Time"
                       value={dayjs(newMeeting.endTime, "HH:mm") || null}
                       onChange={(newValue) =>
@@ -125,7 +123,6 @@ export default function BookingForm({
 
                     {/* Date */}
                     <DatePicker
-                      sx={{ width: "100%" }}
                       label="Date"
                       value={dayjs(newMeeting.date) || dayjs(currentDate)}
                       onChange={(newValue) =>
@@ -140,6 +137,8 @@ export default function BookingForm({
                         <TextField {...params} fullWidth />
                       )}
                     />
+
+                    {/* Name */}
                     <TextField
                       label="Name"
                       type="text"
@@ -150,46 +149,47 @@ export default function BookingForm({
                       fullWidth
                     />
 
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      onClick={handleNext}
-                      className="w-full py-2 font-bold mt-4"
-                    >
-                      Next
-                    </Button>
+                    <div className="col-span-full">
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={handleNext}
+                        className="w-full py-2 font-bold mt-4"
+                      >
+                        Next
+                      </Button>
+                    </div>
                   </div>
                 );
               case 1:
                 return (
-                  <div className="flex flex-col justify-center items-center gap-4 w-full">
+                  <div className="w-full">
                     {/* Room Seats */}
-                    <div className="w-full">
-                      <FormControl fullWidth>
-                        <MuiSelect
-                          labelId="seat-dropdown-label"
-                          value={selectedSeats}
-                          onChange={handleSeatsChange}
-                          displayEmpty
-                          inputProps={{ "aria-label": "Select Seat Count" }}
-                        >
-                          <MenuItem value="">
-                            <em>Select Seat Count</em>
-                          </MenuItem>
-                          {[...new Set(roomList.map((room) => room.seats))].map(
-                            (seat) => (
-                              <MenuItem key={seat} value={seat}>
-                                {seat} seats
-                              </MenuItem>
-                            )
-                          )}
-                        </MuiSelect>
-                      </FormControl>
-                    </div>
+                    <FormControl fullWidth>
+                      <MuiSelect
+                        labelId="seat-dropdown-label"
+                        value={selectedSeats}
+                        onChange={handleSeatsChange}
+                        displayEmpty
+                        sx={{marginBottom:"0.5rem"}}
+                        inputProps={{ "aria-label": "Select Seat Count" }}
+                      >
+                        <MenuItem value="">
+                          <em>Select Seat Count</em>
+                        </MenuItem>
+                        {[...new Set(roomList.map((room) => room.seats))].map(
+                          (seat) => (
+                            <MenuItem key={seat} value={seat}>
+                              {seat} seats
+                            </MenuItem>
+                          )
+                        )}
+                      </MuiSelect>
+                    </FormControl>
 
                     {/* Room Selection */}
                     {filteredRooms.length > 0 && (
-                      <div className="mt-4 w-full">
+                      <div className="col-span-full">
                         <Typography variant="subtitle1" className="mb-2">
                           Select a Room:
                         </Typography>
@@ -210,21 +210,23 @@ export default function BookingForm({
                       </div>
                     )}
 
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      onClick={handleNext}
-                      className="w-full py-2 font-bold mt-4"
-                    >
-                      Next
-                    </Button>
+                    <div className="col-span-full">
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={handleNext}
+                        className="w-full py-2 font-bold mt-4"
+                      >
+                        Next
+                      </Button>
+                    </div>
                   </div>
                 );
               case 2:
                 return (
-                  <div className="flex flex-col justify-center items-center gap-4">
+                  <div className="flex flex-col justify-center w-full gap-2">
                     {/* Participants */}
-                    <div className="w-full">
+                    <div className="col-span-full">
                       <label className="block mb-2 font-medium">
                         Participants
                       </label>
@@ -262,68 +264,71 @@ export default function BookingForm({
                       rows={4}
                       fullWidth
                     />
-                    {credits !== 500 ? (
-                      <p className="text-center text-red-500 font-bold">{`you will have ${credits} credits remaining`}</p>
-                    ) : null}
-                    <Button
-                      type="submit"
-                      variant="contained"
-                      color="primary"
-                      className="w-full py-2 font-bold mt-4"
-                      onClick={handleNext}
-                    >
-                      Next
-                    </Button>
-                  </div>
-                );
-              case 3:
-                return (
-                  <div className="flex flex-col justify-center items-start gap-4 w-full">
-                    <Typography variant="h6" className="mb-2">
-                      Preview Your Booking
-                    </Typography>
-                    <div className="w-full">
-                      <Typography>
-                        <strong>Date:</strong> {newMeeting.date || "N/A"}
-                      </Typography>
-                      <Typography>
-                        <strong>Start Time:</strong>{" "}
-                        {newMeeting.startTime || "N/A"}
-                      </Typography>
-                      <Typography>
-                        <strong>End Time:</strong> {newMeeting.endTime || "N/A"}
-                      </Typography>
-                      <Typography>
-                        <strong>Room:</strong> {newMeeting.room || "N/A"}
-                      </Typography>
-                      <Typography>
-                        <strong>Participants:</strong>{" "}
-                        {selectedParticipants.map((p) => p.label).join(", ") ||
-                          "N/A"}
-                      </Typography>
-                      <Typography>
-                        <strong>Subject:</strong> {newMeeting.subject || "N/A"}
-                      </Typography>
-                      <Typography>
-                        <strong>Agenda:</strong> {newMeeting.agenda || "N/A"}
-                      </Typography>
-                      {credits !== 500 ? (
-                        <Typography className="text-red-500">
-                          You will have <strong>{credits}</strong> remaining.
-                        </Typography>
-                      ) : null}
-                    </div>
-                    <div className="flex gap-4 w-full mt-4">
+
+                    {credits !== 500 && (
+                      <div className="col-span-full">
+                        <p className="text-center text-red-500 font-bold">{`You will have ${credits} credits remaining.`}</p>
+                      </div>
+                    )}
+
+                    <div className="col-span-full">
                       <Button
                         type="submit"
                         variant="contained"
                         color="primary"
-                        className="w-full py-2 font-bold"
-                        onClick={handleSubmit}
+                        className="w-full py-2 font-bold mt-4"
+                        onClick={handleNext}
                       >
-                        Confirm & Submit
+                        Next
                       </Button>
                     </div>
+                  </div>
+                );
+              case 3:
+                return (
+                  <div className="flex flex-col justify-center gap-2">
+                    <Typography variant="h6" className="col-span-full mb-2">
+                      Preview Your Booking
+                    </Typography>
+                    <Typography>
+                      <strong>Date:</strong> {newMeeting.date || "N/A"}
+                    </Typography>
+                    <Typography>
+                      <strong>Start Time:</strong>{" "}
+                      {newMeeting.startTime || "N/A"}
+                    </Typography>
+                    <Typography>
+                      <strong>End Time:</strong> {newMeeting.endTime || "N/A"}
+                    </Typography>
+                    <Typography>
+                      <strong>Room:</strong> {newMeeting.room || "N/A"}
+                    </Typography>
+                    <Typography className="col-span-full">
+                      <strong>Participants:</strong>{" "}
+                      {selectedParticipants.map((p) => p.label).join(", ") ||
+                        "N/A"}
+                    </Typography>
+                    <Typography className="col-span-full">
+                      <strong>Subject:</strong> {newMeeting.subject || "N/A"}
+                    </Typography>
+                    <Typography className="col-span-full">
+                      <strong>Agenda:</strong> {newMeeting.agenda || "N/A"}
+                    </Typography>
+                    {credits !== 500 && (
+                      <Typography className="text-red-500 col-span-full">
+                        You will have <strong>{credits}</strong> credits
+                        remaining.
+                      </Typography>
+                    )}
+                    <Button
+                      type="submit"
+                      variant="contained"
+                      color="primary"
+                      className="col-span-full py-2 font-bold"
+                      onClick={handleSubmit}
+                    >
+                      Confirm & Submit
+                    </Button>
                   </div>
                 );
               default:

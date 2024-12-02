@@ -180,50 +180,52 @@ export default function BookingDetails({
         {/* Details Tab */}
         {tabIndex === 0 && (
           <Box p={3}>
-            <div className="grid grid-cols-1 gap-3 py-2 h-[47vh] overflow-y-scroll">
+            <div className="w-full py-2 h-[47vh] overflow-y-scroll">
               {/* Render details using TextField */}
-              <TextField
-                label="Subject"
-                value={selectedEvent.title || "No Subject"}
-                disabled
-                fullWidth
-                variant="outlined"
-              />
-              <TextField
-                label="Date"
-                value={selectedEvent.start.toISOString().substring(0, 10)}
-                disabled
-                fullWidth
-                variant="outlined"
-              />
-              <TextField
-                label="Start Time"
-                value={format(new Date(selectedEvent.start), "hh:mm a")}
-                disabled
-                fullWidth
-                variant="outlined"
-              />
-              <TextField
-                label="End Time"
-                value={format(new Date(selectedEvent.end), "hh:mm a")}
-                disabled
-                fullWidth
-                variant="outlined"
-              />
-              <TextField
-                label="Room"
-                value={selectedEvent.extendedProps.room || "Not Assigned"}
-                disabled
-                fullWidth
-                variant="outlined"
-              />
-              <TextField
-                label="Participants"
-                value={selectedEvent.extendedProps.participants || "N/A"}
-                disabled
-                fullWidth
-                variant="outlined"
-              />
+              <div className="grid grid-cols-2 gap-3 mb-[0.75rem]">
+                <TextField
+                  label="Subject"
+                  value={selectedEvent.title || "No Subject"}
+                  disabled
+                  fullWidth
+                  variant="outlined"
+                />
+                <TextField
+                  label="Date"
+                  value={selectedEvent.start.toISOString().substring(0, 10)}
+                  disabled
+                  fullWidth
+                  variant="outlined"
+                />
+                <TextField
+                  label="Start Time"
+                  value={format(new Date(selectedEvent.start), "hh:mm a")}
+                  disabled
+                  fullWidth
+                  variant="outlined"
+                />
+                <TextField
+                  label="End Time"
+                  value={format(new Date(selectedEvent.end), "hh:mm a")}
+                  disabled
+                  fullWidth
+                  variant="outlined"
+                />
+                <TextField
+                  label="Room"
+                  value={selectedEvent.extendedProps.room || "Not Assigned"}
+                  disabled
+                  fullWidth
+                  variant="outlined"
+                />
+                <TextField
+                  label="Participants"
+                  value={selectedEvent.extendedProps.participants || "N/A"}
+                  disabled
+                  fullWidth
+                  variant="outlined"
+                />
+              </div>
               <TextField
                 label="Agenda"
                 value={selectedEvent.extendedProps.agenda || "N/A"}
