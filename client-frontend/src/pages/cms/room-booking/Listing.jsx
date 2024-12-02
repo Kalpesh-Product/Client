@@ -8,8 +8,6 @@ import BookingForm from "./components/BookingForm";
 import BookingDetails from "./components/BookingDetails";
 import { format, addMinutes } from "date-fns";
 import { toast } from "sonner";
-import { motion } from "framer-motion";
-import { IoMdClose } from "react-icons/io";
 import { NewModal } from "../../../components/NewModal";
 import { Checkbox, FormControlLabel } from "@mui/material";
 
