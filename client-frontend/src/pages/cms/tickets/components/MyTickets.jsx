@@ -561,8 +561,8 @@ const MyTickets = () => {
                                         setTicketTitle(e.target.value)
                                       } // Update state on selection
                                     >
-                                      <MenuItem value="Wifi is too slow">
-                                        Wifi is too slow
+                                      <MenuItem value="Wifi is not working">
+                                        Wifi is not working
                                       </MenuItem>
                                       <MenuItem value="HR">
                                         Wifi is not working
@@ -851,7 +851,7 @@ const MyTickets = () => {
                         <TextField
                           label="Enter Ticket Title"
                           // value={newEvent.name}
-                          // value="Laptop screen malfunctioning" // Hardcoded value for ticket title
+                          value="Laptop screen malfunctioning" // Hardcoded value for ticket title
                           // onChange={(e) =>
                           //   setnewEvent({ ...newEvent, name: e.target.value })
                           // }
