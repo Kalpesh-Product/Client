@@ -24,6 +24,8 @@ const MyTickets = () => {
   const [highlightFirstRow, setHighlightFirstRow] = React.useState(false);
   const [highlightEditedRow, setHighlightEditedRow] = React.useState(false);
 
+  const [ticketTitle, setTicketTitle] = useState(""); // State to track the selected option
+
   const columns = [
     { field: "id", headerName: "ID", width: 100 },
     { field: "ticketTitle", headerName: "Ticket Title", width: 200 },
@@ -543,6 +545,49 @@ const MyTickets = () => {
                                   </FormControl>
                                 </div>
                                 <div className="grid grid-cols-1 gap-4">
+                                  <FormControl fullWidth>
+                                    <InputLabel id="suggestion-select-label">
+                                      Ticket Title
+                                    </InputLabel>
+                                    <Select
+                                      labelId="suggestion-select-label"
+                                      id="suggestion-select"
+                                      // value={department}
+                                      // value="IT" // Hardcoded value for department
+                                      label="Ticket Title"
+                                      // onChange={handleChange}
+
+                                      onChange={(e) =>
+                                        setTicketTitle(e.target.value)
+                                      } // Update state on selection
+                                    >
+                                      <MenuItem value="Wifi is too slow">
+                                        Wifi is too slow
+                                      </MenuItem>
+                                      <MenuItem value="HR">
+                                        Wifi is not working
+                                      </MenuItem>
+                                      <MenuItem value="Tech">
+                                        Laptop screen malfunctioning
+                                      </MenuItem>
+                                      <MenuItem value="Other">Other</MenuItem>
+                                    </Select>
+                                  </FormControl>
+                                </div>
+                                {ticketTitle === "Other" && (
+                                  <div className="grid grid-cols-1 gap-4">
+                                    <TextField
+                                      label="Ticket Title"
+                                      // value={newEvent.name}
+                                      // onChange={(e) =>
+                                      //   setnewEvent({ ...newEvent, name: e.target.value })
+                                      // }
+                                      fullWidth
+                                    />
+                                  </div>
+                                )}
+
+                                {/* <div className="grid grid-cols-1 gap-4">
                                   <TextField
                                     label="Ticket Title"
                                     // value={newEvent.name}
@@ -551,7 +596,7 @@ const MyTickets = () => {
                                     // }
                                     fullWidth
                                   />
-                                </div>
+                                </div> */}
                               </div>
 
                               {/* Role & Department fields */}
@@ -801,11 +846,12 @@ const MyTickets = () => {
                           </Select>
                         </FormControl>
                       </div>
+
                       <div className="grid grid-cols-1 gap-4">
                         <TextField
-                          label="Ticket Title"
+                          label="Enter Ticket Title"
                           // value={newEvent.name}
-                          value="Laptop screen malfunctioning" // Hardcoded value for ticket title
+                          // value="Laptop screen malfunctioning" // Hardcoded value for ticket title
                           // onChange={(e) =>
                           //   setnewEvent({ ...newEvent, name: e.target.value })
                           // }
