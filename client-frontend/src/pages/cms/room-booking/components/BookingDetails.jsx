@@ -120,7 +120,9 @@ export default function BookingDetails({
         <div className="flex flex-col justify-center items-center sticky top-0 bg-white z-100">
           <div className="flex justify-between items-center w-full bg-white">
             <Typography variant="h5" gutterBottom sx={{ fontWeight: "bold" }}>
-              Meeting Details
+              Meeting Details{" "}
+              {selectedEvent.extendedProps.status === "cancelled" &&
+                "(Cancelled)"}
             </Typography>
             <motion.button
               whileHover={{ scale: 1.05 }}
@@ -146,10 +148,32 @@ export default function BookingDetails({
             textColor="primary"
             aria-label="booking details tabs"
           >
-            <Tab label="Details" sx={{ width: "25%" }} />
-            <Tab label="Edit" sx={{ width: "25%" }} />
-            <Tab label="Extend Time" sx={{ width: "25%" }} />
-            <Tab label="Cancel Booking" sx={{ width: "25%" }} />
+            <Tab
+              label="Details"
+              sx={{
+                width: "25%",
+                cursor:
+                  selectedEvent.extendedProps.status === "cancelled"
+                    ? "no-drop"
+                    : "pointer",
+              }}
+              disabled={selectedEvent.extendedProps.status === "cancelled"}
+            />
+            <Tab
+              label="Edit"
+              sx={{ width: "25%" }}
+              disabled={selectedEvent.extendedProps.status === "cancelled"}
+            />
+            <Tab
+              label="Extend Time"
+              sx={{ width: "25%" }}
+              disabled={selectedEvent.extendedProps.status === "cancelled"}
+            />
+            <Tab
+              label="Cancel Booking"
+              sx={{ width: "25%" }}
+              disabled={selectedEvent.extendedProps.status === "cancelled"}
+            />
           </Tabs>
         </div>
 
@@ -352,6 +376,12 @@ export default function BookingDetails({
                     onClick={() => handleDurationExtension(60)}
                   >
                     Extend 1 hour
+                  </Button>
+                  <Button
+                    variant="outlined"
+                    onClick={() => handleDurationExtension(120)}
+                  >
+                    Extend 2 hours
                   </Button>
                 </Box>
                 <Button

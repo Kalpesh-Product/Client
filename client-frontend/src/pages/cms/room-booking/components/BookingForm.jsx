@@ -263,7 +263,7 @@ export default function BookingForm({
                       fullWidth
                     />
                     {credits !== 500 ? (
-                      <p className="text-center text-red-500 font-bold">{`you will have ${credits} remaining`}</p>
+                      <p className="text-center text-red-500 font-bold">{`you will have ${credits} credits remaining`}</p>
                     ) : null}
                     <Button
                       type="submit"

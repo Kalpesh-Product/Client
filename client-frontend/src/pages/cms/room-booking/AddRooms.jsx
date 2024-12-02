@@ -132,9 +132,6 @@ export default function AddRooms() {
                 </span>{" "}
                 Fits {room.seats} people
               </p>
-              <Typography variant="body2" color="textSecondary">
-                {room.description}
-              </Typography>
               <div className="mt-4">
                 <Button
                   variant="contained"
