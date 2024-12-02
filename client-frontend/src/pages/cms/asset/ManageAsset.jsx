@@ -22,6 +22,8 @@ import allAssets from "./temp_db/MaintainanceAssets.json";
 import itAssets from "./temp_db/ItTemp.json";
 import { IoMdClose } from "react-icons/io";
 import { toast } from "sonner";
+import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
 const ManageAsset = () => {
   const [openModal, setOpenModal] = useState(false);
@@ -129,7 +131,8 @@ const ManageAsset = () => {
                 cursor: "pointer",
                 height: "100%",
               }}
-              onClick={() => handleViewDetails(params.data)}>
+              onClick={() => handleViewDetails(params.data)}
+            >
               Details
             </button>
             {/* <button
@@ -200,7 +203,8 @@ const ManageAsset = () => {
                 cursor: "pointer",
                 height: "100%",
               }}
-              onClick={() => handleAssignAsset(params.data)}>
+              onClick={() => handleAssignAsset(params.data)}
+            >
               Assign
             </button>
           </div>
@@ -271,7 +275,8 @@ const ManageAsset = () => {
                   cursor: "pointer",
                   height: "100%",
                 }}
-                onClick={() => setApproval(true)}>
+                onClick={() => setApproval(true)}
+              >
                 Approve
               </button>
               <button
@@ -285,7 +290,8 @@ const ManageAsset = () => {
                   cursor: "pointer",
                   height: "100%",
                 }}
-                onClick={() => setApproval(false)}>
+                onClick={() => setApproval(false)}
+              >
                 Reject
               </button>
             </div>
@@ -366,7 +372,8 @@ const ManageAsset = () => {
               borderTopRightRadius: "10px",
               fontFamily: "Popins-Semibold",
               padding: "0.5rem",
-            }}>
+            }}
+          >
             {/* 0 */}
             <Tab sx={{ borderRight: "1px solid #e4e4e4" }} label="Add Assets" />
             {/* 1 */}
@@ -409,7 +416,8 @@ const ManageAsset = () => {
                       size="small"
                       value={selectedAssetName}
                       onChange={(e) => setSelectedAssetName(e.target.value)}
-                      sx={{ fontSize: "0.5rem" }}>
+                      sx={{ fontSize: "0.5rem" }}
+                    >
                       <MenuItem value="">All</MenuItem>
                       {[
                         ...new Set(assetsData.map((asset) => asset.category)),
@@ -433,7 +441,8 @@ const ManageAsset = () => {
                           value={selectedDepartment}
                           onChange={(e) =>
                             setSelectedDepartment(e.target.value)
-                          }>
+                          }
+                        >
                           <MenuItem value="">All</MenuItem>
                           <MenuItem value="IT">IT</MenuItem>
                           <MenuItem value="Maintainance">Maintainance</MenuItem>
@@ -445,7 +454,8 @@ const ManageAsset = () => {
 
                 <button
                   onClick={() => handleOpenModal("add")}
-                  className="wono-blue-dark p-2 rounded-md text-white">
+                  className="wono-blue-dark p-2 rounded-md text-white"
+                >
                   Add Asset
                 </button>
               </div>
@@ -479,7 +489,8 @@ const ManageAsset = () => {
                       size="small"
                       value={selectedAssetName}
                       onChange={(e) => setSelectedAssetName(e.target.value)}
-                      sx={{ fontSize: "0.5rem" }}>
+                      sx={{ fontSize: "0.5rem" }}
+                    >
                       <MenuItem value="">All</MenuItem>
                       {[
                         ...new Set(assetsData.map((asset) => asset.category)),
@@ -503,7 +514,8 @@ const ManageAsset = () => {
                           value={selectedDepartment}
                           onChange={(e) =>
                             setSelectedDepartment(e.target.value)
-                          }>
+                          }
+                        >
                           <MenuItem value="">All</MenuItem>
                           <MenuItem value="IT">IT</MenuItem>
                           <MenuItem value="Maintainance">Maintainance</MenuItem>
@@ -568,6 +580,7 @@ const ManageAsset = () => {
         {openModal === "view" && (
           <>
             <div className="flex flex-col gap-4 bg-white rounded-md w-full">
+              {/* Header */}
               <div className="flex justify-between mb-4">
                 <Typography sx={{ fontFamily: "Popins-Semibold" }} variant="h4">
                   Details
@@ -577,34 +590,144 @@ const ManageAsset = () => {
                   whileTap={{ scale: 0.9 }}
                   type="button"
                   onClick={handleCloseModal}
-                  className=" p-2 bg-white text-[red] border border-red-200 hover:border-red-400 text-2xl rounded-md">
+                  className="p-2 bg-white text-[red] border border-red-200 hover:border-red-400 text-2xl rounded-md"
+                >
                   <IoMdClose />
                 </motion.button>
               </div>
+
+              {/* Edit Button */}
               <div className="flex justify-start mb-4 gap-4">
                 <Button
                   variant="contained"
                   onClick={handleEdit}
                   disabled={isEditing}
-                  sx={{ backgroundColor: "#0db4ea", color: "#fff" }}>
+                  sx={{ backgroundColor: "#0db4ea", color: "#fff" }}
+                >
                   Edit
                 </Button>
-                {isEditing && <div className="motion-preset-expand"></div>}
               </div>
+
+              {/* Form Fields */}
               <div className="grid grid-cols-2 gap-4">
-                {/* Render Form Fields */}
-                {Object.entries(formData).map(([key, value]) => (
-                  <TextField
-                    key={key}
-                    label={key.charAt(0).toUpperCase() + key.slice(1)} // Capitalize the label
-                    name={key}
-                    value={value}
-                    onChange={handleInputChange}
-                    fullWidth
+                <TextField
+                  label="Asset Number"
+                  name="assetNumber"
+                  value={formData.assetNumber || ""}
+                  onChange={handleInputChange}
+                  fullWidth
+                  disabled={!isEditing}
+                />
+                <TextField
+                  label="Asset Name"
+                  name="assetName"
+                  value={formData.assetName || ""}
+                  onChange={handleInputChange}
+                  fullWidth
+                  disabled={!isEditing}
+                />
+                <TextField
+                  label="Brand Name"
+                  name="brandName"
+                  value={formData.brandName || ""}
+                  onChange={handleInputChange}
+                  fullWidth
+                  disabled={!isEditing}
+                />
+                <TextField
+                  label="Quantity"
+                  name="quantity"
+                  value={formData.quantity || ""}
+                  onChange={handleInputChange}
+                  fullWidth
+                  disabled={!isEditing}
+                />
+                <TextField
+                  label="Price"
+                  name="price"
+                  value={formData.price || ""}
+                  onChange={handleInputChange}
+                  fullWidth
+                  disabled={!isEditing}
+                />
+                <TextField
+                  label="Total Price"
+                  name="totalPrice"
+                  value={formData.totalPrice || ""}
+                  onChange={handleInputChange}
+                  fullWidth
+                  disabled={!isEditing}
+                />
+                <TextField
+                  label="Vendor Name"
+                  name="vendorName"
+                  value={formData.vendorName || ""}
+                  onChange={handleInputChange}
+                  fullWidth
+                  disabled={!isEditing}
+                />
+                <TextField
+                  label="Location"
+                  name="location"
+                  value={formData.location || ""}
+                  onChange={handleInputChange}
+                  fullWidth
+                  disabled={!isEditing}
+                />
+                <TextField
+                  label="Department"
+                  name="department"
+                  value={formData.department || ""}
+                  onChange={handleInputChange}
+                  disabled={!isEditing}
+                  select
+                >
+                  <MenuItem value="">
+                    <em>Select Department</em> {/* Placeholder */}
+                  </MenuItem>
+                  <MenuItem value="IT">IT</MenuItem>
+                  <MenuItem value="TopManagement">Top Management</MenuItem>
+                  <MenuItem value="Maintenance">Maintenance</MenuItem>
+                </TextField>
+
+                <TextField
+                  label="Status"
+                  name="status"
+                  value={formData.status || ""}
+                  onChange={handleInputChange}
+                  disabled
+                >
+                  <MenuItem value="Active">Active</MenuItem>
+                </TextField>
+                <TextField
+                  label="Category"
+                  name="category"
+                  value={formData.category || ""}
+                  onChange={handleInputChange}
+                  fullWidth
+                  disabled={!isEditing}
+                />
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <DatePicker
+                    label="Purchase Date"
                     disabled={!isEditing}
+                    renderInput={(params) => (
+                      <TextField  sx={{display:'flex',height:'100%'}} {...params} className="w-full md:w-1/4" />
+                    )}
                   />
-                ))}
+                </LocalizationProvider>
+                <TextField
+                  label="Warranty (Months)"
+                  name="warranty"
+                  value={formData.warranty || ""}
+                  onChange={handleInputChange}
+                  fullWidth
+                  disabled={!isEditing}
+                  sx={{height:'100%'}}
+                />
               </div>
+
+              {/* Save Button */}
               {isEditing && (
                 <Button
                   variant="contained"
@@ -613,13 +736,15 @@ const ManageAsset = () => {
                     backgroundColor: "#0db4ea",
                     color: "#fff",
                     width: "full",
-                  }}>
+                  }}
+                >
                   Save
                 </Button>
               )}
             </div>
           </>
         )}
+
         {openModal === "assign" && (
           <AssignAssetForm
             handleCloseModal={handleCloseModal}
