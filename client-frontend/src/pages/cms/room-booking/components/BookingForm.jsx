@@ -74,7 +74,7 @@ export default function BookingForm({
   };
 
   return (
-    <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="en-gb">
+    <LocalizationProvider dateAdapter={AdapterDayjs}>
       <div className="mx-auto p-6 bg-white w-[50vw]">
         <FormStepper steps={steps} handleClose={handleClose}>
           {(activeStep, handleNext) => {
