@@ -28,8 +28,8 @@ export default function Listing() {
 
   const [events, setEvents] = useState(roomBookings);
   const [newMeeting, setNewMeeting] = useState({
-    startTime: null,
-    endTime: null,
+    start: null, // Combined start datetime
+    end: null, // Combined end datetime
     internal: "BIZNest",
     room: "",
     participants: "",
@@ -42,17 +42,13 @@ export default function Listing() {
 
   const handleDateClick = (e) => {
     const now = new Date();
-
-    const formattedTime = format(now, "HH:mm");
-    const timePlus30 = format(addMinutes(now, 30), "HH:mm");
-
-    setCurrentDate(e.dateStr);
+    const startDateTime = new Date(e.dateStr + "T" + format(now, "HH:mm"));
+    const endDateTime = addMinutes(startDateTime, 30);
 
     setNewMeeting((prev) => ({
       ...prev,
-      startTime: formattedTime,
-      endTime: timePlus30,
-      date: e.dateStr,
+      start: startDateTime,
+      end: endDateTime,
     }));
 
     setOpenBookingModal(true);
@@ -77,10 +73,9 @@ export default function Listing() {
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-    // Update state for DateTimePicker
     setNewMeeting((prev) => ({
       ...prev,
-      [name]: value, // Directly store ISO strings from DateTimePicker
+      [name]: value, // Directly update start or end
     }));
   };
 
@@ -90,8 +85,8 @@ export default function Listing() {
     const newEvent = {
       id: uuid(),
       title: newMeeting.subject || "No Subject",
-      start: newMeeting.startTime, // Already in ISO format
-      end: newMeeting.endTime, // Already in ISO format
+      start: newMeeting.start.toISOString(), // Ensure ISO format
+      end: newMeeting.end.toISOString(),
       extendedProps: {
         room: newMeeting.room,
         participants: newMeeting.participants,
@@ -113,17 +108,17 @@ export default function Listing() {
           ? {
               ...event,
               title: updatedMeeting.subject,
-              start: event.start, // Preserve existing start time
-              end: event.end, // Preserve existing end time
+              start: updatedMeeting.start.toISOString(),
+              end: updatedMeeting.end.toISOString(),
               extendedProps: {
-                ...event.extendedProps, // Merge extendedProps
+                ...event.extendedProps,
                 ...updatedMeeting,
               },
             }
           : event
       )
     );
-    setOpenEventDetailsModal(false); // Close modal
+    setOpenEventDetailsModal(false);
   };
 
   // **Handle Extend Time Function**
@@ -213,6 +208,8 @@ export default function Listing() {
             .filter((event) => filters[event.status])
             .map((event) => ({
               ...event,
+              start: event.start, // ISO datetime string
+              end: event.end, // ISO datetime string
               backgroundColor:
                 event.status === "cancelled"
                   ? "#E71D36"

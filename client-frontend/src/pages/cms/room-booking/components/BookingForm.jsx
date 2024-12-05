@@ -74,7 +74,7 @@ export default function BookingForm({
   };
 
   return (
-    <LocalizationProvider dateAdapter={AdapterDayjs}>
+    <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="en-gb">
       <div className="mx-auto p-6 bg-white w-[50vw]">
         <FormStepper steps={steps} handleClose={handleClose}>
           {(activeStep, handleNext) => {
@@ -85,16 +85,12 @@ export default function BookingForm({
                     {/* Start DateTime */}
                     <DateTimePicker
                       label="Start Date & Time"
-                      value={
-                        newMeeting.startTime
-                          ? dayjs(newMeeting.startTime)
-                          : null
-                      }
+                      value={newMeeting.start ? dayjs(newMeeting.start) : null} // Adjusted to handle `newMeeting.start`
                       onChange={(newValue) =>
                         handleChange({
                           target: {
-                            name: "startTime",
-                            value: newValue.format("YYYY-MM-DDTHH:mm"),
+                            name: "start",
+                            value: newValue?.toISOString(), // Ensure ISO format for datetime
                           },
                         })
                       }
@@ -106,14 +102,12 @@ export default function BookingForm({
                     {/* End DateTime */}
                     <DateTimePicker
                       label="End Date & Time"
-                      value={
-                        newMeeting.endTime ? dayjs(newMeeting.endTime) : null
-                      }
+                      value={newMeeting.end ? dayjs(newMeeting.end) : null} // Adjusted to handle `newMeeting.end`
                       onChange={(newValue) =>
                         handleChange({
                           target: {
-                            name: "endTime",
-                            value: newValue.format("YYYY-MM-DDTHH:mm"),
+                            name: "end",
+                            value: newValue?.toISOString(), // Ensure ISO format for datetime
                           },
                         })
                       }
@@ -127,10 +121,11 @@ export default function BookingForm({
                       label="Name"
                       type="text"
                       name="name"
-                      value={loggedInUser.name}
+                      value={loggedInUser?.name || ""} // Prevents crashing if `loggedInUser` is null
                       onChange={handleChange}
                       placeholder="Enter your name"
                       fullWidth
+                      disabled // Disabling the name field if it reflects the logged-in user
                     />
 
                     <div className="col-span-full">
