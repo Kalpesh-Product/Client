@@ -24,6 +24,7 @@ import {
   TimePicker,
   LocalizationProvider,
 } from "@mui/x-date-pickers";
+import "dayjs/locale/en-gb";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
 
@@ -115,7 +116,7 @@ export default function BookingDetails({
   };
 
   return (
-    <LocalizationProvider dateAdapter={AdapterDayjs}>
+    <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="en-gb">
       <Box width="50vw" height="70vh">
         <div className="flex flex-col justify-center items-center sticky top-0 bg-white z-100">
           <div className="flex justify-between items-center w-full bg-white">
@@ -183,6 +184,7 @@ export default function BookingDetails({
             <div className="w-full py-2 h-[47vh] overflow-y-scroll">
               {/* Render details using TextField */}
               <div className="grid grid-cols-2 gap-3 mb-[0.75rem]">
+                {/* Subject */}
                 <TextField
                   label="Subject"
                   value={selectedEvent.title || "No Subject"}
@@ -190,13 +192,30 @@ export default function BookingDetails({
                   fullWidth
                   variant="outlined"
                 />
+
+                {/* Start Date */}
                 <TextField
-                  label="Date"
-                  value={selectedEvent.start.toISOString().substring(0, 10)}
+                  label="Start Date"
+                  value={new Date(selectedEvent.start)
+                    .toLocaleDateString("en-gb")
+                    .substring(0, 10)}
                   disabled
                   fullWidth
                   variant="outlined"
                 />
+
+                {/* End Date */}
+                <TextField
+                  label="End Date"
+                  value={new Date(selectedEvent.end)
+                    .toLocaleDateString("en-gb")
+                    .substring(0, 10)}
+                  disabled
+                  fullWidth
+                  variant="outlined"
+                />
+
+                {/* Start Time */}
                 <TextField
                   label="Start Time"
                   value={format(new Date(selectedEvent.start), "hh:mm a")}
@@ -204,6 +223,8 @@ export default function BookingDetails({
                   fullWidth
                   variant="outlined"
                 />
+
+                {/* End Time */}
                 <TextField
                   label="End Time"
                   value={format(new Date(selectedEvent.end), "hh:mm a")}
@@ -211,6 +232,8 @@ export default function BookingDetails({
                   fullWidth
                   variant="outlined"
                 />
+
+                {/* Room */}
                 <TextField
                   label="Room"
                   value={selectedEvent.extendedProps.room || "Not Assigned"}
@@ -218,14 +241,18 @@ export default function BookingDetails({
                   fullWidth
                   variant="outlined"
                 />
-                <TextField
-                  label="Participants"
-                  value={selectedEvent.extendedProps.participants || "N/A"}
-                  disabled
-                  fullWidth
-                  variant="outlined"
-                />
               </div>
+              {/* Participants */}
+              <TextField
+                label="Participants"
+                value={selectedEvent.extendedProps.participants || "N/A"}
+                disabled
+                fullWidth
+                variant="outlined"
+                sx={{marginBottom:"0.75rem"}}
+              />
+
+              {/* Agenda */}
               <TextField
                 label="Agenda"
                 value={selectedEvent.extendedProps.agenda || "N/A"}
@@ -355,6 +382,7 @@ export default function BookingDetails({
             {activeSteps.extend === 0 && (
               <form onSubmit={(e) => e.preventDefault()} className="space-y-4">
                 <TimePicker
+                ampm
                   sx={{ width: "100%" }}
                   label="End Time"
                   value={dayjs(`${extendedTime.date}T${extendedTime.endTime}`)}
@@ -369,6 +397,12 @@ export default function BookingDetails({
                 <Box display="flex" justifyContent="space-between" mt={2}>
                   <Button
                     variant="outlined"
+                    onClick={() => handleDurationExtension(15)}
+                  >
+                    Extend 15 mins
+                  </Button>
+                  <Button
+                    variant="outlined"
                     onClick={() => handleDurationExtension(30)}
                   >
                     Extend 30 mins
@@ -378,12 +412,6 @@ export default function BookingDetails({
                     onClick={() => handleDurationExtension(60)}
                   >
                     Extend 1 hour
-                  </Button>
-                  <Button
-                    variant="outlined"
-                    onClick={() => handleDurationExtension(120)}
-                  >
-                    Extend 2 hours
                   </Button>
                 </Box>
                 <Button

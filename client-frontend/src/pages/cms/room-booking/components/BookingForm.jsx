@@ -10,6 +10,7 @@ import {
   MenuItem,
   FormControl,
 } from "@mui/material";
+import "dayjs/locale/en-gb";
 import Select from "react-select";
 import {
   DatePicker,
@@ -79,7 +80,7 @@ export default function BookingForm({
   };
 
   return (
-    <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale={"en-gb"}>
+    <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="en-gb">
       <div className="mx-auto p-6 bg-white w-[50vw]">
         <FormStepper steps={steps} handleClose={handleClose}>
           {(activeStep, handleNext) => {
@@ -87,8 +88,43 @@ export default function BookingForm({
               case 0:
                 return (
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {/* Start Date */}
+                    <DatePicker
+                      label="Start Date"
+                      value={dayjs(newMeeting.startDate) || dayjs(currentDate)}
+                      onChange={(newValue) =>
+                        handleChange({
+                          target: {
+                            name: "startDate",
+                            value: newValue,
+                          },
+                        })
+                      }
+                      renderInput={(params) => (
+                        <TextField {...params} fullWidth />
+                      )}
+                    />
+
+                    {/* End Date */}
+                    <DatePicker
+                      label="End Date"
+                      value={dayjs(newMeeting.endDate) || dayjs(currentDate)}
+                      onChange={(newValue) =>
+                        handleChange({
+                          target: {
+                            name: "endDate",
+                            value: newValue,
+                          },
+                        })
+                      }
+                      renderInput={(params) => (
+                        <TextField {...params} fullWidth />
+                      )}
+                    />
+
                     {/* Start Time */}
                     <TimePicker
+                      ampm
                       label="Start Time"
                       value={dayjs(newMeeting.startTime, "HH:mm") || null}
                       onChange={(newValue) =>
@@ -106,6 +142,7 @@ export default function BookingForm({
 
                     {/* End Time */}
                     <TimePicker
+                      ampm
                       label="End Time"
                       value={dayjs(newMeeting.endTime, "HH:mm") || null}
                       onChange={(newValue) =>
@@ -121,33 +158,17 @@ export default function BookingForm({
                       )}
                     />
 
-                    {/* Date */}
-                    <DatePicker
-                      label="Date"
-                      value={dayjs(newMeeting.date) || dayjs(currentDate)}
-                      onChange={(newValue) =>
-                        handleChange({
-                          target: {
-                            name: "date",
-                            value: newValue.format("YYYY-MM-DD"),
-                          },
-                        })
-                      }
-                      renderInput={(params) => (
-                        <TextField {...params} fullWidth />
-                      )}
-                    />
-
-                    {/* Name */}
-                    <TextField
-                      label="Name"
-                      type="text"
-                      name="name"
-                      value={loggedInUser.name}
-                      onChange={handleChange}
-                      placeholder="Enter your name"
-                      fullWidth
-                    />
+                    <div className="col-span-full">
+                      <TextField
+                        label="Name"
+                        type="text"
+                        name="name"
+                        value={loggedInUser.name}
+                        onChange={handleChange}
+                        placeholder="Enter your name"
+                        fullWidth
+                      />
+                    </div>
 
                     <div className="col-span-full">
                       <Button
@@ -161,6 +182,7 @@ export default function BookingForm({
                     </div>
                   </div>
                 );
+
               case 1:
                 return (
                   <div className="w-full">
@@ -171,7 +193,7 @@ export default function BookingForm({
                         value={selectedSeats}
                         onChange={handleSeatsChange}
                         displayEmpty
-                        sx={{marginBottom:"0.5rem"}}
+                        sx={{ marginBottom: "0.5rem" }}
                         inputProps={{ "aria-label": "Select Seat Count" }}
                       >
                         <MenuItem value="">
