@@ -10,8 +10,13 @@ import {
   MenuItem,
   FormControl,
 } from "@mui/material";
+import "dayjs/locale/en-gb";
 import Select from "react-select";
-import { DateTimePicker, LocalizationProvider } from "@mui/x-date-pickers";
+import {
+  DatePicker,
+  TimePicker,
+  LocalizationProvider,
+} from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
 import FormStepper from "../../../../components/FormStepper";
@@ -34,6 +39,7 @@ export default function BookingForm({
   newMeeting,
   handleChange,
   handleSubmit,
+  currentDate,
   loggedInUser,
   roomList,
   handleClose,
@@ -74,7 +80,7 @@ export default function BookingForm({
   };
 
   return (
-    <LocalizationProvider dateAdapter={AdapterDayjs}>
+    <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="en-gb">
       <div className="mx-auto p-6 bg-white w-[50vw]">
         <FormStepper steps={steps} handleClose={handleClose}>
           {(activeStep, handleNext) => {
@@ -82,15 +88,15 @@ export default function BookingForm({
               case 0:
                 return (
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {/* Start DateTime */}
-                    <DateTimePicker
-                      label="Start Date & Time"
-                      value={newMeeting.start ? dayjs(newMeeting.start) : null} // Adjusted to handle `newMeeting.start`
+                    {/* Start Date */}
+                    <DatePicker
+                      label="Start Date"
+                      value={dayjs(newMeeting.startDate) || dayjs(currentDate)}
                       onChange={(newValue) =>
                         handleChange({
                           target: {
-                            name: "start",
-                            value: newValue?.toISOString(), // Ensure ISO format for datetime
+                            name: "startDate",
+                            value: newValue,
                           },
                         })
                       }
@@ -99,15 +105,15 @@ export default function BookingForm({
                       )}
                     />
 
-                    {/* End DateTime */}
-                    <DateTimePicker
-                      label="End Date & Time"
-                      value={newMeeting.end ? dayjs(newMeeting.end) : null} // Adjusted to handle `newMeeting.end`
+                    {/* End Date */}
+                    <DatePicker
+                      label="End Date"
+                      value={dayjs(newMeeting.endDate) || dayjs(currentDate)}
                       onChange={(newValue) =>
                         handleChange({
                           target: {
-                            name: "end",
-                            value: newValue?.toISOString(), // Ensure ISO format for datetime
+                            name: "endDate",
+                            value: newValue,
                           },
                         })
                       }
@@ -116,17 +122,53 @@ export default function BookingForm({
                       )}
                     />
 
-                    {/* Name */}
-                    <TextField
-                      label="Name"
-                      type="text"
-                      name="name"
-                      value={loggedInUser?.name || ""} // Prevents crashing if `loggedInUser` is null
-                      onChange={handleChange}
-                      placeholder="Enter your name"
-                      fullWidth
-                      disabled // Disabling the name field if it reflects the logged-in user
+                    {/* Start Time */}
+                    <TimePicker
+                      ampm
+                      label="Start Time"
+                      value={dayjs(newMeeting.startTime, "HH:mm") || null}
+                      onChange={(newValue) =>
+                        handleChange({
+                          target: {
+                            name: "startTime",
+                            value: newValue.format("HH:mm"),
+                          },
+                        })
+                      }
+                      renderInput={(params) => (
+                        <TextField {...params} fullWidth />
+                      )}
                     />
+
+                    {/* End Time */}
+                    <TimePicker
+                      ampm
+                      label="End Time"
+                      value={dayjs(newMeeting.endTime, "HH:mm") || null}
+                      onChange={(newValue) =>
+                        handleChange({
+                          target: {
+                            name: "endTime",
+                            value: newValue.format("HH:mm"),
+                          },
+                        })
+                      }
+                      renderInput={(params) => (
+                        <TextField {...params} fullWidth />
+                      )}
+                    />
+
+                    <div className="col-span-full">
+                      <TextField
+                        label="Name"
+                        type="text"
+                        name="name"
+                        value={loggedInUser.name}
+                        onChange={handleChange}
+                        placeholder="Enter your name"
+                        fullWidth
+                      />
+                    </div>
 
                     <div className="col-span-full">
                       <Button
@@ -140,6 +182,7 @@ export default function BookingForm({
                     </div>
                   </div>
                 );
+
               case 1:
                 return (
                   <div className="w-full">

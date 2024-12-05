@@ -28,8 +28,10 @@ export default function Listing() {
 
   const [events, setEvents] = useState(roomBookings);
   const [newMeeting, setNewMeeting] = useState({
-    start: null, // Combined start datetime
-    end: null, // Combined end datetime
+    startDate: null,
+    endDate: null,
+    startTime: null,
+    endTime: null,
     internal: "BIZNest",
     room: "",
     participants: "",
@@ -42,13 +44,17 @@ export default function Listing() {
 
   const handleDateClick = (e) => {
     const now = new Date();
-    const startDateTime = new Date(e.dateStr + "T" + format(now, "HH:mm"));
-    const endDateTime = addMinutes(startDateTime, 30);
+    const formattedTime = format(now, "HH:mm");
+    const timePlus30 = format(addMinutes(now, 30), "HH:mm");
+
+    setCurrentDate(e.dateStr);
 
     setNewMeeting((prev) => ({
       ...prev,
-      start: startDateTime,
-      end: endDateTime,
+      startDate: e.dateStr,
+      endDate: e.dateStr, // Default to the same day initially
+      startTime: formattedTime,
+      endTime: timePlus30,
     }));
 
     setOpenBookingModal(true);
@@ -56,10 +62,12 @@ export default function Listing() {
 
   const handleEventClick = (clickInfo) => {
     setSelectedEvent(clickInfo.event);
+    console.log(clickInfo.event);
     setOpenEventDetailsModal(true);
   };
 
   const handleCancel = (eventId) => {
+    console.log(eventId);
     setEvents((prevEvents) =>
       prevEvents.map((event) =>
         event.id === eventId
@@ -72,28 +80,30 @@ export default function Listing() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-
     setNewMeeting((prev) => ({
       ...prev,
-      [name]: value, // Directly update start or end
+      [name]: value,
     }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    const localStart = `${newMeeting.startDate}T${newMeeting.startTime}`;
+    const localEnd = `${newMeeting.endDate}T${newMeeting.endTime}`;
+
     const newEvent = {
       id: uuid(),
       title: newMeeting.subject || "No Subject",
-      start: newMeeting.start.toISOString(), // Ensure ISO format
-      end: newMeeting.end.toISOString(),
+      start: localStart,
+      end: localEnd,
       extendedProps: {
         room: newMeeting.room,
         participants: newMeeting.participants,
         agenda: newMeeting.agenda,
       },
       backgroundColor: "#5E5F9C",
-      status: "active",
+      status: "active", // Default status
     };
 
     toast.success("Booking completed successfully");
@@ -108,17 +118,17 @@ export default function Listing() {
           ? {
               ...event,
               title: updatedMeeting.subject,
-              start: updatedMeeting.start.toISOString(),
-              end: updatedMeeting.end.toISOString(),
+              start: event.start, // Preserve existing start time
+              end: event.end, // Preserve existing end time
               extendedProps: {
-                ...event.extendedProps,
+                ...event.extendedProps, // Merge extendedProps
                 ...updatedMeeting,
               },
             }
           : event
       )
     );
-    setOpenEventDetailsModal(false);
+    setOpenEventDetailsModal(false); // Close modal
   };
 
   // **Handle Extend Time Function**
@@ -128,8 +138,8 @@ export default function Listing() {
         event.id === eventId
           ? {
               ...event,
-              start: `${extendedTime.date}T${extendedTime.startTime}`,
-              end: `${extendedTime.date}T${extendedTime.endTime}`,
+              start: `${extendedTime.startDate}T${extendedTime.startTime}`,
+              end: `${extendedTime.endDate}T${extendedTime.endTime}`,
             }
           : event
       )
@@ -208,15 +218,11 @@ export default function Listing() {
             .filter((event) => filters[event.status])
             .map((event) => ({
               ...event,
-              start: event.start, // ISO datetime string
-              end: event.end, // ISO datetime string
               backgroundColor:
                 event.status === "cancelled"
                   ? "#E71D36"
                   : event.backgroundColor,
             }))}
-          // Apply red color for cancelled events
-          timeZone="local"
         />
       </div>
 
