@@ -44,6 +44,7 @@ export default function AssignAssetForm({ handleCloseModal, selectedAsset }) {
     assetNumber: "",
     brandName: "",
     modelName: "",
+    assignType: "",
     location: "",
     sublocation: "",
     status: "",
@@ -51,6 +52,7 @@ export default function AssignAssetForm({ handleCloseModal, selectedAsset }) {
     assignmentTime: assignmentTime,
   });
   const [user, setUser] = useState("");
+  const [assignType, setAssignType] = useState("");
   const [selectedDepartment, setSelectedDepartment] = useState("");
   console.log(selectedDepartment);
   console.log(formData.department);
@@ -63,6 +65,8 @@ export default function AssignAssetForm({ handleCloseModal, selectedAsset }) {
     "ST-601A": ["Sub-7", "Sub-8", "Sub-9"],
     "ST-601B": ["Sub-10", "Sub-11", "Sub-12"],
   };
+
+  const assignTypeMenu = ["Open Desk", "Private Cabin", "Meeting Room"];
 
   const assetUpdate = () => {
     // Fetch the user from localStorage and update the assignedAsset field
@@ -79,6 +83,7 @@ export default function AssignAssetForm({ handleCloseModal, selectedAsset }) {
       department: formData.department,
       assigneeName: formData.name,
       assetNumber: formData.assetNumber,
+      assignType: formData.assignType,
       brandName: formData.brandName,
       modelName: formData.modelName,
       location: formData.location,
@@ -126,6 +131,11 @@ export default function AssignAssetForm({ handleCloseModal, selectedAsset }) {
   const handleAssetChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevState) => ({ ...prevState, [name]: value }));
+  };
+  const handleAssignType = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevState) => ({ ...prevState, [name]: value }));
+    setAssignType(e.target.value)
   };
 
   // User names
@@ -245,37 +255,58 @@ export default function AssignAssetForm({ handleCloseModal, selectedAsset }) {
                       sx={{ marginBottom: 3, marginTop: 1 }}
                     >
                       <Grid item xs={12} sm={6}>
-                        <FormControl fullWidth>
-                          <InputLabel>Department</InputLabel>
-                          <Select
-                            label="Department"
-                            name="department"
-                            value={formData.department} // Use formData.department as the value
-                            onChange={handleDepartmentChange} // Call the handler
-                          >
-                            {AssigneeDepartment}
-                          </Select>
-                        </FormControl>
-                      </Grid>
-
-                      <Grid item xs={12} sm={6}>
                         <TextField
-                          label="Assignee Name"
-                          name="name"
-                          value={formData.name || ""}
-                          onChange={handleAssigneeChange}
+                          label="Assign Type"
+                          name="assignType"
+                          value={formData.assignType || ""}
+                          onChange={handleAssignType}
                           fullWidth
                           select
                         >
-                          {AssigneeOptions}
+                          {assignTypeMenu.map((type, index) => (
+                            <MenuItem key={index} value={type}>
+                              {type}
+                            </MenuItem>
+                          ))}
                         </TextField>
                       </Grid>
-                      <Grid item xs={12} sm={12}>
+                      {assignType === "Open Desk" || assignType === "Private Cabin" ? (
+                        <>
+                          <Grid item xs={12} sm={6}>
+                            <FormControl fullWidth>
+                              <InputLabel>Department</InputLabel>
+                              <Select
+                                label="Department"
+                                name="department"
+                                value={formData.department} // Use formData.department as the value
+                                onChange={handleDepartmentChange} // Call the handler
+                              >
+                                {AssigneeDepartment}
+                              </Select>
+                            </FormControl>
+                          </Grid>
+
+                          <Grid item xs={12} sm={6}>
+                            <TextField
+                              label="Assignee Name"
+                              name="name"
+                              value={formData.name || ""}
+                              onChange={handleAssigneeChange}
+                              fullWidth
+                              select
+                            >
+                              {AssigneeOptions}
+                            </TextField>
+                          </Grid>
+                        </>
+                      ) : (
+                        <></>
+                      )}
+                      <Grid item xs={12} sm={6}>
                         {/* Sublocation */}
                         {formData.location &&
                           sublocationMap[formData.location] && (
                             <div className="flex flex-col border-b">
-                      
                               <TextField
                                 select
                                 label="Sub location"

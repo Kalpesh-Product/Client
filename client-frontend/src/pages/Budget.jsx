@@ -166,10 +166,18 @@ const Budget = () => {
                   <>
                     <TableHead>
                       <TableRow>
-                        <TableCell className="font-semibold bg-gray-100 text-blue-600">Category</TableCell>
-                        <TableCell className="font-semibold bg-gray-100 text-blue-600">Monthly Allocated</TableCell>
-                        <TableCell className="font-semibold bg-gray-100 text-blue-600">Spent</TableCell>
-                        <TableCell className="font-semibold bg-gray-100 text-blue-600">Remaining</TableCell>
+                        <TableCell className="font-semibold bg-gray-100 text-blue-600">
+                          Category
+                        </TableCell>
+                        <TableCell className="font-semibold bg-gray-100 text-blue-600">
+                          Monthly Allocated
+                        </TableCell>
+                        <TableCell className="font-semibold bg-gray-100 text-blue-600">
+                          Spent
+                        </TableCell>
+                        <TableCell className="font-semibold bg-gray-100 text-blue-600">
+                          Remaining
+                        </TableCell>
                       </TableRow>
                     </TableHead>
                     <TableBody>
