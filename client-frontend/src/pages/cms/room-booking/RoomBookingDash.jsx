@@ -1,31 +1,11 @@
-import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import AgTable from "../../../components/AgTable";
-import { NewModal } from "../../../components/NewModal";
-import BookingForm from "./components/BookingForm";
 import { rooms } from "../../../utils/Rooms";
-import { format, addMinutes } from "date-fns";
-import { toast } from "sonner";
-import { motion } from "framer-motion";
-import { IoMdClose } from "react-icons/io";
 import RoomAvailabilityPieChart from "./components/RoomCharts";
 import AvailableRooms from "./components/AviliableRooms";
 
 export default function RoomBookingDash() {
-  const [openBookingModal, setOpenBookingModal] = useState(false);
-  const [newMeeting, setNewMeeting] = useState({
-    startTime: "",
-    endTime: "",
-    internal: "BIZNest",
-    room: "",
-    participants: "",
-    subject: "",
-    agenda: "",
-    backgroundColor: "",
-  });
-  const [currentDate, setCurrentDate] = useState("");
-  const [loggedInUser, setLoggedInUser] = useState(null);
-  const [roomList, setRoomList] = useState(rooms);
+
   const navigate = useNavigate();
 
   const upcomingBookings = 5;
@@ -84,40 +64,6 @@ export default function RoomBookingDash() {
     },
   ];
 
-  const handleFormSubmit = (e) => {
-    e.preventDefault();
-
-    toast.success("Booking completed successfully");
-    setOpenBookingModal(false);
-    navigate("/customer/meetings/booking"); // Redirect after form submission
-  };
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setNewMeeting((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-
-  useEffect(() => {
-    // Prefill the start time, end time, and current date
-    const now = new Date();
-    const startTime = format(now, "HH:mm"); // Current local time
-    const endTime = format(addMinutes(now, 30), "HH:mm"); // 30 minutes from now
-    const currentDate = format(now, "yyyy-MM-dd"); // Current date in yyyy-MM-dd format
-
-    setNewMeeting((prev) => ({
-      ...prev,
-      startTime,
-      endTime,
-    }));
-    setCurrentDate(currentDate);
-
-    // Get authenticated user from local storage
-    const authenticatedUser = localStorage.getItem("user");
-    setLoggedInUser(JSON.parse(authenticatedUser));
-  }, []);
 
   return (
     <div className="p-4 bg-gray-100 w-[80vw] md:w-full mt-4">
@@ -126,7 +72,7 @@ export default function RoomBookingDash() {
       <div className="w-full flex justify-between items-center mb-6">
         <h1 className="text-2xl font-semibold">Room Booking Management</h1>
         <button
-          onClick={() => setOpenBookingModal(true)} // Open the modal
+          onClick={() => navigate("/customer/meetings/booking")} // Open the modal
           className="px-6 py-2 rounded-lg text-white wono-blue-dark hover:bg-[#3cbce7] transition-shadow shadow-md hover:shadow-lg active:shadow-inner"
         >
           Book a Room
@@ -166,24 +112,6 @@ export default function RoomBookingDash() {
       <h1 className="text-2xl font-semibold my-3">Available rooms</h1>
 
       <AvailableRooms rooms={rooms} />
-
-      {/* Booking Modal */}
-      {openBookingModal && (
-        <NewModal
-          open={openBookingModal}
-          onClose={() => setOpenBookingModal(false)}
-        >
-          <BookingForm
-            newMeeting={newMeeting}
-            handleChange={handleChange}
-            handleSubmit={handleFormSubmit}
-            currentDate={currentDate}
-            loggedInUser={loggedInUser}
-            roomList={roomList}
-            handleClose={() => setOpenBookingModal(false)}
-          />
-        </NewModal>
-      )}
     </div>
   );
 }
