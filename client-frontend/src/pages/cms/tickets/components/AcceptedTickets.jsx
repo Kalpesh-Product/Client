@@ -46,6 +46,14 @@ const AcceptedTickets = () => {
       type: "singleSelect",
       valueOptions: ["IT", "HR", "Tech", "Admin"],
     },
+    {
+      field: "assignee", // New column field
+      headerName: "Assignee", // Column name
+      width: 200,
+      cellRenderer: () => (
+        <span className="text-gray-800">Faizan Shaikh</span> // Display fixed value
+      ),
+    },
     { field: "requestDate", headerName: "Request Date", width: 190 },
 
     // {
@@ -536,26 +544,24 @@ const AcceptedTickets = () => {
                           fullWidth
                         />
                       </div> */}
-                      {/* <div className="grid grid-cols-1 gap-4">
+                      <div className="grid grid-cols-1 gap-4">
                         <FormControl fullWidth>
-                          <InputLabel id="department-select-label">
-                            Escalate To
+                          <InputLabel id="issue-select-label">
+                            Type Of Issue
                           </InputLabel>
                           <Select
-                            labelId="department-select-label"
-                            id="department-select"
+                            labelId="issue-select-label"
+                            id="issue-select"
                             // value={department}
                             // value="IT" // Hardcoded value for department
                             label="Escalate To"
                             // onChange={handleChange}
                           >
-                            <MenuItem value="IT">IT</MenuItem>
-                            <MenuItem value="HR">HR</MenuItem>
-                            <MenuItem value="Tech">Tech</MenuItem>
-                            <MenuItem value="Admin">Admin</MenuItem>
+                            <MenuItem value="Internal">Internal</MenuItem>
+                            <MenuItem value="External">External</MenuItem>
                           </Select>
                         </FormControl>
-                      </div> */}
+                      </div>
                     </div>
 
                     {/* Role & Department fields */}
@@ -691,6 +697,25 @@ const AcceptedTickets = () => {
                           // }
                           fullWidth
                         />
+                      </div>
+
+                      <div className="grid grid-cols-1 gap-4">
+                        <FormControl fullWidth>
+                          <InputLabel id="issue-select-label">
+                            Type Of Issue
+                          </InputLabel>
+                          <Select
+                            labelId="issue-select-label"
+                            id="issue-select"
+                            // value={department}
+                            // value="IT" // Hardcoded value for department
+                            label="Escalate To"
+                            // onChange={handleChange}
+                          >
+                            <MenuItem value="Internal">Internal</MenuItem>
+                            <MenuItem value="External">External</MenuItem>
+                          </Select>
+                        </FormControl>
                       </div>
                       <div className="grid grid-cols-1 gap-4">
                         <FormControl fullWidth>

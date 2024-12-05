@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import ModuleSidebar from "../../components/ModuleSidebar";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation, useParams, useNavigate } from "react-router-dom";
 import TestSide from "../../components/Sidetest";
 import {
   ActiveTickets,
@@ -88,6 +88,8 @@ import MyTickets from "../cms/tickets/components/MyTickets";
 import Budget from "../Budget";
 
 const DepartmentDash = () => {
+  const navigate = useNavigate();
+
   const [user, setUser] = useState("");
   useEffect(() => {
     const storedUser = JSON.parse(localStorage.getItem("user"));
@@ -419,8 +421,7 @@ const DepartmentDash = () => {
                     "& .MuiTabs-indicator": {
                       backgroundColor: "#0db4ea", // Custom indicator color
                     },
-                  }}
-                >
+                  }}>
                   <Tab label="Home" />
                   <Tab label="About" />
                   <Tab label="Gallery" />
@@ -481,8 +482,7 @@ const DepartmentDash = () => {
                   {products.map((product) => (
                     <div
                       key={product.id}
-                      className="bg-gray-100 rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow"
-                    >
+                      className="bg-gray-100 rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
                       <img
                         src={product.image}
                         alt={product.name}
@@ -734,9 +734,16 @@ const DepartmentDash = () => {
                   {/* <AssetAllocationWidget /> */}
 
                   <div className=" ">
-                    <div className=" w-full p-4 pb-4 pl-0 text-lg border-b-0">
+                    <div className="flex w-full p-4 pb-4 pl-0 text-lg border-b-0  gap-4">
                       {/* <h2 className="text-2xl font-bold">My Tickets</h2> */}
-                      <h2 className="text-2xl  font-bold">My Tickets</h2>
+                      <h2 className="text-2xl  font-bold ">Today's Tickets</h2>
+                      <button
+                        className="py-1 px-2 text-sm wono-blue-dark text-white rounded-md "
+                        onClick={() =>
+                          navigate("/customer/tickets/my-tickets")
+                        }>
+                        View All
+                      </button>
                     </div>
                     {/* <p>Today's tickets Table Component</p> */}
                     {/* <TodaysTickets /> */}
@@ -824,8 +831,7 @@ const DepartmentDash = () => {
           open={openTicket}
           onClose={handleCloseTicket}
           aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
-        >
+          aria-describedby="modal-modal-description">
           {/* <Box sx={style}> */}
           <Box sx={style}>
             <AddTicketForm />

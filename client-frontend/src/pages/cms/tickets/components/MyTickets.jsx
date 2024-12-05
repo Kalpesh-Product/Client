@@ -725,7 +725,25 @@ const MyTickets = () => {
                 <br />
                 <p>
                   <span className="font-bold">Ticket Status : </span>
-                  <span>Pending</span>
+                  <span>Closed</span>
+                  <br />
+                  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                  <span className="text-gray-500">
+                    2024-12-05 - 13:15 - In process
+                  </span>{" "}
+                  <br />
+                  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                  <span className="text-gray-500">
+                    2024-12-07 - 13:15 - Escalated
+                  </span>{" "}
+                  <br />
+                  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                  <span className="text-gray-500">
+                    2024-12-09 - 13:15 - Closed
+                  </span>
                 </p>
                 <br />
                 <p>

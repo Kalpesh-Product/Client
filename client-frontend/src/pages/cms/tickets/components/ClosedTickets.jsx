@@ -43,6 +43,22 @@ const ClosedTickets = () => {
       type: "singleSelect",
       valueOptions: ["IT", "HR", "Tech", "Admin"],
     },
+    {
+      field: "assignee", // New column field
+      headerName: "Assignee", // Column name
+      width: 200,
+      cellRenderer: () => (
+        <span className="text-gray-800">Faizan Shaikh</span> // Display fixed value
+      ),
+    },
+    {
+      field: "escalatedTo", // New column field
+      headerName: "Escalated To", // Column name
+      width: 200,
+      cellRenderer: () => (
+        <span className="text-gray-800">Machindranath Parkar</span> // Display fixed value
+      ),
+    },
     { field: "requestDate", headerName: "Request Date", width: 220 },
 
     // {

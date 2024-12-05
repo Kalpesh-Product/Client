@@ -44,6 +44,14 @@ const UnresolvedTickets = () => {
       valueOptions: ["IT", "HR", "Tech", "Admin"],
     },
     {
+      field: "assignee", // New column field
+      headerName: "Assignee", // Column name
+      width: 200,
+      cellRenderer: () => (
+        <span className="text-gray-800">Faizan Shaikh</span> // Display fixed value
+      ),
+    },
+    {
       field: "escalatedTo",
       headerName: "Escalated To",
       width: 200,
