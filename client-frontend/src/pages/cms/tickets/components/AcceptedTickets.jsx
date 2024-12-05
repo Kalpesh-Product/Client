@@ -11,6 +11,8 @@ import Button from "@mui/material/Button";
 import { toast } from "sonner";
 import TextField from "@mui/material/TextField";
 import AgTable from "../../../../components/AgTable";
+import { motion } from "framer-motion";
+import { IoMdClose } from "react-icons/io";
 
 const AcceptedTickets = () => {
   const columns = [
@@ -122,7 +124,7 @@ const AcceptedTickets = () => {
           size="small"
           // onClick={() => handleDelete(params.row)}
           // onClick={handleAccept}
-          onClick={openDeleteTicket}
+          onClick={openCloseTicket}
           variant="contained"
           sx={{
             backgroundColor: "green",
@@ -349,13 +351,27 @@ const AcceptedTickets = () => {
   const closeDeleteTicket = () => setIsDeleteTicketOpen(false);
 
   const handleDeleteTicket = () => {
-    toast.success("Ticket Escalated");
+    toast.error("Ticket Escalated");
     closeDeleteTicket(); // Optionally close the modal after the alert
   };
-  const handleNotResolved = () => {
-    toast.error("Ticket Not Resolved");
-    closeDeleteTicket(); // Optionally close the modal after the alert
+
+  // EDIT TICKET DETAILS MODAL END
+
+  // EDIT TICKET DETAILS MODAL START
+  // State to manage modal visibility
+  const [isCloseTicketOpen, setIsCloseTicketOpen] = useState(false);
+
+  // Function to open the modal
+  const openCloseTicket = () => setIsCloseTicketOpen(true);
+
+  // Function to close the modal
+  const closeCloseTicket = () => setIsCloseTicketOpen(false);
+
+  const handleCloseTicket = () => {
+    toast.success("Ticket Closed");
+    closeCloseTicket(); // Optionally close the modal after the alert
   };
+
   // EDIT TICKET DETAILS MODAL END
 
   return (
@@ -427,6 +443,162 @@ const AcceptedTickets = () => {
 
       {/* EDIT TICKET MODAL END */}
 
+      {/* CLOSE TICKET MODAL START */}
+      {isCloseTicketOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="absolute inset-0" onClick={closeCloseTicket}></div>
+
+          <div className="bg-white w-11/12 max-w-[90%] lg:max-w-[40%] pl-8 pr-8  rounded-lg shadow-lg z-10 relative overflow-y-auto max-h-[80vh]">
+            {/* DeleteTicket Content */}
+
+            {/* DeleteTicket Header */}
+            <div className="sticky top-0 bg-white py-6 z-20 flex justify-between">
+              <div>
+                <h2 className="text-3xl font-bold mb-4 uppercase">
+                  Action Taken
+                </h2>
+              </div>
+              <div>
+                {/* Close button */}
+                {/* <button
+                  className="bg-blue-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-600"
+                  onClick={closeDeleteTicket}>
+                  X
+                </button> */}
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.9 }}
+                  type="button"
+                  onClick={closeCloseTicket}
+                  className=" p-2 bg-white text-[red] border border-red-200 hover:border-red-400 text-2xl rounded-md mr-1">
+                  <IoMdClose />
+                </motion.button>
+              </div>
+            </div>
+
+            {/* DeleteTicket Body START */}
+            <div className=" w-full">
+              {/* <div>AddT icket Form</div> */}
+              <div className="">
+                <div className=" mx-auto">
+                  <Box
+                    sx={{
+                      maxWidth: 600,
+                      padding: 3,
+                      bgcolor: "background.paper",
+                      borderRadius: 2,
+                    }}
+                    // className="bg-white p-6 rounded-lg shadow-md mx-auto">
+                    className="bg-white p-6 rounded-lg mx-auto">
+                    {/* Personal Information */}
+                    {/* <h2 className="text-lg font-semibold mb-4">Add Ticket</h2> */}
+                    <div className="grid grid-cols-1 gap-4">
+                      {/* Name, Mobile, Email, DOB fields */}
+                      {/* <div className="grid grid-cols-1 gap-4">
+                        <FormControl fullWidth>
+                          <InputLabel id="department-select-label">
+                            Issue?
+                          </InputLabel>
+                          <Select
+                            labelId="department-select-label"
+                            id="department-select"
+                            // value={department}
+                            // value="IT" // Hardcoded value for department
+                            label="Department"
+                            // onChange={handleChange}
+                          >
+                            <MenuItem value="IT">IT</MenuItem>
+                            <MenuItem value="HR">HR</MenuItem>
+                            <MenuItem value="Tech">Tech</MenuItem>
+                            <MenuItem value="Admin">Admin</MenuItem>
+                          </Select>
+                        </FormControl>
+                      </div> */}
+                      <div className="grid grid-cols-1 gap-4">
+                        <TextField
+                          label="Action Taken"
+                          // value={newEvent.name}
+                          //   value="Wifi is not working" // Hardcoded value for ticket title
+                          // onChange={(e) =>
+                          //   setnewEvent({ ...newEvent, name: e.target.value })
+                          // }
+                          fullWidth
+                        />
+                      </div>
+                      {/* <div className="grid grid-cols-1 gap-4">
+                        <TextField
+                          label="Reason For Escalation"
+                          // value={newEvent.name}
+                          //   value="Wifi is not working" // Hardcoded value for ticket title
+                          // onChange={(e) =>
+                          //   setnewEvent({ ...newEvent, name: e.target.value })
+                          // }
+                          fullWidth
+                        />
+                      </div> */}
+                      {/* <div className="grid grid-cols-1 gap-4">
+                        <FormControl fullWidth>
+                          <InputLabel id="department-select-label">
+                            Escalate To
+                          </InputLabel>
+                          <Select
+                            labelId="department-select-label"
+                            id="department-select"
+                            // value={department}
+                            // value="IT" // Hardcoded value for department
+                            label="Escalate To"
+                            // onChange={handleChange}
+                          >
+                            <MenuItem value="IT">IT</MenuItem>
+                            <MenuItem value="HR">HR</MenuItem>
+                            <MenuItem value="Tech">Tech</MenuItem>
+                            <MenuItem value="Admin">Admin</MenuItem>
+                          </Select>
+                        </FormControl>
+                      </div> */}
+                    </div>
+
+                    {/* Role & Department fields */}
+                  </Box>
+                  {/* <h1 className="text-xl text-center my-2 font-bold">
+                    Is the ticket resolved?
+                  </h1> */}
+                </div>
+              </div>
+            </div>
+            {/* DeleteTicket Body END */}
+
+            {/* DeleteTicket Footer */}
+
+            <div className="sticky bottom-0 bg-white p-6 z-20 flex justify-center gap-5">
+              <div className="flex justify-center items-center w-full">
+                <button
+                  className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 w-full"
+                  onClick={handleCloseTicket}>
+                  {/* Yes (Close Ticket) */}
+                  Close
+                </button>
+              </div>
+              {/* <div className="flex justify-center items-center">
+                <button
+                  className="bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600"
+                  onClick={handleNotResolved}>
+                  No (Escalate)
+                </button>
+              </div> */}
+            </div>
+            {/* Close button */}
+            {/* <button
+              className="bg-blue-500 text-white py-2 px-4 my-4 rounded-lg hover:bg-blue-600"
+              onClick={closeDeleteTicket}>
+              No
+            </button> */}
+          </div>
+        </div>
+      )}
+
+      {/* CLOSE TICKET MODAL END */}
+
       {/* DELETE TICKET MODAL START */}
       {isDeleteTicketOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
@@ -444,11 +616,19 @@ const AcceptedTickets = () => {
               </div>
               <div>
                 {/* Close button */}
-                <button
+                {/* <button
                   className="bg-blue-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-600"
                   onClick={closeDeleteTicket}>
                   X
-                </button>
+                </button> */}
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.9 }}
+                  type="button"
+                  onClick={closeDeleteTicket}
+                  className=" p-2 bg-white text-[red] border border-red-200 hover:border-red-400 text-2xl rounded-md mr-1">
+                  <IoMdClose />
+                </motion.button>
               </div>
             </div>
 
@@ -558,10 +738,10 @@ const AcceptedTickets = () => {
 
             {/* DeleteTicket Footer */}
 
-            <div className="sticky bottom-0 bg-white py-6 z-20 flex justify-center gap-5">
-              <div className="flex justify-center items-center">
+            <div className="sticky bottom-0 bg-white p-6 z-20 flex justify-center gap-5">
+              <div className="flex justify-center items-center w-full">
                 <button
-                  className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600"
+                  className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 w-full"
                   onClick={handleDeleteTicket}>
                   {/* Yes (Close Ticket) */}
                   Save

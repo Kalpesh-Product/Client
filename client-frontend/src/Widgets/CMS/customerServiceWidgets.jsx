@@ -22,13 +22,13 @@ ChartJS.register(
   LinearScale
 );
 
-export const AssetsCount = ({ count, route }) => {
-  const navigate = useNavigate();
-  return (
-    <div
-      onClick={() => navigate(route)}
-      className="p-4 cursor-pointer hover:bg-slate-100 transition-all">
-      <h3 className="text-lg font-semibold">Total Assets</h3>
+export const AssetsCount = ({ count, route, title }) =>{
+    const navigate = useNavigate();
+
+
+  return(
+    <div onClick={()=>navigate(route)} className="p-4 cursor-pointer hover:bg-slate-100 transition-all">
+      <h3 className="text-lg font-semibold">{title}</h3>
       <p className="text-3xl font-bold">{count}</p>
     </div>
   );
@@ -36,15 +36,13 @@ export const AssetsCount = ({ count, route }) => {
 
 export const MaintenanceRequests = ({ requests, route }) => {
   const navigate = useNavigate();
-  return (
-    <div
-      onClick={() => navigate(route)}
-      className="p-4 cursor-pointer hover:bg-slate-100 transition-all h-full">
-      <h3 className="text-lg font-semibold">Pending Maintenance</h3>
-      <p className="text-2xl">{requests} Requests</p>
-    </div>
-  );
-};
+  return(
+  <div onClick={()=>navigate(route)} className="p-4 cursor-pointer hover:bg-slate-100 transition-all h-full">
+    <h3 className="text-lg font-semibold">Asset Tickets</h3>
+    <p className="text-2xl">{requests} Requests</p>
+  </div>
+);
+}
 
 export const AssetsAssigned = ({ assigned, route }) => {
   const navigate = useNavigate();

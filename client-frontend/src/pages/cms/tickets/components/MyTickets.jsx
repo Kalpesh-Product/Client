@@ -24,6 +24,8 @@ const MyTickets = () => {
   const [highlightFirstRow, setHighlightFirstRow] = React.useState(false);
   const [highlightEditedRow, setHighlightEditedRow] = React.useState(false);
 
+  const [ticketTitle, setTicketTitle] = useState(""); // State to track the selected option
+
   const columns = [
     { field: "id", headerName: "ID", width: 100 },
     { field: "ticketTitle", headerName: "Ticket Title", width: 200 },
@@ -543,6 +545,49 @@ const MyTickets = () => {
                                   </FormControl>
                                 </div>
                                 <div className="grid grid-cols-1 gap-4">
+                                  <FormControl fullWidth>
+                                    <InputLabel id="suggestion-select-label">
+                                      Ticket Title
+                                    </InputLabel>
+                                    <Select
+                                      labelId="suggestion-select-label"
+                                      id="suggestion-select"
+                                      // value={department}
+                                      // value="IT" // Hardcoded value for department
+                                      label="Ticket Title"
+                                      // onChange={handleChange}
+
+                                      onChange={(e) =>
+                                        setTicketTitle(e.target.value)
+                                      } // Update state on selection
+                                    >
+                                      <MenuItem value="Wifi is not working">
+                                        Wifi is not working
+                                      </MenuItem>
+                                      <MenuItem value="HR">
+                                        Wifi is slow
+                                      </MenuItem>
+                                      <MenuItem value="Tech">
+                                        Laptop screen malfunctioning
+                                      </MenuItem>
+                                      <MenuItem value="Other">Other</MenuItem>
+                                    </Select>
+                                  </FormControl>
+                                </div>
+                                {ticketTitle === "Other" && (
+                                  <div className="grid grid-cols-1 gap-4">
+                                    <TextField
+                                      label="Specify"
+                                      // value={newEvent.name}
+                                      // onChange={(e) =>
+                                      //   setnewEvent({ ...newEvent, name: e.target.value })
+                                      // }
+                                      fullWidth
+                                    />
+                                  </div>
+                                )}
+
+                                {/* <div className="grid grid-cols-1 gap-4">
                                   <TextField
                                     label="Ticket Title"
                                     // value={newEvent.name}
@@ -551,7 +596,7 @@ const MyTickets = () => {
                                     // }
                                     fullWidth
                                   />
-                                </div>
+                                </div> */}
                               </div>
 
                               {/* Role & Department fields */}
@@ -597,28 +642,30 @@ const MyTickets = () => {
               } else if (activeStep === 1) {
                 return (
                   <>
-                    <h1 className="text-2xl mb-4 font-semibold text-center">
-                      Are the provided details correct ?
-                    </h1>
-                    <div>
-                      <div className="flex justify-between py-2 border-b">
-                        <h1 className="font-semibold">Department</h1>
-                        <span>IT</span>
+                    <div className="p-6">
+                      <h1 className="text-2xl mb-4 py-3 font-semibold text-center">
+                        Are the provided details correct ?
+                      </h1>
+                      <div>
+                        <div className="flex justify-between py-2 border-b">
+                          <h1 className="font-semibold">Department</h1>
+                          <span>IT</span>
+                        </div>
                       </div>
-                    </div>
-                    <div>
-                      <div className="flex justify-between py-2 border-b">
-                        <h1 className="font-semibold">Ticket title</h1>
-                        <span>Wifi is not working</span>
+                      <div>
+                        <div className="flex justify-between py-2 border-b">
+                          <h1 className="font-semibold">Ticket title</h1>
+                          <span>Wifi is not working</span>
+                        </div>
                       </div>
-                    </div>
-                    <div>
-                      {/* <p>details</p> */}
+                      <div className="pt-8 pb-4">
+                        {/* <p>details</p> */}
 
-                      <WonoButton
-                        content={"Submit"}
-                        onClick={() => handleAddTicket(newTicket)}
-                      />
+                        <WonoButton
+                          content={"Submit"}
+                          onClick={() => handleAddTicket(newTicket)}
+                        />
+                      </div>
                     </div>
                   </>
                 );
@@ -799,9 +846,10 @@ const MyTickets = () => {
                           </Select>
                         </FormControl>
                       </div>
+
                       <div className="grid grid-cols-1 gap-4">
                         <TextField
-                          label="Ticket Title"
+                          label="Enter Ticket Title"
                           // value={newEvent.name}
                           value="Laptop screen malfunctioning" // Hardcoded value for ticket title
                           // onChange={(e) =>
@@ -871,11 +919,19 @@ const MyTickets = () => {
               </div>
               <div>
                 {/* Close button */}
-                <button
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.9 }}
+                  type="button"
+                  onClick={closeDeleteTicket}
+                  className=" p-2 bg-white text-[red] border border-red-200 hover:border-red-400 text-2xl rounded-md mr-1">
+                  <IoMdClose />
+                </motion.button>
+                {/* <button
                   className="bg-blue-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-600"
                   onClick={closeDeleteTicket}>
                   X
-                </button>
+                </button> */}
               </div>
             </div>
 
@@ -885,7 +941,7 @@ const MyTickets = () => {
               <div className="">
                 <div className=" mx-auto">
                   <h1 className="text-xl text-center my-2 font-bold">
-                    Reason for deleting the ticket?
+                    Are you sure you want to delete the ticket?
                   </h1>
                   <Box
                     sx={{
@@ -903,7 +959,7 @@ const MyTickets = () => {
 
                       <div className="grid grid-cols-1 gap-4">
                         <TextField
-                          label="Reason"
+                          label="Reason for deleting"
                           // value={newEvent.name}
                           // value="Wifi is not working" // Hardcoded value for ticket title
                           // onChange={(e) =>
@@ -935,23 +991,23 @@ const MyTickets = () => {
 
             {/* DeleteTicket Footer */}
 
-            <div className="sticky bottom-0 bg-white py-6 z-20 flex justify-center gap-5">
-              <div className="flex justify-center items-center">
+            <div className="sticky bottom-0 bg-white p-6 z-20 flex justify-center gap-5">
+              <div className="flex justify-center items-center w-full">
                 <button
                   // className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600"
-                  className="bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600"
+                  className="bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600 w-full"
                   onClick={handleDeleteTicket}>
                   Delete
                 </button>
               </div>
-              <div className="flex justify-center items-center">
+              {/* <div className="flex justify-center items-center">
                 <button
                   // className="bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600"
                   className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600"
                   onClick={closeDeleteTicket}>
                   Cancel
                 </button>
-              </div>
+              </div> */}
             </div>
             {/* Close button */}
             {/* <button

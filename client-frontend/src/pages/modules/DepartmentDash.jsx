@@ -320,13 +320,18 @@ const DepartmentDash = () => {
       subModule: "asset",
       widgets: [
         <AssetsCount
+          title={user.department === "TopManagement" ? "Total Assets" : (user.department === "IT" ? "IT Assets" : "Maintainence As")}
           route={"/customer/asset/manage"}
           count={customerServiceWidgetsData.totalAssets}
         />,
-        <MaintenanceRequests
-          route={"/customer/asset/manage"}
-          requests={customerServiceWidgetsData.pendingMaintenance}
-        />,
+        ...(user.department !== "TopManagement"
+          ? [
+              <MaintenanceRequests
+                route={"/customer/asset/manage"}
+                requests={customerServiceWidgetsData.pendingMaintenance}
+              />,
+            ]
+          : []), // Conditionally include MaintenanceRequests
         <AssetsAssigned
           route={"/customer/asset/manage"}
           assigned={customerServiceWidgetsData.assignedAssets}

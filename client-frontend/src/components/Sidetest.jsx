@@ -165,7 +165,6 @@ const TestSide = () => {
       "CMS",
       "MARKETING",
       "CAFE (F&B)",
-      "IT",
       "MAINTENANCE",
       "LEGAL",
     ],
@@ -176,7 +175,7 @@ const TestSide = () => {
     CMS: ["CMS"],
     Marketing: ["MARKETING"],
     Cafe: ["CAFE (F&B)"],
-    IT: ["IT", "CMS"],
+    IT: ["CMS"],
     Maintainance: ["CMS"],
     Legal: ["LEGAL"],
   };
