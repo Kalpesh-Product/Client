@@ -11,11 +11,7 @@ import {
   FormControl,
 } from "@mui/material";
 import Select from "react-select";
-import {
-  DatePicker,
-  TimePicker,
-  LocalizationProvider,
-} from "@mui/x-date-pickers";
+import { DateTimePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
 import FormStepper from "../../../../components/FormStepper";
@@ -38,7 +34,6 @@ export default function BookingForm({
   newMeeting,
   handleChange,
   handleSubmit,
-  currentDate,
   loggedInUser,
   roomList,
   handleClose,
@@ -87,15 +82,19 @@ export default function BookingForm({
               case 0:
                 return (
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {/* Start Time */}
-                    <TimePicker
-                      label="Start Time"
-                      value={dayjs(newMeeting.startTime, "HH:mm") || null}
+                    {/* Start DateTime */}
+                    <DateTimePicker
+                      label="Start Date & Time"
+                      value={
+                        newMeeting.startTime
+                          ? dayjs(newMeeting.startTime)
+                          : null
+                      }
                       onChange={(newValue) =>
                         handleChange({
                           target: {
                             name: "startTime",
-                            value: newValue.format("HH:mm"),
+                            value: newValue.format("YYYY-MM-DDTHH:mm"),
                           },
                         })
                       }
@@ -104,32 +103,17 @@ export default function BookingForm({
                       )}
                     />
 
-                    {/* End Time */}
-                    <TimePicker
-                      label="End Time"
-                      value={dayjs(newMeeting.endTime, "HH:mm") || null}
+                    {/* End DateTime */}
+                    <DateTimePicker
+                      label="End Date & Time"
+                      value={
+                        newMeeting.endTime ? dayjs(newMeeting.endTime) : null
+                      }
                       onChange={(newValue) =>
                         handleChange({
                           target: {
                             name: "endTime",
-                            value: newValue.format("HH:mm"),
-                          },
-                        })
-                      }
-                      renderInput={(params) => (
-                        <TextField {...params} fullWidth />
-                      )}
-                    />
-
-                    {/* Date */}
-                    <DatePicker
-                      label="Date"
-                      value={dayjs(newMeeting.date) || dayjs(currentDate)}
-                      onChange={(newValue) =>
-                        handleChange({
-                          target: {
-                            name: "date",
-                            value: newValue.format("YYYY-MM-DD"),
+                            value: newValue.format("YYYY-MM-DDTHH:mm"),
                           },
                         })
                       }
@@ -171,7 +155,7 @@ export default function BookingForm({
                         value={selectedSeats}
                         onChange={handleSeatsChange}
                         displayEmpty
-                        sx={{marginBottom:"0.5rem"}}
+                        sx={{ marginBottom: "0.5rem" }}
                         inputProps={{ "aria-label": "Select Seat Count" }}
                       >
                         <MenuItem value="">

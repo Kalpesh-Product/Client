@@ -369,6 +369,12 @@ export default function BookingDetails({
                 <Box display="flex" justifyContent="space-between" mt={2}>
                   <Button
                     variant="outlined"
+                    onClick={() => handleDurationExtension(15)}
+                  >
+                    Extend 15 mins
+                  </Button>
+                  <Button
+                    variant="outlined"
                     onClick={() => handleDurationExtension(30)}
                   >
                     Extend 30 mins
@@ -378,12 +384,6 @@ export default function BookingDetails({
                     onClick={() => handleDurationExtension(60)}
                   >
                     Extend 1 hour
-                  </Button>
-                  <Button
-                    variant="outlined"
-                    onClick={() => handleDurationExtension(120)}
-                  >
-                    Extend 2 hours
                   </Button>
                 </Box>
                 <Button
