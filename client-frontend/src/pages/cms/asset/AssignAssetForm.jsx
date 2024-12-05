@@ -9,6 +9,7 @@ import {
   Grid,
   Typography,
   Box,
+  Grid2,
 } from "@mui/material";
 import { motion } from "framer-motion";
 import { IoMdClose } from "react-icons/io";
@@ -41,10 +42,10 @@ export default function AssignAssetForm({ handleCloseModal, selectedAsset }) {
     department: "",
     name: "",
     assetNumber: "",
-    assetType: "",
-    assetName: "",
     brandName: "",
+    modelName: "",
     location: "",
+    sublocation: "",
     status: "",
     assignmentDate: new Date().toLocaleDateString(),
     assignmentTime: assignmentTime,
@@ -53,6 +54,15 @@ export default function AssignAssetForm({ handleCloseModal, selectedAsset }) {
   const [selectedDepartment, setSelectedDepartment] = useState("");
   console.log(selectedDepartment);
   console.log(formData.department);
+
+  const locations = ["ST-701A", "ST-701B", "ST-601A", "ST-601B"];
+
+  const sublocationMap = {
+    "ST-701A": ["Sub-1", "Sub-2", "Sub-3"],
+    "ST-701B": ["Sub-4", "Sub-5", "Sub-6"],
+    "ST-601A": ["Sub-7", "Sub-8", "Sub-9"],
+    "ST-601B": ["Sub-10", "Sub-11", "Sub-12"],
+  };
 
   const assetUpdate = () => {
     // Fetch the user from localStorage and update the assignedAsset field
@@ -69,8 +79,8 @@ export default function AssignAssetForm({ handleCloseModal, selectedAsset }) {
       department: formData.department,
       assigneeName: formData.name,
       assetNumber: formData.assetNumber,
-      assetType: formData.assetType,
-      assetName: formData.assetName,
+      brandName: formData.brandName,
+      modelName: formData.modelName,
       location: formData.location,
       status: formData.status,
       assignmentDate: formData.assignmentDate,
@@ -93,7 +103,7 @@ export default function AssignAssetForm({ handleCloseModal, selectedAsset }) {
         ...prevState,
         assetNumber: selectedAsset.assetNumber || "",
         assetType: selectedAsset.assetType || "",
-        assetName: selectedAsset.assetName || "",
+        modelName: selectedAsset.modelName || "",
         brandName: selectedAsset.brandName || "",
         location: selectedAsset.location || "",
         status: selectedAsset.status || "",
@@ -135,6 +145,13 @@ export default function AssignAssetForm({ handleCloseModal, selectedAsset }) {
     </MenuItem>
   ));
 
+  const handleSublocationChange = (e) => {
+    setFormData((prev) => ({
+      ...prev,
+      sublocation: e.target.value,
+    }));
+  };
+
   // If selectedAsset is undefined or null, don't render the form yet
   if (!selectedAsset) {
     return <Typography>Loading...</Typography>; // Show loading or nothing
@@ -171,22 +188,16 @@ export default function AssignAssetForm({ handleCloseModal, selectedAsset }) {
                     <span>{formData.assetNumber || "N/A"}</span>
                   </div>
 
-                  {/* Asset Type */}
-                  <div className="flex justify-between py-2 border-b">
-                    <h1 className="font-semibold">Asset Type</h1>
-                    <span>{formData.assetType || "N/A"}</span>
-                  </div>
-
-                  {/* Asset Name */}
-                  <div className="flex justify-between py-2 border-b">
-                    <h1 className="font-semibold">Asset Name</h1>
-                    <span>{formData.assetName || "N/A"}</span>
-                  </div>
-
                   {/* Brand Name */}
                   <div className="flex justify-between py-2 border-b">
                     <h1 className="font-semibold">Brand Name</h1>
                     <span>{formData.brandName || "N/A"}</span>
+                  </div>
+
+                  {/* Model Name */}
+                  <div className="flex justify-between py-2 border-b">
+                    <h1 className="font-semibold">Model Name</h1>
+                    <span>{formData.modelName || "N/A"}</span>
                   </div>
 
                   {/* Location */}
@@ -258,6 +269,36 @@ export default function AssignAssetForm({ handleCloseModal, selectedAsset }) {
                         >
                           {AssigneeOptions}
                         </TextField>
+                      </Grid>
+                      <Grid item xs={12} sm={12}>
+                        {/* Sublocation */}
+                        {formData.location &&
+                          sublocationMap[formData.location] && (
+                            <div className="flex flex-col border-b">
+                      
+                              <TextField
+                                select
+                                label="Sub location"
+                                value={formData.sublocation}
+                                onChange={handleSublocationChange}
+                                fullWidth
+                              >
+                                <MenuItem value="" disabled>
+                                  Select Sublocation
+                                </MenuItem>
+                                {sublocationMap[formData.location].map(
+                                  (sublocation) => (
+                                    <MenuItem
+                                      key={sublocation}
+                                      value={sublocation}
+                                    >
+                                      {sublocation}
+                                    </MenuItem>
+                                  )
+                                )}
+                              </TextField>
+                            </div>
+                          )}
                       </Grid>
                     </Grid>
 

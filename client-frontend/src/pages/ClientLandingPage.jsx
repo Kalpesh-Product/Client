@@ -778,6 +778,7 @@ const ClientLandingPage = () => {
     { id: 8, title: "Ticket", iconSrc: ticketsImage },
     { id: 9, title: "Meeting", iconSrc: meetingImage },
     { id: 10, title: "Customer Service", iconSrc: customerServiceImage },
+    { id: 11, title: "Asset", iconSrc: dashboardImage },
   ]);
 
   // useEffect(() => {
@@ -1436,6 +1437,9 @@ const SortableCard = ({ id, title, iconSrc, isDragEnabled }) => {
         break;
       case "Meeting":
         navigate("/customer/meetings");
+        break;
+      case "Asset":
+        navigate("/customer/kpi");
         break;
       case "Customer Service":
         navigate("/chat");

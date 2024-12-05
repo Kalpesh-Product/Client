@@ -85,6 +85,7 @@ import Mytasks from "../Mytasks";
 import MyBookings from "../cms/room-booking/MyBookings";
 import { TicketsRemainingWidget } from "../cms/tickets/components/TicketWidgets/TicketsRemainingWidget";
 import MyTickets from "../cms/tickets/components/MyTickets";
+import Budget from "../Budget";
 
 const DepartmentDash = () => {
   const [user, setUser] = useState("");
@@ -320,18 +321,24 @@ const DepartmentDash = () => {
       subModule: "asset",
       widgets: [
         <AssetsCount
-          title={user.department === "TopManagement" ? "Total Assets" : (user.department === "IT" ? "IT Assets" : "Maintainence As")}
+          title={
+            user.department === "TopManagement"
+              ? "Total Assets"
+              : user.department === "IT" || user.department === "Tech"
+              ? "IT Assets"
+              : "Maintainence Assets"
+          }
           route={"/customer/asset/manage"}
           count={customerServiceWidgetsData.totalAssets}
         />,
-        ...(user.department !== "TopManagement"
-          ? [
-              <MaintenanceRequests
-                route={"/customer/asset/manage"}
-                requests={customerServiceWidgetsData.pendingMaintenance}
-              />,
-            ]
-          : []), // Conditionally include MaintenanceRequests
+        // ...(user.department !== "TopManagement"
+        //   ? [
+        //       <MaintenanceRequests
+        //         route={"/customer/asset/manage"}
+        //         requests={customerServiceWidgetsData.pendingMaintenance}
+        //       />,
+        //     ]
+        //   : []), // Conditionally include MaintenanceRequests
         <AssetsAssigned
           route={"/customer/asset/manage"}
           assigned={customerServiceWidgetsData.assignedAssets}
@@ -412,7 +419,8 @@ const DepartmentDash = () => {
                     "& .MuiTabs-indicator": {
                       backgroundColor: "#0db4ea", // Custom indicator color
                     },
-                  }}>
+                  }}
+                >
                   <Tab label="Home" />
                   <Tab label="About" />
                   <Tab label="Gallery" />
@@ -473,7 +481,8 @@ const DepartmentDash = () => {
                   {products.map((product) => (
                     <div
                       key={product.id}
-                      className="bg-gray-100 rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+                      className="bg-gray-100 rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow"
+                    >
                       <img
                         src={product.image}
                         alt={product.name}
@@ -490,6 +499,12 @@ const DepartmentDash = () => {
                       </div>
                     </div>
                   ))}
+                </div>
+              </div>
+            ) : location.pathname === "/frontend/budget" ? (
+              <div>
+                <div>
+                  <Budget />
                 </div>
               </div>
             ) : (
@@ -803,7 +818,8 @@ const DepartmentDash = () => {
           open={openTicket}
           onClose={handleCloseTicket}
           aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description">
+          aria-describedby="modal-modal-description"
+        >
           {/* <Box sx={style}> */}
           <Box sx={style}>
             <AddTicketForm />

@@ -169,7 +169,7 @@ const ManageAsset = () => {
     // { field: "vendorName", headerName: "Vendor", flex: 200 },
     { field: "purchaseDate", headerName: "Purchase Date", flex: 1 },
     { field: "warranty", headerName: "Warranty (Months)", flex: 1 },
-    // { field: "location", headerName: "Location", flex: 150 },
+    { field: "location", headerName: "Location", flex: 1 },
     {
       field: "actions",
       filter: false,

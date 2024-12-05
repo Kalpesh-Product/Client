@@ -20,7 +20,7 @@ import WonoButton from "../../../components/Buttons/WonoButton";
 
 const AddAssetForm = ({ title, handleClose, user }) => {
   const [formData, setFormData] = useState({
-    assetNumber: "0001",
+    assetNumber: "",
     department: "",
     category: "",
     brandName: "",
@@ -52,17 +52,17 @@ const AddAssetForm = ({ title, handleClose, user }) => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-  
+
     setFormData((prevData) => {
       const updatedData = { ...prevData, [name]: value };
-  
+
       // Update totalPrice if price or quantity changes
       if (name === "price" || name === "quantity") {
         const price = name === "price" ? value : prevData.price; // Get the updated price
         const quantity = name === "quantity" ? value : prevData.quantity; // Get the updated quantity
         updatedData.totalPrice = price && quantity ? price * quantity : ""; // Calculate totalPrice
       }
-  
+
       return updatedData;
     });
   };
@@ -74,6 +74,30 @@ const AddAssetForm = ({ title, handleClose, user }) => {
     handleNext();
   };
 
+  const handleCategoryChange = (e) => {
+    const selectedCategory = e.target.value;
+
+    // Generate asset number
+    const assetPrefixMap = {
+      Laptop: "L",
+      Monitor: "MO",
+      Keyboard: "KB",
+      Mouse: "M",
+      Headphones: "HP",
+    };
+
+    const prefix = assetPrefixMap[selectedCategory] || "UN";
+    const storedRequests = JSON.parse(localStorage.getItem("asset")) || [];
+    const nextNumber = (storedRequests.length + 1).toString().padStart(3, "0");
+    const assetNumber = `${prefix}${nextNumber}`;
+
+    setFormData((prevData) => ({
+      ...prevData,
+      category: selectedCategory,
+      assetNumber, // Set the asset number dynamically
+    }));
+  };
+
   const handleSubmit = async (e) => {
     try {
       e.preventDefault();
@@ -81,17 +105,34 @@ const AddAssetForm = ({ title, handleClose, user }) => {
       // Retrieve the existing requests from localStorage or initialize an empty array
       const storedRequests = JSON.parse(localStorage.getItem("asset")) || [];
 
+      // Generate the asset number with the desired prefix
+      const assetPrefixMap = {
+        Laptop: "L",
+        Monitor: "MO",
+        Keyboard: "KB",
+        Mouse: "M",
+        Headphones: "HP",
+      };
+
+      const prefix = assetPrefixMap[formData.category] || "UN"; // Default to 'UN' if category doesn't match
+      const nextNumber = (storedRequests.length + 1)
+        .toString()
+        .padStart(3, "0");
+      const assetNumber = `${prefix}${nextNumber}`;
+
+      const newAsset = { ...formData, assetNumber }; // Add the generated asset number
+
       if (user.role === "Admin") {
         console.log(formData);
-        const newAsset = { ...formData, id: assetsData.length + 1 };
-        assetsData.push(newAsset);
+        const adminAsset = { ...newAsset, id: assetsData.length + 1 };
+        assetsData.push(adminAsset);
         toast.success("Asset added successfully!");
       } else if (user.role === "Employee") {
         toast.success("Request sent to admin");
 
-        // Create a new request and add it to the stored requests array
-        const addRequest = { ...formData, id: storedRequests.length + 1 };
-        const updatedRequests = [...storedRequests, addRequest];
+        // Add the asset number and save the request
+        const employeeRequest = { ...newAsset, id: storedRequests.length + 1 };
+        const updatedRequests = [...storedRequests, employeeRequest];
 
         // Save the updated requests array back to localStorage
         localStorage.setItem("asset", JSON.stringify(updatedRequests));
@@ -122,7 +163,8 @@ const AddAssetForm = ({ title, handleClose, user }) => {
                   sx={{
                     borderRadius: 2,
                     fontFamily: "Popins-SemiBold",
-                  }}>
+                  }}
+                >
                   <div className="flex justify-end align-middle mb-4">
                     {/* <Typography
                       sx={{ fontFamily: "Popins-SemiBold" }}
@@ -135,7 +177,7 @@ const AddAssetForm = ({ title, handleClose, user }) => {
                   <form onSubmit={(e) => handleNextStep(e, handleNext)}>
                     <div className="grid grid-cols-2 gap-4">
                       {/* Asset Number */}
-                      <Grid item xs={12}>
+                      <Grid item xs={12} sx={{ display: "none" }}>
                         <TextField
                           label="Asset Number"
                           value={formData.assetNumber}
@@ -152,7 +194,8 @@ const AddAssetForm = ({ title, handleClose, user }) => {
                           select
                           fullWidth
                           value={formData.department}
-                          onChange={handleChange}>
+                          onChange={handleChange}
+                        >
                           {user.department === "TopManagement"
                             ? departments.map((dept, index) => {
                                 return (
@@ -177,8 +220,9 @@ const AddAssetForm = ({ title, handleClose, user }) => {
                           select
                           fullWidth
                           value={formData.category}
-                          onChange={handleChange}
-                          sx={{ textAlign: "start" }}>
+                          onChange={handleCategoryChange}
+                          sx={{ textAlign: "start" }}
+                        >
                           {assetTypes.map((type, index) => (
                             <MenuItem key={index} value={type}>
                               {type}
@@ -264,6 +308,7 @@ const AddAssetForm = ({ title, handleClose, user }) => {
                           <DatePicker
                             label="Purchase Date"
                             value={formData.purchaseDate}
+                            sx={{width:'100%'}}
                             onChange={(newDate) => {
                               if (newDate) {
                                 setFormData({
@@ -276,7 +321,7 @@ const AddAssetForm = ({ title, handleClose, user }) => {
                             renderInput={(params) => (
                               <TextField
                                 {...params}
-                                className="w-full md:w-1/4"
+                                className="w-full"
                               />
                             )}
                           />
@@ -301,7 +346,8 @@ const AddAssetForm = ({ title, handleClose, user }) => {
                           name="location"
                           fullWidth
                           value={formData.location}
-                          onChange={handleChange}>
+                          onChange={handleChange}
+                        >
                           {locations.map((location, index) => (
                             <MenuItem key={index} value={location}>
                               {location}
@@ -309,12 +355,28 @@ const AddAssetForm = ({ title, handleClose, user }) => {
                           ))}
                         </TextField>
                       </Grid>
+                      <Grid item xs={12}>
+                      <div>
+                        <TextField
+                          id="asset-invoice"
+                          type="file"
+                          label="Invoice"
+                          focused
+                          name="image"
+                          accept="image/*"
+                          className="border-none mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+                        />
+                      </div>
+                      </Grid>
+                      {/* Invoice */}
+      
                     </div>
                     {/* Submit Button */}
                     <div className="mt-4">
                       <button
                         type="submit"
-                        className="p-2 wono-blue-dark text-white rounded-md w-full">
+                        className="p-2 wono-blue-dark text-white rounded-md w-full"
+                      >
                         Next
                       </button>
                     </div>
@@ -342,7 +404,8 @@ const AddAssetForm = ({ title, handleClose, user }) => {
                             columns[0].push(
                               <div
                                 key={key}
-                                className="flex justify-between py-2 border-b">
+                                className="flex justify-between py-2 border-b"
+                              >
                                 <h1 className="font-semibold">
                                   {formattedKey}
                                 </h1>
@@ -353,7 +416,8 @@ const AddAssetForm = ({ title, handleClose, user }) => {
                             columns[1].push(
                               <div
                                 key={key}
-                                className="flex justify-between py-2 border-b">
+                                className="flex justify-between py-2 border-b"
+                              >
                                 <h1 className="font-semibold">
                                   {formattedKey}
                                 </h1>

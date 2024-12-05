@@ -82,6 +82,11 @@ const ModuleSidebar = ({ mainSideBar }) => {
       route: "/frontend/updates",
       icon: <GrDocumentUpdate />,
     },
+    {
+      title: "Budget",
+      route: "/frontend/budget",
+      icon: <BsCashCoin />,
+    }
   ];
 
   const hrModules = [
