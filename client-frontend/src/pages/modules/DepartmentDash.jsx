@@ -507,6 +507,12 @@ const DepartmentDash = () => {
                   <Budget />
                 </div>
               </div>
+            ) : location.pathname === "/frontend/budget/overview" ? (
+              <div>
+                <div>
+                  <Budget />
+                </div>
+              </div>
             ) : (
               <div className="p-6">Doesn't exist</div>
             )}

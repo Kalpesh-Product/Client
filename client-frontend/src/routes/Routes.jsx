@@ -159,6 +159,10 @@ const router = createBrowserRouter([
         element: <DepartmentDash />,
       },
       {
+        path: "/frontend/budget/overview",
+        element: <DepartmentDash />,
+      },
+      {
         path: "/calendar",
         element: <Calender />,
       },

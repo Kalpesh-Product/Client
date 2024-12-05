@@ -86,6 +86,23 @@ const ModuleSidebar = ({ mainSideBar }) => {
       title: "Budget",
       route: "/frontend/budget",
       icon: <BsCashCoin />,
+      subMenus:[
+        {
+        title : 'Budget Overview',
+        route : '/frontend/budget/overview',
+        icon : <BsCashCoin/>
+        },
+        {
+          title : 'Budget Report',
+          route : '/frontend/budget/report',
+          icon : <BsCashCoin/>,
+        },
+        {
+          title : 'Payment Tracker',
+          route : '/frontend/budget/payment-tracker',
+          icon : <BsCashCoin/>
+        }
+    ]
     }
   ];
 
