@@ -101,10 +101,10 @@ export default function AddRooms() {
           >
             <CardMedia
               component="img"
-              height="140"
+              sx={{ height: "350px" }}
               image={room.url}
               alt={room.name}
-              className="object-cover"
+              className="object-contain"
             />
             <CardContent>
               <div className="flex justify-between items-center mb-2">
@@ -268,7 +268,7 @@ export default function AddRooms() {
                         </p>
                         <div className="flex justify-between">
                           <Button
-                          fullWidth
+                            fullWidth
                             type="button"
                             variant="contained"
                             color="primary"
