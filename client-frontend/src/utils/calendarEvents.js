@@ -102,6 +102,12 @@ export const calendarEvents = [
     backgroundColor: "#3454D1",
   },
   {
+    title: "Sick Leave",
+    date: "2024-12-06",
+    type: "meeting",
+    backgroundColor: "#3454D1",
+  },
+  {
     title: "Feedback Loop",
     date: "2024-12-10",
     type: "meeting",
