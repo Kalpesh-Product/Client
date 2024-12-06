@@ -26,6 +26,11 @@
   .wono-opacity {
     opacity: 15%;
   }
+  .wono-title {
+    font-size: 1.5rem /* 24px */;
+    line-height: 2rem /* 32px */;
+    font-weight: 600;
+  }
 }
 
 @font-face {

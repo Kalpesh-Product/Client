@@ -93,7 +93,7 @@ const ModuleSidebar = ({ mainSideBar }) => {
         icon : <BsCashCoin/>
         },
         {
-          title : 'Budget Report',
+          title : 'Reports',
           route : '/frontend/budget/report',
           icon : <BsCashCoin/>,
         },
@@ -443,10 +443,10 @@ const ModuleSidebar = ({ mainSideBar }) => {
             placement="right">
             <button
               onClick={toggleSidebar}
-              className={`text-black text-[0.8rem] p-2 focus:outline-none text-end absolute top-[0.6rem] ${
+              className={`text-black text-[0.8rem] p-2 hover:block  focus:outline-none text-end absolute top-[0.6rem] ${
                 isSidebarOpen ? "left-[11rem]" : "left-[3.2rem]"
               } `}>
-              {isSidebarOpen ? <FaArrowLeft /> : <FaArrowRightToBracket />}
+              {isSidebarOpen ? <FaArrowLeft className=" hover:text-red" /> : <FaArrowRightToBracket  />}
             </button>
           </Tooltip>
 
