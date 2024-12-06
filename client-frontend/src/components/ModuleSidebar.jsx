@@ -446,7 +446,7 @@ const ModuleSidebar = ({ mainSideBar }) => {
               className={`text-black text-[0.8rem] p-2 hover:block  focus:outline-none text-end absolute top-[0.6rem] ${
                 isSidebarOpen ? "left-[11rem]" : "left-[3.2rem]"
               } `}>
-              {isSidebarOpen ? <FaArrowLeft className=" hover:text-red" /> : <FaArrowRightToBracket  />}
+              {isSidebarOpen ? <FaArrowLeft/> : <FaArrowRightToBracket  />}
             </button>
           </Tooltip>
 
