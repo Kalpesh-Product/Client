@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
+import AgTable from "../components/AgTable";
 import {
   MenuItem,
   FormControl,
@@ -36,6 +37,74 @@ const Budget = () => {
   const handleQuarterChange = (event, newValue) => {
     setQuarter(newValue);
   };
+
+  //Months array
+  const months = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+
+  // Get current month index
+  const currentMonthIndex = new Date().getMonth();
+  const [selectedMonth, setSelectedMonth] = useState(months[currentMonthIndex]);
+  // Handle change
+  const handleMonthChange = (event) => {
+    setSelectedMonth(event.target.value);
+  };
+
+  //tracker Random Data
+  const expenseData = [
+    {
+      id: 1,
+      category: "Office Supplies",
+      expenseName: "Stationery",
+      urlLink: "link",
+      vendorName: "OfficeMart",
+      amount: 120.5,
+      invoiceNo: "INV12345",
+      invoiceDate: "2024-12-01",
+      invoiceLink: "link",
+      emailNotification: true,
+    },
+    {
+      id: 2,
+      category: "Software",
+      expenseName: "Subscription",
+      urlLink: "link",
+      vendorName: "TechSoft",
+      amount: 399.99,
+      invoiceNo: "INV67890",
+      invoiceDate: "2024-12-03",
+      invoiceLink: "link",
+      emailNotification: false,
+    },
+  ];
+  
+
+//trackerColumns
+const expenseColumns = [
+  { field: "id", headerName: "ID" },
+  { field: "category", headerName: "Category" },
+  { field: "expenseName", headerName: "Expense Name" },
+  { field: "urlLink", headerName: "URL Link" },
+  { field: "vendorName", headerName: "Vendor Name"},
+  { field: "amount", headerName: "Amount" },
+  { field: "invoiceNo", headerName: "Invoice No" },
+  { field: "invoiceDate", headerName: "Invoice Date" },
+  { field: "invoiceLink", headerName: "Invoice Link" },
+  { field: "emailNotification", headerName: "Email Notification" },
+];
+
 
   return (
     <>
@@ -144,19 +213,40 @@ const Budget = () => {
           </div>
           <div className="bg-white p-2">
             {/* Dropdown */}
-            <FormControl variant="outlined" className="mb-4">
-              <InputLabel id="view-select-label">View</InputLabel>
-              <Select
-                labelId="view-select-label"
-                value={view}
-                onChange={handleViewChange}
-                label="View"
-                className="mb-4"
-              >
-                <MenuItem value="Monthly">Monthly</MenuItem>
-                <MenuItem value="Annually">Annually</MenuItem>
-              </Select>
-            </FormControl>
+            <div className="flex gap-4">
+              <FormControl variant="outlined" className="mb-4">
+                <InputLabel id="view-select-label">View</InputLabel>
+                <Select
+                  labelId="view-select-label"
+                  value={view}
+                  onChange={handleViewChange}
+                  label="View"
+                  className="mb-4"
+                >
+                  <MenuItem value="Monthly">Monthly</MenuItem>
+                  <MenuItem value="Annually">Annually</MenuItem>
+                </Select>
+              </FormControl>
+              {view === "Monthly" && (
+              <FormControl variant="outlined" className="mb-4">
+                <InputLabel id="view-select-label">Select Month</InputLabel>
+                <Select
+                  labelId="month-select-label"
+                  value={selectedMonth}
+                  onChange={handleMonthChange}
+                  label="Select Month"
+                  sx={{ width: 150 }}
+                  className="mb-4"
+                >
+                  {months.map((month) => (
+                    <MenuItem key={month} value={month}>
+                      {month}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+              )}
+            </div>
 
             {/* Table Placeholder */}
             <TableContainer component={Paper}>
@@ -249,9 +339,14 @@ const Budget = () => {
             </TableContainer>
           </div>
         </div>
+      ) : location.pathname === "/frontend/budget/payment-tracker" ? (
+        <div className="p-6">
+          <h1 className="font-semibold text-2xl mb-4">Payment Tracker</h1>
+          <AgTable data={expenseData} columns={expenseColumns} />
+        </div>
       ) : (
         <>
-          <h1></h1>
+          <h1>Doesn't exist</h1>
         </>
       )}
     </>

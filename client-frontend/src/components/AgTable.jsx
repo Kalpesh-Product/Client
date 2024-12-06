@@ -24,8 +24,10 @@ const AgTable = React.memo(
         justifyContent: "center",
         alignItems: "center",
         padding: "px", // Add padding for spacing
+        // width:'100%'
       },
     };
+    // const rowStyle = {width : '100%', overFlowX:'auto'}
 
     // Define the row style conditionally
     const getRowStyle = (params) => {
@@ -54,6 +56,7 @@ const AgTable = React.memo(
           domLayout="autoHeight"
           rowHeight={50} // Increased row height for better spacing
           getRowStyle={getRowStyle}
+          // rowStyle={rowStyle}
         />
       </div>
     );

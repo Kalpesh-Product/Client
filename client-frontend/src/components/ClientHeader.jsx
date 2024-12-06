@@ -54,10 +54,13 @@ const ClientHeader = () => {
           </span>
         </div>
         {/* Navigation Links */}
-        <nav className="flex justify-start py-0">
+        <nav className="flex justify-start py-0 items-center">
           {/* Avatar Menu Trigger */}
           <IconButton onClick={handleMenuOpen} sx={{ py: 0 }}>
             <Avatar className="wono-blue-dark" alt={user.name} src="/path-to-avatar.jpg" />
+            <Typography onClick={()=>{
+              setAnchorEl(null)
+              }} variant="h6" sx={{px:'1rem',py:'0',color:'white'}}>{user.name}</Typography>
           </IconButton>
 
           {/* Menu */}
@@ -75,10 +78,7 @@ const ClientHeader = () => {
             }}
           >
             <div className="py-0">
-            <Typography onClick={()=>{
-              navigate('/profile'); 
-              setAnchorEl(null)
-              }} variant="h6" sx={{px:'1rem',py:'0', borderBottom:'0.5px solid gray', backgroundColor:'#0db4ea', color:'white'}}>{user.name}</Typography>
+        
             <MenuItem onClick={() => {
               navigate("/landing");
               setAnchorEl(null)

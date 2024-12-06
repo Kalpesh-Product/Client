@@ -163,6 +163,10 @@ const router = createBrowserRouter([
         element: <DepartmentDash />,
       },
       {
+        path: "/frontend/budget/payment-tracker",
+        element: <DepartmentDash />,
+      },
+      {
         path: "/calendar",
         element: <Calender />,
       },
