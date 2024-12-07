@@ -573,10 +573,10 @@ const DepartmentDash = () => {
           </>
         )}
         {/* IT submodules */}
-        {location.pathname.startsWith("/customer") && (
+        {location.pathname.startsWith("/it") && (
           <>
-            {location.pathname === "/customer" ||
-            location.pathname === "/customer/dashboard" ? (
+            {location.pathname === "/it" ||
+            location.pathname === "/it/dashboard" ? (
               <div className="bg-gray-100 p-4 rounded-lg  mt-4 flex flex-col gap-4">
                 <div className="bg-white rounded-md p-2">
                   {customerServiceWidgets
@@ -628,7 +628,7 @@ const DepartmentDash = () => {
                   />
                 ))}
               </div>
-            ) : location.pathname === "/customer/kpi" ? (
+            ) : location.pathname === "/it/kpi" ? (
               <>
                 <div className="bg-gray-100 p-4 rounded-lg  mt-4 h-[90vh] overflow-y-auto">
                   <div className="mb-8 flex justify-between">
@@ -660,27 +660,27 @@ const DepartmentDash = () => {
                   <AssetAllocationWidget />
                 </div>
               </>
-            ) : location.pathname === "/customer/asset/view" ? (
+            ) : location.pathname === "/it/asset/view" ? (
               <>
                 <ViewAssets />
               </>
-            ) : location.pathname === "/customer/asset/reports" ? (
+            ) : location.pathname === "/it/asset/reports" ? (
               <>
                 <AssetReports />
               </>
-            ) : location.pathname === "/customer/asset/manage" ? (
+            ) : location.pathname === "/it/asset/manage" ? (
               <>
                 <ManageAsset />
               </>
-            ) : location.pathname === "/customer/asset/my-assets" ? (
+            ) : location.pathname === "/it/asset/my-assets" ? (
               <>
                 <MyAssets />
               </>
-            ) : location.pathname === "/customer/asset/details" ? (
+            ) : location.pathname === "/it/asset/details" ? (
               <>
                 <AssetsData />
               </>
-            ) : location.pathname === "/customer/tickets" ? (
+            ) : location.pathname === "/it/tickets" ? (
               <>
                 <div className="bg-gray-100 p-4 rounded-lg mt-4">
                   <div className="mb-8 flex justify-between">

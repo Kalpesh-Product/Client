@@ -173,7 +173,7 @@ const TestSide = () => {
     CMS: ["CMS"],
     Marketing: ["MARKETING"],
     Cafe: ["CAFE (F&B)"],
-    IT: ["CMS"],
+    IT: ["IT", "HUMAN RESOURCE","FINANCE" ],
     Maintainance: ["CMS"],
     Legal: ["LEGAL"],
   };

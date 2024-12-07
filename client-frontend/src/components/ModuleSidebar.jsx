@@ -109,12 +109,12 @@ const ModuleSidebar = ({ mainSideBar }) => {
   const hrModules = [
     {
       title: "Attendance",
-      route: "#hr/leave-requests",
+      route: "/hr/leave-requests",
       icon: <HiOutlineClipboardList />,
     },
     {
       title: "Payroll",
-      route: "#hr/payroll",
+      route: "/hr/payroll",
       icon: <HiCurrencyDollar />,
     },
   ];
@@ -123,7 +123,7 @@ const ModuleSidebar = ({ mainSideBar }) => {
     {
       title: "Assets",
       index: 0,
-      route: "/customer/kpi",
+      route: "/it/kpi",
       icon: <AiOutlineProduct />,
       subMenus: [
         ...(user.department === "IT" ||
@@ -133,19 +133,19 @@ const ModuleSidebar = ({ mainSideBar }) => {
           ? [
               {
                 title: "Manage Asset",
-                route: "/customer/asset/manage",
+                route: "/it/asset/manage",
                 icon: <MdOutlineManageAccounts />,
               },
             ]
           : []),
         {
           title: "My Assets",
-          route: "/customer/asset/my-assets",
+          route: "/it/asset/my-assets",
           icon: <FaRegUser />,
         },
         {
           title: "Reports",
-          route: "/customer/asset/reports",
+          route: "/it/asset/reports",
           icon: <TbReportSearch />,
         },
       ],
@@ -336,7 +336,7 @@ const ModuleSidebar = ({ mainSideBar }) => {
     modules = frontendModules;
   } else if (passedDepartment === "hr") {
     modules = hrModules;
-  } else if (passedDepartment === "customer") {
+  } else if (passedDepartment === "it") {
     modules = itModules;
   } else if (passedDepartment === "tasks") {
     taskModules = tasks;
