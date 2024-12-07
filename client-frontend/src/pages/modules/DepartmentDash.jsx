@@ -627,13 +627,7 @@ const DepartmentDash = () => {
                   {/* <AssetAllocationWidget /> */}
                   <div className=" ">
                     <div className="flex w-full p-4 pb-4 pl-0 text-lg border-b-0  gap-4">
-                      {/* <h2 className="text-2xl font-bold">My Tickets</h2> */}
                       <h2 className="text-2xl  font-bold ">Pending Leaves</h2>
-                      {/* <button
-            className="py-1 px-2 text-sm wono-blue-dark text-white rounded-md "
-            onClick={() => navigate("/customer/tickets/my-tickets")}>
-            View All
-          </button> */}
                     </div>
                     {/* <p>Today's tickets Table Component</p> */}
                     {/* <TodaysTickets /> */}
@@ -654,11 +648,17 @@ const DepartmentDash = () => {
             ) : location.pathname === "/hr/leaves/my-leaves" ? (
               <>
                 {/* <MyLeaves /> */}
+                <div className="flex w-full p-4 pb-4 pl-0 text-lg border-b-0  gap-4">
+                  <h2 className="text-2xl  font-bold ">My Leaves</h2>
+                </div>
                 <PendingLeaves />
               </>
             ) : location.pathname === "/hr/leaves/leave-reports" ? (
               <>
                 {/* <LeaveReports /> */}
+                <div className="flex w-full p-4 pb-4 pl-0 text-lg border-b-0  gap-4">
+                  <h2 className="text-2xl  font-bold ">Leave Reports</h2>
+                </div>
                 <PendingLeaves />
               </>
             ) : (
