@@ -114,7 +114,7 @@ const ModuleSidebar = ({ mainSideBar }) => {
     },
     {
       title: "Payroll",
-      route: "#hr/payroll",
+      route: "/hr/payroll",
       icon: <HiCurrencyDollar />,
     },
   ];
