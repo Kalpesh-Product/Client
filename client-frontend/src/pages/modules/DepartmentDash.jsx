@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import ModuleSidebar from "../../components/ModuleSidebar";
 import { useLocation, useParams, useNavigate } from "react-router-dom";
 import TestSide from "../../components/Sidetest";
+import PayRollDash from "../hr/payroll/PayRollDash";
 import {
   ActiveTickets,
   CriticalAlerts,
@@ -86,6 +87,7 @@ import MyBookings from "../cms/room-booking/MyBookings";
 import { TicketsRemainingWidget } from "../cms/tickets/components/TicketWidgets/TicketsRemainingWidget";
 import MyTickets from "../cms/tickets/components/MyTickets";
 import Budget from "../Budget";
+import AttendanceDash from "../hr/attendance/AttendanceDash";
 
 const DepartmentDash = () => {
   const navigate = useNavigate();
@@ -421,7 +423,8 @@ const DepartmentDash = () => {
                     "& .MuiTabs-indicator": {
                       backgroundColor: "#0db4ea", // Custom indicator color
                     },
-                  }}>
+                  }}
+                >
                   <Tab label="Home" />
                   <Tab label="About" />
                   <Tab label="Gallery" />
@@ -482,7 +485,8 @@ const DepartmentDash = () => {
                   {products.map((product) => (
                     <div
                       key={product.id}
-                      className="bg-gray-100 rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+                      className="bg-gray-100 rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow"
+                    >
                       <img
                         src={product.image}
                         alt={product.name}
@@ -513,7 +517,7 @@ const DepartmentDash = () => {
                   <Budget />
                 </div>
               </div>
-            ) :location.pathname === "/frontend/budget/payment-tracker" ? (
+            ) : location.pathname === "/frontend/budget/payment-tracker" ? (
               <div>
                 <div>
                   <Budget />
@@ -529,8 +533,8 @@ const DepartmentDash = () => {
         {/* HR submodules */}
         {location.pathname.startsWith("/hr") && (
           <>
-            {(location.pathname === "/hr" ||
-              location.pathname === "/hr/dashboard") && (
+            {location.pathname === "/hr" ||
+            location.pathname === "/hr/dashboard" ? (
               <div className="bg-gray-100 p-4 rounded-lg  mt-4">
                 {hrWidgets.map((section, index) => (
                   <WidgetSection
@@ -540,6 +544,24 @@ const DepartmentDash = () => {
                   />
                 ))}
               </div>
+            ) : location.pathname === "/hr/attendance" ? (
+              <>
+                <AttendanceDash />
+              </>
+            ) : location.pathname === "/hr/leaves" ? (
+              <>
+                {/* <MyBookings /> */}
+                {/* HR Widgets */}
+                <p>HR Widgets Here</p>
+                {/* Pending Leaves */}
+                <p>Pending Leaves Here</p>
+              </>
+            ) : location.pathname === "/hr/payroll" ? (
+              <>
+                <PayRollDash />
+              </>
+            ) : (
+              <></>
             )}
           </>
         )}
@@ -745,9 +767,8 @@ const DepartmentDash = () => {
                       <h2 className="text-2xl  font-bold ">Today's Tickets</h2>
                       <button
                         className="py-1 px-2 text-sm wono-blue-dark text-white rounded-md "
-                        onClick={() =>
-                          navigate("/customer/tickets/my-tickets")
-                        }>
+                        onClick={() => navigate("/customer/tickets/my-tickets")}
+                      >
                         View All
                       </button>
                     </div>
@@ -837,7 +858,8 @@ const DepartmentDash = () => {
           open={openTicket}
           onClose={handleCloseTicket}
           aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description">
+          aria-describedby="modal-modal-description"
+        >
           {/* <Box sx={style}> */}
           <Box sx={style}>
             <AddTicketForm />

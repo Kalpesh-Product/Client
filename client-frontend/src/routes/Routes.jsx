@@ -129,6 +129,18 @@ const router = createBrowserRouter([
         path: "/hr/dashboard",
         element: <DepartmentDash />,
       },
+      {
+        path: "/hr/leaves",
+        element: <DepartmentDash />,
+      },
+      {
+        path: "/hr/attendance",
+        element: <DepartmentDash />,
+      },
+      {
+        path: "/hr/payroll",
+        element: <DepartmentDash />,
+      },
 
       {
         path: "/it/dashboard",
@@ -227,8 +239,8 @@ const router = createBrowserRouter([
         element: <DepartmentDash />,
       },
       {
-        path:"/tasks/mytasks",
-        element: <DepartmentDash/>
+        path: "/tasks/mytasks",
+        element: <DepartmentDash />,
       },
       {
         path: "/tasks/dashboard",
