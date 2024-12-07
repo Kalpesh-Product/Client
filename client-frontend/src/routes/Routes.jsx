@@ -133,6 +133,19 @@ const router = createBrowserRouter([
         path: "/hr/leaves",
         element: <DepartmentDash />,
       },
+      {
+        path: "/hr/leaves/pending-leaves",
+        element: <DepartmentDash />,
+      },
+      {
+        path: "/hr/leaves/my-leaves",
+        element: <DepartmentDash />,
+      },
+
+      {
+        path: "/hr/leaves/leave-reports",
+        element: <DepartmentDash />,
+      },
 
       {
         path: "/cms/dashboard",
