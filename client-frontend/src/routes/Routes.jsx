@@ -133,6 +133,10 @@ const router = createBrowserRouter([
         path: "/hr/leaves",
         element: <DepartmentDash />,
       },
+      {
+        path: "/hr/payroll",
+        element: <DepartmentDash />,
+      },
 
       {
         path: "/cms/dashboard",
