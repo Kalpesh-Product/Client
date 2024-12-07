@@ -79,7 +79,7 @@ const csvHeaders = [
 ];
 
 export default function PayRollDash() {
-  const [loggedInUser, setLoggedInUser] = useState(null); // Initialize as null
+  const [loggedInUser, setLoggedInUser] = useState(null); 
   const [selectedDept, setSelectedDept] = useState("all");
   const [payrolls, setPayrolls] = useState(dummyData);
 
@@ -101,7 +101,7 @@ export default function PayRollDash() {
     setSelectedDept(department);
 
     if (department === "all") {
-      setPayrolls(dummyData); // Show all data if "All Departments" is selected
+      setPayrolls(dummyData); 
     } else {
       const filteredData = dummyData.filter(
         (item) => item.department === department
@@ -111,7 +111,7 @@ export default function PayRollDash() {
   };
 
   if (!loggedInUser) {
-    return <div>Loading...</div>; // Handle case where user data is not yet loaded
+    return <div>Loading...</div>; 
   }
 
   const isAdmin =
@@ -171,7 +171,7 @@ export default function PayRollDash() {
               </CSVLink>
             </div>
             <AgTable
-              data={payrolls} // Use filtered data
+              data={payrolls} 
               columns={columns}
               paginationPageSize={10}
               highlightFirstRow={false}
@@ -184,7 +184,6 @@ export default function PayRollDash() {
         </>
       ) : null}
 
-      {/* Components visible to all users */}
       <MyPayroll payrollDetails={examplePayroll} />
       <div>
         <MyPayslips />
