@@ -513,7 +513,7 @@ const DepartmentDash = () => {
                   <Budget />
                 </div>
               </div>
-            ) :location.pathname === "/frontend/budget/payment-tracker" ? (
+            ) : location.pathname === "/frontend/budget/payment-tracker" ? (
               <div>
                 <div>
                   <Budget />
@@ -529,8 +529,8 @@ const DepartmentDash = () => {
         {/* HR submodules */}
         {location.pathname.startsWith("/hr") && (
           <>
-            {(location.pathname === "/hr" ||
-              location.pathname === "/hr/dashboard") && (
+            {location.pathname === "/hr" ||
+            location.pathname === "/hr/dashboard" ? (
               <div className="bg-gray-100 p-4 rounded-lg  mt-4">
                 {hrWidgets.map((section, index) => (
                   <WidgetSection
@@ -540,6 +540,16 @@ const DepartmentDash = () => {
                   />
                 ))}
               </div>
+            ) : location.pathname === "/hr/leaves" ? (
+              <>
+                {/* <MyBookings /> */}
+                {/* HR Widgets */}
+                <p>HR Widgets Here</p>
+                {/* Pending Leaves */}
+                <p>Pending Leaves Here</p>
+              </>
+            ) : (
+              <></>
             )}
           </>
         )}

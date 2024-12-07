@@ -173,7 +173,7 @@ const TestSide = () => {
     CMS: ["CMS"],
     Marketing: ["MARKETING"],
     Cafe: ["CAFE (F&B)"],
-    IT: ["CMS"],
+    IT: ["CMS", "HUMAN RESOURCE"],
     Maintainance: ["CMS"],
     Legal: ["LEGAL"],
   };
@@ -192,8 +192,12 @@ const TestSide = () => {
     <div
       className={` ${
         isSidebarOpen ? "w-60" : "w-20"
+<<<<<<< HEAD
       } bg-white  border-gray-300 text-black flex flex-shrink-0  overflow-y-auto transition-all duration-300 z-[1]`}
     >
+=======
+      } bg-white  border-gray-300 text-black flex-shrink-0  overflow-y-auto transition-all duration-300 z-[1]`}>
+>>>>>>> 51eadb0accec4b67e748f41995c09d7051d4439f
       <div className="flex relative w-full">
         {/*Dashboard */}
         <div className="mt-5 px-3 flex flex-col gap-2 w-full">
@@ -208,8 +212,7 @@ const TestSide = () => {
                 location.pathname === "/dashboard"
                   ? "wono-blue border-r-4 border-[#0DB4EA] rounded-tl-md rounded-bl-md text-[#0DB4EA]"
                   : "bg-white"
-              }`}
-            >
+              }`}>
               <div className="flex justify-center w-6 text-2xl">
                 <RiDashboardLine />
               </div>
@@ -220,6 +223,7 @@ const TestSide = () => {
           {/* Department dropdown */}
 
           <div>
+<<<<<<< HEAD
             {filteredDepartments.length === 1 ? (
               // If there's only one department, show it directly
               <div
@@ -259,6 +263,70 @@ const TestSide = () => {
                     <div className="flex items-center justify-center">
                       <div className="flex justify-center w-6 text-2xl">
                         <TbSection />
+=======
+            <button
+              onClick={() => {
+                setIsDepartmentsOpen(!isDepartmentsOpen);
+                setIsSidebarOpen(true);
+                handleActive(-2);
+              }}
+              className={`flex items-center border-b-[1px] px-4 py-3 w-full text-black bg-white hover:wono-blue-dark hover:rounded-md hover:text-white ${
+                location.pathname === "/:department"
+                  ? "wono-blue rounded-md wono-blue-text"
+                  : "bg-white"
+              }`}>
+              {isSidebarOpen ? (
+                <div className="flex items-center justify-center">
+                  <div className="flex justify-center w-6 text-2xl">
+                    <TbSection />
+                  </div>
+                  <span className="pl-5 ">Departments</span>
+                </div>
+              ) : (
+                <span>
+                  {" "}
+                  <TbSection />
+                </span>
+              )}
+              {isSidebarOpen ? (
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  className={`w-4 h-4 ml-3 transform ${
+                    isDepartmentsOpen ? "rotate-180" : ""
+                  }`}>
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M19 9l-7 7-7-7"
+                  />
+                </svg>
+              ) : (
+                ""
+              )}
+            </button>
+
+            {isDepartmentsOpen && (
+              <ul
+                className={`cursor-pointer ${isSidebarOpen ? "px-3" : "px-0"}`}>
+                {filteredDepartments.map((dept, index) => (
+                  <Tooltip title={dept.name} placement="right">
+                    <div
+                      key={index}
+                      onClick={() => {
+                        handleActive(index);
+                        navigate(dept.route, {
+                          state: { departmentName: dept.name },
+                        });
+                      }}
+                      className={`flex items-center border-b-[1px] py-3 gap-3 hover:wono-blue-dark pl-[1rem] hover:text-white  hover:rounded-md `}>
+                      {/* <img src={item.icon} alt={item.name} className="w-6 h-6 mr-3" /> */}
+                      <div className="flex justify-center w-6 text-[1.3rem]">
+                        {dept.icon}
+>>>>>>> 51eadb0accec4b67e748f41995c09d7051d4439f
                       </div>
                       <span className="pl-5">Departments</span>
                     </div>
@@ -334,8 +402,7 @@ const TestSide = () => {
                   location.pathname === item.route
                     ? "wono-blue border-r-4 border-b-[0px]  border-[#0DB4EA] rounded-tl-md rounded-bl-md text-[#0DB4EA]"
                     : "bg-white"
-                } `}
-              >
+                } `}>
                 {/* <img src={item.icon} alt={item.name} className="w-6 h-6 mr-3" /> */}
                 <div className="flex justify-center w-6 text-[1.3rem]">
                   {item.icon}
@@ -354,12 +421,10 @@ const TestSide = () => {
             isSidebarOpen ? "justify-end" : "justify-center "
           } items-center  bg-white text-black cursor-pointer fixed top-[6.8rem] ${
             isSidebarOpen ? "left-[14.3rem]" : "left-[4rem]"
-          } transition-all duration-300 rounded-md`}
-        >
+          } transition-all duration-300 rounded-md`}>
           <button
             onClick={toggleSidebar}
-            className="text-black text-[0.8rem] p-2 focus:outline-none text-end"
-          >
+            className="text-black text-[0.8rem] p-2 focus:outline-none text-end">
             {isSidebarOpen ? <FaArrowLeft /> : <FaArrowRightToBracket />}
           </button>
         </div>
