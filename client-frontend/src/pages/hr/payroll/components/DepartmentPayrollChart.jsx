@@ -37,7 +37,7 @@ const DepartmentPayrollChart = () => {
         callbacks: {
           label: function (context) {
             const value = context.raw;
-            return `$${value.toLocaleString()}`;
+            return `₹${value.toLocaleString()}`; // Use INR symbol
           },
         },
       },
@@ -51,7 +51,7 @@ const DepartmentPayrollChart = () => {
       </h2>
       <div className="flex justify-center items-center">
         <div className="w-full md:w-3/4 lg:w-2/3">
-          <Doughnut data={data} options={options}/>
+          <Doughnut data={data} options={options} />
         </div>
       </div>
     </div>
