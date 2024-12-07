@@ -17,7 +17,7 @@ import {
 } from "react-icons/fa";
 
 import { CiBookmarkCheck } from "react-icons/ci";
-import { MdMeetingRoom , MdTask} from "react-icons/md";
+import { MdMeetingRoom, MdTask } from "react-icons/md";
 import { BsArrowLeftSquare } from "react-icons/bs";
 import { TbReportSearch, TbSection } from "react-icons/tb";
 import { IoIosChatboxes } from "react-icons/io";
@@ -86,30 +86,35 @@ const ModuleSidebar = ({ mainSideBar }) => {
       title: "Budget",
       route: "/frontend/budget",
       icon: <BsCashCoin />,
-      subMenus:[
+      subMenus: [
         {
-        title : 'Budget Overview',
-        route : '/frontend/budget/overview',
-        icon : <BsCashCoin/>
+          title: "Budget Overview",
+          route: "/frontend/budget/overview",
+          icon: <BsCashCoin />,
         },
         {
-          title : 'Budget Report',
-          route : '/frontend/budget/report',
-          icon : <BsCashCoin/>,
+          title: "Budget Report",
+          route: "/frontend/budget/report",
+          icon: <BsCashCoin />,
         },
         {
-          title : 'Payment Tracker',
-          route : '/frontend/budget/payment-tracker',
-          icon : <BsCashCoin/>
-        }
-    ]
-    }
+          title: "Payment Tracker",
+          route: "/frontend/budget/payment-tracker",
+          icon: <BsCashCoin />,
+        },
+      ],
+    },
   ];
 
   const hrModules = [
     {
       title: "Attendance",
       route: "#hr/leave-requests",
+      icon: <HiOutlineClipboardList />,
+    },
+    {
+      title: "Leaves",
+      route: "/hr/leaves",
       icon: <HiOutlineClipboardList />,
     },
     {
@@ -317,11 +322,11 @@ const ModuleSidebar = ({ mainSideBar }) => {
           },
         ]
       : []),
-      {
-        title:"My Tasks",
-        route: "/tasks/mytasks",
-        icon: <MdTask/>
-      }
+    {
+      title: "My Tasks",
+      route: "/tasks/mytasks",
+      icon: <MdTask />,
+    },
   ];
 
   // Get the department based on the current path
