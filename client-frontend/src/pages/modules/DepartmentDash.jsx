@@ -88,6 +88,13 @@ import { TicketsRemainingWidget } from "../cms/tickets/components/TicketWidgets/
 import MyTickets from "../cms/tickets/components/MyTickets";
 import Budget from "../Budget";
 import AttendanceDash from "../hr/attendance/AttendanceDash";
+import LeaveWidgets from "../hr/leaves/Components/LeaveWidgets";
+import LeaveWidget2 from "../hr/leaves/Components/LeaveWidget2";
+import LeaveWidget3 from "../hr/leaves/Components/LeaveWidget3";
+import LeaveWidget4 from "../hr/leaves/Components/LeaveWidget4";
+import PendingLeaves from "../hr/leaves/Components/PendingLeaves";
+import MyLeaves from "../hr/leaves/MyLeaves";
+import LeaveReports from "../hr/leaves/LeaveReports";
 
 const DepartmentDash = () => {
   const navigate = useNavigate();
@@ -253,6 +260,23 @@ const DepartmentDash = () => {
         <EmployeeCount count={HrWidgetsData.employeeCount} />,
         <LeaveRequests count={HrWidgetsData.leaveRequests} />,
         <NewHires count={HrWidgetsData.newHires} />,
+      ],
+    },
+    {
+      heading: "Leave Management",
+      subModule: "leaves",
+      widgets: [
+        <LeaveWidgets />,
+        <LeaveWidget2 />,
+        <LeaveWidget3 />,
+        <LeaveWidget4 />,
+        // <AssetsCount count={customerServiceWidgetsData.totalAssets} />,
+        // <MaintenanceRequests
+        //   requests={customerServiceWidgetsData.pendingMaintenance}
+        // />,
+        // <AssetsAssigned assigned={customerServiceWidgetsData.assignedAssets} />,
+        // <AssetsInRepair count={customerServiceWidgetsData.assetsInRepair} />,
+        // <NewAssetsAdded added={customerServiceWidgetsData.newAssetsAdded} />,
       ],
     },
     {
@@ -551,10 +575,103 @@ const DepartmentDash = () => {
             ) : location.pathname === "/hr/leaves" ? (
               <>
                 {/* <MyBookings /> */}
-                {/* HR Widgets */}
-                <p>HR Widgets Here</p>
+                {/* Leave Widgets */}
+                {/* <LeaveWidgets /> */}
+
+                <div className="bg-gray-100 p-4 rounded-lg mt-4">
+                  <div className="mb-8 flex justify-between">
+                    <h1 className="text-3xl  font-bold">Key Insights</h1>
+                    {/* <div className=" flex gap-4">
+                
+
+                      {user.role === "Employee" && user.department === "IT" && (
+                        <div>
+                          <span className="text-2xl">Status: </span>
+                          <button
+                            onClick={toggleStatus}
+                            className={`px-6 py-2 rounded-lg text-white transition-shadow shadow-md hover:shadow-lg active:shadow-inner ${
+                              isAvailable
+                                ? "bg-green-400 hover:bg-green-300"
+                                : "bg-red-400 hover:bg-red-300"
+                            }`}>
+                            {isAvailable ? "Available" : "Unavailable"}
+                          </button>
+                        </div>
+                      )}
+                 
+
+                      <button
+                        onClick={handleOpenTicket}
+                        className="px-6 py-2 rounded-lg text-white wono-blue-dark hover:bg-[#3cbce7] transition-shadow shadow-md hover:shadow-lg active:shadow-inner">
+                        Raise Ticket
+                      </button>
+                    </div> */}
+                  </div>
+
+                  {hrWidgets
+                    .filter((section) => section.subModule === "leaves")
+                    .map((section, index) => (
+                      <WidgetSection
+                        key={index}
+                        heading={section.heading}
+                        widgets={section.widgets}
+                      />
+                    ))}
+                  {user.role === "Admin" && (
+                    <div className="flex w-full flex-1 flex-grow gap-x-4">
+                      {/* <TicketsRemainingWidget
+            totalStock={120}
+            remainingStock={100}
+            assetType="Tickets"
+          />
+
+          <TicketsRemainingWidget
+            totalStock={3}
+            remainingStock={1}
+            assetType="Available Members"
+          /> */}
+                    </div>
+                  )}
+                  {/* <AssetAllocationWidget /> */}
+                  <div className=" ">
+                    <div className="flex w-full p-4 pb-4 pl-0 text-lg border-b-0  gap-4">
+                      {/* <h2 className="text-2xl font-bold">My Tickets</h2> */}
+                      <h2 className="text-2xl  font-bold ">Pending Leaves</h2>
+                      {/* <button
+            className="py-1 px-2 text-sm wono-blue-dark text-white rounded-md "
+            onClick={() => navigate("/customer/tickets/my-tickets")}>
+            View All
+          </button> */}
+                    </div>
+                    {/* <p>Today's tickets Table Component</p> */}
+                    {/* <TodaysTickets /> */}
+                    {/* <MyTickets /> */}
+                    <PendingLeaves />
+                  </div>
+                  {/* <p>x</p> */}
+                </div>
+
+                {/* <p>Leave Widgets Here</p> */}
                 {/* Pending Leaves */}
-                <p>Pending Leaves Here</p>
+                {/* <p>Pending Leaves Here</p> */}
+              </>
+            ) : location.pathname === "/hr/leaves/pending-leaves" ? (
+              <>
+                <PendingLeaves />
+              </>
+            ) : location.pathname === "/hr/leaves/my-leaves" ? (
+              <>
+                {/* <MyLeaves /> */}
+                <PendingLeaves />
+              </>
+            ) : location.pathname === "/hr/leaves/leave-reports" ? (
+              <>
+                {/* <LeaveReports /> */}
+                <PendingLeaves />
+              </>
+            ) : location.pathname === "/hr/payroll" ? (
+              <>
+                <PayRollDash />
               </>
             ) : location.pathname === "/hr/payroll" ? (
               <>

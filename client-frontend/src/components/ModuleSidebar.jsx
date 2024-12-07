@@ -116,6 +116,33 @@ const ModuleSidebar = ({ mainSideBar }) => {
       title: "Leaves",
       route: "/hr/leaves",
       icon: <HiOutlineClipboardList />,
+      subMenus: [
+        // ...(user.role === "Employee" && user.department === "Finance"
+        //   ? []
+        //   : [
+        //       {
+        //         title: "Pending Leaves",
+        //         route: "/hr/leaves/pending-leaves",
+        //         icon: <HiOutlineClipboardList />,
+        //       },
+        //     ]),
+        // ,
+        {
+          title: "My Leaves",
+          route: "/hr/leaves/my-leaves",
+          icon: <HiOutlineClipboardList />,
+        },
+
+        ...(user.role === "Employee" && user.department === "Finance"
+          ? []
+          : [
+              {
+                title: "Reports",
+                route: "/hr/leaves/leave-reports",
+                icon: <HiOutlineClipboardList />,
+              },
+            ]),
+      ],
     },
     {
       title: "Payroll",

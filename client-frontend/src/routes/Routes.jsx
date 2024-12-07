@@ -136,7 +136,20 @@ const router = createBrowserRouter([
       {
         path: "/hr/attendance",
         element: <DepartmentDash />,
+      },      {
+        path: "/hr/leaves/pending-leaves",
+        element: <DepartmentDash />,
       },
+      {
+        path: "/hr/leaves/my-leaves",
+        element: <DepartmentDash />,
+      },
+
+      {
+        path: "/hr/leaves/leave-reports",
+        element: <DepartmentDash />,
+      },
+
       {
         path: "/hr/payroll",
         element: <DepartmentDash />,

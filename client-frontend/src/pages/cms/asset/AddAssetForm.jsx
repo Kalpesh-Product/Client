@@ -163,8 +163,7 @@ const AddAssetForm = ({ title, handleClose, user }) => {
                   sx={{
                     borderRadius: 2,
                     fontFamily: "Popins-SemiBold",
-                  }}
-                >
+                  }}>
                   <div className="flex justify-end align-middle mb-4">
                     {/* <Typography
                       sx={{ fontFamily: "Popins-SemiBold" }}
@@ -194,8 +193,7 @@ const AddAssetForm = ({ title, handleClose, user }) => {
                           select
                           fullWidth
                           value={formData.department}
-                          onChange={handleChange}
-                        >
+                          onChange={handleChange}>
                           {user.department === "TopManagement"
                             ? departments.map((dept, index) => {
                                 return (
@@ -221,8 +219,7 @@ const AddAssetForm = ({ title, handleClose, user }) => {
                           fullWidth
                           value={formData.category}
                           onChange={handleCategoryChange}
-                          sx={{ textAlign: "start" }}
-                        >
+                          sx={{ textAlign: "start" }}>
                           {assetTypes.map((type, index) => (
                             <MenuItem key={index} value={type}>
                               {type}
@@ -308,7 +305,7 @@ const AddAssetForm = ({ title, handleClose, user }) => {
                           <DatePicker
                             label="Purchase Date"
                             value={formData.purchaseDate}
-                            sx={{width:'100%'}}
+                            sx={{ width: "100%" }}
                             onChange={(newDate) => {
                               if (newDate) {
                                 setFormData({
@@ -319,10 +316,7 @@ const AddAssetForm = ({ title, handleClose, user }) => {
                             }}
                             format="DD/MM/YYYY" // Display format in the DatePicker
                             renderInput={(params) => (
-                              <TextField
-                                {...params}
-                                className="w-full"
-                              />
+                              <TextField {...params} className="w-full" />
                             )}
                           />
                         </LocalizationProvider>
@@ -346,8 +340,7 @@ const AddAssetForm = ({ title, handleClose, user }) => {
                           name="location"
                           fullWidth
                           value={formData.location}
-                          onChange={handleChange}
-                        >
+                          onChange={handleChange}>
                           {locations.map((location, index) => (
                             <MenuItem key={index} value={location}>
                               {location}
@@ -356,27 +349,25 @@ const AddAssetForm = ({ title, handleClose, user }) => {
                         </TextField>
                       </Grid>
                       <Grid item xs={12}>
-                      <div>
-                        <TextField
-                          id="asset-invoice"
-                          type="file"
-                          label="Invoice"
-                          focused
-                          name="image"
-                          accept="image/*"
-                          className="border-none mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
-                        />
-                      </div>
+                        <div>
+                          <TextField
+                            id="asset-invoice"
+                            type="file"
+                            label="Invoice"
+                            focused
+                            name="image"
+                            accept="image/*"
+                            className="border-none mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+                          />
+                        </div>
                       </Grid>
                       {/* Invoice */}
-      
                     </div>
                     {/* Submit Button */}
                     <div className="mt-4">
                       <button
                         type="submit"
-                        className="p-2 wono-blue-dark text-white rounded-md w-full"
-                      >
+                        className="p-2 wono-blue-dark text-white rounded-md w-full">
                         Next
                       </button>
                     </div>
@@ -404,8 +395,7 @@ const AddAssetForm = ({ title, handleClose, user }) => {
                             columns[0].push(
                               <div
                                 key={key}
-                                className="flex justify-between py-2 border-b"
-                              >
+                                className="flex justify-between py-2 border-b">
                                 <h1 className="font-semibold">
                                   {formattedKey}
                                 </h1>
@@ -416,8 +406,7 @@ const AddAssetForm = ({ title, handleClose, user }) => {
                             columns[1].push(
                               <div
                                 key={key}
-                                className="flex justify-between py-2 border-b"
-                              >
+                                className="flex justify-between py-2 border-b">
                                 <h1 className="font-semibold">
                                   {formattedKey}
                                 </h1>

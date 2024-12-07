@@ -175,8 +175,7 @@ export default function BookingForm({
                         variant="contained"
                         color="primary"
                         onClick={handleNext}
-                        className="w-full py-2 font-bold mt-4"
-                      >
+                        className="w-full py-2 font-bold mt-4">
                         Next
                       </Button>
                     </div>
@@ -194,8 +193,7 @@ export default function BookingForm({
                         onChange={handleSeatsChange}
                         displayEmpty
                         sx={{ marginBottom: "0.5rem" }}
-                        inputProps={{ "aria-label": "Select Seat Count" }}
-                      >
+                        inputProps={{ "aria-label": "Select Seat Count" }}>
                         <MenuItem value="">
                           <em>Select Seat Count</em>
                         </MenuItem>
@@ -218,8 +216,7 @@ export default function BookingForm({
                         <RadioGroup
                           name="room"
                           value={newMeeting.room || ""}
-                          onChange={handleChange}
-                        >
+                          onChange={handleChange}>
                           {filteredRooms.map((room) => (
                             <FormControlLabel
                               key={room.id}
@@ -237,8 +234,7 @@ export default function BookingForm({
                         variant="contained"
                         color="primary"
                         onClick={handleNext}
-                        className="w-full py-2 font-bold mt-4"
-                      >
+                        className="w-full py-2 font-bold mt-4">
                         Next
                       </Button>
                     </div>
@@ -299,8 +295,7 @@ export default function BookingForm({
                         variant="contained"
                         color="primary"
                         className="w-full py-2 font-bold mt-4"
-                        onClick={handleNext}
-                      >
+                        onClick={handleNext}>
                         Next
                       </Button>
                     </div>
@@ -347,8 +342,7 @@ export default function BookingForm({
                       variant="contained"
                       color="primary"
                       className="col-span-full py-2 font-bold"
-                      onClick={handleSubmit}
-                    >
+                      onClick={handleSubmit}>
                       Confirm & Submit
                     </Button>
                   </div>
