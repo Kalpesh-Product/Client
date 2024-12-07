@@ -79,17 +79,17 @@ const csvHeaders = [
 ];
 
 export default function PayRollDash() {
-  const [loggedInUser, setLoggedInUser] = useState("");
+  const [loggedInUser, setLoggedInUser] = useState(null); // Initialize as null
   const [selectedDept, setSelectedDept] = useState("all");
   const [payrolls, setPayrolls] = useState(dummyData);
 
   useEffect(() => {
-    const loggedInUser = localStorage.getItem("user");
-    setLoggedInUser(JSON.parse(loggedInUser));
+    const user = localStorage.getItem("user");
+    setLoggedInUser(JSON.parse(user));
   }, []);
 
   const examplePayroll = {
-    employeeName: loggedInUser.name,
+    employeeName: loggedInUser?.name || "",
     payPeriod: "01 Nov 2024 - 30 Nov 2024",
     grossSalary: 5000.0,
     deductions: 750.0,
@@ -110,68 +110,81 @@ export default function PayRollDash() {
     }
   };
 
+  if (!loggedInUser) {
+    return <div>Loading...</div>; // Handle case where user data is not yet loaded
+  }
+
+  const isAdmin =
+    loggedInUser.role === "Master Admin" || loggedInUser.role === "Super Admin";
+
   return (
     <div className="p-4 bg-gray-100 w-[80vw] md:w-full mt-4">
-      <div className="w-full flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-semibold">Payroll</h1>
-      </div>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-        {widgets.map((item) => {
-          return (
-            <PayrollWidgets
-              key={item.id}
-              title={item.title}
-              content={item.content}
+      {isAdmin ? (
+        <>
+          <div className="w-full flex justify-between items-center mb-6">
+            <h1 className="text-2xl font-semibold">Payroll</h1>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+            {widgets.map((item) => {
+              return (
+                <PayrollWidgets
+                  key={item.id}
+                  title={item.title}
+                  content={item.content}
+                />
+              );
+            })}
+          </div>
+          <div className="flex flex-col lg:flex-row gap-4 bg-gray-100 w-full">
+            <div className="bg-white rounded-lg shadow-md flex-1 p-4 max-w-full lg:max-w-full">
+              <DepartmentPayrollChart />
+            </div>
+            <div className="bg-white rounded-lg shadow-md flex-1 p-4 max-w-full lg:max-w-full">
+              <PayrollSummary />
+            </div>
+          </div>
+          <div className="bg-white rounded-md p-2 mt-4 flex flex-col gap-2">
+            <div className="flex justify-between items-center">
+              <FormControl className="w-full md:w-1/4">
+                <Select
+                  labelId="dept-filter-label"
+                  size="small"
+                  value={selectedDept}
+                  onChange={handleDepartmentChange}
+                  className="bg-white"
+                >
+                  <MenuItem value="all">All Departments</MenuItem>
+                  <MenuItem value="Human Resources">HR</MenuItem>
+                  <MenuItem value="Tech">Tech</MenuItem>
+                  <MenuItem value="Information Technology">IT</MenuItem>
+                  <MenuItem value="Marketing">Marketing</MenuItem>
+                  <MenuItem value="Sales">Sales</MenuItem>
+                </Select>
+              </FormControl>
+              <CSVLink
+                filename="payrolls_report.csv"
+                data={payrolls}
+                headers={csvHeaders}
+                className="flex items-center justify-center wono-blue-dark hover:bg-blue-700 text-white text-sm font-bold p-4 rounded h-9"
+              >
+                Export
+              </CSVLink>
+            </div>
+            <AgTable
+              data={payrolls} // Use filtered data
+              columns={columns}
+              paginationPageSize={10}
+              highlightFirstRow={false}
+              highlightEditedRow={false}
             />
-          );
-        })}
-      </div>
-      <div className="flex flex-col lg:flex-row gap-4 bg-gray-100 w-full">
-        <div className="bg-white rounded-lg shadow-md flex-1 p-4 max-w-full lg:max-w-full">
-          <DepartmentPayrollChart />
-        </div>
-        <div className="bg-white rounded-lg shadow-md flex-1 p-4 max-w-full lg:max-w-full">
-          <PayrollSummary />
-        </div>
-      </div>
-      <div className="bg-white rounded-md p-2 mt-4 flex flex-col gap-2">
-        <div className="flex justify-between items-center">
-          <FormControl className="w-full md:w-1/4">
-            <Select
-              labelId="dept-filter-label"
-              size="small"
-              value={selectedDept}
-              onChange={handleDepartmentChange}
-              className="bg-white"
-            >
-              <MenuItem value="all">All Departments</MenuItem>
-              <MenuItem value="Human Resources">HR</MenuItem>
-              <MenuItem value="Tech">Tech</MenuItem>
-              <MenuItem value="Information Technology">IT</MenuItem>
-              <MenuItem value="Marketing">Marketing</MenuItem>
-              <MenuItem value="Sales">Sales</MenuItem>
-            </Select>
-          </FormControl>
-          <CSVLink
-            filename="payrolls_report.csv"
-            data={payrolls}
-            headers={csvHeaders}
-            className="flex items-center justify-center wono-blue-dark hover:bg-blue-700 text-white text-sm font-bold p-4 rounded h-9"
-          >
-            Export
-          </CSVLink>
-        </div>
-        <AgTable
-          data={payrolls} // Use filtered data
-          columns={columns}
-          paginationPageSize={10}
-          highlightFirstRow={false}
-          highlightEditedRow={false}
-        />
-      </div>
-      <div className="mt-4">
-        <PayrollTimeLine />
-      </div>
+          </div>
+          <div className="mt-4">
+            <PayrollTimeLine />
+          </div>
+        </>
+      ) : null}
+
+      {/* Components visible to all users */}
       <MyPayroll payrollDetails={examplePayroll} />
       <div>
         <MyPayslips />
