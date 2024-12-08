@@ -8,12 +8,12 @@ const ClientHeader = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [image, setImage] = useState("");
   const [isModelOpen, setIsModalOpen] = useState(false);
-  const [user, setUser] = useState("")
+  const [user, setUser] = useState("");
 
-  useEffect(()=>{
-    const storedUser = JSON.parse(localStorage.getItem("user"))
-    setUser(storedUser)
-  },[])
+  useEffect(() => {
+    const storedUser = JSON.parse(localStorage.getItem("user"));
+    setUser(storedUser);
+  }, []);
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -56,11 +56,24 @@ const ClientHeader = () => {
         {/* Navigation Links */}
         <nav className="flex justify-start py-0 items-center">
           {/* Avatar Menu Trigger */}
+          <h1 className="text-white">Timer here</h1>
           <IconButton onClick={handleMenuOpen} sx={{ py: 0 }}>
-            <Avatar className="wono-blue-dark" alt={user.name} src="/path-to-avatar.jpg" />
-            <Typography onClick={()=>{
-              setAnchorEl(null)
-              }} variant="h6" sx={{px:'1rem',py:'0',color:'white'}}>{user.name}</Typography>
+            <Avatar
+              className="wono-blue-dark"
+              alt={user.name}
+              src="/path-to-avatar.jpg"
+            />
+            <div>
+            <Typography
+              onClick={() => {
+                setAnchorEl(null);
+              }}
+              variant="h6"
+              sx={{ py: "0", color: "white" }}
+            >
+              {user.name}
+            </Typography>
+            </div>
           </IconButton>
 
           {/* Menu */}
@@ -78,21 +91,22 @@ const ClientHeader = () => {
             }}
           >
             <div className="py-0">
-        
-            <MenuItem onClick={() => {
-              navigate("/landing");
-              setAnchorEl(null)
-            }}>
-              <Typography>Home</Typography>
-            </MenuItem>
-            <MenuItem
-              onClick={() => {
-                handleLogout();
-                handleMenuClose();
-              }}
-            >
-              <Typography>Logout</Typography>
-            </MenuItem>
+              <MenuItem
+                onClick={() => {
+                  navigate("/landing");
+                  setAnchorEl(null);
+                }}
+              >
+                <Typography>Home</Typography>
+              </MenuItem>
+              <MenuItem
+                onClick={() => {
+                  handleLogout();
+                  handleMenuClose();
+                }}
+              >
+                <Typography>Logout</Typography>
+              </MenuItem>
             </div>
           </Menu>
         </nav>
