@@ -205,7 +205,7 @@ const ModuleSidebar = ({ mainSideBar }) => {
     {
       title: "Tickets",
       index: 1,
-      route: "/customer/tickets",
+      route: "/it/tickets",
       icon: <HiOutlineClipboardList />,
       subMenus: [
         ...(user.role === "Employee" && user.department === "Finance"
@@ -213,14 +213,14 @@ const ModuleSidebar = ({ mainSideBar }) => {
           : [
               {
                 title: "View Tickets",
-                route: "/customer/tickets/view-tickets",
+                route: "/it/tickets/view-tickets",
                 icon: <HiOutlineClipboardList />,
               },
             ]),
         ,
         {
           title: "My Tickets",
-          route: "/customer/tickets/my-tickets",
+          route: "/it/tickets/my-tickets",
           icon: <HiOutlineClipboardList />,
         },
         ...(user.role === "Employee"
@@ -228,7 +228,7 @@ const ModuleSidebar = ({ mainSideBar }) => {
           : [
               {
                 title: "Members",
-                route: "/customer/tickets/members",
+                route: "/it/tickets/members",
                 icon: <MdOutlineManageAccounts />,
               },
             ]),
@@ -238,7 +238,7 @@ const ModuleSidebar = ({ mainSideBar }) => {
           : [
               {
                 title: "Reports",
-                route: "/customer/tickets/ticket-reports",
+                route: "/it/tickets/ticket-reports",
                 icon: <HiOutlineClipboardList />,
               },
             ]),
@@ -247,12 +247,12 @@ const ModuleSidebar = ({ mainSideBar }) => {
     {
       title: "Meetings",
       index: 2,
-      route: "/customer/meetings",
+      route: "/it/meetings",
       icon: <MdMeetingRoom />,
       subMenus: [
         {
           title: "Calendar",
-          route: "/customer/meetings/booking",
+          route: "/it/meetings/booking",
           icon: <FaRegCalendarAlt />,
         },
         ...(user.department === "Tech"
@@ -260,19 +260,19 @@ const ModuleSidebar = ({ mainSideBar }) => {
           : [
               {
                 title: "Add new Room",
-                route: "/customer/meetings/add-room",
+                route: "/it/meetings/add-room",
                 icon: <FaPlus />,
               },
             ]),
 
         {
           title: "My Bookings",
-          route: "/customer/meetings/my-bookings",
+          route: "/it/meetings/my-bookings",
           icon: <CiBookmarkCheck />,
         },
         {
           title: "Reports",
-          route: "/customer/meetings/reports",
+          route: "/it/meetings/reports",
           icon: <TbReportSearch />,
         },
       ],

@@ -12,6 +12,8 @@ import MyTickets from "./cms/tickets/components/MyTickets";
 import MyBookings from "./cms/room-booking/MyBookings";
 import MyAssets from "../pages/cms/asset/MyAssets";
 import { NewModal } from "../components/NewModal";
+import { motion } from "framer-motion";
+import { IoMdClose } from "react-icons/io";
 // import image from "../profile.jpg";
 
 const Profile = () => {
@@ -339,7 +341,24 @@ const Profile = () => {
           open={uploadProfileImage}
           onClose={() => setUploadProfileImage(false)}>
           <div className="bg-white p-6 rounded-lg w-80">
-            <h3 className="text-xl font-semibold mb-4">Upload Profile Image</h3>
+            <div className="flex justify-between pb-8 items-center">
+              <div>
+                <h3 className="text-xl font-semibold mb-4">
+                  Upload Profile Image
+                </h3>
+              </div>
+              <div>
+                {/* Close button */}
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.9 }}
+                  type="button"
+                  onClick={() => setUploadProfileImage(false)}
+                  className=" p-2 bg-white text-[red] border border-red-200 hover:border-red-400 text-2xl rounded-md mr-1">
+                  <IoMdClose />
+                </motion.button>
+              </div>
+            </div>
             <input
               type="file"
               accept="image/*"
@@ -349,7 +368,7 @@ const Profile = () => {
             <button
               onClick={() => setUploadProfileImage(false)}
               className="mt-4 w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600">
-              Close
+              Save
             </button>
           </div>
         </NewModal>
