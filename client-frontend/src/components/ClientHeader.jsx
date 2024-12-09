@@ -2,9 +2,11 @@ import React, { useEffect, useState } from "react";
 import BiznestLogo from "../LandingPageImages/biz-nest.png";
 import { Avatar, Menu, MenuItem, Typography, IconButton } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { useTimer } from "../contexts/TimerContext";
 
 const ClientHeader = () => {
   const navigate = useNavigate();
+  const {timer, isRunning} = useTimer()
   const [anchorEl, setAnchorEl] = useState(null);
   const [image, setImage] = useState("");
   const [isModelOpen, setIsModalOpen] = useState(false);
@@ -56,7 +58,9 @@ const ClientHeader = () => {
         {/* Navigation Links */}
         <nav className="flex justify-start py-0 items-center">
           {/* Avatar Menu Trigger */}
-          <h1 className="text-white">Timer here</h1>
+          {isRunning ? (
+            <h1 className="text-white">{timer}</h1>
+          ) : ""}
           <IconButton onClick={handleMenuOpen} sx={{ py: 0 }}>
             <Avatar
               className="wono-blue-dark"
