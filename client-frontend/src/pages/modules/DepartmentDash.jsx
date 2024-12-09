@@ -356,7 +356,7 @@ const DepartmentDash = () => {
               ? "IT Assets"
               : "Maintainence Assets"
           }
-          route={"/customer/asset/manage"}
+          route={"/it/asset/manage"}
           count={customerServiceWidgetsData.totalAssets}
         />,
         // ...(user.department !== "TopManagement"
@@ -368,11 +368,11 @@ const DepartmentDash = () => {
         //     ]
         //   : []), // Conditionally include MaintenanceRequests
         <AssetsAssigned
-          route={"/customer/asset/manage"}
+          route={"/it/asset/manage"}
           assigned={customerServiceWidgetsData.assignedAssets}
         />,
         <AssetsInRepair
-          route={"/customer/asset/manage"}
+          route={"/it/asset/manage"}
           count={customerServiceWidgetsData.assetsInRepair}
         />,
       ],
@@ -884,7 +884,7 @@ const DepartmentDash = () => {
                       <h2 className="text-2xl  font-bold ">Today's Tickets</h2>
                       <button
                         className="py-1 px-2 text-sm wono-blue-dark text-white rounded-md "
-                        onClick={() => navigate("/customer/tickets/my-tickets")}
+                        onClick={() => navigate("/it/tickets/my-tickets")}
                       >
                         View All
                       </button>
@@ -896,39 +896,39 @@ const DepartmentDash = () => {
                   {/* <p>x</p> */}
                 </div>
               </>
-            ) : location.pathname === "/customer/tickets/my-tickets" ? (
+            ) : location.pathname === "/it/tickets/my-tickets" ? (
               <>
                 <MyTicketsPage />
               </>
-            ) : location.pathname === "/customer/tickets/view-tickets" ? (
+            ) : location.pathname === "/it/tickets/view-tickets" ? (
               <>
                 <ViewTickets />
               </>
-            ) : location.pathname === "/customer/tickets/members" ? (
+            ) : location.pathname === "/it/tickets/members" ? (
               <>
                 <TicketMembers />
               </>
-            ) : location.pathname === "/customer/tickets/ticket-reports" ? (
+            ) : location.pathname === "/it/tickets/ticket-reports" ? (
               <>
                 <TicketReports />
               </>
-            ) : location.pathname === "/customer/meetings" ? (
+            ) : location.pathname === "/it/meetings" ? (
               <>
                 <RoomBookingDash />
               </>
-            ) : location.pathname === "/customer/meetings/booking" ? (
+            ) : location.pathname === "/it/meetings/booking" ? (
               <>
                 <Listing />
               </>
-            ) : location.pathname === "/customer/meetings/add-room" ? (
+            ) : location.pathname === "/it/meetings/add-room" ? (
               <>
                 <AddRooms />
               </>
-            ) : location.pathname === "/customer/meetings/reports" ? (
+            ) : location.pathname === "/it/meetings/reports" ? (
               <>
                 <BookingReports />
               </>
-            ) : location.pathname === "/customer/meetings/my-bookings" ? (
+            ) : location.pathname === "/it/meetings/my-bookings" ? (
               <>
                 <MyBookings />
               </>

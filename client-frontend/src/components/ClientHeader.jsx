@@ -73,7 +73,7 @@ const ClientHeader = () => {
                 setAnchorEl(null);
               }}
               variant="h6"
-              sx={{ py: "0", color: "white" }}
+              sx={{ px:2,py: "0", color: "white" }}
             >
               {user.name}
             </Typography>
