@@ -109,7 +109,7 @@ const ModuleSidebar = ({ mainSideBar }) => {
   const hrModules = [
     {
       title: "Attendance",
-      route: "#hr/leave-requests",
+      route: "/hr/attendance",
       icon: <HiOutlineClipboardList />,
     },
     {
@@ -146,7 +146,7 @@ const ModuleSidebar = ({ mainSideBar }) => {
     },
     {
       title: "Payroll",
-      route: "#hr/payroll",
+      route: "/hr/payroll",
       icon: <HiCurrencyDollar />,
     },
   ];
@@ -155,7 +155,7 @@ const ModuleSidebar = ({ mainSideBar }) => {
     {
       title: "Assets",
       index: 0,
-      route: "/customer/kpi",
+      route: "/it/kpi",
       icon: <AiOutlineProduct />,
       subMenus: [
         ...(user.department === "IT" ||
@@ -165,19 +165,19 @@ const ModuleSidebar = ({ mainSideBar }) => {
           ? [
               {
                 title: "Manage Asset",
-                route: "/customer/asset/manage",
+                route: "/it/asset/manage",
                 icon: <MdOutlineManageAccounts />,
               },
             ]
           : []),
         {
           title: "My Assets",
-          route: "/customer/asset/my-assets",
+          route: "/it/asset/my-assets",
           icon: <FaRegUser />,
         },
         {
           title: "Reports",
-          route: "/customer/asset/reports",
+          route: "/it/asset/reports",
           icon: <TbReportSearch />,
         },
       ],
@@ -368,7 +368,7 @@ const ModuleSidebar = ({ mainSideBar }) => {
     modules = frontendModules;
   } else if (passedDepartment === "hr") {
     modules = hrModules;
-  } else if (passedDepartment === "customer") {
+  } else if (passedDepartment === "it") {
     modules = itModules;
   } else if (passedDepartment === "tasks") {
     taskModules = tasks;
@@ -475,10 +475,10 @@ const ModuleSidebar = ({ mainSideBar }) => {
             placement="right">
             <button
               onClick={toggleSidebar}
-              className={`text-black text-[0.8rem] p-2 focus:outline-none text-end absolute top-[0.6rem] ${
+              className={`text-black text-[0.8rem] p-2 hover:block  focus:outline-none text-end absolute top-[0.6rem] ${
                 isSidebarOpen ? "left-[11rem]" : "left-[3.2rem]"
               } `}>
-              {isSidebarOpen ? <FaArrowLeft /> : <FaArrowRightToBracket />}
+              {isSidebarOpen ? <FaArrowLeft/> : <FaArrowRightToBracket  />}
             </button>
           </Tooltip>
 

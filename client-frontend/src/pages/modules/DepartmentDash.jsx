@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import ModuleSidebar from "../../components/ModuleSidebar";
 import { useLocation, useParams, useNavigate } from "react-router-dom";
 import TestSide from "../../components/Sidetest";
+import PayRollDash from "../hr/payroll/PayRollDash";
 import {
   ActiveTickets,
   CriticalAlerts,
@@ -86,6 +87,7 @@ import MyBookings from "../cms/room-booking/MyBookings";
 import { TicketsRemainingWidget } from "../cms/tickets/components/TicketWidgets/TicketsRemainingWidget";
 import MyTickets from "../cms/tickets/components/MyTickets";
 import Budget from "../Budget";
+import AttendanceDash from "../hr/attendance/AttendanceDash";
 import LeaveWidgets from "../hr/leaves/Components/LeaveWidgets";
 import LeaveWidget2 from "../hr/leaves/Components/LeaveWidget2";
 import LeaveWidget3 from "../hr/leaves/Components/LeaveWidget3";
@@ -445,7 +447,8 @@ const DepartmentDash = () => {
                     "& .MuiTabs-indicator": {
                       backgroundColor: "#0db4ea", // Custom indicator color
                     },
-                  }}>
+                  }}
+                >
                   <Tab label="Home" />
                   <Tab label="About" />
                   <Tab label="Gallery" />
@@ -506,7 +509,8 @@ const DepartmentDash = () => {
                   {products.map((product) => (
                     <div
                       key={product.id}
-                      className="bg-gray-100 rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+                      className="bg-gray-100 rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow"
+                    >
                       <img
                         src={product.image}
                         alt={product.name}
@@ -564,6 +568,10 @@ const DepartmentDash = () => {
                   />
                 ))}
               </div>
+            ) : location.pathname === "/hr/attendance" ? (
+              <>
+                <AttendanceDash />
+              </>
             ) : location.pathname === "/hr/leaves" ? (
               <>
                 {/* <MyBookings /> */}
@@ -661,6 +669,14 @@ const DepartmentDash = () => {
                 </div>
                 <PendingLeaves />
               </>
+            ) : location.pathname === "/hr/payroll" ? (
+              <>
+                <PayRollDash />
+              </>
+            ) : location.pathname === "/hr/payroll" ? (
+              <>
+                <PayRollDash />
+              </>
             ) : (
               <></>
             )}
@@ -696,10 +712,10 @@ const DepartmentDash = () => {
           </>
         )}
         {/* IT submodules */}
-        {location.pathname.startsWith("/customer") && (
+        {location.pathname.startsWith("/it") && (
           <>
-            {location.pathname === "/customer" ||
-            location.pathname === "/customer/dashboard" ? (
+            {location.pathname === "/it" ||
+            location.pathname === "/it/dashboard" ? (
               <div className="bg-gray-100 p-4 rounded-lg  mt-4 flex flex-col gap-4">
                 <div className="bg-white rounded-md p-2">
                   {customerServiceWidgets
@@ -751,7 +767,7 @@ const DepartmentDash = () => {
                   />
                 ))}
               </div>
-            ) : location.pathname === "/customer/kpi" ? (
+            ) : location.pathname === "/it/kpi" ? (
               <>
                 <div className="bg-gray-100 p-4 rounded-lg  mt-4 h-[90vh] overflow-y-auto">
                   <div className="mb-8 flex justify-between">
@@ -783,27 +799,27 @@ const DepartmentDash = () => {
                   <AssetAllocationWidget />
                 </div>
               </>
-            ) : location.pathname === "/customer/asset/view" ? (
+            ) : location.pathname === "/it/asset/view" ? (
               <>
                 <ViewAssets />
               </>
-            ) : location.pathname === "/customer/asset/reports" ? (
+            ) : location.pathname === "/it/asset/reports" ? (
               <>
                 <AssetReports />
               </>
-            ) : location.pathname === "/customer/asset/manage" ? (
+            ) : location.pathname === "/it/asset/manage" ? (
               <>
                 <ManageAsset />
               </>
-            ) : location.pathname === "/customer/asset/my-assets" ? (
+            ) : location.pathname === "/it/asset/my-assets" ? (
               <>
                 <MyAssets />
               </>
-            ) : location.pathname === "/customer/asset/details" ? (
+            ) : location.pathname === "/it/asset/details" ? (
               <>
                 <AssetsData />
               </>
-            ) : location.pathname === "/customer/tickets" ? (
+            ) : location.pathname === "/it/tickets" ? (
               <>
                 <div className="bg-gray-100 p-4 rounded-lg mt-4">
                   <div className="mb-8 flex justify-between">
@@ -868,9 +884,8 @@ const DepartmentDash = () => {
                       <h2 className="text-2xl  font-bold ">Today's Tickets</h2>
                       <button
                         className="py-1 px-2 text-sm wono-blue-dark text-white rounded-md "
-                        onClick={() =>
-                          navigate("/customer/tickets/my-tickets")
-                        }>
+                        onClick={() => navigate("/customer/tickets/my-tickets")}
+                      >
                         View All
                       </button>
                     </div>
@@ -960,7 +975,8 @@ const DepartmentDash = () => {
           open={openTicket}
           onClose={handleCloseTicket}
           aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description">
+          aria-describedby="modal-modal-description"
+        >
           {/* <Box sx={style}> */}
           <Box sx={style}>
             <AddTicketForm />

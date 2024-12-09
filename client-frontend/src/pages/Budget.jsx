@@ -195,6 +195,7 @@ const expenseColumns = [
         </>
       ) : location.pathname === "/frontend/budget/overview" ? (
         <div className="p-6">
+          <h1 className="wono-title">Budget</h1>
           <div className="grid grid-cols-2 gap-2 my-2">
             {/* Widget:1 */}
             <div className="p-4 bg-gray-50 border rounded-lg shadow-sm">

@@ -74,35 +74,35 @@ const router = createBrowserRouter([
         element: <DepartmentDash />,
       },
       {
-        path: "/customer/asset",
+        path: "/it/asset",
         element: <DepartmentDash />,
       },
       {
-        path: "/customer/asset/details",
+        path: "/it/asset/details",
         element: <DepartmentDash />,
       },
       {
-        path: "/customer/asset/view",
+        path: "/it/asset/view",
         element: <DepartmentDash />,
       },
       {
-        path: "/customer/asset/manage",
+        path: "/it/asset/manage",
         element: <DepartmentDash />,
       },
       {
-        path: "/customer/asset/my-assets",
+        path: "/it/asset/my-assets",
         element: <DepartmentDash />,
       },
       {
-        path: "/customer/asset/reports",
+        path: "/it/asset/reports",
         element: <DepartmentDash />,
       },
       {
-        path: "/customer/dashboard",
+        path: "/it/dashboard",
         element: <DepartmentDash />,
       },
       {
-        path: "/customer/kpi",
+        path: "/it/kpi",
         element: <DepartmentDash />,
       },
       {
@@ -134,6 +134,9 @@ const router = createBrowserRouter([
         element: <DepartmentDash />,
       },
       {
+        path: "/hr/attendance",
+        element: <DepartmentDash />,
+      },      {
         path: "/hr/leaves/pending-leaves",
         element: <DepartmentDash />,
       },
@@ -148,7 +151,12 @@ const router = createBrowserRouter([
       },
 
       {
-        path: "/cms/dashboard",
+        path: "/hr/payroll",
+        element: <DepartmentDash />,
+      },
+
+      {
+        path: "/it/dashboard",
         element: <DepartmentDash />,
       },
       {
