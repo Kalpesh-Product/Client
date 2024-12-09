@@ -149,6 +149,26 @@ const ModuleSidebar = ({ mainSideBar }) => {
       route: "/hr/payroll",
       icon: <HiCurrencyDollar />,
     },
+    {
+      title: "Payslip",
+      route: "/hr/payslips",
+      icon: <HiCurrencyDollar />,
+    },
+    {
+      title: "SOP",
+      route: "/hr/sops",
+      icon: <HiCurrencyDollar />,
+    },
+    {
+      title: "Policies",
+      route: "/hr/policies",
+      icon: <HiCurrencyDollar />,
+    },
+    {
+      title: "Holidays",
+      route: "/hr/holidays",
+      icon: <HiCurrencyDollar />,
+    },
   ];
 
   const itModules = [
@@ -478,7 +498,7 @@ const ModuleSidebar = ({ mainSideBar }) => {
               className={`text-black text-[0.8rem] p-2 hover:block  focus:outline-none text-end absolute top-[0.6rem] ${
                 isSidebarOpen ? "left-[11rem]" : "left-[3.2rem]"
               } `}>
-              {isSidebarOpen ? <FaArrowLeft/> : <FaArrowRightToBracket  />}
+              {isSidebarOpen ? <FaArrowLeft /> : <FaArrowRightToBracket />}
             </button>
           </Tooltip>
 

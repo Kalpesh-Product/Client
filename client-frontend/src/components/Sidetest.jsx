@@ -165,7 +165,7 @@ const TestSide = () => {
       "CAFE (F&B)",
       "MAINTENANCE",
       "LEGAL",
-      "IT"
+      "IT",
     ],
     Tech: ["FRONTEND", "CMS"],
     Finance: ["FINANCE", "CMS"],
@@ -174,7 +174,7 @@ const TestSide = () => {
     CMS: ["CMS"],
     Marketing: ["MARKETING"],
     Cafe: ["CAFE (F&B)"],
-    IT: ["IT", "HUMAN RESOURCE","FINANCE" ],
+    IT: ["IT", "HUMAN RESOURCE", "FINANCE"],
     Maintainance: ["CMS"],
     Legal: ["LEGAL"],
   };
@@ -193,8 +193,7 @@ const TestSide = () => {
     <div
       className={` ${
         isSidebarOpen ? "w-60" : "w-20"
-      } bg-white  border-gray-300 text-black flex flex-shrink-0  overflow-y-auto transition-all duration-300 z-[1]`}
-    >
+      } bg-white  border-gray-300 text-black flex flex-shrink-0  overflow-y-auto transition-all duration-300 z-[1]`}>
       <div className="flex relative w-full">
         {/*Dashboard */}
         <div className="mt-5 px-3 flex flex-col gap-2 w-full">
@@ -229,8 +228,7 @@ const TestSide = () => {
                   navigate(filteredDepartments[0].route, {
                     state: { departmentName: filteredDepartments[0].name },
                   });
-                }}
-              >
+                }}>
                 <div className="flex justify-center w-6 text-[1.3rem]">
                   {filteredDepartments[0].icon}
                 </div>
@@ -253,8 +251,7 @@ const TestSide = () => {
                     location.pathname === "/:department"
                       ? "wono-blue rounded-md wono-blue-text"
                       : "bg-white"
-                  }`}
-                >
+                  }`}>
                   {isSidebarOpen ? (
                     <div className="flex items-center justify-center">
                       <div className="flex justify-center w-6 text-2xl">
@@ -275,8 +272,7 @@ const TestSide = () => {
                       stroke="currentColor"
                       className={`w-4 h-4 ml-3 transform ${
                         isDepartmentsOpen ? "rotate-180" : ""
-                      }`}
-                    >
+                      }`}>
                       <path
                         strokeLinecap="round"
                         strokeLinejoin="round"
@@ -293,8 +289,7 @@ const TestSide = () => {
                   <ul
                     className={`cursor-pointer ${
                       isSidebarOpen ? "px-3" : "px-0"
-                    }`}
-                  >
+                    }`}>
                     {filteredDepartments.map((dept, index) => (
                       <Tooltip title={dept.name} placement="right" key={index}>
                         <div
@@ -304,8 +299,7 @@ const TestSide = () => {
                               state: { departmentName: dept.name },
                             });
                           }}
-                          className={`flex items-center border-b-[1px] py-3 gap-3 hover:wono-blue-dark pl-[1rem] hover:text-white hover:rounded-md`}
-                        >
+                          className={`flex items-center border-b-[1px] py-3 gap-3 hover:wono-blue-dark pl-[1rem] hover:text-white hover:rounded-md`}>
                           <div className="flex justify-center w-6 text-[1.3rem]">
                             {dept.icon}
                           </div>

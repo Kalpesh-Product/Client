@@ -95,6 +95,7 @@ import LeaveWidget4 from "../hr/leaves/Components/LeaveWidget4";
 import PendingLeaves from "../hr/leaves/Components/PendingLeaves";
 import MyLeaves from "../hr/leaves/MyLeaves";
 import LeaveReports from "../hr/leaves/LeaveReports";
+import Holidays from "../hr/holidays/Holidays";
 
 const DepartmentDash = () => {
   const navigate = useNavigate();
@@ -618,16 +619,16 @@ const DepartmentDash = () => {
                   {user.role === "Admin" && (
                     <div className="flex w-full flex-1 flex-grow gap-x-4">
                       {/* <TicketsRemainingWidget
-            totalStock={120}
-            remainingStock={100}
-            assetType="Tickets"
-          />
+                      totalStock={120}
+                      remainingStock={100}
+                      assetType="Tickets"
+                    />
 
-          <TicketsRemainingWidget
-            totalStock={3}
-            remainingStock={1}
-            assetType="Available Members"
-          /> */}
+                    <TicketsRemainingWidget
+                      totalStock={3}
+                      remainingStock={1}
+                      assetType="Available Members"
+                    /> */}
                     </div>
                   )}
                   {/* <AssetAllocationWidget /> */}
@@ -669,6 +670,46 @@ const DepartmentDash = () => {
                     <h2 className="text-2xl  font-bold ">Leave Reports</h2>
                   </div>
                   <PendingLeaves />
+                </div>
+              </>
+            ) : location.pathname === "/hr/payslips" ? (
+              <>
+                {/* <LeaveReports /> */}
+                <div className="bg-gray-100 p-4 rounded-lg ">
+                  <div className="flex w-full  pb-4 pl-0 text-lg border-b-0  gap-4">
+                    <h2 className="text-2xl  font-bold ">Payslip</h2>
+                  </div>
+                  <PendingLeaves />
+                </div>
+              </>
+            ) : location.pathname === "/hr/sops" ? (
+              <>
+                {/* <LeaveReports /> */}
+                <div className="bg-gray-100 p-4 rounded-lg ">
+                  <div className="flex w-full  pb-4 pl-0 text-lg border-b-0  gap-4">
+                    <h2 className="text-2xl  font-bold ">SOPs</h2>
+                  </div>
+                  <PendingLeaves />
+                </div>
+              </>
+            ) : location.pathname === "/hr/policies" ? (
+              <>
+                {/* <LeaveReports /> */}
+                <div className="bg-gray-100 p-4 rounded-lg ">
+                  <div className="flex w-full  pb-4 pl-0 text-lg border-b-0  gap-4">
+                    <h2 className="text-2xl  font-bold ">Policies</h2>
+                  </div>
+                  <PendingLeaves />
+                </div>
+              </>
+            ) : location.pathname === "/hr/holidays" ? (
+              <>
+                {/* <LeaveReports /> */}
+                <div className="bg-gray-100 p-4 rounded-lg ">
+                  <div className="flex w-full  pb-4 pl-0 text-lg border-b-0  gap-4">
+                    <h2 className="text-2xl  font-bold ">Holidays</h2>
+                  </div>
+                  <Holidays />
                 </div>
               </>
             ) : location.pathname === "/hr/payroll" ? (
