@@ -2,18 +2,20 @@ import React, { useEffect, useState } from "react";
 import BiznestLogo from "../LandingPageImages/biz-nest.png";
 import { Avatar, Menu, MenuItem, Typography, IconButton } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { useTimer } from "../contexts/TimerContext";
 
 const ClientHeader = () => {
   const navigate = useNavigate();
+  const {timer, isRunning} = useTimer()
   const [anchorEl, setAnchorEl] = useState(null);
   const [image, setImage] = useState("");
   const [isModelOpen, setIsModalOpen] = useState(false);
-  const [user, setUser] = useState("")
+  const [user, setUser] = useState("");
 
-  useEffect(()=>{
-    const storedUser = JSON.parse(localStorage.getItem("user"))
-    setUser(storedUser)
-  },[])
+  useEffect(() => {
+    const storedUser = JSON.parse(localStorage.getItem("user"));
+    setUser(storedUser);
+  }, []);
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -56,11 +58,26 @@ const ClientHeader = () => {
         {/* Navigation Links */}
         <nav className="flex justify-start py-0 items-center">
           {/* Avatar Menu Trigger */}
+          {isRunning ? (
+            <h1 className="text-white">{timer}</h1>
+          ) : ""}
           <IconButton onClick={handleMenuOpen} sx={{ py: 0 }}>
-            <Avatar className="wono-blue-dark" alt={user.name} src="/path-to-avatar.jpg" />
-            <Typography onClick={()=>{
-              setAnchorEl(null)
-              }} variant="h6" sx={{px:'1rem',py:'0',color:'white'}}>{user.name}</Typography>
+            <Avatar
+              className="wono-blue-dark"
+              alt={user.name}
+              src="/path-to-avatar.jpg"
+            />
+            <div>
+            <Typography
+              onClick={() => {
+                setAnchorEl(null);
+              }}
+              variant="h6"
+              sx={{ py: "0", color: "white" }}
+            >
+              {user.name}
+            </Typography>
+            </div>
           </IconButton>
 
           {/* Menu */}
@@ -78,21 +95,22 @@ const ClientHeader = () => {
             }}
           >
             <div className="py-0">
-        
-            <MenuItem onClick={() => {
-              navigate("/landing");
-              setAnchorEl(null)
-            }}>
-              <Typography>Home</Typography>
-            </MenuItem>
-            <MenuItem
-              onClick={() => {
-                handleLogout();
-                handleMenuClose();
-              }}
-            >
-              <Typography>Logout</Typography>
-            </MenuItem>
+              <MenuItem
+                onClick={() => {
+                  navigate("/landing");
+                  setAnchorEl(null);
+                }}
+              >
+                <Typography>Home</Typography>
+              </MenuItem>
+              <MenuItem
+                onClick={() => {
+                  handleLogout();
+                  handleMenuClose();
+                }}
+              >
+                <Typography>Logout</Typography>
+              </MenuItem>
             </div>
           </Menu>
         </nav>

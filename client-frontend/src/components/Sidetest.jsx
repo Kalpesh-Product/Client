@@ -165,6 +165,7 @@ const TestSide = () => {
       "CAFE (F&B)",
       "MAINTENANCE",
       "LEGAL",
+      "IT"
     ],
     Tech: ["FRONTEND", "CMS"],
     Finance: ["FINANCE", "CMS"],
