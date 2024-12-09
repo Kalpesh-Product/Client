@@ -447,8 +447,7 @@ const DepartmentDash = () => {
                     "& .MuiTabs-indicator": {
                       backgroundColor: "#0db4ea", // Custom indicator color
                     },
-                  }}
-                >
+                  }}>
                   <Tab label="Home" />
                   <Tab label="About" />
                   <Tab label="Gallery" />
@@ -509,8 +508,7 @@ const DepartmentDash = () => {
                   {products.map((product) => (
                     <div
                       key={product.id}
-                      className="bg-gray-100 rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow"
-                    >
+                      className="bg-gray-100 rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
                       <img
                         src={product.image}
                         alt={product.name}
@@ -656,18 +654,22 @@ const DepartmentDash = () => {
             ) : location.pathname === "/hr/leaves/my-leaves" ? (
               <>
                 {/* <MyLeaves /> */}
-                <div className="flex w-full p-4 pb-4 pl-0 text-lg border-b-0  gap-4">
-                  <h2 className="text-2xl  font-bold ">My Leaves</h2>
+                <div className="bg-gray-100 p-4 rounded-lg ">
+                  <div className="flex w-full  pb-4 pl-0 text-lg border-b-0  gap-4">
+                    <h2 className="text-2xl  font-bold ">My Leaves</h2>
+                  </div>
+                  <PendingLeaves />
                 </div>
-                <PendingLeaves />
               </>
             ) : location.pathname === "/hr/leaves/leave-reports" ? (
               <>
                 {/* <LeaveReports /> */}
-                <div className="flex w-full p-4 pb-4 pl-0 text-lg border-b-0  gap-4">
-                  <h2 className="text-2xl  font-bold ">Leave Reports</h2>
+                <div className="bg-gray-100 p-4 rounded-lg ">
+                  <div className="flex w-full  pb-4 pl-0 text-lg border-b-0  gap-4">
+                    <h2 className="text-2xl  font-bold ">Leave Reports</h2>
+                  </div>
+                  <PendingLeaves />
                 </div>
-                <PendingLeaves />
               </>
             ) : location.pathname === "/hr/payroll" ? (
               <>
@@ -884,8 +886,9 @@ const DepartmentDash = () => {
                       <h2 className="text-2xl  font-bold ">Today's Tickets</h2>
                       <button
                         className="py-1 px-2 text-sm wono-blue-dark text-white rounded-md "
-                        onClick={() => navigate("/customer/tickets/my-tickets")}
-                      >
+                        onClick={() =>
+                          navigate("/customer/tickets/my-tickets")
+                        }>
                         View All
                       </button>
                     </div>
@@ -975,8 +978,7 @@ const DepartmentDash = () => {
           open={openTicket}
           onClose={handleCloseTicket}
           aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
-        >
+          aria-describedby="modal-modal-description">
           {/* <Box sx={style}> */}
           <Box sx={style}>
             <AddTicketForm />
