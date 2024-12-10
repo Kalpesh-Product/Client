@@ -10,15 +10,16 @@ import { CSVLink } from "react-csv";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import { toast } from "sonner";
-import AgTable from "../../../../components/AgTable";
+import AgTable from "../../../components/AgTable";
 import { useLocation } from "react-router-dom";
-import { NewModal } from "../../../../components/NewModal";
-import FormStepper from "../../../../components/FormStepper";
-import WonoButton from "../../../../components/Buttons/WonoButton";
+import { NewModal } from "../../../components/NewModal";
+import FormStepper from "../../../components/FormStepper";
+import WonoButton from "../../../components/Buttons/WonoButton";
 import { motion } from "framer-motion";
 import { IoMdClose } from "react-icons/io";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import PayslipTest from "./PayslipTest";
 
 const Payslips = () => {
   const location = useLocation();
@@ -431,18 +432,18 @@ const Payslips = () => {
         <div>
           <FormControl size="small" style={{ minWidth: 220 }}>
             <TextField
-              label="Filter by department"
+              label="Select Month"
               variant="outlined"
               select
               size="small"
-              onChange={handleChange}
-              value={department}
+              // onChange={handleChange}
+              // value={department}
               sx={{ fontSize: "0.5rem" }}>
-              <MenuItem value="">All</MenuItem>
-              <MenuItem value="IT">IT</MenuItem>
-              <MenuItem value="HR">HR</MenuItem>
-              <MenuItem value="Tech">Tech</MenuItem>
-              <MenuItem value="Admin">Admin</MenuItem>
+              {/* <MenuItem value="">December 2024</MenuItem> */}
+              <MenuItem value="December 2024">December 2024</MenuItem>
+              <MenuItem value="November 2024">November 2024</MenuItem>
+              <MenuItem value="October 2024">October 2024</MenuItem>
+              <MenuItem value="September 2024">September 2024</MenuItem>
             </TextField>
           </FormControl>
         </div>
@@ -498,12 +499,14 @@ const Payslips = () => {
         highlightFirstRow={false}
       /> */}
 
-      <AgTable
+      {/* <AgTable
         data={rows} // Use the state here
         columns={columns}
         highlightFirstRow={highlightFirstRow} // Bind the state here
         highlightEditedRow={highlightEditedRow} // Bind the state here
-      />
+      /> */}
+
+      <PayslipTest />
 
       {/* {location.pathname === "/customer/tickets/my-tickets" && (
         <div>

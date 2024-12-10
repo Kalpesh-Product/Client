@@ -96,6 +96,9 @@ import PendingLeaves from "../hr/leaves/Components/PendingLeaves";
 import MyLeaves from "../hr/leaves/MyLeaves";
 import LeaveReports from "../hr/leaves/LeaveReports";
 import Holidays from "../hr/holidays/Holidays";
+import Sops from "../hr/sops/Sops";
+import Policies from "../hr/policies/Policies";
+import Payslips from "../hr/payslips/Payslips";
 
 const DepartmentDash = () => {
   const navigate = useNavigate();
@@ -679,7 +682,7 @@ const DepartmentDash = () => {
                   <div className="flex w-full  pb-4 pl-0 text-lg border-b-0  gap-4">
                     <h2 className="text-2xl  font-bold ">Payslip</h2>
                   </div>
-                  <PendingLeaves />
+                  <Payslips />
                 </div>
               </>
             ) : location.pathname === "/hr/sops" ? (
@@ -689,7 +692,7 @@ const DepartmentDash = () => {
                   <div className="flex w-full  pb-4 pl-0 text-lg border-b-0  gap-4">
                     <h2 className="text-2xl  font-bold ">SOPs</h2>
                   </div>
-                  <PendingLeaves />
+                  <Sops />
                 </div>
               </>
             ) : location.pathname === "/hr/policies" ? (
@@ -699,7 +702,7 @@ const DepartmentDash = () => {
                   <div className="flex w-full  pb-4 pl-0 text-lg border-b-0  gap-4">
                     <h2 className="text-2xl  font-bold ">Policies</h2>
                   </div>
-                  <PendingLeaves />
+                  <Policies />
                 </div>
               </>
             ) : location.pathname === "/hr/holidays" ? (
