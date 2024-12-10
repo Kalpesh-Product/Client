@@ -10,7 +10,6 @@ const errorHandler = require("./middlewares/errorHandler");
 const authRoutes = require("./routes/auth/authRoutes");
 const verifyJwt = require("./middlewares/verifyJwt");
 const redisClient = require("./config/redisClient");
-const departmentRoutes = require("./routes/departmentRoutes");
 const credentials = require("./middlewares/credentials");
 
 const app = express();
@@ -40,8 +39,6 @@ app.use("/api/auth", authRoutes);
 app.get("/protected", verifyJwt, (req, res) => {
   res.status(200).json({ message: "this is protected data" });
 });
-
-app.use("/departments", departmentRoutes);
 
 app.all("*", (req, res) => {
   if (req.accepts("html")) {
