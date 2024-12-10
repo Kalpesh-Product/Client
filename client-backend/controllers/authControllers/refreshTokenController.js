@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 const User = require("../../models/User");
-const redisClient = require("../../config/redisClient");
+// const redisClient = require("../../config/redisClient");
 
 const handleRefreshToken = async (req, res, next) => {
   try {

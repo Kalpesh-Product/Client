@@ -9,7 +9,7 @@ const connectDb = require("./config/db");
 const errorHandler = require("./middlewares/errorHandler");
 const authRoutes = require("./routes/auth/authRoutes");
 const verifyJwt = require("./middlewares/verifyJwt");
-const redisClient = require("./config/redisClient");
+// const redisClient = require("./config/redisClient");
 const credentials = require("./middlewares/credentials");
 
 const app = express();
@@ -52,10 +52,9 @@ app.all("*", (req, res) => {
 
 app.use(errorHandler);
 
-redisClient.on("connect", () => {
+
   mongoose.connection.once("open", () => {
     app.listen(PORT, () => {
       console.log(`server started on port ${PORT}`);
     });
-  });
 });
