@@ -43,8 +43,9 @@ const DownloadableDiv = () => {
   };
 
   return (
-    <div className=" pb-10 flex items-center justify-center">
-      {/* <div id="yellowDiv" className="bg-yellow-400 p-20 rounded-lg text-center">
+    <div className="relative">
+      <div className=" pb-10 flex items-center justify-center">
+        {/* <div id="yellowDiv" className="bg-yellow-400 p-20 rounded-lg text-center">
         <h1 className="text-xl font-bold mb-4">This is a Yellow Div</h1>
         <p className="mb-4">Some text inside the yellow div.</p>
         <div className="space-x-4">
@@ -59,123 +60,128 @@ const DownloadableDiv = () => {
           </button>
         </div>
       </div> */}
-      <div
-        id="yellowDiv"
-        className="max-w-2xl mx-auto mt-10 border border-gray-300 rounded-lg shadow-lg p-8 bg-white">
-        <h1 className="text-2xl font-bold text-center mb-6">Pay Slip</h1>
+        <div
+          id="yellowDiv"
+          className="max-w-2xl mx-auto mt-10 border border-gray-300 rounded-lg shadow-lg p-8 bg-white">
+          <h1 className="text-2xl font-bold text-center mb-6">Pay Slip</h1>
 
-        <div className="border-t border-gray-300 mb-4"></div>
+          <div className="border-t border-gray-300 mb-4"></div>
 
-        {/* Employee Details */}
-        <div className="grid grid-cols-2 gap-4 text-sm mb-6">
-          <div>
-            <p className="font-semibold">Employee Name:</p>
-            <p>{employeeDetails.name}</p>
+          {/* Employee Details */}
+          <div className="grid grid-cols-2 gap-4 text-sm mb-6">
+            <div>
+              <p className="font-semibold">Employee Name:</p>
+              <p>{employeeDetails.name}</p>
+            </div>
+            <div>
+              <p className="font-semibold">Employee ID:</p>
+              <p>{employeeDetails.employeeId}</p>
+            </div>
+            <div>
+              <p className="font-semibold">Designation:</p>
+              <p>{employeeDetails.designation}</p>
+            </div>
+            <div>
+              <p className="font-semibold">Department:</p>
+              <p>{employeeDetails.department}</p>
+            </div>
+            <div>
+              <p className="font-semibold">Month:</p>
+              <p>{employeeDetails.month}</p>
+            </div>
           </div>
-          <div>
-            <p className="font-semibold">Employee ID:</p>
-            <p>{employeeDetails.employeeId}</p>
+
+          <div className="border-t border-gray-300 mb-4"></div>
+
+          {/* Salary Breakdown */}
+          <table className="w-full text-sm">
+            <thead>
+              <tr className="bg-gray-100">
+                <th className="text-left py-2 px-4 border-b">Earnings</th>
+                <th className="text-right py-2 px-4 border-b">Amount (₹)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td className="py-2 px-4 border-b">Basic Pay</td>
+                <td className="text-right py-2 px-4 border-b">
+                  {employeeDetails.basicPay}
+                </td>
+              </tr>
+              <tr>
+                <td className="py-2 px-4 border-b">
+                  House Rent Allowance (HRA)
+                </td>
+                <td className="text-right py-2 px-4 border-b">
+                  {employeeDetails.hra}
+                </td>
+              </tr>
+              <tr>
+                <td className="py-2 px-4 border-b">Other Allowances</td>
+                <td className="text-right py-2 px-4 border-b">
+                  {employeeDetails.allowances}
+                </td>
+              </tr>
+              <tr className="font-bold">
+                <td className="py-2 px-4 border-b">Total Earnings</td>
+                <td className="text-right py-2 px-4 border-b">
+                  {employeeDetails.basicPay +
+                    employeeDetails.hra +
+                    employeeDetails.allowances}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div className="border-t border-gray-300 mb-4"></div>
+
+          <table className="w-full text-sm">
+            <thead>
+              <tr className="bg-gray-100">
+                <th className="text-left py-2 px-4 border-b">Deductions</th>
+                <th className="text-right py-2 px-4 border-b">Amount (₹)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td className="py-2 px-4 border-b">Tax and Other Deductions</td>
+                <td className="text-right py-2 px-4 border-b">
+                  {employeeDetails.deductions}
+                </td>
+              </tr>
+              <tr className="font-bold">
+                <td className="py-2 px-4 border-b">Total Deductions</td>
+                <td className="text-right py-2 px-4 border-b">
+                  {employeeDetails.deductions}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div className="border-t border-gray-300 mb-4"></div>
+
+          {/* Net Pay */}
+          <div className="text-lg font-bold text-right">
+            <p>
+              Net Pay: ₹<span>{employeeDetails.netPay}</span>
+            </p>
           </div>
-          <div>
-            <p className="font-semibold">Designation:</p>
-            <p>{employeeDetails.designation}</p>
+
+          <div className="text-center mt-8">
+            <p className="text-xs text-gray-500">
+              *This is a computer-generated document and does not require a
+              signature.
+            </p>
           </div>
-          <div>
-            <p className="font-semibold">Department:</p>
-            <p>{employeeDetails.department}</p>
-          </div>
-          <div>
-            <p className="font-semibold">Month:</p>
-            <p>{employeeDetails.month}</p>
-          </div>
-        </div>
-
-        <div className="border-t border-gray-300 mb-4"></div>
-
-        {/* Salary Breakdown */}
-        <table className="w-full text-sm">
-          <thead>
-            <tr className="bg-gray-100">
-              <th className="text-left py-2 px-4 border-b">Earnings</th>
-              <th className="text-right py-2 px-4 border-b">Amount (₹)</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td className="py-2 px-4 border-b">Basic Pay</td>
-              <td className="text-right py-2 px-4 border-b">
-                {employeeDetails.basicPay}
-              </td>
-            </tr>
-            <tr>
-              <td className="py-2 px-4 border-b">House Rent Allowance (HRA)</td>
-              <td className="text-right py-2 px-4 border-b">
-                {employeeDetails.hra}
-              </td>
-            </tr>
-            <tr>
-              <td className="py-2 px-4 border-b">Other Allowances</td>
-              <td className="text-right py-2 px-4 border-b">
-                {employeeDetails.allowances}
-              </td>
-            </tr>
-            <tr className="font-bold">
-              <td className="py-2 px-4 border-b">Total Earnings</td>
-              <td className="text-right py-2 px-4 border-b">
-                {employeeDetails.basicPay +
-                  employeeDetails.hra +
-                  employeeDetails.allowances}
-              </td>
-            </tr>
-          </tbody>
-        </table>
-
-        <div className="border-t border-gray-300 mb-4"></div>
-
-        <table className="w-full text-sm">
-          <thead>
-            <tr className="bg-gray-100">
-              <th className="text-left py-2 px-4 border-b">Deductions</th>
-              <th className="text-right py-2 px-4 border-b">Amount (₹)</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td className="py-2 px-4 border-b">Tax and Other Deductions</td>
-              <td className="text-right py-2 px-4 border-b">
-                {employeeDetails.deductions}
-              </td>
-            </tr>
-            <tr className="font-bold">
-              <td className="py-2 px-4 border-b">Total Deductions</td>
-              <td className="text-right py-2 px-4 border-b">
-                {employeeDetails.deductions}
-              </td>
-            </tr>
-          </tbody>
-        </table>
-
-        <div className="border-t border-gray-300 mb-4"></div>
-
-        {/* Net Pay */}
-        <div className="text-lg font-bold text-right">
-          <p>
-            Net Pay: ₹<span>{employeeDetails.netPay}</span>
-          </p>
-        </div>
-
-        <div className="text-center mt-8">
-          <p className="text-xs text-gray-500">
-            *This is a computer-generated document and does not require a
-            signature.
-          </p>
         </div>
       </div>
-      <button
-        onClick={downloadPDF}
-        className="absolute bottom-10 right-10 bg-teal-500 text-white px-6 py-3 rounded shadow">
-        Download as PDF
-      </button>
+      <div>
+        <button
+          onClick={downloadPDF}
+          className=" absolute top-[-54px] right-0 wono-blue-dark text-white px-6 py-3 rounded shadow">
+          Download as PDF
+        </button>
+      </div>
     </div>
   );
 };

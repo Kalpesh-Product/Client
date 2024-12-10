@@ -97,7 +97,8 @@ const Holidays = () => {
         <Button
           size="small"
           // onClick={() => handleDelete(params.row)}
-          onClick={handleDeleteTicket}
+          onClick={openDeleteTicket}
+          // onClick={handleDeleteTicket}
           variant="contained"
           sx={{
             backgroundColor: "red",
@@ -403,7 +404,7 @@ const Holidays = () => {
   const handleDeleteTicket = () => {
     // setHighlightFirstRow(true); // Highlight the first row after editing a ticket
     toast.success("Holiday Deleted");
-    // closeDeleteTicket(); // Optionally close the modal after the alert
+    closeDeleteTicket(); // Optionally close the modal after the alert
   };
   // EDIT TICKET DETAILS MODAL END
 
@@ -1003,7 +1004,7 @@ const Holidays = () => {
             <div className="sticky top-0 bg-white py-6 z-20 flex justify-between">
               <div>
                 <h2 className="text-3xl font-bold mb-4 uppercase">
-                  Delete Ticket
+                  Delete Holiday
                 </h2>
               </div>
               <div>
@@ -1030,7 +1031,7 @@ const Holidays = () => {
               <div className="">
                 <div className=" mx-auto">
                   <h1 className="text-xl text-center my-2 font-bold">
-                    Are you sure you want to delete the ticket?
+                    Are you sure you want to delete the holiday?
                   </h1>
                   <Box
                     sx={{
@@ -1046,7 +1047,7 @@ const Holidays = () => {
                     <div className="grid grid-cols-1 gap-4">
                       {/* Name, Mobile, Email, DOB fields */}
 
-                      <div className="grid grid-cols-1 gap-4">
+                      {/* <div className="grid grid-cols-1 gap-4">
                         <TextField
                           label="Reason for deleting"
                           // value={newEvent.name}
@@ -1056,7 +1057,7 @@ const Holidays = () => {
                           // }
                           fullWidth
                         />
-                      </div>
+                      </div> */}
                     </div>
 
                     {/* Role & Department fields */}

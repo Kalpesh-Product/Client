@@ -30,7 +30,7 @@ const Sops = () => {
     <div>
       {/* <div>SOPs</div> */}
       <div>
-        <div className="flex">
+        <div className="flex bg-white p-4 rounded-lg">
           <div className="mb-2 flex justify-between w-full">
             <h1 className="text-3xl"></h1>
             <button
@@ -41,62 +41,62 @@ const Sops = () => {
             </button>
           </div>
         </div>
-
-        <TabContext value={value} sx={{ backgroundColor: "red" }}>
-          <Box
-            sx={{
-              borderBottom: 0,
-              borderColor: "divider",
-              width: "100%",
-            }}>
-            <TabList
-              onChange={handleChange}
-              aria-label="Departments"
-              variant="fullWidth"
+        <div className="bg-white">
+          <TabContext value={value} sx={{ backgroundColor: "red" }}>
+            <Box
               sx={{
+                borderBottom: 0,
+                borderColor: "divider",
                 width: "100%",
-                backgroundColor: "white",
-                borderTopLeftRadius: "10px",
-                borderTopRightRadius: "10px",
-                fontFamily: "Popins-Semibold",
-                padding: "0.5rem",
               }}>
-              <Tab
-                label="SOP - Saturday Work From Home"
-                value="1"
+              <TabList
+                onChange={handleChange}
+                aria-label="Departments"
+                variant="fullWidth"
                 sx={{
-                  textTransform: "uppercase",
-                  borderRight: "1px solid #e4e4e4",
-                }}
-              />
-              <Tab
-                label="Test PDF"
-                value="2"
-                sx={{
-                  textTransform: "uppercase",
-                  borderRight: "1px solid #e4e4e4",
-                }}
-              />
-            </TabList>
-          </Box>
-          <TabPanel value="1" className="p-2">
-            <div className="flex justify-center items-center ">
-              <div className=" w-50">
-                <PdfViewer />
+                  width: "100%",
+                  backgroundColor: "white",
+                  borderTopLeftRadius: "10px",
+                  borderTopRightRadius: "10px",
+                  fontFamily: "Popins-Semibold",
+                  padding: "0.5rem",
+                }}>
+                <Tab
+                  label="SOP - Saturday Work From Home"
+                  value="1"
+                  sx={{
+                    textTransform: "uppercase",
+                    borderRight: "1px solid #e4e4e4",
+                  }}
+                />
+                <Tab
+                  label="Test PDF"
+                  value="2"
+                  sx={{
+                    textTransform: "uppercase",
+                    borderRight: "1px solid #e4e4e4",
+                  }}
+                />
+              </TabList>
+            </Box>
+            <TabPanel value="1" className="p-2">
+              <div className="flex justify-center items-center ">
+                <div className=" w-50 border border-black">
+                  <PdfViewer />
+                </div>
               </div>
-            </div>
-          </TabPanel>
+            </TabPanel>
 
-          <TabPanel value="2">
-            {" "}
-            <div className="flex justify-center items-center ">
-              <div className=" w-50">
-                <PdfViewer2 />
+            <TabPanel value="2">
+              {" "}
+              <div className="flex justify-center items-center ">
+                <div className=" w-50 border border-black">
+                  <PdfViewer2 />
+                </div>
               </div>
-            </div>
-          </TabPanel>
+            </TabPanel>
 
-          {/* <TabPanel value="3">3</TabPanel>
+            {/* <TabPanel value="3">3</TabPanel>
 
           <TabPanel value="4">4</TabPanel>
 
@@ -105,7 +105,8 @@ const Sops = () => {
           </TabPanel>
 
           <TabPanel value="6">6</TabPanel> */}
-        </TabContext>
+          </TabContext>
+        </div>
       </div>
       {/* Modal for Image Upload */}
 
