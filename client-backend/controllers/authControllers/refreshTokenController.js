@@ -1,6 +1,5 @@
 const jwt = require("jsonwebtoken");
 const User = require("../../models/User");
-// const redisClient = require("../../config/redisClient");
 
 const handleRefreshToken = async (req, res, next) => {
   try {
@@ -19,23 +18,11 @@ const handleRefreshToken = async (req, res, next) => {
           return res.sendStatus(403);
         }
 
-        // Check session ID in Redis
-        const sessionIdInRedis = await redisClient.get(`session:${user._id}`);
-        if (
-          !sessionIdInRedis ||
-          sessionIdInRedis !== decoded.userInfo.sessionId
-        ) {
-          return res
-            .status(403)
-            .json({ message: "Session expired. Please log in again." });
-        }
-
         const accessToken = jwt.sign(
           {
             userInfo: {
               email: decoded.userInfo.email,
               role: user.role,
-              sessionId: decoded.userInfo.sessionId,
               userId: user._id,
             },
           },
@@ -44,7 +31,7 @@ const handleRefreshToken = async (req, res, next) => {
         );
 
         delete user.refreshToken;
-        delete user.credentials.password;
+        delete user.credentials?.password;
         delete user.updatedAt;
 
         res.json({
