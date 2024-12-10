@@ -169,6 +169,26 @@ const Tasklist = () => {
 
   const navigate = useNavigate();
 
+  // for Assignees 
+
+
+  const getInitials = (name) => {
+    const words = name.split(" ");
+    const firstInitial = words[0][0];
+    const lastInitial = words[words.length - 1][0];
+    return `${firstInitial}${lastInitial}`;
+  };
+  
+  // Function to generate a unique color
+  const generateColor = (name) => {
+    let hash = 0;
+    for (let i = 0; i < name.length; i++) {
+      hash = name.charCodeAt(i) + ((hash << 5) - hash);
+    }
+    const color = `hsl(${hash % 360}, 70%, 60%)`;
+    return color;
+  };
+
   const handleClick = (title) => {
     navigate("/tasks/tasklisttable", { state: { taskTitle: title } });
   };
@@ -177,142 +197,7 @@ const Tasklist = () => {
 
   const handleActionChange = () => {};
 
-  // const tasks = {
-  //   ongoing: [
-  //     {
-  //       title: "Website Redesign",
-  //       department: "IT",
-  //       description:
-  //         "To discuss about the details of the projects which is important",
-  //       Assignes: [
-  //         "https://i.pravatar.cc/150?img=1",
-  //         "https://i.pravatar.cc/150?img=2",
-  //         "https://i.pravatar.cc/150?img=3",
-  //       ],
-  //     },
-  //     {
-  //       title: "Launch a new digital marketing Campaign",
-  //       department: "Marketing",
-  //       description:
-  //         "To enhance the productivity and the materials of the projects which is very much effetives.",
-  //       Assignes: [
-  //         "https://i.pravatar.cc/150?img=4",
-  //         "https://i.pravatar.cc/150?img=5",
-  //         "https://i.pravatar.cc/150?img=6",
-  //       ],
-  //     },
-  //     {
-  //       title: "Market Expansion strategy for new Product line",
-  //       department: "Finance",
-  //       description:
-  //         "To entertain the peacefull understanding anf training for the ppeople around us.",
-  //       Assignes: [
-  //         "https://i.pravatar.cc/150?img=7",
-  //         "https://i.pravatar.cc/150?img=8",
-  //         "https://i.pravatar.cc/150?img=9",
-  //       ],
-  //     },
-  //   ],
-  //   upcoming: [
-  //     {
-  //       title: "Financial forcasting and Budgeting",
-  //       department: "Sales",
-  //       description:
-  //         "To discuss about the details of the projects which is important",
-  //       Assignes: [
-  //         "https://i.pravatar.cc/150?img=7",
-  //         "https://i.pravatar.cc/150?img=8",
-  //         "https://i.pravatar.cc/150?img=9",
-  //       ],
-  //     },
-  //     {
-  //       title: "Bussiness Process optimizations and Automation",
-  //       department: "Operation",
-  //       description:
-  //         "To enhance the productivity and the materials of the projects which is very much effetives.",
-  //       Assignes: [
-  //         "https://i.pravatar.cc/150?img=1",
-  //         "https://i.pravatar.cc/150?img=2",
-  //         "https://i.pravatar.cc/150?img=3",
-  //       ],
-  //     },
-  //     {
-  //       title: "Employee Onboarding and training programme",
-  //       department: "Human Resources and Training",
-  //       description:
-  //         "To entertain the peacefull understanding anf training for the ppeople around us",
-  //     },
-  //   ],
-  //   pending: [
-  //     {
-  //       title: "Annual Co-operate Conference and Networking Evets",
-  //       department: "Event Management",
-  //       description: "Details about Task 7",
-  //       Assignes: [
-  //         "https://i.pravatar.cc/150?img=1",
-  //         "https://i.pravatar.cc/150?img=2",
-  //         "https://i.pravatar.cc/150?img=3",
-  //       ],
-  //     },
-  //     {
-  //       title: "Data Privacy And GDPR Compliance initiative",
-  //       department: "Compliance and Regulatory",
-  //       description:
-  //         "To enhance the productivity and the materials of the projects which is very much effetives.",
-  //       Assignes: [
-  //         "https://i.pravatar.cc/150?img=7",
-  //         "https://i.pravatar.cc/150?img=8",
-  //         "https://i.pravatar.cc/150?img=9",
-  //       ],
-  //     },
-  //     {
-  //       title: "Reducing Environmental impact and promoting Sustainability",
-  //       department: "Corporate Sustainability and Compliance",
-  //       description:
-  //         "To enhance the productivity and the materials of the projects which is very much effetives.",
-  //       Assignes: [
-  //         "https://i.pravatar.cc/150?img=7",
-  //         "https://i.pravatar.cc/150?img=8",
-  //         "https://i.pravatar.cc/150?img=9",
-  //       ],
-  //     },
-  //   ],
-  //   completed: [
-  //     {
-  //       title: "Annual Co-operate Conference and Networking Evets",
-  //       department: "Event Management",
-  //       description: "Details about Task 7",
-  //       Assignes: [
-  //         "https://i.pravatar.cc/150?img=1",
-  //         "https://i.pravatar.cc/150?img=2",
-  //         "https://i.pravatar.cc/150?img=3",
-  //       ],
-  //     },
-  //     {
-  //       title: "Data Privacy And GDPR Compliance initiative",
-  //       department: "Compliance and Regulatory",
-  //       description:
-  //         "To enhance the productivity and the materials of the projects which is very much effetives.",
-  //       Assignes: [
-  //         "https://i.pravatar.cc/150?img=7",
-  //         "https://i.pravatar.cc/150?img=8",
-  //         "https://i.pravatar.cc/150?img=9",
-  //       ],
-  //     },
-  //     {
-  //       title: "Reducing Environmental impact and promoting Sustainability",
-  //       department: "Corporate Sustainability and Compliance",
-  //       description:
-  //         "To enhance the productivity and the materials of the projects which is very much effetives.",
-  //       Assignes: [
-  //         "https://i.pravatar.cc/150?img=1",
-  //         "https://i.pravatar.cc/150?img=2",
-  //         "https://i.pravatar.cc/150?img=3",
-  //       ],
-  //     },
-  //   ],
-  // };
-
+ 
   const setEditModalOpen =(value,title,description,department)=>{
     SetModalOpen(true);
     SetEditValue(true);
@@ -383,6 +268,37 @@ const Tasklist = () => {
       <p className="text-gray-600 my-5 text-xs">{description}</p>
       <div>
         <p className="text-xs font-bold">Assignees</p>
+
+       {projectData.assignees?.length !== 0 ? (<>
+        <Stack
+    spacing={-1}
+    direction="row"
+    sx={{
+      paddingTop: "5%",
+      width: "100%",
+    }}
+  >
+    {projectData?.assignees?.map((assignee, index) => {
+      const initials = getInitials(assignee);
+      const backgroundColor = generateColor(assignee);
+
+      return (
+        <Avatar
+          key={index}
+          sx={{
+            width: 30,
+            height: 30,
+            border: "1px solid white",
+            backgroundColor,
+          }}
+        >
+          {initials}
+        </Avatar>
+      );
+    })}
+  </Stack>
+       </>): (<>
+
         <Stack
           spacing={-1}
           direction="row"
@@ -405,6 +321,10 @@ const Tasklist = () => {
             />
           ))}
         </Stack>
+       </>)}
+
+       
+        
       </div>
     </div>
   );

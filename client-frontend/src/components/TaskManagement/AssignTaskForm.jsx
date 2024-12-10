@@ -166,7 +166,7 @@ const AssignTaskForm = ({
         ...prev,
         upcoming: [
           ...prev.upcoming,
-          { ...projectData },
+          { ...projectData, assignees: projectData.assignees },
           // { ...projectData, assignees: projectData.assignees.map((name) => `/path/to/${name}.jpg`) },
         ],
       }));
@@ -175,6 +175,7 @@ const AssignTaskForm = ({
         description: "",
         Department: "",
         category: "",
+        
       });
     }
     console.log(tasks);
@@ -623,10 +624,10 @@ const AssignTaskForm = ({
                               multiple
                               options={names}
                               value={projectData.assignees}
-                              onChange={(e) =>
+                              onChange={(e , newValue) =>
                                 setProjectData({
                                   ...projectData,
-                                  assignes: e.target.value,
+                                  assignees: [...new Set([...newValue])],
                                 })
                               }
                               renderInput={(params) => (
@@ -702,27 +703,34 @@ const AssignTaskForm = ({
                       <div className="grid grid-cols-2 gap-7 mb-10 mt-5">
                   {/* Asset Number */}
                   <div className="flex justify-between py-2 border-b">
-                    <h1 className="font-semibold">Task</h1>
-                    <span>{formData.taskName|| "N/A"}</span>
+                    <h1 className="font-semibold">Project</h1>
+                    <span>{projectData.Title|| "N/A"}</span>
                   </div>
 
                   {/* Asset Type */}
                   <div className="flex justify-between py-2 border-b">
-                    <h1 className="font-semibold">Project Name</h1>
-                    <span>{formData.project|| "N/A"}</span>
+                    <h1 className="font-semibold">Department</h1>
+                    <span>{projectData.Department|| "N/A"}</span>
                   </div>
 
                   {/* Asset Name */}
                   <div className="flex justify-between py-2 border-b">
-                    <h1 className="font-semibold">Priority</h1>
-                    <span>{formData.priority || "N/A"}</span>
+                    <h1 className="font-semibold">Description</h1>
+                    <span>{projectData.description || "N/A"}</span>
+                  </div>
+
+                  {/* Assignees */}
+                  <div className="flex justify-between py-2 border-b gap-5">
+                    <h1 className="font-semibold">Assignees</h1>
+                    <span >{projectData.assignees || "N/A"}</span>
                   </div>
 
                   {/* Brand Name */}
                   <div className="flex justify-between py-2 border-b">
                     <h1 className="font-semibold">Status</h1>
-                    <span>{formData.status || "N/A"}</span>
+                    <span>{projectData.status || "N/A"}</span>
                   </div>
+
 
                   
                 </div>
