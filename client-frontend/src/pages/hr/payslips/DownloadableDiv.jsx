@@ -62,7 +62,7 @@ const DownloadableDiv = () => {
       <div
         id="yellowDiv"
         className="max-w-2xl mx-auto mt-10 border border-gray-300 rounded-lg shadow-lg p-8 bg-white">
-        <h1 className="text-2xl font-bold text-center mb-6">Salary Slip</h1>
+        <h1 className="text-2xl font-bold text-center mb-6">Pay Slip</h1>
 
         <div className="border-t border-gray-300 mb-4"></div>
 
