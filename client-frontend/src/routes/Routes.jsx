@@ -106,23 +106,23 @@ const router = createBrowserRouter([
         element: <DepartmentDash />,
       },
       {
-        path: "/customer/meetings",
+        path: "/it/meetings",
         element: <DepartmentDash />,
       },
       {
-        path: "/customer/meetings/booking",
+        path: "/it/meetings/booking",
         element: <DepartmentDash />,
       },
       {
-        path: "/customer/meetings/reports",
+        path: "/it/meetings/reports",
         element: <DepartmentDash />,
       },
       {
-        path: "/customer/meetings/my-bookings",
+        path: "/it/meetings/my-bookings",
         element: <DepartmentDash />,
       },
       {
-        path: "/customer/meetings/add-room",
+        path: "/it/meetings/add-room",
         element: <DepartmentDash />,
       },
       {
@@ -134,9 +134,26 @@ const router = createBrowserRouter([
         element: <DepartmentDash />,
       },
       {
+        path: "/hr/payslips",
+        element: <DepartmentDash />,
+      },
+      {
+        path: "/hr/sops",
+        element: <DepartmentDash />,
+      },
+      {
+        path: "/hr/policies",
+        element: <DepartmentDash />,
+      },
+      {
+        path: "/hr/holidays",
+        element: <DepartmentDash />,
+      },
+      {
         path: "/hr/attendance",
         element: <DepartmentDash />,
-      },      {
+      },
+      {
         path: "/hr/leaves/pending-leaves",
         element: <DepartmentDash />,
       },
@@ -212,23 +229,23 @@ const router = createBrowserRouter([
         element: <ChatPage />,
       },
       {
-        path: "/customer/tickets",
+        path: "/it/tickets",
         element: <DepartmentDash />,
       },
       {
-        path: "/customer/tickets/members",
+        path: "/it/tickets/members",
         element: <DepartmentDash />,
       },
       {
-        path: "/customer/tickets/my-tickets",
+        path: "/it/tickets/my-tickets",
         element: <DepartmentDash />,
       },
       {
-        path: "/customer/tickets/view-tickets",
+        path: "/it/tickets/view-tickets",
         element: <DepartmentDash />,
       },
       {
-        path: "/customer/tickets/ticket-reports",
+        path: "/it/tickets/ticket-reports",
         element: <DepartmentDash />,
       },
       {

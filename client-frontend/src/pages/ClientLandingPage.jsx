@@ -1433,13 +1433,13 @@ const SortableCard = ({ id, title, iconSrc, isDragEnabled }) => {
         navigate("/tasks");
         break;
       case "Ticket":
-        navigate("/customer/tickets");
+        navigate("/it/tickets");
         break;
       case "Meeting":
-        navigate("/customer/meetings");
+        navigate("/it/meetings");
         break;
       case "Asset":
-        navigate("/customer/kpi");
+        navigate("/it/kpi");
         break;
       case "Customer Service":
         navigate("/chat");

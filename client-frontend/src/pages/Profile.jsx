@@ -10,8 +10,10 @@ import SuperAdmin from "../assets/kashif-bg.png";
 import { Accordion, AccordionDetails, AccordionSummary } from "@mui/material";
 import MyTickets from "./cms/tickets/components/MyTickets";
 import MyBookings from "./cms/room-booking/MyBookings";
-import MyAssets from '../pages/cms/asset/MyAssets'
+import MyAssets from "../pages/cms/asset/MyAssets";
 import { NewModal } from "../components/NewModal";
+import { motion } from "framer-motion";
+import { IoMdClose } from "react-icons/io";
 // import image from "../profile.jpg";
 
 const Profile = () => {
@@ -108,8 +110,7 @@ const Profile = () => {
           <div class="flex flex-row gap-3 relative">
             <div
               onClick={() => setUploadProfileImage(true)}
-              className="w-16 h-16 rounded-full overflow-hidden bg-gray-200 cursor-pointer"
-            >
+              className="w-16 h-16 rounded-full overflow-hidden bg-gray-200 cursor-pointer">
               <img
                 src={
                   userData?.role === "Master Admin"
@@ -119,8 +120,7 @@ const Profile = () => {
                     : Profilepic
                 }
                 alt="Profile Logo"
-                class="w-16 h-16 rounded-full border-4 border-[#0DB4EA] mr-4"
-              ></img>
+                class="w-16 h-16 rounded-full border-4 border-[#0DB4EA] mr-4"></img>
             </div>
             <span className="p-1 absolute left-11 top-10 cursor-pointer rounded-full bg-p wono-blue-dark">
               <TbCameraPlus
@@ -147,8 +147,7 @@ const Profile = () => {
                     ? "border-b-4 border-[#0DB4EA] text-blue-600"
                     : ""
                 }`}
-                onClick={() => setActiveTab("tab-1")}
-              >
+                onClick={() => setActiveTab("tab-1")}>
                 Profile
               </button>
             </li>
@@ -159,8 +158,7 @@ const Profile = () => {
                     ? "border-b-4 border-[#0DB4EA] text-blue-600"
                     : ""
                 }`}
-                onClick={() => setActiveTab("tab-2")}
-              >
+                onClick={() => setActiveTab("tab-2")}>
                 Access
               </button>
             </li>
@@ -171,8 +169,7 @@ const Profile = () => {
                     ? "border-b-4 border-[#0DB4EA] text-blue-600"
                     : ""
                 }`}
-                onClick={() => setActiveTab("tab-3")}
-              >
+                onClick={() => setActiveTab("tab-3")}>
                 Assets
               </button>
             </li>
@@ -183,8 +180,7 @@ const Profile = () => {
                     ? "border-b-4 border-[#0DB4EA] text-blue-600"
                     : ""
                 }`}
-                onClick={() => setActiveTab("tab-4")}
-              >
+                onClick={() => setActiveTab("tab-4")}>
                 Credits
               </button>
             </li>
@@ -195,8 +191,7 @@ const Profile = () => {
                     ? "border-b-4 border-[#0DB4EA] text-blue-600"
                     : ""
                 }`}
-                onClick={() => setActiveTab("tab-5")}
-              >
+                onClick={() => setActiveTab("tab-5")}>
                 Tickets
               </button>
             </li>
@@ -206,13 +201,11 @@ const Profile = () => {
               <div
                 className="tab-pane motion-preset-slide-up show active"
                 id="tab-1"
-                role="tabpanel"
-              >
+                role="tabpanel">
                 <div
                   className="flex flex-col"
                   data-aos="fade-up"
-                  data-aos-delay="100"
-                >
+                  data-aos-delay="100">
                   <EmployeeProfile
                     data={{
                       name: "Abrar Shaikh",
@@ -233,13 +226,11 @@ const Profile = () => {
               <div
                 className="tab-pane motion-preset-slide-up-sm show"
                 id="tab-2"
-                role="tabpanel"
-              >
+                role="tabpanel">
                 <div
                   className="flex flex-col"
                   data-aos="fade-up"
-                  data-aos-delay="100"
-                >
+                  data-aos-delay="100">
                   {/* Tab 2 Content */}
                   <AccessHierarchyTab />
                 </div>
@@ -249,8 +240,7 @@ const Profile = () => {
               <div
                 className="tab-pane motion-preset-slide-up-sm show"
                 id="tab-2"
-                role="tabpanel"
-              >
+                role="tabpanel">
                 <div
                   className="flex flex-col h-full"
                   data-aos="fade-up"
@@ -291,8 +281,7 @@ const Profile = () => {
               <div
                 className="tab-pane motion-preset-slide-up-sm show"
                 id="tab-4"
-                role="tabpanel"
-              >
+                role="tabpanel">
                 {/* Credits Summary Section */}
                 <div className="grid p-2 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6 w-full">
                   {/* Total Credits Widget */}
@@ -350,18 +339,36 @@ const Profile = () => {
       {uploadProfileImage && (
         <NewModal
           open={uploadProfileImage}
-          onClose={() => setUploadProfileImage(false)}
-        >
+          onClose={() => setUploadProfileImage(false)}>
           <div className="bg-white p-6 rounded-lg w-80">
-            <h3 className="text-xl font-semibold mb-4">Upload Profile Image</h3>
+            <div className="flex justify-between pb-8 items-center">
+              <div>
+                <h3 className="text-xl font-semibold mb-4">
+                  Upload Profile Image
+                </h3>
+              </div>
+              <div>
+                {/* Close button */}
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.9 }}
+                  type="button"
+                  onClick={() => setUploadProfileImage(false)}
+                  className=" p-2 bg-white text-[red] border border-red-200 hover:border-red-400 text-2xl rounded-md mr-1">
+                  <IoMdClose />
+                </motion.button>
+              </div>
+            </div>
             <input
               type="file"
               accept="image/*"
               onChange={handleImageChange}
               className="block w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer focus:outline-none"
             />
-            <button className="mt-4 w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600">
-              Close
+            <button
+              onClick={() => setUploadProfileImage(false)}
+              className="mt-4 w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600">
+              Save
             </button>
           </div>
         </NewModal>
@@ -376,16 +383,14 @@ const Profile = () => {
                 <li className="w-1/2 text-center" role="presentation">
                   <button
                     className="text-lg py-2 w-full font-semibold hover:bg-gray-100 focus:bg-gray-200 "
-                    onClick={() => setActiveTab("tab-1")}
-                  >
+                    onClick={() => setActiveTab("tab-1")}>
                     PROFILE
                   </button>
                 </li>
                 <li className="w-1/2 text-center" role="presentation">
                   <button
                     className="text-lg py-2 w-full font-semibold hover:bg-gray-100 focus:bg-gray-200 "
-                    onClick={() => setActiveTab("tab-2")}
-                  >
+                    onClick={() => setActiveTab("tab-2")}>
                     ACCESS
                   </button>
                 </li>
@@ -395,13 +400,11 @@ const Profile = () => {
                   <div
                     className="tab-pane fade show active"
                     id="tab-1"
-                    role="tabpanel"
-                  >
+                    role="tabpanel">
                     <div
                       className="flex flex-col items-center justify-center"
                       data-aos="fade-up"
-                      data-aos-delay="100"
-                    >
+                      data-aos-delay="100">
                       <EmployeeProfile />
                     </div>
                   </div>
@@ -410,13 +413,11 @@ const Profile = () => {
                   <div
                     className="tab-pane fade show"
                     id="tab-2"
-                    role="tabpanel"
-                  >
+                    role="tabpanel">
                     <div
                       className="flex flex-col items-center justify-center"
                       data-aos="fade-up"
-                      data-aos-delay="100"
-                    >
+                      data-aos-delay="100">
                       {/* Tab 2 Content */}
                       <p>Your Apply Now content here...</p>
                     </div>
@@ -427,8 +428,7 @@ const Profile = () => {
 
             <button
               onClick={() => setIsAccessModalOpen(false)}
-              className="w-full bg-[#0DB4EA] text-white py-2 rounded-lg hover:bg-blue-600"
-            >
+              className="w-full bg-[#0DB4EA] text-white py-2 rounded-lg hover:bg-blue-600">
               Save & Close
             </button>
           </div>
@@ -443,8 +443,7 @@ const Profile = () => {
             </h3>
             <button
               onClick={() => setIsUpdateModalOpen(false)}
-              className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600"
-            >
+              className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600">
               Save & Close
             </button>
           </div>
