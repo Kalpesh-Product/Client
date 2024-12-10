@@ -189,6 +189,8 @@ const AssignTaskForm = ({
   const steps = ["Add Projects", "Verify Details"];
   
   const steps2 = ["Add Tasks","Verify Details"];
+
+  const steps3 = ["Add Employee", "View Details"];
   const handleNextStep = (e, handleNext) => {
     e.preventDefault();
     handleNext();
@@ -226,7 +228,10 @@ const AssignTaskForm = ({
         </div>
         <form onSubmit={handleSubmit}>
           {location.pathname === "/tasks/teams" ? (
+
             <>
+            
+            
               <div className="grid grid-cols-1 gap-4">
                 {/* Asset Number */}
                 <Grid item xs={12}>
@@ -401,12 +406,59 @@ const AssignTaskForm = ({
                     ))}
                   </TextField>
                 </Grid>
+
+                <Button 
+                variant="contained"
+                color="primary"
+                onClick={(e) => handleNextStep(e,handleNext)}>
+                Next
+                </Button>
+
               </div>
 
                     </>)
                   }
                   else if (activeStep === 1) {
+                    return(
+                    <>
                     <h1>View Details</h1>
+                    <div className="grid grid-cols-2 gap-7 mb-10 mt-5">
+                  {/* Asset Number */}
+                  <div className="flex justify-between py-2 border-b">
+                    <h1 className="font-semibold">Task</h1>
+                    <span>{formData.taskName|| "N/A"}</span>
+                  </div>
+
+                  {/* Asset Type */}
+                  <div className="flex justify-between py-2 border-b">
+                    <h1 className="font-semibold">Project Name</h1>
+                    <span>{formData.project|| "N/A"}</span>
+                  </div>
+
+                  {/* Asset Name */}
+                  <div className="flex justify-between py-2 border-b">
+                    <h1 className="font-semibold">Priority</h1>
+                    <span>{formData.priority || "N/A"}</span>
+                  </div>
+
+                  {/* Brand Name */}
+                  <div className="flex justify-between py-2 border-b">
+                    <h1 className="font-semibold">Status</h1>
+                    <span>{formData.status || "N/A"}</span>
+                  </div>
+
+                  
+                </div>
+                <Button 
+                variant="contained"
+                color="primary"
+                >
+                Submit
+                </Button>
+
+               
+                </>
+                    );
                   }
                 }
                 }
@@ -623,6 +675,13 @@ const AssignTaskForm = ({
                             </TextField>
                           </Grid>
 
+                          <Button 
+                variant="contained"
+                color="primary"
+                onClick={(e) => handleNextStep(e,handleNext)}>
+                Next
+                </Button>
+
                           {/* Asset Name */}
 
                           {/* <Box sx={{ mt: 3 }}>
@@ -637,7 +696,45 @@ const AssignTaskForm = ({
                       </>
                     );
                   } else if (activeStep === 1) {
-                    return <div>hello</div>;
+                    return (
+                      <>
+                      <h1>View Project Details</h1>
+                      <div className="grid grid-cols-2 gap-7 mb-10 mt-5">
+                  {/* Asset Number */}
+                  <div className="flex justify-between py-2 border-b">
+                    <h1 className="font-semibold">Task</h1>
+                    <span>{formData.taskName|| "N/A"}</span>
+                  </div>
+
+                  {/* Asset Type */}
+                  <div className="flex justify-between py-2 border-b">
+                    <h1 className="font-semibold">Project Name</h1>
+                    <span>{formData.project|| "N/A"}</span>
+                  </div>
+
+                  {/* Asset Name */}
+                  <div className="flex justify-between py-2 border-b">
+                    <h1 className="font-semibold">Priority</h1>
+                    <span>{formData.priority || "N/A"}</span>
+                  </div>
+
+                  {/* Brand Name */}
+                  <div className="flex justify-between py-2 border-b">
+                    <h1 className="font-semibold">Status</h1>
+                    <span>{formData.status || "N/A"}</span>
+                  </div>
+
+                  
+                </div>
+                <Button 
+                variant="contained"
+                color="primary"
+                type="submit"
+                >
+                Submit
+                </Button>
+                      </>
+                    );
                   }
                 }}
               ></FormStepper>
@@ -745,16 +842,17 @@ const AssignTaskForm = ({
                 </Button>
               </>
             )}
-            {!selectedRow && (
+            {/* {!selectedRow &&  (
               <Button
                 type="submit"
                 variant="contained"
                 color="primary"
                 fullWidth
+                
               >
-                Submit
+                Next
               </Button>
-            )}
+            )} */}
           </div>
         </form>
       </Box>
