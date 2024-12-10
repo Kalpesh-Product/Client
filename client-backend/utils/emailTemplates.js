@@ -17,3 +17,5 @@ const emailTemplates = (email, name, password) => {
 
   return userMailOptions;
 };
+
+module.exports = emailTemplates;
