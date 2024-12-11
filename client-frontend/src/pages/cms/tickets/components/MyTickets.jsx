@@ -244,25 +244,6 @@ const MyTickets = () => {
       ? allRows // show all rows if no department is selected
       : allRows.filter((row) => row.department === department);
 
-  // Handlers for the buttons
-  // const handleViewDetails = (row) => {
-  //   alert(`Viewing details for: ${row.ticketTitle}`);
-  // };
-
-  // const handleEdit = (row) => {
-  //   alert(`Editing ticket: ${row.ticketTitle}`);
-  // };
-
-  // const handleDelete = (row) => {
-  //   if (
-  //     window.confirm(
-  //       `Are you sure you want to delete ticket: ${row.ticketTitle}?`
-  //     )
-  //   ) {
-  //     alert(`Deleted ticket: ${row.ticketTitle}`);
-  //   }
-  // };
-
   const csvHeaders = [
     { label: "ID", key: "id" },
     { label: "Ticket Title", key: "ticketTitle" },
@@ -361,24 +342,6 @@ const MyTickets = () => {
 
   return (
     <div className="w-[72vw] md:w-full transition-all duration-200 ease-in-out bg-white p-2 rounded-md">
-      {/* <div className="bg-green-500">
-        <h2>Today's Tickets</h2>
-      </div> */}
-
-      {/* <div>
-        <h2 className="text-lg">Today's Tickets</h2>
-        <br />
-      </div> */}
-
-      {/* <div className="mb-2 flex justify-between">
-        <h1 className="text-3xl"></h1>
-        <button
-          onClick={openModal}
-          className="px-6 py-2 rounded-lg text-white wono-blue-dark hover:bg-[#3cbce7] transition-shadow shadow-md hover:shadow-lg active:shadow-inner">
-          Raise Ticket
-        </button>
-      </div> */}
-
       <div className="flex gap-4 mb-4 justify-between">
         {/* <div className="pt-2">Filter :</div> */}
         <div>
@@ -399,26 +362,6 @@ const MyTickets = () => {
             </TextField>
           </FormControl>
         </div>
-        {/* <div className=" flex">
-          <CSVLink
-            data={filteredRows} // Pass the filtered rows for CSV download
-            headers={csvHeaders} // Pass the CSV headers
-            filename="tickets_report.csv" // Set the filename for the CSV file
-            className="wono-blue-dark hover:bg-blue-700 text-white text-sm font-bold py-2 px-4 rounded h-9 mt-2">
-            Export Report
-          </CSVLink>
-        </div> */}
-
-        {/* <div className=" flex">
-          <div className="mb-2 flex justify-between">
-            <h1 className="text-3xl"></h1>
-            <button
-              onClick={openModal}
-              className="px-6 py-2 rounded-lg text-white wono-blue-dark hover:bg-[#3cbce7] transition-shadow shadow-md hover:shadow-lg active:shadow-inner">
-              Raise Ticket
-            </button>
-          </div>
-        </div> */}
 
         {location.pathname !== "/profile" && (
           <div className="flex">
@@ -436,36 +379,12 @@ const MyTickets = () => {
 
       {/* Tickets datatable START */}
 
-      {/* <DataGrid
-          rows={filteredRows}
-          columns={columns}
-          initialState={{ pagination: { paginationModel } }}
-          pageSizeOptions={[5, 10]}
-          sx={{ border: 0, width: "75vw" }}
-        /> */}
-
-      {/* <AgTable data={filteredRows} columns={columns} highlightFirstRow={true} /> */}
-      {/* <AgTable
-        data={filteredRows}
-        columns={columns}
-        highlightFirstRow={false}
-      /> */}
-
       <AgTable
         data={rows} // Use the state here
         columns={columns}
         highlightFirstRow={highlightFirstRow} // Bind the state here
         highlightEditedRow={highlightEditedRow} // Bind the state here
       />
-
-      {/* {location.pathname === "/customer/tickets/my-tickets" && (
-        <div>
-          <br />
-          <br />
-          <br />
-          <br />
-        </div>
-      )} */}
 
       {/* Tickets datatable END */}
 

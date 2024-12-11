@@ -101,7 +101,7 @@ const AssignedTickets = () => {
                   padding: "4px 8px",
                   borderRadius: "0.375rem",
                 }}>
-                Assign
+                Assign Member
               </Button>
             ),
           },

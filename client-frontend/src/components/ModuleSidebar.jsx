@@ -217,7 +217,7 @@ const ModuleSidebar = ({ mainSideBar }) => {
           ? []
           : [
               {
-                title: "View Tickets",
+                title: "Received Tickets",
                 route: "/it/tickets/view-tickets",
                 icon: <HiOutlineClipboardList />,
               },
