@@ -1,33 +1,12 @@
 import React, { useState } from "react";
 import TextField from "@mui/material/TextField";
 import { motion } from "framer-motion";
-import { useMutation } from "@tanstack/react-query";
-import axios from "axios";
-import { toast } from "sonner";
-import { IoMdClose, IoMdCloseCircleOutline } from "react-icons/io";
+import { IoMdClose } from "react-icons/io";
 
 export default function DepartmentForm({ formTitle, onClose }) {
   const [department, setDepartment] = useState({
     name: "",
     description: "",
-  });
-
-  const { mutate } = useMutation({
-    mutationFn: async function (data) {
-      const response = await axios.post(
-        "http://localhost:5000/departments/create-department",
-        data
-      );
-
-      return response.data;
-    },
-    onSuccess: function () {
-      onClose();
-      toast.success("Successfully created Department");
-    },
-    onError: function (err) {
-      toast.error(err.message);
-    },
   });
 
   const handleChange = (e) => {
@@ -40,7 +19,6 @@ export default function DepartmentForm({ formTitle, onClose }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    mutate(department);
     console.log("Department Details:", department);
     // Submit form logic here
   };
