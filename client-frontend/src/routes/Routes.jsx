@@ -150,6 +150,10 @@ const router = createBrowserRouter([
         element: <DepartmentDash />,
       },
       {
+        path: "/hr/onboarding",
+        element: <DepartmentDash />,
+      },
+      {
         path: "/hr/attendance",
         element: <DepartmentDash />,
       },

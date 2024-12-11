@@ -99,6 +99,7 @@ import Holidays from "../hr/holidays/Holidays";
 import Sops from "../hr/sops/Sops";
 import Policies from "../hr/policies/Policies";
 import Payslips from "../hr/payslips/Payslips";
+import Onboarding from "../hr/onboarding/Onboarding";
 
 const DepartmentDash = () => {
   const navigate = useNavigate();
@@ -570,6 +571,16 @@ const DepartmentDash = () => {
                   />
                 ))}
               </div>
+            ) : location.pathname === "/hr/onboarding" ? (
+              <>
+                {/* <LeaveReports /> */}
+                <div className="bg-gray-100 p-4 rounded-lg ">
+                  <div className="flex w-full  pb-4 pl-0 text-lg border-b-0  gap-4">
+                    <h2 className="text-2xl  font-bold ">Onboarding</h2>
+                  </div>
+                  <Onboarding />
+                </div>
+              </>
             ) : location.pathname === "/hr/attendance" ? (
               <>
                 <AttendanceDash />
