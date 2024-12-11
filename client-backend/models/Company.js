@@ -8,10 +8,9 @@ const companySchema = new mongoose.Schema({
   },
   companyInfo: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "CompanyData",
+    ref: "CompanyData", // Reference to the CompanyData schema
   },
 });
 
 const Company = mongoose.model("Company", companySchema);
 module.exports = Company;
-
