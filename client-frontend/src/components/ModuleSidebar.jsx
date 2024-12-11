@@ -108,6 +108,11 @@ const ModuleSidebar = ({ mainSideBar }) => {
 
   const hrModules = [
     {
+      title: "Onboarding",
+      route: "/hr/onboarding",
+      icon: <HiOutlineClipboardList />,
+    },
+    {
       title: "Attendance",
       route: "/hr/attendance",
       icon: <HiOutlineClipboardList />,
