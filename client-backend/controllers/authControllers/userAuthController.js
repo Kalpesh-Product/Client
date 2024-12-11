@@ -1,11 +1,10 @@
 const jwt = require("jsonwebtoken");
 const User = require("../../models/User");
 const registerLogs = require("../../utils/loginLogs");
-const { v4: uuid } = require("uuid");
-const redisClient = require("../../config/redisClient");
 const bcrypt = require("bcryptjs");
 const generatePassword = require("../../utils/passwordGenerator");
 const mailer = require("../../config/nodemailerConfig");
+const emailTemplates = require("../../utils/emailTemplates");
 
 const login = async (req, res, next) => {
   try {
@@ -40,7 +39,11 @@ const login = async (req, res, next) => {
       return res.status(404).json({ message: "Invalid credentials" });
     }
 
-    if (password !== userExists.credentials.password) {
+    const isPasswordValid = await bcrypt.compare(
+      password,
+      userExists.credentials.password
+    );
+    if (!isPasswordValid) {
       await registerLogs({
         email,
         status: "failed",
@@ -50,19 +53,9 @@ const login = async (req, res, next) => {
       return res.status(400).json({ message: "Invalid credentials" });
     }
 
-    const sessionId = uuid();
-
-    await redisClient.set(
-      `session:${userExists._id}`,
-      sessionId,
-      "EX",
-      30 * 24 * 60 * 60
-    );
-
     const accessToken = jwt.sign(
       {
         userInfo: {
-          sessionId,
           userId: userExists._id,
           role: userExists.role,
           email: userExists.personalInfo.email,
@@ -74,7 +67,6 @@ const login = async (req, res, next) => {
 
     const refreshToken = jwt.sign(
       {
-        sessionId,
         email: userExists.personalInfo.email,
       },
       process.env.REFRESH_TOKEN_SECRET,
@@ -90,12 +82,11 @@ const login = async (req, res, next) => {
 
     await User.findOneAndUpdate({ _id: userExists._id }, { refreshToken });
 
-    // Send refresh token as HttpOnly cookie
     res.cookie("clientCookie", refreshToken, {
       httpOnly: true,
       sameSite: "None",
       secure: true,
-      maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
+      maxAge: 30 * 24 * 60 * 60 * 1000,
     });
 
     delete userExists.refreshToken;
@@ -125,11 +116,6 @@ const logOut = async (req, res, next) => {
       return res.sendStatus(204);
     }
 
-    const sessionIdInRedis = await redisClient.get(`session:${foundUser._id}`);
-    if (sessionIdInRedis) {
-      await redisClient.del(`session:${foundUser._id}`);
-    }
-
     await User.findOneAndUpdate({ _id: foundUser._id }, { refreshToken: null })
       .lean()
       .exec();
@@ -150,52 +136,36 @@ const createUser = async (req, res, next) => {
   try {
     const {
       name,
-      mobile,
+      phone,
       email,
-      dob,
-      gender,
-      country,
-      state,
-      city,
       role,
       department,
-      userId,
+      designation,
+      company,
+      selectedServices,
+      empId,
     } = req.body;
 
-    if (
-      !name ||
-      !email ||
-      !mobile ||
-      !dob ||
-      !gender ||
-      !country ||
-      !state ||
-      !city ||
-      !role ||
-      !department ||
-      !userId
-    ) {
-      return res.status(400), json({ message: "Invalid data" });
+    // Validate required fields
+    if (!name || !phone || !email || !designation || !company || !empId) {
+      return res
+        .status(400)
+        .json({ message: "Invalid data: Missing required fields" });
     }
 
-    if (!mongoose.Types.ObjectId.isValid(userId)) {
-      return res.status(400), json({ message: "Invalid data" });
-    }
-
-    let emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    // Validate email format
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     if (!emailRegex.test(email)) {
-      return res.status(400).json({ message: "Invalid data" });
+      return res.status(400).json({ message: "Invalid email format" });
     }
 
-    const userExists = await User.findOne({ "personalInfo.email": email })
-      .lean()
-      .exec();
-
+    // Check if the user already exists
+    const userExists = await User.findOne({ email }).lean().exec();
     if (userExists) {
       return res.status(409).json({ message: "User already exists" });
     }
 
-    const username = email.split("@")[1];
+    // Generate password
     const password = generatePassword(8, {
       upper: true,
       lower: true,
@@ -203,36 +173,28 @@ const createUser = async (req, res, next) => {
       symbol: true,
     });
 
+    // Hash password
     const hashPwd = await bcrypt.hash(password, 10);
-    const creator = await User.findById(userId).lean().exec();
-    if (!creator) {
-      return res.status(400).json({ message: "Invalid data" });
-    }
+
+    // Create new user instance
     const newUser = new User({
-      personalInfo: {
-        name,
-        email,
-        mobile,
-        gender,
-        dob: new Date(dob),
-        country,
-        state,
-        city,
-      },
-      role,
+      empId,
+      name,
+      email,
+      role: role || "masterAdmin", // Default to "masterAdmin" if role is not provided
       department,
-      companyInfo: {
-        ...creator.companyInfo,
-      },
-      credentials: {
-        username,
-        password: hashPwd,
-      },
+      selectedServices,
+      password: hashPwd,
+      designation,
+      company,
+      phone,
     });
 
+    // Send email with user credentials
     const userMailOptions = emailTemplates(email, name, password);
     await Promise.all([newUser.save(), mailer.sendMail(userMailOptions)]);
-    res.status(201).json({ message: "user created successfully" });
+
+    res.status(201).json({ message: "User created successfully" });
   } catch (error) {
     next(error);
   }
