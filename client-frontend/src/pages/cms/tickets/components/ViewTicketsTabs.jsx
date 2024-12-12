@@ -28,7 +28,7 @@ const ViewTicketsTabs = () => {
   return (
     <div>
       <div className=" w-full p-4 text-lg">
-        <h2 className="text-2xl  font-bold">View Tickets</h2>
+        <h2 className="text-2xl  font-bold">Received Tickets</h2>
       </div>
 
       <div className="bg-white mx-4 rounded-md">
