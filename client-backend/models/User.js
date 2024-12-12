@@ -17,24 +17,8 @@ const userSchema = new mongoose.Schema({
   dob: {
     type: Date,
   },
-  email: {
-    type: String,
-    required: true,
-    unique: true,
-  },
-  password:{
-    type: String,
-  },
-  phone: {
-    type: String,
-    required: true,
-    match: /^[+]?[\d\s\-()]{7,20}$/,
-    minlength: 7,
-    maxlength: 20,
-  },
   role: {
     type: String,
-    default: "masterAdmin",
   },
   department: [
     {
@@ -42,9 +26,38 @@ const userSchema = new mongoose.Schema({
       ref: "Department",
     },
   ],
-  designation: {
+  fatherName: {
+    type: String,
+  },
+  motherName: {
+    type: String,
+  },
+  fatherOccupation: {
+    type: String,
+  },
+  motherOccupation: {
+    type: String,
+  },
+  maritalStatus: {
+    type: String,
+  },
+  spouseName: {
+    type: String,
+  },
+  spouseOccupation: {
+    type: String,
+  },
+  email: {
     type: String,
     required: true,
+    unique: true,
+  },
+  phone: {
+    type: String,
+    required: true,
+    match: /^[+]?[\d\s\-()]{7,20}$/,
+    minlength: 7,
+    maxlength: 20,
   },
   reportsTo: {
     type: mongoose.Schema.Types.ObjectId,
@@ -82,6 +95,34 @@ const userSchema = new mongoose.Schema({
     ifsc: {
       type: String,
     },
+  },
+  workLocation: {
+    type: String,
+  },
+  workType: {
+    type: String,
+  },
+  employeeType: {
+    type: String,
+  },
+  startDate: {
+    type: Date,
+  },
+  shift: {
+    type: String,
+  },
+  workPolicy: {
+    type: String,
+  },
+  attendanceSource: {
+    type: String,
+    default: "TimeClock",
+  },
+  pfAccountNumber: {
+    type: String,
+  },
+  esiAccountNumber: {
+    type: String,
   },
   selectedServices: [
     {

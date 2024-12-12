@@ -16,7 +16,7 @@ const departmentSchema = new mongoose.Schema({
   },
   company: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Company",
+    ref: "CompanyData",
   },
   designations: {
     type: [String], // Array of strings to hold multiple designations

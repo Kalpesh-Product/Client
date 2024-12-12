@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 
 const WonoButton = ({onClick, content}) => {
   return (
-    <div>
+    <div className="">
       <div>
         <motion.button
           whileHover={{ scale: 1.05 }}

@@ -9,6 +9,11 @@ import FormStepper from "../../../components/FormStepper";
 
 const Onboarding = () => {
   const [openModal, setOpenModal] = useState(false);
+
+  const modalStyle = {
+    width : "80vw",
+    minHeight : "70vh"
+  }
   // Define columns
   const columns = [
     { headerName: "empID", field: "id", flex: 1 },
@@ -76,7 +81,7 @@ const Onboarding = () => {
         </div>
       </div>
 
-      <NewModal open={!!openModal} onClose={handleCloseModal}>
+      <NewModal styles={modalStyle} open={!!openModal} onClose={handleCloseModal}>
         {openModal === "add" && (
           <>
             <OnBoardingForm handleClose={handleCloseModal} />

@@ -20,6 +20,7 @@ import { CiBookmarkCheck } from "react-icons/ci";
 import { MdMeetingRoom, MdTask } from "react-icons/md";
 import { BsArrowLeftSquare } from "react-icons/bs";
 import { TbReportSearch, TbSection } from "react-icons/tb";
+import { IoSettingsOutline } from "react-icons/io5";
 import { IoIosChatboxes } from "react-icons/io";
 import { SiAuthelia, SiMarketo } from "react-icons/si";
 import { CgProfile } from "react-icons/cg";
@@ -173,6 +174,11 @@ const ModuleSidebar = ({ mainSideBar }) => {
       title: "Holidays",
       route: "/hr/holidays",
       icon: <HiCurrencyDollar />,
+    },
+    {
+      title: "Comapny Settings",
+      route: "/hr/company-settings",
+      icon: <IoSettingsOutline />,
     },
   ];
 

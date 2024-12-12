@@ -2,7 +2,7 @@ const CompanyData = require("../../models/CompanyData");
 
 const addCompany = async (req, res, next) => {
   try {
-    // Extract the data from the request
+    // Extract the data from the wono registration form
     const formData = req.body;
 
     // Step 1: Save the companyInfo to the CompanyData table
@@ -26,4 +26,17 @@ const addCompany = async (req, res, next) => {
   }
 };
 
-module.exports = { addCompany };
+const getCompanies = async (req, res, nex) => {
+  try {
+    const companies = await CompanyData.find();
+    res.status(200).json({
+      message: "Company data fetched",
+      companies
+    });
+  } catch(error) { 
+    console.error("Error fetching companies : ", error.message);
+    res.status(500).json({error: error.message});
+  }
+}
+
+module.exports = { addCompany, getCompanies };

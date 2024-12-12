@@ -175,6 +175,10 @@ const router = createBrowserRouter([
         path: "/hr/payroll",
         element: <DepartmentDash />,
       },
+      {
+        path: "/hr/company-settings",
+        element: <DepartmentDash />,
+      },
 
       {
         path: "/it/dashboard",

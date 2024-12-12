@@ -1,5 +1,5 @@
 const Department = require("../../models/Departments");
-const Company = require("../../models/Company")
+const CompanyData = require("../../models/CompanyData")
 const User = require("../../models/User")
 
 const addDepartment = async (req, res, next) => {
@@ -9,7 +9,7 @@ const addDepartment = async (req, res, next) => {
     console.log("Request Payload:", { departmentId, name, company });
 
     // Find the company using the companyId
-    const companyDoc = await Company.findOne({ companyId: company });
+    const companyDoc = await CompanyData.findById(company);
     console.log("Company Found:", companyDoc);
 
     if (!companyDoc) {

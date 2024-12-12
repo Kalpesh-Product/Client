@@ -9,21 +9,41 @@ const createUser = async (req, res, next) => {
     const {
       empId,
       name,
+      gender,
+      dob,
       email,
-      role = "masterAdmin", // Default role if not provided
-      department,
-      companyId,
-      designation,
       phone,
-      address = {}, // Default empty object for address
-      kycDetails = {}, // Default empty object for KYC details
-      bankDetails = {}, // Default empty object for bank details
-      selectedServices = [], // Default empty array for services
+      role = "masterAdmin",
+      department,
+      fatherName,
+      motherName,
+      fatherOccupation,
+      motherOccupation,
+      maritalStatus,
+      spouseName,
+      spouseOccupation,
+      reportsTo,
+      address = {},
+      kycDetails = {},
+      bankDetails = {},
+      selectedServices = [],
+      workLocation = "",
+      workType = "",
+      employeeType = "",
+      startDate = null,
+      shift = "",
+      workPolicy = "",
+      attendanceSource = "TimeClock",
+      pfAccountNumber = "",
+      esiAccountNumber = "",
+      assignedAsset = [],
+      assignedMembers = [],
+      companyId,
     } = req.body;
 
     console.log(req.body);
 
-    // Validate the company
+    // Validate the company using _id
     const company = await CompanyData.findOne({ companyId });
     if (!company) {
       return res.status(404).json({ message: "Company not found" });
@@ -34,7 +54,6 @@ const createUser = async (req, res, next) => {
       return res.status(400).json({ message: "Department is required" });
     }
 
-    // Ensure department is always an array
     const departmentArray = Array.isArray(department) ? department : [department];
 
     // Validate each department ID
@@ -51,6 +70,19 @@ const createUser = async (req, res, next) => {
       })
     );
 
+    // Validate reportsTo field
+    let reportsToId = null;
+    if (reportsTo) {
+      if (!mongoose.Types.ObjectId.isValid(reportsTo)) {
+        return res.status(400).json({ message: "Invalid reportsTo ID" });
+      }
+      const reportingUser = await User.findById(reportsTo);
+      if (!reportingUser) {
+        return res.status(404).json({ message: "Reporting user not found" });
+      }
+      reportsToId = reportingUser._id;
+    }
+
     // Generate default password and hash it
     const defaultPassword = "123";
     // const hashedPassword = await bcrypt.hash(defaultPassword, 10);
@@ -59,19 +91,37 @@ const createUser = async (req, res, next) => {
     const user = new User({
       empId,
       name,
+      gender,
+      dob,
       email,
-      role,
-      department: departmentIds, // Reference the department documents
-      company: company._id, // Reference the company document
-      password: defaultPassword, // Store hashed password
-      designation,
       phone,
+      role,
+      department: departmentIds,
+      fatherName,
+      motherName,
+      fatherOccupation,
+      motherOccupation,
+      maritalStatus,
+      spouseName,
+      spouseOccupation,
+      reportsTo: reportsToId,
       address,
       kycDetails,
       bankDetails,
       selectedServices,
-      assignedAsset: [], // Default to empty array
-      assignedMembers: [], // Default to empty array
+      workLocation,
+      workType,
+      employeeType,
+      startDate,
+      shift,
+      workPolicy,
+      attendanceSource,
+      pfAccountNumber,
+      esiAccountNumber,
+      assignedAsset,
+      assignedMembers,
+      company: company._id,
+      password: defaultPassword, // Store hashed password
     });
 
     // Save the user
@@ -87,5 +137,19 @@ const createUser = async (req, res, next) => {
   }
 };
 
+const fetchUser = async (req, res) => {
+  try {
+    const users = await User.find().populate("reportsTo", "name email");
+    res.status(200).json({
+      message: "Users data fetched",
+      users
+    });
+  }catch(error){
+    console.log("Error fetching users : ", error);
+    res.status(500).json({error: error.message})
+  }
+}
 
-module.exports = { createUser };
+
+
+module.exports = { createUser, fetchUser };
