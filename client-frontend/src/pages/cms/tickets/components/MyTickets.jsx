@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
@@ -17,8 +17,155 @@ import FormStepper from "../../../../components/FormStepper";
 import WonoButton from "../../../../components/Buttons/WonoButton";
 import { motion } from "framer-motion";
 import { IoMdClose } from "react-icons/io";
+import axios from "axios";
 
 const MyTickets = () => {
+  const [user, setUser] = useState("");
+
+  // useEffect(() => {
+  //   const storedUser = JSON.parse(localStorage.getItem("user"));
+  //   setUser(storedUser);
+  //   fetchmyTickets();
+  // }, []);
+
+  const [refreshTrigger, setRefreshTrigger] = useState(false);
+
+  useEffect(() => {
+    const storedUser = JSON.parse(localStorage.getItem("user"));
+    setUser(storedUser);
+    fetchmyTickets();
+
+    // Set a timeout to update the refreshTrigger state after 2 seconds
+    const timer = setTimeout(() => {
+      setRefreshTrigger((prev) => !prev); // Toggle the trigger state
+    }, 2000);
+
+    // Cleanup to clear the timeout
+    return () => clearTimeout(timer);
+  }, [refreshTrigger]); // Depend on refreshTrigger to re-run the effect
+
+  const raisedByFilter = user.name; // Replace with the desired name or variable
+
+  // Ticket With APIs & Local START
+
+  // State to store my tickets
+  const [myTickets, setMyTickets] = useState([]);
+  // const raisedByFilter = "Allan"; // Replace with the desired name or variable
+
+  // state to hold the values of ticket form inputs
+  const [createForm, setCreateForm] = useState({
+    raisedBy: user.name,
+    selectedDepartment: "",
+    description: "",
+  });
+
+  // we need to get the name of the input field while typing(changing using onChange) & we need to get the new value. so we get both of those of the default html event that gets passed here (we put an e for the event)
+  const updateCreateFormField = (e) => {
+    // console.log("hey");
+    console.log(createForm);
+
+    // const { name, value } = e.target;
+    const target = e.target; // We first access the target property of the event object e, which represents the element that triggered the event.
+    const name = target.name; // Next, we extract the name and value properties from the target object and assign them to variables.
+    const value = target.value;
+    // const triggeredHtmlElement = e.target;
+    // const nameAttributeOfTheTriggeredElement = triggeredHtmlElement.name;
+    // const valueAttributeOfTheTriggeredElement = triggeredHtmlElement.value;
+
+    // now we update the state
+    // setCreateForm({
+    //   ...createForm, // creates a duplicate of the createForm object
+    //   // name: value, // this will update the key of name, but we don't need the key of name, we need whatever the variable is equal to
+    //   [name]: value, // this will find the keys (name attributes) and update its values (value attributes) to whatever is changed by the JS event.
+    // });
+
+    setCreateForm((prevForm) => ({
+      ...prevForm, // Spread previous form values
+      [name]: value, // Update the specific field being modified
+      raisedBy: user.name, // Ensure raisedBy is always set to user.name
+    }));
+
+    console.log("Updated Form:", createForm);
+    console.log("Updated Field:", { name, value });
+
+    console.log({ name, value });
+  };
+
+  // Function to create the ticket
+  const createMyTicket = async (e) => {
+    try {
+      console.log("submitted x");
+      console.log(createForm);
+      e.preventDefault(); // prevents the page from reloading when the form is submitted
+
+      // Create the ticket
+
+      // const responseFromBackend = await axios.post(
+      //   // the 2 arguments are: the link to post the values, the values to be sent for post method
+      //   // "/api/tickets/create-ticket",
+      //   "http://localhost:5000/api/tickets/create-ticket",
+      //   createForm
+      // );
+
+      const responseFromBackend = await axios.post(
+        "/api/tickets/create-ticket",
+        createForm
+      );
+
+      console.log(responseFromBackend);
+
+      // Update state
+      setMyTickets([...myTickets, responseFromBackend.data.ticket]); // adds our newly created ticket to the array of tickets. The variable ticket was created in out backend for response
+      // console.log("submit");
+      // console.log(responseFromBackend);
+
+      // Clear form state
+      setCreateForm({
+        raisedBy: "",
+        selectedDepartment: "",
+        description: "",
+      });
+      toast.success("New Ticket Created");
+      fetchmyTickets();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  // function that fetches our tickets
+  const fetchmyTickets = async () => {
+    // Fetch the tickets
+    const responseFromBackend = await axios.get(
+      "/api/tickets/view-all-tickets"
+    ); // the function is not running yet. we want the function to run as soon as the app starts up, so we do that in a useEffect (react hook).
+
+    const allTickets = responseFromBackend.data.tickets;
+
+    // Filter tickets where 'raisedBy' matches
+    const filteredTickets = allTickets.filter(
+      (ticket) => ticket.raisedBy === raisedByFilter
+    );
+
+    // Set it on state (update the value of tickets)
+    // setMyTickets(responseFromBackend.data.tickets); // setNotes will update the value of tickets from null to the current array of tickets
+    // Update state with filtered tickets
+    setMyTickets(filteredTickets);
+    // console.log(responseFromBackend);
+    // console.log(responseFromBackend.data.tickets);
+  };
+
+  // useeffect for displaying the tickets array after fetching from backend response
+  useEffect(() => {
+    // anything you put in here will run when the app starts
+    fetchmyTickets(); // this will run the fetchNotes function & fetch the tickets array from backend as our response (in network tab from developer tools)
+  }, []); // we leave the array empty since we need it to run only once when the app starts up.
+
+  // Finction to delete a ticket
+
+  // Function to edit the ticket
+
+  // Ticket With APIs & Local END
+
   const location = useLocation();
 
   const [highlightFirstRow, setHighlightFirstRow] = React.useState(false);
@@ -152,6 +299,109 @@ const MyTickets = () => {
     },
   ];
 
+  // Columns with Edit and Delete buttons
+  // const columns2 = [
+  //   { field: "_id", headerName: "ID", width: 100 },
+  //   { field: "description", headerName: "Ticket Title", width: 200 },
+  //   { field: "priority", headerName: "Priority", width: 150 },
+  //   { field: "status", headerName: "Status", width: 150 },
+  //   { field: "department", headerName: "Department", width: 150 },
+  //   { field: "requestDate", headerName: "Request Date", width: 150 },
+  //   {
+  //     field: "actions",
+  //     headerName: "Actions",
+  //     width: 200,
+  //     cellRenderer: (params) => {
+  //       const handleEdit = () => {
+  //         console.log("Editing ticket:", params.data._id);
+  //         // Implement your edit logic here
+  //       };
+
+  //       const handleDelete = () => {
+  //         console.log("Deleting ticket:", params.data._id);
+  //         // Update state to remove the ticket
+  //         setMyTickets((prevTickets) =>
+  //           prevTickets.filter((ticket) => ticket._id !== params.data._id)
+  //         );
+  //       };
+
+  //       return (
+  //         <div className="flex space-x-2">
+  //           <button
+  //             onClick={handleEdit}
+  //             className="bg-blue-500 text-white px-3 py-1 rounded">
+  //             Edit
+  //           </button>
+  //           <button
+  //             onClick={handleDelete}
+  //             className="bg-red-500 text-white px-3 py-1 rounded">
+  //             Delete
+  //           </button>
+  //         </div>
+  //       );
+  //     },
+  //   },
+  // ];
+  const columns3 = [
+    { field: "ticketId", headerName: "ID", width: 100 },
+    { field: "raisedBy", headerName: "Raised By", width: 150 },
+    {
+      field: "selectedDepartment",
+      headerName: "Selected Department",
+      width: 150,
+    },
+    { field: "description", headerName: "Ticket Title", width: 200 },
+    // { field: "status", headerName: "Status", width: 150 },
+    // { field: "requestDate", headerName: "Request Date", width: 150 },
+    {
+      field: "actions",
+      headerName: "Actions",
+      width: 200,
+      cellRenderer: (params) => {
+        const handleEdit = () => {
+          console.log("Editing ticket:", params.data._id);
+          // Implement your edit logic here
+        };
+
+        const handleDelete = async () => {
+          console.log("Deleting ticket:", params.data._id);
+          // Update state to remove the ticket
+          // setMyTickets((prevTickets) =>
+          //   prevTickets.filter((ticket) => ticket._id !== params.data._id)
+          // );
+
+          const responseFromBackend = await axios.delete(
+            `/api/tickets/delete-ticket/${params.data._id}`
+          );
+          console.log(responseFromBackend);
+
+          // Update state
+          // we heve to filter out the one we deleted
+          const newTickets = [...myTickets].filter((ticket) => {
+            return ticket._id !== params.data._id; // return tickets where note._id is not equal to the id we passed in (idOfTheNoteToBeDeleted). This will return an array of notes that meet this condition.
+          });
+
+          setMyTickets(newTickets); // assigns newTickets as the new value of the tickets state variable.
+        };
+
+        return (
+          <div className="flex space-x-2">
+            <button
+              onClick={handleEdit}
+              className="bg-blue-500 text-white px-3 py-1 rounded">
+              Edit
+            </button>
+            <button
+              onClick={handleDelete}
+              className="bg-red-500 text-white px-3 py-1 rounded">
+              Delete
+            </button>
+          </div>
+        );
+      },
+    },
+  ];
+
   // const [tickets, setTickets] = useState(allRows);
 
   const allRows = [
@@ -271,15 +521,15 @@ const MyTickets = () => {
   // Function to close the modal
   const closeModal = () => setIsModalOpen(false);
 
-  // const handleAddTicket = () => {
-  //   toast.success("New Ticket Created");
-  //   closeModal(); // Optionally close the modal after the alert
-  // };
-  const handleAddTicket = (newTicket) => {
-    setRows((prevRows) => [newTicket, ...prevRows]); // Update the state
+  const handleAddTicket = () => {
     toast.success("New Ticket Created");
     closeModal(); // Optionally close the modal after the alert
   };
+  // const handleAddTicket = (newTicket) => {
+  //   setRows((prevRows) => [newTicket, ...prevRows]); // Update the state
+  //   toast.success("New Ticket Created");
+  //   closeModal(); // Optionally close the modal after the alert
+  // };
 
   // ADD TICKET MODAL END
 
@@ -380,10 +630,9 @@ const MyTickets = () => {
       {/* Tickets datatable START */}
 
       <AgTable
-        data={rows} // Use the state here
-        columns={columns}
-        highlightFirstRow={highlightFirstRow} // Bind the state here
-        highlightEditedRow={highlightEditedRow} // Bind the state here
+        // data={rows} // Use the state here
+        data={myTickets} // Use the state here
+        columns={columns3}
       />
 
       {/* Tickets datatable END */}
@@ -393,18 +642,19 @@ const MyTickets = () => {
 
       <NewModal open={isModalOpen} onClose={closeModal}>
         <>
-          <FormStepper
-            steps={steps}
-            handleClose={closeModal}
-            children={(activeStep, handleNext) => {
-              if (activeStep === 0) {
-                return (
-                  <>
-                    <div className="bg-white  w-[31vw] rounded-lg z-10 relative overflow-y-auto max-h-[80vh]">
-                      {/* Modal Content */}
+          <form onSubmit={createMyTicket}>
+            <FormStepper
+              steps={steps}
+              handleClose={closeModal}
+              children={(activeStep, handleNext) => {
+                if (activeStep === 0) {
+                  return (
+                    <>
+                      <div className="bg-white  w-[31vw] rounded-lg z-10 relative overflow-y-auto max-h-[80vh]">
+                        {/* Modal Content */}
 
-                      {/* Modal Header */}
-                      {/* <div className="sticky top-0 bg-white pt-6 z-20 flex justify-between">
+                        {/* Modal Header */}
+                        {/* <div className="sticky top-0 bg-white pt-6 z-20 flex justify-between">
                         <div>
                           <h2 className="text-3xl font-bold mb-4 uppercase">
                             Raise Ticket
@@ -423,90 +673,110 @@ const MyTickets = () => {
                         </div>
                       </div> */}
 
-                      {/* Modal Body START */}
-                      <div className=" w-full">
-                        {/* <div>AddT icket Form</div> */}
-                        <div className="">
-                          <div className=" mx-auto">
-                            {/* <h1 className="text-xl text-center my-2 font-bold">
+                        {/* Modal Body START */}
+                        <div className=" w-full">
+                          {/* <div>AddT icket Form</div> */}
+                          <div className="">
+                            <div className=" mx-auto">
+                              {/* <h1 className="text-xl text-center my-2 font-bold">
                     Add Ticket
                   </h1> */}
-                            <Box
-                              sx={{
-                                maxWidth: 600,
-                                paddingY: 3,
-                                bgcolor: "background.paper",
-                                borderRadius: 2,
-                              }}
-                              // className="bg-white p-6 rounded-lg shadow-md mx-auto">
-                              className="bg-white py-6 rounded-lg">
-                              {/* Personal Information */}
-                              {/* <h2 className="text-lg font-semibold mb-4">Add Ticket</h2> */}
-                              <div className="grid grid-cols-1 gap-4">
-                                {/* Name, Mobile, Email, DOB fields */}
+                              <Box
+                                sx={{
+                                  maxWidth: 600,
+                                  paddingY: 3,
+                                  bgcolor: "background.paper",
+                                  borderRadius: 2,
+                                }}
+                                // className="bg-white p-6 rounded-lg shadow-md mx-auto">
+                                className="bg-white py-6 rounded-lg">
+                                {/* Personal Information */}
+                                {/* <h2 className="text-lg font-semibold mb-4">Add Ticket</h2> */}
                                 <div className="grid grid-cols-1 gap-4">
-                                  <FormControl fullWidth>
-                                    <InputLabel id="department-select-label">
-                                      Department
-                                    </InputLabel>
-                                    <Select
-                                      labelId="department-select-label"
-                                      id="department-select"
-                                      // value={department}
-                                      label="Department"
-                                      // onChange={handleChange}
-                                    >
-                                      <MenuItem value="IT">IT</MenuItem>
-                                      <MenuItem value="HR">HR</MenuItem>
-                                      <MenuItem value="Tech">Tech</MenuItem>
-                                      <MenuItem value="Admin">Admin</MenuItem>
-                                    </Select>
-                                  </FormControl>
-                                </div>
-                                <div className="grid grid-cols-1 gap-4">
-                                  <FormControl fullWidth>
-                                    <InputLabel id="suggestion-select-label">
-                                      Ticket Title
-                                    </InputLabel>
-                                    <Select
-                                      labelId="suggestion-select-label"
-                                      id="suggestion-select"
-                                      // value={department}
-                                      // value="IT" // Hardcoded value for department
-                                      label="Ticket Title"
-                                      // onChange={handleChange}
-
-                                      onChange={(e) =>
-                                        setTicketTitle(e.target.value)
-                                      } // Update state on selection
-                                    >
-                                      <MenuItem value="Wifi is not working">
-                                        Wifi is not working
-                                      </MenuItem>
-                                      <MenuItem value="HR">
-                                        Wifi is slow
-                                      </MenuItem>
-                                      <MenuItem value="Tech">
-                                        Laptop screen malfunctioning
-                                      </MenuItem>
-                                      <MenuItem value="Other">Other</MenuItem>
-                                    </Select>
-                                  </FormControl>
-                                </div>
-                                {ticketTitle === "Other" && (
+                                  {/* Name, Mobile, Email, DOB fields */}
                                   <div className="grid grid-cols-1 gap-4">
-                                    <TextField
-                                      label="Specify"
-                                      // value={newEvent.name}
-                                      // onChange={(e) =>
-                                      //   setnewEvent({ ...newEvent, name: e.target.value })
-                                      // }
-                                      fullWidth
-                                    />
+                                    <FormControl fullWidth>
+                                      <InputLabel id="department-select-label">
+                                        Department
+                                      </InputLabel>
+                                      <Select
+                                        labelId="department-select-label"
+                                        id="department-select"
+                                        value={createForm.selectedDepartment}
+                                        label="Department"
+                                        name="selectedDepartment"
+                                        onChange={updateCreateFormField}>
+                                        <MenuItem value="IT">IT</MenuItem>
+                                        <MenuItem value="HR">HR</MenuItem>
+                                        <MenuItem value="Tech">Tech</MenuItem>
+                                        <MenuItem value="Admin">Admin</MenuItem>
+                                        <MenuItem value="Finance">
+                                          Finance
+                                        </MenuItem>
+                                        <MenuItem value="Maintenance">
+                                          Maintenance
+                                        </MenuItem>
+                                        <MenuItem value="Sales">Sales</MenuItem>
+                                      </Select>
+                                    </FormControl>
                                   </div>
-                                )}
+                                  <div className="grid grid-cols-1 gap-4">
+                                    <FormControl fullWidth>
+                                      <InputLabel id="suggestion-select-label">
+                                        Ticket Title
+                                      </InputLabel>
+                                      <Select
+                                        labelId="suggestion-select-label"
+                                        id="suggestion-select"
+                                        // value={department}
+                                        // value="IT" // Hardcoded value for department
+                                        value={createForm.description}
+                                        label="Ticket Title"
+                                        // onChange={handleChange}
+                                        name="description"
+                                        onChange={updateCreateFormField}
+                                        // onChange={(e) =>
+                                        //   setTicketTitle(e.target.value)
+                                        // }
+                                        // Update state on selection
+                                      >
+                                        <MenuItem value="Wifi is not working">
+                                          Wifi is not working
+                                        </MenuItem>
+                                        <MenuItem value="Wifi is slow">
+                                          Wifi is slow
+                                        </MenuItem>
+                                        <MenuItem value="Laptop screen malfunctioning">
+                                          Laptop screen malfunctioning
+                                        </MenuItem>
+                                        <MenuItem value="Leave request not approved">
+                                          Leave request not approved
+                                        </MenuItem>
+                                        <MenuItem value="Incorrect salary received">
+                                          Incorrect salary received
+                                        </MenuItem>
+                                        <MenuItem value="Discussion of new SOP">
+                                          Discussion of new SOP
+                                        </MenuItem>
+                                        <MenuItem value="ggs">ggs</MenuItem>
+                                        {/* <MenuItem value="Other">Other</MenuItem> */}
+                                      </Select>
+                                    </FormControl>
+                                  </div>
+                                  {/* {ticketTitle === "Other" && (
+                                    <div className="grid grid-cols-1 gap-4">
+                                      <TextField
+                                        label="Specify"
+                                        // value={newEvent.name}
+                                        // onChange={(e) =>
+                                        //   setnewEvent({ ...newEvent, name: e.target.value })
+                                        // }
+                                        fullWidth
+                                      />
+                                    </div>
+                                  )} */}
 
-                                {/* <div className="grid grid-cols-1 gap-4">
+                                  {/* <div className="grid grid-cols-1 gap-4">
                                   <TextField
                                     label="Ticket Title"
                                     // value={newEvent.name}
@@ -516,11 +786,11 @@ const MyTickets = () => {
                                     fullWidth
                                   />
                                 </div> */}
-                              </div>
+                                </div>
 
-                              {/* Role & Department fields */}
+                                {/* Role & Department fields */}
 
-                              {/* <div className="col-span-2 flex gap-4">
+                                {/* <div className="col-span-2 flex gap-4">
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.9 }}
@@ -531,66 +801,74 @@ const MyTickets = () => {
                 </motion.button>
           
               </div> */}
-                            </Box>
+                              </Box>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                      {/* Modal Body END */}
+                        {/* Modal Body END */}
 
-                      {/* Modal Footer */}
+                        {/* Modal Footer */}
 
-                      <div className="sticky bottom-0 bg-white py-6 z-20 flex justify-center">
-                        <div className="flex justify-center items-center w-full">
-                          <button
-                            className="wono-blue-dark text-white py-2 px-4 rounded-md hover:bg-blue-600 w-full"
-                            // onClick={handleAddTicket}>
-                            onClick={() => handleNextStep(handleNext)}>
-                            Next
-                          </button>
+                        <div className="sticky bottom-0 bg-white py-6 z-20 flex justify-center">
+                          <div className="flex justify-center items-center w-full">
+                            <button
+                              className="wono-blue-dark text-white py-2 px-4 rounded-md hover:bg-blue-600 w-full"
+                              // onClick={handleAddTicket}>
+                              onClick={() => handleNextStep(handleNext)}>
+                              Next
+                            </button>
+                          </div>
                         </div>
-                      </div>
-                      {/* Close button */}
-                      {/* <button
+                        {/* Close button */}
+                        {/* <button
                 className="bg-blue-500 text-white py-2 px-4 my-4 rounded-lg hover:bg-blue-600"
                 onClick={closeModal}>
                 Close
               </button> */}
-                    </div>
-                  </>
-                );
-              } else if (activeStep === 1) {
-                return (
-                  <>
-                    <div className="p-6">
-                      <h1 className="text-2xl mb-4 py-3 font-semibold text-center">
-                        Are the provided details correct ?
-                      </h1>
-                      <div>
-                        <div className="flex justify-between py-2 border-b">
-                          <h1 className="font-semibold">Department</h1>
-                          <span>IT</span>
+                      </div>
+                    </>
+                  );
+                } else if (activeStep === 1) {
+                  return (
+                    <>
+                      <div className="p-6">
+                        <h1 className="text-2xl mb-4 py-3 font-semibold text-center">
+                          Are the provided details correct ?
+                        </h1>
+                        <div>
+                          <div className="flex justify-between py-2 border-b">
+                            <h1 className="font-semibold">Department</h1>
+                            <span>IT</span>
+                          </div>
+                        </div>
+                        <div>
+                          <div className="flex justify-between py-2 border-b">
+                            <h1 className="font-semibold">Ticket title</h1>
+                            <span>Wifi is not working</span>
+                          </div>
+                        </div>
+                        <div className="pt-8 pb-4">
+                          {/* <p>details</p> */}
+                          <button
+                            type="submit"
+                            // onClick={console.log("submitted")}
+                            className=" p-2 bg-white wono-blue-dark w-full text-white rounded-md">
+                            Submit
+                          </button>
+                          {/* <WonoButton
+                            content={"Submit"}
+                            buttonType={"Submit"}
+                            // onClick={() => handleAddTicket(newTicket)}
+                            onClick={createMyTicket}
+                          /> */}
                         </div>
                       </div>
-                      <div>
-                        <div className="flex justify-between py-2 border-b">
-                          <h1 className="font-semibold">Ticket title</h1>
-                          <span>Wifi is not working</span>
-                        </div>
-                      </div>
-                      <div className="pt-8 pb-4">
-                        {/* <p>details</p> */}
-
-                        <WonoButton
-                          content={"Submit"}
-                          onClick={() => handleAddTicket(newTicket)}
-                        />
-                      </div>
-                    </div>
-                  </>
-                );
-              }
-            }}
-          />
+                    </>
+                  );
+                }
+              }}
+            />
+          </form>
         </>
       </NewModal>
 

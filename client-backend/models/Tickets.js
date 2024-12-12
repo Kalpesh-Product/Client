@@ -3,8 +3,7 @@ const mongoose = require("mongoose");
 const ticketSchema = new mongoose.Schema({
   ticketId: {
     type: String,
-    required: true,
-    // unique: true,
+
     default: "1",
   },
   raisedBy: {
@@ -14,10 +13,12 @@ const ticketSchema = new mongoose.Schema({
     required: true,
     default: "Allan",
   },
-  // selectedDepartment: {
-  //   type: mongoose.Schema.Types.ObjectId,
-  //   ref: "Department",
-  // },
+  selectedDepartment: {
+    // type: mongoose.Schema.Types.ObjectId,
+    // ref: "Department",
+    type: String,
+    required: true,
+  },
   description: {
     type: String,
     required: true,

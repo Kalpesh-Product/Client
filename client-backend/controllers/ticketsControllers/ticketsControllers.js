@@ -1,6 +1,7 @@
 // const Ticket = require("../../models/TicketTest");
 const Ticket = require("../../models/Tickets");
-
+const TicketUsersTest = require("../../models/TicketUsersTest");
+const bcrypt = require("bcryptjs");
 // POST - Raise a ticket
 
 const createTicket = async (req, res) => {
@@ -9,12 +10,14 @@ const createTicket = async (req, res) => {
     // const ticketIdFromRequestBody = req.body.ticketId;
     const raisedByFromRequestBody = req.body.raisedBy;
     const descriptionFromRequestBody = req.body.description;
+    const selectedDepartmentFromRequestBody = req.body.selectedDepartment;
 
     // Create a ticket with it (take the values from the request body / frontend and insert in the database)
     const ourCreatedTicket = await Ticket.create({
       //   ticketId: ticketIdFromRequestBody,
       raisedBy: raisedByFromRequestBody,
       description: descriptionFromRequestBody,
+      selectedDepartment: selectedDepartmentFromRequestBody,
     });
 
     // respond with the new ticket (this will be our response in postman / developer tools)
@@ -105,10 +108,49 @@ const updateTicket = async (req, res) => {
   }
 };
 
+// TEST USER ROUTES START
+
+const signupUser = async (req, res) => {
+  try {
+    // Get the email and password off the req body
+    const nameFromRequestBody = req.body.name;
+    const emailFromRequestBody = req.body.email;
+    const roleFromRequestBody = req.body.role;
+    const departmentFromRequestBody = req.body.department;
+    const passwordFromRequestBody = req.body.password;
+    const designationFromRequestBody = req.body.designation;
+    const companyFromRequestBody = req.body.company;
+    const phoneFromRequestBody = req.body.phone;
+
+    //   Hash password
+    const hashedPassword = bcrypt.hashSync(passwordFromRequestBody, 8);
+
+    // Create a user with the data (in the DB)
+    await TicketUsersTest.create({
+      name: nameFromRequestBody,
+      email: emailFromRequestBody,
+      role: roleFromRequestBody,
+      department: departmentFromRequestBody,
+      password: hashedPassword,
+      designation: designationFromRequestBody,
+      company: companyFromRequestBody,
+      phone: phoneFromRequestBody,
+    });
+
+    // respond with the new created user
+    res.sendStatus(200);
+  } catch (error) {
+    console.log(error);
+    res.sendStatus(400);
+  }
+};
+// TEST USER ROUTES END
+
 module.exports = {
   createTicket,
   fetchAllTickets,
   fetchASingleTicket,
   deleteTicket,
   updateTicket,
+  signupUser,
 };

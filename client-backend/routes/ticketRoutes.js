@@ -16,4 +16,11 @@ router.delete("/delete-ticket/:id", ticketController.deleteTicket);
 // Edit Ticket
 router.put("/edit-ticket/:id", ticketController.updateTicket);
 
+// TICKET TEST USER ROUTES START
+
+// User Signup
+router.post("/signup-user", ticketController.signupUser);
+
+// TICKET TEST USER ROUTES END
+
 module.exports = router;
