@@ -256,13 +256,13 @@ const TicketMembers = () => {
       </Paper> */}
 
       <div className="p-2 bg-white mx-4 rounded-md">
-        <div className="text-right pb-4">
+        {/* <div className="text-right pb-4">
           <button
             onClick={openModal}
             className="px-6 py-2 rounded-lg text-white wono-blue-dark hover:bg-[#3cbce7] transition-shadow shadow-md hover:shadow-lg active:shadow-inner">
             Add Member
           </button>
-        </div>
+        </div> */}
         <AgTable data={filteredRows} columns={columns} />
       </div>
       {/* Tickets datatable END */}
