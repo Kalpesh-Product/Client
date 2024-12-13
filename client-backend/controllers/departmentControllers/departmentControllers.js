@@ -4,9 +4,9 @@ const User = require("../../models/User")
 
 const addDepartment = async (req, res, next) => {
   try {
-    const { departmentId, name, admin, company, designations } = req.body;
+    const { name, company } = req.body;
 
-    console.log("Request Payload:", { departmentId, name, company });
+    console.log("Request Payload:", { name, company });
 
     // Find the company using the companyId
     const companyDoc = await CompanyData.findById(company);
@@ -16,13 +16,15 @@ const addDepartment = async (req, res, next) => {
       return res.status(404).json({ message: "Company not found" });
     }
 
+    // Generate a unique departmentId based on the number of existing departments
+    const departmentCount = await Department.countDocuments();
+    const departmentId = `DEP${String(departmentCount + 1).padStart(5, "0")}`;
+
     // Create the department
     const department = new Department({
       departmentId,
       name,
-      admin: admin || null, // Optional admin field
-      company: companyDoc._id, // Use the ObjectId of the company
-      designations,
+      company
     });
 
     const savedDepartment = await department.save();
@@ -36,12 +38,15 @@ const addDepartment = async (req, res, next) => {
   }
 };
 
+
+
 const getDepartments = async (req, res, next) => {
   try {
     // Fetch all departments
     const departments = await Department.find()
-      .populate("company", "companyId companyInfo") // Populate company reference with selected fields
+      .populate("company", "companyName") // Populate company reference with selected fields
       .populate("admin", "name email") // Populate admin reference with selected fields
+      .populate("designations", "title responsibilities") // Populate admin reference with selected fields
       .exec();
 
     res.status(200).json({
@@ -66,7 +71,7 @@ const assignAdmin = async (req, res, next) => {
     }
 
     // Validate the department reference
-    const department = await Department.findOne({ departmentId });
+    const department = await Department.findById(departmentId);
     if (!department) {
       return res.status(404).json({ message: "Department not found" });
     }

@@ -97,6 +97,7 @@ const createUser = async (req, res, next) => {
       phone,
       role,
       department: departmentIds,
+      designation,
       fatherName,
       motherName,
       fatherOccupation,

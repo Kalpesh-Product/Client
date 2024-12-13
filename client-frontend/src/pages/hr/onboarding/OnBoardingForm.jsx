@@ -25,6 +25,7 @@ const OnBoardingForm = ({ handleClose }) => {
     dob: null, // ISO format
     role: "",
     department: [], // Array of ObjectId
+    designation: "",
     fatherName: "",
     motherName: "",
     fatherOccupation: "",
@@ -101,7 +102,7 @@ const OnBoardingForm = ({ handleClose }) => {
     if (field === "department") {
       setFormData((prev) => ({
         ...prev,
-        designation: "",
+        designation: [],
       }));
     }
   };
@@ -114,13 +115,18 @@ const OnBoardingForm = ({ handleClose }) => {
     return selectedDepartment ? selectedDepartment.admin : [];
   };
 
-  // Get designations for the selected department
   const getDesignations = () => {
     const selectedDepartment = departments.find(
       (department) => department._id === formData.department
     );
     return selectedDepartment ? selectedDepartment.designations : [];
   };
+  
+  console.log(
+    getDesignations().map((desig) => {
+      return desig.title; // Correctly access the `title` property of each designation
+    })
+  );
 
   const handleSubmit = async () => {
     try {
@@ -207,7 +213,7 @@ const OnBoardingForm = ({ handleClose }) => {
                       <div className="grid lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 gap-4">
                         <TextField
                           label="Name"
-                          sx={{borderRadius:'20px'}}
+                          sx={{ borderRadius: "20px" }}
                           value={formData.name}
                           onChange={(e) => handleChange("name", e.target.value)}
                           fullWidth
@@ -465,11 +471,15 @@ const OnBoardingForm = ({ handleClose }) => {
                         }
                         required
                       >
-                        {departments.map((department) => (
-                          <MenuItem key={department._id} value={department._id}>
-                            {department.name}
-                          </MenuItem>
-                        ))}
+                        {Array.isArray(departments) &&
+                          departments.map((department) => (
+                            <MenuItem
+                              key={department?._id}
+                              value={department?._id}
+                            >
+                              {department?.name || "Unnamed Department"}
+                            </MenuItem>
+                          ))}
                       </Select>
                     </FormControl>
                     <FormControl fullWidth>
@@ -483,8 +493,8 @@ const OnBoardingForm = ({ handleClose }) => {
                         disabled={!formData.department}
                       >
                         {getDesignations().map((designation, index) => (
-                          <MenuItem key={index} value={designation}>
-                            {designation}
+                          <MenuItem key={designation._id} value={designation._id}>
+                            {designation.title}
                           </MenuItem>
                         ))}
                       </Select>

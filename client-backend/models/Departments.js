@@ -19,14 +19,12 @@ const departmentSchema = new mongoose.Schema({
     ref: "CompanyData",
   },
   designations: {
-    type: [String], // Array of strings to hold multiple designations
-    required: true,
-    validate: {
-      validator: function (v) {
-        return v && v.length > 0; // Ensure at least one designation is provided
-      },
-      message: "At least one designation must be specified.",
-    },
+    type: [mongoose.Schema.Types.ObjectId], // Array of strings to hold multiple designations
+    ref: "Designation", // Refers to the Designations schema
+  },
+  members: {
+    type: [mongoose.Schema.Types.ObjectId], // Array of ObjectIds
+    ref: "User", // Refers to the User schema
   },
 });
 

@@ -16,6 +16,7 @@ const assetsRoutes = require("./routes/assetsRoutes");
 const departmentsRoutes = require("./routes/departmentRoutes");
 const companyRoutes = require("./routes/companyRoutes");
 const userRoutes = require("./routes/userRoutes");
+const designationRoutes = require("./routes/designationRoutes");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -44,6 +45,7 @@ app.use("/api/auth", authRoutes);
 //protected routes that should be protected later 👽
 app.use("/api/company", companyRoutes);
 app.use("/api/departments", departmentsRoutes);
+app.use("/api/designations", designationRoutes);
 app.use("/api/assets", assetsRoutes);
 app.use("/api/meetings", meetingsRoutes);
 app.use("/api/tickets", ticketsRoutes);
