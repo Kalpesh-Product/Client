@@ -1,11 +1,10 @@
 import { useNavigate } from "react-router-dom";
 import AgTable from "../../../components/AgTable";
-import { rooms } from "../../../utils/Rooms";
+// import { rooms } from "../../../utils/Rooms";
 import RoomAvailabilityPieChart from "./components/RoomCharts";
 import AvailableRooms from "./components/AviliableRooms";
 
 export default function RoomBookingDash() {
-
   const navigate = useNavigate();
 
   const upcomingBookings = 5;
@@ -55,15 +54,13 @@ export default function RoomBookingDash() {
         const statusClass = statusColors[params.value] || "";
         return (
           <span
-            className={`px-3 py-1 rounded-full text-sm font-medium ${statusClass}`}
-          >
+            className={`px-3 py-1 rounded-full text-sm font-medium ${statusClass}`}>
             {params.value}
           </span>
         );
       },
     },
   ];
-
 
   return (
     <div className="p-4 bg-gray-100 w-[80vw] md:w-full mt-4">
@@ -73,8 +70,7 @@ export default function RoomBookingDash() {
         <h1 className="text-2xl font-semibold">Room Booking Management</h1>
         <button
           onClick={() => navigate("/it/meetings/booking")} // Open the modal
-          className="px-6 py-2 rounded-lg text-white wono-blue-dark hover:bg-[#3cbce7] transition-shadow shadow-md hover:shadow-lg active:shadow-inner"
-        >
+          className="px-6 py-2 rounded-lg text-white wono-blue-dark hover:bg-[#3cbce7] transition-shadow shadow-md hover:shadow-lg active:shadow-inner">
           Book a Room
         </button>
       </div>
@@ -100,7 +96,7 @@ export default function RoomBookingDash() {
       </div>
 
       {/* <RoomAvailabilityPieChart rooms={rooms} /> */}
-      <RoomAvailabilityPieChart rooms={rooms} />
+      {/* <RoomAvailabilityPieChart rooms={rooms} />
       <div className="bg-white shadow-md rounded-lg p-6">
         <h2 className="text-xl font-semibold mb-4">Recent Bookings</h2>
         <AgTable
@@ -111,7 +107,7 @@ export default function RoomBookingDash() {
       </div>
       <h1 className="text-2xl font-semibold my-3">Available rooms</h1>
 
-      <AvailableRooms rooms={rooms} />
+      <AvailableRooms rooms={rooms} /> */}
     </div>
   );
 }

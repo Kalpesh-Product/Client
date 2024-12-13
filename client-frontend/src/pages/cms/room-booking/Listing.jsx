@@ -3,7 +3,7 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import { useState, useEffect } from "react";
-import { rooms as roomList } from "../../../utils/Rooms";
+// import { rooms as roomList } from "../../../utils/Rooms";
 import BookingForm from "./components/BookingForm";
 import BookingDetails from "./components/BookingDetails";
 import { format, addMinutes } from "date-fns";
@@ -230,9 +230,8 @@ export default function Listing() {
       {openBookingModal && (
         <NewModal
           open={openBookingModal}
-          onClose={() => setOpenBookingModal(false)}
-        >
-          <BookingForm
+          onClose={() => setOpenBookingModal(false)}>
+          {/* <BookingForm
             handleClose={() => setOpenBookingModal(false)}
             newMeeting={newMeeting}
             handleChange={handleChange}
@@ -240,7 +239,7 @@ export default function Listing() {
             currentDate={currentDate}
             loggedInUser={loggedInUser}
             roomList={roomList}
-          />
+          /> */}
         </NewModal>
       )}
 
@@ -248,8 +247,7 @@ export default function Listing() {
       {openEventDetailsModal && selectedEvent && (
         <NewModal
           open={openEventDetailsModal}
-          onClose={() => setOpenEventDetailsModal(false)}
-        >
+          onClose={() => setOpenEventDetailsModal(false)}>
           <BookingDetails
             handleModalClose={() => setOpenEventDetailsModal(false)}
             selectedEvent={selectedEvent}
