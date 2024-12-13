@@ -25,7 +25,7 @@ const ticketSchema = new mongoose.Schema({
   },
   status: {
     type: String,
-    default: "pending",
+    default: "Pending",
   },
   // assignedMember: [
   //   {
@@ -33,63 +33,69 @@ const ticketSchema = new mongoose.Schema({
   //     ref: "User",
   //   },
   // ],
+  assignedMember: {
+    type: String,
+    default: "",
+  },
+
   // ticketPriority: {
   //   type: String,
   //   default: "low",
   // },
-  // accepted: {
-  //   acceptedStatus: {
-  //     type: Boolean,
-  //     defalut: false,
-  //   },
-  //   acceptedBy: {
-  //     type: mongoose.Schema.Types.ObjectId,
-  //     ref: "User",
-  //   },
-  //   acceptedDate: {
-  //     type: Date,
-  //   },
-  //   acceptedTime: {
-  //     type: String,
-  //     match: /^([0-1]\d|2[0-3]):([0-5]\d)(:[0-5]\d)?$/,
-  //   },
-  // },
+  accepted: {
+    acceptedStatus: {
+      type: Boolean,
+      default: false,
+    },
+    // acceptedBy: {
+    //   type: mongoose.Schema.Types.ObjectId,
+    //   ref: "User",
+    // },
+    // acceptedDate: {
+    //   type: Date,
+    // },
+    // acceptedTime: {
+    //   type: String,
+    //   match: /^([0-1]\d|2[0-3]):([0-5]\d)(:[0-5]\d)?$/,
+    // },
+  },
   // timeTaken: {
   //   type: String,
   // },
-  // escalation: {
-  //   escalationToAdmin: {
-  //     isEscalated: {
-  //       type: Boolean,
-  //       default: false,
-  //     },
-  //     escalationMessage: {
-  //       type: String,
-  //     },
-  //   },
-  //   escalationToSuperAdmin: {
-  //     isEscalated: {
-  //       type: Boolean,
-  //       default: false,
-  //     },
-  //     escalationMessage: {
-  //       type: String,
-  //     },
-  //   },
-  //   escalationToMasterAdmin: {
-  //     isEscalated: {
-  //       type: Boolean,
-  //       default: false,
-  //     },
-  //     escalationMessage: {
-  //       type: String,
-  //     },
-  //   },
-  //   escalationToDepartment: {
-  //     type: mongoose.Schema.Types.ObjectId,
-  //     ref: "Department",
-  //   },
-  // },
+  escalation: {
+    escalationToAdmin: {
+      isEscalated: {
+        type: Boolean,
+        default: false,
+      },
+      escalationMessage: {
+        type: String,
+        default: "",
+      },
+    },
+    // escalationToSuperAdmin: {
+    //   isEscalated: {
+    //     type: Boolean,
+    //     default: false,
+    //   },
+    //   escalationMessage: {
+    //     type: String,
+    //   },
+    // },
+    // escalationToMasterAdmin: {
+    //   isEscalated: {
+    //     type: Boolean,
+    //     default: false,
+    //   },
+    //   escalationMessage: {
+    //     type: String,
+    //   },
+    // },
+    // escalationToDepartment: {
+    //   type: mongoose.Schema.Types.ObjectId,
+    //   ref: "Department",
+    // },
+  },
   // closingMessage: {
   //   type: String,
   //   required: true,

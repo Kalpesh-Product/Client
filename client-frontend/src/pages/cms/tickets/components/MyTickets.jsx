@@ -28,21 +28,41 @@ const MyTickets = () => {
   //   fetchmyTickets();
   // }, []);
 
-  const [refreshTrigger, setRefreshTrigger] = useState(false);
+  // const [refreshTrigger, setRefreshTrigger] = useState(false);
+
+  // useEffect(() => {
+  //   const storedUser = JSON.parse(localStorage.getItem("user"));
+  //   setUser(storedUser);
+  //   fetchmyTickets();
+
+  //   // Set a timeout to update the refreshTrigger state after 2 seconds
+  //   const timer = setTimeout(() => {
+  //     setRefreshTrigger((prev) => !prev); // Toggle the trigger state
+  //   }, 2000);
+
+  //   // Cleanup to clear the timeout
+  //   return () => clearTimeout(timer);
+  // }, [refreshTrigger]); // Depend on refreshTrigger to re-run the effect
+
+  const [hasRefreshed, setHasRefreshed] = useState(false);
 
   useEffect(() => {
+    // Fetch the user from localStorage and update state
     const storedUser = JSON.parse(localStorage.getItem("user"));
     setUser(storedUser);
     fetchmyTickets();
 
-    // Set a timeout to update the refreshTrigger state after 2 seconds
+    // Set a timeout to run the effect one more time after 2 seconds
     const timer = setTimeout(() => {
-      setRefreshTrigger((prev) => !prev); // Toggle the trigger state
-    }, 2000);
+      if (!hasRefreshed) {
+        setHasRefreshed(true); // Mark as refreshed
+        fetchmyTickets(); // Run your fetching logic one more time
+      }
+    }, 1000);
 
     // Cleanup to clear the timeout
     return () => clearTimeout(timer);
-  }, [refreshTrigger]); // Depend on refreshTrigger to re-run the effect
+  }, [hasRefreshed]);
 
   const raisedByFilter = user.name; // Replace with the desired name or variable
 
@@ -127,6 +147,7 @@ const MyTickets = () => {
       });
       toast.success("New Ticket Created");
       fetchmyTickets();
+      closeModal();
     } catch (error) {
       console.log(error);
     }
@@ -351,7 +372,27 @@ const MyTickets = () => {
       width: 150,
     },
     { field: "description", headerName: "Ticket Title", width: 200 },
-    // { field: "status", headerName: "Status", width: 150 },
+    {
+      field: "status",
+      headerName: "Status",
+      width: 150,
+      type: "singleSelect",
+      valueOptions: ["Pending", "In Process", "Resolved"],
+      cellRenderer: (params) => {
+        const statusColors = {
+          "In Process": "text-blue-600 bg-blue-100",
+          Pending: "text-red-600 bg-red-100",
+          Resolved: "text-yellow-600 bg-yellow-100",
+        };
+        const statusClass = statusColors[params.value] || "";
+        return (
+          <span
+            className={`px-3 py-1 rounded-full text-sm font-medium ${statusClass}`}>
+            {params.value}
+          </span>
+        );
+      },
+    },
     // { field: "requestDate", headerName: "Request Date", width: 150 },
     {
       field: "actions",
@@ -387,7 +428,8 @@ const MyTickets = () => {
         return (
           <div className="flex space-x-2">
             <button
-              onClick={handleEdit}
+              // onClick={handleEdit}
+              onClick={openEditTicket}
               className="bg-blue-500 text-white px-3 py-1 rounded">
               Edit
             </button>
@@ -560,7 +602,7 @@ const MyTickets = () => {
   const closeEditTicket = () => setIsEditTicketOpen(false);
 
   const handleEditTicket = () => {
-    setHighlightEditedRow(true); // Highlight the first row after editing a ticket
+    // setHighlightEditedRow(true); // Highlight the first row after editing a ticket
     toast.success("Ticket Updated");
     closeEditTicket(); // Optionally close the modal after the alert
   };
@@ -838,13 +880,13 @@ const MyTickets = () => {
                         <div>
                           <div className="flex justify-between py-2 border-b">
                             <h1 className="font-semibold">Department</h1>
-                            <span>IT</span>
+                            <span>{createForm.selectedDepartment}</span>
                           </div>
                         </div>
                         <div>
                           <div className="flex justify-between py-2 border-b">
                             <h1 className="font-semibold">Ticket title</h1>
-                            <span>Wifi is not working</span>
+                            <span>{createForm.description}</span>
                           </div>
                         </div>
                         <div className="pt-8 pb-4">
