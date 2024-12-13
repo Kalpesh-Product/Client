@@ -28,7 +28,7 @@ const TreeNode = ({ node }) => {
       <NewModal open={showModal} onClose={closeModal}>
         <div className="relative w-[58rem] max-w-4xl h-[90vh] overflow-hidden p-2 bg-white  ">
           <div className="flex items-center p-1 bg-white rounded-lg  justify-between mb-4">
-            <div className="flex flex-row gap-3">
+            <div className="flex flex-row gap-3 bg-white">
               <div
                 className={`flex items-center justify-center w-12 h-12 rounded-full text-white font-bold mr-3 ${getNodeColor(
                   node.name

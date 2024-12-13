@@ -118,10 +118,6 @@ const router = createBrowserRouter([
         element: <DepartmentDash />,
       },
       {
-        path: "/it/meetings/my-bookings",
-        element: <DepartmentDash />,
-      },
-      {
         path: "/it/meetings/add-room",
         element: <DepartmentDash />,
       },
