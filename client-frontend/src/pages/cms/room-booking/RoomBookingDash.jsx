@@ -1,12 +1,22 @@
 import { useNavigate } from "react-router-dom";
 import AgTable from "../../../components/AgTable";
-import { rooms } from "../../../utils/Rooms";
 import RoomAvailabilityPieChart from "./components/RoomCharts";
 import AvailableRooms from "./components/AviliableRooms";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
 
 export default function RoomBookingDash() {
-
   const navigate = useNavigate();
+
+  const { data: rooms, isLoading, isError, error } = useQuery({
+    queryKey: ["rooms"],
+    queryFn: async () => {
+      const response = await axios.get(
+        "http://localhost:5000/api/meetings/get-rooms"
+      );
+      return response.data.data; // Assuming the API response has rooms in response.data
+    },
+  });
 
   const upcomingBookings = 5;
   const totalBookings = 10;
@@ -64,15 +74,13 @@ export default function RoomBookingDash() {
     },
   ];
 
-
   return (
     <div className="p-4 bg-gray-100 w-[80vw] md:w-full mt-4">
-      {/* Header */}
       <h1 className="text-3xl mb-8 font-bold">Key insights</h1>
       <div className="w-full flex justify-between items-center mb-6">
         <h1 className="text-2xl font-semibold">Room Booking Management</h1>
         <button
-          onClick={() => navigate("/it/meetings/booking")} // Open the modal
+          onClick={() => navigate("/it/meetings/booking")}
           className="px-6 py-2 rounded-lg text-white wono-blue-dark hover:bg-[#3cbce7] transition-shadow shadow-md hover:shadow-lg active:shadow-inner"
         >
           Book a Room
@@ -99,19 +107,26 @@ export default function RoomBookingDash() {
         </div>
       </div>
 
-      {/* <RoomAvailabilityPieChart rooms={rooms} /> */}
-      <RoomAvailabilityPieChart rooms={rooms} />
-      <div className="bg-white shadow-md rounded-lg p-6">
-        <h2 className="text-xl font-semibold mb-4">Recent Bookings</h2>
-        <AgTable
-          data={recentBookings}
-          columns={columns}
-          paginationPageSize={5}
-        />
-      </div>
-      <h1 className="text-2xl font-semibold my-3">Available rooms</h1>
+      {/* Loading and Error States */}
+      {isLoading && <p>Loading rooms...</p>}
+      {isError && <p className="text-red-600">Error: {error.message}</p>}
 
-      <AvailableRooms rooms={rooms} />
+      {/* Render Pie Chart and Table if Data is Available */}
+      {!isLoading && !isError && rooms && (
+        <>
+          <RoomAvailabilityPieChart rooms={rooms} />
+          <div className="bg-white shadow-md rounded-lg p-6">
+            <h2 className="text-xl font-semibold mb-4">Recent Bookings</h2>
+            <AgTable
+              data={recentBookings}
+              columns={columns}
+              paginationPageSize={5}
+            />
+          </div>
+          <h1 className="text-2xl font-semibold my-3">Available rooms</h1>
+          <AvailableRooms rooms={rooms} />
+        </>
+      )}
     </div>
   );
 }

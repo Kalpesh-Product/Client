@@ -4,7 +4,7 @@ import { FiWifi, FiSun, FiMonitor } from "react-icons/fi"; // Using only 3 icons
 const AvailableRooms = ({ rooms }) => {
   // Filter available rooms and limit to 4
   const availableRooms = rooms
-    .filter((room) => room.availability === "Available")
+    .filter((room) => room.status === "Available")
     .slice(0, 3); // Display only 3-4 rooms
 
   return (
@@ -15,7 +15,7 @@ const AvailableRooms = ({ rooms }) => {
           className="bg-white shadow-lg rounded-lg overflow-hidden transition-transform hover:scale-105"
         >
           <img
-            src={room.url}
+            src={room.image.url}
             alt={room.name}
             className="w-full h-48 object-cover"
           />
