@@ -23,10 +23,10 @@ const ticketSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  // status: {
-  //   type: String,
-  //   default: "pending",
-  // },
+  status: {
+    type: String,
+    default: "pending",
+  },
   // assignedMember: [
   //   {
   //     type: mongoose.Schema.Types.ObjectId,
