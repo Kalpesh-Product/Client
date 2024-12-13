@@ -16,6 +16,7 @@ import {
 } from "@mui/material";
 import { toast } from "sonner";
 import axios from "axios";
+import { IoIosArrowDown } from "react-icons/io";
 
 const AddDesignationForm = () => {
   const [departments, setDepartments] = useState([]);
@@ -179,7 +180,7 @@ const AddDesignationForm = () => {
                               sx={{ marginBottom: 1 }}
                             >
                               <AccordionSummary
-                                expandIcon={<button>open</button>}
+                                expandIcon={<IoIosArrowDown />}
                                 aria-controls={`panel-${designation._id}-content`}
                                 id={`panel-${designation._id}-header`}
                               >

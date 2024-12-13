@@ -15,6 +15,7 @@ const createUser = async (req, res, next) => {
       phone,
       role = "masterAdmin",
       department,
+      designation,
       fatherName,
       motherName,
       fatherOccupation,
