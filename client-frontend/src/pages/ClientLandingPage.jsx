@@ -1,7 +1,4 @@
 import React, { useEffect, useState } from "react";
-// import iconSrc from "../LandingPageImages/dummy-icon.png";
-import dashboardIcon from "../LandingPageImages/dummy-icon.png";
-import Swal from "sweetalert2";
 import { toast } from "sonner";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";

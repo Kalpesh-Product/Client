@@ -72,7 +72,7 @@ export default function RoomBookingDash() {
       <div className="w-full flex justify-between items-center mb-6">
         <h1 className="text-2xl font-semibold">Room Booking Management</h1>
         <button
-          onClick={() => navigate("/customer/meetings/booking")} // Open the modal
+          onClick={() => navigate("/it/meetings/booking")} // Open the modal
           className="px-6 py-2 rounded-lg text-white wono-blue-dark hover:bg-[#3cbce7] transition-shadow shadow-md hover:shadow-lg active:shadow-inner"
         >
           Book a Room
