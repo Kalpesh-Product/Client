@@ -52,7 +52,7 @@ const ViewTicketsTabs = () => {
                 fontFamily: "Popins-Semibold",
                 padding: "0.5rem",
               }}>
-              {user.role !== "Employee" && user.role !== "Admin" && (
+              {/* {user.role !== "Employee" && user.role !== "Admin" && (
                 <Tab
                   label="External Tickets"
                   value="2"
@@ -61,7 +61,7 @@ const ViewTicketsTabs = () => {
                     borderRight: "1px solid #e4e4e4",
                   }}
                 />
-              )}
+              )} */}
               <Tab
                 label="Assigned Tickets"
                 value="5"

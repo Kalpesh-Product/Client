@@ -791,12 +791,12 @@ const MyTickets = () => {
                                         <MenuItem value="Laptop screen malfunctioning">
                                           Laptop screen malfunctioning
                                         </MenuItem>
-                                        <MenuItem value="Leave request not approved">
-                                          Leave request not approved
+                                        <MenuItem value="Attendance data is incorrect">
+                                          Attendance data is incorrect
                                         </MenuItem>
-                                        <MenuItem value="Incorrect salary received">
+                                        {/* <MenuItem value="Incorrect salary received">
                                           Incorrect salary received
-                                        </MenuItem>
+                                        </MenuItem> */}
                                         <MenuItem value="Discussion of new SOP">
                                           Discussion of new SOP
                                         </MenuItem>
