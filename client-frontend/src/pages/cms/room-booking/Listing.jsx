@@ -3,7 +3,6 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import { useState, useEffect } from "react";
-// import { rooms as roomList } from "../../../utils/Rooms";
 import BookingForm from "./components/BookingForm";
 import BookingDetails from "./components/BookingDetails";
 import { format, addMinutes } from "date-fns";
@@ -12,8 +11,19 @@ import { NewModal } from "../../../components/NewModal";
 import { Checkbox, FormControlLabel } from "@mui/material";
 import { v4 as uuid } from "uuid";
 import { roomBookings } from "../../../utils/roomBookings";
+import axios from "axios";
+import { useQuery } from "@tanstack/react-query";
 
 export default function Listing() {
+  const { data: roomList } = useQuery({
+    queryKey: ["rooms"],
+    queryFn: async () => {
+      const response = await axios.get(
+        "http://localhost:5000/api/meetings/get-rooms"
+      );
+      return response.data.data; // Assuming the "data" field contains the rooms array
+    },
+  });
   const [openBookingModal, setOpenBookingModal] = useState(false);
   const [openEventDetailsModal, setOpenEventDetailsModal] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState(null); // For event details modal
