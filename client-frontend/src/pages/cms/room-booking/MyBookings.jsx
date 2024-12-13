@@ -14,11 +14,11 @@ export default function MyBookings() {
       const response = await axios.get(
         "http://localhost:5000/api/meetings/get-rooms"
       );
-      return response.data.data; // Assuming the API response has rooms in response.data.data
+      return response.data.data; 
     },
   });
 
-  // Generate bookings only if rooms are available
+
   const bookings =
     rooms?.map((room) => ({
       id: room.id,
