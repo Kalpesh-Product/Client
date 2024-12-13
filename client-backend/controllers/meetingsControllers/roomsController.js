@@ -1,48 +1,42 @@
 const Room = require("../../models/Rooms");
 const idGenerator = require("../../utils/idGenerator");
 const sharp = require("sharp");
-const { handleFileUpload } = require("../../config/cloudinaryConfig");
+const {
+  handleFileUpload,
+  handleFileDelete,
+} = require("../../config/cloudinaryConfig");
+const { default: mongoose } = require("mongoose");
 
 const addRoom = async (req, res, next) => {
   try {
     const { name, seats, description } = req.body;
 
-    // Validate required fields
     if (!name || !seats || !description) {
       return res
         .status(400)
         .json({ message: "All required fields must be provided" });
     }
 
-    // Generate a unique room ID
     const roomId = idGenerator("R");
 
-    // Initialize variable for image ID
     let imageId;
+    let imageUrl;
 
-    // If a file is uploaded, process and upload it
-    let imageUrl; // Leave this undefined by default
     if (req.file) {
       const file = req.file;
 
-      // Resize the image using sharp
       const buffer = await sharp(file.buffer)
-        .resize(800, 800, { fit: "cover" }) // Resize to 800x800 while maintaining aspect ratio
-        .webp({ quality: 80 }) // Convert to WEBP with quality 80
+        .resize(800, 800, { fit: "cover" })
+        .webp({ quality: 80 })
         .toBuffer();
 
-      // Convert buffer to data URI
       const base64Image = `data:image/webp;base64,${buffer.toString("base64")}`;
-
-      // Upload the image to Cloudinary using handleFileUpload
       const uploadResult = await handleFileUpload(base64Image, "rooms");
 
-      // Store the image URL and ID
       imageId = uploadResult.public_id;
-      imageUrl = uploadResult.secure_url; // Only set if a file is uploaded
+      imageUrl = uploadResult.secure_url;
     }
 
-    // Create the room object
     const room = new Room({
       roomId,
       name,
@@ -50,15 +44,13 @@ const addRoom = async (req, res, next) => {
       description,
       assignedAssets: [],
       image: {
-        id: imageId, // Will remain undefined if no file is uploaded
-        url: imageUrl, // MongoDB schema default will be used if undefined
+        id: imageId,
+        url: imageUrl,
       },
     });
 
-    // Save the room to the database
     const savedRoom = await room.save();
 
-    // Send success response
     res.status(201).json({
       message: "Room added successfully",
       room: savedRoom,
@@ -69,7 +61,7 @@ const addRoom = async (req, res, next) => {
   }
 };
 
-const getRooms = async (req, res) => {
+const getRooms = async (req, res, next) => {
   try {
     // Fetch all rooms, including the assigned assets data
     const rooms = await Room.find().populate("assignedAssets");
@@ -81,13 +73,71 @@ const getRooms = async (req, res) => {
       data: rooms,
     });
   } catch (error) {
-    // Handle errors and send the appropriate response
-    res.status(500).json({
-      success: false,
-      message: "Error fetching rooms",
-      error: error.message,
-    });
+    next(error);
   }
 };
 
-module.exports = { addRoom, getRooms };
+const updateRoom = async (req, res, next) => {
+  try {
+    const { id: roomId } = req.params;
+    const { name, description, seats } = req.body;
+
+    if (!roomId) {
+      return res.status(400).json({ message: "Room ID must be provided." });
+    }
+
+    // Validate the Room ID
+    if (!mongoose.Types.ObjectId.isValid(roomId)) {
+      return res.status(400).json({ message: "Invalid Room ID." });
+    }
+
+    // Find the room to update
+    const room = await Room.findOne({ _id: roomId });
+    if (!room) {
+      return res.status(404).json({ message: "Room not found." });
+    }
+
+    let imageId = room.image?.id;
+    let imageUrl = room.image?.url;
+
+    // Check if a new file is provided
+    if (req.file) {
+      const file = req.file;
+
+      // Process the image using Sharp
+      const buffer = await sharp(file.buffer)
+        .resize(800, 800, { fit: "cover" })
+        .webp({ quality: 80 })
+        .toBuffer();
+
+      const base64Image = `data:image/webp;base64,${buffer.toString("base64")}`;
+
+      // Delete the current image in Cloudinary if it exists
+      if (imageId) {
+        await handleFileDelete(imageId);
+      }
+
+      // Upload the new image to Cloudinary
+      const uploadResult = await handleFileUpload(base64Image, "rooms");
+      imageId = uploadResult.public_id;
+      imageUrl = uploadResult.secure_url;
+    }
+
+    // Update the room details only if they are provided
+    if (name) room.name = name;
+    if (description) room.description = description;
+    if (seats) room.seats = seats;
+    if (req.file) room.image = { id: imageId, url: imageUrl };
+
+    const updatedRoom = await room.save();
+
+    res.status(200).json({
+      message: "Room updated successfully.",
+      room: updatedRoom,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+module.exports = { addRoom, getRooms, updateRoom };

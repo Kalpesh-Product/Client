@@ -21,12 +21,12 @@ export default function Listing() {
       const response = await axios.get(
         "http://localhost:5000/api/meetings/get-rooms"
       );
-      return response.data.data; // Assuming the "data" field contains the rooms array
+      return response.data.data;
     },
   });
   const [openBookingModal, setOpenBookingModal] = useState(false);
   const [openEventDetailsModal, setOpenEventDetailsModal] = useState(false);
-  const [selectedEvent, setSelectedEvent] = useState(null); // For event details modal
+  const [selectedEvent, setSelectedEvent] = useState(null); 
   const [currentDate, setCurrentDate] = useState("");
   const [filters, setFilters] = useState({
     active: true,

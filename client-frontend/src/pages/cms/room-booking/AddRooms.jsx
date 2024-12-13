@@ -56,6 +56,26 @@ export default function AddRooms() {
     },
   });
 
+  const { mutate: updateRoom } = useMutation({
+    mutationFn: async (data) => {
+      const response = await axios.patch(
+        `http://localhost:5000/api/meetings/update-room/${data.id}`,
+        data.formData,
+        {
+          headers: { "Content-Type": "multipart/form-data" },
+        }
+      );
+      return response.data;
+    },
+    onSuccess: () => {
+      toast.success("Room updated successfully!");
+      refetch();
+    },
+    onError: (error) => {
+      toast.error(error.response?.data?.message || "An error occurred.");
+    },
+  });
+
   const handleChange = (e) => {
     const { name, value, files } = e.target;
     if (name === "image") {
@@ -76,9 +96,16 @@ export default function AddRooms() {
       formData.append("room", newRoom.image);
     }
 
-    mutate(formData);
+    if (isEditing) {
+      updateRoom({ id: selectedRoomId, formData });
+    } else {
+      mutate(formData);
+    }
+
     setShowModal(false);
     setNewRoom({ name: "", description: "", seats: "" });
+    setIsEditing(false);
+    setSelectedRoomId(null);
   };
 
   const handleEdit = (room) => {
@@ -87,7 +114,7 @@ export default function AddRooms() {
       description: room.description,
       seats: room.seats,
     });
-    setSelectedRoomId(room.roomId);
+    setSelectedRoomId(room._id);
     setIsEditing(true);
     setShowModal(true);
   };
