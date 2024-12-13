@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Button,
   Radio,
@@ -29,10 +29,24 @@ const selectStyles = {
 };
 
 const participantsList = [
-  { label: "Allan Silvera", value: "Allan Silvera" },
-  { label: "Aiwinraj KS", value: "Aiwinraj KS" },
-  { label: "Anushri Bhagat", value: "Anushri Bhagat" },
-  { label: "Kalpesh Naik", value: "Kalpesh Naik" },
+  { label: "abrar@biznest.co.in", value: "abrar@biznest.co.in" },
+  { label: "kashif@biznest.co.in", value: "kashif@biznest.co.in" },
+  { label: "farzeen@biznest.co.in", value: "farzeen@biznest.co.in" },
+  { label: "kalpesh@biznest.co.in", value: "kalpesh@biznest.co.in" },
+  { label: "pranali@biznest.co.in", value: "pranali@biznest.co.in" },
+  { label: "allan@biznest.co.in", value: "allan@biznest.co.in" },
+  { label: "aiwinraj@biznest.co.in", value: "aiwinraj@biznest.co.in" },
+  { label: "anushri@biznest.co.in", value: "anushri@biznest.co.in" },
+  { label: "sankalp@biznest.co.in", value: "sankalp@biznest.co.in" },
+  { label: "narshiva@biznest.co.in", value: "narshiva@biznest.co.in" },
+  { label: "hema@biznest.co.in", value: "hema@biznest.co.in" },
+  { label: "rhutvik@biznest.co.in", value: "rhutvik@biznest.co.in" },
+  { label: "siddhi@biznest.co.in", value: "siddhi@biznest.co.in" },
+  { label: "mac@biznest.co.in", value: "mac@biznest.co.in" },
+  { label: "faizan@biznest.co.in", value: "faizan@biznest.co.in" },
+  { label: "amol@biznest.co.in", value: "amol@biznest.co.in" },
+  { label: "jill@biznest.co.in", value: "jill@biznest.co.in" },
+  { label: "urjita@biznest.co.in", value: "urjita@biznest.co.in" },
 ];
 
 export default function BookingForm({
@@ -48,6 +62,15 @@ export default function BookingForm({
   const [filteredRooms, setFilteredRooms] = useState([]);
   const [selectedParticipants, setSelectedParticipants] = useState([]);
   const [credits, setCredits] = useState(500);
+  const [participants, setParticipants] = useState([]);
+
+  useEffect(() => {
+    const loggedInUser = JSON.parse(localStorage.getItem("user"));
+    const filteredList = participantsList.filter(
+      (item) => item.label !== loggedInUser.email
+    );
+    setParticipants(filteredList);
+  }, [participantsList]);
 
   const steps = [
     "Select Time",
@@ -175,7 +198,8 @@ export default function BookingForm({
                         variant="contained"
                         color="primary"
                         onClick={handleNext}
-                        className="w-full py-2 font-bold mt-4">
+                        className="w-full py-2 font-bold mt-4"
+                      >
                         Next
                       </Button>
                     </div>
@@ -193,7 +217,8 @@ export default function BookingForm({
                         onChange={handleSeatsChange}
                         displayEmpty
                         sx={{ marginBottom: "0.5rem" }}
-                        inputProps={{ "aria-label": "Select Seat Count" }}>
+                        inputProps={{ "aria-label": "Select Seat Count" }}
+                      >
                         <MenuItem value="">
                           <em>Select Seat Count</em>
                         </MenuItem>
@@ -216,7 +241,8 @@ export default function BookingForm({
                         <RadioGroup
                           name="room"
                           value={newMeeting.room || ""}
-                          onChange={handleChange}>
+                          onChange={handleChange}
+                        >
                           {filteredRooms.map((room) => (
                             <FormControlLabel
                               key={room.id}
@@ -234,7 +260,8 @@ export default function BookingForm({
                         variant="contained"
                         color="primary"
                         onClick={handleNext}
-                        className="w-full py-2 font-bold mt-4">
+                        className="w-full py-2 font-bold mt-4"
+                      >
                         Next
                       </Button>
                     </div>
@@ -250,7 +277,7 @@ export default function BookingForm({
                       </label>
                       <Select
                         isMulti
-                        options={participantsList}
+                        options={participants}
                         value={selectedParticipants}
                         onChange={handleParticipantsChange}
                         placeholder="Select participants"
@@ -295,7 +322,8 @@ export default function BookingForm({
                         variant="contained"
                         color="primary"
                         className="w-full py-2 font-bold mt-4"
-                        onClick={handleNext}>
+                        onClick={handleNext}
+                      >
                         Next
                       </Button>
                     </div>
@@ -342,7 +370,8 @@ export default function BookingForm({
                       variant="contained"
                       color="primary"
                       className="col-span-full py-2 font-bold"
-                      onClick={handleSubmit}>
+                      onClick={handleSubmit}
+                    >
                       Confirm & Submit
                     </Button>
                   </div>
