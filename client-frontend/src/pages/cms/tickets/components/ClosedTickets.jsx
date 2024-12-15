@@ -162,7 +162,10 @@ const ClosedTickets = () => {
 
     // Filter tickets where 'department' matches
     const filteredTickets = allTickets.filter(
-      (ticket) => ticket.selectedDepartment === selectedDepartmentFilter
+      (ticket) =>
+        ticket.selectedDepartment === selectedDepartmentFilter &&
+        ticket.status === "Closed" &&
+        ticket.assignedMember === user.name
     );
 
     // Set it on state (update the value of tickets)
@@ -381,12 +384,12 @@ const ClosedTickets = () => {
       headerName: "Status",
       width: 150,
       type: "singleSelect",
-      valueOptions: ["Pending", "In Process", "Resolved"],
+      valueOptions: ["Pending", "In Process", "Closed"],
       cellRenderer: (params) => {
         const statusColors = {
-          "In Process": "text-blue-600 bg-blue-100",
+          "In Process": "text-yellow-600 bg-yellow-100",
           Pending: "text-red-600 bg-red-100",
-          Resolved: "text-yellow-600 bg-yellow-100",
+          Closed: "text-blue-600 bg-blue-100",
         };
         const statusClass = statusColors[params.value] || "";
         return (

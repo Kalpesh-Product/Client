@@ -16,6 +16,15 @@ router.delete("/delete-ticket/:id", ticketController.deleteTicket);
 // Edit Ticket
 router.put("/edit-ticket/:id", ticketController.updateTicket);
 
+// Accept Ticket
+router.put("/accept-ticket/:id", ticketController.acceptTicket);
+
+// Close Ticket
+router.put("/close-ticket/:id", ticketController.closeTicket);
+
+// Escalate Ticket
+router.put("/escalate-ticket/:id", ticketController.escalateTicket);
+
 // TICKET TEST USER ROUTES START
 
 // User Signup

@@ -164,7 +164,11 @@ const AcceptedTickets = () => {
 
     // Filter tickets where 'department' matches
     const filteredTickets = allTickets.filter(
-      (ticket) => ticket.selectedDepartment === selectedDepartmentFilter
+      (ticket) =>
+        ticket.selectedDepartment === selectedDepartmentFilter &&
+        ticket.accepted.acceptedStatus === true &&
+        ticket.status !== "Closed" &&
+        ticket.assignedMember === user.name
     );
 
     // Set it on state (update the value of tickets)
@@ -428,12 +432,12 @@ const AcceptedTickets = () => {
       headerName: "Status",
       width: 150,
       type: "singleSelect",
-      valueOptions: ["Pending", "In Process", "Resolved"],
+      valueOptions: ["Pending", "In Process", "Closed"],
       cellRenderer: (params) => {
         const statusColors = {
-          "In Process": "text-blue-600 bg-blue-100",
+          "In Process": "text-yellow-600 bg-yellow-100",
           Pending: "text-red-600 bg-red-100",
-          Resolved: "text-yellow-600 bg-yellow-100",
+          Closed: "text-blue-600 bg-blue-100",
         };
         const statusClass = statusColors[params.value] || "";
         return (
@@ -450,43 +454,45 @@ const AcceptedTickets = () => {
       headerName: "Actions",
       width: 200,
       cellRenderer: (params) => {
-        const handleEdit = () => {
-          console.log("Editing ticket:", params.data._id);
-          // Implement your edit logic here
-        };
+        const handleClose = async () => {
+          console.log("Closed ticket:", params.data._id);
+          // Implement your close logic here
 
-        const handleDelete = async () => {
-          console.log("Deleting ticket:", params.data._id);
-          // Update state to remove the ticket
-          // setMyTickets((prevTickets) =>
-          //   prevTickets.filter((ticket) => ticket._id !== params.data._id)
-          // );
-
-          const responseFromBackend = await axios.delete(
-            `/api/tickets/delete-ticket/${params.data._id}`
+          // Temporary close login on button click
+          const responseFromBackend = await axios.put(
+            `/api/tickets/close-ticket/${params.data._id}`
           );
           console.log(responseFromBackend);
+          toast.success("Ticket Closed");
 
-          // Update state
-          // we heve to filter out the one we deleted
-          const newTickets = [...myTickets].filter((ticket) => {
-            return ticket._id !== params.data._id; // return tickets where note._id is not equal to the id we passed in (idOfTheNoteToBeDeleted). This will return an array of notes that meet this condition.
-          });
+          fetchmyTickets();
+        };
 
-          setMyTickets(newTickets); // assigns newTickets as the new value of the tickets state variable.
+        const handleEscalate = async () => {
+          console.log("Escalated ticket:", params.data._id);
+          // Temporary close login on button click
+          const responseFromBackend = await axios.put(
+            `/api/tickets/escalate-ticket/${params.data._id}`
+          );
+          console.log(responseFromBackend);
+          toast.success("Ticket Escalated");
+
+          fetchmyTickets();
         };
 
         return (
           <div className="flex space-x-2">
             <button
               // onClick={handleEdit}
-              onClick={handleCloseTicket}
+              // onClick={handleCloseTicket}
+              onClick={handleClose}
               className="bg-red-500 text-white px-3 py-1 rounded">
               Close
             </button>
             <button
               // onClick={handleDelete}
-              onClick={handleDeleteTicket}
+              // onClick={handleDeleteTicket}
+              onClick={handleEscalate}
               className="bg-red-500 text-white px-3 py-1 rounded">
               Escalate
             </button>

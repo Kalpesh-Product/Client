@@ -253,6 +253,10 @@ const router = createBrowserRouter([
         element: <DepartmentDash />,
       },
       {
+        path: "/it/tickets/all-tickets",
+        element: <DepartmentDash />,
+      },
+      {
         path: "/dropTest",
         element: <DropTest />,
       },

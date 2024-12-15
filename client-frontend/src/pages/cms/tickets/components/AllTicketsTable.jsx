@@ -8,13 +8,13 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { CSVLink } from "react-csv";
 import { TextField } from "@mui/material";
-import AgTable from "../../../components/AgTable";
+import AgTable from "../../../../components/AgTable";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { toast } from "sonner";
 import axios from "axios";
 
-const MyTicketsTable = () => {
+const AllTicketsTable = () => {
   // const [user, setUser] = useState("");
   // useEffect(() => {
   //   const storedUser = JSON.parse(localStorage.getItem("user"));
@@ -64,7 +64,7 @@ const MyTicketsTable = () => {
     return () => clearTimeout(timer);
   }, [hasRefreshed]);
 
-  const selectedDepartmentFilter = user.department; // Replace with the desired name or variable
+  //   const selectedDepartmentFilter = user.department; // Replace with the desired name or variable
 
   // Ticket With APIs & Local START
 
@@ -162,16 +162,16 @@ const MyTicketsTable = () => {
     const allTickets = responseFromBackend.data.tickets;
 
     // Filter tickets where 'department' matches
-    const filteredTickets = allTickets.filter(
-      (ticket) =>
-        ticket.selectedDepartment === selectedDepartmentFilter &&
-        ticket.assignedMember === user.name
-    );
+    // const filteredTickets = allTickets.filter(
+    //   (ticket) =>
+    //     ticket.selectedDepartment === selectedDepartmentFilter &&
+    //     ticket.assignedMember === user.name
+    // );
 
     // Set it on state (update the value of tickets)
     // setMyTickets(responseFromBackend.data.tickets); // setNotes will update the value of tickets from null to the current array of tickets
     // Update state with filtered tickets
-    setMyTickets(filteredTickets);
+    setMyTickets(allTickets);
     // console.log(responseFromBackend);
     // console.log(responseFromBackend.data.tickets);
   };
@@ -673,4 +673,4 @@ const MyTicketsTable = () => {
   );
 };
 
-export default MyTicketsTable;
+export default AllTicketsTable;

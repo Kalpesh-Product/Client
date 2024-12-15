@@ -162,7 +162,10 @@ const UnresolvedTickets = () => {
 
     // Filter tickets where 'department' matches
     const filteredTickets = allTickets.filter(
-      (ticket) => ticket.selectedDepartment === selectedDepartmentFilter
+      (ticket) =>
+        ticket.selectedDepartment === selectedDepartmentFilter &&
+        ticket.status !== "Closed" &&
+        ticket.assignedMember === user.name
     );
 
     // Set it on state (update the value of tickets)
@@ -402,12 +405,12 @@ const UnresolvedTickets = () => {
       headerName: "Status",
       width: 150,
       type: "singleSelect",
-      valueOptions: ["Pending", "In Process", "Resolved"],
+      valueOptions: ["Pending", "In Process", "Closed"],
       cellRenderer: (params) => {
         const statusColors = {
-          "In Process": "text-blue-600 bg-blue-100",
+          "In Process": "text-yellow-600 bg-yellow-100",
           Pending: "text-red-600 bg-red-100",
-          Resolved: "text-yellow-600 bg-yellow-100",
+          Closed: "text-blue-600 bg-blue-100",
         };
         const statusClass = statusColors[params.value] || "";
         return (
@@ -417,6 +420,11 @@ const UnresolvedTickets = () => {
           </span>
         );
       },
+    },
+    {
+      field: "escalatedTo",
+      headerName: "Escalated To",
+      width: 200,
     },
     // { field: "requestDate", headerName: "Request Date", width: 150 },
     // {
@@ -583,6 +591,13 @@ const UnresolvedTickets = () => {
     { label: "Request Date", key: "requestDate" },
   ];
 
+  // nesting the mongoDB value for escalatedTo
+
+  const ticketsForTable = myTickets.map((ticket) => ({
+    ...ticket,
+    escalatedTo: ticket.escalation?.escalationToAdmin?.escalatedTo || "N/A",
+  }));
+
   return (
     <div>
       {/* <div className="bg-green-500">
@@ -647,7 +662,8 @@ const UnresolvedTickets = () => {
         />
       </Paper> */}
       {/* <AgTable data={filteredRows} columns={columns} /> */}
-      <AgTable data={myTickets} columns={columns3} />
+      {/* <AgTable data={myTickets} columns={columns3} /> */}
+      <AgTable data={ticketsForTable} columns={columns3} />
       {/* Tickets datatable END */}
     </div>
   );
