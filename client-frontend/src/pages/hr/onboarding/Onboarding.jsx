@@ -27,6 +27,8 @@ const Onboarding = () => {
     fetchUsers();
   }, []);
 
+  console.log(users)
+
   const modalStyle = {
     width: "80vw",
     minHeight: "70vh",

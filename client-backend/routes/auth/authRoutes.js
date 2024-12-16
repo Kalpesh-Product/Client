@@ -1,9 +1,13 @@
 const router = require("express").Router();
 const {
-  login,
+  // login,
   logOut,
   createUser,
 } = require("../../controllers/authControllers/userAuthController");
+const {
+  login,
+} = require("../../controllers/authControllers/testLogin");
+
 const refreshTokenController = require("../../controllers/authControllers/refreshTokenController");
 
 router.post("/login", login);

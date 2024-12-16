@@ -184,6 +184,8 @@ const TestSide = () => {
     (departmentMapping[user?.department] || []).includes(dept.name)
   );
 
+  console.log("Department from DB : ",user.department)
+
   const handleActive = (index) => {
     setIsActive(index);
     console.log("Menu clicked");

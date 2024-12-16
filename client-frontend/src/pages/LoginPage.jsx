@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate, Link, useLocation } from "react-router-dom";
+import axios from "axios"
 import dummyData from "../dummyData/dummyData.json";
 import { Container, Box, Grid, TextField, Button } from "@mui/material";
 import "../styles/ClientLogin.css";
@@ -24,23 +25,52 @@ const LoginPage = () => {
   });
 
   // Validation function
-  const handleLogin = (e) => {
+  // const handleLogin = (e) => {
+  //   e.preventDefault();
+
+  //   const user = dummyData.find(
+  //     (u) => u.email === email && u.password === password
+  //   );
+
+  //   if (user) {
+
+  //     localStorage.setItem("user", JSON.stringify(user));
+
+  //     navigate("/landing");
+  //     console.log(user.name);
+  //     console.log(user);
+  //   } else {
+  //     setError("Invalid email or passwod");
+  //   }
+  // };
+
+  const handleLogin = async (e) => {
     e.preventDefault();
 
-    // Find user in dummyData based on email and password
-    const user = dummyData.find(
-      (u) => u.email === email && u.password === password
-    );
+    try {
+      // Make an API call to the backend for authentication
+      const response = await axios.post(
+        "http://localhost:5000/api/auth/login",
+        {
+          email,
+          password,
+        }
+      );
 
-    if (user) {
-      // Store user data in localStorage
-      localStorage.setItem("user", JSON.stringify(user));
-      // Redirect to homepage
-      navigate("/landing");
-      console.log(user.name);
-      console.log(user);
-    } else {
-      setError("Invalid email or passwod");
+      // Check if login is successful
+      if (response.status === 200 && response.data.user) {
+        // Store user data in localStorage
+        localStorage.setItem("user", JSON.stringify(response.data.user));
+
+        // Redirect to homepage
+        navigate("/landing");
+        console.log(response.data.user.name);
+      } else {
+        setError("Invalid email or password");
+      }
+    } catch (error) {
+      console.error("Error during login:", error);
+      setError("Invalid email or password");
     }
   };
 
