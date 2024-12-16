@@ -776,6 +776,26 @@ const MyTickets = () => {
 
   const visiblePaths = ["/profile", "/it/tickets/my-tickets"];
 
+  // Code for filtering ticket messages
+  const issues = [
+    { department: "IT", message: "Wifi is not working" },
+    { department: "IT", message: "Wifi is slow" },
+    { department: "IT", message: "Laptop screen malfunctioning" },
+    { department: "HR", message: "Attendance data is incorrect" },
+    { department: "HR", message: "Salary Not received" },
+    { department: "HR", message: "Discussion of new SOP" },
+    { department: "Admin", message: "AC is too cold" },
+    { department: "Admin", message: "Request for new stationery supplies" },
+    { department: "Admin", message: "Conflict in meeting room scheduling" },
+    { department: "Tech", message: "Domain expired" },
+    { department: "Tech", message: "Software not working" },
+    { department: "Tech", message: "Domain change required" },
+  ];
+
+  const filteredIssues = issues.filter(
+    (issue) => issue.department === createForm.selectedDepartment
+  );
+
   return (
     <div className="w-[72vw] md:w-full transition-all duration-200 ease-in-out bg-white p-2 rounded-md">
       <div className="flex gap-4 mb-4 justify-between">
@@ -938,13 +958,13 @@ const MyTickets = () => {
                                         <MenuItem value="HR">HR</MenuItem>
                                         <MenuItem value="Tech">Tech</MenuItem>
                                         <MenuItem value="Admin">Admin</MenuItem>
-                                        <MenuItem value="Finance">
+                                        {/* <MenuItem value="Finance">
                                           Finance
                                         </MenuItem>
                                         <MenuItem value="Maintenance">
                                           Maintenance
                                         </MenuItem>
-                                        <MenuItem value="Sales">Sales</MenuItem>
+                                        <MenuItem value="Sales">Sales</MenuItem> */}
                                       </Select>
                                     </FormControl>
                                   </div>
@@ -968,7 +988,7 @@ const MyTickets = () => {
                                         // }
                                         // Update state on selection
                                       >
-                                        <MenuItem value="Wifi is not working">
+                                        {/* <MenuItem value="Wifi is not working">
                                           Wifi is not working
                                         </MenuItem>
                                         <MenuItem value="Wifi is slow">
@@ -980,13 +1000,20 @@ const MyTickets = () => {
                                         <MenuItem value="Attendance data is incorrect">
                                           Attendance data is incorrect
                                         </MenuItem>
-                                        {/* <MenuItem value="Incorrect salary received">
-                                          Incorrect salary received
-                                        </MenuItem> */}
+                                        <MenuItem value="Salary Not received">
+                                          Salary Not received
+                                        </MenuItem>
                                         <MenuItem value="Discussion of new SOP">
                                           Discussion of new SOP
                                         </MenuItem>
-                                        <MenuItem value="ggs">ggs</MenuItem>
+                                        <MenuItem value="ggs">ggs</MenuItem> */}
+                                        {filteredIssues.map((issue, index) => (
+                                          <MenuItem
+                                            key={index}
+                                            value={issue.message}>
+                                            {issue.message}
+                                          </MenuItem>
+                                        ))}
                                         {/* <MenuItem value="Other">Other</MenuItem> */}
                                       </Select>
                                     </FormControl>
