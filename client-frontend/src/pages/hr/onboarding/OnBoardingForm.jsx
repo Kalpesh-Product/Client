@@ -73,24 +73,45 @@ const OnBoardingForm = ({ handleClose }) => {
   });
 
   const [departments, setDepartments] = useState([]);
+  const [roles, setRoles] = useState([]);
+  const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    // Fetch departments from the API
-    const fetchDepartments = async () => {
+    const fetchData = async () => {
       try {
-        const response = await axios.get(
-          "http://localhost:5000/api/departments/get-departments"
-        ); // Correct endpoint
-        setDepartments(response.data.departments); // Assuming response data has a `departments` array
+        // Fetch both departments and roles concurrently
+        const [departmentsResponse, rolesResponse] = await Promise.all([
+          axios.get("http://localhost:5000/api/departments/get-departments"),
+          axios.get("http://localhost:5000/api/roles/get-roles"),
+        ]);
+
+        // Update state with fetched data
+        setDepartments(departmentsResponse.data.departments);
+        setRoles(rolesResponse.data.roles);
       } catch (error) {
-        console.error("Error fetching departments:", error);
+        console.error("Error fetching data:", error);
       }
     };
 
-    fetchDepartments();
+    fetchData();
   }, []);
 
-  console.log(departments);
+  useEffect(()=>{
+    const fetchUsers = async () =>{
+      try{
+        const response = await axios.get("http://localhost:5000/api/users/fetch-users");
+        setUsers(response.data.users);
+
+      }catch(error){
+        console.error("Error fetching users:", error);
+      }
+    }
+    fetchUsers()
+  },[])
+
+
+
+  console.log(users);
 
   const handleChange = (field, value) => {
     setFormData((prev) => ({
@@ -121,7 +142,7 @@ const OnBoardingForm = ({ handleClose }) => {
     );
     return selectedDepartment ? selectedDepartment.designations : [];
   };
-  
+
   console.log(
     getDesignations().map((desig) => {
       return desig.title; // Correctly access the `title` property of each designation
@@ -451,18 +472,6 @@ const OnBoardingForm = ({ handleClose }) => {
                       )}
                     />
                     <FormControl fullWidth>
-                      <InputLabel>Role</InputLabel>
-                      <Select
-                        value={formData.role}
-                        onChange={(e) => handleChange("role", e.target.value)}
-                        required
-                      >
-                        <MenuItem value="Admin">Admin</MenuItem>
-                        <MenuItem value="Manager">Manager</MenuItem>
-                        <MenuItem value="Employee">Employee</MenuItem>
-                      </Select>
-                    </FormControl>
-                    <FormControl fullWidth>
                       <InputLabel>Department</InputLabel>
                       <Select
                         value={formData.department}
@@ -483,6 +492,21 @@ const OnBoardingForm = ({ handleClose }) => {
                       </Select>
                     </FormControl>
                     <FormControl fullWidth>
+                      <InputLabel>Role</InputLabel>
+                      <Select
+                        value={formData.role}
+                        onChange={(e) => handleChange("role", e.target.value)}
+                        required
+                      >
+                        {roles.map((role) => (
+                          <MenuItem key={role._id} value={role._id}>
+                            {role.roleTitle}
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    </FormControl>
+
+                    <FormControl fullWidth>
                       <InputLabel>Designation</InputLabel>
                       <Select
                         value={formData.designation}
@@ -493,7 +517,10 @@ const OnBoardingForm = ({ handleClose }) => {
                         disabled={!formData.department}
                       >
                         {getDesignations().map((designation, index) => (
-                          <MenuItem key={designation._id} value={designation._id}>
+                          <MenuItem
+                            key={designation._id}
+                            value={designation._id}
+                          >
                             {designation.title}
                           </MenuItem>
                         ))}

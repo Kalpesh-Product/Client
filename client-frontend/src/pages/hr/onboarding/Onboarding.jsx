@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import AgTable from "../../../components/AgTable";
 import WonoButton from "../../../components/Buttons/WonoButton";
 import { NewModal } from "../../../components/NewModal";
@@ -6,14 +6,31 @@ import { motion } from "framer-motion";
 import { IoMdClose } from "react-icons/io";
 import OnBoardingForm from "./OnBoardingForm";
 import FormStepper from "../../../components/FormStepper";
+import UserCard from "../../../components/UserCard";
+import axios from "axios"
 
 const Onboarding = () => {
   const [openModal, setOpenModal] = useState(false);
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:5000/api/users/fetch-users"
+        );
+        setUsers(response.data.users);
+      } catch (error) {
+        console.error("Error fetching users:", error);
+      }
+    };
+    fetchUsers();
+  }, []);
 
   const modalStyle = {
-    width : "80vw",
-    minHeight : "70vh"
-  }
+    width: "80vw",
+    minHeight: "70vh",
+  };
   // Define columns
   const columns = [
     { headerName: "empID", field: "id", flex: 1 },
@@ -79,9 +96,21 @@ const Onboarding = () => {
           </div>
           <AgTable data={tableData} columns={columns} />
         </div>
+
+        <div>
+          <div className="grid grid-cols-2">
+            {users.map((user) => (
+              <UserCard key={user._id} user={user} />
+            ))}
+          </div>
+        </div>
       </div>
 
-      <NewModal styles={modalStyle} open={!!openModal} onClose={handleCloseModal}>
+      <NewModal
+        styles={modalStyle}
+        open={!!openModal}
+        onClose={handleCloseModal}
+      >
         {openModal === "add" && (
           <>
             <OnBoardingForm handleClose={handleCloseModal} />
