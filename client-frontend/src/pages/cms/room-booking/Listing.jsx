@@ -146,8 +146,8 @@ export default function Listing() {
         event.id === eventId
           ? {
               ...event,
-              start: `${extendedTime.startDate}T${extendedTime.startTime}`,
-              end: `${extendedTime.endDate}T${extendedTime.endTime}`,
+              start: new Date(`${extendedTime.date}T${extendedTime.startTime}`),
+              end: new Date(`${extendedTime.date}T${extendedTime.endTime}`),
             }
           : event
       )
