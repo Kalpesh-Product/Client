@@ -239,7 +239,7 @@ export default function Listing() {
         <NewModal
           open={openBookingModal}
           onClose={() => setOpenBookingModal(false)}>
-          {/* <BookingForm
+          <BookingForm
             handleClose={() => setOpenBookingModal(false)}
             newMeeting={newMeeting}
             handleChange={handleChange}
@@ -247,7 +247,7 @@ export default function Listing() {
             currentDate={currentDate}
             loggedInUser={loggedInUser}
             roomList={roomList}
-          /> */}
+          />
         </NewModal>
       )}
 
