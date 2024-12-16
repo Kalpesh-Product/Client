@@ -231,15 +231,15 @@ const ModuleSidebar = ({ mainSideBar }) => {
                 icon: <MdOutlineManageAccounts />,
               },
             ]),
-        ...(user.role === "Master Admin" && user.role === "Super Admin"
-          ? []
-          : [
+        ...(user.role === "Master Admin" || user.role === "Super Admin"
+          ? [
               {
                 title: "All Tickets",
                 route: "/it/tickets/all-tickets",
                 icon: <MdOutlineManageAccounts />,
               },
-            ]),
+            ]
+          : []),
 
         ...(user.role === "Employee" && user.department === "Finance"
           ? []

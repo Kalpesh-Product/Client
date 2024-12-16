@@ -29,41 +29,41 @@ const MyTickets = () => {
   //   fetchmyTickets();
   // }, []);
 
-  const [refreshTrigger, setRefreshTrigger] = useState(false);
-
-  useEffect(() => {
-    const storedUser = JSON.parse(localStorage.getItem("user"));
-    setUser(storedUser);
-    fetchmyTickets();
-
-    // Set a timeout to update the refreshTrigger state after 2 seconds
-    const timer = setTimeout(() => {
-      setRefreshTrigger((prev) => !prev); // Toggle the trigger state
-    }, 2000);
-
-    // Cleanup to clear the timeout
-    return () => clearTimeout(timer);
-  }, [refreshTrigger]); // Depend on refreshTrigger to re-run the effect
-
-  // const [hasRefreshed, setHasRefreshed] = useState(false);
+  // const [refreshTrigger, setRefreshTrigger] = useState(false);
 
   // useEffect(() => {
-  //   // Fetch the user from localStorage and update state
   //   const storedUser = JSON.parse(localStorage.getItem("user"));
   //   setUser(storedUser);
   //   fetchmyTickets();
 
-  //   // Set a timeout to run the effect one more time after 2 seconds
+  //   // Set a timeout to update the refreshTrigger state after 2 seconds
   //   const timer = setTimeout(() => {
-  //     if (!hasRefreshed) {
-  //       setHasRefreshed(true); // Mark as refreshed
-  //       fetchmyTickets(); // Run your fetching logic one more time
-  //     }
-  //   }, 1000);
+  //     setRefreshTrigger((prev) => !prev); // Toggle the trigger state
+  //   }, 2000);
 
   //   // Cleanup to clear the timeout
   //   return () => clearTimeout(timer);
-  // }, [hasRefreshed]);
+  // }, [refreshTrigger]); // Depend on refreshTrigger to re-run the effect
+
+  const [hasRefreshed, setHasRefreshed] = useState(false);
+
+  useEffect(() => {
+    // Fetch the user from localStorage and update state
+    const storedUser = JSON.parse(localStorage.getItem("user"));
+    setUser(storedUser);
+    fetchmyTickets();
+
+    // Set a timeout to run the effect one more time after 2 seconds
+    const timer = setTimeout(() => {
+      if (!hasRefreshed) {
+        setHasRefreshed(true); // Mark as refreshed
+        fetchmyTickets(); // Run your fetching logic one more time
+      }
+    }, 1000);
+
+    // Cleanup to clear the timeout
+    return () => clearTimeout(timer);
+  }, [hasRefreshed]);
 
   const raisedByFilter = user.name; // Replace with the desired name or variable
 
