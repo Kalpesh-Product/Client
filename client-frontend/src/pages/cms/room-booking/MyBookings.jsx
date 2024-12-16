@@ -11,13 +11,10 @@ export default function MyBookings() {
   } = useQuery({
     queryKey: ["rooms"],
     queryFn: async () => {
-      const response = await axios.get(
-        "http://localhost:5000/api/meetings/get-rooms"
-      );
-      return response.data.data; 
+      const response = await axios.get("/api/meetings/get-rooms");
+      return response.data.data;
     },
   });
-
 
   const bookings =
     rooms?.map((room) => ({

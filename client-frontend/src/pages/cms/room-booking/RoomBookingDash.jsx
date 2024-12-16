@@ -8,12 +8,15 @@ import axios from "axios";
 export default function RoomBookingDash() {
   const navigate = useNavigate();
 
-  const { data: rooms, isLoading, isError, error } = useQuery({
+  const {
+    data: rooms,
+    isLoading,
+    isError,
+    error,
+  } = useQuery({
     queryKey: ["rooms"],
     queryFn: async () => {
-      const response = await axios.get(
-        "http://localhost:5000/api/meetings/get-rooms"
-      );
+      const response = await axios.get("/api/meetings/get-rooms");
       return response.data.data; // Assuming the API response has rooms in response.data
     },
   });
@@ -80,8 +83,7 @@ export default function RoomBookingDash() {
         <h1 className="text-2xl font-semibold">Room Booking Management</h1>
         <button
           onClick={() => navigate("/it/meetings/booking")}
-          className="px-6 py-2 rounded-lg text-white wono-blue-dark hover:bg-[#3cbce7] transition-shadow shadow-md hover:shadow-lg active:shadow-inner"
-        >
+          className="px-6 py-2 rounded-lg text-white wono-blue-dark hover:bg-[#3cbce7] transition-shadow shadow-md hover:shadow-lg active:shadow-inner">
           Book a Room
         </button>
       </div>

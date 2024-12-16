@@ -29,22 +29,16 @@ export default function AddRooms() {
   const { data, isLoading, isError, refetch } = useQuery({
     queryKey: ["rooms"],
     queryFn: async () => {
-      const response = await axios.get(
-        "http://localhost:5000/api/meetings/get-rooms"
-      );
+      const response = await axios.get("/api/meetings/get-rooms");
       return response.data.data; // Assuming the "data" field contains the rooms array
     },
   });
 
   const { mutate } = useMutation({
     mutationFn: async (data) => {
-      const response = await axios.post(
-        "http://localhost:5000/api/meetings/create-room",
-        data,
-        {
-          headers: { "Content-Type": "multipart/form-data" },
-        }
-      );
+      const response = await axios.post("/api/meetings/create-room", data, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
       return response.data;
     },
     onSuccess: () => {
@@ -59,7 +53,7 @@ export default function AddRooms() {
   const { mutate: updateRoom } = useMutation({
     mutationFn: async (data) => {
       const response = await axios.patch(
-        `http://localhost:5000/api/meetings/update-room/${data.id}`,
+        `/api/meetings/update-room/${data.id}`,
         data.formData,
         {
           headers: { "Content-Type": "multipart/form-data" },
@@ -132,8 +126,7 @@ export default function AddRooms() {
             setNewRoom({ name: "", description: "", seats: "" });
             setShowModal(true);
           }}
-          className="px-6 py-2 rounded-lg text-white wono-blue-dark hover:bg-[#3cbce7] transition-shadow shadow-md hover:shadow-lg active:shadow-inner"
-        >
+          className="px-6 py-2 rounded-lg text-white wono-blue-dark hover:bg-[#3cbce7] transition-shadow shadow-md hover:shadow-lg active:shadow-inner">
           Add new Room
         </button>
       </div>
@@ -141,8 +134,7 @@ export default function AddRooms() {
         {data.map((room) => (
           <Card
             key={room._id}
-            className="shadow-md hover:shadow-lg transition-shadow border border-gray-200"
-          >
+            className="shadow-md hover:shadow-lg transition-shadow border border-gray-200">
             <CardMedia
               component="img"
               sx={{ height: "350px" }}
@@ -160,8 +152,7 @@ export default function AddRooms() {
                     room.status === "Available"
                       ? "bg-green-100 text-green-600"
                       : "bg-red-100 text-red-600"
-                  }`}
-                >
+                  }`}>
                   {room.status}
                 </span>
               </div>
@@ -180,8 +171,7 @@ export default function AddRooms() {
                 <Button
                   variant="contained"
                   className="w-full"
-                  onClick={() => handleEdit(room)}
-                >
+                  onClick={() => handleEdit(room)}>
                   Edit Room
                 </Button>
               </div>
@@ -194,8 +184,7 @@ export default function AddRooms() {
           <div className="flex flex-col gap-4 w-[50vw] mx-auto">
             <FormStepper
               steps={["Room Details", "Confirmation"]}
-              handleClose={() => setShowModal(false)}
-            >
+              handleClose={() => setShowModal(false)}>
               {(activeStep, handleNext) => {
                 switch (activeStep) {
                   case 0:
@@ -205,8 +194,7 @@ export default function AddRooms() {
                           e.preventDefault();
                           handleNext();
                         }}
-                        className="flex flex-col gap-4"
-                      >
+                        className="flex flex-col gap-4">
                         <div className="flex flex-col gap-4">
                           <TextField
                             label="Room Name"
@@ -238,8 +226,7 @@ export default function AddRooms() {
                           <div>
                             <label
                               htmlFor="room-image"
-                              className="block text-sm font-medium text-gray-700"
-                            >
+                              className="block text-sm font-medium text-gray-700">
                               Upload Room Image
                             </label>
                             <input
@@ -257,8 +244,7 @@ export default function AddRooms() {
                             fullWidth
                             type="submit"
                             variant="contained"
-                            color="primary"
-                          >
+                            color="primary">
                             Next
                           </Button>
                         </div>
@@ -285,8 +271,7 @@ export default function AddRooms() {
                             type="button"
                             variant="contained"
                             color="primary"
-                            onClick={handleSubmit}
-                          >
+                            onClick={handleSubmit}>
                             {isEditing ? "Update Room" : "Add Room"}
                           </Button>
                         </div>
