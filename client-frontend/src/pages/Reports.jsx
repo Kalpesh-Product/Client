@@ -41,59 +41,64 @@ const Reports = () => {
   // };
 
   const myReportWidgetsData = [
-    {
-      title: "Ticket",
-      subtitle: "View and manage all ticket-related reports",
-      link: "/customer/tickets/ticket-reports",
-    },
+    // {
+    //   title: "Ticket",
+    //   subtitle: "View and manage all ticket-related reports",
+    //   link: "/customer/tickets/ticket-reports",
+    // },
     {
       title: "Task",
       subtitle: "Analyze your task performance",
-      link: "/reports/tasks",
+      link: "/tasks/mytasks",
     },
     {
       title: "Meeting",
       subtitle: "Track meeting analytics and outcomes",
-      link: "/customer/meetings/reports",
+      link: "/it/meetings/reports",
     },
     {
-      title: "Assets",
-      subtitle: "Insights into all the assets",
-      link: "/customer/asset/reports",
+      title: "Leaves",
+      subtitle: "Track meeting analytics and outcomes",
+      link: "/hr/leaves/leave-reports",
     },
+    // {
+    //   title: "Assets",
+    //   subtitle: "Insights into all the assets",
+    //   link: "/customer/asset/reports",
+    // },
   ];
 
   const externalReportWidgetsData = [
     {
       title: "Ticket",
       subtitle: "View and manage all ticket-related reports",
-      link: "/customer/tickets/ticket-reports",
+      link: "/it/tickets/ticket-reports",
     },
-    {
-      title: "Task",
-      subtitle: "Analyze your task performance",
-      link: "/reports/tasks",
-    },
-    {
-      title: "Meeting",
-      subtitle: "Track meeting analytics and outcomes",
-      link: "/customer/meetings/reports",
-    },
+    // {
+    //   title: "Task",
+    //   subtitle: "Analyze your task performance",
+    //   link: "/reports/tasks",
+    // },
+    // {
+    //   title: "Meeting",
+    //   subtitle: "Track meeting analytics and outcomes",
+    //   link: "/customer/meetings/reports",
+    // },
     {
       title: "Assets",
       subtitle: "Insights into all the assets",
-      link: "/customer/asset/reports",
+      link: "/it/asset/reports",
     },
-    {
-      title: "Finance",
-      subtitle: "Insights into all the finances",
-      link: "/customer/asset/reports",
-    },
-    {
-      title: "Sales",
-      subtitle: "Insights into all the sales",
-      link: "/customer/asset/reports",
-    },
+    // {
+    //   title: "Finance",
+    //   subtitle: "Insights into all the finances",
+    //   link: "/customer/asset/reports",
+    // },
+    // {
+    //   title: "Sales",
+    //   subtitle: "Insights into all the sales",
+    //   link: "/customer/asset/reports",
+    // },
   ];
 
   return (

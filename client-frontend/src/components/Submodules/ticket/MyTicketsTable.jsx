@@ -421,11 +421,14 @@ const MyTicketsTable = () => {
       : allRows.filter((row) => row.department === department);
 
   const csvHeaders = [
-    { label: "ID", key: "id" },
-    { label: "Ticket Title", key: "ticketTitle" },
-    { label: "Priority", key: "priority" },
-    { label: "Department", key: "department" },
-    { label: "Request Date", key: "requestDate" },
+    { label: "ID", key: "ticketId" },
+    { label: "Raised By", key: "raisedBy" },
+    { label: "Selected Department", key: "selectedDepartment" },
+    { label: "Ticket Title", key: "description" },
+    // { label: "Priority", key: "priority" },
+    { label: "Status", key: "status" },
+    // { label: "Request Date", key: "requestDate" },
+    { label: "Escalated To", key: "escalatedTo" },
   ];
 
   // nesting the mongoDB value for escalatedTo
@@ -647,7 +650,8 @@ const MyTicketsTable = () => {
             Export Report
           </button> */}
           <CSVLink
-            data={filteredRows} // Pass the filtered rows for CSV download
+            // data={filteredRows} // Pass the filtered rows for CSV download
+            data={ticketsForTable} // Pass the filtered rows for CSV download
             headers={csvHeaders} // Pass the CSV headers
             filename="tickets_report.csv" // Set the filename for the CSV file
             className="wono-blue-dark hover:bg-blue-700 text-white text-sm font-bold p-2 rounded ">

@@ -11,7 +11,7 @@ import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import { toast } from "sonner";
 import AgTable from "../../../../components/AgTable";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { NewModal } from "../../../../components/NewModal";
 import FormStepper from "../../../../components/FormStepper";
 import WonoButton from "../../../../components/Buttons/WonoButton";
@@ -20,6 +20,7 @@ import { IoMdClose } from "react-icons/io";
 import axios from "axios";
 
 const MyTickets = () => {
+  const navigate = useNavigate();
   const [user, setUser] = useState("");
 
   // useEffect(() => {
@@ -155,6 +156,7 @@ const MyTickets = () => {
       toast.success("New Ticket Created");
       fetchmyTickets();
       closeModal();
+      navigate("/it/tickets/my-tickets");
     } catch (error) {
       console.log(error);
     }
@@ -454,7 +456,7 @@ const MyTickets = () => {
   //   },
   // ];
   const columns3 = [
-    { field: "ticketId", headerName: "ID", width: 100 },
+    { field: "ticketId", headerName: "ID", width: 80 },
     { field: "raisedBy", headerName: "Raised By", width: 150 },
     {
       field: "selectedDepartment",
@@ -484,96 +486,101 @@ const MyTickets = () => {
       },
     },
     // { field: "requestDate", headerName: "Request Date", width: 150 },
-    {
-      field: "actions",
-      headerName: "Actions",
-      width: 200,
-      cellRenderer: (params) => {
-        // const viewDetails = () => {
-        //   console.log("View Ticket Details:", params.data._id);
-        //   // Implement your edit logic here
-        //   // toggleUpdate()
 
-        //   // Toggling update
-        //   setUpdateForm({
-        //     raisedBy: user.name,
-        //     selectedDepartment: params.data.selectedDepartment,
-        //     description: params.data.description,
-        //     _id: params.data._id,
-        //   });
+    ...(location.pathname === "/it/tickets/my-tickets"
+      ? [
+          {
+            field: "actions",
+            headerName: "Actions",
+            width: 200,
+            cellRenderer: (params) => {
+              // const viewDetails = () => {
+              //   console.log("View Ticket Details:", params.data._id);
+              //   // Implement your edit logic here
+              //   // toggleUpdate()
 
-        //   console.log(setUpdateForm);
-        // };
+              //   // Toggling update
+              //   setUpdateForm({
+              //     raisedBy: user.name,
+              //     selectedDepartment: params.data.selectedDepartment,
+              //     description: params.data.description,
+              //     _id: params.data._id,
+              //   });
 
-        const handleEdit = () => {
-          console.log("Editing ticket:", params.data._id);
-          // Implement your edit logic here
-          // toggleUpdate()
+              //   console.log(setUpdateForm);
+              // };
 
-          // Toggling update
-          setUpdateForm({
-            raisedBy: user.name,
-            selectedDepartment: params.data.selectedDepartment,
-            description: params.data.description,
-            _id: params.data._id,
-          });
+              const handleEdit = () => {
+                console.log("Editing ticket:", params.data._id);
+                // Implement your edit logic here
+                // toggleUpdate()
 
-          console.log(setUpdateForm);
-        };
-        //  toggleUpdateForm(ticket);
+                // Toggling update
+                setUpdateForm({
+                  raisedBy: user.name,
+                  selectedDepartment: params.data.selectedDepartment,
+                  description: params.data.description,
+                  _id: params.data._id,
+                });
 
-        const handleDelete = async () => {
-          console.log("Deleting ticket:", params.data._id);
-          // Update state to remove the ticket
-          // setMyTickets((prevTickets) =>
-          //   prevTickets.filter((ticket) => ticket._id !== params.data._id)
-          // );
+                console.log(setUpdateForm);
+              };
+              //  toggleUpdateForm(ticket);
 
-          const responseFromBackend = await axios.delete(
-            `/api/tickets/delete-ticket/${params.data._id}`
-          );
-          console.log(responseFromBackend);
+              const handleDelete = async () => {
+                console.log("Deleting ticket:", params.data._id);
+                // Update state to remove the ticket
+                // setMyTickets((prevTickets) =>
+                //   prevTickets.filter((ticket) => ticket._id !== params.data._id)
+                // );
 
-          // Update state
-          // we heve to filter out the one we deleted
-          const newTickets = [...myTickets].filter((ticket) => {
-            return ticket._id !== params.data._id; // return tickets where ticket._id is not equal to the id we passed in (idOfTheTicketToBeDeleted). This will return an array of tickets that meet this condition.
-          });
+                const responseFromBackend = await axios.delete(
+                  `/api/tickets/delete-ticket/${params.data._id}`
+                );
+                console.log(responseFromBackend);
 
-          setMyTickets(newTickets); // assigns newTickets as the new value of the tickets state variable.
-        };
+                // Update state
+                // we heve to filter out the one we deleted
+                const newTickets = [...myTickets].filter((ticket) => {
+                  return ticket._id !== params.data._id; // return tickets where ticket._id is not equal to the id we passed in (idOfTheTicketToBeDeleted). This will return an array of tickets that meet this condition.
+                });
 
-        return (
-          <div className="flex space-x-2">
-            <button
-              // onClick={handleEdit}
-              // onClick={openEditTicket}
-              onClick={() => {
-                handleEdit();
-                openDetailsModal();
-              }}
-              className="bg-blue-300 text-white px-3 py-1 rounded">
-              Details
-            </button>
-            <button
-              // onClick={handleEdit}
-              // onClick={openEditTicket}
-              onClick={() => {
-                handleEdit();
-                openEditTicket();
-              }}
-              className="bg-blue-500 text-white px-3 py-1 rounded">
-              Edit
-            </button>
-            <button
-              onClick={handleDelete}
-              className="bg-red-500 text-white px-3 py-1 rounded">
-              Delete
-            </button>
-          </div>
-        );
-      },
-    },
+                setMyTickets(newTickets); // assigns newTickets as the new value of the tickets state variable.
+              };
+
+              return (
+                <div className="flex space-x-2">
+                  <button
+                    // onClick={handleEdit}
+                    // onClick={openEditTicket}
+                    onClick={() => {
+                      handleEdit();
+                      openDetailsModal();
+                    }}
+                    className="bg-blue-300 text-white px-3 py-1 rounded">
+                    Details
+                  </button>
+                  <button
+                    // onClick={handleEdit}
+                    // onClick={openEditTicket}
+                    onClick={() => {
+                      handleEdit();
+                      openEditTicket();
+                    }}
+                    className="bg-blue-500 text-white px-3 py-1 rounded">
+                    Edit
+                  </button>
+                  <button
+                    onClick={handleDelete}
+                    className="bg-red-500 text-white px-3 py-1 rounded">
+                    Delete
+                  </button>
+                </div>
+              );
+            },
+          },
+        ]
+      : []),
   ];
 
   // const [tickets, setTickets] = useState(allRows);
@@ -668,14 +675,6 @@ const MyTickets = () => {
       ? allRows // show all rows if no department is selected
       : allRows.filter((row) => row.department === department);
 
-  const csvHeaders = [
-    { label: "ID", key: "id" },
-    { label: "Ticket Title", key: "ticketTitle" },
-    { label: "Priority", key: "priority" },
-    { label: "Department", key: "department" },
-    { label: "Request Date", key: "requestDate" },
-  ];
-
   const newTicket = {
     id: rows.length + 1,
     ticketTitle: "Wifi is not working",
@@ -764,6 +763,19 @@ const MyTickets = () => {
     handleNext();
   };
 
+  const csvHeaders = [
+    { label: "ID", key: "ticketId" },
+    { label: "Raised By", key: "raisedBy" },
+    { label: "Selected Department", key: "selectedDepartment" },
+    { label: "Ticket Title", key: "description" },
+    // { label: "Priority", key: "priority" },
+    { label: "Status", key: "status" },
+    // { label: "Request Date", key: "requestDate" },
+    // { label: "Escalated To", key: "escalatedTo" },
+  ];
+
+  const visiblePaths = ["/profile", "/it/tickets/my-tickets"];
+
   return (
     <div className="w-[72vw] md:w-full transition-all duration-200 ease-in-out bg-white p-2 rounded-md">
       <div className="flex gap-4 mb-4 justify-between">
@@ -787,18 +799,60 @@ const MyTickets = () => {
           </FormControl>
         </div>
 
-        {location.pathname !== "/profile" && (
-          <div className="flex">
-            <div className="mb-2 flex justify-between">
+        {/* {location.pathname === "/it/tickets" && (
+          <div className="  bg-red-500">
+            <div className=" relative mb-2 flex justify-between">
               <h1 className="text-3xl"></h1>
               <button
                 onClick={openModal}
-                className="px-6 py-2 rounded-lg text-white wono-blue-dark hover:bg-[#3cbce7] transition-shadow shadow-md hover:shadow-lg active:shadow-inner">
+                className="absolute bottom-4 right-4 px-6 py-2 rounded-lg text-white wono-blue-dark hover:bg-[#3cbce7] transition-shadow shadow-md hover:shadow-lg active:shadow-inner">
                 Raise Ticket
               </button>
             </div>
           </div>
+        )} */}
+        {location.pathname === "/it/tickets" && (
+          <div className="relative bg-red-500">
+            <h1 className="text-3xl mb-2"></h1>
+            <button
+              onClick={openModal}
+              className="w-[9.4rem] absolute top-[-25.5rem] right-[-434px] px-6 py-2 rounded-lg text-white wono-blue-dark hover:bg-[#3cbce7] transition-shadow shadow-md hover:shadow-lg active:shadow-inner">
+              Raise Ticket
+            </button>
+          </div>
         )}
+
+        <div className="flex gap-4">
+          {location.pathname !== "/profile" &&
+            location.pathname !== "/it/tickets" && (
+              <div className="flex">
+                <div className="mb-2 flex justify-between">
+                  <h1 className="text-3xl"></h1>
+                  <button
+                    onClick={openModal}
+                    className=" px-6 py-2 rounded-lg text-white wono-blue-dark hover:bg-[#3cbce7] transition-shadow shadow-md hover:shadow-lg active:shadow-inner">
+                    Raise Ticket
+                  </button>
+                </div>
+              </div>
+            )}
+
+          {visiblePaths.includes(location.pathname) && (
+            <div className="flex">
+              <div className="mb-2 flex justify-between">
+                <h1 className="text-3xl"></h1>
+                <CSVLink
+                  // data={filteredRows} // Pass the filtered rows for CSV download
+                  data={myTickets} // Pass the filtered rows for CSV download
+                  headers={csvHeaders} // Pass the CSV headers
+                  filename="tickets_report.csv" // Set the filename for the CSV file
+                  className="wono-blue-dark hover:bg-blue-700 text-white text-sm font-bold p-2 rounded ">
+                  Export
+                </CSVLink>
+              </div>
+            </div>
+          )}
+        </div>
       </div>
 
       {/* Tickets datatable START */}

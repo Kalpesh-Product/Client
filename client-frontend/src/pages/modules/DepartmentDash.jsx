@@ -935,14 +935,14 @@ const DepartmentDash = () => {
                   {/* <AssetAllocationWidget /> */}
 
                   <div className=" ">
-                    <div className="flex w-full p-4 pb-4 pl-0 text-lg border-b-0  gap-4">
+                    <div className="flex w-full p-4 pb-4 pl-0 text-lg border-b-0 gap-4">
                       {/* <h2 className="text-2xl font-bold">My Tickets</h2> */}
-                      <h2 className="text-2xl  font-bold ">
+                      <h2 className="text-2xl font-bold">
                         {/* Tickets Received Today */}
                         Tickets Raised Today
                       </h2>
                       <button
-                        className="py-1 px-2 text-sm wono-blue-dark text-white rounded-md "
+                        className="py-1 px-2 text-sm wono-blue-dark text-white rounded-md"
                         onClick={() => navigate("/it/tickets/my-tickets")}>
                         View All
                       </button>
