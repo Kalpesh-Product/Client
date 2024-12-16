@@ -27,7 +27,7 @@ const AddDepartmentForm = ({ handleClose }) => {
     const fetchUsers = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:5000/api/users/fetch-users"
+          "/api/users/fetch-users"
         );
         setUsers(response.data.users); // Assuming users are in response.data.users
       } catch (error) {
@@ -67,7 +67,7 @@ const AddDepartmentForm = ({ handleClose }) => {
     event.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/departments/add-department",
+        "/api/departments/add-department",
         formData
       );
       console.log("Data sent successfully, Data : ", response);

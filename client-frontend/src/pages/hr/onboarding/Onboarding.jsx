@@ -17,7 +17,7 @@ const Onboarding = () => {
     const fetchUsers = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:5000/api/users/fetch-users"
+          "/api/users/fetch-users"
         );
         setUsers(response.data.users);
       } catch (error) {

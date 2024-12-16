@@ -26,7 +26,7 @@ export default function Access() {
     const fetchRoles = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:5000/api/roles/get-roles"
+          "/api/roles/get-roles"
         );
         setRoles(response.data.roles);
         setEditedRoles(response.data.roles); // Initialize editable roles
@@ -56,7 +56,7 @@ export default function Access() {
   // Save changes
   const handleSave = async () => {
     try {
-      await axios.post("http://localhost:5000/api/roles/update-roles", {
+      await axios.post("/api/roles/update-roles", {
         roles: editedRoles,
       });
       setRoles(editedRoles); // Update displayed roles

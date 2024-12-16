@@ -81,8 +81,8 @@ const OnBoardingForm = ({ handleClose }) => {
       try {
         // Fetch both departments and roles concurrently
         const [departmentsResponse, rolesResponse] = await Promise.all([
-          axios.get("http://localhost:5000/api/departments/get-departments"),
-          axios.get("http://localhost:5000/api/roles/get-roles"),
+          axios.get("/api/departments/get-departments"),
+          axios.get("/api/roles/get-roles"),
         ]);
 
         // Update state with fetched data
@@ -99,7 +99,7 @@ const OnBoardingForm = ({ handleClose }) => {
   useEffect(()=>{
     const fetchUsers = async () =>{
       try{
-        const response = await axios.get("http://localhost:5000/api/users/fetch-users");
+        const response = await axios.get("/api/users/fetch-users");
         setUsers(response.data.users);
 
       }catch(error){
@@ -183,7 +183,7 @@ const OnBoardingForm = ({ handleClose }) => {
 
       // Call the API
       const response = await axios.post(
-        "http://localhost:5000/api/users/create-user",
+        "/api/users/create-user",
         payload
       );
       toast.success("User Created Successfully");
