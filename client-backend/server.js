@@ -17,6 +17,9 @@ const departmentsRoutes = require("./routes/departmentRoutes");
 const companyRoutes = require("./routes/companyRoutes");
 const userRoutes = require("./routes/userRoutes");
 const designationRoutes = require("./routes/designationRoutes");
+const moduleRoutes = require("./routes/moduleRoutes");
+const subModuleRoutes = require("./routes/subModuleRoutes");
+const roleRoutes = require("./routes/roleRoutes");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -50,6 +53,9 @@ app.use("/api/assets", assetsRoutes);
 app.use("/api/meetings", meetingsRoutes);
 app.use("/api/tickets", ticketsRoutes);
 app.use("/api/users", userRoutes);
+app.use("/api/roles", roleRoutes);
+app.use("/api/modules", moduleRoutes);
+app.use("/api/sub-modules", subModuleRoutes);
 
 app.all("*", (req, res) => {
   if (req.accepts("html")) {
