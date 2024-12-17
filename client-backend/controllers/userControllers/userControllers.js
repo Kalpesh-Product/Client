@@ -42,7 +42,6 @@ const createUser = async (req, res, next) => {
       companyId,
     } = req.body;
 
-    console.log(req.body);
 
     // Validate the company using _id
     const company = await CompanyData.findOne({ companyId });
