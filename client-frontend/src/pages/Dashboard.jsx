@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import ClientSidebar from "../components/ClientSidebar"; // Import the Sidebar component
 import RecurringClientsWidget from "../Widgets/RecurringClientsWidget";
 import SalesProgressWidget from "../Widgets/SalesProgressWidget";
 import SalesTargetWidget from "../Widgets/SalesTargetWidget";
