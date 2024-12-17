@@ -196,7 +196,7 @@ const Dashboard = () => {
           {auth.user.name}'s Dashboard
         </h1>
         <h2 className="my-5 motion-preset-slide-right-md">
-          BIZ Nest-{auth.user.role}-
+          BIZ Nest-{auth.user.role.roleTitle}-
           {auth.user.department.length > 1
             ? auth.user.department.map((dept) => dept.name).join(", ")
             : auth.user.department[0].name}

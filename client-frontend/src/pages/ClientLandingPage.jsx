@@ -836,9 +836,9 @@ const ClientLandingPage = () => {
           </h1>
           <div className="flex gap-4 pr-20">
             {/* Add More Button */}
-            {auth.user.role === "Master Admin" ||
-            auth.user.role === "Super Admin" ||
-            auth.user.role === "Admin" ? (
+            {auth.user.role.roleTitle === "Master Admin" ||
+            auth.user.role.roleTitle=== "Super Admin" ||
+            auth.user.role.roleTitle === "Admin" ? (
               <div className="flex justify-center">
                 <button
                   className="bg-blue-500 text-white py-3 px-8 rounded-lg hover:bg-blue-600"
