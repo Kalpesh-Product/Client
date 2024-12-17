@@ -18,7 +18,8 @@ const userSchema = new mongoose.Schema({
     type: Date,
   },
   role: {
-    type: String,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Role",
   },
   department: [
     {

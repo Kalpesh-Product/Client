@@ -27,7 +27,14 @@ const login = async (req, res, next) => {
 
     const userExists = await User.findOne({ email })
       .select("name role email empId department")
-      .populate({path:"department",select:"name departmentId"})
+      .populate({
+        path: "department",
+        select: "name departmentId",
+      })
+      .populate({
+        path: "role", // Populate the role field
+        select: "roleTitle", // Only fetch roleTitle, exclude _id
+      })
       .lean();
 
     if (!userExists) {
