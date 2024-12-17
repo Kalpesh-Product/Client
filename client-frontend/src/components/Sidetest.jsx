@@ -183,7 +183,7 @@ const TestSide = () => {
 
   // Filter departments based on user's department using departmentMapping
   const filteredDepartments = departments.filter((dept) =>
-    (departmentMapping[user?.department] || []).includes(dept.name)
+    (departmentMapping[authUser?.user.department.map((dept)=>dept.name)] || []).includes(dept.name)
   );
 
   const handleActive = (index) => {
