@@ -30,9 +30,11 @@ import { AiOutlineSecurityScan } from "react-icons/ai";
 import { RiCustomerService2Line, RiDashboardLine } from "react-icons/ri";
 import { useNavigate, useLocation, useParams } from "react-router-dom";
 import { BsCashCoin } from "react-icons/bs";
+import useAuth from "../hooks/useAuth";
 // import { useSidebar } from "./GlobalContext";
 
 const TestSide = () => {
+  const { auth:authUser } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   // const { isSidebarOpen, setIsSidebarOpen } = useSidebar();
