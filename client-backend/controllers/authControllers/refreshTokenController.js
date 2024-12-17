@@ -14,8 +14,8 @@ const handleRefreshToken = async (req, res, next) => {
         select: "name departmentId",
       })
       .populate({
-        path: "role", // Populate the role field
-        select: "roleTitle", // Only fetch roleTitle, exclude _id
+        path: "role", 
+        select: "roleTitle", 
       })
       .lean();
     if (!user) return res.sendStatus(403);
