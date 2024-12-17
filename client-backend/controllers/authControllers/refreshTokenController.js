@@ -9,7 +9,14 @@ const handleRefreshToken = async (req, res, next) => {
     const refreshToken = cookie.clientCookie;
     const user = await User.findOne({ refreshToken })
       .select("name role email empId department")
-      .populate({ path: "department", select: "name departmentId" })
+      .populate({
+        path: "department",
+        select: "name departmentId",
+      })
+      .populate({
+        path: "role", // Populate the role field
+        select: "roleTitle", // Only fetch roleTitle, exclude _id
+      })
       .lean();
     if (!user) return res.sendStatus(403);
 
