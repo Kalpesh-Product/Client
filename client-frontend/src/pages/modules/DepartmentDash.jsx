@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import ModuleSidebar from "../../components/ModuleSidebar";
-import { useLocation, useParams, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import TestSide from "../../components/Sidetest";
 import PayRollDash from "../hr/payroll/PayRollDash";
 import {
@@ -22,6 +22,7 @@ import {
 import RevenueVsExpensesWidget from "../../Widgets/RevenueVsExpensesWidget";
 import ProgressDoughnutWidget from "../../Widgets/ProgressDoughnutWidget";
 import BarGraphWidget from "../../Widgets/BarGraphWidget";
+import useAuth from "../../hooks/useAuth";
 import {
   RecurringClients,
   SalesByMonthGraph,
@@ -101,12 +102,7 @@ import CompanySettings from "../hr/company-settings/CompanySettings";
 
 const DepartmentDash = () => {
   const navigate = useNavigate();
-
-  const [user, setUser] = useState("");
-  useEffect(() => {
-    const storedUser = JSON.parse(localStorage.getItem("user"));
-    setUser(storedUser);
-  }, []);
+  const { auth: authUser } = useAuth();
 
   const [open, setOpen] = useState(false);
   const [openTicket, setOpenTicket] = useState(false);
@@ -348,9 +344,12 @@ const DepartmentDash = () => {
       widgets: [
         <AssetsCount
           title={
-            user.department === "TopManagement"
+            authUser.user.department.find(
+              (dept) => dept.name === "TopManagement"
+            )
               ? "Total Assets"
-              : user.department === "IT" || user.department === "Tech"
+              : authUser.user.department.find((dept) => dept.name === "IT") ||
+                authUser.user.department.find((dept) => dept.name === "Tech")
               ? "IT Assets"
               : "Maintainence Assets"
           }
@@ -630,7 +629,7 @@ const DepartmentDash = () => {
                         widgets={section.widgets}
                       />
                     ))}
-                  {user.role === "Admin" && (
+                  {authUser.user.role === "Admin" && (
                     <div className="flex w-full flex-1 flex-grow gap-x-4">
                       {/* <TicketsRemainingWidget
                       totalStock={120}
@@ -917,7 +916,7 @@ const DepartmentDash = () => {
                       />
                     ))}
 
-                  {user.role === "Admin" && (
+                  {authUser.user.role === "Admin" && (
                     <div className="flex w-full flex-1 flex-grow gap-x-4">
                       <TicketsRemainingWidget
                         totalStock={120}

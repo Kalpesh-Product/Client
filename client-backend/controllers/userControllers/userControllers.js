@@ -135,7 +135,7 @@ const createUser = async (req, res, next) => {
     });
   } catch (error) {
     console.error("Error adding user:", error.message);
-    res.status(500).json({ error: error.message });
+    next(error);
   }
 };
 

@@ -26,7 +26,7 @@ export default function Listing() {
   });
   const [openBookingModal, setOpenBookingModal] = useState(false);
   const [openEventDetailsModal, setOpenEventDetailsModal] = useState(false);
-  const [selectedEvent, setSelectedEvent] = useState(null); 
+  const [selectedEvent, setSelectedEvent] = useState(null);
   const [currentDate, setCurrentDate] = useState("");
   const [filters, setFilters] = useState({
     active: true,
@@ -148,13 +148,13 @@ export default function Listing() {
         event.id === eventId
           ? {
               ...event,
-              start: `${extendedTime.startDate}T${extendedTime.startTime}`,
-              end: `${extendedTime.endDate}T${extendedTime.endTime}`,
+              start: new Date(`${extendedTime.date}T${extendedTime.startTime}`),
+              end: new Date(`${extendedTime.date}T${extendedTime.endTime}`),
             }
           : event
       )
     );
-    setOpenEventDetailsModal(false); // Close modal
+    setOpenEventDetailsModal(false); 
   };
 
   useEffect(() => {
@@ -240,8 +240,9 @@ export default function Listing() {
       {openBookingModal && (
         <NewModal
           open={openBookingModal}
-          onClose={() => setOpenBookingModal(false)}>
-          {/* <BookingForm
+          onClose={() => setOpenBookingModal(false)}
+        >
+          <BookingForm
             handleClose={() => setOpenBookingModal(false)}
             newMeeting={newMeeting}
             handleChange={handleChange}
@@ -249,7 +250,7 @@ export default function Listing() {
             currentDate={currentDate}
             loggedInUser={loggedInUser}
             roomList={roomList}
-          /> */}
+          />
         </NewModal>
       )}
 
@@ -257,7 +258,8 @@ export default function Listing() {
       {openEventDetailsModal && selectedEvent && (
         <NewModal
           open={openEventDetailsModal}
-          onClose={() => setOpenEventDetailsModal(false)}>
+          onClose={() => setOpenEventDetailsModal(false)}
+        >
           <BookingDetails
             handleModalClose={() => setOpenEventDetailsModal(false)}
             selectedEvent={selectedEvent}
