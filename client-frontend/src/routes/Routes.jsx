@@ -12,7 +12,6 @@ import Reports from "../pages/Reports";
 import TestDashboard from "../pages/TestPage";
 import DropTest from "../pages/DropTest";
 import Calender from "../pages/Calender";
-import Sidebar from "../components/ClientSidebar";
 import Services from "../pages/Services";
 import DepartmentDash from "../pages/modules/DepartmentDash";
 import ChatPage from "../pages/ChatPage";
@@ -228,10 +227,6 @@ const router = createBrowserRouter([
               {
                 path: "/reports",
                 element: <Reports />,
-              },
-              {
-                path: "/testdash",
-                element: <Sidebar />,
               },
               {
                 path: "/chat",
