@@ -18,9 +18,7 @@ export default function Listing() {
   const { data: roomList } = useQuery({
     queryKey: ["rooms"],
     queryFn: async () => {
-      const response = await axios.get(
-        "http://localhost:5000/api/meetings/get-rooms"
-      );
+      const response = await axios.get("/api/meetings/get-rooms");
       return response.data.data;
     },
   });

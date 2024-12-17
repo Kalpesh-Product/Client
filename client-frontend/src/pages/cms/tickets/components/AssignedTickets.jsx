@@ -164,7 +164,10 @@ const AssignedTickets = () => {
 
     // Filter tickets where 'department' matches
     const filteredTickets = allTickets.filter(
-      (ticket) => ticket.selectedDepartment === selectedDepartmentFilter
+      (ticket) =>
+        ticket.selectedDepartment === selectedDepartmentFilter &&
+        ticket.accepted.acceptedStatus === false &&
+        ticket.status !== "Closed"
     );
 
     // Set it on state (update the value of tickets)
@@ -420,12 +423,12 @@ const AssignedTickets = () => {
       headerName: "Status",
       width: 150,
       type: "singleSelect",
-      valueOptions: ["Pending", "In Process", "Resolved"],
+      valueOptions: ["Pending", "In Process", "Closed"],
       cellRenderer: (params) => {
         const statusColors = {
-          "In Process": "text-blue-600 bg-blue-100",
+          "In Process": "text-yellow-600 bg-yellow-100",
           Pending: "text-red-600 bg-red-100",
-          Resolved: "text-yellow-600 bg-yellow-100",
+          Closed: "text-blue-600 bg-blue-100",
         };
         const statusClass = statusColors[params.value] || "";
         return (
@@ -442,43 +445,91 @@ const AssignedTickets = () => {
       headerName: "Actions",
       width: 200,
       cellRenderer: (params) => {
-        const handleEdit = () => {
-          console.log("Editing ticket:", params.data._id);
+        const handleAcceptTicket = async () => {
+          console.log("Accepted ticket:", params.data._id);
           // Implement your edit logic here
+          console.log(params.data);
+          console.log("Accepted by:", user.name);
+
+          // Accept ticket START
+          //  const newUpdatedTicketDepartment = updateForm.selectedDepartment;
+          const newUpdatedAssignedMember = user.name;
+          // Even longer version
+          // const updateFormTitle = updateForm.title;
+          // const updateFormBody = updateForm.body;
+          // const title = updateFormTitle;
+          // const body = updateFormBody;
+          // Send the update request
+          const responseFromBackend = await axios.put(
+            `/api/tickets/accept-ticket/${params.data._id}`,
+            {
+              // selectedDepartment: newUpdatedTicketDepartment,
+              assignedMember: newUpdatedAssignedMember,
+            }
+          );
+          // console.log(responseFromBackend);
+          // Update state
+          // creating a duplicate of the tickets
+          const newTickets = [...myTickets];
+          const ticketIndex = myTickets.findIndex((myTicket) => {
+            return myTicket._id === params.data._id; // finds the index of the ticket which is updated (ticket whose id was in the button). We find the index so that we can update the ticket at that index
+          });
+          newTickets[ticketIndex] = responseFromBackend.data.myTicket; // The ticket at that particular index is now equal to the response we got from updating the ticket
+          setMyTickets(newTickets); // Set the tickets array to our updated array
+          // Clear update form state
+
+          // console.log(myTicket);
+          // console.log(newTickets);
+          // setUpdateForm({
+          //   _id: null,
+          //   raisedBy: user.name,
+          //   selectedDepartment: "",
+          //   description: "",
+          // });
+
+          // Additional things
+          // display tickets again in the table
+          fetchmyTickets();
+
+          toast.success("Ticket Accepted");
+          // closeEditTicket(); // Optionally close the modal after the alert
+          // Accept ticket END
         };
 
-        const handleDelete = async () => {
-          console.log("Deleting ticket:", params.data._id);
+        const handleAssignTicket = async () => {
+          console.log("Assigning ticket:", params.data._id);
           // Update state to remove the ticket
           // setMyTickets((prevTickets) =>
           //   prevTickets.filter((ticket) => ticket._id !== params.data._id)
           // );
 
-          const responseFromBackend = await axios.delete(
-            `/api/tickets/delete-ticket/${params.data._id}`
-          );
-          console.log(responseFromBackend);
+          // const responseFromBackend = await axios.delete(
+          //   `/api/tickets/delete-ticket/${params.data._id}`
+          // );
+          // console.log(responseFromBackend);
 
-          // Update state
-          // we heve to filter out the one we deleted
-          const newTickets = [...myTickets].filter((ticket) => {
-            return ticket._id !== params.data._id; // return tickets where note._id is not equal to the id we passed in (idOfTheNoteToBeDeleted). This will return an array of notes that meet this condition.
-          });
+          // // Update state
+          // // we heve to filter out the one we deleted
+          // const newTickets = [...myTickets].filter((ticket) => {
+          //   return ticket._id !== params.data._id; // return tickets where note._id is not equal to the id we passed in (idOfTheNoteToBeDeleted). This will return an array of notes that meet this condition.
+          // });
 
-          setMyTickets(newTickets); // assigns newTickets as the new value of the tickets state variable.
+          // setMyTickets(newTickets); // assigns newTickets as the new value of the tickets state variable.
         };
 
         return (
           <div className="flex space-x-2">
             <button
               // onClick={handleEdit}
-              onClick={handleAccept}
+              onClick={handleAcceptTicket}
               className="bg-red-500 text-white px-3 py-1 rounded">
               Accept
             </button>
             <button
               // onClick={handleDelete}
-              onClick={handleAssign}
+              // onClick={handleAssign}
+              // onClick={handleAssignTicket}
+              onClick={openModal}
               className="bg-red-500 text-white px-3 py-1 rounded">
               Assign
             </button>
@@ -622,20 +673,23 @@ const AssignedTickets = () => {
   const [filteredSuggestions, setFilteredSuggestions] = useState([]); // To store filtered name suggestions
 
   const fullNames = [
-    "Faizan Shaikh",
-    "Rajiv Kumar Pal",
-    "Desmon Goes",
-    "Allan Mark Silveira",
-    "Aiwinraj KS",
-    "Anushri Mohandas Bhagat",
-    "Sankalp Chandrashekar Kalangutkar",
-    "Kashif Shaikh",
-    "Ragesh A C",
-    "Machindranath Parkar",
-    "Benson Nadakattin",
-    "Kalpesh Naik",
-    "Nikhil Nagvekar",
-    "Farzeen Qadri",
+    "Faizan",
+    "Rajiv",
+    "Desmon",
+    // "Faizan Shaikh",
+    // "Rajiv Kumar Pal",
+    // "Desmon Goes",
+    // "Allan Mark Silveira",
+    // "Aiwinraj KS",
+    // "Anushri Mohandas Bhagat",
+    // "Sankalp Chandrashekar Kalangutkar",
+    // "Kashif Shaikh",
+    // "Ragesh A C",
+    // "Machindranath Parkar",
+    // "Benson Nadakattin",
+    // "Kalpesh Naik",
+    // "Nikhil Nagvekar",
+    // "Farzeen Qadri",
   ];
 
   useEffect(() => {

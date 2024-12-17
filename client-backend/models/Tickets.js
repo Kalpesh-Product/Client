@@ -4,7 +4,7 @@ const ticketSchema = new mongoose.Schema({
   ticketId: {
     type: String,
 
-    default: "1",
+    default: "T-001",
   },
   raisedBy: {
     // type: mongoose.Schema.Types.ObjectId,
@@ -69,6 +69,10 @@ const ticketSchema = new mongoose.Schema({
         default: false,
       },
       escalationMessage: {
+        type: String,
+        default: "",
+      },
+      escalatedTo: {
         type: String,
         default: "",
       },

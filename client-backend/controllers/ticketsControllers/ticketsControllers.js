@@ -108,6 +108,103 @@ const updateTicket = async (req, res) => {
   }
 };
 
+// PUT - Accept ticket
+const acceptTicket = async (req, res) => {
+  try {
+    // Get the id off the url
+    const ticketIdFromTheUrl = req.params.id;
+
+    // Get the data off the req body
+    const assignedMemberFromRequestBody = req.body.assignedMember;
+    // const descriptionFromRequestBody = req.body.description;
+
+    // Find and update the record
+    await Ticket.findOneAndUpdate(
+      { _id: ticketIdFromTheUrl },
+      {
+        assignedMember: assignedMemberFromRequestBody,
+        // description: descriptionFromRequestBody,
+        "accepted.acceptedStatus": true,
+      },
+      { new: true } // Returns the updated document
+    );
+
+    //   Find updated ticket (using it's id)
+    const updatedTicket = await Ticket.findById(ticketIdFromTheUrl);
+
+    // Respond with the updated ticket (after finding it)
+    res.json({ ticket: updatedTicket });
+  } catch (error) {
+    console.log(error);
+    res.sendStatus(400);
+  }
+};
+
+// PUT - close ticket
+const closeTicket = async (req, res) => {
+  try {
+    // Get the id off the url
+    const ticketIdFromTheUrl = req.params.id;
+
+    // Get the data off the req body
+    // const assignedMemberFromRequestBody = req.body.assignedMember;
+    // const descriptionFromRequestBody = req.body.description;
+
+    // Find and update the record
+    await Ticket.findOneAndUpdate(
+      { _id: ticketIdFromTheUrl },
+      {
+        // assignedMember: assignedMemberFromRequestBody,
+        // description: descriptionFromRequestBody,
+        status: "Closed",
+      },
+      { new: true } // Returns the updated document
+    );
+
+    //   Find updated ticket (using it's id)
+    const updatedTicket = await Ticket.findById(ticketIdFromTheUrl);
+
+    // Respond with the updated ticket (after finding it)
+    res.json({ ticket: updatedTicket });
+  } catch (error) {
+    console.log(error);
+    res.sendStatus(400);
+  }
+};
+
+// PUT - escalate ticket
+const escalateTicket = async (req, res) => {
+  try {
+    // Get the id off the url
+    const ticketIdFromTheUrl = req.params.id;
+
+    // Get the data off the req body
+    // const assignedMemberFromRequestBody = req.body.assignedMember;
+    // const descriptionFromRequestBody = req.body.description;
+
+    // Find and update the record
+    await Ticket.findOneAndUpdate(
+      { _id: ticketIdFromTheUrl },
+      {
+        // assignedMember: assignedMemberFromRequestBody,
+        // description: descriptionFromRequestBody,
+        "escalation.escalationToAdmin.isEscalated": true,
+        "escalation.escalationToAdmin.escalatedTo": "Machendranath",
+      },
+      { new: true } // Returns the updated document
+    );
+
+    //   Find updated ticket (using it's id)
+    const updatedTicket = await Ticket.findById(ticketIdFromTheUrl);
+
+    // Respond with the updated ticket (after finding it)
+    res.json({ ticket: updatedTicket });
+  } catch (error) {
+    console.log(error);
+    res.sendStatus(400);
+  }
+};
+
 // TEST USER ROUTES START
 
 const signupUser = async (req, res) => {
@@ -152,5 +249,8 @@ module.exports = {
   fetchASingleTicket,
   deleteTicket,
   updateTicket,
+  acceptTicket,
+  closeTicket,
+  escalateTicket,
   signupUser,
 };

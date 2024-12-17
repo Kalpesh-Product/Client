@@ -7,13 +7,14 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { CSVLink } from "react-csv";
-import Button from "@mui/material/Button";
 import { TextField } from "@mui/material";
 import AgTable from "../../../../components/AgTable";
+import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { toast } from "sonner";
 import axios from "axios";
 
-const UnresolvedTickets = () => {
+const AllTicketsTable = () => {
   // const [user, setUser] = useState("");
   // useEffect(() => {
   //   const storedUser = JSON.parse(localStorage.getItem("user"));
@@ -63,7 +64,7 @@ const UnresolvedTickets = () => {
     return () => clearTimeout(timer);
   }, [hasRefreshed]);
 
-  const selectedDepartmentFilter = user.department; // Replace with the desired name or variable
+  //   const selectedDepartmentFilter = user.department; // Replace with the desired name or variable
 
   // Ticket With APIs & Local START
 
@@ -161,17 +162,16 @@ const UnresolvedTickets = () => {
     const allTickets = responseFromBackend.data.tickets;
 
     // Filter tickets where 'department' matches
-    const filteredTickets = allTickets.filter(
-      (ticket) =>
-        ticket.selectedDepartment === selectedDepartmentFilter &&
-        ticket.status !== "Closed" &&
-        ticket.assignedMember === user.name
-    );
+    // const filteredTickets = allTickets.filter(
+    //   (ticket) =>
+    //     ticket.selectedDepartment === selectedDepartmentFilter &&
+    //     ticket.assignedMember === user.name
+    // );
 
     // Set it on state (update the value of tickets)
     // setMyTickets(responseFromBackend.data.tickets); // setNotes will update the value of tickets from null to the current array of tickets
     // Update state with filtered tickets
-    setMyTickets(filteredTickets);
+    setMyTickets(allTickets);
     // console.log(responseFromBackend);
     // console.log(responseFromBackend.data.tickets);
   };
@@ -188,13 +188,16 @@ const UnresolvedTickets = () => {
 
   // Ticket With APIs & Local END
 
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
+
   const columns = [
-    { field: "id", headerName: "ID", width: 100 },
-    { field: "ticketTitle", headerName: "Ticket Title", width: 200 },
+    { field: "id", headerName: "ID", flex: 1 },
+    { field: "ticketTitle", headerName: "Ticket Title", flex: 1 },
     {
       field: "priority",
       headerName: "Priority",
-      width: 150,
+      flex: 1,
       type: "singleSelect",
       valueOptions: ["High", "Medium", "Low"],
       cellRenderer: (params) => {
@@ -212,183 +215,36 @@ const UnresolvedTickets = () => {
         );
       },
     },
+
     {
       field: "department",
       headerName: "Department",
-      width: 150,
+      flex: 1,
       type: "singleSelect",
       valueOptions: ["IT", "HR", "Tech", "Admin"],
     },
+    { field: "requestDate", headerName: "Request Date", flex: 1 },
     {
-      field: "assignee", // New column field
-      headerName: "Assignee", // Column name
-      width: 200,
-      cellRenderer: () => (
-        <span className="text-gray-800">Faizan Shaikh</span> // Display fixed value
-      ),
+      field: "status",
+      headerName: "Status",
+      flex: 1,
+      type: "singleSelect",
+      valueOptions: ["Pending", "In Process", "Resolved"],
+      cellRenderer: (params) => {
+        const statusColors = {
+          "In Process": "text-blue-600 bg-blue-100",
+          Pending: "text-red-600 bg-red-100",
+          Resolved: "text-yellow-600 bg-yellow-100",
+        };
+        const statusClass = statusColors[params.value] || "";
+        return (
+          <span
+            className={`px-3 py-1 rounded-full text-sm font-medium ${statusClass}`}>
+            {params.value}
+          </span>
+        );
+      },
     },
-    {
-      field: "escalatedTo",
-      headerName: "Escalated To",
-      width: 200,
-    },
-    { field: "requestDate", headerName: "Request Date", width: 150 },
-
-    // {
-    //   field: "viewDetails",
-    //   headerName: "View Details",
-    //   width: 150,
-    //   renderCell: (params) => (
-    //     <Button
-    //       size="small"
-    //       onClick={() => handleViewDetails(params.row)}
-    //       variant="contained"
-    //       sx={{
-    //         backgroundColor: "#3B82F6", // Tailwind blue-500
-    //         color: "white",
-    //         "&:hover": {
-    //           backgroundColor: "#2563EB", // Tailwind blue-600
-    //         },
-    //         padding: "8px 16px",
-    //         borderRadius: "0.375rem", // Tailwind rounded
-    //       }}>
-    //       View Details
-    //     </Button>
-    //   ),
-    // },
-    // {
-    //   field: "edit",
-    //   headerName: "Edit",
-    //   width: 100,
-    //   renderCell: (params) => (
-    //     <Button
-    //       size="small"
-    //       onClick={() => handleEdit(params.row)}
-    //       variant="contained"
-    //       sx={{
-    //         backgroundColor: "#22C55E", // Tailwind green-500
-    //         color: "white",
-    //         "&:hover": {
-    //           backgroundColor: "#16A34A", // Tailwind green-600
-    //         },
-    //         padding: "8px 16px",
-    //         borderRadius: "0.375rem", // Tailwind rounded
-    //       }}>
-    //       Edit
-    //     </Button>
-    //   ),
-    // },
-    // {
-    //   field: "delete",
-    //   headerName: "Delete",
-    //   width: 120,
-    //   renderCell: (params) => (
-    //     <Button
-    //       size="small"
-    //       onClick={() => handleDelete(params.row)}
-    //       variant="contained"
-    //       sx={{
-    //         backgroundColor: "#EF4444", // Tailwind red-500
-    //         color: "white",
-    //         "&:hover": {
-    //           backgroundColor: "#DC2626", // Tailwind red-600
-    //         },
-    //         padding: "8px 16px",
-    //         borderRadius: "0.375rem", // Tailwind rounded
-    //       }}>
-    //       Delete
-    //     </Button>
-    //   ),
-    // },
-
-    // {
-    //   field: "accept",
-    //   headerName: "Accept",
-    //   width: 150,
-    //   renderCell: (params) => (
-    //     <Button
-    //       size="small"
-    //       // onClick={() => handleDelete(params.row)}
-    //       onClick={handleDelete}
-    //       variant="contained"
-    //       sx={{
-    //         backgroundColor: "#EF4444",
-    //         color: "white",
-    //         "&:hover": {
-    //           backgroundColor: "#DC2626",
-    //         },
-    //         padding: "4px 8px",
-    //         borderRadius: "0.375rem",
-    //       }}>
-    //       Accept
-    //     </Button>
-    //   ),
-    // },
-
-    // {
-    //   field: "viewDetails",
-    //   headerName: "Actions",
-    //   width: 150,
-    //   // renderCell: (params) => {
-    //   cellRenderer: (params) => {
-    //     const handleActionChange = (event) => {
-    //       const selectedAction = event.target.value;
-
-    //       if (selectedAction === "view") {
-    //         handleViewDetails(params.row);
-    //       } else if (selectedAction === "edit") {
-    //         handleEdit(params.row);
-    //       } else if (selectedAction === "delete") {
-    //         handleDelete(params.row);
-    //       }
-    //     };
-
-    //     return (
-    //       <FormControl size="small" sx={{ width: "100%" }}>
-    //         <Select
-    //           value="" // Always forces the dropdown to display the SVG
-    //           onChange={handleActionChange}
-    //           displayEmpty
-    //           disableUnderline
-    //           IconComponent={() => null} // Removes the dropdown arrow
-    //           sx={{
-    //             "& .MuiSelect-select": {
-    //               padding: "8px 16px",
-    //               borderRadius: "0.375rem", // Tailwind rounded
-    //               backgroundColor: "transparent",
-    //               border: "none", // Removes border
-    //               display: "flex",
-    //               alignItems: "center",
-    //               justifyContent: "center",
-    //             },
-    //             "& fieldset": {
-    //               border: "none", // Removes border in outlined variant
-    //             },
-    //           }}>
-    //           <MenuItem value="" disabled>
-    //             <svg
-    //               className="flex-none size-4 text-gray-600 dark:text-neutral-500"
-    //               xmlns="http://www.w3.org/2000/svg"
-    //               width={24}
-    //               height={24}
-    //               viewBox="0 0 24 24"
-    //               fill="none"
-    //               stroke="currentColor"
-    //               strokeWidth={2}
-    //               strokeLinecap="round"
-    //               strokeLinejoin="round">
-    //               <circle cx={12} cy={12} r={1} />
-    //               <circle cx={12} cy={5} r={1} />
-    //               <circle cx={12} cy={19} r={1} />
-    //             </svg>
-    //           </MenuItem>
-    //           <MenuItem value="view">View Details</MenuItem>
-
-    //         </Select>
-    //       </FormControl>
-    //     );
-    //   },
-    // },
   ];
 
   const columns3 = [
@@ -477,76 +333,76 @@ const UnresolvedTickets = () => {
   ];
 
   const allRows = [
-    // {
-    //   id: 1,
-    //   ticketTitle: "Wifi is not working",
-    //   priority: "High",
-    //   department: "IT",
-    //   escalatedTo: "Machindranath Parkar",
-    //   requestDate: "2024-10-01",
-    // },
-    // {
-    //   id: 2,
-    //   ticketTitle: "Payroll Issue",
-    //   priority: "Medium",
-    //   department: "HR",
-    //   escalatedTo: "Machindranath Parkar",
-    //   requestDate: "2024-10-03",
-    // },
-    // {
-    //   id: 3,
-    //   ticketTitle: "Server Downtime",
-    //   priority: "High",
-    //   department: "Tech",
-    //   escalatedTo: "Machindranath Parkar",
-    //   requestDate: "2024-10-05",
-    // },
-    // {
-    //   id: 4,
-    //   ticketTitle: "New Workstation Setup",
-    //   priority: "Low",
-    //   department: "Admin",
-    //   escalatedTo: "Machindranath Parkar",
-    //   requestDate: "2024-10-06",
-    // },
+    {
+      id: 1,
+      ticketTitle: "Wifi is not working",
+      priority: "High",
+      status: "Pending",
+      department: "IT",
+      requestDate: "2024-10-01",
+    },
+    {
+      id: 2,
+      ticketTitle: "Payroll Issue",
+      priority: "Medium",
+      status: "In Process",
+      department: "HR",
+      requestDate: "2024-10-03",
+    },
+    {
+      id: 3,
+      ticketTitle: "Server Downtime",
+      priority: "High",
+      status: "Resolved",
+      department: "Tech",
+      requestDate: "2024-10-05",
+    },
+    {
+      id: 4,
+      ticketTitle: "New Workstation Setup",
+      priority: "Low",
+      status: "Pending",
+      department: "Admin",
+      requestDate: "2024-10-06",
+    },
     {
       id: 5,
-      ticketTitle: "Wifi is not working",
+      ticketTitle: "Employee Onboarding",
       priority: "Medium",
-      department: "IT",
-      escalatedTo: "Machindranath Parkar",
+      status: "In Process",
+      department: "HR",
       requestDate: "2024-10-07",
     },
     {
       id: 6,
       ticketTitle: "Network Issue",
       priority: "High",
+      status: "Pending",
       department: "IT",
-      escalatedTo: "Machindranath Parkar",
       requestDate: "2024-10-08",
     },
-    // {
-    //   id: 7,
-    //   ticketTitle: "Software Installation",
-    //   priority: "Low",
-    //   department: "Tech",
-    //   escalatedTo: "Machindranath Parkar",
-    //   requestDate: "2024-10-09",
-    // },
-    // {
-    //   id: 8,
-    //   ticketTitle: "Office Supplies Request",
-    //   priority: "Low",
-    //   department: "Admin",
-    //   escalatedTo: "Machindranath Parkar",
-    //   requestDate: "2024-10-10",
-    // },
+    {
+      id: 7,
+      ticketTitle: "Software Installation",
+      priority: "Low",
+      status: "Resolved",
+      department: "Tech",
+      requestDate: "2024-10-09",
+    },
+    {
+      id: 8,
+      ticketTitle: "Office Supplies Request",
+      priority: "Low",
+      status: "Pending",
+      department: "Admin",
+      requestDate: "2024-10-10",
+    },
     {
       id: 9,
       ticketTitle: "Email Access Issue",
       priority: "Medium",
+      status: "In Process",
       department: "IT",
-      escalatedTo: "Machindranath Parkar",
       requestDate: "2024-10-11",
     },
   ];
@@ -564,25 +420,6 @@ const UnresolvedTickets = () => {
       ? allRows // show all rows if no department is selected
       : allRows.filter((row) => row.department === department);
 
-  // Handlers for the buttons
-  const handleViewDetails = (row) => {
-    alert(`Viewing details for: ${row.ticketTitle}`);
-  };
-
-  const handleEdit = (row) => {
-    alert(`Editing ticket: ${row.ticketTitle}`);
-  };
-
-  const handleDelete = (row) => {
-    if (
-      window.confirm(
-        `Are you sure you want to delete ticket: ${row.ticketTitle}?`
-      )
-    ) {
-      alert(`Deleted ticket: ${row.ticketTitle}`);
-    }
-  };
-
   const csvHeaders = [
     { label: "ID", key: "id" },
     { label: "Ticket Title", key: "ticketTitle" },
@@ -599,47 +436,136 @@ const UnresolvedTickets = () => {
   }));
 
   return (
-    <div>
-      {/* <div className="bg-green-500">
-        <h2>Today's Tickets</h2>
-      </div> */}
-
-      {/* <div>
-        <h2 className="text-lg">Today's Tickets</h2>
-        <br />
-      </div> */}
-
-      <div className="flex gap-4">
-        <div className="flex gap-4 mb-4">
-          <div>
-            <FormControl size="small" style={{ minWidth: 220 }}>
-              <TextField
-                label="Filter by department"
-                variant="outlined"
-                select
-                size="small"
-                onChange={handleChange}
+    <div className="px-2 pb-2 pt-0 bg-white mx-4">
+      {/* <div className="flex gap-4 h-16 ">
+        <div className="pt-2">Filter by :</div>
+        <div>
+          <Box sx={{ minWidth: 140 }}>
+            <FormControl
+              fullWidth
+              sx={{
+                height: "34px",
+                padding: "10px 8px 4px 2px",
+              }}>
+              <InputLabel
+                id="department-select-label"
+                className=" pt-0 mt-0 mr-3 pr-2 pl-1">
+                Department
+              </InputLabel>
+              <Select
+                labelId="department-select-label"
+                id="department-select"
                 value={department}
-                sx={{ fontSize: "0.5rem" }}>
-                <MenuItem value="">All</MenuItem>
+                label="Department"
+                sx={{
+                  height: "32px",
+                  width: "140px",
+                  padding: "2px 8px 4px 8px",
+                }}
+                className=" pt-0"
+                onChange={handleChange}>
+                <MenuItem value="">All</MenuItem>{" "}
                 <MenuItem value="IT">IT</MenuItem>
                 <MenuItem value="HR">HR</MenuItem>
                 <MenuItem value="Tech">Tech</MenuItem>
                 <MenuItem value="Admin">Admin</MenuItem>
-              </TextField>
+              </Select>
             </FormControl>
-          </div>
-          {/* <div className=" flex">
-          <CSVLink
-            data={filteredRows} // Pass the filtered rows for CSV download
-            headers={csvHeaders} // Pass the CSV headers
-            filename="tickets_report.csv" // Set the filename for the CSV file
-            className="wono-blue-dark hover:bg-blue-700 text-white text-sm font-bold py-2 px-4 rounded h-9 mt-2">
-            Export Report
-          </CSVLink>
-        </div> */}
+          </Box>
         </div>
-        {/* <div className=" flex">
+        <div>
+          <Box sx={{ minWidth: 140 }}>
+            <FormControl
+              fullWidth
+              sx={{
+                height: "34px", // Adjust height of the select input
+                padding: "10px 8px 4px 2px", // Adjust padding inside
+              }}>
+              <InputLabel id="department-select-label" className=" pt-0 mt-0">
+                Start Date
+              </InputLabel>
+              <Select
+                labelId="department-select-label"
+                id="department-select"
+                value={department}
+                label="Department"
+                sx={{
+                  height: "32px", // Adjust the height of the select
+                  padding: "2px 8px 4px 8px", // Adjust the padding inside the select
+                }}
+                className=" pt-0"
+                onChange={handleChange}>
+                <MenuItem value="">All</MenuItem>{" "}
+                <MenuItem value="Tech">2024-10-01</MenuItem>
+                <MenuItem value="IT">Last 7 Days</MenuItem>
+                <MenuItem value="HR">Last 30 Days</MenuItem>
+                <MenuItem value="Admin">Last 365 Days</MenuItem>
+              </Select>
+            </FormControl>
+          </Box>
+        </div>
+        <div>
+          <Box sx={{ minWidth: 140 }}>
+            <FormControl
+              fullWidth
+              sx={{
+                height: "34px", // Adjust height of the select input
+                padding: "10px 8px 4px 2px", // Adjust padding inside
+              }}>
+              <InputLabel id="department-select-label" className=" pt-0 mt-0">
+                End Date
+              </InputLabel>
+              <Select
+                labelId="department-select-label"
+                id="department-select"
+                value={department}
+                label="Department"
+                sx={{
+                  height: "32px", // Adjust the height of the select
+                  padding: "2px 8px 4px 8px", // Adjust the padding inside the select
+                }}
+                className=" pt-0"
+                onChange={handleChange}>
+                <MenuItem value="">All</MenuItem>{" "}
+                <MenuItem value="Tech">Today</MenuItem>
+                <MenuItem value="IT">Last 7 Days</MenuItem>
+                <MenuItem value="HR">Last 30 Days</MenuItem>
+                <MenuItem value="Admin">Last 365 Days</MenuItem>
+              </Select>
+            </FormControl>
+          </Box>
+        </div>
+        <div>
+          <Box sx={{ minWidth: 140 }}>
+            <FormControl
+              fullWidth
+              sx={{
+                height: "34px", // Adjust height of the select input
+                padding: "10px 8px 4px 2px", // Adjust padding inside
+              }}>
+              <InputLabel id="department-select-label" className=" pt-0 mt-0">
+                Status
+              </InputLabel>
+              <Select
+                labelId="department-select-label"
+                id="department-select"
+                value={department}
+                label="Department"
+                sx={{
+                  height: "32px", // Adjust the height of the select
+                  padding: "2px 8px 4px 8px", // Adjust the padding inside the select
+                }}
+                className=" pt-0"
+                onChange={handleChange}>
+                <MenuItem value="">All</MenuItem>{" "}
+                <MenuItem value="Tech">Pending</MenuItem>
+                <MenuItem value="IT">In Process</MenuItem>
+                <MenuItem value="HR">Resolved</MenuItem>
+              </Select>
+            </FormControl>
+          </Box>
+        </div>
+        <div className=" flex w-full">
           <CSVLink
             data={filteredRows} // Pass the filtered rows for CSV download
             headers={csvHeaders} // Pass the CSV headers
@@ -647,26 +573,104 @@ const UnresolvedTickets = () => {
             className="wono-blue-dark hover:bg-blue-700 text-white text-sm font-bold py-2 px-4 rounded h-9 mt-2">
             Export Report
           </CSVLink>
-        </div> */}
-      </div>
+        </div>
+      </div> */}
 
+      <div className="flex justify-between p-2 pl-0 items-center">
+        {/* <div className="">Filter by :</div> */}
+        <FormControl size="small" style={{ minWidth: 220 }}>
+          {/* <InputLabel>Filter by Asset Name</InputLabel> */}
+          <TextField
+            label="Department"
+            variant="outlined"
+            select
+            size="small"
+            onChange={handleChange}
+            value={department}>
+            {/* <MenuItem value="">All</MenuItem>
+            <MenuItem value="Chair">Chair</MenuItem>
+            <MenuItem value="Carpet Floor">Carpet</MenuItem>
+            <MenuItem value="Carpet Floor">Carpet</MenuItem> */}
+            <MenuItem value="">All</MenuItem>
+            <MenuItem value="IT">IT</MenuItem>
+            <MenuItem value="HR">HR</MenuItem>
+            <MenuItem value="Tech">Tech</MenuItem>
+            <MenuItem value="Admin">Admin</MenuItem>
+          </TextField>
+        </FormControl>
+        <FormControl size="small" style={{ minWidth: 220 }}>
+          {/* <InputLabel>Filter by Asset Name</InputLabel> */}
+          <TextField label="Priority" variant="outlined" select size="small">
+            <MenuItem value="">All</MenuItem>
+            <MenuItem value="Chair">High</MenuItem>
+            <MenuItem value="Carpet Floor">Medium</MenuItem>
+            <MenuItem value="Carpet Floor">Low</MenuItem>
+          </TextField>
+        </FormControl>
+        {/* <FormControl size="small" style={{ minWidth: 220 }}>
+          <TextField label="Start Date" variant="outlined" select size="small">
+            <MenuItem value="">.</MenuItem>
+            <MenuItem value="Chair">.</MenuItem>
+            <MenuItem value="Carpet Floor">.</MenuItem>
+          </TextField>
+        </FormControl>
+        <FormControl size="small" style={{ minWidth: 220 }}>
+          <TextField label="End Date" variant="outlined" select size="small">
+            <MenuItem value="">.</MenuItem>
+            <MenuItem value="Chair">.</MenuItem>
+            <MenuItem value="Carpet Floor">.</MenuItem>
+          </TextField>
+        </FormControl> */}
+        {/* Date Range Filter */}
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <DatePicker
+            label="Start Date"
+            value={startDate}
+            slotProps={{ textField: { size: "small" } }}
+            onChange={(newValue) => setStartDate(newValue)}
+            renderInput={(params) => (
+              <TextField {...params} className="w-full md:w-1/4" />
+            )}
+          />
+          <DatePicker
+            label="End Date"
+            slotProps={{ textField: { size: "small" } }}
+            value={endDate}
+            onChange={(newValue) => setEndDate(newValue)}
+            renderInput={(params) => (
+              <TextField {...params} className="w-full md:w-1/4" />
+            )}
+          />
+        </LocalizationProvider>
+        <div className="h-full">
+          {/* <button className="bg-blue-500 hover:bg-blue-700 text-white text-sm font-bold py-2 px-4 rounded">
+            Export Report
+          </button> */}
+          <CSVLink
+            data={filteredRows} // Pass the filtered rows for CSV download
+            headers={csvHeaders} // Pass the CSV headers
+            filename="tickets_report.csv" // Set the filename for the CSV file
+            className="wono-blue-dark hover:bg-blue-700 text-white text-sm font-bold p-2 rounded ">
+            Export
+          </CSVLink>
+        </div>
+      </div>
       {/* Tickets datatable START */}
-      {/* <Paper sx={{ height: 400, width: "100%" }}>
-        <DataGrid
-          rows={filteredRows} // Pass filtered rows
+      <div className="w-full">
+        {/* <DataGrid
+          rows={filteredRows} 
           columns={columns}
           initialState={{ pagination: { paginationModel } }}
           pageSizeOptions={[5, 10]}
-          // checkboxSelection
-          sx={{ border: 0, width: "75vw" }}
-        />
-      </Paper> */}
-      {/* <AgTable data={filteredRows} columns={columns} /> */}
-      {/* <AgTable data={myTickets} columns={columns3} /> */}
-      <AgTable data={ticketsForTable} columns={columns3} />
+          checkboxSelection
+          sx={{backgroundColor:'white'}}
+        /> */}
+        {/* <AgTable data={filteredRows} columns={columns} /> */}
+        <AgTable data={ticketsForTable} columns={columns3} />
+      </div>
       {/* Tickets datatable END */}
     </div>
   );
 };
 
-export default UnresolvedTickets;
+export default AllTicketsTable;

@@ -18,7 +18,7 @@ const CompanySettings = () => {
   const getCompanies = async () => {
     try {
       const companies = await axios.get(
-        "http://localhost:5000/api/company/get-companies"
+        "/api/company/get-companies"
       );
       const response = companies.data;
       setCompany(response.companies[0]); // Assuming only one company for now.
@@ -41,7 +41,7 @@ const CompanySettings = () => {
       try {
         setLoadingDepartments(true);
         const response = await axios.get(
-          "http://localhost:5000/api/departments/get-departments"
+          "/api/departments/get-departments"
         );
         setDepartments(response.data.departments);
         console.log(response.data.departments);

@@ -141,14 +141,18 @@ const createUser = async (req, res, next) => {
 
 const fetchUser = async (req, res) => {
   try {
-    const users = await User.find().populate("reportsTo", "name email");
+    const users = await User.find()
+    .populate("reportsTo", "name email")
+    .populate("department", "name")
+    .populate("company", "name")
+    .populate("role", "roleTitle modulePermissions")
     res.status(200).json({
       message: "Users data fetched",
       users
     });
-  }catch(error){
+  } catch (error) {
     console.log("Error fetching users : ", error);
-    res.status(500).json({error: error.message})
+    res.status(500).json({ error: error.message })
   }
 }
 
