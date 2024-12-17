@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate, Link, useLocation } from "react-router-dom";
 import dummyData from "../dummyData/dummyData.json";
 import { Container, Box, Grid, TextField, Button } from "@mui/material";
@@ -9,38 +9,48 @@ import LoginWithFacebookImage from "../assets/WONO_images/img/login_images/login
 import LoginWithEmailImage from "../assets/WONO_images/img/login_images/email-icon.png";
 import WonoLogo from "../assets/WONO_images/img/WONO_LOGO_white_TP.png";
 import Footer from "../components/LoginFooter/LoginFooter";
+import useAuth from "../hooks/useAuth";
+import useRefresh from "../hooks/useRefresh";
+import { api } from "../utils/axios";
+import { toast } from "sonner";
 
 const LoginPage = () => {
+  const { auth, setAuth } = useAuth();
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const refresh = useRefresh();
 
-  const styles = (theme) => ({
-    notchedOutline: {
-      borderWidth: "1px",
-      borderColor: "yellow !important",
-    },
-  });
+  useEffect(() => {
+    if (auth.accessToken.length) {
+      navigate("/");
+    } else {
+      refresh();
+    }
+  }, []);
 
   // Validation function
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-
-    // Find user in dummyData based on email and password
-    const user = dummyData.find(
-      (u) => u.email === email && u.password === password
-    );
-
-    if (user) {
-      // Store user data in localStorage
-      localStorage.setItem("user", JSON.stringify(user));
-      // Redirect to homepage
-      navigate("/landing");
-      console.log(user.name);
-      console.log(user);
-    } else {
-      setError("Invalid email or passwod");
+    try {
+      const response = await api.post(
+        "/api/auth/login",
+        { email, password },
+        {
+          withCredentials: true,
+        }
+      );
+      setAuth((prevState) => {
+        return {
+          ...prevState,
+          accessToken: response.data.accessToken,
+          user: response.data.user,
+        };
+      });
+      toast.success("Successfully logged in");
+      navigate("/");
+    } catch (error) {
+      toast.error(error.message);
     }
   };
 
@@ -153,17 +163,7 @@ const LoginPage = () => {
           <div className="loginRightContainer">
             <div className="loginWithSection d-flex flex-column justify-content-center align-items-center">
               <div className="loginWithSection d-flex flex-column justify-content-center align-items-center">
-                {/* <LoginSocialGoogle
-              client_id={"358669748567-d4e1dl47ic6patb61sidq0ipdvllb0bn.apps.googleusercontent.com"}
-              scope="openid profile email"
-              access_type="offline"
-              onResolve={handleLoginResolve}
-              onReject={(err) => {
-                console.log('Error:', err);
-              }}
-            >
-              
-            </LoginSocialGoogle> */}
+                
                 <div className="LoginWithGoogleContainer loginWithBox loginWithGoogleBox d-flex justify-content-between align-items-center centerElement">
                   <div className="loginWithIconBox loginWithGoogleIconBox centerElement">
                     <img
