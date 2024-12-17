@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
-import ClientSidebar from "../components/ClientSidebar"; // Import the Sidebar component
 import RecurringClientsWidget from "../Widgets/RecurringClientsWidget";
 import SalesProgressWidget from "../Widgets/SalesProgressWidget";
 import SalesTargetWidget from "../Widgets/SalesTargetWidget";
 import RevenueVsExpensesWidget from "../Widgets/RevenueVsExpensesWidget";
 import ProgressDoughnutWidget from "../Widgets/ProgressDoughnutWidget";
 import BarGraphWidget from "../Widgets/BarGraphWidget";
+import useAuth from "../hooks/useAuth";
 import {
   ActiveTickets,
   PendingTasks,
@@ -45,11 +45,13 @@ export const WidgetSection = ({ heading, widgets }) => (
     md:grid-cols-${Math.min(widgets.length, 3)}
     lg:grid-cols-${Math.min(widgets.length, 4)}
     
-  `}>
+  `}
+    >
       {widgets.map((Widget, index) => (
         <div
           key={index}
-          className="bg-white p-0 shadow-md rounded-lg h-full overflow-auto motion-preset-expand">
+          className="bg-white p-0 shadow-md rounded-lg h-full overflow-auto motion-preset-expand"
+        >
           {Widget}
         </div>
       ))}
@@ -58,14 +60,7 @@ export const WidgetSection = ({ heading, widgets }) => (
 );
 
 const Dashboard = () => {
-  const [user, setUser] = useState("");
-
-  useEffect(() => {
-    const storedUser = JSON.parse(localStorage.getItem("user"));
-    setUser(storedUser);
-    console.log(user);
-    console.log(user.name);
-  }, []);
+  const { auth } = useAuth();
 
   const techWidgetsData = {
     activeTickets: 8,
@@ -198,14 +193,18 @@ const Dashboard = () => {
       <div className="flex-1 bg-gray-100 p-8 overflow-y-auto">
         {/* Heading 1 */}
         <h1 className="text-3xl motion-preset-slide-right-md font-bold">
-          {user.name}'s Dashboard
+          {auth.user.name}'s Dashboard
         </h1>
         <h2 className="my-5 motion-preset-slide-right-md">
-          BIZ Nest-{user.role}-{user.department}
+          BIZ Nest-{auth.user.role}-
+          {auth.user.department.length > 1
+            ? auth.user.department.map((dept) => dept.name).join(", ")
+            : auth.user.department[0].name}
         </h2>
 
         {/* Conditionally render widgets based on user role */}
-        {(user.role === "Master Admin" || user.role === "Super Admin") && (
+        {(auth.user.role === "Master Admin" ||
+          auth.user.role === "Super Admin") && (
           <div className="grid grid-cols-1 md:grid-cols-1 gap-4">
             {/* Sales Widget */}
             <div className="bg-white p-4  rounded-lg  ">
@@ -228,7 +227,7 @@ const Dashboard = () => {
         )}
 
         {/* For Admin or Employee, display only Sales section */}
-        {user.department === "Sales" && (
+        {auth.user.department === "Sales" && (
           <div className="bg-white p-4 rounded-lg  mt-4">
             {salesWidgets.map((section, index) => (
               <WidgetSection
@@ -240,19 +239,19 @@ const Dashboard = () => {
           </div>
         )}
 
-        {user.department === "Finance" && (
+        {auth.user.department === "Finance" && (
           <div className="bg-white p-4 rounded-lg  ">
             <WidgetSection heading="Finance" widgets={financeWidgets} />
           </div>
         )}
 
-        {user.department === "HR" && (
+        {auth.user.department === "HR" && (
           <div className="bg-white p-4 rounded-lg  ">
             <WidgetSection heading="HR" widgets={salesWidgets} />
           </div>
         )}
 
-        {user.department === "Tech" && (
+        {auth.user.department === "Tech" && (
           <div className="bg-white p-4 rounded-lg  mt-4">
             {techWidgets.map((section, index) => (
               <WidgetSection
@@ -263,7 +262,7 @@ const Dashboard = () => {
             ))}
           </div>
         )}
-        {user.department === "IT" && (
+        {auth.user.department === "IT" && (
           <div className="bg-white p-4 rounded-lg  mt-4">
             {itWidgets.map((section, index) => (
               <WidgetSection

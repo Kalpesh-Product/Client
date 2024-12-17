@@ -21,6 +21,7 @@ import { TbReportSearch, TbSection } from "react-icons/tb";
 import { IoSettingsOutline } from "react-icons/io5";
 import { SiMarketo } from "react-icons/si";
 import { Tooltip } from "@mui/material";
+import useAuth from "../hooks/useAuth";
 import {
   MdAccountBalance,
   MdLocalCafe,
@@ -42,13 +43,9 @@ import { BsCashCoin } from "react-icons/bs";
 import { AiOutlineProduct, AiOutlineSecurityScan } from "react-icons/ai";
 
 const ModuleSidebar = ({ mainSideBar }) => {
-  useEffect(() => {
-    const storedUser = JSON.parse(localStorage.getItem("user"));
-    setUser(storedUser);
-  }, []);
+  const { auth: authUser } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
-  const [user, setUser] = useState("");
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isActive, setIsActive] = useState(null);
   const [isDepartmentsOpen, setIsDepartmentsOpen] = useState(false);
@@ -111,23 +108,13 @@ const ModuleSidebar = ({ mainSideBar }) => {
       route: "/hr/leaves",
       icon: <HiOutlineClipboardList />,
       subMenus: [
-        // ...(user.role === "Employee" && user.department === "Finance"
-        //   ? []
-        //   : [
-        //       {
-        //         title: "Pending Leaves",
-        //         route: "/hr/leaves/pending-leaves",
-        //         icon: <HiOutlineClipboardList />,
-        //       },
-        //     ]),
-        // ,
         {
           title: "My Leaves",
           route: "/hr/leaves/my-leaves",
           icon: <HiOutlineClipboardList />,
         },
 
-        ...(user.role === "Employee" && user.department === "Finance"
+        ...(authUser.user.role === "Employee" && authUser.user.department === "Finance"
           ? []
           : [
               {
@@ -177,10 +164,10 @@ const ModuleSidebar = ({ mainSideBar }) => {
       route: "/it/kpi",
       icon: <AiOutlineProduct />,
       subMenus: [
-        ...(user.department === "IT" ||
-        user.department === "Maintainance" ||
-        user.role === "Master Admin" ||
-        user.role === "Super Admin"
+        ...(authUser.user.department.find((dept) => dept.name === "IT") ||
+        authUser.user.department.find((dept) => dept.name === "Maintainence") ||
+        authUser.user.role === "Master Admin" ||
+        authUser.user.role === "Super Admin"
           ? [
               {
                 title: "Manage Asset",
@@ -207,7 +194,8 @@ const ModuleSidebar = ({ mainSideBar }) => {
       route: "/it/tickets",
       icon: <HiOutlineClipboardList />,
       subMenus: [
-        ...(user.role === "Employee" && user.department === "Finance"
+        ...(authUser.user.role === "Employee" &&
+        authUser.user.department.find((dept) => dept.name === "Finance")
           ? []
           : [
               {
@@ -222,7 +210,7 @@ const ModuleSidebar = ({ mainSideBar }) => {
           route: "/it/tickets/my-tickets",
           icon: <HiOutlineClipboardList />,
         },
-        ...(user.role === "Employee"
+        ...(authUser.user.role === "Employee"
           ? []
           : [
               {
@@ -231,7 +219,7 @@ const ModuleSidebar = ({ mainSideBar }) => {
                 icon: <MdOutlineManageAccounts />,
               },
             ]),
-        ...(user.role === "Master Admin" || user.role === "Super Admin"
+        ...(authUser.user.role === "Master Admin" || authUser.user.role === "Super Admin"
           ? [
               {
                 title: "All Tickets",
@@ -241,7 +229,8 @@ const ModuleSidebar = ({ mainSideBar }) => {
             ]
           : []),
 
-        ...(user.role === "Employee" && user.department === "Finance"
+        ...(authUser.user.role === "Employee" &&
+        authUser.user.department.find((dept) => dept.name === "Finance")
           ? []
           : [
               {
@@ -263,7 +252,7 @@ const ModuleSidebar = ({ mainSideBar }) => {
           route: "/it/meetings/booking",
           icon: <FaRegCalendarAlt />,
         },
-        ...(user.department === "Tech"
+        ...(authUser.user.department.find((dept) => dept.name === "Tech")
           ? []
           : [
               {
@@ -316,11 +305,6 @@ const ModuleSidebar = ({ mainSideBar }) => {
           route: "/customer/tickets/my-tickets",
           icon: <HiOutlineClipboardList />,
         },
-        // {
-        //   title: "Members",
-        //   route: "/customer/tickets/members",
-        //  icon: <MdOutlineManageAccounts />,
-        // },
         {
           title: "Ticket Reports",
           route: "/customer/tickets/ticket-reports",
@@ -363,7 +347,7 @@ const ModuleSidebar = ({ mainSideBar }) => {
       route: "/tasks/tasklistfirstmenu",
       icon: <FaTasks />,
     },
-    ...(user?.role === "Master Admin" || user?.role === "Admin"
+    ...(authUser.user?.role === "Master Admin" || authUser.user?.role === "Admin"
       ? [
           {
             title: "Teams",
@@ -379,12 +363,7 @@ const ModuleSidebar = ({ mainSideBar }) => {
     },
   ];
 
-  // Get the department based on the current path
   let passedDepartment = location.pathname.split("/")[1];
-
-  // Replace "customer" with "cms"
-
-  // Determine which module array to render based on the department in the URL
   let modules = [];
   let taskModules = [];
   if (passedDepartment === "frontend") {
@@ -450,15 +429,6 @@ const ModuleSidebar = ({ mainSideBar }) => {
     Legal: ["LEGAL"],
   };
 
-  // Filter departments based on user's department using departmentMapping
-  const filteredDepartments = departments.filter((dept) =>
-    (departmentMapping[user?.department] || []).includes(dept.name)
-  );
-
-  const handleActive = (index) => {
-    setIsActive(index);
-    console.log("Menu clicked");
-  };
   // Handle manual toggling of dropdowns
   const handleMenuClick = (index) => {
     // If the clicked menu is already open, close it; otherwise, open it
