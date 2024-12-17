@@ -166,8 +166,8 @@ const ModuleSidebar = ({ mainSideBar }) => {
       subMenus: [
         ...(authUser.user.department.find((dept) => dept.name === "IT") ||
         authUser.user.department.find((dept) => dept.name === "Maintainence") ||
-        authUser.user.role === "Master Admin" ||
-        authUser.user.role === "Super Admin"
+        authUser.user.role === "Master-Admin" ||
+        authUser.user.role === "Super-Admin"
           ? [
               {
                 title: "Manage Asset",
@@ -219,7 +219,7 @@ const ModuleSidebar = ({ mainSideBar }) => {
                 icon: <MdOutlineManageAccounts />,
               },
             ]),
-        ...(authUser.user.role === "Master Admin" || authUser.user.role === "Super Admin"
+        ...(authUser.user.role === "Master-Admin" || authUser.user.role === "Super-Admin"
           ? [
               {
                 title: "All Tickets",
@@ -347,7 +347,7 @@ const ModuleSidebar = ({ mainSideBar }) => {
       route: "/tasks/tasklistfirstmenu",
       icon: <FaTasks />,
     },
-    ...(authUser.user?.role === "Master Admin" || authUser.user?.role === "Admin"
+    ...(authUser.user?.role === "Master-Admin" || authUser.user?.role === "Admin"
       ? [
           {
             title: "Teams",

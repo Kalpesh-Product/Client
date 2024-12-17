@@ -203,8 +203,8 @@ const Dashboard = () => {
         </h2>
 
         {/* Conditionally render widgets based on user role */}
-        {(auth.user.role === "Master Admin" ||
-          auth.user.role === "Super Admin") && (
+        {(auth.user.role.roleTitle === "Master-Admin" ||
+          auth.user.role.roleTitle === "Super-Admin") && (
           <div className="grid grid-cols-1 md:grid-cols-1 gap-4">
             {/* Sales Widget */}
             <div className="bg-white p-4  rounded-lg  ">
