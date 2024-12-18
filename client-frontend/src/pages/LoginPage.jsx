@@ -90,8 +90,7 @@ const LoginPage = () => {
                 sx={{ flexGrow: 1 }}
                 onSubmit={handleLogin}
                 noValidate
-                autoComplete="off"
-              >
+                autoComplete="off">
                 <Grid container spacing={2}>
                   <Grid item xs={12}>
                     <TextField
@@ -120,8 +119,7 @@ const LoginPage = () => {
                     <Box p={0} mt={2}>
                       <Link
                         to="/forgot-password"
-                        style={{ textDecoration: "none" }}
-                      >
+                        style={{ textDecoration: "none" }}>
                         Forgot Password?
                       </Link>
                     </Box>
@@ -134,8 +132,7 @@ const LoginPage = () => {
                   </button> */}
                       <button
                         type="submit"
-                        className="loginButtonStyling text-decoration-none"
-                      >
+                        className="loginButtonStyling text-decoration-none">
                         Login
                       </button>
                     </div>

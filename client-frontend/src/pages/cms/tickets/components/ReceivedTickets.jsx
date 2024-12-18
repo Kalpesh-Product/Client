@@ -9,27 +9,15 @@ import Select from "@mui/material/Select";
 import { CSVLink } from "react-csv";
 import Button from "@mui/material/Button";
 import { toast } from "sonner";
-import TextField from "@mui/material/TextField";
+import { TextField } from "@mui/material";
 import AgTable from "../../../../components/AgTable";
 import { motion } from "framer-motion";
 import { IoMdClose } from "react-icons/io";
 import axios from "axios";
+import useAuth from "../../../../hooks/useAuth";
 
-const AcceptedTickets = () => {
-  const [closeTicketData, setCloseTicketData] = useState({
-    _id: null,
-
-    // closingMessage: "",
-    // typeOfIssue: "",
-  });
-
-  const [escalateTicketData, setEscalateTicketData] = useState({
-    _id: null,
-
-    // closingMessage: "",
-    // typeOfIssue: "",
-  });
-
+const ReceivedTickets = () => {
+  const { auth: authUser } = useAuth();
   // const [user, setUser] = useState("");
   // useEffect(() => {
   //   const storedUser = JSON.parse(localStorage.getItem("user"));
@@ -79,8 +67,8 @@ const AcceptedTickets = () => {
     return () => clearTimeout(timer);
   }, [hasRefreshed]);
 
-  const selectedDepartmentFilter = user.department; // Replace with the desired name or variable
-
+  const selectedDepartmentFilter = authUser.user.department[0].name; // Replace with the desired name or variable
+  console.log(authUser.user.department[0].name);
   // Ticket With APIs & Local START
 
   // State to store my tickets
@@ -89,7 +77,7 @@ const AcceptedTickets = () => {
 
   // state to hold the values of ticket form inputs
   const [createForm, setCreateForm] = useState({
-    raisedBy: user.name,
+    raisedBy: authUser.user.name,
     selectedDepartment: "",
     description: "",
   });
@@ -117,7 +105,7 @@ const AcceptedTickets = () => {
     setCreateForm((prevForm) => ({
       ...prevForm, // Spread previous form values
       [name]: value, // Update the specific field being modified
-      raisedBy: user.name, // Ensure raisedBy is always set to user.name
+      raisedBy: authUser.user.name, // Ensure raisedBy is always set to authUser.user.name
     }));
 
     console.log("Updated Form:", createForm);
@@ -180,9 +168,8 @@ const AcceptedTickets = () => {
     const filteredTickets = allTickets.filter(
       (ticket) =>
         ticket.selectedDepartment === selectedDepartmentFilter &&
-        ticket.accepted.acceptedStatus === true &&
-        ticket.status !== "Closed" &&
-        ticket.assignedMember === user.name
+        ticket.accepted.acceptedStatus === false &&
+        ticket.status !== "Closed"
     );
 
     // Set it on state (update the value of tickets)
@@ -199,31 +186,9 @@ const AcceptedTickets = () => {
     fetchmyTickets(); // this will run the fetchNotes function & fetch the tickets array from backend as our response (in network tab from developer tools)
   }, []); // we leave the array empty since we need it to run only once when the app starts up.
 
-  // Finction to close a ticket
+  // Finction to delete a ticket
 
-  const handleCloseTicket = async () => {
-    // Temporary close login on button click
-    const responseFromBackend = await axios.put(
-      `/api/tickets/close-ticket/${closeTicketData._id}`
-    );
-    console.log(responseFromBackend);
-
-    toast.success("Ticket Closed");
-    closeCloseTicket(); // Optionally close the modal after the alert
-    fetchmyTickets();
-  };
-
-  // Function to escalate the ticket manually
-  const handleEscalateTicket = async () => {
-    // Temporary close login on button click
-    const responseFromBackend = await axios.put(
-      `/api/tickets/escalate-ticket/${escalateTicketData._id}`
-    );
-    console.log(responseFromBackend);
-    toast.success("Ticket Escalated");
-    closeDeleteTicket();
-    fetchmyTickets();
-  };
+  // Function to edit the ticket
 
   // Ticket With APIs & Local END
 
@@ -233,7 +198,7 @@ const AcceptedTickets = () => {
     {
       field: "priority",
       headerName: "Priority",
-      width: 190,
+      width: 170,
       type: "singleSelect",
       valueOptions: ["High", "Medium", "Low"],
       cellRenderer: (params) => {
@@ -254,19 +219,65 @@ const AcceptedTickets = () => {
     {
       field: "department",
       headerName: "Department",
-      width: 190,
+      width: 170,
       type: "singleSelect",
       valueOptions: ["IT", "HR", "Tech", "Admin"],
     },
+    { field: "requestDate", headerName: "Request Date", width: 170 },
+
     {
-      field: "assignee", // New column field
-      headerName: "Assignee", // Column name
-      width: 200,
-      cellRenderer: () => (
-        <span className="text-gray-800">Faizan Shaikh</span> // Display fixed value
+      field: "accept",
+      headerName: "Accept",
+      width: 170,
+      // renderCell: (params) => (
+      cellRenderer: (params) => (
+        <Button
+          size="small"
+          // onClick={() => handleDelete(params.row)}
+          onClick={handleAccept}
+          variant="contained"
+          sx={{
+            backgroundColor: "#EF4444",
+            color: "white",
+            "&:hover": {
+              backgroundColor: "#DC2626",
+            },
+            padding: "4px 8px",
+            borderRadius: "0.375rem",
+          }}>
+          Accept
+        </Button>
       ),
     },
-    { field: "requestDate", headerName: "Request Date", width: 190 },
+    ...(authUser.user.role.roleTitle !== "Employee"
+      ? [
+          {
+            field: "assign",
+            headerName: "Assign",
+            width: 170,
+            // renderCell: (params) => (
+            cellRenderer: (params) => (
+              <Button
+                size="small"
+                // onClick={() => handleDelete(params.row)}
+                // onClick={handleAssign}
+                onClick={openModal}
+                variant="contained"
+                sx={{
+                  backgroundColor: "#EF4444",
+                  color: "white",
+                  "&:hover": {
+                    backgroundColor: "#DC2626",
+                  },
+                  padding: "4px 8px",
+                  borderRadius: "0.375rem",
+                }}>
+                Assign Member
+              </Button>
+            ),
+          },
+        ]
+      : []),
 
     // {
     //   field: "viewDetails",
@@ -334,73 +345,22 @@ const AcceptedTickets = () => {
     //     </Button>
     //   ),
     // },
-    {
-      field: "close",
-      headerName: "Close",
-      width: 170,
-      // renderCell: (params) => (
-      cellRenderer: (params) => (
-        <Button
-          size="small"
-          // onClick={() => handleDelete(params.row)}
-          // onClick={handleAccept}
-          onClick={openCloseTicket}
-          variant="contained"
-          sx={{
-            backgroundColor: "green",
-            color: "white",
-            "&:hover": {
-              backgroundColor: "#DC2626",
-            },
-            padding: "4px 8px",
-            borderRadius: "0.375rem",
-          }}>
-          Close
-        </Button>
-      ),
-    },
-    {
-      field: "escalate",
-      headerName: "Escalate",
-      width: 170,
-      // renderCell: (params) => (
-      cellRenderer: (params) => (
-        <Button
-          size="small"
-          // onClick={() => handleDelete(params.row)}
-          // onClick={handleAccept}
-          onClick={openDeleteTicket}
-          variant="contained"
-          sx={{
-            backgroundColor: "#EF4444",
-            color: "white",
-            "&:hover": {
-              backgroundColor: "#DC2626",
-            },
-            padding: "4px 8px",
-            borderRadius: "0.375rem",
-          }}>
-          Escalate
-        </Button>
-      ),
-    },
     // {
     //   field: "viewDetails",
     //   headerName: "Actions",
-    //   width: 190,
-    //   renderCell: (params) => {
+    //   width: 150,
+    //   // renderCell: (params) => {
+    //   cellRenderer: (params) => {
     //     const handleActionChange = (event) => {
     //       const selectedAction = event.target.value;
 
     //       if (selectedAction === "view") {
     //         handleViewDetails(params.row);
+    //       } else if (selectedAction === "edit") {
+    //         handleEdit(params.row);
+    //       } else if (selectedAction === "delete") {
+    //         handleDelete(params.row);
     //       }
-    //       //    else if (selectedAction === "edit") {
-    //       //     handleEdit(params.row);
-    //       //   }
-    //       //   //   else if (selectedAction === "delete") {
-    //       //     handleDelete(params.row);
-    //       //   }
     //     };
 
     //     return (
@@ -443,10 +403,7 @@ const AcceptedTickets = () => {
     //             </svg>
     //           </MenuItem>
     //           <MenuItem value="view">View Details</MenuItem>
-    //           <MenuItem value="edit" onClick={openDeleteTicket}>
-    //             Action Taken
-    //           </MenuItem>
-    //           {/* <MenuItem value="delete">Delete</MenuItem> */}
+
     //         </Select>
     //       </FormControl>
     //     );
@@ -490,46 +447,96 @@ const AcceptedTickets = () => {
       headerName: "Actions",
       width: 200,
       cellRenderer: (params) => {
-        const handleClose = async () => {
-          console.log("Closing ticket:", params.data._id);
-          // Implement your close logic here
+        const handleAcceptTicket = async () => {
+          console.log("Accepted ticket:", params.data._id);
+          // Implement your edit logic here
+          console.log(params.data);
+          console.log("Accepted by:", authUser.user.name);
 
-          setCloseTicketData({
-            _id: params.data._id,
+          // Accept ticket START
+          //  const newUpdatedTicketDepartment = updateForm.selectedDepartment;
+          const newUpdatedAssignedMember = authUser.user.name;
+          // Even longer version
+          // const updateFormTitle = updateForm.title;
+          // const updateFormBody = updateForm.body;
+          // const title = updateFormTitle;
+          // const body = updateFormBody;
+          // Send the update request
+          const responseFromBackend = await axios.put(
+            `/api/tickets/accept-ticket/${params.data._id}`,
+            {
+              // selectedDepartment: newUpdatedTicketDepartment,
+              assignedMember: newUpdatedAssignedMember,
+            }
+          );
+          // console.log(responseFromBackend);
+          // Update state
+          // creating a duplicate of the tickets
+          const newTickets = [...myTickets];
+          const ticketIndex = myTickets.findIndex((myTicket) => {
+            return myTicket._id === params.data._id; // finds the index of the ticket which is updated (ticket whose id was in the button). We find the index so that we can update the ticket at that index
           });
-          console.log(closeTicketData);
-          openCloseTicket();
+          newTickets[ticketIndex] = responseFromBackend.data.myTicket; // The ticket at that particular index is now equal to the response we got from updating the ticket
+          setMyTickets(newTickets); // Set the tickets array to our updated array
+          // Clear update form state
+
+          // console.log(myTicket);
+          // console.log(newTickets);
+          // setUpdateForm({
+          //   _id: null,
+          //   raisedBy: authUser.user.name,
+          //   selectedDepartment: "",
+          //   description: "",
+          // });
+
+          // Additional things
+          // display tickets again in the table
+          fetchmyTickets();
+
+          toast.success("Ticket Accepted");
+          // closeEditTicket(); // Optionally close the modal after the alert
+          // Accept ticket END
         };
 
-        const handleEscalate = async () => {
-          console.log("Escalating ticket:", params.data._id);
+        const handleAssignTicket = async () => {
+          console.log("Assigning ticket:", params.data._id);
+          // Update state to remove the ticket
+          // setMyTickets((prevTickets) =>
+          //   prevTickets.filter((ticket) => ticket._id !== params.data._id)
+          // );
 
-          setEscalateTicketData({
-            _id: params.data._id,
-          });
+          // const responseFromBackend = await axios.delete(
+          //   `/api/tickets/delete-ticket/${params.data._id}`
+          // );
+          // console.log(responseFromBackend);
 
-          console.log(escalateTicketData);
-          openDeleteTicket();
+          // // Update state
+          // // we heve to filter out the one we deleted
+          // const newTickets = [...myTickets].filter((ticket) => {
+          //   return ticket._id !== params.data._id; // return tickets where note._id is not equal to the id we passed in (idOfTheNoteToBeDeleted). This will return an array of notes that meet this condition.
+          // });
+
+          // setMyTickets(newTickets); // assigns newTickets as the new value of the tickets state variable.
         };
 
         return (
           <div className="flex space-x-2">
             <button
               // onClick={handleEdit}
-              // onClick={handleCloseTicket}
-              onClick={handleClose}
-              // onClick={openCloseTicket}
+              onClick={handleAcceptTicket}
               className="bg-red-500 text-white px-3 py-1 rounded">
-              Close
+              Accept
             </button>
-            <button
-              // onClick={handleDelete}
-              // onClick={handleDeleteTicket}
-              onClick={handleEscalate}
-              // onClick={openDeleteTicket}
-              className="bg-red-500 text-white px-3 py-1 rounded">
-              Escalate
-            </button>
+            {authUser.user.role.roleTitle !== "Employee" && (
+              <button
+                // onClick={handleDelete}
+                // onClick={handleAssign}
+                // onClick={handleAssignTicket}
+                onClick={openModal}
+                className="bg-red-500 text-white px-3 py-1 rounded">
+                Assign
+              </button>
+            )}
           </div>
         );
       },
@@ -544,62 +551,62 @@ const AcceptedTickets = () => {
       department: "IT",
       requestDate: "2024-10-01",
     },
-    // {
-    //   id: 2,
-    //   ticketTitle: "Payroll Issue",
-    //   priority: "Medium",
-    //   department: "HR",
-    //   requestDate: "2024-10-03",
-    // },
-    // {
-    //   id: 3,
-    //   ticketTitle: "Server Downtime",
-    //   priority: "High",
-    //   department: "Tech",
-    //   requestDate: "2024-10-05",
-    // },
-    // {
-    //   id: 4,
-    //   ticketTitle: "New Workstation Setup",
-    //   priority: "Low",
-    //   department: "Admin",
-    //   requestDate: "2024-10-06",
-    // },
-    // {
-    //   id: 5,
-    //   ticketTitle: "Employee Onboarding",
-    //   priority: "Medium",
-    //   department: "HR",
-    //   requestDate: "2024-10-07",
-    // },
-    // {
-    //   id: 6,
-    //   ticketTitle: "Network Issue",
-    //   priority: "High",
-    //   department: "IT",
-    //   requestDate: "2024-10-08",
-    // },
-    // {
-    //   id: 7,
-    //   ticketTitle: "Software Installation",
-    //   priority: "Low",
-    //   department: "Tech",
-    //   requestDate: "2024-10-09",
-    // },
-    // {
-    //   id: 8,
-    //   ticketTitle: "Office Supplies Request",
-    //   priority: "Low",
-    //   department: "Admin",
-    //   requestDate: "2024-10-10",
-    // },
-    // {
-    //   id: 9,
-    //   ticketTitle: "Email Access Issue",
-    //   priority: "Medium",
-    //   department: "IT",
-    //   requestDate: "2024-10-11",
-    // },
+    {
+      id: 2,
+      ticketTitle: "Payroll Issue",
+      priority: "Medium",
+      department: "HR",
+      requestDate: "2024-10-03",
+    },
+    {
+      id: 3,
+      ticketTitle: "Server Downtime",
+      priority: "High",
+      department: "Tech",
+      requestDate: "2024-10-05",
+    },
+    {
+      id: 4,
+      ticketTitle: "New Workstation Setup",
+      priority: "Low",
+      department: "Admin",
+      requestDate: "2024-10-06",
+    },
+    {
+      id: 5,
+      ticketTitle: "Employee Onboarding",
+      priority: "Medium",
+      department: "HR",
+      requestDate: "2024-10-07",
+    },
+    {
+      id: 6,
+      ticketTitle: "Network Issue",
+      priority: "High",
+      department: "IT",
+      requestDate: "2024-10-08",
+    },
+    {
+      id: 7,
+      ticketTitle: "Software Installation",
+      priority: "Low",
+      department: "Tech",
+      requestDate: "2024-10-09",
+    },
+    {
+      id: 8,
+      ticketTitle: "Office Supplies Request",
+      priority: "Low",
+      department: "Admin",
+      requestDate: "2024-10-10",
+    },
+    {
+      id: 9,
+      ticketTitle: "Email Access Issue",
+      priority: "Medium",
+      department: "IT",
+      requestDate: "2024-10-11",
+    },
   ];
 
   const paginationModel = { page: 0, pageSize: 5 };
@@ -620,9 +627,9 @@ const AcceptedTickets = () => {
     alert(`Viewing details for: ${row.ticketTitle}`);
   };
 
-  //   const handleEdit = (row) => {
-  //     alert(`Editing ticket: ${row.ticketTitle}`);
-  //   };
+  const handleEdit = (row) => {
+    alert(`Editing ticket: ${row.ticketTitle}`);
+  };
 
   const handleDelete = (row) => {
     if (
@@ -642,39 +649,63 @@ const AcceptedTickets = () => {
     { label: "Request Date", key: "requestDate" },
   ];
 
-  // EDIT TICKET DETAILS MODAL START
   // State to manage modal visibility
-  const [isDeleteTicketOpen, setIsDeleteTicketOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   // Function to open the modal
-  const openDeleteTicket = () => setIsDeleteTicketOpen(true);
+  const openModal = () => setIsModalOpen(true);
 
   // Function to close the modal
-  const closeDeleteTicket = () => setIsDeleteTicketOpen(false);
+  const closeModal = () => setIsModalOpen(false);
 
-  const handleDeleteTicket = () => {
-    toast.error("Ticket Escalated");
-    closeDeleteTicket(); // Optionally close the modal after the alert
+  const handleAddTicket = () => {
+    toast.success("Ticket Assigned To Available Employee: Faizan Shaikh");
+    closeModal(); // Optionally close the modal after the alert
   };
 
-  // EDIT TICKET DETAILS MODAL END
+  const handleAccept = () => {
+    toast.success("Ticket Accepted");
+    //   closeDeleteTicket();
+  };
 
-  // EDIT TICKET DETAILS MODAL START
-  // State to manage modal visibility
-  const [isCloseTicketOpen, setIsCloseTicketOpen] = useState(false);
+  const handleAssign = () => {
+    toast.success("Ticket Assigned To Available Employee: Faizan Shaikh");
+    //   closeDeleteTicket();
+  };
 
-  // Function to open the modal
-  const openCloseTicket = () => setIsCloseTicketOpen(true);
+  const [nameInput, setNameInput] = useState(""); // To store the current input value
+  const [filteredSuggestions, setFilteredSuggestions] = useState([]); // To store filtered name suggestions
 
-  // Function to close the modal
-  const closeCloseTicket = () => setIsCloseTicketOpen(false);
+  const fullNames = [
+    "Faizan",
+    "Rajiv",
+    "Desmon",
+    // "Faizan Shaikh",
+    // "Rajiv Kumar Pal",
+    // "Desmon Goes",
+    // "Allan Mark Silveira",
+    // "Aiwinraj KS",
+    // "Anushri Mohandas Bhagat",
+    // "Sankalp Chandrashekar Kalangutkar",
+    // "Kashif Shaikh",
+    // "Ragesh A C",
+    // "Machindranath Parkar",
+    // "Benson Nadakattin",
+    // "Kalpesh Naik",
+    // "Nikhil Nagvekar",
+    // "Farzeen Qadri",
+  ];
 
-  // const handleCloseTicket = () => {
-  //   toast.success("Ticket Closed");
-  //   closeCloseTicket(); // Optionally close the modal after the alert
-  // };
-
-  // EDIT TICKET DETAILS MODAL END
+  useEffect(() => {
+    if (nameInput === "") {
+      setFilteredSuggestions([]); // Clear suggestions if input is empty
+    } else {
+      const filtered = fullNames.filter((name) =>
+        name.toLowerCase().startsWith(nameInput.toLowerCase())
+      );
+      setFilteredSuggestions(filtered);
+    }
+  }, [nameInput]);
 
   return (
     <div>
@@ -687,10 +718,11 @@ const AcceptedTickets = () => {
         <br />
       </div> */}
 
-      <div className="flex gap-4">
+      <div className="flex gap-4 pt-2">
         <div className="flex gap-4 mb-4">
           <div>
             <FormControl size="small" style={{ minWidth: 220 }}>
+              {/* <InputLabel>Filter by Asset Name</InputLabel> */}
               <TextField
                 label="Filter by department"
                 variant="outlined"
@@ -744,200 +776,46 @@ const AcceptedTickets = () => {
       <AgTable data={myTickets} columns={columns3} />
       {/* Tickets datatable END */}
 
-      {/* EDIT TICKET MODAL END */}
-
-      {/* CLOSE TICKET MODAL START */}
-      {isCloseTicketOpen && (
+      {isModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="absolute inset-0" onClick={closeCloseTicket}></div>
+          <div className="absolute inset-0" onClick={closeModal}></div>
 
           <div className="bg-white w-11/12 max-w-[90%] lg:max-w-[40%] pl-8 pr-8  rounded-lg shadow-lg z-10 relative overflow-y-auto max-h-[80vh]">
-            {/* DeleteTicket Content */}
+            {/* Modal Content */}
 
-            {/* DeleteTicket Header */}
+            {/* Modal Header */}
             <div className="sticky top-0 bg-white py-6 z-20 flex justify-between">
               <div>
                 <h2 className="text-3xl font-bold mb-4 uppercase">
-                  Action Taken
+                  Assign Member
                 </h2>
               </div>
               <div>
                 {/* Close button */}
                 {/* <button
                   className="bg-blue-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-600"
-                  onClick={closeDeleteTicket}>
+                  onClick={closeModal}>
                   X
                 </button> */}
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.9 }}
                   type="button"
-                  onClick={closeCloseTicket}
+                  onClick={closeModal}
                   className=" p-2 bg-white text-[red] border border-red-200 hover:border-red-400 text-2xl rounded-md mr-1">
                   <IoMdClose />
                 </motion.button>
               </div>
             </div>
 
-            {/* DeleteTicket Body START */}
+            {/* Modal Body START */}
             <div className=" w-full">
               {/* <div>AddT icket Form</div> */}
               <div className="">
                 <div className=" mx-auto">
-                  <Box
-                    sx={{
-                      maxWidth: 600,
-                      padding: 3,
-                      bgcolor: "background.paper",
-                      borderRadius: 2,
-                    }}
-                    // className="bg-white p-6 rounded-lg shadow-md mx-auto">
-                    className="bg-white p-6 rounded-lg mx-auto">
-                    {/* Personal Information */}
-                    {/* <h2 className="text-lg font-semibold mb-4">Add Ticket</h2> */}
-                    <div className="grid grid-cols-1 gap-4">
-                      {/* Name, Mobile, Email, DOB fields */}
-                      {/* <div className="grid grid-cols-1 gap-4">
-                        <FormControl fullWidth>
-                          <InputLabel id="department-select-label">
-                            Issue?
-                          </InputLabel>
-                          <Select
-                            labelId="department-select-label"
-                            id="department-select"
-                            // value={department}
-                            // value="IT" // Hardcoded value for department
-                            label="Department"
-                            // onChange={handleChange}
-                          >
-                            <MenuItem value="IT">IT</MenuItem>
-                            <MenuItem value="HR">HR</MenuItem>
-                            <MenuItem value="Tech">Tech</MenuItem>
-                            <MenuItem value="Admin">Admin</MenuItem>
-                          </Select>
-                        </FormControl>
-                      </div> */}
-                      <div className="grid grid-cols-1 gap-4">
-                        <TextField
-                          label="Action Taken"
-                          // value={newEvent.name}
-                          //   value="Wifi is not working" // Hardcoded value for ticket title
-                          // onChange={(e) =>
-                          //   setnewEvent({ ...newEvent, name: e.target.value })
-                          // }
-                          fullWidth
-                        />
-                      </div>
-                      {/* <div className="grid grid-cols-1 gap-4">
-                        <TextField
-                          label="Reason For Escalation"
-                          // value={newEvent.name}
-                          //   value="Wifi is not working" // Hardcoded value for ticket title
-                          // onChange={(e) =>
-                          //   setnewEvent({ ...newEvent, name: e.target.value })
-                          // }
-                          fullWidth
-                        />
-                      </div> */}
-                      <div className="grid grid-cols-1 gap-4">
-                        <FormControl fullWidth>
-                          <InputLabel id="issue-select-label">
-                            Type Of Issue
-                          </InputLabel>
-                          <Select
-                            labelId="issue-select-label"
-                            id="issue-select"
-                            // value={department}
-                            // value="IT" // Hardcoded value for department
-                            label="Escalate To"
-                            // onChange={handleChange}
-                          >
-                            <MenuItem value="Internal">Internal</MenuItem>
-                            <MenuItem value="External">External</MenuItem>
-                          </Select>
-                        </FormControl>
-                      </div>
-                    </div>
-
-                    {/* Role & Department fields */}
-                  </Box>
                   {/* <h1 className="text-xl text-center my-2 font-bold">
-                    Is the ticket resolved?
+                    Add Member
                   </h1> */}
-                </div>
-              </div>
-            </div>
-            {/* DeleteTicket Body END */}
-
-            {/* DeleteTicket Footer */}
-
-            <div className="sticky bottom-0 bg-white p-6 z-20 flex justify-center gap-5">
-              <div className="flex justify-center items-center w-full">
-                <button
-                  className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 w-full"
-                  onClick={handleCloseTicket}>
-                  {/* Yes (Close Ticket) */}
-                  Close
-                </button>
-              </div>
-              {/* <div className="flex justify-center items-center">
-                <button
-                  className="bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600"
-                  onClick={handleNotResolved}>
-                  No (Escalate)
-                </button>
-              </div> */}
-            </div>
-            {/* Close button */}
-            {/* <button
-              className="bg-blue-500 text-white py-2 px-4 my-4 rounded-lg hover:bg-blue-600"
-              onClick={closeDeleteTicket}>
-              No
-            </button> */}
-          </div>
-        </div>
-      )}
-
-      {/* CLOSE TICKET MODAL END */}
-
-      {/* DELETE TICKET MODAL START */}
-      {isDeleteTicketOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="absolute inset-0" onClick={closeDeleteTicket}></div>
-
-          <div className="bg-white w-11/12 max-w-[90%] lg:max-w-[40%] pl-8 pr-8  rounded-lg shadow-lg z-10 relative overflow-y-auto max-h-[80vh]">
-            {/* DeleteTicket Content */}
-
-            {/* DeleteTicket Header */}
-            <div className="sticky top-0 bg-white py-6 z-20 flex justify-between">
-              <div>
-                <h2 className="text-3xl font-bold mb-4 uppercase">
-                  Action Taken
-                </h2>
-              </div>
-              <div>
-                {/* Close button */}
-                {/* <button
-                  className="bg-blue-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-600"
-                  onClick={closeDeleteTicket}>
-                  X
-                </button> */}
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.9 }}
-                  type="button"
-                  onClick={closeDeleteTicket}
-                  className=" p-2 bg-white text-[red] border border-red-200 hover:border-red-400 text-2xl rounded-md mr-1">
-                  <IoMdClose />
-                </motion.button>
-              </div>
-            </div>
-
-            {/* DeleteTicket Body START */}
-            <div className=" w-full">
-              {/* <div>AddT icket Form</div> */}
-              <div className="">
-                <div className=" mx-auto">
                   <Box
                     sx={{
                       maxWidth: 600,
@@ -954,13 +832,12 @@ const AcceptedTickets = () => {
                       {/* <div className="grid grid-cols-1 gap-4">
                         <FormControl fullWidth>
                           <InputLabel id="department-select-label">
-                            Issue?
+                            Department
                           </InputLabel>
                           <Select
                             labelId="department-select-label"
                             id="department-select"
                             // value={department}
-                            // value="IT" // Hardcoded value for department
                             label="Department"
                             // onChange={handleChange}
                           >
@@ -971,58 +848,91 @@ const AcceptedTickets = () => {
                           </Select>
                         </FormControl>
                       </div> */}
-                      <div className="grid grid-cols-1 gap-4">
+                      {/* <div className="grid grid-cols-1 gap-4">
                         <TextField
-                          label="Action Taken"
+                          label="Name"
                           // value={newEvent.name}
-                          //   value="Wifi is not working" // Hardcoded value for ticket title
                           // onChange={(e) =>
                           //   setnewEvent({ ...newEvent, name: e.target.value })
                           // }
                           fullWidth
                         />
-                      </div>
-                      <div className="grid grid-cols-1 gap-4">
-                        <TextField
-                          label="Reason For Escalation"
-                          // value={newEvent.name}
-                          //   value="Wifi is not working" // Hardcoded value for ticket title
-                          // onChange={(e) =>
-                          //   setnewEvent({ ...newEvent, name: e.target.value })
-                          // }
-                          fullWidth
-                        />
-                      </div>
+                      </div> */}
 
-                      <div className="grid grid-cols-1 gap-4">
-                        <FormControl fullWidth>
-                          <InputLabel id="issue-select-label">
-                            Type Of Issue
-                          </InputLabel>
-                          <Select
-                            labelId="issue-select-label"
-                            id="issue-select"
-                            // value={department}
-                            // value="IT" // Hardcoded value for department
-                            label="Escalate To"
-                            // onChange={handleChange}
-                          >
-                            <MenuItem value="Internal">Internal</MenuItem>
-                            <MenuItem value="External">External</MenuItem>
-                          </Select>
-                        </FormControl>
-                      </div>
-                      <div className="grid grid-cols-1 gap-4">
+                      <TextField
+                        label="Select Available Member"
+                        value={nameInput}
+                        onChange={(e) => setNameInput(e.target.value)} // Trigger suggestion filtering on typing
+                        fullWidth
+                      />
+
+                      {filteredSuggestions.length > 0 && nameInput && (
+                        <ul
+                          style={{
+                            listStyleType: "none",
+                            padding: 0,
+                            marginTop: 4,
+                          }}>
+                          {filteredSuggestions.map((suggestion, index) => (
+                            <li
+                              key={index}
+                              style={{
+                                padding: 4,
+                                background: "#f1f1f1",
+                                cursor: "pointer",
+                                borderRadius: 4,
+                              }}
+                              onClick={() => {
+                                setNameInput(suggestion); // Set input to clicked suggestion
+                                setFilteredSuggestions([]); // Clear suggestions after selecting
+                              }}>
+                              {suggestion}
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+
+                      {/* <div className="grid grid-cols-1 gap-4">
+                        <TextField
+                          label="Email"
+                          // value={newEvent.name}
+                          // onChange={(e) =>
+                          //   setnewEvent({ ...newEvent, name: e.target.value })
+                          // }
+                          fullWidth
+                        />
+                      </div> */}
+                      {/* <div className="grid grid-cols-1 gap-4">
+                        <TextField
+                          label="Password"
+                          // value={newEvent.name}
+                          // onChange={(e) =>
+                          //   setnewEvent({ ...newEvent, name: e.target.value })
+                          // }
+                          fullWidth
+                        />
+                      </div> */}
+                      {/* <div className="grid grid-cols-1 gap-4">
+                        <TextField
+                          label="Role"
+                          // value={newEvent.name}
+                          // onChange={(e) =>
+                          //   setnewEvent({ ...newEvent, name: e.target.value })
+                          // }
+                          fullWidth
+                        />
+                      </div> */}
+
+                      {/* <div className="grid grid-cols-1 gap-4">
                         <FormControl fullWidth>
                           <InputLabel id="department-select-label">
-                            Escalate To
+                            Role
                           </InputLabel>
                           <Select
                             labelId="department-select-label"
                             id="department-select"
                             // value={department}
-                            // value="IT" // Hardcoded value for department
-                            label="Escalate To"
+                            label="Department"
                             // onChange={handleChange}
                           >
                             <MenuItem value="IT">IT</MenuItem>
@@ -1031,7 +941,7 @@ const AcceptedTickets = () => {
                             <MenuItem value="Admin">Admin</MenuItem>
                           </Select>
                         </FormControl>
-                      </div>
+                      </div> */}
                     </div>
 
                     {/* Role & Department fields */}
@@ -1048,46 +958,42 @@ const AcceptedTickets = () => {
           
               </div> */}
                   </Box>
-                  {/* <h1 className="text-xl text-center my-2 font-bold">
-                    Is the ticket resolved?
-                  </h1> */}
                 </div>
               </div>
             </div>
-            {/* DeleteTicket Body END */}
+            {/* Modal Body END */}
 
-            {/* DeleteTicket Footer */}
+            {/* Modal Footer */}
 
-            <div className="sticky bottom-0 bg-white p-6 z-20 flex justify-center gap-5">
+            {/* <div className="sticky bottom-0 bg-white py-6 z-20 flex justify-center">
               <div className="flex justify-center items-center w-full">
                 <button
-                  className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 w-full"
-                  onClick={handleEscalateTicket}>
-                  {/* Yes (Close Ticket) */}
+                  className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 w-full mx-6"
+                  onClick={handleAddTicket}>
                   Save
                 </button>
               </div>
-              {/* <div className="flex justify-center items-center">
+            </div> */}
+            <div className="sticky bottom-0 bg-white p-6 z-20 flex justify-center">
+              <div className="flex justify-center items-center w-full">
                 <button
-                  className="bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600"
-                  onClick={handleNotResolved}>
-                  No (Escalate)
+                  className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 w-full"
+                  onClick={handleAddTicket}>
+                  Save
                 </button>
-              </div> */}
+              </div>
             </div>
             {/* Close button */}
             {/* <button
-              className="bg-blue-500 text-white py-2 px-4 my-4 rounded-lg hover:bg-blue-600"
-              onClick={closeDeleteTicket}>
-              No
-            </button> */}
+                className="bg-blue-500 text-white py-2 px-4 my-4 rounded-lg hover:bg-blue-600"
+                onClick={closeModal}>
+                Close
+              </button> */}
           </div>
         </div>
       )}
-
-      {/* DELETE TICKET MODAL END */}
     </div>
   );
 };
 
-export default AcceptedTickets;
+export default ReceivedTickets;

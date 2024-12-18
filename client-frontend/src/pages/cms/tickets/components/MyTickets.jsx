@@ -18,8 +18,10 @@ import WonoButton from "../../../../components/Buttons/WonoButton";
 import { motion } from "framer-motion";
 import { IoMdClose } from "react-icons/io";
 import axios from "axios";
+import useAuth from "../../../../hooks/useAuth";
 
 const MyTickets = () => {
+  const { auth: authUser } = useAuth();
   const navigate = useNavigate();
   const [user, setUser] = useState("");
 
@@ -45,6 +47,7 @@ const MyTickets = () => {
   //   return () => clearTimeout(timer);
   // }, [refreshTrigger]); // Depend on refreshTrigger to re-run the effect
 
+  // [[[[[[[]]]]]]]
   const [hasRefreshed, setHasRefreshed] = useState(false);
 
   useEffect(() => {
@@ -65,7 +68,28 @@ const MyTickets = () => {
     return () => clearTimeout(timer);
   }, [hasRefreshed]);
 
-  const raisedByFilter = user.name; // Replace with the desired name or variable
+  // ]]]]]]]]
+  // [[[[[]]]]]
+
+  // useEffect(() => {
+  //   // Fetch the user from localStorage and update state
+  //   const storedUser = JSON.parse(localStorage.getItem("user"));
+  //   setUser(storedUser);
+
+  //   // Fetch tickets immediately
+  //   fetchmyTickets();
+
+  //   // Schedule fetch to run again after 2 seconds
+  //   const timer = setTimeout(() => {
+  //     fetchmyTickets();
+  //   }, 2000); // 2-second delay
+
+  //   // Cleanup timeout to avoid memory leaks
+  //   return () => clearTimeout(timer);
+  // }, []); // Empty dependency array ensures this runs only once
+  // ]]]]]]
+
+  const raisedByFilter = authUser.user.name; // Replace with the desired name or variable
 
   // Ticket With APIs & Local START
 
@@ -75,14 +99,14 @@ const MyTickets = () => {
 
   // state to hold the values of ticket form inputs
   const [createForm, setCreateForm] = useState({
-    raisedBy: user.name,
+    raisedBy: authUser.user.name,
     selectedDepartment: "",
     description: "",
   });
 
   const [updateForm, setUpdateForm] = useState({
     _id: null,
-    raisedBy: user.name,
+    raisedBy: authUser.user.name,
     selectedDepartment: "",
     description: "",
   });
@@ -110,7 +134,7 @@ const MyTickets = () => {
     setCreateForm((prevForm) => ({
       ...prevForm, // Spread previous form values
       [name]: value, // Update the specific field being modified
-      raisedBy: user.name, // Ensure raisedBy is always set to user.name
+      raisedBy: authUser.user.name, // Ensure raisedBy is always set to authUser.user.name
     }));
 
     console.log("Updated Form:", createForm);
@@ -221,7 +245,7 @@ const MyTickets = () => {
     // console.log(ticket);
     // Set state on update form
     setUpdateForm({
-      raisedBy: user.name,
+      raisedBy: authUser.user.name,
       selectedDepartment: ticketToBeDisplayedBeforeUpdating.selectedDepartment,
       description: ticketToBeDisplayedBeforeUpdating.description,
       _id: ticketToBeDisplayedBeforeUpdating._id,
@@ -264,7 +288,7 @@ const MyTickets = () => {
     console.log(newTickets);
     setUpdateForm({
       _id: null,
-      raisedBy: user.name,
+      raisedBy: authUser.user.name,
       selectedDepartment: "",
       description: "",
     });
@@ -501,7 +525,7 @@ const MyTickets = () => {
 
               //   // Toggling update
               //   setUpdateForm({
-              //     raisedBy: user.name,
+              //     raisedBy: authUser.user.name,
               //     selectedDepartment: params.data.selectedDepartment,
               //     description: params.data.description,
               //     _id: params.data._id,
@@ -517,7 +541,7 @@ const MyTickets = () => {
 
                 // Toggling update
                 setUpdateForm({
-                  raisedBy: user.name,
+                  raisedBy: authUser.user.name,
                   selectedDepartment: params.data.selectedDepartment,
                   description: params.data.description,
                   _id: params.data._id,
@@ -776,6 +800,26 @@ const MyTickets = () => {
 
   const visiblePaths = ["/profile", "/it/tickets/my-tickets"];
 
+  // Code for filtering ticket messages
+  const issues = [
+    { department: "IT", message: "Wifi is not working" },
+    { department: "IT", message: "Wifi is slow" },
+    { department: "IT", message: "Laptop screen malfunctioning" },
+    { department: "HR", message: "Attendance data is incorrect" },
+    { department: "HR", message: "Salary Not received" },
+    { department: "HR", message: "Discussion of new SOP" },
+    { department: "Admin", message: "AC is too cold" },
+    { department: "Admin", message: "Request for new stationery supplies" },
+    { department: "Admin", message: "Conflict in meeting room scheduling" },
+    { department: "Tech", message: "Domain expired" },
+    { department: "Tech", message: "Software not working" },
+    { department: "Tech", message: "Domain change required" },
+  ];
+
+  const filteredIssues = issues.filter(
+    (issue) => issue.department === createForm.selectedDepartment
+  );
+
   return (
     <div className="w-[72vw] md:w-full transition-all duration-200 ease-in-out bg-white p-2 rounded-md">
       <div className="flex gap-4 mb-4 justify-between">
@@ -811,16 +855,41 @@ const MyTickets = () => {
             </div>
           </div>
         )} */}
-        {location.pathname === "/it/tickets" && (
+        {/* {location.pathname === "/it/tickets" && (
           <div className="relative bg-red-500">
             <h1 className="text-3xl mb-2"></h1>
             <button
               onClick={openModal}
-              className="w-[9.4rem] absolute top-[-25.5rem] right-[-434px] px-6 py-2 rounded-lg text-white wono-blue-dark hover:bg-[#3cbce7] transition-shadow shadow-md hover:shadow-lg active:shadow-inner">
+              className="w-[9.4rem] absolute top-[-960%] right-[-30rem] px-6 py-2 rounded-lg text-white wono-blue-dark hover:bg-[#3cbce7] transition-shadow shadow-md hover:shadow-lg active:shadow-inner">
               Raise Ticket
             </button>
           </div>
-        )}
+        )} */}
+
+        {location.pathname === "/it/tickets" &&
+          ["Admin", "Super Admin", "Master Admin"].includes(
+            authUser.user.role.roleTitle
+          ) && (
+            <div className="relative bg-red-500">
+              <h1 className="text-3xl mb-2"></h1>
+              <button
+                onClick={openModal}
+                className="w-[9.4rem] absolute top-[-960%] right-[-30rem] px-6 py-2 rounded-lg text-white wono-blue-dark hover:bg-[#3cbce7] transition-shadow shadow-md hover:shadow-lg active:shadow-inner">
+                Raise Ticket
+              </button>
+            </div>
+          )}
+        {location.pathname === "/it/tickets" &&
+          ["Employee"].includes(authUser.user.role.roleTitle) && (
+            <div className="relative bg-red-500">
+              <h1 className="text-3xl mb-2"></h1>
+              <button
+                onClick={openModal}
+                className="w-[9.4rem] absolute top-[-560%] right-[-30rem] px-6 py-2 rounded-lg text-white wono-blue-dark hover:bg-[#3cbce7] transition-shadow shadow-md hover:shadow-lg active:shadow-inner">
+                Raise Ticket
+              </button>
+            </div>
+          )}
 
         <div className="flex gap-4">
           {location.pathname !== "/profile" &&
@@ -938,13 +1007,13 @@ const MyTickets = () => {
                                         <MenuItem value="HR">HR</MenuItem>
                                         <MenuItem value="Tech">Tech</MenuItem>
                                         <MenuItem value="Admin">Admin</MenuItem>
-                                        <MenuItem value="Finance">
+                                        {/* <MenuItem value="Finance">
                                           Finance
                                         </MenuItem>
                                         <MenuItem value="Maintenance">
                                           Maintenance
                                         </MenuItem>
-                                        <MenuItem value="Sales">Sales</MenuItem>
+                                        <MenuItem value="Sales">Sales</MenuItem> */}
                                       </Select>
                                     </FormControl>
                                   </div>
@@ -968,7 +1037,7 @@ const MyTickets = () => {
                                         // }
                                         // Update state on selection
                                       >
-                                        <MenuItem value="Wifi is not working">
+                                        {/* <MenuItem value="Wifi is not working">
                                           Wifi is not working
                                         </MenuItem>
                                         <MenuItem value="Wifi is slow">
@@ -980,13 +1049,20 @@ const MyTickets = () => {
                                         <MenuItem value="Attendance data is incorrect">
                                           Attendance data is incorrect
                                         </MenuItem>
-                                        {/* <MenuItem value="Incorrect salary received">
-                                          Incorrect salary received
-                                        </MenuItem> */}
+                                        <MenuItem value="Salary Not received">
+                                          Salary Not received
+                                        </MenuItem>
                                         <MenuItem value="Discussion of new SOP">
                                           Discussion of new SOP
                                         </MenuItem>
-                                        <MenuItem value="ggs">ggs</MenuItem>
+                                        <MenuItem value="ggs">ggs</MenuItem> */}
+                                        {filteredIssues.map((issue, index) => (
+                                          <MenuItem
+                                            key={index}
+                                            value={issue.message}>
+                                            {issue.message}
+                                          </MenuItem>
+                                        ))}
                                         {/* <MenuItem value="Other">Other</MenuItem> */}
                                       </Select>
                                     </FormControl>

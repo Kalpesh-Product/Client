@@ -23,16 +23,24 @@ const ticketSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+
   status: {
     type: String,
     default: "Pending",
   },
+
   // assignedMember: [
   //   {
   //     type: mongoose.Schema.Types.ObjectId,
   //     ref: "User",
   //   },
   // ],
+
+  isTicketAssigned: {
+    type: Boolean,
+    default: false,
+  },
+
   assignedMember: {
     type: String,
     default: "",
@@ -100,10 +108,16 @@ const ticketSchema = new mongoose.Schema({
     //   ref: "Department",
     // },
   },
-  // closingMessage: {
-  //   type: String,
-  //   required: true,
-  // },
+  closingMessage: {
+    type: String,
+    // required: true,
+    default: "",
+  },
+  typeOfIssue: {
+    type: String,
+    // required: true,
+    default: "",
+  },
   // resolvedStatus: {
   //   type: Boolean,
   //   default: false,

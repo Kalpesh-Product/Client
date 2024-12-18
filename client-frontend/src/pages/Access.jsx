@@ -25,9 +25,7 @@ export default function Access() {
   useEffect(() => {
     const fetchRoles = async () => {
       try {
-        const response = await axios.get(
-          "/api/roles/get-roles"
-        );
+        const response = await axios.get("/api/roles/get-roles");
         setRoles(response.data.roles);
         setEditedRoles(response.data.roles); // Initialize editable roles
       } catch (error) {
@@ -86,11 +84,11 @@ export default function Access() {
           </div>
         </div>
 
-        <div>
+        {/* <div>
           <TableBody>
             {editedRoles.map((role) => (
               <>
-                {/* Role Title */}
+              
                 <TableRow key={role._id}>
                   <TableCell rowSpan={role.modulePermissions.length + 1}>
                     <strong>{role.roleTitle}</strong>
@@ -98,13 +96,13 @@ export default function Access() {
                 </TableRow>
                 {role.modulePermissions.map((modulePermission, moduleIndex) => (
                   <>
-                    {/* Module Title and Permissions */}
+               
                     <TableRow key={`${role._id}-${moduleIndex}`}>
                       <TableCell>
                         <strong>{modulePermission.module.moduleTitle}</strong>
                       </TableCell>
                       <TableCell colSpan={2}>
-                        {/* Module-Level Permissions */}
+                
                         Read:{" "}
                         <Switch
                           checked={modulePermission.modulePermissions.read}
@@ -134,7 +132,7 @@ export default function Access() {
                       </TableCell>
                     </TableRow>
 
-                    {/* Submodule Rows */}
+           
                     {modulePermission.subModulePermissions.map(
                       (subModulePermission, subIndex) => (
                         <TableRow
@@ -144,7 +142,7 @@ export default function Access() {
                             {subModulePermission.subModule.subModuleTitle}
                           </TableCell>
                           <TableCell>
-                            {/* Submodule-Level Permissions */}
+                    
                             Read:{" "}
                             <Switch
                               checked={subModulePermission.permissions.read}
@@ -180,7 +178,7 @@ export default function Access() {
               </>
             ))}
           </TableBody>
-        </div>
+        </div> */}
       </main>
     </div>
   );

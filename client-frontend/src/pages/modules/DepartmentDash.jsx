@@ -913,7 +913,9 @@ const DepartmentDash = () => {
                       />
                     ))}
 
-                  {authUser.user.role === "Admin" && (
+                  {["Admin", "Super Admin", "Master Admin"].includes(
+                    authUser.user.role.roleTitle
+                  ) && (
                     <div className="flex w-full flex-1 flex-grow gap-x-4">
                       <TicketsRemainingWidget
                         totalStock={120}
