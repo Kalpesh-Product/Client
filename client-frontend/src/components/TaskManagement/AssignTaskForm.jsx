@@ -51,6 +51,13 @@ const AssignTaskForm = ({
 }) => {
   const [selectedOptions, setSelectedOptions] = useState([]);
 
+  const projectTitles = [
+    ...tasks.ongoing.map((task) => task.Title),
+    ...tasks.upcoming.map((task) => task.Title),
+    ...tasks.pending.map((task) =>task.Title),
+    ...tasks.completed.map((tasks) =>tasks.Title),
+  ];
+
   const [formData, setFormData] = useState({
     taskName: "",
     date: "",
@@ -166,7 +173,7 @@ const AssignTaskForm = ({
         ...prev,
         upcoming: [
           ...prev.upcoming,
-          { ...projectData, assignees: projectData.assignees },
+          { ...projectData, Assignees: projectData.assignees },
           // { ...projectData, assignees: projectData.assignees.map((name) => `/path/to/${name}.jpg`) },
         ],
       }));
@@ -175,7 +182,6 @@ const AssignTaskForm = ({
         description: "",
         Department: "",
         category: "",
-        
       });
     }
     console.log(tasks);
@@ -188,10 +194,13 @@ const AssignTaskForm = ({
   };
 
   const steps = ["Add Projects", "Verify Details"];
-  
-  const steps2 = ["Add Tasks","Verify Details"];
+
+  const steps2 = ["Add Tasks", "Verify Details"];
 
   const steps3 = ["Add Employee", "View Details"];
+
+  const editSteps = ["Edit Fields", "View Edits"];
+
   const handleNextStep = (e, handleNext) => {
     e.preventDefault();
     handleNext();
@@ -217,22 +226,11 @@ const AssignTaskForm = ({
           >
             {/* {title} */}
           </Typography>
-          {/* <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.9 }}
-            type="button"
-            onClick={handleClose}
-            className=" p-2 bg-white text-[red] border border-red-200 hover:border-red-400 text-2xl rounded-md"
-          >
-            <IoMdClose />
-          </motion.button> */}
+          
         </div>
         <form onSubmit={handleSubmit}>
           {location.pathname === "/tasks/teams" ? (
-
             <>
-            
-            
               <div className="grid grid-cols-1 gap-4">
                 {/* Asset Number */}
                 <Grid item xs={12}>
@@ -305,275 +303,278 @@ const AssignTaskForm = ({
             </>
           ) : modalType === "Add Task" ? (
             <>
-            <FormStepper
+              <FormStepper
                 steps={steps2}
                 handleClose={handleClose}
                 children={(activeStep, handleNext) => {
                   if (activeStep === 0) {
-                    return (<>
-                     <div className="grid grid-cols-1 gap-4">
-                {/* Asset Number */}
-                <Grid item xs={12}>
-                  <TextField
-                    name="taskName"
-                    label="Task name"
-                    value={formData.taskName}
-                    fullWidth
-                    onChange={handleChange}
-                  />
-                </Grid>
+                    return (
+                      <>
+                        <div className="grid grid-cols-1 gap-4">
+                          {/* Asset Number */}
+                          <Grid item xs={12}>
+                            <TextField
+                              name="taskName"
+                              label="Task name"
+                              value={formData.taskName}
+                              fullWidth
+                              onChange={handleChange}
+                            />
+                          </Grid>
 
-                {/* Department Dropdown */}
-                <Grid item xs={12}>
-                  <Autocomplete
-                    multiple
-                    options={names}
-                    value={selectedOptions}
-                    onChange={(event, newValue) => setSelectedOptions(newValue)}
-                    renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        variant="outlined"
-                        label="Assignes"
-                        placeholder="Choose..."
-                      />
-                    )}
-                  />
-                </Grid>
+                          {/* Department Dropdown */}
+                          <Grid item xs={12}>
+                            <Autocomplete
+                              multiple
+                              options={names}
+                              value={selectedOptions}
+                              onChange={(event, newValue) =>
+                                setSelectedOptions(newValue)
+                              }
+                              renderInput={(params) => (
+                                <TextField
+                                  {...params}
+                                  variant="outlined"
+                                  label="Assignes"
+                                  placeholder="Choose..."
+                                />
+                              )}
+                            />
+                          </Grid>
 
-                <Grid item xs={12}>
-                  <TextField
-                    label="Select Project"
-                    name="project"
-                    select
-                    fullWidth
-                    value={formData.project}
-                    onChange={handleChange}
-                  >
-                    {projects.map((type, index) => (
-                      <MenuItem key={index} value={type}>
-                        {type}
-                      </MenuItem>
-                    ))}
-                  </TextField>
-                </Grid>
+                          <Grid item xs={12}>
+                            <TextField
+                              label="Select Project"
+                              name="project"
+                              select
+                              fullWidth
+                              value={formData.project}
+                              onChange={handleChange}
+                            >
+                              {projectTitles.map((type, index) => (
+                                <MenuItem key={index} value={type}>
+                                  {type}
+                                </MenuItem>
+                              ))}
+                            </TextField>
+                          </Grid>
 
-                {/* Asset Type Dropdown */}
-                <Grid item xs={12}>
-                  <TextField
-                    label="Priority"
-                    name="priority"
-                    select
-                    fullWidth
-                    value={formData.priority}
-                    onChange={handleChange}
-                  >
-                    {priorityType.map((type, index) => (
-                      <MenuItem key={index} value={type}>
-                        {type}
-                      </MenuItem>
-                    ))}
-                  </TextField>
-                </Grid>
+                          {/* Asset Type Dropdown */}
+                          <Grid item xs={12}>
+                            <TextField
+                              label="Priority"
+                              name="priority"
+                              select
+                              fullWidth
+                              value={formData.priority}
+                              onChange={handleChange}
+                            >
+                              {priorityType.map((type, index) => (
+                                <MenuItem key={index} value={type}>
+                                  {type}
+                                </MenuItem>
+                              ))}
+                            </TextField>
+                          </Grid>
 
-                {/* Due Date */}
-                <Grid item xs={12}>
-                  <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <DatePicker
-                      label="Date"
-                      // slotProps={{ textField: { size: "small" } }}
-                      sx={{ width: "-webkit-fill-available" }}
-                      renderInput={(params) => (
-                        <TextField {...params} className="w-full md:w-1/4" />
-                      )}
-                    />
-                  </LocalizationProvider>
-                </Grid>
+                          {/* Due Date */}
+                          <Grid item xs={12}>
+                            <LocalizationProvider dateAdapter={AdapterDayjs}>
+                              <DatePicker
+                                label="Date"
+                                // slotProps={{ textField: { size: "small" } }}
+                                sx={{ width: "-webkit-fill-available" }}
+                                renderInput={(params) => (
+                                  <TextField
+                                    {...params}
+                                    className="w-full md:w-1/4"
+                                  />
+                                )}
+                              />
+                            </LocalizationProvider>
+                          </Grid>
 
-                {/* Asset Name */}
-                <Grid item xs={12}>
-                  <TextField
-                    label="Status"
-                    name="status"
-                    select
-                    fullWidth
-                    value={formData.status}
-                    onChange={handleChange}
-                  >
-                    {statusTypes.map((type, index) => (
-                      <MenuItem key={index} value={type}>
-                        {type}
-                      </MenuItem>
-                    ))}
-                  </TextField>
-                </Grid>
+                          {/* Asset Name */}
+                          <Grid item xs={12}>
+                            <TextField
+                              label="Status"
+                              name="status"
+                              select
+                              fullWidth
+                              value={formData.status}
+                              onChange={handleChange}
+                            >
+                              {statusTypes.map((type, index) => (
+                                <MenuItem key={index} value={type}>
+                                  {type}
+                                </MenuItem>
+                              ))}
+                            </TextField>
+                          </Grid>
 
-                <Button 
-                variant="contained"
-                color="primary"
-                onClick={(e) => handleNextStep(e,handleNext)}>
-                Next
-                </Button>
+                          <Button
+                            variant="contained"
+                            color="primary"
+                            onClick={(e) => handleNextStep(e, handleNext)}
+                          >
+                            Next
+                          </Button>
+                        </div>
+                      </>
+                    );
+                  } else if (activeStep === 1) {
+                    return (
+                      <>
+                        <h1>View Details</h1>
+                        <div className="grid grid-cols-2 gap-7 mb-10 mt-5">
+                          {/* Asset Number */}
+                          <div className="flex justify-between py-2 border-b">
+                            <h1 className="font-semibold">Task</h1>
+                            <span>{formData.taskName || "N/A"}</span>
+                          </div>
 
-              </div>
+                          {/* Asset Type */}
+                          <div className="flex justify-between py-2 border-b">
+                            <h1 className="font-semibold">Project Name</h1>
+                            <span>{formData.project || "N/A"}</span>
+                          </div>
 
-                    </>)
-                  }
-                  else if (activeStep === 1) {
-                    return(
-                    <>
-                    <h1>View Details</h1>
-                    <div className="grid grid-cols-2 gap-7 mb-10 mt-5">
-                  {/* Asset Number */}
-                  <div className="flex justify-between py-2 border-b">
-                    <h1 className="font-semibold">Task</h1>
-                    <span>{formData.taskName|| "N/A"}</span>
-                  </div>
+                          {/* Asset Name */}
+                          <div className="flex justify-between py-2 border-b">
+                            <h1 className="font-semibold">Priority</h1>
+                            <span>{formData.priority || "N/A"}</span>
+                          </div>
 
-                  {/* Asset Type */}
-                  <div className="flex justify-between py-2 border-b">
-                    <h1 className="font-semibold">Project Name</h1>
-                    <span>{formData.project|| "N/A"}</span>
-                  </div>
-
-                  {/* Asset Name */}
-                  <div className="flex justify-between py-2 border-b">
-                    <h1 className="font-semibold">Priority</h1>
-                    <span>{formData.priority || "N/A"}</span>
-                  </div>
-
-                  {/* Brand Name */}
-                  <div className="flex justify-between py-2 border-b">
-                    <h1 className="font-semibold">Status</h1>
-                    <span>{formData.status || "N/A"}</span>
-                  </div>
-
-                  
-                </div>
-                <Button 
-                variant="contained"
-                color="primary"
-                >
-                Submit
-                </Button>
-
-               
-                </>
+                          {/* Brand Name */}
+                          <div className="flex justify-between py-2 border-b">
+                            <h1 className="font-semibold">Status</h1>
+                            <span>{formData.status || "N/A"}</span>
+                          </div>
+                        </div>
+                        <Button variant="contained" color="primary">
+                          Submit
+                        </Button>
+                      </>
                     );
                   }
-                }
-                }
-                ></FormStepper>
-             
+                }}
+              ></FormStepper>
             </>
           ) : modalType === "task2" ? (
             <>
-            <FormStepper
+              <FormStepper
                 steps={steps2}
                 handleClose={handleClose}
                 children={(activeStep, handleNext) => {
                   if (activeStep === 0) {
-                    return (<>
-                     <div className="grid grid-cols-1 gap-4">
-                {/* Asset Number */}
-                <Grid item xs={12}>
-                  <TextField
-                    name="taskName"
-                    label="Task name"
-                    value={insideAddTask.taskName}
-                    fullWidth
-                    onChange={handleChange}
-                  />
-                </Grid>
+                    return (
+                      <>
+                        <div className="grid grid-cols-1 gap-4">
+                          {/* Asset Number */}
+                          <Grid item xs={12}>
+                            <TextField
+                              name="taskName"
+                              label="Task name"
+                              value={insideAddTask.taskName}
+                              fullWidth
+                              onChange={handleChange}
+                            />
+                          </Grid>
 
-                {/* Department Dropdown */}
-                <Grid item xs={12}>
-                  <Autocomplete
-                    multiple
-                    options={names}
-                    value={selectedOptions}
-                    onChange={(event, newValue) => setSelectedOptions(newValue)}
-                    renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        variant="outlined"
-                        label="Assignes"
-                        placeholder="Choose..."
-                      />
-                    )}
-                  />
-                </Grid>
+                          {/* Department Dropdown */}
+                          <Grid item xs={12}>
+                            <Autocomplete
+                              multiple
+                              options={names}
+                              value={selectedOptions}
+                              onChange={(event, newValue) =>
+                                setSelectedOptions(newValue)
+                              }
+                              renderInput={(params) => (
+                                <TextField
+                                  {...params}
+                                  variant="outlined"
+                                  label="Assignes"
+                                  placeholder="Choose..."
+                                />
+                              )}
+                            />
+                          </Grid>
 
-                <Grid item xs={12}>
-                  <TextField
-                    label="Project Name"
-                    name="project"
-                    fullWidth
-                    value={projectTitle}
-                    onChange={handleChange}
-                  ></TextField>
-                </Grid>
+                          <Grid item xs={12}>
+                            <TextField
+                              label="Project Name"
+                              name="project"
+                              fullWidth
+                              value={projectTitle}
+                              onChange={handleChange}
+                            ></TextField>
+                          </Grid>
 
-                {/* Asset Type Dropdown */}
-                <Grid item xs={12}>
-                  <TextField
-                    label="Priority"
-                    name="priority"
-                    select
-                    fullWidth
-                    value={insideAddTask.priority}
-                    onChange={handleChange}
-                  >
-                    {priorityType.map((type, index) => (
-                      <MenuItem key={index} value={type}>
-                        {type}
-                      </MenuItem>
-                    ))}
-                  </TextField>
-                </Grid>
+                          {/* Asset Type Dropdown */}
+                          <Grid item xs={12}>
+                            <TextField
+                              label="Priority"
+                              name="priority"
+                              select
+                              fullWidth
+                              value={insideAddTask.priority}
+                              onChange={handleChange}
+                            >
+                              {priorityType.map((type, index) => (
+                                <MenuItem key={index} value={type}>
+                                  {type}
+                                </MenuItem>
+                              ))}
+                            </TextField>
+                          </Grid>
 
-                {/* Due Date */}
-                <Grid item xs={12}>
-                  <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <DatePicker
-                      label="Date"
-                      // slotProps={{ textField: { size: "small" } }}
-                      sx={{ width: "-webkit-fill-available" }}
-                      renderInput={(params) => (
-                        <TextField {...params} className="w-full md:w-1/4" />
-                      )}
-                    />
-                  </LocalizationProvider>
-                </Grid>
+                          {/* Due Date */}
+                          <Grid item xs={12}>
+                            <LocalizationProvider dateAdapter={AdapterDayjs}>
+                              <DatePicker
+                                label="Date"
+                                // slotProps={{ textField: { size: "small" } }}
+                                sx={{ width: "-webkit-fill-available" }}
+                                renderInput={(params) => (
+                                  <TextField
+                                    {...params}
+                                    className="w-full md:w-1/4"
+                                  />
+                                )}
+                              />
+                            </LocalizationProvider>
+                          </Grid>
 
-                {/* Asset Name */}
-                <Grid item xs={12}>
-                  <TextField
-                    label="Status"
-                    name="status"
-                    select
-                    fullWidth
-                    value={insideAddTask.status}
-                    onChange={handleChange}
-                  >
-                    {statusTypes.map((type, index) => (
-                      <MenuItem key={index} value={type}>
-                        {type}
-                      </MenuItem>
-                    ))}
-                  </TextField>
-                </Grid>
-              </div>
-                    </>);
-                  }
-                  else if (activeStep === 1) {
-                    return (<>
-                    <h1>View Details</h1>
-                    </>);
+                          {/* Asset Name */}
+                          <Grid item xs={12}>
+                            <TextField
+                              label="Status"
+                              name="status"
+                              select
+                              fullWidth
+                              value={insideAddTask.status}
+                              onChange={handleChange}
+                            >
+                              {statusTypes.map((type, index) => (
+                                <MenuItem key={index} value={type}>
+                                  {type}
+                                </MenuItem>
+                              ))}
+                            </TextField>
+                          </Grid>
+                        </div>
+                      </>
+                    );
+                  } else if (activeStep === 1) {
+                    return (
+                      <>
+                        <h1>View Details</h1>
+                      </>
+                    );
                   }
                 }}
-                ></FormStepper>
-             
+              ></FormStepper>
             </>
           ) : modalType === "Add Project" ? (
             <>
@@ -624,7 +625,7 @@ const AssignTaskForm = ({
                               multiple
                               options={names}
                               value={projectData.assignees}
-                              onChange={(e , newValue) =>
+                              onChange={(e, newValue) =>
                                 setProjectData({
                                   ...projectData,
                                   assignees: [...new Set([...newValue])],
@@ -676,97 +677,174 @@ const AssignTaskForm = ({
                             </TextField>
                           </Grid>
 
-                          <Button 
-                variant="contained"
-                color="primary"
-                onClick={(e) => handleNextStep(e,handleNext)}>
-                Next
-                </Button>
+                          <Button
+                            variant="contained"
+                            color="primary"
+                            onClick={(e) => handleNextStep(e, handleNext)}
+                          >
+                            Next
+                          </Button>
 
-                          {/* Asset Name */}
-
-                          {/* <Box sx={{ mt: 3 }}>
-                        <button
-                        onClick={handleNextStep}
-                        className="px-6 w-full py-2 rounded-lg text-white wono-blue-dark hover:bg-[#3cbce7] transition-shadow shadow-md hover:shadow-lg active:shadow-inner"
-                      >
-                        Next
-                      </button>
-                      </Box> */}
+                          
                         </div>
                       </>
                     );
                   } else if (activeStep === 1) {
                     return (
                       <>
-                      <h1>View Project Details</h1>
-                      <div className="grid grid-cols-2 gap-7 mb-10 mt-5">
-                  {/* Asset Number */}
-                  <div className="flex justify-between py-2 border-b">
-                    <h1 className="font-semibold">Project</h1>
-                    <span>{projectData.Title|| "N/A"}</span>
-                  </div>
+                        <h1>View Project Details</h1>
+                        <div className="grid grid-cols-2 gap-7 mb-10 mt-5">
+                          {/* Asset Number */}
+                          <div className="flex justify-between py-2 border-b">
+                            <h1 className="font-semibold">Project</h1>
+                            <span>{projectData.Title || "N/A"}</span>
+                          </div>
 
-                  {/* Asset Type */}
-                  <div className="flex justify-between py-2 border-b">
-                    <h1 className="font-semibold">Department</h1>
-                    <span>{projectData.Department|| "N/A"}</span>
-                  </div>
+                          {/* Asset Type */}
+                          <div className="flex justify-between py-2 border-b">
+                            <h1 className="font-semibold">Department</h1>
+                            <span>{projectData.Department || "N/A"}</span>
+                          </div>
 
-                  {/* Asset Name */}
-                  <div className="flex justify-between py-2 border-b">
-                    <h1 className="font-semibold">Description</h1>
-                    <span>{projectData.description || "N/A"}</span>
-                  </div>
+                          {/* Asset Name */}
+                          <div className="flex justify-between py-2 border-b">
+                            <h1 className="font-semibold">Description</h1>
+                            <span>{projectData.description || "N/A"}</span>
+                          </div>
 
-                  {/* Assignees */}
-                  <div className="flex justify-between py-2 border-b gap-5">
-                    <h1 className="font-semibold">Assignees</h1>
-                    <span >{projectData.assignees || "N/A"}</span>
-                  </div>
+                          {/* Assignees */}
+                          <div className="flex justify-between py-2 border-b gap-5">
+                            <h1 className="font-semibold">Assignees</h1>
+                            <span>{projectData.assignees || "N/A"}</span>
+                          </div>
 
-                  {/* Brand Name */}
-                  <div className="flex justify-between py-2 border-b">
-                    <h1 className="font-semibold">Status</h1>
-                    <span>{projectData.status || "N/A"}</span>
-                  </div>
-
-
-                  
-                </div>
-                <Button 
-                variant="contained"
-                color="primary"
-                type="submit"
-                >
-                Submit
-                </Button>
+                          {/* Brand Name */}
+                          <div className="flex justify-between py-2 border-b">
+                            <h1 className="font-semibold">Status</h1>
+                            <span>{projectData.status || "N/A"}</span>
+                          </div>
+                        </div>
+                        <Button
+                          variant="contained"
+                          color="primary"
+                          type="submit"
+                        >
+                          Submit
+                        </Button>
                       </>
                     );
                   }
                 }}
               ></FormStepper>
             </>
+          ) : modalType === "Delete_Row" ? (
+            <>
+              <div className="container">
+                <div className="main">
+                  <h1>Are You Sure you want to delete ?</h1>
+                </div>
+                <div className="btns">
+                  <Button
+                   variant="contained"
+                   color="red"
+                   fullWidth>
+                     Delete
+                  </Button>
+                  <Button
+                   variant="contained"
+                   color="primary"
+                   fullWidth>
+                     Close
+                  </Button>
+                </div>
+              </div>
+            </>
           ) : EditValue ? (
             <>
-              <div className="grid grid-cols-1 gap-4 top-5">
-                {/* Asset Number */}
-                <Grid item xs={12}>
-                  <TextField label="Department" value={department} fullWidth />
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField label="Title" value={Title} fullWidth />
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    label="description"
-                    fullWidth
-                    multiline
-                    rows={4}
-                    value={description}
-                  ></TextField>
-                </Grid>
-              </div>
+              <FormStepper
+                steps={editSteps}
+                handleClose={handleClose}
+                children={(activeStep, handleNext) => {
+                  if (activeStep === 0) {
+                    return (
+                      <div className="grid grid-cols-1 gap-4 top-5">
+                        {/* Asset Number */}
+                        <Grid item xs={12}>
+                          <TextField
+                            label="Department"
+                            value={department}
+                            fullWidth
+                          />
+                        </Grid>
+                        <Grid item xs={12}>
+                          <TextField label="Title" value={Title} fullWidth />
+                        </Grid>
+                        <Grid item xs={12}>
+                          <TextField
+                            label="description"
+                            fullWidth
+                            multiline
+                            rows={4}
+                            value={description}
+                          ></TextField>
+                        </Grid>
+
+                        <Button
+                          variant="contained"
+                          color="primary"
+                          onClick={(e) => handleNextStep(e, handleNext)}
+                        >
+                          Next
+                        </Button>
+                      </div>
+                    );
+                  } else if (activeStep === 1) {
+                    return (
+                      <>
+                        <h1>View Project Details</h1>
+                        <div className="grid grid-cols-2 gap-7 mb-10 mt-5">
+                          {/* Asset Number */}
+                          <div className="flex justify-between py-2 border-b">
+                            <h1 className="font-semibold">Project</h1>
+                            <span>{projectData.Title || "N/A"}</span>
+                          </div>
+
+                          {/* Asset Type */}
+                          <div className="flex justify-between py-2 border-b">
+                            <h1 className="font-semibold">Department</h1>
+                            <span>{projectData.Department || "N/A"}</span>
+                          </div>
+
+                          {/* Asset Name */}
+                          <div className="flex justify-between py-2 border-b">
+                            <h1 className="font-semibold">Description</h1>
+                            <span>{projectData.description || "N/A"}</span>
+                          </div>
+
+                          {/* Assignees */}
+                          <div className="flex justify-between py-2 border-b gap-5">
+                            <h1 className="font-semibold">Assignees</h1>
+                            <span>{projectData.assignees || "N/A"}</span>
+                          </div>
+
+                          {/* Brand Name */}
+                          <div className="flex justify-between py-2 border-b">
+                            <h1 className="font-semibold">Status</h1>
+                            <span>{projectData.status || "N/A"}</span>
+                          </div>
+                        </div>
+                        <Button
+                          variant="contained"
+                          color="primary"
+                          type="submit"
+                        >
+                          Submit
+                        </Button>
+                      </>
+                    );
+                  }
+                }}
+              ></FormStepper>
             </>
           ) : location.pathname === "/tasks/teams" ? (
             <>
@@ -781,6 +859,7 @@ const AssignTaskForm = ({
                     onChange={hadndleEmployeeChange}
                   />
                 </Grid>
+                
                 <Grid item xs={12}>
                   <TextField
                     name="Email"
@@ -790,6 +869,7 @@ const AssignTaskForm = ({
                     onChange={hadndleEmployeeChange}
                   />
                 </Grid>
+
                 <Grid item xs={12}>
                   <TextField
                     label="tasks"
@@ -850,17 +930,7 @@ const AssignTaskForm = ({
                 </Button>
               </>
             )}
-            {/* {!selectedRow &&  (
-              <Button
-                type="submit"
-                variant="contained"
-                color="primary"
-                fullWidth
-                
-              >
-                Next
-              </Button>
-            )} */}
+            
           </div>
         </form>
       </Box>

@@ -35,9 +35,10 @@ const TasklistGrid = () => {
           id: 1,
           ticketTitle: "Financial Forcasting And Budgeting",
           Assignees: [
-            "https://i.pravatar.cc/150?img=1",
-            "https://i.pravatar.cc/150?img=2",
-            "https://i.pravatar.cc/150?img=3",
+            "Saddhya Sawaikar",
+          "Sankalp Kalangutkar",
+          "Supriya Gaonkar",
+          "Neha Tari",
           ],
           AssigneeNames: ["Riya", "Piya", "Siya"],
           DueDate: "10th october 2024",
@@ -50,9 +51,7 @@ const TasklistGrid = () => {
           id: 2,
           ticketTitle: "Annual Co-orporate Network And Networking Events",
           Assignees: [
-            "https://i.pravatar.cc/150?img=4",
-            "https://i.pravatar.cc/150?img=5",
-            "https://i.pravatar.cc/150?img=6",
+            "Riya Naik", "Parinda Raikar", "Amisha Naik"
           ],
           DueDate: "12th october 2024",
           priority: "Medium",
@@ -64,9 +63,7 @@ const TasklistGrid = () => {
           id: 3,
           ticketTitle: "Website Redesign",
           Assignees: [
-            "https://i.pravatar.cc/150?img=7",
-            "https://i.pravatar.cc/150?img=8",
-            "https://i.pravatar.cc/150?img=9",
+            "John Doe", "Jane Smith", "Alex Johnson"
           ],
           DueDate: "15th october 2024",
           priority: "High",
@@ -78,9 +75,7 @@ const TasklistGrid = () => {
           id: 4,
           ticketTitle: "Bussiness Process optimizations and Automations",
           Assignees: [
-            "https://i.pravatar.cc/150?img=1",
-            "https://i.pravatar.cc/150?img=2",
-            "https://i.pravatar.cc/150?img=3",
+            "Jayesh Redkar", "Geeta parab", "Ashita Parab"
           ],
           DueDate: "30th october 2024",
           priority: "Low",
@@ -92,9 +87,7 @@ const TasklistGrid = () => {
           id: 5,
           ticketTitle: "Data Privacy and GDPR Compliance Initiative",
           Assignees: [
-            "https://i.pravatar.cc/150?img=1",
-            "https://i.pravatar.cc/150?img=2",
-            "https://i.pravatar.cc/150?img=3",
+            "Govardhan Parab", "Dgymj Lodh", "Dold Peold"
           ],
           DueDate: "2th November 2024",
           priority: "Medium",
@@ -106,9 +99,7 @@ const TasklistGrid = () => {
           id: 6,
           ticketTitle: "Launch a New Digital Marketing Initiative ",
           Assignees: [
-            "https://i.pravatar.cc/150?img=7",
-            "https://i.pravatar.cc/150?img=8",
-            "https://i.pravatar.cc/150?img=9",
+            "Siya Amonkar", "Chaya Shinde", "Priya Dessai"
           ],
           DueDate: "7th November 2024",
           priority: "High",
@@ -120,9 +111,7 @@ const TasklistGrid = () => {
           id: 7,
           ticketTitle: "Data Privacy And GDPR Compliance Initiative",
           Assignees: [
-            "https://i.pravatar.cc/150?img=7",
-            "https://i.pravatar.cc/150?img=8",
-            "https://i.pravatar.cc/150?img=9",
+            "Mahima Naik", "Angela Vaz", "Urvi Palang"
           ],
           DueDate: "9th November 2024",
           priority: "Low",
@@ -148,9 +137,7 @@ const TasklistGrid = () => {
           id: 9,
           ticketTitle: "Email Access Issue",
           Assignees: [
-            "https://i.pravatar.cc/150?img=7",
-            "https://i.pravatar.cc/150?img=8",
-            "https://i.pravatar.cc/150?img=9",
+            "Rami Naik", "Krutika Ghadi", "Rajeshwari Maheshwari"
           ],
           DueDate: "20th November 2024",
           priority: "Medium",
@@ -161,10 +148,46 @@ const TasklistGrid = () => {
       ]);
       // const [avatars, setAvatars]= useState(allRows.forEach((rows)=>{rows.Assignes}))
       // console.log(avatars)
+
+      const getInitials = (name) => {
+        const words = name.split(" ");
+        const firstInitial = words[0][0].toUpperCase();
+        const lastInitial = words[words.length - 1][0].toUpperCase();
+        return `${firstInitial}${lastInitial}`;
+      };
+      
+      // Function to generate a unique color
+      const generateColor = (name) => {
+        let hash = 0;
+        for (let i = 0; i < name.length; i++) {
+          hash = name.charCodeAt(i) + ((hash << 5) - hash);
+        }
+        const color = `hsl(${hash % 360}, 70%, 60%)`;
+        return color;
+      };
     
       const columns = [
         { field: "id", headerName: "ID", width: "100%" },
-        { field: "ticketTitle", headerName: "Projects", width:"100%" },
+        
+        { field: "ticketTitle", headerName: "Projects", width:"100%",
+          cellStyle: {
+          whiteSpace: "normal", // Enables text wrapping
+          wordWrap: "break-word", // Breaks long words if necessary
+          overflow: "hidden", // Ensures no overflow
+          textOverflow: "ellipsis", // Adds ellipsis for very long text
+        },
+        cellRenderer: (params) => (
+          <div
+            style={{
+              whiteSpace: "normal",
+              wordWrap: "break-word",
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+            }}
+          >
+            {params.value}
+          </div>
+        ), },
         {
           field: "Assignees",
           headerName: "Assignees",
@@ -182,9 +205,14 @@ const TasklistGrid = () => {
               {params.data.Assignees.map((assignee, index) => (
                 <Avatar
                   key={index}
-                  src={assignee}
-                  sx={{ width: 30, height: 30, border: "1px solid white" }}
-                />
+                  
+                  sx={{ width: 30, height: 30, border: "1px solid white",bgcolor: generateColor(assignee), 
+                    color: "white",
+                    fontWeight: "bold",
+                    fontSize: "0.9rem" }}
+                >
+                  {getInitials(assignee)}
+                  </Avatar>
               ))}
             </Stack>
           ),

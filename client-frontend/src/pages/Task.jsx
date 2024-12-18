@@ -34,9 +34,9 @@ const Task = () => {
       id: 1,
       ticketTitle: "Wifi is not working",
       Assignees: [
-        "https://i.pravatar.cc/150?img=1",
-        "https://i.pravatar.cc/150?img=2",
-        "https://i.pravatar.cc/150?img=3",
+        "Riya Jaiswal",
+        "Piya Redkar",
+        "Neha Naik"
       ],
       AssigneeNames: ["Riya", "Piya", "Siya"],
       DueDate: "10th october 2024",
@@ -48,9 +48,9 @@ const Task = () => {
       id: 2,
       ticketTitle: "Payroll Issue",
       Assignees: [
-        "https://i.pravatar.cc/150?img=4",
-        "https://i.pravatar.cc/150?img=5",
-        "https://i.pravatar.cc/150?img=6",
+        "Siya Amonkar",
+        "Pravin Naik",
+        "Mahesh Tiwari"
       ],
       DueDate: "12th october 2024",
       priority: "Medium",
@@ -61,9 +61,9 @@ const Task = () => {
       id: 3,
       ticketTitle: "Server Downtime",
       Assignees: [
-        "https://i.pravatar.cc/150?img=7",
-        "https://i.pravatar.cc/150?img=8",
-        "https://i.pravatar.cc/150?img=9",
+        "Pradnya Bhagat",
+        "Vedashree Amonkar",
+        "Supriya Gaonkar"
       ],
       DueDate: "15th october 2024",
       priority: "High",
@@ -74,9 +74,9 @@ const Task = () => {
       id: 4,
       ticketTitle: "New Workstation Setup",
       Assignees: [
-        "https://i.pravatar.cc/150?img=1",
-        "https://i.pravatar.cc/150?img=2",
-        "https://i.pravatar.cc/150?img=3",
+        "Ved Mhamre",
+        "Aaditya Shetye",
+        "Pranay Tari",
       ],
       DueDate: "30th october 2024",
       priority: "Low",
@@ -87,9 +87,9 @@ const Task = () => {
       id: 5,
       ticketTitle: "Employee Onboarding",
       Assignees: [
-        "https://i.pravatar.cc/150?img=1",
-        "https://i.pravatar.cc/150?img=2",
-        "https://i.pravatar.cc/150?img=3",
+        "Riya Mashelkar",
+        "Pallavi Shirsat",
+        "Prajakta Shirsat",
       ],
       DueDate: "2th November 2024",
       priority: "Medium",
@@ -100,9 +100,9 @@ const Task = () => {
       id: 6,
       ticketTitle: "Network Issue",
       Assignees: [
-        "https://i.pravatar.cc/150?img=7",
-        "https://i.pravatar.cc/150?img=8",
-        "https://i.pravatar.cc/150?img=9",
+        "Allen Silvera",
+        "AiwinRaj",
+        "Kalpesh Naik",
       ],
       DueDate: "7th November 2024",
       priority: "High",
@@ -113,9 +113,9 @@ const Task = () => {
       id: 7,
       ticketTitle: "Software Installation",
       Assignees: [
-        "https://i.pravatar.cc/150?img=7",
-        "https://i.pravatar.cc/150?img=8",
-        "https://i.pravatar.cc/150?img=9",
+        "Nehal Naik",
+        "Pawan Garde",
+        "Siddhant Madkaikar",
       ],
       DueDate: "9th November 2024",
       priority: "Low",
@@ -126,9 +126,9 @@ const Task = () => {
       id: 8,
       ticketTitle: "Office Supplies Request",
       Assignees: [
-        "https://i.pravatar.cc/150?img=1",
-        "https://i.pravatar.cc/150?img=2",
-        "https://i.pravatar.cc/150?img=3",
+        "Sanmay Tari",
+        "Angela vaz",
+        "Vaishnavi Jambhulkar",
       ],
       DueDate: "10th November 2024",
       priority: "Low",
@@ -139,9 +139,9 @@ const Task = () => {
       id: 9,
       ticketTitle: "Email Access Issue",
       Assignees: [
-        "https://i.pravatar.cc/150?img=7",
-        "https://i.pravatar.cc/150?img=8",
-        "https://i.pravatar.cc/150?img=9",
+        "Prachi Phadte",
+        "Swapna Tari",
+        "Karan pawar",
       ],
       DueDate: "20th November 2024",
       priority: "Medium",
@@ -149,8 +149,23 @@ const Task = () => {
       requestDate: "2024-10-11",
     },
   ]);
-  // const [avatars, setAvatars]= useState(allRows.forEach((rows)=>{rows.Assignes}))
-  // console.log(avatars)
+ 
+  const getInitials = (name) => {
+    const words = name.split(" ");
+    const firstInitial = words[0][0].toUpperCase();
+    const lastInitial = words[words.length - 1][0].toUpperCase();
+    return `${firstInitial}${lastInitial}`;
+  };
+  
+  // Function to generate a unique color
+  const generateColor = (name) => {
+    let hash = 0;
+    for (let i = 0; i < name.length; i++) {
+      hash = name.charCodeAt(i) + ((hash << 5) - hash);
+    }
+    const color = `hsl(${hash % 360}, 70%, 60%)`;
+    return color;
+  };
 
   const columns = [
     { field: "id", headerName: "ID", width: 70 },
@@ -172,9 +187,14 @@ const Task = () => {
           {params.data.Assignees?.map((assignee, index) => (
             <Avatar
               key={index}
-              src={assignee}
-              sx={{ width: 30, height: 30, border: "1px solid white" }}
-            />
+              
+              sx={{ width: 30, height: 30, border: "1px solid white",bgcolor: generateColor(assignee), 
+                color: "white",
+                fontWeight: "bold",
+                fontSize: "0.9rem", }}
+            >
+            {getInitials(assignee)}
+            </Avatar>
           ))}
         </Stack>
       ),
