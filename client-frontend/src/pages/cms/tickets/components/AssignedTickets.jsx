@@ -519,20 +519,22 @@ const AssignedTickets = () => {
 
         return (
           <div className="flex space-x-2">
-            <button
+            {/* <button
               // onClick={handleEdit}
               onClick={handleAcceptTicket}
               className="bg-red-500 text-white px-3 py-1 rounded">
               Accept
-            </button>
-            <button
-              // onClick={handleDelete}
-              // onClick={handleAssign}
-              // onClick={handleAssignTicket}
-              onClick={openModal}
-              className="bg-red-500 text-white px-3 py-1 rounded">
-              Assign
-            </button>
+            </button> */}
+            {user.role !== "Employee" && (
+              <button
+                // onClick={handleDelete}
+                // onClick={handleAssign}
+                // onClick={handleAssignTicket}
+                onClick={openModal}
+                className="bg-red-500 text-white px-3 py-1 rounded">
+                Assign
+              </button>
+            )}
           </div>
         );
       },

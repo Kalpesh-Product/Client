@@ -6,7 +6,7 @@ import { useTimer } from "../contexts/TimerContext";
 
 const ClientHeader = () => {
   const navigate = useNavigate();
-  const {timer, isRunning} = useTimer()
+  const { timer, isRunning } = useTimer();
   const [anchorEl, setAnchorEl] = useState(null);
   const [image, setImage] = useState("");
   const [isModelOpen, setIsModalOpen] = useState(false);
@@ -58,9 +58,7 @@ const ClientHeader = () => {
         {/* Navigation Links */}
         <nav className="flex justify-start py-0 items-center">
           {/* Avatar Menu Trigger */}
-          {isRunning ? (
-            <h1 className="text-white">{timer}</h1>
-          ) : ""}
+          {isRunning ? <h1 className="text-white">{timer}</h1> : ""}
           <IconButton onClick={handleMenuOpen} sx={{ py: 0 }}>
             <Avatar
               className="wono-blue-dark"
@@ -68,15 +66,14 @@ const ClientHeader = () => {
               src="/path-to-avatar.jpg"
             />
             <div>
-            <Typography
-              onClick={() => {
-                setAnchorEl(null);
-              }}
-              variant="h6"
-              sx={{ px:2,py: "0", color: "white" }}
-            >
-              {user.name}
-            </Typography>
+              <Typography
+                onClick={() => {
+                  setAnchorEl(null);
+                }}
+                variant="h6"
+                sx={{ px: 2, py: "0", color: "white" }}>
+                {user.name}
+              </Typography>
             </div>
           </IconButton>
 
@@ -92,23 +89,20 @@ const ClientHeader = () => {
             transformOrigin={{
               vertical: "top",
               horizontal: "center",
-            }}
-          >
+            }}>
             <div className="py-0">
               <MenuItem
                 onClick={() => {
                   navigate("/landing");
                   setAnchorEl(null);
-                }}
-              >
+                }}>
                 <Typography>Home</Typography>
               </MenuItem>
               <MenuItem
                 onClick={() => {
                   handleLogout();
                   handleMenuClose();
-                }}
-              >
+                }}>
                 <Typography>Logout</Typography>
               </MenuItem>
             </div>
@@ -129,8 +123,7 @@ const ClientHeader = () => {
             />
             <button
               onClick={() => setIsModalOpen(false)}
-              className="mt-4 w-full bg-red-500 text-white py-2 rounded-lg hover:bg-red-600"
-            >
+              className="mt-4 w-full bg-red-500 text-white py-2 rounded-lg hover:bg-red-600">
               Close
             </button>
           </div>

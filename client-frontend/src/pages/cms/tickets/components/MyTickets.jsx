@@ -45,6 +45,7 @@ const MyTickets = () => {
   //   return () => clearTimeout(timer);
   // }, [refreshTrigger]); // Depend on refreshTrigger to re-run the effect
 
+  // [[[[[[[]]]]]]]
   const [hasRefreshed, setHasRefreshed] = useState(false);
 
   useEffect(() => {
@@ -64,6 +65,27 @@ const MyTickets = () => {
     // Cleanup to clear the timeout
     return () => clearTimeout(timer);
   }, [hasRefreshed]);
+
+  // ]]]]]]]]
+  // [[[[[]]]]]
+
+  // useEffect(() => {
+  //   // Fetch the user from localStorage and update state
+  //   const storedUser = JSON.parse(localStorage.getItem("user"));
+  //   setUser(storedUser);
+
+  //   // Fetch tickets immediately
+  //   fetchmyTickets();
+
+  //   // Schedule fetch to run again after 2 seconds
+  //   const timer = setTimeout(() => {
+  //     fetchmyTickets();
+  //   }, 2000); // 2-second delay
+
+  //   // Cleanup timeout to avoid memory leaks
+  //   return () => clearTimeout(timer);
+  // }, []); // Empty dependency array ensures this runs only once
+  // ]]]]]]
 
   const raisedByFilter = user.name; // Replace with the desired name or variable
 
@@ -831,16 +853,39 @@ const MyTickets = () => {
             </div>
           </div>
         )} */}
-        {location.pathname === "/it/tickets" && (
+        {/* {location.pathname === "/it/tickets" && (
           <div className="relative bg-red-500">
             <h1 className="text-3xl mb-2"></h1>
             <button
               onClick={openModal}
-              className="w-[9.4rem] absolute top-[-25.5rem] right-[-434px] px-6 py-2 rounded-lg text-white wono-blue-dark hover:bg-[#3cbce7] transition-shadow shadow-md hover:shadow-lg active:shadow-inner">
+              className="w-[9.4rem] absolute top-[-960%] right-[-30rem] px-6 py-2 rounded-lg text-white wono-blue-dark hover:bg-[#3cbce7] transition-shadow shadow-md hover:shadow-lg active:shadow-inner">
               Raise Ticket
             </button>
           </div>
-        )}
+        )} */}
+
+        {location.pathname === "/it/tickets" &&
+          ["Admin", "Super Admin", "Master Admin"].includes(user.role) && (
+            <div className="relative bg-red-500">
+              <h1 className="text-3xl mb-2"></h1>
+              <button
+                onClick={openModal}
+                className="w-[9.4rem] absolute top-[-960%] right-[-30rem] px-6 py-2 rounded-lg text-white wono-blue-dark hover:bg-[#3cbce7] transition-shadow shadow-md hover:shadow-lg active:shadow-inner">
+                Raise Ticket
+              </button>
+            </div>
+          )}
+        {location.pathname === "/it/tickets" &&
+          ["Employee"].includes(user.role) && (
+            <div className="relative bg-red-500">
+              <h1 className="text-3xl mb-2"></h1>
+              <button
+                onClick={openModal}
+                className="w-[9.4rem] absolute top-[-560%] right-[-30rem] px-6 py-2 rounded-lg text-white wono-blue-dark hover:bg-[#3cbce7] transition-shadow shadow-md hover:shadow-lg active:shadow-inner">
+                Raise Ticket
+              </button>
+            </div>
+          )}
 
         <div className="flex gap-4">
           {location.pathname !== "/profile" &&
