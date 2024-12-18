@@ -2,7 +2,7 @@ import React from "react";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 
-export const NewModal = ({ open,  children }) => {
+export const NewModal = ({ open,  children, styles }) => {
   return (
     <Dialog
       open={open}
@@ -17,7 +17,7 @@ export const NewModal = ({ open,  children }) => {
         },
       }}
     >
-      <DialogContent className="motion-preset-fade-sm">
+      <DialogContent style={styles}  className="motion-preset-fade-sm">
         {children}
       </DialogContent>
     </Dialog>

@@ -1,4 +1,7 @@
-const allowedOrigins = ["http://localhost:3000"];
+const allowedOrigins = [
+  "http://localhost:3000",
+  "https://client-beta-beryl.vercel.app",
+];
 
 const corsConfig = {
   origin: function (origin, callback) {

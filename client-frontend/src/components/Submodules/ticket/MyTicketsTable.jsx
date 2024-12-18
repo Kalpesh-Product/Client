@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
@@ -11,8 +11,183 @@ import { TextField } from "@mui/material";
 import AgTable from "../../../components/AgTable";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { toast } from "sonner";
+import axios from "axios";
 
 const MyTicketsTable = () => {
+  // const [user, setUser] = useState("");
+  // useEffect(() => {
+  //   const storedUser = JSON.parse(localStorage.getItem("user"));
+  //   setUser(storedUser);
+  // }, []);
+  const [user, setUser] = useState("");
+
+  // useEffect(() => {
+  //   const storedUser = JSON.parse(localStorage.getItem("user"));
+  //   setUser(storedUser);
+  //   fetchmyTickets();
+  // }, []);
+
+  // const [refreshTrigger, setRefreshTrigger] = useState(false);
+
+  // useEffect(() => {
+  //   const storedUser = JSON.parse(localStorage.getItem("user"));
+  //   setUser(storedUser);
+  //   fetchmyTickets();
+
+  //   // Set a timeout to update the refreshTrigger state after 2 seconds
+  //   const timer = setTimeout(() => {
+  //     setRefreshTrigger((prev) => !prev); // Toggle the trigger state
+  //   }, 2000);
+
+  //   // Cleanup to clear the timeout
+  //   return () => clearTimeout(timer);
+  // }, [refreshTrigger]); // Depend on refreshTrigger to re-run the effect
+
+  const [hasRefreshed, setHasRefreshed] = useState(false);
+
+  useEffect(() => {
+    // Fetch the user from localStorage and update state
+    const storedUser = JSON.parse(localStorage.getItem("user"));
+    setUser(storedUser);
+    fetchmyTickets();
+
+    // Set a timeout to run the effect one more time after 2 seconds
+    const timer = setTimeout(() => {
+      if (!hasRefreshed) {
+        setHasRefreshed(true); // Mark as refreshed
+        fetchmyTickets(); // Run your fetching logic one more time
+      }
+    }, 1000);
+
+    // Cleanup to clear the timeout
+    return () => clearTimeout(timer);
+  }, [hasRefreshed]);
+
+  const selectedDepartmentFilter = user.department; // Replace with the desired name or variable
+
+  // Ticket With APIs & Local START
+
+  // State to store my tickets
+  const [myTickets, setMyTickets] = useState([]);
+  // const selectedDepartmentFilter = "Allan"; // Replace with the desired name or variable
+
+  // state to hold the values of ticket form inputs
+  const [createForm, setCreateForm] = useState({
+    raisedBy: user.name,
+    selectedDepartment: "",
+    description: "",
+  });
+
+  // we need to get the name of the input field while typing(changing using onChange) & we need to get the new value. so we get both of those of the default html event that gets passed here (we put an e for the event)
+  const updateCreateFormField = (e) => {
+    // console.log("hey");
+    console.log(createForm);
+
+    // const { name, value } = e.target;
+    const target = e.target; // We first access the target property of the event object e, which represents the element that triggered the event.
+    const name = target.name; // Next, we extract the name and value properties from the target object and assign them to variables.
+    const value = target.value;
+    // const triggeredHtmlElement = e.target;
+    // const nameAttributeOfTheTriggeredElement = triggeredHtmlElement.name;
+    // const valueAttributeOfTheTriggeredElement = triggeredHtmlElement.value;
+
+    // now we update the state
+    // setCreateForm({
+    //   ...createForm, // creates a duplicate of the createForm object
+    //   // name: value, // this will update the key of name, but we don't need the key of name, we need whatever the variable is equal to
+    //   [name]: value, // this will find the keys (name attributes) and update its values (value attributes) to whatever is changed by the JS event.
+    // });
+
+    setCreateForm((prevForm) => ({
+      ...prevForm, // Spread previous form values
+      [name]: value, // Update the specific field being modified
+      raisedBy: user.name, // Ensure raisedBy is always set to user.name
+    }));
+
+    console.log("Updated Form:", createForm);
+    console.log("Updated Field:", { name, value });
+
+    console.log({ name, value });
+  };
+
+  // Function to create the ticket
+  const createMyTicket = async (e) => {
+    try {
+      console.log("submitted x");
+      console.log(createForm);
+      e.preventDefault(); // prevents the page from reloading when the form is submitted
+
+      // Create the ticket
+
+      // const responseFromBackend = await axios.post(
+      //   // the 2 arguments are: the link to post the values, the values to be sent for post method
+      //   // "/api/tickets/create-ticket",
+      //   "http://localhost:5000/api/tickets/create-ticket",
+      //   createForm
+      // );
+
+      const responseFromBackend = await axios.post(
+        "/api/tickets/create-ticket",
+        createForm
+      );
+
+      console.log(responseFromBackend);
+
+      // Update state
+      setMyTickets([...myTickets, responseFromBackend.data.ticket]); // adds our newly created ticket to the array of tickets. The variable ticket was created in out backend for response
+      // console.log("submit");
+      // console.log(responseFromBackend);
+
+      // Clear form state
+      setCreateForm({
+        raisedBy: "",
+        selectedDepartment: "",
+        description: "",
+      });
+      toast.success("New Ticket Created");
+      fetchmyTickets();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  // function that fetches our tickets
+  const fetchmyTickets = async () => {
+    // Fetch the tickets
+    const responseFromBackend = await axios.get(
+      "/api/tickets/view-all-tickets"
+    ); // the function is not running yet. we want the function to run as soon as the app starts up, so we do that in a useEffect (react hook).
+
+    const allTickets = responseFromBackend.data.tickets;
+
+    // Filter tickets where 'department' matches
+    const filteredTickets = allTickets.filter(
+      (ticket) =>
+        ticket.selectedDepartment === selectedDepartmentFilter &&
+        ticket.assignedMember === user.name
+    );
+
+    // Set it on state (update the value of tickets)
+    // setMyTickets(responseFromBackend.data.tickets); // setNotes will update the value of tickets from null to the current array of tickets
+    // Update state with filtered tickets
+    setMyTickets(filteredTickets);
+    // console.log(responseFromBackend);
+    // console.log(responseFromBackend.data.tickets);
+  };
+
+  // useeffect for displaying the tickets array after fetching from backend response
+  useEffect(() => {
+    // anything you put in here will run when the app starts
+    fetchmyTickets(); // this will run the fetchNotes function & fetch the tickets array from backend as our response (in network tab from developer tools)
+  }, []); // we leave the array empty since we need it to run only once when the app starts up.
+
+  // Finction to delete a ticket
+
+  // Function to edit the ticket
+
+  // Ticket With APIs & Local END
+
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
 
@@ -70,6 +245,91 @@ const MyTicketsTable = () => {
         );
       },
     },
+  ];
+
+  const columns3 = [
+    { field: "ticketId", headerName: "ID", width: 100 },
+    { field: "raisedBy", headerName: "Raised By", width: 150 },
+    {
+      field: "selectedDepartment",
+      headerName: "Selected Department",
+      width: 150,
+    },
+    { field: "description", headerName: "Ticket Title", width: 200 },
+    {
+      field: "status",
+      headerName: "Status",
+      width: 150,
+      type: "singleSelect",
+      valueOptions: ["Pending", "In Process", "Closed"],
+      cellRenderer: (params) => {
+        const statusColors = {
+          "In Process": "text-yellow-600 bg-yellow-100",
+          Pending: "text-red-600 bg-red-100",
+          Closed: "text-blue-600 bg-blue-100",
+        };
+        const statusClass = statusColors[params.value] || "";
+        return (
+          <span
+            className={`px-3 py-1 rounded-full text-sm font-medium ${statusClass}`}>
+            {params.value}
+          </span>
+        );
+      },
+    },
+    {
+      field: "escalatedTo",
+      headerName: "Escalated To",
+      width: 200,
+    },
+    // { field: "requestDate", headerName: "Request Date", width: 150 },
+    // {
+    //   field: "actions",
+    //   headerName: "Actions",
+    //   width: 200,
+    //   cellRenderer: (params) => {
+    //     const handleEdit = () => {
+    //       console.log("Editing ticket:", params.data._id);
+    //       // Implement your edit logic here
+    //     };
+
+    //     const handleDelete = async () => {
+    //       console.log("Deleting ticket:", params.data._id);
+    //       // Update state to remove the ticket
+    //       // setMyTickets((prevTickets) =>
+    //       //   prevTickets.filter((ticket) => ticket._id !== params.data._id)
+    //       // );
+
+    //       const responseFromBackend = await axios.delete(
+    //         `/api/tickets/delete-ticket/${params.data._id}`
+    //       );
+    //       console.log(responseFromBackend);
+
+    //       // Update state
+    //       // we heve to filter out the one we deleted
+    //       const newTickets = [...myTickets].filter((ticket) => {
+    //         return ticket._id !== params.data._id; // return tickets where note._id is not equal to the id we passed in (idOfTheNoteToBeDeleted). This will return an array of notes that meet this condition.
+    //       });
+
+    //       setMyTickets(newTickets); // assigns newTickets as the new value of the tickets state variable.
+    //     };
+
+    //     return (
+    //       <div className="flex space-x-2">
+    //         <button
+    //           onClick={handleEdit}
+    //           className="bg-red-500 text-white px-3 py-1 rounded">
+    //           Close
+    //         </button>
+    //         <button
+    //           onClick={handleDelete}
+    //           className="bg-red-500 text-white px-3 py-1 rounded">
+    //           Escalate
+    //         </button>
+    //       </div>
+    //     );
+    //   },
+    // },
   ];
 
   const allRows = [
@@ -161,12 +421,22 @@ const MyTicketsTable = () => {
       : allRows.filter((row) => row.department === department);
 
   const csvHeaders = [
-    { label: "ID", key: "id" },
-    { label: "Ticket Title", key: "ticketTitle" },
-    { label: "Priority", key: "priority" },
-    { label: "Department", key: "department" },
-    { label: "Request Date", key: "requestDate" },
+    { label: "ID", key: "ticketId" },
+    { label: "Raised By", key: "raisedBy" },
+    { label: "Selected Department", key: "selectedDepartment" },
+    { label: "Ticket Title", key: "description" },
+    // { label: "Priority", key: "priority" },
+    { label: "Status", key: "status" },
+    // { label: "Request Date", key: "requestDate" },
+    { label: "Escalated To", key: "escalatedTo" },
   ];
+
+  // nesting the mongoDB value for escalatedTo
+
+  const ticketsForTable = myTickets.map((ticket) => ({
+    ...ticket,
+    escalatedTo: ticket.escalation?.escalationToAdmin?.escalatedTo || "N/A",
+  }));
 
   return (
     <div className="px-2 pb-2 pt-0 bg-white mx-4">
@@ -380,7 +650,8 @@ const MyTicketsTable = () => {
             Export Report
           </button> */}
           <CSVLink
-            data={filteredRows} // Pass the filtered rows for CSV download
+            // data={filteredRows} // Pass the filtered rows for CSV download
+            data={ticketsForTable} // Pass the filtered rows for CSV download
             headers={csvHeaders} // Pass the CSV headers
             filename="tickets_report.csv" // Set the filename for the CSV file
             className="wono-blue-dark hover:bg-blue-700 text-white text-sm font-bold p-2 rounded ">
@@ -398,7 +669,8 @@ const MyTicketsTable = () => {
           checkboxSelection
           sx={{backgroundColor:'white'}}
         /> */}
-        <AgTable data={filteredRows} columns={columns} />
+        {/* <AgTable data={filteredRows} columns={columns} /> */}
+        <AgTable data={ticketsForTable} columns={columns3} />
       </div>
       {/* Tickets datatable END */}
     </div>

@@ -9,9 +9,17 @@ const connectDb = require("./config/db");
 const errorHandler = require("./middlewares/errorHandler");
 const authRoutes = require("./routes/auth/authRoutes");
 const verifyJwt = require("./middlewares/verifyJwt");
-const redisClient = require("./config/redisClient");
-const departmentRoutes = require("./routes/departmentRoutes");
 const credentials = require("./middlewares/credentials");
+const ticketsRoutes = require("./routes/ticketRoutes");
+const meetingsRoutes = require("./routes/meetingRoutes");
+const assetsRoutes = require("./routes/assetsRoutes");
+const departmentsRoutes = require("./routes/departmentRoutes");
+const companyRoutes = require("./routes/companyRoutes");
+const userRoutes = require("./routes/userRoutes");
+const designationRoutes = require("./routes/designationRoutes");
+const moduleRoutes = require("./routes/moduleRoutes");
+const subModuleRoutes = require("./routes/subModuleRoutes");
+const roleRoutes = require("./routes/roleRoutes");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -34,14 +42,20 @@ app.get("/", (req, res) => {
     res.type("text").status(200).send("Welcome to the client API");
   }
 });
+
 app.use("/api/auth", authRoutes);
 
-//protected routes
-app.get("/protected", verifyJwt, (req, res) => {
-  res.status(200).json({ message: "this is protected data" });
-});
-
-app.use("/departments", departmentRoutes);
+//protected routes that should be protected later 👽
+app.use("/api/company", companyRoutes);
+app.use("/api/departments", departmentsRoutes);
+app.use("/api/designations", designationRoutes);
+app.use("/api/assets", assetsRoutes);
+app.use("/api/meetings", meetingsRoutes);
+app.use("/api/tickets", ticketsRoutes);
+app.use("/api/users", userRoutes);
+app.use("/api/roles", roleRoutes);
+app.use("/api/modules", moduleRoutes);
+app.use("/api/sub-modules", subModuleRoutes);
 
 app.all("*", (req, res) => {
   if (req.accepts("html")) {
@@ -55,10 +69,8 @@ app.all("*", (req, res) => {
 
 app.use(errorHandler);
 
-redisClient.on("connect", () => {
-  mongoose.connection.once("open", () => {
-    app.listen(PORT, () => {
-      console.log(`server started on port ${PORT}`);
-    });
+mongoose.connection.once("open", () => {
+  app.listen(PORT, () => {
+    console.log(`server started on port ${PORT}`);
   });
 });

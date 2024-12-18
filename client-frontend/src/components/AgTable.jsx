@@ -4,7 +4,13 @@ import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
 
 const AgTable = React.memo(
-  ({ data, columns, paginationPageSize, highlightFirstRow }) => {
+  ({
+    data,
+    columns,
+    paginationPageSize,
+    highlightFirstRow,
+    highlightEditedRow,
+  }) => {
     const defaultColDef = {
       resizable: true,
       sortable: true,
@@ -18,14 +24,21 @@ const AgTable = React.memo(
         justifyContent: "center",
         alignItems: "center",
         padding: "px", // Add padding for spacing
+        // width:'100%'
       },
     };
+    // const rowStyle = {width : '100%', overFlowX:'auto'}
 
     // Define the row style conditionally
     const getRowStyle = (params) => {
-      if (highlightFirstRow && params.node.rowIndex === 0) {
+      if (highlightFirstRow && params.node.rowIndex === 2) {
+        // if (highlightFirstRow) {
         // return { backgroundColor: "grey" };
         return { backgroundColor: "#f5f5f5", color: "#b0b0b0" };
+      } else if (highlightEditedRow && params.node.rowIndex === 1) {
+        // if (highlightEditedRow) {
+        // return { backgroundColor: "grey" };
+        return { backgroundColor: "#beffa9", color: "black" };
       }
       return null;
     };
@@ -33,8 +46,7 @@ const AgTable = React.memo(
     return (
       <div
         className="ag-theme-alpine border-none"
-        style={{ width: "100%", fontFamily: "Popins-Regular" }}
-      >
+        style={{ width: "100%", fontFamily: "Popins-Regular" }}>
         <AgGridReact
           rowData={data}
           columnDefs={columns}
@@ -44,6 +56,7 @@ const AgTable = React.memo(
           domLayout="autoHeight"
           rowHeight={50} // Increased row height for better spacing
           getRowStyle={getRowStyle}
+          // rowStyle={rowStyle}
         />
       </div>
     );

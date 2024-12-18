@@ -8,6 +8,7 @@ import MyTickets from "./MyTickets";
 import ExternalTickets from "./ExternalTickets";
 import ClosedTickets from "./ClosedTickets";
 import UnresolvedTickets from "./UnresolvedTickets";
+import TodaysTickets from "./TodaysTickets";
 
 const MyTicketsTabs = () => {
   // For Departments
@@ -32,36 +33,8 @@ const MyTicketsTabs = () => {
               borderBottom: 0,
               borderColor: "divider",
               width: "100%",
-            }}>
-            {/* <Tab
-                label="My Tickets"
-                value="1"
-                className="wono-blue"
-                sx={{ textTransform: "capitalize" }}
-              /> */}
-            {/* <Tab
-                label="External Tickets"
-                value="2"
-                sx={{ textTransform: "capitalize" }}
-              />
-              <Tab
-                label="Closed Tickets"
-                value="3"
-                sx={{ textTransform: "capitalize" }}
-              />
-              <Tab
-                label="Unresolved Tickets"
-                value="4"
-                sx={{ textTransform: "capitalize" }}
-              /> */}
-          </Box>
+            }}></Box>
           <TabPanel value="1" sx={{ padding: "1rem" }}>
-            {/* <div className="flex gap-4">
-              <div>My Tickets</div>
-            </div>
-            <br /> */}
-
-            {/* <MyTicketsTable /> */}
             <MyTickets />
           </TabPanel>
 
@@ -70,7 +43,7 @@ const MyTicketsTabs = () => {
               <div>External Tickets</div>
             </div>
             <br />
-            {/* <MyTicketsTable /> */}
+
             <ExternalTickets />
           </TabPanel>
 
@@ -79,7 +52,7 @@ const MyTicketsTabs = () => {
               <div>Closed Tickets</div>
             </div>
             <br />
-            {/* <MyTicketsTable /> */}
+
             <ClosedTickets />
           </TabPanel>
 
@@ -88,7 +61,7 @@ const MyTicketsTabs = () => {
               <div>Unresolved Tickets</div>
             </div>
             <br />
-            {/* <MyTicketsTable /> */}
+
             <UnresolvedTickets />
           </TabPanel>
         </TabContext>

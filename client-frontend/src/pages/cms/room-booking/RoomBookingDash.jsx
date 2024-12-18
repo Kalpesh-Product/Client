@@ -1,32 +1,25 @@
-import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import AgTable from "../../../components/AgTable";
-import { NewModal } from "../../../components/NewModal";
-import BookingForm from "./components/BookingForm";
-import { rooms } from "../../../utils/Rooms";
-import { format, addMinutes } from "date-fns";
-import { toast } from "sonner";
-import { motion } from "framer-motion";
-import { IoMdClose } from "react-icons/io";
 import RoomAvailabilityPieChart from "./components/RoomCharts";
 import AvailableRooms from "./components/AviliableRooms";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
 
 export default function RoomBookingDash() {
-  const [openBookingModal, setOpenBookingModal] = useState(false);
-  const [newMeeting, setNewMeeting] = useState({
-    startTime: "",
-    endTime: "",
-    internal: "BIZNest",
-    room: "",
-    participants: "",
-    subject: "",
-    agenda: "",
-    backgroundColor: "",
-  });
-  const [currentDate, setCurrentDate] = useState("");
-  const [loggedInUser, setLoggedInUser] = useState(null);
-  const [roomList, setRoomList] = useState(rooms);
   const navigate = useNavigate();
+
+  const {
+    data: rooms,
+    isLoading,
+    isError,
+    error,
+  } = useQuery({
+    queryKey: ["rooms"],
+    queryFn: async () => {
+      const response = await axios.get("/api/meetings/get-rooms");
+      return response.data.data; // Assuming the API response has rooms in response.data
+    },
+  });
 
   const upcomingBookings = 5;
   const totalBookings = 10;
@@ -75,8 +68,7 @@ export default function RoomBookingDash() {
         const statusClass = statusColors[params.value] || "";
         return (
           <span
-            className={`px-3 py-1 rounded-full text-sm font-medium ${statusClass}`}
-          >
+            className={`px-3 py-1 rounded-full text-sm font-medium ${statusClass}`}>
             {params.value}
           </span>
         );
@@ -84,51 +76,14 @@ export default function RoomBookingDash() {
     },
   ];
 
-  const handleFormSubmit = (e) => {
-    e.preventDefault();
-
-    toast.success("Booking completed successfully");
-    setOpenBookingModal(false);
-    navigate("/customer/meetings/booking"); // Redirect after form submission
-  };
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setNewMeeting((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-
-  useEffect(() => {
-    // Prefill the start time, end time, and current date
-    const now = new Date();
-    const startTime = format(now, "HH:mm"); // Current local time
-    const endTime = format(addMinutes(now, 30), "HH:mm"); // 30 minutes from now
-    const currentDate = format(now, "yyyy-MM-dd"); // Current date in yyyy-MM-dd format
-
-    setNewMeeting((prev) => ({
-      ...prev,
-      startTime,
-      endTime,
-    }));
-    setCurrentDate(currentDate);
-
-    // Get authenticated user from local storage
-    const authenticatedUser = localStorage.getItem("user");
-    setLoggedInUser(JSON.parse(authenticatedUser));
-  }, []);
-
   return (
     <div className="p-4 bg-gray-100 w-[80vw] md:w-full mt-4">
-      {/* Header */}
       <h1 className="text-3xl mb-8 font-bold">Key insights</h1>
       <div className="w-full flex justify-between items-center mb-6">
         <h1 className="text-2xl font-semibold">Room Booking Management</h1>
         <button
-          onClick={() => setOpenBookingModal(true)} // Open the modal
-          className="px-6 py-2 rounded-lg text-white wono-blue-dark hover:bg-[#3cbce7] transition-shadow shadow-md hover:shadow-lg active:shadow-inner"
-        >
+          onClick={() => navigate("/it/meetings/booking")}
+          className="px-6 py-2 rounded-lg text-white wono-blue-dark hover:bg-[#3cbce7] transition-shadow shadow-md hover:shadow-lg active:shadow-inner">
           Book a Room
         </button>
       </div>
@@ -153,47 +108,25 @@ export default function RoomBookingDash() {
         </div>
       </div>
 
-      {/* <RoomAvailabilityPieChart rooms={rooms} /> */}
-      <RoomAvailabilityPieChart rooms={rooms} />
-      <div className="bg-white shadow-md rounded-lg p-6">
-        <h2 className="text-xl font-semibold mb-4">Recent Bookings</h2>
-        <AgTable
-          data={recentBookings}
-          columns={columns}
-          paginationPageSize={5}
-        />
-      </div>
-      <h1 className="text-2xl font-semibold my-3">Available rooms</h1>
-      
-      <AvailableRooms rooms={rooms} />
+      {/* Loading and Error States */}
+      {isLoading && <p>Loading rooms...</p>}
+      {isError && <p className="text-red-600">Error: {error.message}</p>}
 
-      {/* Booking Modal */}
-      {openBookingModal && (
-        <NewModal
-          open={openBookingModal}
-          onClose={() => setOpenBookingModal(false)}
-        >
-          <div className="flex justify-between items-center p-4">
-            <h1 className="text-2xl font-bold ml-4">Create Booking</h1>
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.9 }}
-              type="button"
-              onClick={() => setOpenBookingModal(false)}
-              className=" p-2 bg-white text-[red] border border-red-200 hover:border-red-400 text-2xl rounded-md"
-            >
-              <IoMdClose />
-            </motion.button>
+      {/* Render Pie Chart and Table if Data is Available */}
+      {!isLoading && !isError && rooms && (
+        <>
+          <RoomAvailabilityPieChart rooms={rooms} />
+          <div className="bg-white shadow-md rounded-lg p-6">
+            <h2 className="text-xl font-semibold mb-4">Recent Bookings</h2>
+            <AgTable
+              data={recentBookings}
+              columns={columns}
+              paginationPageSize={5}
+            />
           </div>
-          <BookingForm
-            newMeeting={newMeeting}
-            handleChange={handleChange}
-            handleSubmit={handleFormSubmit}
-            currentDate={currentDate}
-            loggedInUser={loggedInUser}
-            roomList={roomList}
-          />
-        </NewModal>
+          <h1 className="text-2xl font-semibold my-3">Available rooms</h1>
+          <AvailableRooms rooms={rooms} />
+        </>
       )}
     </div>
   );

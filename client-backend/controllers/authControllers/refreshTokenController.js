@@ -1,6 +1,5 @@
 const jwt = require("jsonwebtoken");
 const User = require("../../models/User");
-const redisClient = require("../../config/redisClient");
 
 const handleRefreshToken = async (req, res, next) => {
   try {
@@ -8,34 +7,32 @@ const handleRefreshToken = async (req, res, next) => {
     if (!cookie?.clientCookie) return res.sendStatus(401);
 
     const refreshToken = cookie.clientCookie;
-    const user = await User.findOne({ refreshToken }).lean().exec();
+    const user = await User.findOne({ refreshToken })
+      .select("name role email empId department")
+      .populate({
+        path: "department",
+        select: "name departmentId",
+      })
+      .populate({
+        path: "role", 
+        select: "roleTitle", 
+      })
+      .lean();
     if (!user) return res.sendStatus(403);
 
     jwt.verify(
       refreshToken,
       process.env.REFRESH_TOKEN_SECRET,
       async (err, decoded) => {
-        if (err || user.personalInfo.email !== decoded.userInfo.email) {
+        if (err || user.email !== decoded.email) {
           return res.sendStatus(403);
-        }
-
-        // Check session ID in Redis
-        const sessionIdInRedis = await redisClient.get(`session:${user._id}`);
-        if (
-          !sessionIdInRedis ||
-          sessionIdInRedis !== decoded.userInfo.sessionId
-        ) {
-          return res
-            .status(403)
-            .json({ message: "Session expired. Please log in again." });
         }
 
         const accessToken = jwt.sign(
           {
             userInfo: {
-              email: decoded.userInfo.email,
+              email: decoded.email,
               role: user.role,
-              sessionId: decoded.userInfo.sessionId,
               userId: user._id,
             },
           },
@@ -44,7 +41,7 @@ const handleRefreshToken = async (req, res, next) => {
         );
 
         delete user.refreshToken;
-        delete user.credentials.password;
+        delete user.credentials?.password;
         delete user.updatedAt;
 
         res.json({

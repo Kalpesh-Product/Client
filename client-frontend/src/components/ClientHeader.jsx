@@ -1,12 +1,19 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import BiznestLogo from "../LandingPageImages/biz-nest.png";
+import { Avatar, Menu, MenuItem, Typography, IconButton } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { useTimer } from "../contexts/TimerContext";
+import useAuth from "../hooks/useAuth";
+import useLogout from "../hooks/useLogout";
 
 const ClientHeader = () => {
   const navigate = useNavigate();
-
+  const { timer, isRunning } = useTimer();
+  const [anchorEl, setAnchorEl] = useState(null);
   const [image, setImage] = useState("");
   const [isModelOpen, setIsModalOpen] = useState(false);
+  const { auth: authUser } = useAuth();
+  const logout = useLogout();
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -18,57 +25,86 @@ const ClientHeader = () => {
     setIsModalOpen(false);
   };
 
-  const handleLogout = () => {
-    localStorage.removeItem("user");
-    navigate("/");
+  const handleMenuOpen = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleLogout = async () => {
+    await logout();
+    navigate("/auth");
   };
   return (
     <>
-      <header className="bg-black text-white py-4 px-6 flex justify-between items-center sticky top-0 z-40">
+      <header className="bg-black text-white py-4 px-6 pr-16 flex justify-between items-center sticky top-0 z-40">
         {/* Logo Section */}
         <div className="flex items-center">
           <span className="text-white text-xl font-semibold">
             <img
               src={BiznestLogo}
               onClick={() => {
-                navigate("/landing");
+                navigate("/");
               }}
               alt=""
               className="rounded cursor-pointer"
             />
           </span>
         </div>
-        {/* <div className="flex items-center">
-          <span className="text-white text-xl font-semibold">
-            <img
-              src={image}
-              onClick={() => setIsModalOpen(true)}
-              alt="Add Logo"
-              className="rounded cursor-pointer max-h-16 max-w-32"
-            />
-          </span>
-        </div> */}
-        {/* <div
-          className="w-16 h-16 rounded-full overflow-hidden bg-gray-200 cursor-pointer"
-          onClick={() => setIsModalOpen(true)}>
-          <img
-            src={image}
-            alt="Add Logo"
-            class="w-16 h-16 rounded-full mr-4"></img>
-        </div> */}
-
         {/* Navigation Links */}
-        <nav className="flex space-x-6">
-          <span
-            className="text-white hover:text-gray-400 cursor-pointer"
-            onClick={() => navigate("/landing")}>
-            Home
-          </span>
-          <a
-            onClick={handleLogout}
-            className="text-white hover:text-gray-400 cursor-pointer">
-            Logout
-          </a>
+        <nav className="flex justify-start py-0 items-center">
+          {/* Avatar Menu Trigger */}
+          {isRunning ? <h1 className="text-white">{timer}</h1> : ""}
+          <IconButton onClick={handleMenuOpen} sx={{ py: 0 }}>
+            <Avatar
+              className="wono-blue-dark"
+              alt={authUser.user.name}
+              src="/path-to-avatar.jpg"
+            />
+            <div>
+              <Typography
+                onClick={() => {
+                  setAnchorEl(null);
+                }}
+                variant="h6"
+                sx={{ px: 2, py: "0", color: "white" }}>
+                {authUser.user.name}
+              </Typography>
+            </div>
+          </IconButton>
+
+          {/* Menu */}
+          <Menu
+            anchorEl={anchorEl}
+            open={Boolean(anchorEl)}
+            onClose={handleMenuClose}
+            anchorOrigin={{
+              vertical: "bottom",
+              horizontal: "center",
+            }}
+            transformOrigin={{
+              vertical: "top",
+              horizontal: "center",
+            }}>
+            <div className="py-0">
+              <MenuItem
+                onClick={() => {
+                  navigate("/landing");
+                  setAnchorEl(null);
+                }}>
+                <Typography>Home</Typography>
+              </MenuItem>
+              <MenuItem
+                onClick={() => {
+                  handleLogout();
+                  handleMenuClose();
+                }}>
+                <Typography>Logout</Typography>
+              </MenuItem>
+            </div>
+          </Menu>
         </nav>
       </header>
       {/* Modal for Image Upload */}

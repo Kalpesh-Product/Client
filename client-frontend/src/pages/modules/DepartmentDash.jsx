@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import ModuleSidebar from "../../components/ModuleSidebar";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import TestSide from "../../components/Sidetest";
+import PayRollDash from "../hr/payroll/PayRollDash";
 import {
   ActiveTickets,
   CriticalAlerts,
@@ -21,6 +22,7 @@ import {
 import RevenueVsExpensesWidget from "../../Widgets/RevenueVsExpensesWidget";
 import ProgressDoughnutWidget from "../../Widgets/ProgressDoughnutWidget";
 import BarGraphWidget from "../../Widgets/BarGraphWidget";
+import useAuth from "../../hooks/useAuth";
 import {
   RecurringClients,
   SalesByMonthGraph,
@@ -82,25 +84,32 @@ import Tasklist from "../Tasklist";
 import TasklistTable from "../TasklistTable";
 import Tasklistfirstmenu from "../tasklistfirstmenu";
 import Mytasks from "../Mytasks";
-import MyBookings from "../cms/room-booking/MyBookings";
+import { TicketsRemainingWidget } from "../cms/tickets/components/TicketWidgets/TicketsRemainingWidget";
+import MyTickets from "../cms/tickets/components/MyTickets";
+import Budget from "../Budget";
+import AttendanceDash from "../hr/attendance/AttendanceDash";
+import LeaveWidgets from "../hr/leaves/Components/LeaveWidgets";
+import LeaveWidget2 from "../hr/leaves/Components/LeaveWidget2";
+import LeaveWidget3 from "../hr/leaves/Components/LeaveWidget3";
+import LeaveWidget4 from "../hr/leaves/Components/LeaveWidget4";
+import PendingLeaves from "../hr/leaves/Components/PendingLeaves";
+import Holidays from "../hr/holidays/Holidays";
+import Sops from "../hr/sops/Sops";
+import Policies from "../hr/policies/Policies";
+import Payslips from "../hr/payslips/Payslips";
+import Onboarding from "../hr/onboarding/Onboarding";
+import CompanySettings from "../hr/company-settings/CompanySettings";
+import AllTickets from "../cms/tickets/AllTickets";
 
 const DepartmentDash = () => {
-  const [user, setUser] = useState("");
-  useEffect(() => {
-    const storedUser = JSON.parse(localStorage.getItem("user"));
-    setUser(storedUser);
-  }, []);
+  const navigate = useNavigate();
+  const { auth: authUser } = useAuth();
 
   const [open, setOpen] = useState(false);
   const [openTicket, setOpenTicket] = useState(false);
   const location = useLocation();
-  const departmentName = location.state?.departmentName;
-  const { department } = useParams();
   const [value, setValue] = useState(0);
-  const [activeModal, setActiveModal] = useState(null);
-  const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const handleOpenTicket = () => setOpenTicket(true);
   const handleCloseTicket = () => setOpenTicket(false);
 
   const handleTwo = () => {
@@ -249,6 +258,23 @@ const DepartmentDash = () => {
       ],
     },
     {
+      heading: "Leave Management",
+      subModule: "leaves",
+      widgets: [
+        <LeaveWidgets />,
+        <LeaveWidget2 />,
+        <LeaveWidget3 />,
+        <LeaveWidget4 />,
+        // <AssetsCount count={customerServiceWidgetsData.totalAssets} />,
+        // <MaintenanceRequests
+        //   requests={customerServiceWidgetsData.pendingMaintenance}
+        // />,
+        // <AssetsAssigned assigned={customerServiceWidgetsData.assignedAssets} />,
+        // <AssetsInRepair count={customerServiceWidgetsData.assetsInRepair} />,
+        // <NewAssetsAdded added={customerServiceWidgetsData.newAssetsAdded} />,
+      ],
+    },
+    {
       heading: "Payroll and Attendance",
       widgets: [
         <PayrollSummary amount={HrWidgetsData.payrollAmount} />,
@@ -318,19 +344,33 @@ const DepartmentDash = () => {
       subModule: "asset",
       widgets: [
         <AssetsCount
-          route={"/customer/asset/manage"}
+          title={
+            authUser.user.department.find(
+              (dept) => dept.name === "TopManagement"
+            )
+              ? "Total Assets"
+              : authUser.user.department.find((dept) => dept.name === "IT") ||
+                authUser.user.department.find((dept) => dept.name === "Tech")
+              ? "IT Assets"
+              : "Maintainence Assets"
+          }
+          route={"/it/asset/manage"}
           count={customerServiceWidgetsData.totalAssets}
         />,
-        <MaintenanceRequests
-          route={"/customer/asset/manage"}
-          requests={customerServiceWidgetsData.pendingMaintenance}
-        />,
+        // ...(user.department !== "TopManagement"
+        //   ? [
+        //       <MaintenanceRequests
+        //         route={"/customer/asset/manage"}
+        //         requests={customerServiceWidgetsData.pendingMaintenance}
+        //       />,
+        //     ]
+        //   : []), // Conditionally include MaintenanceRequests
         <AssetsAssigned
-          route={"/customer/asset/manage"}
+          route={"/it/asset/manage"}
           assigned={customerServiceWidgetsData.assignedAssets}
         />,
         <AssetsInRepair
-          route={"/customer/asset/manage"}
+          route={"/it/asset/manage"}
           count={customerServiceWidgetsData.assetsInRepair}
         />,
       ],
@@ -405,7 +445,8 @@ const DepartmentDash = () => {
                     "& .MuiTabs-indicator": {
                       backgroundColor: "#0db4ea", // Custom indicator color
                     },
-                  }}>
+                  }}
+                >
                   <Tab label="Home" />
                   <Tab label="About" />
                   <Tab label="Gallery" />
@@ -466,7 +507,8 @@ const DepartmentDash = () => {
                   {products.map((product) => (
                     <div
                       key={product.id}
-                      className="bg-gray-100 rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+                      className="bg-gray-100 rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow"
+                    >
                       <img
                         src={product.image}
                         alt={product.name}
@@ -485,6 +527,24 @@ const DepartmentDash = () => {
                   ))}
                 </div>
               </div>
+            ) : location.pathname === "/frontend/budget" ? (
+              <div>
+                <div>
+                  <Budget />
+                </div>
+              </div>
+            ) : location.pathname === "/frontend/budget/overview" ? (
+              <div>
+                <div>
+                  <Budget />
+                </div>
+              </div>
+            ) : location.pathname === "/frontend/budget/payment-tracker" ? (
+              <div>
+                <div>
+                  <Budget />
+                </div>
+              </div>
             ) : (
               <div className="p-6">Doesn't exist</div>
             )}
@@ -495,8 +555,8 @@ const DepartmentDash = () => {
         {/* HR submodules */}
         {location.pathname.startsWith("/hr") && (
           <>
-            {(location.pathname === "/hr" ||
-              location.pathname === "/hr/dashboard") && (
+            {location.pathname === "/hr" ||
+            location.pathname === "/hr/dashboard" ? (
               <div className="bg-gray-100 p-4 rounded-lg  mt-4">
                 {hrWidgets.map((section, index) => (
                   <WidgetSection
@@ -506,6 +566,172 @@ const DepartmentDash = () => {
                   />
                 ))}
               </div>
+            ) : location.pathname === "/hr/onboarding" ? (
+              <>
+                {/* <LeaveReports /> */}
+                <div className="bg-gray-100 p-4 rounded-lg ">
+                  <div className="flex w-full  pb-4 pl-0 text-lg border-b-0  gap-4"></div>
+                  <Onboarding />
+                </div>
+              </>
+            ) : location.pathname === "/hr/company-settings" ? (
+              <>
+                {/* <LeaveReports /> */}
+                <div className="bg-gray-100 p-4 rounded-lg ">
+                  <div className="flex w-full  pb-4 pl-0 text-lg border-b-0  gap-4"></div>
+                  <CompanySettings />
+                </div>
+              </>
+            ) : location.pathname === "/hr/attendance" ? (
+              <>
+                <AttendanceDash />
+              </>
+            ) : location.pathname === "/hr/leaves" ? (
+              <>
+                {/* Leave Widgets */}
+                {/* <LeaveWidgets /> */}
+
+                <div className="bg-gray-100 p-4 rounded-lg mt-4">
+                  <div className="mb-8 flex justify-between">
+                    <h1 className="text-3xl  font-bold">Key Insights</h1>
+                    {/* <div className=" flex gap-4">
+                
+
+                      {user.role === "Employee" && user.department === "IT" && (
+                        <div>
+                          <span className="text-2xl">Status: </span>
+                          <button
+                            onClick={toggleStatus}
+                            className={`px-6 py-2 rounded-lg text-white transition-shadow shadow-md hover:shadow-lg active:shadow-inner ${
+                              isAvailable
+                                ? "bg-green-400 hover:bg-green-300"
+                                : "bg-red-400 hover:bg-red-300"
+                            }`}>
+                            {isAvailable ? "Available" : "Unavailable"}
+                          </button>
+                        </div>
+                      )}
+                 
+
+                      <button
+                        onClick={handleOpenTicket}
+                        className="px-6 py-2 rounded-lg text-white wono-blue-dark hover:bg-[#3cbce7] transition-shadow shadow-md hover:shadow-lg active:shadow-inner">
+                        Raise Ticket
+                      </button>
+                    </div> */}
+                  </div>
+
+                  {hrWidgets
+                    .filter((section) => section.subModule === "leaves")
+                    .map((section, index) => (
+                      <WidgetSection
+                        key={index}
+                        heading={section.heading}
+                        widgets={section.widgets}
+                      />
+                    ))}
+                  {authUser.user.role === "Admin" && (
+                    <div className="flex w-full flex-1 flex-grow gap-x-4">
+                      {/* <TicketsRemainingWidget
+                      totalStock={120}
+                      remainingStock={100}
+                      assetType="Tickets"
+                    />
+
+                    <TicketsRemainingWidget
+                      totalStock={3}
+                      remainingStock={1}
+                      assetType="Available Members"
+                    /> */}
+                    </div>
+                  )}
+                  {/* <AssetAllocationWidget /> */}
+                  <div className=" ">
+                    <div className="flex w-full p-4 pb-4 pl-0 text-lg border-b-0  gap-4">
+                      <h2 className="text-2xl  font-bold ">Pending Leaves</h2>
+                    </div>
+                    {/* <p>Today's tickets Table Component</p> */}
+                    {/* <TodaysTickets /> */}
+                    {/* <MyTickets /> */}
+                    <PendingLeaves />
+                  </div>
+                  {/* <p>x</p> */}
+                </div>
+
+                {/* <p>Leave Widgets Here</p> */}
+                {/* Pending Leaves */}
+                {/* <p>Pending Leaves Here</p> */}
+              </>
+            ) : location.pathname === "/hr/leaves/pending-leaves" ? (
+              <>
+                <PendingLeaves />
+              </>
+            ) : location.pathname === "/hr/leaves/my-leaves" ? (
+              <>
+                {/* <MyLeaves /> */}
+                <div className="bg-gray-100 p-4 rounded-lg ">
+                  <div className="flex w-full  pb-4 pl-0 text-lg border-b-0  gap-4">
+                    <h2 className="text-2xl  font-bold ">My Leaves</h2>
+                  </div>
+                  <PendingLeaves />
+                </div>
+              </>
+            ) : location.pathname === "/hr/leaves/leave-reports" ? (
+              <>
+                {/* <LeaveReports /> */}
+                <div className="bg-gray-100 p-4 rounded-lg ">
+                  <div className="flex w-full  pb-4 pl-0 text-lg border-b-0  gap-4">
+                    <h2 className="text-2xl  font-bold ">Leave Reports</h2>
+                  </div>
+                  <PendingLeaves />
+                </div>
+              </>
+            ) : location.pathname === "/hr/payslips" ? (
+              <>
+                {/* <LeaveReports /> */}
+                <div className="bg-gray-100 p-4 rounded-lg ">
+                  <div className="flex w-full  pb-4 pl-0 text-lg border-b-0  gap-4">
+                    <h2 className="text-2xl  font-bold ">Payslip</h2>
+                  </div>
+                  <Payslips />
+                </div>
+              </>
+            ) : location.pathname === "/hr/sops" ? (
+              <>
+                {/* <LeaveReports /> */}
+                <div className="bg-gray-100 p-4 rounded-lg ">
+                  <div className="flex w-full  pb-4 pl-0 text-lg border-b-0  gap-4">
+                    <h2 className="text-2xl  font-bold ">SOPs</h2>
+                  </div>
+                  <Sops />
+                </div>
+              </>
+            ) : location.pathname === "/hr/policies" ? (
+              <>
+                {/* <LeaveReports /> */}
+                <div className="bg-gray-100 p-4 rounded-lg ">
+                  <div className="flex w-full  pb-4 pl-0 text-lg border-b-0  gap-4">
+                    <h2 className="text-2xl  font-bold ">Policies</h2>
+                  </div>
+                  <Policies />
+                </div>
+              </>
+            ) : location.pathname === "/hr/holidays" ? (
+              <>
+                {/* <LeaveReports /> */}
+                <div className="bg-gray-100 p-4 rounded-lg ">
+                  <div className="flex w-full  pb-4 pl-0 text-lg border-b-0  gap-4">
+                    <h2 className="text-2xl  font-bold ">Holidays</h2>
+                  </div>
+                  <Holidays />
+                </div>
+              </>
+            ) : location.pathname === "/hr/payroll" ? (
+              <>
+                <PayRollDash />
+              </>
+            ) : (
+              <></>
             )}
           </>
         )}
@@ -539,10 +765,10 @@ const DepartmentDash = () => {
           </>
         )}
         {/* IT submodules */}
-        {location.pathname.startsWith("/customer") && (
+        {location.pathname.startsWith("/it") && (
           <>
-            {location.pathname === "/customer" ||
-            location.pathname === "/customer/dashboard" ? (
+            {location.pathname === "/it" ||
+            location.pathname === "/it/dashboard" ? (
               <div className="bg-gray-100 p-4 rounded-lg  mt-4 flex flex-col gap-4">
                 <div className="bg-white rounded-md p-2">
                   {customerServiceWidgets
@@ -594,7 +820,7 @@ const DepartmentDash = () => {
                   />
                 ))}
               </div>
-            ) : location.pathname === "/customer/kpi" ? (
+            ) : location.pathname === "/it/kpi" ? (
               <>
                 <div className="bg-gray-100 p-4 rounded-lg  mt-4 h-[90vh] overflow-y-auto">
                   <div className="mb-8 flex justify-between">
@@ -626,27 +852,27 @@ const DepartmentDash = () => {
                   <AssetAllocationWidget />
                 </div>
               </>
-            ) : location.pathname === "/customer/asset/view" ? (
+            ) : location.pathname === "/it/asset/view" ? (
               <>
                 <ViewAssets />
               </>
-            ) : location.pathname === "/customer/asset/reports" ? (
+            ) : location.pathname === "/it/asset/reports" ? (
               <>
                 <AssetReports />
               </>
-            ) : location.pathname === "/customer/asset/manage" ? (
+            ) : location.pathname === "/it/asset/manage" ? (
               <>
                 <ManageAsset />
               </>
-            ) : location.pathname === "/customer/asset/my-assets" ? (
+            ) : location.pathname === "/it/asset/my-assets" ? (
               <>
                 <MyAssets />
               </>
-            ) : location.pathname === "/customer/asset/details" ? (
+            ) : location.pathname === "/it/asset/details" ? (
               <>
                 <AssetsData />
               </>
-            ) : location.pathname === "/customer/tickets" ? (
+            ) : location.pathname === "/it/tickets" ? (
               <>
                 <div className="bg-gray-100 p-4 rounded-lg mt-4">
                   <div className="mb-8 flex justify-between">
@@ -687,64 +913,82 @@ const DepartmentDash = () => {
                       />
                     ))}
 
-                  {/* <div className="flex w-full flex-1 flex-grow gap-x-4">
-                    <QuantityRemainingWidget
-                      totalStock={100}
-                      remainingStock={30}
-                      assetType="Tickets"
-                    />
+                  {["Admin", "Super Admin", "Master Admin"].includes(
+                    authUser.user.role.roleTitle
+                  ) && (
+                    <div className="flex w-full flex-1 flex-grow gap-x-4">
+                      <TicketsRemainingWidget
+                        totalStock={120}
+                        remainingStock={100}
+                        assetType="Tickets"
+                      />
 
-                    <QuantityRemainingWidget
-                      totalStock={100}
-                      remainingStock={10}
-                      assetType="Available Members"
-                    />
-                  </div> */}
+                      <TicketsRemainingWidget
+                        totalStock={3}
+                        remainingStock={1}
+                        assetType="Available Members"
+                      />
+                    </div>
+                  )}
 
                   {/* <AssetAllocationWidget /> */}
 
-                  <div className=" py-10">
+                  <div className=" ">
+                    <div className="flex w-full p-4 pb-4 pl-0 text-lg border-b-0 gap-4">
+                      {/* <h2 className="text-2xl font-bold">My Tickets</h2> */}
+                      <h2 className="text-2xl font-bold">
+                        {/* Tickets Received Today */}
+                        Tickets Raised Today
+                      </h2>
+                      <button
+                        className="py-1 px-2 text-sm wono-blue-dark text-white rounded-md"
+                        onClick={() => navigate("/it/tickets/my-tickets")}
+                      >
+                        View All
+                      </button>
+                    </div>
                     {/* <p>Today's tickets Table Component</p> */}
-                    <TodaysTickets />
+                    {/* <TodaysTickets /> */}
+                    <MyTickets />
                   </div>
                   {/* <p>x</p> */}
                 </div>
               </>
-            ) : location.pathname === "/customer/tickets/my-tickets" ? (
+            ) : location.pathname === "/it/tickets/my-tickets" ? (
               <>
                 <MyTicketsPage />
               </>
-            ) : location.pathname === "/customer/tickets/view-tickets" ? (
+            ) : location.pathname === "/it/tickets/view-tickets" ? (
               <>
                 <ViewTickets />
               </>
-            ) : location.pathname === "/customer/tickets/members" ? (
+            ) : location.pathname === "/it/tickets/members" ? (
               <>
                 <TicketMembers />
               </>
-            ) : location.pathname === "/customer/tickets/ticket-reports" ? (
+            ) : location.pathname === "/it/tickets/ticket-reports" ? (
               <>
                 <TicketReports />
               </>
-            ) : location.pathname === "/customer/meetings" ? (
+            ) : location.pathname === "/it/tickets/all-tickets" ? (
+              <>
+                <AllTickets />
+              </>
+            ) : location.pathname === "/it/meetings" ? (
               <>
                 <RoomBookingDash />
               </>
-            ) : location.pathname === "/customer/meetings/booking" ? (
+            ) : location.pathname === "/it/meetings/booking" ? (
               <>
                 <Listing />
               </>
-            ) : location.pathname === "/customer/meetings/add-room" ? (
+            ) : location.pathname === "/it/meetings/add-room" ? (
               <>
                 <AddRooms />
               </>
-            ) : location.pathname === "/customer/meetings/reports" ? (
+            ) : location.pathname === "/it/meetings/reports" ? (
               <>
                 <BookingReports />
-              </>
-            ) : location.pathname === "/customer/meetings/my-bookings" ? (
-              <>
-                <MyBookings />
               </>
             ) : (
               <></>
@@ -762,10 +1006,9 @@ const DepartmentDash = () => {
           </>
         ) : location.pathname === "/tasks/mytasks" ? (
           <>
-          <Mytasks/>
+            <Mytasks />
           </>
-        ):
-         location.pathname === "/tasks/tasklist" ? (
+        ) : location.pathname === "/tasks/tasklist" ? (
           <>
             <Tasklist />
           </>
@@ -790,7 +1033,8 @@ const DepartmentDash = () => {
           open={openTicket}
           onClose={handleCloseTicket}
           aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description">
+          aria-describedby="modal-modal-description"
+        >
           {/* <Box sx={style}> */}
           <Box sx={style}>
             <AddTicketForm />

@@ -1,98 +1,156 @@
 const mongoose = require("mongoose");
 
-const userSchema = new mongoose.Schema(
-  {
-    // Personal Information Section
-    personalInfo: {
-      name: { type: String, required: true },
-      mobile: { type: String, required: true },
-      email: { type: String, required: true, unique: true },
-      dob: {
-        type: Date,
-        required: true,
-      },
-      gender: String,
-      country: String,
-      city: String,
-      state: String,
-    },
-    profilePicture: String,
-    role: {
-      type: String,
-      default: "CMA-001",
-    },
-    department: [
-      {
-        type: String,
-        default: "",
-      },
-    ],
-
-    // Company Information Section
-    companyInfo: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Company",
-    },
-    isActive: {
-      type: Boolean,
-      default: true,
-    },
-
-    // Login Credentials
-    credentials: {
-      username: String,
-      password: String,
-    },
-    refreshToken: String,
-
-    // Service Selection Section
-    selectedServices: {
-      service1: { type: Boolean, default: false },
-      service2: { type: Boolean, default: false },
-      service3: { type: Boolean, default: false },
-      service4: { type: Boolean, default: false },
-    },
-    access: {
-      hr: [
-        {
-          type: String,
-        },
-      ],
-      salesAndMarketing: [
-        {
-          type: String,
-        },
-      ],
-      financeAndAccounting: [
-        {
-          type: String,
-        },
-      ],
-      customerManagementServices: [
-        {
-          type: String,
-        },
-      ],
-      reportsAndAnalytics: [
-        {
-          type: String,
-        },
-      ],
-      frontend: [
-        {
-          type: String,
-        },
-      ],
-    },
-
-    otp: { type: String, required: false },
+const userSchema = new mongoose.Schema({
+  empId: {
+    type: String,
+    required: true,
+    unique: true,
   },
-  {
-    timestamps: true,
-    collection: "registrationDetails",
-  }
-);
+  name: {
+    type: String,
+    required: true,
+  },
+  gender: {
+    type: String,
+    enum: ["Male", "Female", "Other"],
+  },
+  dob: {
+    type: Date,
+  },
+  role: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Role", // Refers to the Role schema
+  },
+  department: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Department",
+    },
+  ],
+  fatherName: {
+    type: String,
+  },
+  motherName: {
+    type: String,
+  },
+  fatherOccupation: {
+    type: String,
+  },
+  motherOccupation: {
+    type: String,
+  },
+  maritalStatus: {
+    type: String,
+  },
+  spouseName: {
+    type: String,
+  },
+  spouseOccupation: {
+    type: String,
+  },
+  email: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  password:{
+    type: String,
+  },
+  phone: {
+    type: String,
+    required: true,
+    match: /^[+]?[\d\s\-()]{7,20}$/,
+    minlength: 7,
+    maxlength: 20,
+  },
+  reportsTo: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+  },
+  address: {
+    street: {
+      type: String,
+    },
+    city: {
+      type: String,
+    },
+    state: {
+      type: String,
+    },
+    zip: {
+      type: String,
+    },
+  },
+  kycDetails: {
+    aadhaar: {
+      type: String,
+    },
+    pan: {
+      type: String,
+    },
+  },
+  bankDetails: {
+    bankName: {
+      type: String,
+    },
+    accountNumber: {
+      type: String,
+    },
+    ifsc: {
+      type: String,
+    },
+  },
+  workLocation: {
+    type: String,
+  },
+  workType: {
+    type: String,
+  },
+  employeeType: {
+    type: String,
+  },
+  startDate: {
+    type: Date,
+  },
+  shift: {
+    type: String,
+  },
+  workPolicy: {
+    type: String,
+  },
+  attendanceSource: {
+    type: String,
+    default: "TimeClock",
+  },
+  pfAccountNumber: {
+    type: String,
+  },
+  esiAccountNumber: {
+    type: String,
+  },
+  selectedServices: [
+    {
+      type: String,
+    },
+  ],
+  company: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "CompanyData",
+  },
+  assignedAsset: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Asset",
+    },
+  ],
+  assignedMembers: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
+  ],
+  refreshToken: String,
+});
 
 const User = mongoose.model("User", userSchema);
-
 module.exports = User;

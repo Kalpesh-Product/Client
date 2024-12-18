@@ -16,20 +16,16 @@ import {
   FaProjectDiagram,
 } from "react-icons/fa";
 
-import { CiBookmarkCheck } from "react-icons/ci";
-import { MdMeetingRoom , MdTask} from "react-icons/md";
-import { BsArrowLeftSquare } from "react-icons/bs";
+import { MdMeetingRoom, MdTask } from "react-icons/md";
 import { TbReportSearch, TbSection } from "react-icons/tb";
-import { IoIosChatboxes } from "react-icons/io";
-import { SiAuthelia, SiMarketo } from "react-icons/si";
-import { CgProfile } from "react-icons/cg";
-import { Toolbar, Tooltip } from "@mui/material";
+import { IoSettingsOutline } from "react-icons/io5";
+import { SiMarketo } from "react-icons/si";
+import { Tooltip } from "@mui/material";
+import useAuth from "../hooks/useAuth";
 import {
   MdAccountBalance,
-  MdDashboard,
   MdLocalCafe,
   MdOutlineLocalCafe,
-  MdOutlineAddBox,
   MdOutlineViewModule,
   MdOutlineWifiTethering,
   MdPolicy,
@@ -39,27 +35,17 @@ import {
   HiColorSwatch,
   HiCurrencyDollar,
   HiOutlineClipboardList,
-  HiUsers,
 } from "react-icons/hi";
-import {
-  RiAppsLine,
-  RiCustomerService2Line,
-  RiDashboardLine,
-} from "react-icons/ri";
+import { RiAppsLine, RiCustomerService2Line } from "react-icons/ri";
 import { GrDocumentUpdate } from "react-icons/gr";
 import { useNavigate, useLocation, useParams } from "react-router-dom";
-import { CgWebsite } from "react-icons/cg";
 import { BsCashCoin } from "react-icons/bs";
 import { AiOutlineProduct, AiOutlineSecurityScan } from "react-icons/ai";
 
 const ModuleSidebar = ({ mainSideBar }) => {
-  useEffect(() => {
-    const storedUser = JSON.parse(localStorage.getItem("user"));
-    setUser(storedUser);
-  }, []);
+  const { auth: authUser } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
-  const [user, setUser] = useState("");
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isActive, setIsActive] = useState(null);
   const [isDepartmentsOpen, setIsDepartmentsOpen] = useState(false);
@@ -82,18 +68,92 @@ const ModuleSidebar = ({ mainSideBar }) => {
       route: "/frontend/updates",
       icon: <GrDocumentUpdate />,
     },
+    {
+      title: "Budget",
+      route: "/frontend/budget",
+      icon: <BsCashCoin />,
+      subMenus: [
+        {
+          title: "Budget Overview",
+          route: "/frontend/budget/overview",
+          icon: <BsCashCoin />,
+        },
+        {
+          title: "Budget Report",
+          route: "/frontend/budget/report",
+          icon: <BsCashCoin />,
+        },
+        {
+          title: "Payment Tracker",
+          route: "/frontend/budget/payment-tracker",
+          icon: <BsCashCoin />,
+        },
+      ],
+    },
   ];
 
   const hrModules = [
     {
-      title: "Attendance",
-      route: "#hr/leave-requests",
+      title: "Onboarding",
+      route: "/hr/onboarding",
       icon: <HiOutlineClipboardList />,
     },
     {
+      title: "Attendance",
+      route: "/hr/attendance",
+      icon: <HiOutlineClipboardList />,
+    },
+    {
+      title: "Leaves",
+      route: "/hr/leaves",
+      icon: <HiOutlineClipboardList />,
+      subMenus: [
+        {
+          title: "My Leaves",
+          route: "/hr/leaves/my-leaves",
+          icon: <HiOutlineClipboardList />,
+        },
+
+        ...(authUser.user.role === "Employee" && authUser.user.department === "Finance"
+          ? []
+          : [
+              {
+                title: "Reports",
+                route: "/hr/leaves/leave-reports",
+                icon: <HiOutlineClipboardList />,
+              },
+            ]),
+      ],
+    },
+    {
       title: "Payroll",
-      route: "#hr/payroll",
+      route: "/hr/payroll",
       icon: <HiCurrencyDollar />,
+    },
+    {
+      title: "Payslip",
+      route: "/hr/payslips",
+      icon: <HiCurrencyDollar />,
+    },
+    {
+      title: "SOP",
+      route: "/hr/sops",
+      icon: <HiCurrencyDollar />,
+    },
+    {
+      title: "Policies",
+      route: "/hr/policies",
+      icon: <HiCurrencyDollar />,
+    },
+    {
+      title: "Holidays",
+      route: "/hr/holidays",
+      icon: <HiCurrencyDollar />,
+    },
+    {
+      title: "Comapny Settings",
+      route: "/hr/company-settings",
+      icon: <IoSettingsOutline />,
     },
   ];
 
@@ -101,29 +161,29 @@ const ModuleSidebar = ({ mainSideBar }) => {
     {
       title: "Assets",
       index: 0,
-      route: "/customer/kpi",
+      route: "/it/kpi",
       icon: <AiOutlineProduct />,
       subMenus: [
-        ...(user.department === "IT" ||
-        user.department === "Maintainance" ||
-        user.role === "Master Admin" ||
-        user.role === "Super Admin"
+        ...(authUser.user.department.map((dept) => dept.name === "IT") ||
+        authUser.user.department.map((dept) => dept.name === "Maintainence") ||
+        authUser.user.role === "Master-Admin" ||
+        authUser.user.role === "Super-Admin"
           ? [
               {
                 title: "Manage Asset",
-                route: "/customer/asset/manage",
+                route: "/it/asset/manage",
                 icon: <MdOutlineManageAccounts />,
               },
             ]
           : []),
         {
           title: "My Assets",
-          route: "/customer/asset/my-assets",
+          route: "/it/asset/my-assets",
           icon: <FaRegUser />,
         },
         {
           title: "Reports",
-          route: "/customer/asset/reports",
+          route: "/it/asset/reports",
           icon: <TbReportSearch />,
         },
       ],
@@ -131,40 +191,51 @@ const ModuleSidebar = ({ mainSideBar }) => {
     {
       title: "Tickets",
       index: 1,
-      route: "/customer/tickets",
+      route: "/it/tickets",
       icon: <HiOutlineClipboardList />,
       subMenus: [
-        ...(user.role === "Employee" && user.department === "Finance"
+        ...(authUser.user.role === "Employee" &&
+        authUser.user.department.find((dept) => dept.name === "Finance")
           ? []
           : [
               {
-                title: "View Tickets",
-                route: "/customer/tickets/view-tickets",
+                title: "Received Tickets",
+                route: "/it/tickets/view-tickets",
                 icon: <HiOutlineClipboardList />,
               },
             ]),
         ,
         {
           title: "My Tickets",
-          route: "/customer/tickets/my-tickets",
+          route: "/it/tickets/my-tickets",
           icon: <HiOutlineClipboardList />,
         },
-        ...(user.role === "Employee"
+        ...(authUser.user.role === "Employee"
           ? []
           : [
               {
                 title: "Members",
-                route: "/customer/tickets/members",
+                route: "/it/tickets/members",
                 icon: <MdOutlineManageAccounts />,
               },
             ]),
+        ...(authUser.user.role === "Master-Admin" || authUser.user.role === "Super-Admin"
+          ? [
+              {
+                title: "All Tickets",
+                route: "/it/tickets/all-tickets",
+                icon: <MdOutlineManageAccounts />,
+              },
+            ]
+          : []),
 
-        ...(user.role === "Employee" && user.department === "Finance"
+        ...(authUser.user.role === "Employee" &&
+        authUser.user.department.find((dept) => dept.name === "Finance")
           ? []
           : [
               {
                 title: "Reports",
-                route: "/customer/tickets/ticket-reports",
+                route: "/it/tickets/ticket-reports",
                 icon: <HiOutlineClipboardList />,
               },
             ]),
@@ -173,32 +244,27 @@ const ModuleSidebar = ({ mainSideBar }) => {
     {
       title: "Meetings",
       index: 2,
-      route: "/customer/meetings",
+      route: "/it/meetings",
       icon: <MdMeetingRoom />,
       subMenus: [
         {
           title: "Calendar",
-          route: "/customer/meetings/booking",
+          route: "/it/meetings/booking",
           icon: <FaRegCalendarAlt />,
         },
-        ...(user.department === "Tech"
+        ...(authUser.user.department.find((dept) => dept.name === "Tech")
           ? []
           : [
               {
                 title: "Add new Room",
-                route: "/customer/meetings/add-room",
+                route: "/it/meetings/add-room",
                 icon: <FaPlus />,
               },
             ]),
 
         {
-          title: "My Bookings",
-          route: "/customer/meetings/my-bookings",
-          icon: <CiBookmarkCheck />,
-        },
-        {
           title: "Reports",
-          route: "/customer/meetings/reports",
+          route: "/it/meetings/reports",
           icon: <TbReportSearch />,
         },
       ],
@@ -239,11 +305,6 @@ const ModuleSidebar = ({ mainSideBar }) => {
           route: "/customer/tickets/my-tickets",
           icon: <HiOutlineClipboardList />,
         },
-        // {
-        //   title: "Members",
-        //   route: "/customer/tickets/members",
-        //  icon: <MdOutlineManageAccounts />,
-        // },
         {
           title: "Ticket Reports",
           route: "/customer/tickets/ticket-reports",
@@ -286,7 +347,7 @@ const ModuleSidebar = ({ mainSideBar }) => {
       route: "/tasks/tasklistfirstmenu",
       icon: <FaTasks />,
     },
-    ...(user?.role === "Master Admin" || user?.role === "Admin"
+    ...(authUser.user?.role === "Master-Admin" || authUser.user?.role === "Admin"
       ? [
           {
             title: "Teams",
@@ -295,26 +356,21 @@ const ModuleSidebar = ({ mainSideBar }) => {
           },
         ]
       : []),
-      {
-        title:"My Tasks",
-        route: "/tasks/mytasks",
-        icon: <MdTask/>
-      }
+    {
+      title: "My Tasks",
+      route: "/tasks/mytasks",
+      icon: <MdTask />,
+    },
   ];
 
-  // Get the department based on the current path
   let passedDepartment = location.pathname.split("/")[1];
-
-  // Replace "customer" with "cms"
-
-  // Determine which module array to render based on the department in the URL
   let modules = [];
   let taskModules = [];
   if (passedDepartment === "frontend") {
     modules = frontendModules;
   } else if (passedDepartment === "hr") {
     modules = hrModules;
-  } else if (passedDepartment === "customer") {
+  } else if (passedDepartment === "it") {
     modules = itModules;
   } else if (passedDepartment === "tasks") {
     taskModules = tasks;
@@ -373,15 +429,6 @@ const ModuleSidebar = ({ mainSideBar }) => {
     Legal: ["LEGAL"],
   };
 
-  // Filter departments based on user's department using departmentMapping
-  const filteredDepartments = departments.filter((dept) =>
-    (departmentMapping[user?.department] || []).includes(dept.name)
-  );
-
-  const handleActive = (index) => {
-    setIsActive(index);
-    console.log("Menu clicked");
-  };
   // Handle manual toggling of dropdowns
   const handleMenuClick = (index) => {
     // If the clicked menu is already open, close it; otherwise, open it
@@ -421,7 +468,7 @@ const ModuleSidebar = ({ mainSideBar }) => {
             placement="right">
             <button
               onClick={toggleSidebar}
-              className={`text-black text-[0.8rem] p-2 focus:outline-none text-end absolute top-[0.6rem] ${
+              className={`text-black text-[0.8rem] p-2 hover:block  focus:outline-none text-end absolute top-[0.6rem] ${
                 isSidebarOpen ? "left-[11rem]" : "left-[3.2rem]"
               } `}>
               {isSidebarOpen ? <FaArrowLeft /> : <FaArrowRightToBracket />}

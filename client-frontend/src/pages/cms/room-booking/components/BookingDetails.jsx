@@ -24,6 +24,7 @@ import {
   TimePicker,
   LocalizationProvider,
 } from "@mui/x-date-pickers";
+import "dayjs/locale/en-gb";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
 
@@ -115,12 +116,14 @@ export default function BookingDetails({
   };
 
   return (
-    <LocalizationProvider dateAdapter={AdapterDayjs}>
+    <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="en-gb">
       <Box width="50vw" height="70vh">
         <div className="flex flex-col justify-center items-center sticky top-0 bg-white z-100">
           <div className="flex justify-between items-center w-full bg-white">
             <Typography variant="h5" gutterBottom sx={{ fontWeight: "bold" }}>
-              Meeting Details
+              Meeting Details{" "}
+              {selectedEvent.extendedProps.status === "cancelled" &&
+                "(Cancelled)"}
             </Typography>
             <motion.button
               whileHover={{ scale: 1.05 }}
@@ -146,60 +149,110 @@ export default function BookingDetails({
             textColor="primary"
             aria-label="booking details tabs"
           >
-            <Tab label="Details" sx={{ width: "25%" }} />
-            <Tab label="Edit" sx={{ width: "25%" }} />
-            <Tab label="Extend Time" sx={{ width: "25%" }} />
-            <Tab label="Cancel Booking" sx={{ width: "25%" }} />
+            <Tab
+              label="Details"
+              sx={{
+                width: "25%",
+                cursor:
+                  selectedEvent.extendedProps.status === "cancelled"
+                    ? "no-drop"
+                    : "pointer",
+              }}
+              disabled={selectedEvent.extendedProps.status === "cancelled"}
+            />
+            <Tab
+              label="Edit"
+              sx={{ width: "25%" }}
+              disabled={selectedEvent.extendedProps.status === "cancelled"}
+            />
+            <Tab
+              label="Extend Time"
+              sx={{ width: "25%" }}
+              disabled={selectedEvent.extendedProps.status === "cancelled"}
+            />
+            <Tab
+              label="Cancel Booking"
+              sx={{ width: "25%" }}
+              disabled={selectedEvent.extendedProps.status === "cancelled"}
+            />
           </Tabs>
         </div>
 
         {/* Details Tab */}
         {tabIndex === 0 && (
           <Box p={3}>
-            <div className="grid grid-cols-1 gap-3 py-2 h-[47vh] overflow-y-scroll">
+            <div className="w-full py-2 h-[47vh] overflow-y-scroll">
               {/* Render details using TextField */}
-              <TextField
-                label="Subject"
-                value={selectedEvent.title || "No Subject"}
-                disabled
-                fullWidth
-                variant="outlined"
-              />
-              <TextField
-                label="Date"
-                value={selectedEvent.start.toISOString().substring(0, 10)}
-                disabled
-                fullWidth
-                variant="outlined"
-              />
-              <TextField
-                label="Start Time"
-                value={format(new Date(selectedEvent.start), "hh:mm a")}
-                disabled
-                fullWidth
-                variant="outlined"
-              />
-              <TextField
-                label="End Time"
-                value={format(new Date(selectedEvent.end), "hh:mm a")}
-                disabled
-                fullWidth
-                variant="outlined"
-              />
-              <TextField
-                label="Room"
-                value={selectedEvent.extendedProps.room || "Not Assigned"}
-                disabled
-                fullWidth
-                variant="outlined"
-              />
+              <div className="grid grid-cols-2 gap-3 mb-[0.75rem]">
+                {/* Subject */}
+                <TextField
+                  label="Subject"
+                  value={selectedEvent.title || "No Subject"}
+                  disabled
+                  fullWidth
+                  variant="outlined"
+                />
+
+                {/* Start Date */}
+                <TextField
+                  label="Start Date"
+                  value={new Date(selectedEvent.start)
+                    .toLocaleDateString("en-gb")
+                    .substring(0, 10)}
+                  disabled
+                  fullWidth
+                  variant="outlined"
+                />
+
+                {/* End Date */}
+                <TextField
+                  label="End Date"
+                  value={new Date(selectedEvent.end)
+                    .toLocaleDateString("en-gb")
+                    .substring(0, 10)}
+                  disabled
+                  fullWidth
+                  variant="outlined"
+                />
+
+                {/* Start Time */}
+                <TextField
+                  label="Start Time"
+                  value={format(new Date(selectedEvent.start), "hh:mm a")}
+                  disabled
+                  fullWidth
+                  variant="outlined"
+                />
+
+                {/* End Time */}
+                <TextField
+                  label="End Time"
+                  value={format(new Date(selectedEvent.end), "hh:mm a")}
+                  disabled
+                  fullWidth
+                  variant="outlined"
+                />
+
+                {/* Room */}
+                <TextField
+                  label="Room"
+                  value={selectedEvent.extendedProps.room || "Not Assigned"}
+                  disabled
+                  fullWidth
+                  variant="outlined"
+                />
+              </div>
+              {/* Participants */}
               <TextField
                 label="Participants"
                 value={selectedEvent.extendedProps.participants || "N/A"}
                 disabled
                 fullWidth
                 variant="outlined"
+                sx={{marginBottom:"0.75rem"}}
               />
+
+              {/* Agenda */}
               <TextField
                 label="Agenda"
                 value={selectedEvent.extendedProps.agenda || "N/A"}
@@ -329,6 +382,7 @@ export default function BookingDetails({
             {activeSteps.extend === 0 && (
               <form onSubmit={(e) => e.preventDefault()} className="space-y-4">
                 <TimePicker
+                ampm
                   sx={{ width: "100%" }}
                   label="End Time"
                   value={dayjs(`${extendedTime.date}T${extendedTime.endTime}`)}
@@ -341,6 +395,12 @@ export default function BookingDetails({
                   renderInput={(params) => <TextField {...params} fullWidth />}
                 />
                 <Box display="flex" justifyContent="space-between" mt={2}>
+                  <Button
+                    variant="outlined"
+                    onClick={() => handleDurationExtension(15)}
+                  >
+                    Extend 15 mins
+                  </Button>
                   <Button
                     variant="outlined"
                     onClick={() => handleDurationExtension(30)}

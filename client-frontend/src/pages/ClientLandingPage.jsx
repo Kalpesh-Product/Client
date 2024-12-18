@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from "react";
-// import iconSrc from "../LandingPageImages/dummy-icon.png";
-import dashboardIcon from "../LandingPageImages/dummy-icon.png";
-import Swal from "sweetalert2";
 import { toast } from "sonner";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import useAuth from "../hooks/useAuth";
 
 import {
   androidAppSaas,
@@ -93,33 +91,7 @@ import { CSS } from "@dnd-kit/utilities";
 
 const ClientLandingPage = () => {
   const navigate = useNavigate();
-
-  // Get the role parameter from the URL
-  const { role } = useParams();
-
-  // You can define names or roles here based on the role
-  const roleBasedNames = {
-    ma: "Abrar Shaikh",
-    sa: "Kashif Shaikh",
-    at: "Kalpesh Naik",
-    af: "Narshiva Naik",
-    et1: "Aiwinraj KS",
-    et2: "Allan Mark Silveira",
-    et3: "Anushri Mohandas Bhagat",
-    et4: "Sankalp Chandrashekar Kalangutkar",
-    ef1: "Hema Natalkar",
-    ef2: "Rhutvik Durgadas Sawant",
-    ef3: "Siddhi Mahesh Naik Vernekar",
-  };
-
-  // Set a default if the role is not found
-  const displayName = roleBasedNames[role] || "Abrar Shaikh";
-
-  const [user, setUser] = useState("");
-  useEffect(() => {
-    const storedUser = JSON.parse(localStorage.getItem("user"));
-    setUser(storedUser);
-  }, []);
+  const { auth } = useAuth();
 
   // Arrays Icon Start
 
@@ -778,73 +750,8 @@ const ClientLandingPage = () => {
     { id: 8, title: "Ticket", iconSrc: ticketsImage },
     { id: 9, title: "Meeting", iconSrc: meetingImage },
     { id: 10, title: "Customer Service", iconSrc: customerServiceImage },
+    { id: 11, title: "Asset", iconSrc: dashboardImage },
   ]);
-
-  // useEffect(() => {
-  //   if (user) {
-  //     const additionalIcons = [
-  //       ...(user.role === "Employee"
-  //         ? [
-  //             {
-  //               id: 11,
-  //               title: "Attendance",
-  //               iconSrc: services_hrSupport[0].image,
-  //             },
-  //             {
-  //               id: 12,
-  //               title: "Payroll",
-  //               iconSrc: services_hrSupport[1].image,
-  //             },
-  //             {
-  //               id: 13,
-  //               title: "Leaves",
-  //               iconSrc: services_hrSupport[3].image,
-  //             },
-  //             {
-  //               id: 14,
-  //               title: "Performance",
-  //               iconSrc: services_hrSupport[8].image,
-  //             },
-  //           ]
-  //         : []),
-  //       ...(user.role === "Employee" && user.department === "Tech"
-  //         ? [
-  //             {
-  //               id: 15,
-  //               title: "Website",
-  //               iconSrc: websiteImage,
-  //             },
-  //             {
-  //               id: 16,
-  //               title: "Notifications",
-  //               iconSrc: services_frontend[7].image,
-  //             },
-  //           ]
-  //         : []),
-  //       ...(user.role === "Employee" && user.department === "Finance"
-  //         ? [
-  //             {
-  //               id: 17,
-  //               title: "Invoicing",
-  //               iconSrc: customerServiceImage,
-  //             },
-  //             {
-  //               id: 18,
-  //               title: "Budget",
-  //               iconSrc: customerServiceImage,
-  //             },
-  //             {
-  //               id: 19,
-  //               title: "Financial Reports",
-  //               iconSrc: customerServiceImage,
-  //             },
-  //           ]
-  //         : []),
-  //     ];
-
-  //     setQuickLaunchIcons((prevIcons) => [...prevIcons, ...additionalIcons]);
-  //   }
-  // }, [user]);
 
   // Toggle drag-and-drop functionality
   const toggleDragAndDrop = () => {
@@ -888,18 +795,6 @@ const ClientLandingPage = () => {
     });
   };
 
-  // const handleAddServices = () => {
-  //   // Alert
-  //   // Swal.fire({
-  //   //   title: "New Services Added!",
-  //   //   text: "You clicked the button!",
-  //   //   icon: "success",
-  //   // });
-  //   // alert("New services added");
-  //   toast.success("New Services Added");
-  //   closeModal(); // Optionally close the modal after the alert
-  // };
-
   const handleAddServices = () => {
     setQuickLaunchIcons((prev) => {
       const newIcons = selectedCards.map((title) => {
@@ -937,70 +832,41 @@ const ClientLandingPage = () => {
         {/* Welcome Section */}
         <div className="flex justify-between items-center mb-12 flex-wrap">
           <h1 className="text-3xl md:text-4xl font-bold pl-20 motion-preset-slide-right-md">
-            {user.name}
+            {auth.user.name}
           </h1>
           <div className="flex gap-4 pr-20">
             {/* Add More Button */}
-            {user.role === "Master Admin" ||
-            user.role === "Super Admin" ||
-            user.role === "Admin" ? (
+            {auth.user.role.roleTitle === "Master Admin" ||
+            auth.user.role.roleTitle=== "Super Admin" ||
+            auth.user.role.roleTitle === "Admin" ? (
               <div className="flex justify-center">
                 <button
                   className="bg-blue-500 text-white py-3 px-8 rounded-lg hover:bg-blue-600"
-                  onClick={openModal}>
+                  onClick={openModal}
+                >
                   Add More
                 </button>
               </div>
             ) : null}
             <button
               onClick={toggleDragAndDrop}
-              className="bg-blue-500 text-white py-2 px-6 rounded-lg hover:bg-blue-600 mt-4 md:mt-0">
+              className="bg-blue-500 text-white py-2 px-6 rounded-lg hover:bg-blue-600 mt-4 md:mt-0"
+            >
               {/* Organize */}
               {isDragEnabled ? "Save Changes" : "Organize"}
             </button>
           </div>
         </div>
-
-        {/* Main Grid Section */}
-        {/* <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-8 mb-12"> */}
-        {/* <div className="grid grid-cols-2 sm:grid-cols-3  gap-8 mb-12">
-          <CardNS
-            title="Dashboard"
-            iconSrc={dashboardImage}
-            onClick={() => navigate("/dashboard")}
-          />
-          <CardNS title="Services" iconSrc={servicesImage} />
-          <CardNS title="Chat" iconSrc={chatImage} />
-          <CardNS
-            title="Profile"
-            iconSrc={profileImage}
-            onClick={() => navigate("/profile")}
-          />
-          <CardNS title="Calendar" iconSrc={calendarImage} />
-          <CardNS
-            title="Access"
-            iconSrc={accessImage}
-            onClick={() => navigate("/access")}
-          />
-        </div> */}
-
-        {/* Quick Launch Section */}
-
-        {/* {user.role === "Master Admin" ||
-        user.role === "Super Admin" ||
-        user.role === "Admin" ? (
-          <h2 className="text-2xl md:text-3xl font-bold mb-8 lg:ps-[7rem] uppercase">
-            Quick launch
-          </h2>
-        ) : null} */}
         <div>
           {isDragEnabled ? (
             <DndContext
               collisionDetection={closestCorners}
-              onDragEnd={handleDragEnd}>
+              onDragEnd={handleDragEnd}
+            >
               <SortableContext
                 items={quickLaunchIcons.map((icon) => icon.id)}
-                strategy={verticalListSortingStrategy}>
+                strategy={verticalListSortingStrategy}
+              >
                 <IconGrid
                   isDragEnabled={isDragEnabled}
                   quickLaunchIcons={quickLaunchIcons}
@@ -1010,65 +876,7 @@ const ClientLandingPage = () => {
           ) : (
             <IconGrid quickLaunchIcons={quickLaunchIcons} />
           )}
-
-          {/* Conditional rendering for employee-specific cards */}
-          {/* <div className="grid grid-cols-2 sm:grid-cols-5 gap-8 mb-12">
-            {user.role === "Employee" && (
-              <>
-                <CardNS
-                  title="Attendance"
-                  iconSrc={services_hrSupport[0].image}
-                />
-                <CardNS title="Payroll" iconSrc={services_hrSupport[1].image} />
-                <CardNS title="Leaves" iconSrc={services_hrSupport[3].image} />
-                <CardNS
-                  title="Performance"
-                  iconSrc={services_hrSupport[8].image}
-                />
-              </>
-            )}
-
-            {user.role === "Employee" && user.department === "Tech" && (
-              <>
-                <CardNS title="Website" iconSrc={websiteImage} />
-                <CardNS
-                  title="Notifications"
-                  iconSrc={services_frontend[7].image}
-                />
-              </>
-            )}
-
-            {user.role === "Employee" && user.department === "Finance" && (
-              <>
-                <CardNS
-                  title="Invoicing"
-                  iconSrc={services_financeAccounting[0].image}
-                />
-                <CardNS
-                  title="Budget"
-                  iconSrc={services_financeAccounting[3].image}
-                />
-                <CardNS
-                  title="Financial Reports"
-                  iconSrc={services_financeAccounting[5].image}
-                />
-              </>
-            )}
-          </div> */}
         </div>
-
-        {/* Add More Button */}
-        {/* {user.role === "Master Admin" ||
-        user.role === "Super Admin" ||
-        user.role === "Admin" ? (
-          <div className="flex justify-center">
-            <button
-              className="bg-blue-500 text-white py-3 px-8 rounded-lg hover:bg-blue-600"
-              onClick={openModal}>
-              Add More
-            </button>
-          </div>
-        ) : null} */}
       </div>
       {/* MODAL CODE */}
       {/* <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100"> */}
@@ -1099,7 +907,8 @@ const ClientLandingPage = () => {
                   {/* Close button */}
                   <button
                     className="bg-blue-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-600"
-                    onClick={closeModal}>
+                    onClick={closeModal}
+                  >
                     X
                   </button>
                 </div>
@@ -1164,8 +973,8 @@ const ClientLandingPage = () => {
                   </div>
                 </div> */}
 
-                {user.department === "TopManagement" ||
-                user.department === "Tech" ? (
+                {auth.user.department === "TopManagement" ||
+                auth.user.department === "Tech" ? (
                   <div>
                     <h2 className="text-xl md:text-2xl font-bold mb-8 ps-[7rem] uppercase">
                       Frontend
@@ -1194,8 +1003,8 @@ const ClientLandingPage = () => {
 
                 {/* Finance & Accounting Section */}
 
-                {user.department === "TopManagement" ||
-                user.department === "Finance" ? (
+                {auth.user.department === "TopManagement" ||
+                auth.user.department === "Finance" ? (
                   <div>
                     <h2 className="text-xl md:text-2xl font-bold mb-8 ps-[7rem] uppercase">
                       Finance & Accounting
@@ -1222,7 +1031,7 @@ const ClientLandingPage = () => {
                 ) : null}
 
                 {/* Sales & Marketing Section */}
-                {user.department === "TopManagement" ? (
+                {auth.user.department === "TopManagement" ? (
                   <div>
                     <h2 className="text-xl md:text-2xl font-bold mb-8 ps-[7rem] uppercase">
                       Sales & Marketing
@@ -1249,7 +1058,7 @@ const ClientLandingPage = () => {
                 ) : null}
 
                 {/* HR Section */}
-                {user.department === "TopManagement" ? (
+                {auth.user.department === "TopManagement" ? (
                   <div>
                     <h2 className="text-xl md:text-2xl font-bold mb-8 ps-[7rem] uppercase">
                       HR Support
@@ -1276,7 +1085,7 @@ const ClientLandingPage = () => {
                 ) : null}
 
                 {/* Customer Management Section */}
-                {user.department === "TopManagement" ? (
+                {auth.user.department === "TopManagement" ? (
                   <div>
                     <h2 className="text-xl md:text-2xl font-bold mb-8 ps-[7rem] uppercase">
                       Customer Management
@@ -1303,7 +1112,7 @@ const ClientLandingPage = () => {
                 ) : null}
 
                 {/* Reports & Analytics Section */}
-                {user.department === "TopManagement" ? (
+                {auth.user.department === "TopManagement" ? (
                   <div>
                     <h2 className="text-xl md:text-2xl font-bold mb-8 ps-[7rem] uppercase">
                       Reports & Analytics
@@ -1336,7 +1145,8 @@ const ClientLandingPage = () => {
                   {/* Add button */}
                   <button
                     className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600"
-                    onClick={handleAddServices}>
+                    onClick={handleAddServices}
+                  >
                     Add
                   </button>
                 </div>
@@ -1432,10 +1242,13 @@ const SortableCard = ({ id, title, iconSrc, isDragEnabled }) => {
         navigate("/tasks");
         break;
       case "Ticket":
-        navigate("/customer/tickets");
+        navigate("/it/tickets");
         break;
       case "Meeting":
-        navigate("/customer/meetings");
+        navigate("/it/meetings");
+        break;
+      case "Asset":
+        navigate("/it/kpi");
         break;
       case "Customer Service":
         navigate("/chat");
@@ -1454,7 +1267,8 @@ const SortableCard = ({ id, title, iconSrc, isDragEnabled }) => {
       onClick={handleClick} // Navigate on click
       className={`flex flex-col items-center text-center cursor-pointer p-4 bg-white border-2 rounded-lg ${
         isDragEnabled ? "border-blue-500" : "border-white"
-      }`}>
+      }`}
+    >
       <img src={iconSrc} alt={title} className="w-16 h-16 mb-4" />
       <p className="text-lg font-medium">{title}</p>
     </div>
@@ -1514,7 +1328,8 @@ const Card = ({ title, iconSrc, isSelected, handleSelect }) => {
       className={`relative w-32 h-32 border-2 rounded-lg p-3 transition-shadow duration-300 cursor-pointer flex flex-col justify-center items-center ${
         isSelected ? "border-blue-500 shadow-lg" : "border-gray-300"
       }`}
-      onClick={() => handleSelect(title)}>
+      onClick={() => handleSelect(title)}
+    >
       <input
         type="checkbox"
         checked={isSelected}

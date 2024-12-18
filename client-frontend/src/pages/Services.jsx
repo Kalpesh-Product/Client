@@ -77,9 +77,11 @@ import {
 
 import TestSide from "../components/Sidetest";
 import { Card } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 const Services = () => {
-  const [user, setUser]=useState("")
+  const navigate = useNavigate();
+  const [user, setUser] = useState("");
 
   // const handleSelect = (title) => {
   //   setSelectedCards((prev) => {
@@ -91,14 +93,13 @@ const Services = () => {
   //     if (isInQuickLaunch) {
   //       return prev.filter((t) => t !== title);
   //     } else {
-     
+
   //       return prev.includes(title)
   //         ? prev.filter((t) => t !== title)
   //         : [...prev, title];
   //     }
   //   });
   // };
-
 
   const services_frontend = [
     {
@@ -501,6 +502,7 @@ const Services = () => {
       alt: "TransactionalWebsite",
       title: "Ticket Raising",
       description: "Efficient ticket management system",
+      route: '/customer/tickets'
     },
     {
       id: 2,
@@ -517,6 +519,7 @@ const Services = () => {
       alt: "MeetingRoomEngine",
       title: "Meetings Rooms",
       description: "Manage meeting room bookings",
+      route : '/customer/meetings'
     },
     {
       id: 4,
@@ -691,38 +694,78 @@ const Services = () => {
   ];
   // State to track selected cards (already present in your code)
   const [selectedCards, setSelectedCards] = useState([]);
-  useEffect(()=>{
-    const storedUser = JSON.parse(localStorage.getItem("user"))
-    setUser(storedUser)
-  },[])
-  console.log("From profile section : ",user)
+  useEffect(() => {
+    const storedUser = JSON.parse(localStorage.getItem("user"));
+    setUser(storedUser);
+  }, []);
+  console.log("From profile section : ", user);
   return (
     <div className="flex">
       <TestSide />
-      <div className="p-6">
+      <div className="p-6 flex-1 h-screen overflow-y-auto">
         <div>
-          {user.department === "TopManagement" || user.department === "Tech" ? (
-            <div>
-              <h2 className="text-xl md:text-2xl font-bold mb-8 ps-[7rem] uppercase">
-                Frontend
-              </h2>
-              <div className="grid grid-cols-2 sm:grid-cols-6 gap-8 mb-12">
-                {services_frontend.map((service) => (
-                  <div className="flex justify-center items-center">
-                    <Card
-                      key={service.id}
-                      title={service.title}
-                      iconSrc={service.image}
-                      // isSelected={
-                      //   selectedCards.includes(service.title) ||
-                      // }
-                      // handleSelect={handleSelect}
-                    />
+          {/* {user.department === "TopManagement" || user.department === "Tech" ? (
+          
+          ) : null} */}
+
+          <div>
+            <h2 className="text-xl md:text-2xl font-bold mb-8 ps-[7rem] uppercase">
+              Frontend
+            </h2>
+            <div className="grid grid-cols-4 w-full gap-8">
+              {services_frontend.map((service) => (
+                <div
+                  key={service.id} // Move the key here
+                  className=""
+                >
+                  <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow-md hover:shadow-lg p-4">
+                    <div className="flex justify-center">
+                      <img
+                        src={service.image}
+                        alt={service.title}
+                        className="h-16 w-16 object-contain mb-4"
+                      />
+                    </div>
+                    <h2 className="text-lg font-semibold text-gray-800 text-center">
+                      {service.title}
+                    </h2>
                   </div>
-                ))}
-              </div>
+                </div>
+              ))}
             </div>
-          ) : null}
+            <h2 className="text-xl md:text-2xl font-bold my-8 ps-[7rem] uppercase">
+              CMS
+            </h2>
+            <div className="grid grid-cols-4 w-full gap-8">
+              {services_customerManagement.map((service) => (
+                <div
+                  key={service.id} // Move the key here
+                  className=""
+                >
+                  <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow-md hover:shadow-lg p-4">
+                    <div 
+                    className="flex justify-center"
+                    onClick={() => {
+                      if (service.route) {
+                        navigate(service.route); // For internal navigation
+                      }
+                    }}
+                    >
+                      <img
+                        src={service.image}
+                        alt={service.title}
+                        className="h-16 w-16 object-contain mb-4"
+                        
+                      />
+                    </div>
+                    <h2 className="text-lg font-semibold text-gray-800 text-center">
+                      {service.title}
+                    </h2>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </div>
