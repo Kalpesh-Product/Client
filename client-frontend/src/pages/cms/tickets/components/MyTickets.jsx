@@ -18,8 +18,10 @@ import WonoButton from "../../../../components/Buttons/WonoButton";
 import { motion } from "framer-motion";
 import { IoMdClose } from "react-icons/io";
 import axios from "axios";
+import useAuth from "../../../../hooks/useAuth";
 
 const MyTickets = () => {
+  const { auth: authUser } = useAuth();
   const navigate = useNavigate();
   const [user, setUser] = useState("");
 
@@ -87,7 +89,7 @@ const MyTickets = () => {
   // }, []); // Empty dependency array ensures this runs only once
   // ]]]]]]
 
-  const raisedByFilter = user.name; // Replace with the desired name or variable
+  const raisedByFilter = authUser.user.name; // Replace with the desired name or variable
 
   // Ticket With APIs & Local START
 
@@ -97,14 +99,14 @@ const MyTickets = () => {
 
   // state to hold the values of ticket form inputs
   const [createForm, setCreateForm] = useState({
-    raisedBy: user.name,
+    raisedBy: authUser.user.name,
     selectedDepartment: "",
     description: "",
   });
 
   const [updateForm, setUpdateForm] = useState({
     _id: null,
-    raisedBy: user.name,
+    raisedBy: authUser.user.name,
     selectedDepartment: "",
     description: "",
   });
@@ -132,7 +134,7 @@ const MyTickets = () => {
     setCreateForm((prevForm) => ({
       ...prevForm, // Spread previous form values
       [name]: value, // Update the specific field being modified
-      raisedBy: user.name, // Ensure raisedBy is always set to user.name
+      raisedBy: authUser.user.name, // Ensure raisedBy is always set to authUser.user.name
     }));
 
     console.log("Updated Form:", createForm);
@@ -243,7 +245,7 @@ const MyTickets = () => {
     // console.log(ticket);
     // Set state on update form
     setUpdateForm({
-      raisedBy: user.name,
+      raisedBy: authUser.user.name,
       selectedDepartment: ticketToBeDisplayedBeforeUpdating.selectedDepartment,
       description: ticketToBeDisplayedBeforeUpdating.description,
       _id: ticketToBeDisplayedBeforeUpdating._id,
@@ -286,7 +288,7 @@ const MyTickets = () => {
     console.log(newTickets);
     setUpdateForm({
       _id: null,
-      raisedBy: user.name,
+      raisedBy: authUser.user.name,
       selectedDepartment: "",
       description: "",
     });
@@ -523,7 +525,7 @@ const MyTickets = () => {
 
               //   // Toggling update
               //   setUpdateForm({
-              //     raisedBy: user.name,
+              //     raisedBy: authUser.user.name,
               //     selectedDepartment: params.data.selectedDepartment,
               //     description: params.data.description,
               //     _id: params.data._id,
@@ -539,7 +541,7 @@ const MyTickets = () => {
 
                 // Toggling update
                 setUpdateForm({
-                  raisedBy: user.name,
+                  raisedBy: authUser.user.name,
                   selectedDepartment: params.data.selectedDepartment,
                   description: params.data.description,
                   _id: params.data._id,
@@ -865,7 +867,9 @@ const MyTickets = () => {
         )} */}
 
         {location.pathname === "/it/tickets" &&
-          ["Admin", "Super Admin", "Master Admin"].includes(user.role) && (
+          ["Admin", "Super Admin", "Master Admin"].includes(
+            authUser.user.role.roleTitle
+          ) && (
             <div className="relative bg-red-500">
               <h1 className="text-3xl mb-2"></h1>
               <button
@@ -876,7 +880,7 @@ const MyTickets = () => {
             </div>
           )}
         {location.pathname === "/it/tickets" &&
-          ["Employee"].includes(user.role) && (
+          ["Employee"].includes(authUser.user.role.roleTitle) && (
             <div className="relative bg-red-500">
               <h1 className="text-3xl mb-2"></h1>
               <button

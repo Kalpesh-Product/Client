@@ -916,7 +916,7 @@ const DepartmentDash = () => {
                     ))}
 
                   {["Admin", "Super Admin", "Master Admin"].includes(
-                    user.role
+                    authUser.user.role.roleTitle
                   ) && (
                     <div className="flex w-full flex-1 flex-grow gap-x-4">
                       <TicketsRemainingWidget

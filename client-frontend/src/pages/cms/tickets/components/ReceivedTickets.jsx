@@ -14,8 +14,10 @@ import AgTable from "../../../../components/AgTable";
 import { motion } from "framer-motion";
 import { IoMdClose } from "react-icons/io";
 import axios from "axios";
+import useAuth from "../../../../hooks/useAuth";
 
 const ReceivedTickets = () => {
+  const { auth: authUser } = useAuth();
   // const [user, setUser] = useState("");
   // useEffect(() => {
   //   const storedUser = JSON.parse(localStorage.getItem("user"));
@@ -65,8 +67,8 @@ const ReceivedTickets = () => {
     return () => clearTimeout(timer);
   }, [hasRefreshed]);
 
-  const selectedDepartmentFilter = user.department; // Replace with the desired name or variable
-
+  const selectedDepartmentFilter = authUser.user.department[0].name; // Replace with the desired name or variable
+  console.log(authUser.user.department[0].name);
   // Ticket With APIs & Local START
 
   // State to store my tickets
@@ -75,7 +77,7 @@ const ReceivedTickets = () => {
 
   // state to hold the values of ticket form inputs
   const [createForm, setCreateForm] = useState({
-    raisedBy: user.name,
+    raisedBy: authUser.user.name,
     selectedDepartment: "",
     description: "",
   });
@@ -103,7 +105,7 @@ const ReceivedTickets = () => {
     setCreateForm((prevForm) => ({
       ...prevForm, // Spread previous form values
       [name]: value, // Update the specific field being modified
-      raisedBy: user.name, // Ensure raisedBy is always set to user.name
+      raisedBy: authUser.user.name, // Ensure raisedBy is always set to authUser.user.name
     }));
 
     console.log("Updated Form:", createForm);
@@ -247,7 +249,7 @@ const ReceivedTickets = () => {
         </Button>
       ),
     },
-    ...(user.role !== "Employee"
+    ...(authUser.user.role.roleTitle !== "Employee"
       ? [
           {
             field: "assign",
@@ -449,11 +451,11 @@ const ReceivedTickets = () => {
           console.log("Accepted ticket:", params.data._id);
           // Implement your edit logic here
           console.log(params.data);
-          console.log("Accepted by:", user.name);
+          console.log("Accepted by:", authUser.user.name);
 
           // Accept ticket START
           //  const newUpdatedTicketDepartment = updateForm.selectedDepartment;
-          const newUpdatedAssignedMember = user.name;
+          const newUpdatedAssignedMember = authUser.user.name;
           // Even longer version
           // const updateFormTitle = updateForm.title;
           // const updateFormBody = updateForm.body;
@@ -482,7 +484,7 @@ const ReceivedTickets = () => {
           // console.log(newTickets);
           // setUpdateForm({
           //   _id: null,
-          //   raisedBy: user.name,
+          //   raisedBy: authUser.user.name,
           //   selectedDepartment: "",
           //   description: "",
           // });
@@ -525,7 +527,7 @@ const ReceivedTickets = () => {
               className="bg-red-500 text-white px-3 py-1 rounded">
               Accept
             </button>
-            {user.role !== "Employee" && (
+            {authUser.user.role.roleTitle !== "Employee" && (
               <button
                 // onClick={handleDelete}
                 // onClick={handleAssign}
