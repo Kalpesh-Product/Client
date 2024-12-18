@@ -120,7 +120,7 @@ export default function BookingReports() {
   // Filtering logic
   const filteredBookings = bookings.filter((booking) => {
     const isDepartmentMatch =
-      loggedInUser.user?.role === "Employee"
+      loggedInUser.user?.role.roleTitle === "Employee"
         ? loggedInUser.user.department.some(
             (dept) => dept.name === booking.department
           ) // Check if the booking's department exists in the loggedInUser's departments
@@ -191,13 +191,13 @@ export default function BookingReports() {
           {/* Department Filter */}
           <FormControl className="w-full md:w-1/4">
             <Select
-              disabled={loggedInUser.role === "Employee"}
+              disabled={loggedInUser.user.role === "Employee"}
               value={selectedDepartment}
               onChange={(e) => setSelectedDepartment(e.target.value)}
               size="small"
             >
               <MenuItem value="All">
-                {loggedInUser.role === "Employee"
+                {loggedInUser.user.role.roleTitle === "Employee"
                   ? "My Departments"
                   : "All Departments"}
               </MenuItem>

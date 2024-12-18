@@ -19,20 +19,16 @@ import { motion } from "framer-motion";
 import { IoMdClose } from "react-icons/io";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import useAuth from "../../../hooks/useAuth";
 
 const Holidays = () => {
   const location = useLocation();
+  const { auth } = useAuth();
 
   const [highlightFirstRow, setHighlightFirstRow] = React.useState(false);
   const [highlightEditedRow, setHighlightEditedRow] = React.useState(false);
 
   const [holidayName, setLeaveType] = useState(""); // State to track the selected option
-
-  const [user, setUser] = useState("");
-  useEffect(() => {
-    const storedUser = JSON.parse(localStorage.getItem("user"));
-    setUser(storedUser);
-  }, []);
 
   const columns = [
     { field: "id", headerName: "ID", width: 100 },
@@ -108,7 +104,8 @@ const Holidays = () => {
             },
             padding: "4px 8px",
             borderRadius: "0.375rem",
-          }}>
+          }}
+        >
           Delete
         </Button>
       ),
@@ -476,13 +473,14 @@ const Holidays = () => {
           </div>
         </div> */}
 
-        {user.department !== "Finance" && (
+        {!auth.user.department.find((dept) => dept.name === "Finance") && (
           <div className="flex">
             <div className="mb-2 flex justify-between">
               <h1 className="text-3xl"></h1>
               <button
                 onClick={openModal}
-                className="px-6 py-2 rounded-lg text-white wono-blue-dark hover:bg-[#3cbce7] transition-shadow shadow-md hover:shadow-lg active:shadow-inner">
+                className="px-6 py-2 rounded-lg text-white wono-blue-dark hover:bg-[#3cbce7] transition-shadow shadow-md hover:shadow-lg active:shadow-inner"
+              >
                 + Add Holiday
               </button>
             </div>
@@ -576,7 +574,8 @@ const Holidays = () => {
                                 borderRadius: 2,
                               }}
                               // className="bg-white p-6 rounded-lg shadow-md mx-auto">
-                              className="bg-white py-6 rounded-lg">
+                              className="bg-white py-6 rounded-lg"
+                            >
                               {/* Personal Information */}
                               {/* <h2 className="text-lg font-semibold mb-4">Add Ticket</h2> */}
                               <div className="grid grid-cols-1 gap-4">
@@ -622,7 +621,8 @@ const Holidays = () => {
                                       Ticket Title
                                     </InputLabel> */}
                                     <LocalizationProvider
-                                      dateAdapter={AdapterDayjs}>
+                                      dateAdapter={AdapterDayjs}
+                                    >
                                       <DatePicker
                                         label="Date"
                                         // value={formData.purchaseDate}
@@ -697,7 +697,8 @@ const Holidays = () => {
                           <button
                             className="wono-blue-dark text-white py-2 px-4 rounded-md hover:bg-blue-600 w-full"
                             // onClick={handleAddTicket}>
-                            onClick={() => handleNextStep(handleNext)}>
+                            onClick={() => handleNextStep(handleNext)}
+                          >
                             Next
                           </button>
                         </div>
@@ -770,7 +771,8 @@ const Holidays = () => {
                 whileTap={{ scale: 0.9 }}
                 type="button"
                 onClick={closeDetailsModal}
-                className=" p-2 bg-white text-[red] border border-red-200 hover:border-red-400 text-2xl rounded-md mr-1">
+                className=" p-2 bg-white text-[red] border border-red-200 hover:border-red-400 text-2xl rounded-md mr-1"
+              >
                 <IoMdClose />
               </motion.button>
             </div>
@@ -877,7 +879,8 @@ const Holidays = () => {
                   whileTap={{ scale: 0.9 }}
                   type="button"
                   onClick={closeEditTicket}
-                  className=" p-2 bg-white text-[red] border border-red-200 hover:border-red-400 text-2xl rounded-md mr-1">
+                  className=" p-2 bg-white text-[red] border border-red-200 hover:border-red-400 text-2xl rounded-md mr-1"
+                >
                   <IoMdClose />
                 </motion.button>
               </div>
@@ -899,7 +902,8 @@ const Holidays = () => {
                       borderRadius: 2,
                     }}
                     // className="bg-white p-6 rounded-lg shadow-md mx-auto">
-                    className="bg-white p-6 rounded-lg mx-auto">
+                    className="bg-white p-6 rounded-lg mx-auto"
+                  >
                     {/* Personal Information */}
                     {/* <h2 className="text-lg font-semibold mb-4">Add Ticket</h2> */}
                     <div className="grid grid-cols-1 gap-4">
@@ -975,7 +979,8 @@ const Holidays = () => {
               <div className="flex justify-center items-center w-full">
                 <button
                   className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 w-full"
-                  onClick={handleEditTicket}>
+                  onClick={handleEditTicket}
+                >
                   Save
                 </button>
               </div>
@@ -1014,7 +1019,8 @@ const Holidays = () => {
                   whileTap={{ scale: 0.9 }}
                   type="button"
                   onClick={closeDeleteTicket}
-                  className=" p-2 bg-white text-[red] border border-red-200 hover:border-red-400 text-2xl rounded-md mr-1">
+                  className=" p-2 bg-white text-[red] border border-red-200 hover:border-red-400 text-2xl rounded-md mr-1"
+                >
                   <IoMdClose />
                 </motion.button>
                 {/* <button
@@ -1041,7 +1047,8 @@ const Holidays = () => {
                       borderRadius: 2,
                     }}
                     // className="bg-white p-6 rounded-lg shadow-md mx-auto">
-                    className="bg-white p-6 rounded-lg mx-auto">
+                    className="bg-white p-6 rounded-lg mx-auto"
+                  >
                     {/* Personal Information */}
                     {/* <h2 className="text-lg font-semibold mb-4">Add Ticket</h2> */}
                     <div className="grid grid-cols-1 gap-4">
@@ -1086,7 +1093,8 @@ const Holidays = () => {
                 <button
                   // className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600"
                   className="bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600 w-full"
-                  onClick={handleDeleteTicket}>
+                  onClick={handleDeleteTicket}
+                >
                   Delete
                 </button>
               </div>
