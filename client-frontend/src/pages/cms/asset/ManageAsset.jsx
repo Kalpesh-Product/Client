@@ -24,6 +24,7 @@ import { IoMdClose } from "react-icons/io";
 import { toast } from "sonner";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import useAuth from "../../../hooks/useAuth";
 
 const ManageAsset = () => {
   const [openModal, setOpenModal] = useState(false);
@@ -40,6 +41,7 @@ const ManageAsset = () => {
   const [approval, setApproval] = useState(null);
   const [activeTab, setActiveTab] = useState(0);
   const [requests, setRequests] = useState([]);
+  const { auth: authUser } = useAuth();
 
   useEffect(() => {
     const storedUser = JSON.parse(localStorage.getItem("user"));
@@ -387,7 +389,7 @@ const ManageAsset = () => {
               label="Assigned Asset"
             />
             {/* 3 */}
-            {user.role === "Employee" ? (
+            {authUser?.role?.roleTitle === "Employee" ? (
               <Tab label="Requests" />
             ) : (
               <Tab label="Approvals" />
@@ -429,7 +431,7 @@ const ManageAsset = () => {
                     </TextField>
                   </FormControl>
 
-                  {user.department === "TopManagement" && (
+                  {authUser?.department?.map((dept)=>dept.name) === "TopManagement" && (
                     <>
                       <FormControl size="small" style={{ minWidth: 220 }}>
                         {/* <InputLabel>Filter by Asset Name</InputLabel> */}

@@ -164,8 +164,8 @@ const ModuleSidebar = ({ mainSideBar }) => {
       route: "/it/kpi",
       icon: <AiOutlineProduct />,
       subMenus: [
-        ...(authUser.user.department.find((dept) => dept.name === "IT") ||
-        authUser.user.department.find((dept) => dept.name === "Maintainence") ||
+        ...(authUser.user.department.map((dept) => dept.name === "IT") ||
+        authUser.user.department.map((dept) => dept.name === "Maintainence") ||
         authUser.user.role === "Master-Admin" ||
         authUser.user.role === "Super-Admin"
           ? [
