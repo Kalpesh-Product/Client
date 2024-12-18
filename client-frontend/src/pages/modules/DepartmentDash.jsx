@@ -445,7 +445,8 @@ const DepartmentDash = () => {
                     "& .MuiTabs-indicator": {
                       backgroundColor: "#0db4ea", // Custom indicator color
                     },
-                  }}>
+                  }}
+                >
                   <Tab label="Home" />
                   <Tab label="About" />
                   <Tab label="Gallery" />
@@ -506,7 +507,8 @@ const DepartmentDash = () => {
                   {products.map((product) => (
                     <div
                       key={product.id}
-                      className="bg-gray-100 rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+                      className="bg-gray-100 rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow"
+                    >
                       <img
                         src={product.image}
                         alt={product.name}
@@ -728,10 +730,6 @@ const DepartmentDash = () => {
               <>
                 <PayRollDash />
               </>
-            ) : location.pathname === "/hr/payroll" ? (
-              <>
-                <PayRollDash />
-              </>
             ) : (
               <></>
             )}
@@ -942,7 +940,8 @@ const DepartmentDash = () => {
                       </h2>
                       <button
                         className="py-1 px-2 text-sm wono-blue-dark text-white rounded-md"
-                        onClick={() => navigate("/it/tickets/my-tickets")}>
+                        onClick={() => navigate("/it/tickets/my-tickets")}
+                      >
                         View All
                       </button>
                     </div>
@@ -1032,7 +1031,8 @@ const DepartmentDash = () => {
           open={openTicket}
           onClose={handleCloseTicket}
           aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description">
+          aria-describedby="modal-modal-description"
+        >
           {/* <Box sx={style}> */}
           <Box sx={style}>
             <AddTicketForm />

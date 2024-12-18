@@ -9,6 +9,7 @@ import { CSVLink } from "react-csv";
 import PayrollTimeLine from "./components/PayrollTimeLine";
 import MyPayroll from "./components/MyPayroll";
 import MyPayslips from "./components/MyPayslips";
+import useAuth from "../../../hooks/useAuth";
 
 const widgets = [
   {
@@ -79,17 +80,12 @@ const csvHeaders = [
 ];
 
 export default function PayRollDash() {
-  const [loggedInUser, setLoggedInUser] = useState(null); 
+  const { auth } = useAuth();
   const [selectedDept, setSelectedDept] = useState("all");
   const [payrolls, setPayrolls] = useState(dummyData);
 
-  useEffect(() => {
-    const user = localStorage.getItem("user");
-    setLoggedInUser(JSON.parse(user));
-  }, []);
-
   const examplePayroll = {
-    employeeName: loggedInUser?.name || "",
+    employeeName: auth.user?.name || "",
     payPeriod: "01 Nov 2024 - 30 Nov 2024",
     grossSalary: 5000.0,
     deductions: 750.0,
@@ -101,7 +97,7 @@ export default function PayRollDash() {
     setSelectedDept(department);
 
     if (department === "all") {
-      setPayrolls(dummyData); 
+      setPayrolls(dummyData);
     } else {
       const filteredData = dummyData.filter(
         (item) => item.department === department
@@ -110,12 +106,13 @@ export default function PayRollDash() {
     }
   };
 
-  if (!loggedInUser) {
-    return <div>Loading...</div>; 
+  if (!auth.user) {
+    return <div>Loading...</div>;
   }
 
   const isAdmin =
-    loggedInUser.role === "Master Admin" || loggedInUser.role === "Super Admin";
+    auth.user.role.roleTitle === "Master-Admin" ||
+    auth.user.role.roleTitle === "Super-Admin";
 
   return (
     <div className="p-4 bg-gray-100 w-[80vw] md:w-full mt-4">
@@ -171,7 +168,7 @@ export default function PayRollDash() {
               </CSVLink>
             </div>
             <AgTable
-              data={payrolls} 
+              data={payrolls}
               columns={columns}
               paginationPageSize={10}
               highlightFirstRow={false}
