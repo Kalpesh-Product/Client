@@ -30,9 +30,11 @@ import { AiOutlineSecurityScan } from "react-icons/ai";
 import { RiCustomerService2Line, RiDashboardLine } from "react-icons/ri";
 import { useNavigate, useLocation, useParams } from "react-router-dom";
 import { BsCashCoin } from "react-icons/bs";
+import useAuth from "../hooks/useAuth";
 // import { useSidebar } from "./GlobalContext";
 
 const TestSide = () => {
+  const { auth:authUser } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   // const { isSidebarOpen, setIsSidebarOpen } = useSidebar();
@@ -167,7 +169,7 @@ const TestSide = () => {
       "LEGAL",
       "IT",
     ],
-    Tech: ["FRONTEND", "CMS"],
+    Tech: ["FRONTEND", "CMS", "HUMAN RESOURCE"],
     Finance: ["FINANCE", "CMS"],
     Sales: ["SALES"],
     HR: ["HUMAN RESOURCE", "CMS"],
@@ -181,7 +183,7 @@ const TestSide = () => {
 
   // Filter departments based on user's department using departmentMapping
   const filteredDepartments = departments.filter((dept) =>
-    (departmentMapping[user?.department] || []).includes(dept.name)
+    (departmentMapping[authUser?.user.department.map((dept)=>dept.name)] || []).includes(dept.name)
   );
 
   const handleActive = (index) => {

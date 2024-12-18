@@ -7,21 +7,31 @@ const handleRefreshToken = async (req, res, next) => {
     if (!cookie?.clientCookie) return res.sendStatus(401);
 
     const refreshToken = cookie.clientCookie;
-    const user = await User.findOne({ refreshToken }).lean().exec();
+    const user = await User.findOne({ refreshToken })
+      .select("name role email empId department")
+      .populate({
+        path: "department",
+        select: "name departmentId",
+      })
+      .populate({
+        path: "role", 
+        select: "roleTitle", 
+      })
+      .lean();
     if (!user) return res.sendStatus(403);
 
     jwt.verify(
       refreshToken,
       process.env.REFRESH_TOKEN_SECRET,
       async (err, decoded) => {
-        if (err || user.personalInfo.email !== decoded.userInfo.email) {
+        if (err || user.email !== decoded.email) {
           return res.sendStatus(403);
         }
 
         const accessToken = jwt.sign(
           {
             userInfo: {
-              email: decoded.userInfo.email,
+              email: decoded.email,
               role: user.role,
               userId: user._id,
             },

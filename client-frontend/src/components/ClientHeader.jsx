@@ -3,6 +3,8 @@ import BiznestLogo from "../LandingPageImages/biz-nest.png";
 import { Avatar, Menu, MenuItem, Typography, IconButton } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useTimer } from "../contexts/TimerContext";
+import useAuth from "../hooks/useAuth";
+import useLogout from "../hooks/useLogout";
 
 const ClientHeader = () => {
   const navigate = useNavigate();
@@ -10,12 +12,8 @@ const ClientHeader = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [image, setImage] = useState("");
   const [isModelOpen, setIsModalOpen] = useState(false);
-  const [user, setUser] = useState("");
-
-  useEffect(() => {
-    const storedUser = JSON.parse(localStorage.getItem("user"));
-    setUser(storedUser);
-  }, []);
+  const { auth: authUser } = useAuth();
+  const logout = useLogout();
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -35,9 +33,9 @@ const ClientHeader = () => {
     setAnchorEl(null);
   };
 
-  const handleLogout = () => {
-    localStorage.removeItem("user");
-    navigate("/");
+  const handleLogout = async () => {
+    await logout();
+    navigate("/auth");
   };
   return (
     <>
@@ -48,7 +46,7 @@ const ClientHeader = () => {
             <img
               src={BiznestLogo}
               onClick={() => {
-                navigate("/landing");
+                navigate("/");
               }}
               alt=""
               className="rounded cursor-pointer"
@@ -62,7 +60,7 @@ const ClientHeader = () => {
           <IconButton onClick={handleMenuOpen} sx={{ py: 0 }}>
             <Avatar
               className="wono-blue-dark"
-              alt={user.name}
+              alt={authUser.user.name}
               src="/path-to-avatar.jpg"
             />
             <div>
@@ -72,7 +70,7 @@ const ClientHeader = () => {
                 }}
                 variant="h6"
                 sx={{ px: 2, py: "0", color: "white" }}>
-                {user.name}
+                {authUser.user.name}
               </Typography>
             </div>
           </IconButton>

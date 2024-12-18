@@ -5,13 +5,14 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { DatePicker } from "@mui/x-date-pickers";
 import AgTable from "../../../components/AgTable";
+import useAuth from "../../../hooks/useAuth";
 
 export default function BookingReports() {
   const [selectedDepartment, setSelectedDepartment] = useState("All");
   const [selectedStatus, setSelectedStatus] = useState("All");
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
-  const [loggedInUser, setLoggedInUser] = useState("");
+  const { auth: loggedInUser } = useAuth();
 
   // Dummy data for bookings
   const bookings = [
@@ -116,16 +117,13 @@ export default function BookingReports() {
     },
   ];
 
-  useEffect(() => {
-    const storedUser = JSON.parse(localStorage.getItem("user"));
-    setLoggedInUser(storedUser || { role: "Guest", department: "All" });
-  }, []);
-
   // Filtering logic
   const filteredBookings = bookings.filter((booking) => {
     const isDepartmentMatch =
-      loggedInUser?.role === "Employee"
-        ? booking.department === loggedInUser.department // Employees see only their department's bookings
+      loggedInUser.user?.role.roleTitle === "Employee"
+        ? loggedInUser.user.department.some(
+            (dept) => dept.name === booking.department
+          ) // Check if the booking's department exists in the loggedInUser's departments
         : selectedDepartment === "All" ||
           booking.department === selectedDepartment;
 
@@ -193,24 +191,29 @@ export default function BookingReports() {
           {/* Department Filter */}
           <FormControl className="w-full md:w-1/4">
             <Select
-              disabled={loggedInUser.role === "Employee"}
+              disabled={loggedInUser.user.role === "Employee"}
               value={selectedDepartment}
               onChange={(e) => setSelectedDepartment(e.target.value)}
               size="small"
             >
               <MenuItem value="All">
-                {loggedInUser.role === "Employee"
-                  ? loggedInUser.department
+                {loggedInUser.user.role.roleTitle === "Employee"
+                  ? "My Departments"
                   : "All Departments"}
               </MenuItem>
-              <MenuItem value="IT">IT</MenuItem>
-              <MenuItem value="Admin">Admin</MenuItem>
-              <MenuItem value="HR">HR</MenuItem>
-              <MenuItem value="Finance">Finance</MenuItem>
-              <MenuItem value="Tech">Tech</MenuItem>
+              {loggedInUser.user.role === "Employee"
+                ? loggedInUser.user.department.map((dept) => (
+                    <MenuItem key={dept.name} value={dept.name}>
+                      {dept.name}
+                    </MenuItem>
+                  ))
+                : ["IT", "Admin", "HR", "Finance", "Tech"].map((dept) => (
+                    <MenuItem key={dept} value={dept}>
+                      {dept}
+                    </MenuItem>
+                  ))}
             </Select>
           </FormControl>
-
           {/* Status Filter */}
           <FormControl className="w-full md:w-1/4">
             <Select
@@ -226,7 +229,6 @@ export default function BookingReports() {
               <MenuItem value="Upcoming">Upcoming</MenuItem>
             </Select>
           </FormControl>
-
           {/* Date Range Filter */}
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DatePicker
@@ -248,7 +250,6 @@ export default function BookingReports() {
               )}
             />
           </LocalizationProvider>
-
           {/* Export Button */}
           <CSVLink
             filename="tickets_report.csv"

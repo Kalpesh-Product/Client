@@ -152,7 +152,7 @@ export default function Listing() {
           : event
       )
     );
-    setOpenEventDetailsModal(false); // Close modal
+    setOpenEventDetailsModal(false); 
   };
 
   useEffect(() => {
@@ -238,7 +238,8 @@ export default function Listing() {
       {openBookingModal && (
         <NewModal
           open={openBookingModal}
-          onClose={() => setOpenBookingModal(false)}>
+          onClose={() => setOpenBookingModal(false)}
+        >
           <BookingForm
             handleClose={() => setOpenBookingModal(false)}
             newMeeting={newMeeting}
@@ -255,7 +256,8 @@ export default function Listing() {
       {openEventDetailsModal && selectedEvent && (
         <NewModal
           open={openEventDetailsModal}
-          onClose={() => setOpenEventDetailsModal(false)}>
+          onClose={() => setOpenEventDetailsModal(false)}
+        >
           <BookingDetails
             handleModalClose={() => setOpenEventDetailsModal(false)}
             selectedEvent={selectedEvent}

@@ -25,9 +25,17 @@ const login = async (req, res, next) => {
     if (!password)
       return res.status(400).json({ message: "Invalid credentials" });
 
-    const userExists = await User.findOne({ "personalInfo.email": email })
-      .lean()
-      .exec();
+    const userExists = await User.findOne({ email })
+      .select("name role email empId department")
+      .populate({
+        path: "department",
+        select: "name departmentId",
+      })
+      .populate({
+        path: "role", 
+        select: "roleTitle", 
+      })
+      .lean();
 
     if (!userExists) {
       await registerLogs({
@@ -39,26 +47,12 @@ const login = async (req, res, next) => {
       return res.status(404).json({ message: "Invalid credentials" });
     }
 
-    const isPasswordValid = await bcrypt.compare(
-      password,
-      userExists.credentials.password
-    );
-    if (!isPasswordValid) {
-      await registerLogs({
-        email,
-        status: "failed",
-        ip: ipAddress,
-        message: "Invalid credentials format",
-      });
-      return res.status(400).json({ message: "Invalid credentials" });
-    }
-
     const accessToken = jwt.sign(
       {
         userInfo: {
           userId: userExists._id,
           role: userExists.role,
-          email: userExists.personalInfo.email,
+          email: userExists.email,
         },
       },
       process.env.ACCESS_TOKEN_SECRET,
@@ -67,7 +61,7 @@ const login = async (req, res, next) => {
 
     const refreshToken = jwt.sign(
       {
-        email: userExists.personalInfo.email,
+        email: userExists.email,
       },
       process.env.REFRESH_TOKEN_SECRET,
       { expiresIn: "30d" }
@@ -88,10 +82,6 @@ const login = async (req, res, next) => {
       secure: true,
       maxAge: 30 * 24 * 60 * 60 * 1000,
     });
-
-    delete userExists.refreshToken;
-    delete userExists.credentials.password;
-    delete userExists.updatedAt;
 
     res.status(200).json({ user: userExists, accessToken });
   } catch (error) {
@@ -132,72 +122,4 @@ const logOut = async (req, res, next) => {
   }
 };
 
-const createUser = async (req, res, next) => {
-  try {
-    const {
-      name,
-      phone,
-      email,
-      role,
-      department,
-      designation,
-      company,
-      selectedServices,
-      empId,
-    } = req.body;
-
-    // Validate required fields
-    if (!name || !phone || !email || !designation || !company || !empId) {
-      return res
-        .status(400)
-        .json({ message: "Invalid data: Missing required fields" });
-    }
-
-    // Validate email format
-    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    if (!emailRegex.test(email)) {
-      return res.status(400).json({ message: "Invalid email format" });
-    }
-
-    // Check if the user already exists
-    const userExists = await User.findOne({ email }).lean().exec();
-    if (userExists) {
-      return res.status(409).json({ message: "User already exists" });
-    }
-
-    // Generate password
-    const password = generatePassword(8, {
-      upper: true,
-      lower: true,
-      number: true,
-      symbol: true,
-    });
-
-    // Hash password
-    const hashPwd = await bcrypt.hash(password, 10);
-
-    // Create new user instance
-    const newUser = new User({
-      empId,
-      name,
-      email,
-      role: role || "masterAdmin", // Default to "masterAdmin" if role is not provided
-      department,
-      selectedServices,
-      password: hashPwd,
-      designation,
-      company,
-      phone,
-    });
-
-    // Send email with user credentials
-    const userMailOptions = emailTemplates(email, name, password);
-    await Promise.all([newUser.save(), mailer.sendMail(userMailOptions)]);
-
-    res.status(201).json({ message: "User created successfully" });
-  } catch (error) {
-    next(error);
-  }
-};
-
-module.exports = { login, logOut, createUser };
+module.exports = { login, logOut };

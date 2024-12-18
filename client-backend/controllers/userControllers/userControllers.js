@@ -42,7 +42,6 @@ const createUser = async (req, res, next) => {
       companyId,
     } = req.body;
 
-    console.log(req.body);
 
     // Validate the company using _id
     const company = await CompanyData.findOne({ companyId });
@@ -135,7 +134,7 @@ const createUser = async (req, res, next) => {
     });
   } catch (error) {
     console.error("Error adding user:", error.message);
-    res.status(500).json({ error: error.message });
+    next(error);
   }
 };
 

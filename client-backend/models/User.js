@@ -53,6 +53,9 @@ const userSchema = new mongoose.Schema({
     required: true,
     unique: true,
   },
+  password:{
+    type: String,
+  },
   phone: {
     type: String,
     required: true,
@@ -146,9 +149,7 @@ const userSchema = new mongoose.Schema({
       ref: "User",
     },
   ],
-  refreshToken: {
-    type: String,
-  },
+  refreshToken: String,
 });
 
 const User = mongoose.model("User", userSchema);
