@@ -117,7 +117,7 @@ const PCFixesLineGraph = ({ data }) => {
       <div className="p-4 bg-white text-black rounded-lg text-center">
         <h3 className="text-sm font-semibold">PC Fixes Over Time</h3>
         <div className="h-full w-full mt-3">
-          <Line data={chartData} options={chartOptions} />
+          <Line style={{width:'100%', height:'100%'}} data={chartData} options={chartOptions} />
         </div>
       </div>
     );

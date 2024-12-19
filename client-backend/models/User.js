@@ -27,6 +27,10 @@ const userSchema = new mongoose.Schema({
       ref: "Department",
     },
   ],
+  designation: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Designation",
+  },
   fatherName: {
     type: String,
   },

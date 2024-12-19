@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import ModuleSidebar from "../../components/ModuleSidebar";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import TestSide from "../../components/Sidetest";
 import PayRollDash from "../hr/payroll/PayRollDash";
 import {
@@ -100,6 +100,9 @@ import Payslips from "../hr/payslips/Payslips";
 import Onboarding from "../hr/onboarding/Onboarding";
 import CompanySettings from "../hr/company-settings/CompanySettings";
 import AllTickets from "../cms/tickets/AllTickets";
+import { IoMdClose } from "react-icons/io";
+import AntiqueCafe from "../../assets/builder-preview/cafe-antique.png";
+import Caffo from "../../assets/builder-preview/cafe-caffo.png";
 
 const DepartmentDash = () => {
   const navigate = useNavigate();
@@ -132,56 +135,41 @@ const DepartmentDash = () => {
     boxShadow: 24,
     p: 4,
   };
-  const products = [
+  const themes = [
     {
       id: 1,
-      name: "Theme 1",
-      price: "Free",
-      image: "https://via.placeholder.com/150",
+      name: "Cafe Template",
+      description: "A clean and minimalistic HTML template",
+      folder: "/templates/template-1",
+      image: AntiqueCafe,
+      features: [
+        "Responsive Design",
+        "Cross-Browser Compatibility",
+        "Search Engine Optimization",
+        "Customizable Colors",
+      ],
+      demoLink: "/templates/template-1/index.html",
     },
     {
       id: 2,
-      name: "Theme 2",
-      price: "Free",
-      image: "https://via.placeholder.com/150",
-    },
-    {
-      id: 3,
-      name: "Theme 3",
-      price: "Free",
-      image: "https://via.placeholder.com/150",
-    },
-    {
-      id: 4,
-      name: "Theme 4",
-      price: "Free",
-      image: "https://via.placeholder.com/150",
-    },
-    {
-      id: 5,
-      name: "Theme 5",
-      price: "Free",
-      image: "https://via.placeholder.com/150",
-    },
-    {
-      id: 6,
-      name: "Theme 6",
-      price: "Free",
-      image: "https://via.placeholder.com/150",
-    },
-    {
-      id: 7,
-      name: "Theme 7",
-      price: "Free",
-      image: "https://via.placeholder.com/150",
-    },
-    {
-      id: 8,
-      name: "Theme 8",
-      price: "Free",
-      image: "https://via.placeholder.com/150",
+      name: "Cafe Template",
+      description: "A clean and minimalistic HTML template",
+      folder: "/templates/template-2",
+      image: Caffo,
+      features: [
+        "Responsive Design",
+        "Cross-Browser Compatibility",
+        "Search Engine Optimization",
+        "Customizable Colors",
+      ],
+      demoLink: "/templates/template-2/index.html",
     },
   ];
+  const { id } = useParams(); // Extract ID from the route
+
+  const selectedTheme = id
+    ? themes.find((theme) => theme.id === parseInt(id, 10))
+    : null;
 
   const techWidgetsData = {
     activeTickets: 8,
@@ -224,6 +212,12 @@ const DepartmentDash = () => {
   ];
 
   const techWidgets = [
+    {
+      heading: "Budget",
+      widgets: [
+        <PCFixesLineGraph />,
+      ],
+    },
     {
       heading: "Website Data",
       widgets: [
@@ -412,7 +406,7 @@ const DepartmentDash = () => {
             {location.pathname === "/frontend" ||
             location.pathname === "/frontend/dashboard" ? (
               <div>
-                <div className="bg-gray-100 p-4 rounded-lg">
+                <div className="bg-gray-100 p-4 rounded-lg h-screen overflow-auto">
                   <h1 className="text-3xl font-bold mb-4">
                     Frontend Dashboard
                   </h1>
@@ -504,22 +498,24 @@ const DepartmentDash = () => {
               <div className="p-6 w-full">
                 <h2 className="text-2xl font-bold mb-6">Themes</h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                  {products.map((product) => (
+                  {themes.map((theme) => (
                     <div
-                      key={product.id}
+                      key={theme.id}
                       className="bg-gray-100 rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow"
                     >
                       <img
-                        src={product.image}
-                        alt={product.name}
+                        src={theme.image}
+                        alt={theme.name}
                         className="w-full h-48 object-cover"
                       />
                       <div className="p-4">
-                        <h3 className="text-lg font-semibold">
-                          {product.name}
-                        </h3>
-                        <p className="text-gray-500">{product.price}</p>
-                        <button className="mt-4 w-full wono-blue-dark text-white py-2 rounded-lg hover:bg-blue-600 transition">
+                        <h3 className="text-lg font-semibold">{theme.name}</h3>
+                        <button
+                          onClick={() =>
+                            navigate(`/frontend/themes/view-theme/${theme.id}`)
+                          }
+                          className="mt-4 w-full wono-blue-dark text-white py-2 rounded-lg hover:bg-blue-600 transition"
+                        >
                           View Details
                         </button>
                       </div>
@@ -527,6 +523,82 @@ const DepartmentDash = () => {
                   ))}
                 </div>
               </div>
+            ) : location.pathname.includes("/frontend/themes/view-theme/") &&
+              selectedTheme ? (
+              <>
+                <div className="p-6 w-full">
+                  <h2 className="text-2xl font-bold mb-6">
+                    {selectedTheme.name}
+                  </h2>
+                  <div className="flex flex-col lg:flex-row justify-between gap-16">
+                    <div className="h-[40vh] flex flex-col justify-between">
+                      <p className="text-gray-700 mb-6">
+                        {selectedTheme.description}
+                      </p>
+                      <ul className="list-disc pl-5 mb-6">
+                        {selectedTheme.features.map((feature, index) => (
+                          <li key={index} className="text-gray-600">
+                            {feature}
+                          </li>
+                        ))}
+                      </ul>
+                      <div className="flex justify-between gap-4">
+                        <button
+                          onClick={() => {
+                            setOpen(true);
+                          }}
+                          className="wono-blue-dark w-[50%] text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition"
+                        >
+                          View Demo
+                        </button>
+                        <button
+                          onClick={()=>{
+                            toast.success("Coming Soon")
+                          }}
+                          className="wono-blue-dark w-[50%] text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition"
+                        >
+                          Edit
+                        </button>
+
+                      </div>
+                    </div>
+                    <div className="w-[50%]">
+                      <img
+                        src={selectedTheme.image}
+                        alt={selectedTheme.name}
+                        className="w-full  lg:rounded-lg lg:h-full shadow-md object-cover"
+                      />
+                    </div>
+                  </div>
+                  <button
+                    onClick={() => navigate("/frontend/themes")}
+                    className="mt-8 text-blue-500 underline"
+                  >
+                    Go Back
+                  </button>
+                </div>
+
+                <NewModal open={open} onClose={handleClose}>
+                  <div className="motion-preset-expand w-full h-full">
+                    <div className="flex justify-end mb-4">
+                      <motion.button
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.9 }}
+                        type="button"
+                        onClick={handleClose}
+                        className="p-2 bg-white text-[red] border border-red-200 hover:border-red-400 text-2xl rounded-md"
+                      >
+                        <IoMdClose />
+                      </motion.button>
+                    </div>
+                    <iframe
+                      src={selectedTheme.demoLink}
+                      title="Theme Demo"
+                      className="w-full h-full rounded-lg shadow-md"
+                    ></iframe>
+                  </div>
+                </NewModal>
+              </>
             ) : location.pathname === "/frontend/budget" ? (
               <div>
                 <div>
@@ -1020,13 +1092,7 @@ const DepartmentDash = () => {
           <></>
         )}
       </div>
-      <div>
-        <NewModal open={open} onClose={handleClose}>
-          <div className="motion-preset-expand">
-            <AddAssetForm title={"Add Asset"} handleClose={handleClose} />
-          </div>
-        </NewModal>
-      </div>
+      <div></div>
       <div>
         {/* <Button onClick={handleOpenTicket}>Open modal</Button> */}
         <Modal

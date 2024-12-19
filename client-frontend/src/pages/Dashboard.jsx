@@ -50,7 +50,7 @@ export const WidgetSection = ({ heading, widgets }) => (
       {widgets.map((Widget, index) => (
         <div
           key={index}
-          className="bg-white p-0 shadow-md rounded-lg h-full overflow-auto motion-preset-expand"
+          className="bg-white p-0 shadow-md rounded-lg w-full h-full overflow-auto motion-preset-expand"
         >
           {Widget}
         </div>
@@ -179,6 +179,8 @@ const Dashboard = () => {
     },
   ];
 
+  console.log(auth)
+
   return (
     <div className="flex h-screen">
       {/* Sidebar */}
@@ -193,10 +195,10 @@ const Dashboard = () => {
       <div className="flex-1 bg-gray-100 p-8 overflow-y-auto">
         {/* Heading 1 */}
         <h1 className="text-3xl motion-preset-slide-right-md font-bold">
-          {auth.user.name}'s Dashboard
+          {auth?.user?.name}'s Dashboard
         </h1>
         <h2 className="my-5 motion-preset-slide-right-md">
-          BIZ Nest-{auth.user.role.roleTitle}-
+          BIZ Nest-{auth?.user?.role?.roleTitle}-
           {auth.user.department.length > 1
             ? auth.user.department.map((dept) => dept.name).join(", ")
             : auth.user.department[0].name}
