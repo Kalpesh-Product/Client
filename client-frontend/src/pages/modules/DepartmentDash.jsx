@@ -103,6 +103,7 @@ import AllTickets from "../cms/tickets/AllTickets";
 import { IoMdClose } from "react-icons/io";
 import AntiqueCafe from "../../assets/builder-preview/cafe-antique.png";
 import Caffo from "../../assets/builder-preview/cafe-caffo.png";
+import EditTemplate from "../website-builder/EditTemplate";
 
 const DepartmentDash = () => {
   const navigate = useNavigate();
@@ -214,9 +215,7 @@ const DepartmentDash = () => {
   const techWidgets = [
     {
       heading: "Budget",
-      widgets: [
-        <PCFixesLineGraph />,
-      ],
+      widgets: [<PCFixesLineGraph />],
     },
     {
       heading: "Website Data",
@@ -543,23 +542,33 @@ const DepartmentDash = () => {
                         ))}
                       </ul>
                       <div className="flex justify-between gap-4">
-                        <button
+                        {/* <button
                           onClick={() => {
                             setOpen(true);
                           }}
                           className="wono-blue-dark w-[50%] text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition"
                         >
                           View Demo
+                        </button> */}
+
+                        <button
+                          onClick={() =>
+                            window.open(selectedTheme.demoLink, "_blank")
+                          }
+                          className="wono-blue-dark text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition"
+                        >
+                          View Demo
                         </button>
                         <button
-                          onClick={()=>{
-                            toast.success("Coming Soon")
-                          }}
+                          onClick={() =>
+                            navigate("/frontend/themes/edit-template", {
+                              state: { template: selectedTheme },
+                            })
+                          }
                           className="wono-blue-dark w-[50%] text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition"
                         >
                           Edit
                         </button>
-
                       </div>
                     </div>
                     <div className="w-[50%]">
@@ -599,6 +608,12 @@ const DepartmentDash = () => {
                   </div>
                 </NewModal>
               </>
+            ) : location.pathname.includes("/frontend/themes/edit-template") ? (
+              <div>
+                <div>
+                  <EditTemplate />
+                </div>
+              </div>
             ) : location.pathname === "/frontend/budget" ? (
               <div>
                 <div>
