@@ -176,6 +176,18 @@ const router = createBrowserRouter([
                 element: <DepartmentDash />,
               },
               {
+                path: "/hr/payroll/value",
+                element: <DepartmentDash />,
+              },
+              {
+                path: "/hr/payroll/employee-count",
+                element: <DepartmentDash />,
+              },
+              {
+                path: "/hr/payroll/due-payout",
+                element: <DepartmentDash />,
+              },
+              {
                 path: "/hr/company-settings",
                 element: <DepartmentDash />,
               },

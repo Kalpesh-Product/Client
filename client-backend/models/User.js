@@ -10,6 +10,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+
   gender: {
     type: String,
     enum: ["Male", "Female", "Other"],
@@ -27,6 +28,10 @@ const userSchema = new mongoose.Schema({
       ref: "Department",
     },
   ],
+  designation: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Designation",
+  },
   fatherName: {
     type: String,
   },
@@ -53,7 +58,7 @@ const userSchema = new mongoose.Schema({
     required: true,
     unique: true,
   },
-  password:{
+  password: {
     type: String,
   },
   phone: {

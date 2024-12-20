@@ -1,31 +1,30 @@
 import DepartmentPayrollChart from "./components/DepartmentPayrollChart";
-import PayrollSummary from "./components/PayrollSummary";
 import PayrollWidgets from "./components/PayrollWidgets";
 import AgTable from "../../../components/AgTable";
 import { dummyData } from "../../../utils/payrollData";
 import { FormControl, MenuItem, Select } from "@mui/material";
 import { useState, useEffect } from "react";
 import { CSVLink } from "react-csv";
-import PayrollTimeLine from "./components/PayrollTimeLine";
 import MyPayroll from "./components/MyPayroll";
 import MyPayslips from "./components/MyPayslips";
 import useAuth from "../../../hooks/useAuth";
+import EmployeeCount from "./components/EmployeeCount";
 
 const widgets = [
   {
     id: 1,
     title: "Payroll Cost",
-    content: "₹ 150000000",
+    content: "₹ 15000000",
   },
   {
     id: 2,
-    title: "Pending Payments",
-    content: "₹ 45000",
+    title: "Total Employee count",
+    content: "5",
   },
   {
     id: 3,
-    title: "Total Payrolls",
-    content: "200",
+    title: "Due Payout",
+    content: "₹ 200000",
   },
 ];
 export const columns = [
@@ -125,6 +124,7 @@ export default function PayRollDash() {
             {widgets.map((item) => {
               return (
                 <PayrollWidgets
+                  id={item.id}
                   key={item.id}
                   title={item.title}
                   content={item.content}
@@ -133,14 +133,11 @@ export default function PayRollDash() {
             })}
           </div>
           <div className="flex flex-col lg:flex-row gap-4 bg-gray-100 w-full">
-            <div className="bg-white rounded-lg shadow-md flex-1 p-4 max-w-full lg:max-w-full">
-              <DepartmentPayrollChart />
-            </div>
-            <div className="bg-white rounded-lg shadow-md flex-1 p-4 max-w-full lg:max-w-full">
-              <PayrollSummary />
-            </div>
+            <DepartmentPayrollChart />
+
+            <EmployeeCount />
           </div>
-          <div className="bg-white rounded-md p-2 mt-4 flex flex-col gap-2">
+          {/* <div className="bg-white rounded-md p-2 mt-4 flex flex-col gap-2">
             <div className="flex justify-between items-center">
               <FormControl className="w-full md:w-1/4">
                 <Select
@@ -174,17 +171,13 @@ export default function PayRollDash() {
               highlightFirstRow={false}
               highlightEditedRow={false}
             />
-          </div>
-          <div className="mt-4">
-            <PayrollTimeLine />
-          </div>
+          </div> */}
+          <div className="mt-4"></div>
         </>
       ) : null}
 
-      <MyPayroll payrollDetails={examplePayroll} />
-      <div>
-        <MyPayslips />
-      </div>
+      {/* <MyPayroll payrollDetails={examplePayroll} /> */}
+      <div>{/* <MyPayslips /> */}</div>
     </div>
   );
 }

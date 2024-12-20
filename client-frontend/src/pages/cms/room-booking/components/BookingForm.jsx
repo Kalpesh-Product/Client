@@ -12,6 +12,8 @@ import {
 } from "@mui/material";
 import "dayjs/locale/en-gb";
 import Select from "react-select";
+import { useQuery } from "@tanstack/react-query";
+import { api } from "../../../../utils/axios";
 import {
   DatePicker,
   TimePicker,
@@ -64,10 +66,21 @@ export default function BookingForm({
   const [credits, setCredits] = useState(500);
   const [participants, setParticipants] = useState([]);
 
+  const { isLoading, data, error } = useQuery({
+    queryKey: ["users"],
+    queryFn: async function () {
+      try {
+        const response = await api.get("/api/users/fetch-users");
+        return response.data;
+      } catch (error) {
+        throw new Error(error.response.data.message);
+      }
+    },
+  });
+
   useEffect(() => {
-    const loggedInUser = JSON.parse(localStorage.getItem("user"));
     const filteredList = participantsList.filter(
-      (item) => item.label !== loggedInUser.email
+      (item) => item.label !== loggedInUser.user.email
     );
     setParticipants(filteredList);
   }, [participantsList]);
@@ -104,6 +117,7 @@ export default function BookingForm({
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="en-gb">
+      {isLoading ? null : console.log(data)}
       <div className="mx-auto p-6 bg-white w-[50vw]">
         <FormStepper steps={steps} handleClose={handleClose}>
           {(activeStep, handleNext) => {
@@ -186,7 +200,7 @@ export default function BookingForm({
                         label="Name"
                         type="text"
                         name="name"
-                        value={loggedInUser.name}
+                        value={loggedInUser.user.name}
                         onChange={handleChange}
                         placeholder="Enter your name"
                         fullWidth
@@ -277,8 +291,14 @@ export default function BookingForm({
                       </label>
                       <Select
                         isMulti
-                        options={participants}
-                        value={selectedParticipants}
+                        options={
+                          isLoading
+                            ? []
+                            : data.users.map((user) => ({
+                                label: user.email, 
+                                value: user.email, 
+                              }))
+                        }
                         onChange={handleParticipantsChange}
                         placeholder="Select participants"
                         className="basic-multi-select"

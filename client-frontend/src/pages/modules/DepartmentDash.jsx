@@ -100,6 +100,9 @@ import Payslips from "../hr/payslips/Payslips";
 import Onboarding from "../hr/onboarding/Onboarding";
 import CompanySettings from "../hr/company-settings/CompanySettings";
 import AllTickets from "../cms/tickets/AllTickets";
+import PayrollValue from "../hr/payroll/PayrollValue";
+import EmployeeCountTable from "../hr/payroll/EmployeeCountTable";
+import DuePayout from "../hr/payroll/DuePayout";
 
 const DepartmentDash = () => {
   const navigate = useNavigate();
@@ -729,6 +732,18 @@ const DepartmentDash = () => {
             ) : location.pathname === "/hr/payroll" ? (
               <>
                 <PayRollDash />
+              </>
+            ) : location.pathname === "/hr/payroll/value" ? (
+              <>
+                <PayrollValue />
+              </>
+            ) : location.pathname === "/hr/payroll/employee-count" ? (
+              <>
+                <EmployeeCountTable />
+              </>
+            ) : location.pathname === "/hr/payroll/due-payout" ? (
+              <>
+                <DuePayout />
               </>
             ) : (
               <></>

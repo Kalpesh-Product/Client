@@ -1,17 +1,44 @@
 import React from "react";
-import { Doughnut } from "react-chartjs-2";
+import { Pie } from "react-chartjs-2";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
+import { useQuery } from "@tanstack/react-query";
+import { api } from "../../../../utils/axios";
 
-// Register necessary Chart.js components
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-const DepartmentPayrollChart = () => {
-  const data = {
-    labels: ["Finance", "HR", "Tech", "IT", "Sales", "Administration"],
+export default function EmployeeCount() {
+  const { isLoading, data, error } = useQuery({
+    queryKey: ["users"],
+    queryFn: async function () {
+      try {
+        const response = await api.get("/api/users/fetch-users");
+        return response.data;
+      } catch (error) {
+        throw new Error(error.response.data.message);
+      }
+    },
+  });
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
+
+  const departmentCount = data.users.reduce((acc, user) => {
+    user.department.forEach((dept) => {
+      acc[dept.name] = (acc[dept.name] || 0) + 1;
+    });
+    return acc;
+  }, {});
+
+  const chartData = {
+    labels: Object.keys(departmentCount),
     datasets: [
       {
-        label: "Payroll Distribution",
-        data: [35000, 15000, 20000, 25000, 18000, 45000],
+        data: Object.values(departmentCount),
         backgroundColor: [
           "#264653",
           "#2A9D8F",
@@ -26,7 +53,7 @@ const DepartmentPayrollChart = () => {
     ],
   };
 
-  const options = {
+  const chartOptions = {
     responsive: true,
     maintainAspectRatio: false, // Prevent automatic resizing
     plugins: {
@@ -37,7 +64,7 @@ const DepartmentPayrollChart = () => {
         callbacks: {
           label: function (context) {
             const value = context.raw;
-            return `₹${value.toLocaleString()}`;
+            return `${value} Employee${value > 1 ? "s" : ""}`;
           },
         },
       },
@@ -47,7 +74,7 @@ const DepartmentPayrollChart = () => {
   return (
     <div className="bg-white p-4 w-full">
       <h2 className="text-lg font-bold mb-4 text-gray-700">
-        Department-wise Payroll Split
+        Department-wise Employee Count
       </h2>
       <div className="flex justify-center items-center">
         <div
@@ -56,13 +83,10 @@ const DepartmentPayrollChart = () => {
             height: "300px", // Explicit size for the chart container
           }}
         >
-          <Doughnut data={data} options={options} />
+          <Pie data={chartData} options={chartOptions} />
         </div>
       </div>
     </div>
   );
-};
+}
 
-
-
-export default DepartmentPayrollChart;

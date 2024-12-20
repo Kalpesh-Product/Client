@@ -13,8 +13,10 @@ import { v4 as uuid } from "uuid";
 import { roomBookings } from "../../../utils/roomBookings";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
+import useAuth from "../../../hooks/useAuth";
 
 export default function Listing() {
+  const { auth: loggedInUser } = useAuth();
   const { data: roomList } = useQuery({
     queryKey: ["rooms"],
     queryFn: async () => {
@@ -48,8 +50,6 @@ export default function Listing() {
     backgroundColor: "",
   });
 
-  const [loggedInUser, setLoggedInUser] = useState(null);
-
   const handleDateClick = (e) => {
     const now = new Date();
     const formattedTime = format(now, "HH:mm");
@@ -60,7 +60,7 @@ export default function Listing() {
     setNewMeeting((prev) => ({
       ...prev,
       startDate: e.dateStr,
-      endDate: e.dateStr, // Default to the same day initially
+      endDate: e.dateStr,
       startTime: formattedTime,
       endTime: timePlus30,
     }));
@@ -126,20 +126,19 @@ export default function Listing() {
           ? {
               ...event,
               title: updatedMeeting.subject,
-              start: event.start, // Preserve existing start time
-              end: event.end, // Preserve existing end time
+              start: event.start,
+              end: event.end,
               extendedProps: {
-                ...event.extendedProps, // Merge extendedProps
+                ...event.extendedProps,
                 ...updatedMeeting,
               },
             }
           : event
       )
     );
-    setOpenEventDetailsModal(false); // Close modal
+    setOpenEventDetailsModal(false);
   };
 
-  // **Handle Extend Time Function**
   const handleExtendTime = (eventId, extendedTime) => {
     setEvents((prevEvents) =>
       prevEvents.map((event) =>
@@ -152,13 +151,8 @@ export default function Listing() {
           : event
       )
     );
-    setOpenEventDetailsModal(false); 
+    setOpenEventDetailsModal(false);
   };
-
-  useEffect(() => {
-    const authenticatedUser = localStorage.getItem("user");
-    setLoggedInUser(JSON.parse(authenticatedUser));
-  }, []);
 
   return (
     <section className="h-screen overflow-y-auto top-0 p-4">
@@ -215,7 +209,6 @@ export default function Listing() {
             const date = new Date(arg.date);
             const today = new Date();
 
-            // Add a custom class to past dates
             if (date < today.setHours(0, 0, 0, 0)) {
               return "disabled-date";
             }
@@ -234,7 +227,6 @@ export default function Listing() {
         />
       </div>
 
-      {/* Booking Modal */}
       {openBookingModal && (
         <NewModal
           open={openBookingModal}
@@ -252,7 +244,6 @@ export default function Listing() {
         </NewModal>
       )}
 
-      {/* Event Details Modal */}
       {openEventDetailsModal && selectedEvent && (
         <NewModal
           open={openEventDetailsModal}
