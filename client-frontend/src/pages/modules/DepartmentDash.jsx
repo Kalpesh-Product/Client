@@ -4,7 +4,8 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import TestSide from "../../components/Sidetest";
 import PayRollDash from "../hr/payroll/PayRollDash";
 import {
-  ActiveTickets,
+  BudgetApproval,
+  CountCard,
   CriticalAlerts,
   PendingTasks,
   ResolvedIssues,
@@ -104,6 +105,9 @@ import { IoMdClose } from "react-icons/io";
 import AntiqueCafe from "../../assets/builder-preview/cafe-antique.png";
 import Caffo from "../../assets/builder-preview/cafe-caffo.png";
 import EditTemplate from "../website-builder/EditTemplate";
+import LineGraph from "../../components/Graphs/LineGraph";
+import BarGraphMUI from "../../components/Graphs/BarGraphMUI";
+import PieChartMUI from "../../components/Graphs/PieChartMUI";
 
 const DepartmentDash = () => {
   const navigate = useNavigate();
@@ -144,10 +148,11 @@ const DepartmentDash = () => {
       folder: "/templates/template-1",
       image: AntiqueCafe,
       features: [
-        "Responsive Design",
-        "Cross-Browser Compatibility",
-        "Search Engine Optimization",
-        "Customizable Colors",
+        "Website / Native Apps",
+        "Payment Gateway",
+        "Booking Engine",
+        "Customer Profile",
+        "No Code & Self-Serve",
       ],
       demoLink: "/templates/template-1/index.html",
     },
@@ -179,6 +184,7 @@ const DepartmentDash = () => {
     serverUptime: "99.8%",
     criticalAlerts: 2,
   };
+
   const HrWidgetsData = {
     employeeCount: 150,
     leaveRequests: 12,
@@ -211,32 +217,268 @@ const DepartmentDash = () => {
       ],
     },
   ];
+  const techAllocatedBudgetData = {
+    labels: [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ],
+    datasets: [
+      {
+        label: "Approved Budget ($)",
+        data: [
+          4000, 6500, 7200, 8100, 9500, 10200, 9800, 11200, 10700, 12300, 11900,
+          13000,
+        ],
+        borderColor: "rgba(54, 162, 235, 1)",
+        backgroundColor: "rgba(54, 162, 235, 0.2)",
+        tension: 0.4,
+      },
+    ],
+  };
+  const techUtilisedBudgetData = {
+    labels: [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ],
+    datasets: [
+      {
+        label: "Approved Budget ($)",
+        data: [
+          3000, 7500, 4200, 3100, 8500, 10300, 9800, 11300, 13700, 15300, 16900,
+          23000,
+        ],
+        borderColor: "rgba(54, 162, 235, 1)",
+        backgroundColor: "rgba(54, 162, 235, 0.2)",
+        tension: 0.4,
+      },
+    ],
+  };
+  const techUniqueData = {
+    months: [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ],
+    data: [15, 12, 4, 2, 5, 14, 12, 4, 1, 4, 5, 6],
+  };
+  const techSiteVisitors = {
+    months: [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ],
+    data: [15, 12, 4, 2, 5, 14, 12, 4, 1, 4, 5, 6],
+  };
+  const techTotalComplaints = {
+    labels: [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ],
+    datasets: [
+      {
+        label: "Total Complaints",
+        data: [15, 10, 2, 5, 6, 2, 5, 10, 12, 7, 2, 2],
+        borderColor: "rgba(54, 162, 235, 1)",
+        backgroundColor: "rgba(54, 162, 235, 0.2)",
+        tension: 0.4,
+      },
+    ],
+  };
+  const techPendingComplaints = {
+    labels: [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ],
+    datasets: [
+      {
+        label: "Pending Complaints",
+        data: [5, 0, 2, 1, 0, 1, 3, 5, 1, 1, 1, 2],
+        borderColor: "rgba(54, 162, 235, 1)",
+        backgroundColor: "rgba(54, 162, 235, 0.2)",
+        tension: 0.4,
+      },
+    ],
+  };
+
+  const techIndiaVisitors = [
+    { id: 0, value: 25, label: "Mumbai" },
+    { id: 1, value: 20, label: "Delhi" },
+    { id: 2, value: 15, label: "Bangalore" },
+    { id: 3, value: 20, label: "Goa" },
+    { id: 4, value: 30, label: "Chennai" },
+  ];
+  const techGoaVisitors = [
+    { id: 0, value: 5, label: "Panaji" },
+    { id: 1, value: 2, label: "Margao" },
+    { id: 2, value: 3, label: "Mapusa" },
+    { id: 3, value: 3, label: "Ponda" },
+    { id: 4, value: 6, label: "Verna" },
+  ];
 
   const techWidgets = [
     {
-      heading: "Budget",
-      widgets: [<PCFixesLineGraph />],
-    },
-    {
-      heading: "Website Data",
+      heading: "Annual Budget Allotted",
       widgets: [
-        <ActiveTickets count={techWidgetsData.activeTickets} />,
-        <PendingTasks count={techWidgetsData.pendingTasks} />,
-        <ResolvedIssues count={techWidgetsData.resolvedIssues} />,
+        <LineGraph
+          graphXaxis={techAllocatedBudgetData.labels}
+          graphYaxis={techAllocatedBudgetData.datasets}
+          xAxisLabel="Allocated Budget"
+          graphHeight={500}
+          graphWidth={1250}
+        />,
       ],
     },
     {
-      heading: "Personal Milestones",
+      heading: "Annual Budget Utilised",
       widgets: [
-        <ResolvedIssues count={techWidgetsData.resolvedIssues} />,
-        <ServerUptime uptime={techWidgetsData.serverUptime} />,
+        <LineGraph
+          graphXaxis={techUtilisedBudgetData.labels}
+          graphYaxis={techUtilisedBudgetData.datasets}
+          graphHeight={500}
+          graphWidth={1250}
+        />,
       ],
     },
     {
-      heading: "Requirements",
+      heading: "Budget Data",
       widgets: [
-        <CriticalAlerts count={techWidgetsData.criticalAlerts} />,
-        <DoughnutChart />,
+        <CountCard
+          title="Projected Per Unit Cost"
+          count="3000"
+          totalMonths="12"
+          deptCount="5"
+          annualCost="10000"
+          monthsPeriod="Total"
+        />,
+        <CountCard
+          title="Actual Per Unit Cost"
+          count="3000"
+          totalMonths="12"
+          deptCount="5"
+          annualCost="10000"
+          monthsPeriod="Existing"
+        />,
+        <BudgetApproval
+          title="Additional Budget Requested"
+          count="6000"
+          budgetStatus={false}
+        />,
+      ],
+    },
+    {
+      heading: "Unique Data",
+      widgets: [
+        <BarGraphMUI
+          graphHeight={400}
+          graphWidth={600}
+          title={"Unique Companies"}
+        />,
+        <BarGraphMUI
+          graphHeight={400}
+          graphWidth={600}
+          title={"Unique Customers"}
+          data={techUniqueData}
+        />,
+      ],
+    },
+    {
+      heading: "Total Complaints",
+      widgets: [
+        <LineGraph
+          graphXaxis={techAllocatedBudgetData.labels}
+          graphYaxis={techTotalComplaints.datasets}
+          xAxisLabel="Total Complaints"
+          graphHeight={500}
+          graphWidth={1180}
+        />,
+      ],
+    },
+    {
+      heading: "Pending Complaints",
+      widgets: [
+        <LineGraph
+          graphXaxis={techAllocatedBudgetData.labels}
+          graphYaxis={techPendingComplaints.datasets}
+          xAxisLabel="Pending Complaints"
+          graphHeight={500}
+          graphWidth={1180}
+        />,
+      ],
+    },
+    {
+      heading: "Site Visitors",
+      widgets: [
+        <BarGraphMUI
+          graphHeight={400}
+          graphWidth={1100}
+          title={"Site Visitors"}
+          data={techSiteVisitors}
+        />,
+      ],
+    },
+    {
+      heading: "Visitor Analytics",
+      widgets: [
+        <PieChartMUI data={techIndiaVisitors} />,
+        <PieChartMUI data={techGoaVisitors} />,
       ],
     },
   ];
@@ -405,7 +647,7 @@ const DepartmentDash = () => {
             {location.pathname === "/frontend" ||
             location.pathname === "/frontend/dashboard" ? (
               <div>
-                <div className="bg-gray-100 p-4 rounded-lg h-screen overflow-auto">
+                <div className="bg-gray-100 p-4 rounded-lg h-screen overflow-auto w-full">
                   <h1 className="text-3xl font-bold mb-4">
                     Frontend Dashboard
                   </h1>
@@ -496,18 +738,24 @@ const DepartmentDash = () => {
             ) : location.pathname === "/frontend/themes" ? (
               <div className="p-6 w-full">
                 <h2 className="text-2xl font-bold mb-6">Themes</h2>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6">
                   {themes.map((theme) => (
                     <div
                       key={theme.id}
-                      className="bg-gray-100 rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow"
+                      className="bg-gray-100 rounded-lg shadow-md overflow-visible hover:shadow-lg transition-shadow"
                     >
-                      <img
-                        src={theme.image}
-                        alt={theme.name}
-                        className="w-full h-48 object-cover"
-                      />
-                      <div className="p-4">
+                      <div className="w-full h-full overflow-hidden rounded-md">
+                        <img
+                          src={theme.image}
+                          alt={theme.name}
+                          onClick={() =>
+                            navigate(`/frontend/themes/view-theme/${theme.id}`)
+                          }
+                          className="w-full h-56 object-cover transform hover:scale-110 transition duration-300 hover:cursor-pointer"
+                        />
+                      </div>
+
+                      {/* <div className="p-4">
                         <h3 className="text-lg font-semibold">{theme.name}</h3>
                         <button
                           onClick={() =>
@@ -517,7 +765,7 @@ const DepartmentDash = () => {
                         >
                           View Details
                         </button>
-                      </div>
+                      </div> */}
                     </div>
                   ))}
                 </div>
@@ -530,18 +778,19 @@ const DepartmentDash = () => {
                     {selectedTheme.name}
                   </h2>
                   <div className="flex flex-col lg:flex-row justify-between gap-16">
-                    <div className="h-[40vh] flex flex-col justify-between">
-                      <p className="text-gray-700 mb-6">
+                    <div className="h-[45vh] flex flex-col justify-between">
+                      <h1 className="text-3xl font-semibold">INCLUSIONS</h1>
+                      {/* <p className="text-gray-700 mb-3">
                         {selectedTheme.description}
-                      </p>
-                      <ul className="list-disc pl-5 mb-6">
+                      </p> */}
+                      <ul className="list-disc pl-5 my-3 text-xl">
                         {selectedTheme.features.map((feature, index) => (
                           <li key={index} className="text-gray-600">
                             {feature}
                           </li>
                         ))}
                       </ul>
-                      <div className="flex justify-between gap-4">
+                      <div className="flex flex-col justify-between gap-2">
                         {/* <button
                           onClick={() => {
                             setOpen(true);
@@ -565,7 +814,7 @@ const DepartmentDash = () => {
                               state: { template: selectedTheme },
                             })
                           }
-                          className="wono-blue-dark w-[50%] text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition"
+                          className="wono-blue-dark w-full text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition"
                         >
                           Edit
                         </button>

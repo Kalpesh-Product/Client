@@ -36,10 +36,10 @@ import Sidetest from "../components/Sidetest";
 import TestSide from "../components/Sidetest";
 
 export const WidgetSection = ({ heading, widgets }) => (
-  <div className="mt-0">
-    <h2 className="text-2xl font-semibold">{heading}</h2>
+  <div className="my-3 rounded-md bg-white w-full p-2">
+    <h2 className="text-2xl font-semibold p-2 bg-white">{heading}</h2>
     <div
-      className={`grid gap-4 mt-3
+      className={`grid gap-4 mt-0
     grid-cols-1
     sm:grid-cols-${Math.min(widgets.length, 2)}
     md:grid-cols-${Math.min(widgets.length, 3)}
@@ -50,7 +50,7 @@ export const WidgetSection = ({ heading, widgets }) => (
       {widgets.map((Widget, index) => (
         <div
           key={index}
-          className="bg-white p-0 shadow-md rounded-lg w-full h-full overflow-auto motion-preset-expand"
+          className="bg-white p-0 shadow-md  w-full h-full overflow-auto motion-preset-expand"
         >
           {Widget}
         </div>
