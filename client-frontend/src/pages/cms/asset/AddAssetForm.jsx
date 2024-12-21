@@ -36,7 +36,7 @@ const AddAssetForm = ({ title, handleClose, user }) => {
   });
 
   const storedUser = user;
-  console.log("passed user :", storedUser.department);
+
 
   const assetTypes = ["Laptop", "Monitor", "Keyboard", "Mouse", "Headphones"];
   const departments = ["IT", "Maintainance", "Admin"];

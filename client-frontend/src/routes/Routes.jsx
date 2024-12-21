@@ -266,6 +266,14 @@ const router = createBrowserRouter([
                 element: <DepartmentDash />,
               },
               {
+                path: "/frontend/themes/view-theme/:id",
+                element: <DepartmentDash />,
+              },
+              {
+                path: "/frontend/themes/edit-template",
+                element: <DepartmentDash />,
+              },
+              {
                 path: "/frontend/updates",
                 element: <DepartmentDash />,
               },

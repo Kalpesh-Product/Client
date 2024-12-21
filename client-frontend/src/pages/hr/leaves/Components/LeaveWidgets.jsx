@@ -19,4 +19,4 @@ const LeaveWidgets = () => {
   );
 };
 
-export default LeaveWidgets;
+export default BasicCardCount;
