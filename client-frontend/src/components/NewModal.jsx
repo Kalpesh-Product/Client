@@ -8,8 +8,8 @@ export const NewModal = ({ open,  children, styles }) => {
       open={open}
       PaperProps={{
         style: {
-          width: "100%",
-          height: "100%",
+          width: "auto",
+          height: "auto",
           maxWidth: "90%", // Prevents it from being too wide
           maxHeight: "90%", // Prevents it from being too tall
           overflow: "auto", // Adds scroll if the content overflows

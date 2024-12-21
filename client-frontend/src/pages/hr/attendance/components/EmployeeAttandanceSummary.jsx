@@ -62,7 +62,7 @@ const EmployeeAttandanceSummary = () => {
       </FormControl>
 
       {/* Dashboard Widgets */}
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-3 cursor-pointer" onClick={() => navigate("hr/attandence/shift-time-usage")}>
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-3 cursor-pointer" onClick={() => navigate("/hr/attandence/shift-time-usage")}>
         {/* Employees Present */}
         <Card className="shadow-lg">
           <CardContent>

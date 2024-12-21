@@ -75,7 +75,8 @@ import { TicketsRemainingWidget } from "../cms/tickets/components/TicketWidgets/
 import MyTickets from "../cms/tickets/components/MyTickets";
 import Budget from "../Budget";
 import AttendanceDash from "../hr/attendance/AttendanceDash";
-import BasicCardCount from "../hr/leaves/Components/LeaveWidgets";
+import BasicCardCount from "../../components/Cards/BasicCardCount";
+import LeaveWidgets from "../hr/leaves/Components/LeaveWidgets";
 import LeaveWidget2 from "../hr/leaves/Components/LeaveWidget2";
 import LeaveWidget3 from "../hr/leaves/Components/LeaveWidget3";
 import LeaveWidget4 from "../hr/leaves/Components/LeaveWidget4";
@@ -732,16 +733,20 @@ const DepartmentDash = () => {
       heading: "Leave Management",
       subModule: "leaves",
       widgets: [
-        <BasicCardCount title={"Current Headcount"} data="6" />,
-        <BasicCardCount title={"Average Salary"} data={"45,000"} />,
-        <BasicCardCount title={"Average Monthly Employees"} data={"25"} />,
-        // <AssetsCount count={customerServiceWidgetsData.totalAssets} />,
-        // <MaintenanceRequests
-        //   requests={customerServiceWidgetsData.pendingMaintenance}
-        // />,
-        // <AssetsAssigned assigned={customerServiceWidgetsData.assignedAssets} />,
-        // <AssetsInRepair count={customerServiceWidgetsData.assetsInRepair} />,
-        // <NewAssetsAdded added={customerServiceWidgetsData.newAssetsAdded} />,
+        <LeaveWidgets />,
+        <LeaveWidget2 />,
+        <LeaveWidget3 />,
+        <LeaveWidget4 />,
+      ],
+    },
+    {
+      heading: "Company Handbook",
+      subModule: "company-handbook",
+      widgets: [
+        <SopLink />,
+        <PoliciesLink />,
+        // <LeaveWidget3 />,
+        // <LeaveWidget4 />,
       ],
     },
     {
