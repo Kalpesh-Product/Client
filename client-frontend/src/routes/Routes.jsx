@@ -170,10 +170,23 @@ const router = createBrowserRouter([
                 path: "/hr/leaves/leave-reports",
                 element: <DepartmentDash />,
               },
+             
 
               {
                 path: "/hr/payroll",
                 element: <DepartmentDash />,
+              },
+              {
+                path: "/hr/events",
+                element: <DepartmentDash/>
+              },
+              {
+                path:"/hr/cvdump",
+                element: <DepartmentDash/>
+              },
+              {
+                path:"/hr/cvdump/applicants",
+                element: <DepartmentDash/>
               },
               {
                 path: "/hr/company-settings",

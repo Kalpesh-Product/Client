@@ -24,9 +24,8 @@ const Daily_KRA = () => {
   return (
     <>
       <div className=" min-h-screen  ">
-        <div className="w-full max-w-md mx-auto p-4 bg-white shadow-md">
-          <h1 className="text-xl font-bold mb-4">Dynamic Fields</h1>
-
+        <div className="w-90 mx-10 p-4 bg-white shadow-md fixed left-0 right-0">
+          
           
             {rows.map((row) => (
               <div key={row.id} className="space-x-4">

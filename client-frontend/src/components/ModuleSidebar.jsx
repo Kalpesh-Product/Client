@@ -151,10 +151,52 @@ const ModuleSidebar = ({ mainSideBar }) => {
       icon: <HiCurrencyDollar />,
     },
     {
+      title: "Events",
+      route: "/hr/events",
+      icon: <IoSettingsOutline />,
+      
+    },
+    
+      // {
+      //   title: "Leaves",
+      //   route: "/hr/leaves",
+      //   icon: <HiOutlineClipboardList />,
+      //   subMenus: [
+      //     {
+      //       title: "My Leaves",
+      //       route: "/hr/leaves/my-leaves",
+      //       icon: <HiOutlineClipboardList />,
+      //     },
+  
+      //     ...(authUser.user.role === "Employee" && authUser.user.department === "Finance"
+      //       ? []
+      //       : [
+      //           {
+      //             title: "Reports",
+      //             route: "/hr/leaves/leave-reports",
+      //             icon: <HiOutlineClipboardList />,
+      //           },
+      //         ]),
+      //   ],
+      // },
+      {
+        title: "CV Dump",
+        route: "/hr/cvdump",
+        icon: <HiOutlineClipboardList />,
+        subMenus: [
+          {
+            title: "Applicants",
+            route: "/hr/cvdump/applicants",
+            icon: <HiOutlineClipboardList />,
+          },
+        ],
+      },    
+    {
       title: "Comapny Settings",
       route: "/hr/company-settings",
       icon: <IoSettingsOutline />,
     },
+    
   ];
 
   const itModules = [

@@ -20,6 +20,8 @@ import { IoMdClose } from "react-icons/io";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import useAuth from "../../../hooks/useAuth";
+import dayjs from "dayjs";
+import axios from "axios";
 
 const Holidays = () => {
   const location = useLocation();
@@ -29,6 +31,18 @@ const Holidays = () => {
   const [highlightEditedRow, setHighlightEditedRow] = React.useState(false);
 
   const [holidayName, setLeaveType] = useState(""); // State to track the selected option
+
+  const [holidayList, setHolidayList] = useState({
+      holiday:"",
+      date:null
+});
+
+const handleHolidayChange = (field, value) => {
+  setHolidayList((prev) => ({
+    ...prev,
+    [field]: value,
+  }));
+};
 
   const columns = [
     { field: "id", headerName: "ID", width: 100 },
@@ -347,10 +361,23 @@ const Holidays = () => {
   //   toast.success("New Ticket Created");
   //   closeModal(); // Optionally close the modal after the alert
   // };
-  const handleAddTicket = (newTicket) => {
+  const handleAddTicket = async (newTicket, holidayList) => {
     setRows((prevRows) => [newTicket, ...prevRows]); // Update the state
     toast.success("Added a new holiday.");
-    closeModal(); // Optionally close the modal after the alert
+    closeModal();
+    console.log(holidayList);
+    // Optionally close the modal after the alert
+    try{
+      const response = await axios.post("http://localhost:5000/api/holidays", holidayList);
+      alert(response.data.message);
+      alert('Holiday Added Successfully to database');
+
+    }catch(error){
+      console.log('Error Saving holiday',error);
+      alert('Failed to save holiday. Please try again');
+    }
+
+    
   };
 
   // ADD TICKET MODAL END
@@ -608,10 +635,9 @@ const Holidays = () => {
                                 <div className="grid grid-cols-1 gap-4">
                                   <TextField
                                     label="Holiday Name"
-                                    // value={newEvent.name}
-                                    // onChange={(e) =>
-                                    //   setnewEvent({ ...newEvent, name: e.target.value })
-                                    // }
+                                    value={holidayList.holiday}
+                                    
+                                    onChange={(e) => handleHolidayChange("holiday", e.target.value)}
                                     fullWidth
                                   />
                                 </div>
@@ -625,22 +651,19 @@ const Holidays = () => {
                                     >
                                       <DatePicker
                                         label="Date"
-                                        // value={formData.purchaseDate}
+                                        
                                         sx={{ width: "100%" }}
-                                        // onChange={(newDate) => {
-                                        //   if (newDate) {
-                                        //     setFormData({
-                                        //       ...formData,
-                                        //       purchaseDate: newDate, // Store the Dayjs object
-                                        //     });
-                                        //   }
-                                        // }}
-                                        format="DD/MM/YYYY" // Display format in the DatePicker
+                                        
+                                        value={holidayList.date ? dayjs(holidayList.date) : null} // Convert string to Dayjs
+                                        onChange={(newDate) => {
+                                          if (newDate) {
+                                            const formattedDate = newDate.format("YYYY-MM-DD"); // Format date
+                                            handleHolidayChange("date", formattedDate); // Store as string
+                                          }
+                                        }}
+                                        // format="DD/MM/YYYY" // Display format in the DatePicker
                                         renderInput={(params) => (
-                                          <TextField
-                                            {...params}
-                                            className="w-full"
-                                          />
+                                          <TextField {...params} className="w-full" />
                                         )}
                                       />
                                     </LocalizationProvider>
@@ -722,13 +745,13 @@ const Holidays = () => {
                       <div>
                         <div className="flex justify-between py-2 border-b">
                           <h1 className="font-semibold">Holiday Name</h1>
-                          <span>New Holiday</span>
+                          <span>{holidayList.holiday}</span>
                         </div>
                       </div>
                       <div>
                         <div className="flex justify-between py-2 border-b">
                           <h1 className="font-semibold">Date</h1>
-                          <span>07/12/2024</span>
+                          <span>{holidayList.date}</span>
                         </div>
                       </div>
                       <div className="pt-8 pb-4">
@@ -736,7 +759,7 @@ const Holidays = () => {
 
                         <WonoButton
                           content={"Submit"}
-                          onClick={() => handleAddTicket(newTicket)}
+                          onClick={() => handleAddTicket(newTicket,holidayList)}
                         />
                       </div>
                     </div>

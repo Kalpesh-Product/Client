@@ -99,7 +99,10 @@ import Policies from "../hr/policies/Policies";
 import Payslips from "../hr/payslips/Payslips";
 import Onboarding from "../hr/onboarding/Onboarding";
 import CompanySettings from "../hr/company-settings/CompanySettings";
+import Events from "../hr/events/Events";
 import AllTickets from "../cms/tickets/AllTickets";
+import Applicants from "../hr/cv-dump/Applicants";
+import CvDump from "../hr/cv-dump/CvDump";
 
 const DepartmentDash = () => {
   const navigate = useNavigate();
@@ -574,7 +577,34 @@ const DepartmentDash = () => {
                   <Onboarding />
                 </div>
               </>
-            ) : location.pathname === "/hr/company-settings" ? (
+            ) : location.pathname === "/hr/events" ? (
+              <>
+                <div className="bg-gray-100 p-4 rounded-lg ">
+                  <div className="flex w-full  pb-4 pl-0 text-lg border-b-0  gap-4">
+                    <h2 className="text-2xl  font-bold ">Events</h2>
+                  </div>
+                  <Events />
+                </div>
+              </>
+            ) : location.pathname === "/hr/cvdump" ? (
+              <>
+                <div className="bg-gray-100 p-4 rounded-lg mt-4">
+                  <div className="mb-8 flex justify-between">
+                    <h1 className="text-3xl  font-bold">Key Insights</h1>
+                  </div>
+                </div>
+              </>
+            ) : location.pathname === "/hr/cvdump/applicants" ? (
+              <>
+                <div className="bg-gray-100 p-4 rounded-lg ">
+                  <div className="flex w-full  pb-4 pl-0 text-lg border-b-0  gap-4">
+                    <h2 className="text-2xl  font-bold ">Applicants</h2>
+                  </div>
+                  <Applicants />
+                </div>
+              </>
+            ) :
+            location.pathname === "/hr/company-settings" ? (
               <>
                 {/* <LeaveReports /> */}
                 <div className="bg-gray-100 p-4 rounded-lg ">
@@ -586,7 +616,8 @@ const DepartmentDash = () => {
               <>
                 <AttendanceDash />
               </>
-            ) : location.pathname === "/hr/leaves" ? (
+            ) : location.pathname === "/hr/leaves" ? 
+            (
               <>
                 {/* Leave Widgets */}
                 {/* <LeaveWidgets /> */}
