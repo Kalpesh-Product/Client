@@ -1,15 +1,22 @@
 import React from "react";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
-import SalarySlip from "./SalarySlip";
+import useAuth from "../../../hooks/useAuth";
+import { useState } from "react";
+import { FormControl, MenuItem, TextField } from "@mui/material";
 
 const DownloadableDiv = () => {
+  const [month, setMonth] = useState("December 2024");
+  const { auth } = useAuth();
   const employeeDetails = {
-    name: "Kalpesh Naik",
-    employeeId: "EMP12345",
-    designation: "Software Engineer",
-    department: "Tech",
-    month: "December 2024",
+    name: auth.user.name,
+    employeeId: auth.user.empId,
+    designation: auth.user.designation.title,
+    department:
+      auth.user.department.length > 1
+        ? auth.user.department.map((dept) => dept.name).join(", ")
+        : auth.user.department.map((dept) => dept.name),
+    month,
     basicPay: 70000,
     hra: 15000,
     allowances: 10000,
@@ -44,25 +51,35 @@ const DownloadableDiv = () => {
 
   return (
     <div className="relative">
-      <div className=" pb-10 flex items-center justify-center">
-        {/* <div id="yellowDiv" className="bg-yellow-400 p-20 rounded-lg text-center">
-        <h1 className="text-xl font-bold mb-4">This is a Yellow Div</h1>
-        <p className="mb-4">Some text inside the yellow div.</p>
-        <div className="space-x-4">
-          <button className="bg-blue-500 text-white px-4 py-2 rounded shadow">
-            Button 1
-          </button>
-          <button className="bg-green-500 text-white px-4 py-2 rounded shadow hide-in-pdf">
-            Button 2
-          </button>
-          <button className="bg-purple-500 text-white px-4 py-2 rounded shadow hide-in-pdf">
-            Button 3
+      <div className=" pb-10 flex-col flex items-center justify-center">
+        <div className="flex items-center justify-between w-full">
+          <FormControl size="small" style={{ minWidth: 220 }}>
+            <TextField
+              label="Select Month"
+              variant="outlined"
+              select
+              size="small"
+              onChange={(e) => setMonth(e.target.value)}
+              sx={{ fontSize: "0.5rem" }}
+            >
+              <MenuItem value="December 2024">December 2024</MenuItem>
+              <MenuItem value="November 2024">November 2024</MenuItem>
+              <MenuItem value="October 2024">October 2024</MenuItem>
+              <MenuItem value="September 2024">September 2024</MenuItem>
+            </TextField>
+          </FormControl>
+
+          <button
+            onClick={downloadPDF}
+            className="wono-blue-dark text-white px-6 py-3 rounded shadow"
+          >
+            Download as PDF
           </button>
         </div>
-      </div> */}
         <div
           id="yellowDiv"
-          className="max-w-2xl mx-auto mt-10 border border-gray-300 rounded-lg shadow-lg p-8 bg-white">
+          className="max-w-2xl mx-auto mt-10 border border-gray-300 rounded-lg shadow-lg p-8 bg-white"
+        >
           <h1 className="text-2xl font-bold text-center mb-6">Pay Slip</h1>
 
           <div className="border-t border-gray-300 mb-4"></div>
@@ -174,13 +191,6 @@ const DownloadableDiv = () => {
             </p>
           </div>
         </div>
-      </div>
-      <div>
-        <button
-          onClick={downloadPDF}
-          className=" absolute top-[-54px] right-0 wono-blue-dark text-white px-6 py-3 rounded shadow">
-          Download as PDF
-        </button>
       </div>
     </div>
   );

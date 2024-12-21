@@ -42,7 +42,6 @@ const createUser = async (req, res, next) => {
       companyId,
     } = req.body;
 
-
     // Validate the company using _id
     const company = await CompanyData.findOne({ companyId });
     if (!company) {
@@ -54,7 +53,9 @@ const createUser = async (req, res, next) => {
       return res.status(400).json({ message: "Department is required" });
     }
 
-    const departmentArray = Array.isArray(department) ? department : [department];
+    const departmentArray = Array.isArray(department)
+      ? department
+      : [department];
 
     // Validate each department ID
     const departmentIds = await Promise.all(
@@ -141,20 +142,19 @@ const createUser = async (req, res, next) => {
 const fetchUser = async (req, res) => {
   try {
     const users = await User.find()
-    .populate("reportsTo", "name email")
-    .populate("department", "name")
-    .populate("company", "name")
-    .populate("role", "roleTitle modulePermissions")
+      .select("-password")
+      .populate("reportsTo", "name email")
+      .populate("department", "name")
+      .populate("company", "name")
+      .populate("role", "roleTitle modulePermissions");
     res.status(200).json({
       message: "Users data fetched",
-      users
+      users,
     });
   } catch (error) {
     console.log("Error fetching users : ", error);
-    res.status(500).json({ error: error.message })
+    res.status(500).json({ error: error.message });
   }
-}
-
-
+};
 
 module.exports = { createUser, fetchUser };

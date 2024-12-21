@@ -5,6 +5,9 @@ import AttendanceRateWidget from "./components/AttendanceRate";
 import EmployeeAttendance from "./components/EmployeeAttendance";
 import ShiftScheduleWidget from "./components/ShiftScheduleWidget ";
 import MonthlyAttendanceOverviewWidget from "./components/MonthlyAttendanceOverviewWidget ";
+import EmployeeAttandanceSummary from "./components/EmployeeAttandanceSummary";
+import CheckInOutData from "./components/CheckInOut";
+import ShiftTimeUseage from "./components/ShiftTimeUsage";
 
 const AttendanceDash = () => {
   // Dummy Monthly Details Data
@@ -83,13 +86,16 @@ const AttendanceDash = () => {
       <div className="flex flex-col gap-4">
         <ClockInOut />
         {/* Monthly Details Widget */}
-        <MonthlyDetailsWidget
+        {/* <MonthlyDetailsWidget
           totalHours={monthlyDetails.totalHours}
           lateCheckIns={monthlyDetails.lateCheckIns}
           avgBreakTime={monthlyDetails.avgBreakTime}
-        />
+        /> */}
+        <EmployeeAttandanceSummary />
+        <CheckInOutData />
+        <ShiftTimeUseage/>
 
-        <div className="grid gap-4" style={{gridTemplateColumns:'18% 1fr'}}>
+        <div className="grid gap-4" style={{ gridTemplateColumns: "18% 1fr" }}>
           <div className="w-full flex flex-col gap-4">
             <AttendanceRateWidget attendanceRate={95} increasePercentage={10} />
             {/* Monthly Attendance Overview Widget */}

@@ -1,16 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { DataGrid } from "@mui/x-data-grid";
-import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import { CSVLink } from "react-csv";
-import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import { toast } from "sonner";
-import AgTable from "../../../components/AgTable";
 import { useLocation } from "react-router-dom";
 import { NewModal } from "../../../components/NewModal";
 import FormStepper from "../../../components/FormStepper";
@@ -429,24 +424,6 @@ const Payslips = () => {
 
       <div className="flex gap-4 mb-4 justify-between">
         {/* <div className="pt-2">Filter :</div> */}
-        <div>
-          <FormControl size="small" style={{ minWidth: 220 }}>
-            <TextField
-              label="Select Month"
-              variant="outlined"
-              select
-              size="small"
-              // onChange={handleChange}
-              // value={department}
-              sx={{ fontSize: "0.5rem" }}>
-              {/* <MenuItem value="">December 2024</MenuItem> */}
-              <MenuItem value="December 2024">December 2024</MenuItem>
-              <MenuItem value="November 2024">November 2024</MenuItem>
-              <MenuItem value="October 2024">October 2024</MenuItem>
-              <MenuItem value="September 2024">September 2024</MenuItem>
-            </TextField>
-          </FormControl>
-        </div>
         {/* <div className=" flex">
           <CSVLink
             data={filteredRows} // Pass the filtered rows for CSV download
