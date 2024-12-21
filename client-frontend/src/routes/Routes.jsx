@@ -146,6 +146,34 @@ const router = createBrowserRouter([
                 element: <DepartmentDash />,
               },
               {
+                path: "/hr/employment-agreement",
+                element: <DepartmentDash />,
+              },
+              {
+                path: "/hr/employment-agreement-details",
+                element: <DepartmentDash />,
+              },
+              {
+                path: "/hr/company-handbook",
+                element: <DepartmentDash />,
+              },
+              {
+                path: "/hr/company-handbook/sop",
+                element: <DepartmentDash />,
+              },
+              {
+                path: "/hr/company-handbook/sop-details",
+                element: <DepartmentDash />,
+              },
+              {
+                path: "/hr/company-handbook/policies",
+                element: <DepartmentDash />,
+              },
+              {
+                path: "/hr/company-handbook/policy-details",
+                element: <DepartmentDash />,
+              },
+              {
                 path: "/hr/holidays",
                 element: <DepartmentDash />,
               },
@@ -171,7 +199,15 @@ const router = createBrowserRouter([
               },
 
               {
-                path: "/hr/leaves/leave-reports",
+                path: "/hr/leaves/past-leaves",
+                element: <DepartmentDash />,
+              },
+              {
+                path: "/hr/leaves/due-approvals",
+                element: <DepartmentDash />,
+              },
+              {
+                path: "/hr/leaves/manage-leaves",
                 element: <DepartmentDash />,
               },
              

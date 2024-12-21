@@ -20,7 +20,7 @@ import { IoMdClose } from "react-icons/io";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
-const MyLeaves = () => {
+const SubordinateDueApprovals = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -42,7 +42,7 @@ const MyLeaves = () => {
     { field: "leaveType", headerName: "Leave Type", width: 200 },
     { field: "leavePeriod", headerName: "Leave Period", width: 200 },
     { field: "hours", headerName: "Hours", width: 200 },
-    { field: "description", headerName: "Description", width: 200 },
+    { field: "createdBy", headerName: "Created By", width: 200 },
     {
       field: "status",
       headerName: "Status",
@@ -212,43 +212,43 @@ const MyLeaves = () => {
   const allRows = [
     {
       id: 1,
-      fromDate: "Dec 29 2024",
-      toDate: "Dec 29 2024",
+      fromDate: "Nov 26 2024",
+      toDate: "Nov 26 2024",
       leaveType: "Privileged Leave",
       leavePeriod: "Single",
       hours: "9.00",
       priority: "High",
-      description: "Privileged Leave",
+      createdB: "Pending",
       createdBy: "Allan Silveira",
 
       status: "Pending",
-      approvedBy: "Abrar Shaikh",
+      approvedBy: "N/A",
     },
     {
       id: 1,
-      fromDate: "Dec 26 2024",
-      toDate: "Dec 26 2024",
+      fromDate: "Nov 7 2024",
+      toDate: "Nov 7 2024",
       leaveType: "Privileged Leave",
       leavePeriod: "Partial",
       hours: "4.00",
       priority: "High",
-      description: "Laptop Repair",
+      createdB: "Approved",
       createdBy: "Allan Silveira",
-      status: "Rejected",
-      approvedBy: "Abrar Shaikh",
+      status: "Approved",
+      approvedBy: "Kalpesh Naik",
     },
     {
       id: 1,
-      fromDate: "Dec 22 2024",
-      toDate: "Dec 22 2024",
+      fromDate: "Nov 2 2024",
+      toDate: "Nov 2 2024",
       leaveType: "Privileged Leave",
       leavePeriod: "Partial",
       hours: "3.00",
       priority: "High",
-      description: "Family Function",
+      createdB: "Approved",
       createdBy: "Allan Silveira",
       status: "Approved",
-      approvedBy: "Abrar Shaikh",
+      approvedBy: "Kalpesh Naik",
     },
     // {
     //   id: 2,
@@ -360,17 +360,10 @@ const MyLeaves = () => {
 
   const newTicket = {
     id: rows.length + 1,
-    fromDate: "Dec 30 2024",
-    toDate: "Dec 30 2024",
-    leaveType: "Privileged Leave",
-    leavePeriod: "Single",
-    hours: "9.00",
-    priority: "High",
-    description: "Privileged Leave",
-    createdBy: "Allan Silveira",
-
+    leaveType: "Sick Leave",
+    priority: "Medium",
     status: "Pending",
-    approvedBy: "Kalpesh Naik",
+    department: "IT",
     requestDate: new Date().toISOString().split("T")[0], // Today's date
   };
 
@@ -473,7 +466,7 @@ const MyLeaves = () => {
         </button>
       </div> */}
 
-      <div className="flex gap-4 mb-4 justify-end">
+      <div className="flex gap-4 mb-4 justify-between">
         {/* <div className="pt-2">Filter :</div> */}
 
         {/* <div className=" flex">
@@ -496,35 +489,6 @@ const MyLeaves = () => {
             </button>
           </div>
         </div> */}
-
-        {/* {location.pathname === "/hr/leaves/my-leaves" && ( */}
-        <div className="flex gap-4">
-          {/* <div className="mb-2 flex justify-between">
-            <h1 className="text-3xl"></h1>
-            <button
-              onClick={() => navigate("/hr/leaves/past-leaves")}
-              className="px-6 py-2 rounded-lg text-white wono-blue-dark hover:bg-[#3cbce7] transition-shadow shadow-md hover:shadow-lg active:shadow-inner">
-              View Past Leaves
-            </button>
-          </div>
-          <div className="mb-2 flex justify-between">
-            <h1 className="text-3xl"></h1>
-            <button
-              onClick={() => navigate("/hr/leaves/due-approvals")}
-              className="px-6 py-2 rounded-lg text-white wono-blue-dark hover:bg-[#3cbce7] transition-shadow shadow-md hover:shadow-lg active:shadow-inner">
-              Subordinate Due Approvals
-            </button>
-          </div> */}
-          <div className="mb-2 flex justify-between">
-            <h1 className="text-3xl"></h1>
-            <button
-              onClick={openModal}
-              className="px-6 py-2 rounded-lg text-white wono-blue-dark hover:bg-[#3cbce7] transition-shadow shadow-md hover:shadow-lg active:shadow-inner">
-              + Apply Leave
-            </button>
-          </div>
-        </div>
-        {/* )} */}
       </div>
 
       {/* Tickets datatable START */}
@@ -636,8 +600,8 @@ const MyLeaves = () => {
                                       <MenuItem value="Casual Leave">
                                         Casual Leave
                                       </MenuItem>
-                                      <MenuItem value="Privileged Leave">
-                                        Privileged Leave
+                                      <MenuItem value="Annual Leave">
+                                        Annual Leave
                                       </MenuItem>
                                       {/* <MenuItem value="Admin">Admin</MenuItem> */}
                                     </Select>
@@ -748,13 +712,13 @@ const MyLeaves = () => {
                       <div>
                         <div className="flex justify-between py-2 border-b">
                           <h1 className="font-semibold">Leave Type</h1>
-                          <span>Privileged Leave</span>
+                          <span>Sick Leave</span>
                         </div>
                       </div>
                       <div>
                         <div className="flex justify-between py-2 border-b">
                           <h1 className="font-semibold">Date</h1>
-                          <span>Dec 30 2024</span>
+                          <span>07/12/2024</span>
                         </div>
                       </div>
                       <div className="pt-8 pb-4">
@@ -1141,4 +1105,4 @@ const MyLeaves = () => {
   );
 };
 
-export default MyLeaves;
+export default SubordinateDueApprovals;

@@ -11,7 +11,7 @@ import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import { toast } from "sonner";
 import AgTable from "../../../../components/AgTable";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { NewModal } from "../../../../components/NewModal";
 import FormStepper from "../../../../components/FormStepper";
 import WonoButton from "../../../../components/Buttons/WonoButton";
@@ -21,6 +21,7 @@ import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
 const PendingLeaves = () => {
+  const navigate = useNavigate();
   const location = useLocation();
 
   const [highlightFirstRow, setHighlightFirstRow] = React.useState(false);
@@ -35,8 +36,35 @@ const PendingLeaves = () => {
   }, []);
 
   const columns = [
-    { field: "id", headerName: "ID", width: 100 },
+    // { field: "id", headerName: "ID", width: 100 },
+    { field: "fromDate", headerName: "From Date", width: 200 },
+    { field: "toDate", headerName: "To Date", width: 200 },
     { field: "leaveType", headerName: "Leave Type", width: 200 },
+    { field: "leavePeriod", headerName: "Leave Period", width: 200 },
+    { field: "hours", headerName: "Hours", width: 200 },
+    { field: "createdBy", headerName: "Created By", width: 200 },
+    {
+      field: "status",
+      headerName: "Status",
+      width: 150,
+      type: "singleSelect",
+      valueOptions: ["Approved", "Pending", "Rejected"],
+      cellRenderer: (params) => {
+        const statusColors = {
+          Approved: "text-blue-600 bg-blue-100",
+          Pending: "text-red-600 bg-red-100",
+          Rejected: "text-yellow-600 bg-yellow-100",
+        };
+        const statusClass = statusColors[params.value] || "";
+        return (
+          <span
+            className={`px-3 py-1 rounded-full text-sm font-medium ${statusClass}`}>
+            {params.value}
+          </span>
+        );
+      },
+    },
+    { field: "approvedBy", headerName: "Approved By", width: 200 },
     // {
     //   field: "priority",
     //   headerName: "Priority",
@@ -59,35 +87,15 @@ const PendingLeaves = () => {
     //   },
     // },
 
-    {
-      field: "department",
-      headerName: "Department",
-      width: 150,
-      type: "singleSelect",
-      valueOptions: ["IT", "HR", "Tech", "Admin"],
-    },
-    { field: "requestDate", headerName: "Request Date", width: 150 },
-    {
-      field: "status",
-      headerName: "Status",
-      width: 150,
-      type: "singleSelect",
-      valueOptions: ["Approved", "Pending", "Rejected"],
-      cellRenderer: (params) => {
-        const statusColors = {
-          Approved: "text-blue-600 bg-blue-100",
-          Pending: "text-red-600 bg-red-100",
-          Rejected: "text-yellow-600 bg-yellow-100",
-        };
-        const statusClass = statusColors[params.value] || "";
-        return (
-          <span
-            className={`px-3 py-1 rounded-full text-sm font-medium ${statusClass}`}>
-            {params.value}
-          </span>
-        );
-      },
-    },
+    // {
+    //   field: "department",
+    //   headerName: "Department",
+    //   width: 150,
+    //   type: "singleSelect",
+    //   valueOptions: ["IT", "HR", "Tech", "Admin"],
+    // },
+    // { field: "requestDate", headerName: "Request Date", width: 150 },
+
     // {
     //   field: "approve",
     //   headerName: "Approve",
@@ -204,76 +212,108 @@ const PendingLeaves = () => {
   const allRows = [
     {
       id: 1,
-      leaveType: "Sick Leave",
+      fromDate: "Nov 26 2024",
+      toDate: "Nov 26 2024",
+      leaveType: "Privileged Leave",
+      leavePeriod: "Single",
+      hours: "9.00",
       priority: "High",
+      createdB: "Pending",
+      createdBy: "Allan Silveira",
+
       status: "Pending",
-      department: "IT",
-      requestDate: "2024-10-01",
+      approvedBy: "N/A",
     },
     {
-      id: 2,
-      leaveType: "Sick Leave",
-      priority: "Medium",
-      status: "Pending",
-      department: "HR",
-      requestDate: "2024-10-03",
-    },
-    {
-      id: 3,
-      leaveType: "Sick Leave",
+      id: 1,
+      fromDate: "Nov 7 2024",
+      toDate: "Nov 7 2024",
+      leaveType: "Privileged Leave",
+      leavePeriod: "Partial",
+      hours: "4.00",
       priority: "High",
+      createdB: "Approved",
+      createdBy: "Allan Silveira",
       status: "Pending",
-      department: "Tech",
-      requestDate: "2024-10-05",
+      approvedBy: "N/A",
     },
     {
-      id: 4,
-      leaveType: "Sick Leave",
-      priority: "Low",
-      status: "Pending",
-      department: "Admin",
-      requestDate: "2024-10-06",
-    },
-    {
-      id: 5,
-      leaveType: "Sick Leave",
-      priority: "Medium",
-      status: "Pending",
-      department: "HR",
-      requestDate: "2024-10-07",
-    },
-    {
-      id: 6,
-      leaveType: "Sick Leave",
+      id: 1,
+      fromDate: "Nov 2 2024",
+      toDate: "Nov 2 2024",
+      leaveType: "Privileged Leave",
+      leavePeriod: "Partial",
+      hours: "3.00",
       priority: "High",
+      createdB: "Approved",
+      createdBy: "Allan Silveira",
       status: "Pending",
-      department: "IT",
-      requestDate: "2024-10-08",
+      approvedBy: "N/A",
     },
-    {
-      id: 7,
-      leaveType: "Sick Leave",
-      priority: "Low",
-      status: "Pending",
-      department: "Tech",
-      requestDate: "2024-10-09",
-    },
-    {
-      id: 8,
-      leaveType: "Sick Leave",
-      priority: "Low",
-      status: "Pending",
-      department: "Admin",
-      requestDate: "2024-10-10",
-    },
-    {
-      id: 9,
-      leaveType: "Sick Leave",
-      priority: "Medium",
-      status: "Pending",
-      department: "IT",
-      requestDate: "2024-10-11",
-    },
+    // {
+    //   id: 2,
+    //   leaveType: "Sick Leave",
+    //   priority: "Medium",
+    //   status: "Pending",
+    //   department: "HR",
+    //   requestDate: "2024-10-03",
+    // },
+    // {
+    //   id: 3,
+    //   leaveType: "Sick Leave",
+    //   priority: "High",
+    //   status: "Pending",
+    //   department: "Tech",
+    //   requestDate: "2024-10-05",
+    // },
+    // {
+    //   id: 4,
+    //   leaveType: "Sick Leave",
+    //   priority: "Low",
+    //   status: "Pending",
+    //   department: "Admin",
+    //   requestDate: "2024-10-06",
+    // },
+    // {
+    //   id: 5,
+    //   leaveType: "Sick Leave",
+    //   priority: "Medium",
+    //   status: "Pending",
+    //   department: "HR",
+    //   requestDate: "2024-10-07",
+    // },
+    // {
+    //   id: 6,
+    //   leaveType: "Sick Leave",
+    //   priority: "High",
+    //   status: "Pending",
+    //   department: "IT",
+    //   requestDate: "2024-10-08",
+    // },
+    // {
+    //   id: 7,
+    //   leaveType: "Sick Leave",
+    //   priority: "Low",
+    //   status: "Pending",
+    //   department: "Tech",
+    //   requestDate: "2024-10-09",
+    // },
+    // {
+    //   id: 8,
+    //   leaveType: "Sick Leave",
+    //   priority: "Low",
+    //   status: "Pending",
+    //   department: "Admin",
+    //   requestDate: "2024-10-10",
+    // },
+    // {
+    //   id: 9,
+    //   leaveType: "Sick Leave",
+    //   priority: "Medium",
+    //   status: "Pending",
+    //   department: "IT",
+    //   requestDate: "2024-10-11",
+    // },
   ];
 
   const [rows, setRows] = React.useState(allRows);
@@ -428,7 +468,7 @@ const PendingLeaves = () => {
 
       <div className="flex gap-4 mb-4 justify-between">
         {/* <div className="pt-2">Filter :</div> */}
-        <div>
+        {/* <div>
           <FormControl size="small" style={{ minWidth: 220 }}>
             <TextField
               label="Filter by department"
@@ -445,7 +485,7 @@ const PendingLeaves = () => {
               <MenuItem value="Admin">Admin</MenuItem>
             </TextField>
           </FormControl>
-        </div>
+        </div> */}
         {/* <div className=" flex">
           <CSVLink
             data={filteredRows} // Pass the filtered rows for CSV download
@@ -467,18 +507,34 @@ const PendingLeaves = () => {
           </div>
         </div> */}
 
-        {location.pathname === "/hr/leaves/my-leaves" && (
-          <div className="flex">
-            <div className="mb-2 flex justify-between">
-              <h1 className="text-3xl"></h1>
-              <button
-                onClick={openModal}
-                className="px-6 py-2 rounded-lg text-white wono-blue-dark hover:bg-[#3cbce7] transition-shadow shadow-md hover:shadow-lg active:shadow-inner">
-                + Apply Leave
-              </button>
-            </div>
+        {/* {location.pathname === "/hr/leaves/my-leaves" && ( */}
+        {/* <div className="flex gap-4">
+          <div className="mb-2 flex justify-between">
+            <h1 className="text-3xl"></h1>
+            <button
+              onClick={() => navigate("/hr/leaves/past-leaves")}
+              className="px-6 py-2 rounded-lg text-white wono-blue-dark hover:bg-[#3cbce7] transition-shadow shadow-md hover:shadow-lg active:shadow-inner">
+              View Past Leaves
+            </button>
           </div>
-        )}
+          <div className="mb-2 flex justify-between">
+            <h1 className="text-3xl"></h1>
+            <button
+              onClick={() => navigate("/hr/leaves/due-approvals")}
+              className="px-6 py-2 rounded-lg text-white wono-blue-dark hover:bg-[#3cbce7] transition-shadow shadow-md hover:shadow-lg active:shadow-inner">
+              Subordinate Due Approvals
+            </button>
+          </div>
+          <div className="mb-2 flex justify-between">
+            <h1 className="text-3xl"></h1>
+            <button
+              onClick={openModal}
+              className="px-6 py-2 rounded-lg text-white wono-blue-dark hover:bg-[#3cbce7] transition-shadow shadow-md hover:shadow-lg active:shadow-inner">
+              + Apply Leave
+            </button>
+          </div>
+        </div> */}
+        {/* )} */}
       </div>
 
       {/* Tickets datatable START */}

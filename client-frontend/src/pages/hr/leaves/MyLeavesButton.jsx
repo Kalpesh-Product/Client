@@ -20,7 +20,7 @@ import { IoMdClose } from "react-icons/io";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
-const MyLeaves = () => {
+const MyLeavesButton = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -392,6 +392,7 @@ const MyLeaves = () => {
     setRows((prevRows) => [newTicket, ...prevRows]); // Update the state
     toast.success("Applied for a new leave.");
     closeModal(); // Optionally close the modal after the alert
+    navigate("/hr/leaves/my-leaves");
   };
 
   // ADD TICKET MODAL END
@@ -454,7 +455,7 @@ const MyLeaves = () => {
   };
 
   return (
-    <div className="w-[72vw] md:w-full transition-all duration-200 ease-in-out bg-white p-2 rounded-md">
+    <div className="w-[72vw] md:w-full transition-all duration-200 ease-in-out  p-2 pb-0 pt-10 rounded-md">
       {/* <div className="bg-green-500">
         <h2>Today's Tickets</h2>
       </div> */}
@@ -473,7 +474,7 @@ const MyLeaves = () => {
         </button>
       </div> */}
 
-      <div className="flex gap-4 mb-4 justify-end">
+      <div className="flex gap-4  justify-center">
         {/* <div className="pt-2">Filter :</div> */}
 
         {/* <div className=" flex">
@@ -515,11 +516,11 @@ const MyLeaves = () => {
               Subordinate Due Approvals
             </button>
           </div> */}
-          <div className="mb-2 flex justify-between">
-            <h1 className="text-3xl"></h1>
+          <div className="mb-2 flex justify-center">
+            {/* <h1 className="text-3xl"></h1> */}
             <button
               onClick={openModal}
-              className="px-6 py-2 rounded-lg text-white wono-blue-dark hover:bg-[#3cbce7] transition-shadow shadow-md hover:shadow-lg active:shadow-inner">
+              className="px-6 py-2 rounded-lg text-white wono-blue-dark hover:bg-[#3cbce7] transition-shadow shadow-md hover:shadow-lg active:shadow-inner text-center">
               + Apply Leave
             </button>
           </div>
@@ -544,12 +545,12 @@ const MyLeaves = () => {
         highlightFirstRow={false}
       /> */}
 
-      <AgTable
+      {/* <AgTable
         data={rows} // Use the state here
         columns={columns}
         highlightFirstRow={highlightFirstRow} // Bind the state here
         highlightEditedRow={highlightEditedRow} // Bind the state here
-      />
+      /> */}
 
       {/* {location.pathname === "/customer/tickets/my-tickets" && (
         <div>
@@ -1141,4 +1142,4 @@ const MyLeaves = () => {
   );
 };
 
-export default MyLeaves;
+export default MyLeavesButton;

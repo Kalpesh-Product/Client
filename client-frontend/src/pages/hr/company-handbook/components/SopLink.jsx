@@ -1,20 +1,16 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-const LeaveWidget2 = () => {
+const SopLink = () => {
   const navigate = useNavigate();
   return (
     <>
-      <div>
-        <div className="p-4" onClick={() => navigate("/hr/leaves/past-leaves")}>
-          <h3 className="text-lg font-semibold text-center">Utilised Leaves</h3>
-          <p className="text-3xl font-bold text-center">4/12</p>
+      <div onClick={() => navigate("/hr/company-handbook/sop")}>
+        <div className="p-4">
+          {/* <h3 className="text-lg font-semibold">Utilised Leaves</h3> */}
           <br />
-          <div className="text-center">
-            <span className="px-3 py-1 rounded-full text-sm font-medium text-blue-600 bg-blue-100">
-              View Past Leaves
-            </span>
-          </div>
+          <p className="text-3xl font-bold">SOPs</p>
+          <br />
         </div>
       </div>
       {/* <div>
@@ -31,4 +27,4 @@ const LeaveWidget2 = () => {
   );
 };
 
-export default LeaveWidget2;
+export default SopLink;

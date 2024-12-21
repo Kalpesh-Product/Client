@@ -126,17 +126,32 @@ const ModuleSidebar = ({ mainSideBar }) => {
           route: "/hr/leaves/my-leaves",
           icon: <HiOutlineClipboardList />,
         },
+        {
+          title: "View Past Leaves",
+          route: "/hr/leaves/past-leaves",
+          icon: <HiOutlineClipboardList />,
+        },
+        {
+          title: "Subordinate Due Approvals",
+          route: "/hr/leaves/due-approvals",
+          icon: <HiOutlineClipboardList />,
+        },
+        {
+          title: "Manage Leaves",
+          route: "/hr/leaves/manage-leaves",
+          icon: <HiOutlineClipboardList />,
+        },
 
-        ...(authUser.user.role === "Employee" &&
-        authUser.user.department === "Finance"
-          ? []
-          : [
-              {
-                title: "Reports",
-                route: "/hr/leaves/leave-reports",
-                icon: <HiOutlineClipboardList />,
-              },
-            ]),
+        // ...(authUser.user.role === "Employee" &&
+        // authUser.user.department === "Finance"
+        //   ? []
+        //   : [
+        //       {
+        //         title: "Reports",
+        //         route: "/hr/leaves/leave-reports",
+        //         icon: <HiOutlineClipboardList />,
+        //       },
+        //     ]),
       ],
     },
     {
@@ -167,15 +182,37 @@ const ModuleSidebar = ({ mainSideBar }) => {
       icon: <HiCurrencyDollar />,
     },
     {
-      title: "SOP",
-      route: "/hr/sops",
+      title: "Employment Agreement",
+      route: "/hr/employment-agreement",
       icon: <HiCurrencyDollar />,
     },
     {
-      title: "Policies",
-      route: "/hr/policies",
+      title: "Company Handbook",
+      route: "/hr/company-handbook",
       icon: <HiCurrencyDollar />,
+      subMenus: [
+        {
+          title: "SOP",
+          route: "/hr/company-handbook/sop",
+          icon: <HiOutlineClipboardList />,
+        },
+        {
+          title: "Policies",
+          route: "/hr/company-handbook/policies",
+          icon: <HiOutlineClipboardList />,
+        },
+      ],
     },
+    // {
+    //   title: "SOP",
+    //   route: "/hr/sops",
+    //   icon: <HiCurrencyDollar />,
+    // },
+    // {
+    //   title: "Policies",
+    //   route: "/hr/policies",
+    //   icon: <HiCurrencyDollar />,
+    // },
     {
       title: "Holidays",
       route: "/hr/holidays",
