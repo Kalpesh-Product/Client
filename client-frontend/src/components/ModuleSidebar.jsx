@@ -41,7 +41,7 @@ import {
 import { RiAppsLine, RiCustomerService2Line } from "react-icons/ri";
 import { GrDocumentUpdate } from "react-icons/gr";
 import { useNavigate, useLocation, useParams } from "react-router-dom";
-import { BsCashCoin } from "react-icons/bs";
+import { BsCashCoin, BsFillPersonCheckFill } from "react-icons/bs";
 import { AiOutlineProduct, AiOutlineSecurityScan } from "react-icons/ai";
 
 const ModuleSidebar = ({ mainSideBar }) => {
@@ -104,6 +104,13 @@ const ModuleSidebar = ({ mainSideBar }) => {
       title: "Attendance",
       route: "/hr/attendance",
       icon: <HiOutlineClipboardList />,
+      subMenus: [
+        {
+          title: "Employee wise Attendance",
+          route: "/hr/attandence/shift-time-usage",
+          icon: <BsFillPersonCheckFill />,
+        },
+      ],
     },
     {
       title: "Leaves",

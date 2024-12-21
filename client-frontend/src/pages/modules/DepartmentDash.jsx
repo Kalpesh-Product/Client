@@ -103,6 +103,7 @@ import AllTickets from "../cms/tickets/AllTickets";
 import PayrollValue from "../hr/payroll/PayrollValue";
 import EmployeeCountTable from "../hr/payroll/EmployeeCountTable";
 import DuePayout from "../hr/payroll/DuePayout";
+import EmployeeWiseAttandance from "../hr/attendance/EmployeeWiseAttandance";
 
 const DepartmentDash = () => {
   const navigate = useNavigate();
@@ -588,6 +589,10 @@ const DepartmentDash = () => {
             ) : location.pathname === "/hr/attendance" ? (
               <>
                 <AttendanceDash />
+              </>
+            ) : location.pathname === "/hr/attandence/shift-time-usage" ? (
+              <>
+                <EmployeeWiseAttandance />
               </>
             ) : location.pathname === "/hr/leaves" ? (
               <>

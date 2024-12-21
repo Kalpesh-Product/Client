@@ -158,6 +158,10 @@ const router = createBrowserRouter([
                 element: <DepartmentDash />,
               },
               {
+                path: "/hr/attandence/shift-time-usage",
+                element: <DepartmentDash />,
+              },
+              {
                 path: "/hr/leaves/pending-leaves",
                 element: <DepartmentDash />,
               },
