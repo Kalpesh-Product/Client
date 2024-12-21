@@ -63,14 +63,14 @@ const ViewTicketsTabs = () => {
                 }}
               />
               {/* )} */}
-              <Tab
+              {/* <Tab
                 label="Assigned Tickets"
                 value="5"
                 sx={{
                   textTransform: "uppercase",
                   borderRight: "1px solid #e4e4e4",
                 }}
-              />
+              /> */}
 
               <Tab
                 label="Accepted Tickets"

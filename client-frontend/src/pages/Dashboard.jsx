@@ -34,8 +34,11 @@ import {
 } from "../Widgets/ITWidgets";
 import Sidetest from "../components/Sidetest";
 import TestSide from "../components/Sidetest";
+import { useNavigate } from "react-router-dom";
+// import { openModal } from "../pages/hr/MyLeaves";
+// import MyLeaves from "./hr/leaves/MyLeaves";
 
-export const WidgetSection = ({ heading, widgets }) => (
+export const WidgetSection = ({ heading, widgets, buttons }) => (
   <div className="mt-0">
     <h2 className="text-2xl font-semibold">{heading}</h2>
     <div
@@ -45,19 +48,73 @@ export const WidgetSection = ({ heading, widgets }) => (
     md:grid-cols-${Math.min(widgets.length, 3)}
     lg:grid-cols-${Math.min(widgets.length, 4)}
     
-  `}
-    >
+  `}>
       {widgets.map((Widget, index) => (
         <div
           key={index}
-          className="bg-white p-0 shadow-md rounded-lg h-full overflow-auto motion-preset-expand"
-        >
+          className="bg-white p-0 shadow-md rounded-lg h-full overflow-auto motion-preset-expand">
           {Widget}
         </div>
       ))}
     </div>
   </div>
 );
+
+export const ButtonSection = ({ heading, widgets }) => {
+  const navigate = useNavigate();
+
+  return (
+    <div className="mt-0">
+      <h2 className="text-2xl font-semibold">{heading}</h2>
+      <div
+        className={`grid gap-4 mt-3
+    grid-cols-1
+    sm:grid-cols-${Math.min(widgets.length, 2)}
+    md:grid-cols-${Math.min(widgets.length, 3)}
+    lg:grid-cols-${Math.min(widgets.length, 4)}
+    
+  `}>
+        {/* {widgets.map((Widget, index) => (
+        <div
+          key={index}
+          className="bg-white p-0 shadow-md rounded-lg h-full overflow-auto motion-preset-expand">
+          {Widget}
+        </div>
+      ))} */}
+
+        {/* <div className="bg-white p-0 shadow-md rounded-lg h-full overflow-auto motion-preset-expand"> */}
+        <div className=" p-0 flex justify-center items-center  h-full overflow-auto motion-preset-expand">
+          <button
+            onClick={() => navigate("/hr/leaves/my-leaves")}
+            className="px-6 py-2 rounded-lg text-white wono-blue-dark hover:bg-[#3cbce7] transition-shadow shadow-md hover:shadow-lg active:shadow-inner">
+            View Applied Leaves
+          </button>
+        </div>
+        <div className=" p-0 flex justify-center items-center  h-full overflow-auto motion-preset-expand">
+          <button
+            onClick={() => navigate("/hr/leaves/past-leaves")}
+            className="px-6 py-2 rounded-lg text-white wono-blue-dark hover:bg-[#3cbce7] transition-shadow shadow-md hover:shadow-lg active:shadow-inner">
+            View Past Leaves
+          </button>
+        </div>
+        <div className=" p-0 flex justify-center items-center  h-full overflow-auto motion-preset-expand">
+          <button
+            onClick={() => navigate("/hr/leaves/my-leaves")}
+            className="px-6 py-2 rounded-lg text-white wono-blue-dark hover:bg-[#3cbce7] transition-shadow shadow-md hover:shadow-lg active:shadow-inner">
+            View Pending Leaves
+          </button>
+        </div>
+        <div className=" p-0 flex justify-center items-center  h-full overflow-auto motion-preset-expand">
+          <button
+            onClick={() => navigate("/hr/leaves/due-approvals")}
+            className="px-6 py-2 rounded-lg text-white wono-blue-dark hover:bg-[#3cbce7] transition-shadow shadow-md hover:shadow-lg active:shadow-inner">
+            Subordinate Due Approvals
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 const Dashboard = () => {
   const { auth } = useAuth();

@@ -11,7 +11,7 @@ import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import { toast } from "sonner";
 import AgTable from "../../../components/AgTable";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { NewModal } from "../../../components/NewModal";
 import FormStepper from "../../../components/FormStepper";
 import WonoButton from "../../../components/Buttons/WonoButton";
@@ -21,7 +21,8 @@ import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import useAuth from "../../../hooks/useAuth";
 
-const Holidays = () => {
+const SopCrud = () => {
+  const navigate = useNavigate();
   const location = useLocation();
   const { auth } = useAuth();
 
@@ -32,7 +33,8 @@ const Holidays = () => {
 
   const columns = [
     { field: "id", headerName: "ID", width: 100 },
-    { field: "holidayName", headerName: "Holiday Name", width: 200 },
+    { field: "sopName", headerName: "SOP Name", width: 200 },
+    // { field: "agreement", headerName: "Agreement", width: 200 },
     // {
     //   field: "priority",
     //   headerName: "Priority",
@@ -62,7 +64,7 @@ const Holidays = () => {
     //   type: "singleSelect",
     //   valueOptions: ["IT", "HR", "Tech", "Admin"],
     // },
-    { field: "date", headerName: "Date", width: 150 },
+    { field: "date", headerName: "Date Added", width: 150 },
     // {
     //   field: "status",
     //   headerName: "Status",
@@ -84,29 +86,73 @@ const Holidays = () => {
     //     );
     //   },
     // },
+    // {
+    //   field: "delete",
+    //   headerName: "Delete",
+    //   width: 170,
+    //   // renderCell: (params) => (
+    //   cellRenderer: (params) => (
+    //     <Button
+    //       size="small"
+    //       // onClick={() => handleDelete(params.row)}
+    //       onClick={openDeleteTicket}
+    //       // onClick={handleDeleteTicket}
+    //       variant="contained"
+    //       sx={{
+    //         backgroundColor: "blue",
+    //         color: "white",
+    //         "&:hover": {
+    //           backgroundColor: "blue",
+    //         },
+    //         padding: "4px 8px",
+    //         borderRadius: "0.375rem",
+    //       }}>
+    //       View Details
+    //     </Button>
+    //   ),
+    // },
     {
-      field: "delete",
-      headerName: "Delete",
+      field: "actions",
+      headerName: "Actions",
       width: 170,
       // renderCell: (params) => (
       cellRenderer: (params) => (
-        <Button
-          size="small"
-          // onClick={() => handleDelete(params.row)}
-          onClick={openDeleteTicket}
-          // onClick={handleDeleteTicket}
-          variant="contained"
-          sx={{
-            backgroundColor: "red",
-            color: "white",
-            "&:hover": {
+        <div className="flex gap-4">
+          <Button
+            size="small"
+            // onClick={() => handleDelete(params.row)}
+            onClick={() => navigate("/hr/company-handbook/sop-details")}
+            // onClick={handleDeleteTicket}
+            variant="contained"
+            sx={{
+              backgroundColor: "blue",
+              color: "white",
+              "&:hover": {
+                backgroundColor: "blue",
+              },
+              padding: "4px 8px",
+              borderRadius: "0.375rem",
+            }}>
+            View Details
+          </Button>
+          <Button
+            size="small"
+            // onClick={() => handleDelete(params.row)}
+            onClick={openDeleteTicket}
+            // onClick={handleDeleteTicket}
+            variant="contained"
+            sx={{
               backgroundColor: "red",
-            },
-            padding: "4px 8px",
-            borderRadius: "0.375rem",
-          }}>
-          Delete
-        </Button>
+              color: "white",
+              "&:hover": {
+                backgroundColor: "red",
+              },
+              padding: "4px 8px",
+              borderRadius: "0.375rem",
+            }}>
+            Delete
+          </Button>
+        </div>
       ),
     },
     // {
@@ -201,7 +247,8 @@ const Holidays = () => {
   const allRows = [
     {
       id: 1,
-      holidayName: "Republic Day",
+      sopName: "Work From Home SOP",
+      agreement: "Republic Day",
       priority: "High",
       status: "Pending",
       department: "IT",
@@ -209,7 +256,8 @@ const Holidays = () => {
     },
     {
       id: 2,
-      holidayName: "New Year",
+      sopName: "Yearly Leaves SOP",
+      agreement: "New Year",
       priority: "Medium",
       status: "Pending",
       department: "HR",
@@ -217,68 +265,69 @@ const Holidays = () => {
     },
     {
       id: 3,
-      holidayName: "Labor Day",
+      sopName: "Transport Facilities SOP",
+      agreement: "Labor Day",
       priority: "High",
       status: "Pending",
       department: "Tech",
       date: "2024-05-01",
     },
-    {
-      id: 4,
-      holidayName: "Independence Day",
-      priority: "Low",
-      status: "Pending",
-      department: "Admin",
-      date: "2024-08-15",
-    },
-    {
-      id: 5,
-      holidayName: "Gudi Padava",
-      priority: "Medium",
-      status: "Pending",
-      department: "HR",
-      date: "2024-04-09",
-    },
-    {
-      id: 6,
-      holidayName: "Goa Liberation Day",
-      priority: "High",
-      status: "Pending",
-      department: "IT",
-      date: "2024-12-19",
-    },
-    {
-      id: 7,
-      holidayName: "Ganesh Chaturthi",
-      priority: "Low",
-      status: "Pending",
-      department: "Tech",
-      date: "2024-09-07",
-    },
-    {
-      id: 8,
-      holidayName: "Gandhi Jayanti",
-      priority: "Low",
-      status: "Pending",
-      department: "Admin",
-      date: "2024-10-02",
-    },
-    {
-      id: 9,
-      holidayName: "Feast of St. Francis Xavier",
-      priority: "Medium",
-      status: "Pending",
-      department: "IT",
-      date: "2024-12-03",
-    },
-    {
-      id: 9,
-      holidayName: "Eid Al-Fitr",
-      priority: "Medium",
-      status: "Pending",
-      department: "IT",
-      date: "2024-04-11",
-    },
+    // {
+    //   id: 4,
+    //   holidayName: "Independence Day",
+    //   priority: "Low",
+    //   status: "Pending",
+    //   department: "Admin",
+    //   date: "2024-08-15",
+    // },
+    // {
+    //   id: 5,
+    //   holidayName: "Gudi Padava",
+    //   priority: "Medium",
+    //   status: "Pending",
+    //   department: "HR",
+    //   date: "2024-04-09",
+    // },
+    // {
+    //   id: 6,
+    //   holidayName: "Goa Liberation Day",
+    //   priority: "High",
+    //   status: "Pending",
+    //   department: "IT",
+    //   date: "2024-12-19",
+    // },
+    // {
+    //   id: 7,
+    //   holidayName: "Ganesh Chaturthi",
+    //   priority: "Low",
+    //   status: "Pending",
+    //   department: "Tech",
+    //   date: "2024-09-07",
+    // },
+    // {
+    //   id: 8,
+    //   holidayName: "Gandhi Jayanti",
+    //   priority: "Low",
+    //   status: "Pending",
+    //   department: "Admin",
+    //   date: "2024-10-02",
+    // },
+    // {
+    //   id: 9,
+    //   holidayName: "Feast of St. Francis Xavier",
+    //   priority: "Medium",
+    //   status: "Pending",
+    //   department: "IT",
+    //   date: "2024-12-03",
+    // },
+    // {
+    //   id: 9,
+    //   holidayName: "Eid Al-Fitr",
+    //   priority: "Medium",
+    //   status: "Pending",
+    //   department: "IT",
+    //   date: "2024-04-11",
+    // },
   ];
 
   const [rows, setRows] = React.useState(allRows);
@@ -325,10 +374,12 @@ const Holidays = () => {
 
   const newTicket = {
     id: rows.length + 1,
-    holidayName: "New Holiday",
-    priority: "Medium",
+    sopName: "New Test SOP",
+    agreement: "Republic Day",
+    priority: "High",
     status: "Pending",
     department: "IT",
+
     date: new Date().toISOString().split("T")[0], // Today's date
   };
 
@@ -348,7 +399,7 @@ const Holidays = () => {
   // };
   const handleAddTicket = (newTicket) => {
     setRows((prevRows) => [newTicket, ...prevRows]); // Update the state
-    toast.success("Added a new holiday.");
+    toast.success("Added a new SOP.");
     closeModal(); // Optionally close the modal after the alert
   };
 
@@ -399,12 +450,12 @@ const Holidays = () => {
 
   const handleDeleteTicket = () => {
     // setHighlightFirstRow(true); // Highlight the first row after editing a ticket
-    toast.success("Holiday Deleted");
+    toast.success("SOP Deleted");
     closeDeleteTicket(); // Optionally close the modal after the alert
   };
   // EDIT TICKET DETAILS MODAL END
 
-  const steps = ["Add Holiday", "Verify Details"];
+  const steps = ["Add SOP", "Verify Details"];
 
   const handleNextStep = (handleNext) => {
     // e.preventDefault();
@@ -479,7 +530,7 @@ const Holidays = () => {
               <button
                 onClick={openModal}
                 className="px-6 py-2 rounded-lg text-white wono-blue-dark hover:bg-[#3cbce7] transition-shadow shadow-md hover:shadow-lg active:shadow-inner">
-                + Add Holiday
+                + Add SOP
               </button>
             </div>
           </div>
@@ -579,32 +630,31 @@ const Holidays = () => {
                                 {/* Name, Mobile, Email, DOB fields */}
                                 {/* <div className="grid grid-cols-1 gap-4">
                                   <FormControl fullWidth>
-                                    <InputLabel id="leave-type-select-label">
-                                      Leave Type
+                                    <InputLabel id="select-employee-label">
+                                      Select Employee
                                     </InputLabel>
                                     <Select
-                                      labelId="leave-type-select-label"
-                                      id="leave-type-select"
+                                      labelId="select-employee-label"
+                                      id="select-employee"
                                       // value={department}
                                       label="Department"
                                       // onChange={handleChange}
                                     >
-                                      <MenuItem value="Sick Leave">
-                                        Sick Leave
+                                      <MenuItem value="Kalpesh Naik">
+                                        Kalpesh Naik
                                       </MenuItem>
-                                      <MenuItem value="Casual Leave">
-                                        Casual Leave
+                                      <MenuItem value="Allan Silveira">
+                                        Allan Silveira
                                       </MenuItem>
-                                      <MenuItem value="Annual Leave">
-                                        Annual Leave
+                                      <MenuItem value="Aiwinraj KS">
+                                        Aiwinraj KS
                                       </MenuItem>
-                               
                                     </Select>
                                   </FormControl>
                                 </div> */}
                                 <div className="grid grid-cols-1 gap-4">
                                   <TextField
-                                    label="Holiday Name"
+                                    label="SOP Name"
                                     // value={newEvent.name}
                                     // onChange={(e) =>
                                     //   setnewEvent({ ...newEvent, name: e.target.value })
@@ -612,11 +662,24 @@ const Holidays = () => {
                                     fullWidth
                                   />
                                 </div>
-                                <div className="grid grid-cols-1 gap-4">
+                                <div>
+                                  <label
+                                    htmlFor="room-image"
+                                    className="block text-sm font-medium text-gray-700">
+                                    Upload SOP
+                                  </label>
+                                  <input
+                                    id="room-image"
+                                    type="file"
+                                    name="image"
+                                    accept="pdf/*"
+                                    // onChange={handleChange}
+                                    className="border-none mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+                                  />
+                                </div>
+                                {/* <div className="grid grid-cols-1 gap-4">
                                   <FormControl fullWidth>
-                                    {/* <InputLabel id="suggestion-select-label">
-                                      Ticket Title
-                                    </InputLabel> */}
+                                  
                                     <LocalizationProvider
                                       dateAdapter={AdapterDayjs}>
                                       <DatePicker
@@ -641,7 +704,7 @@ const Holidays = () => {
                                       />
                                     </LocalizationProvider>
                                   </FormControl>
-                                </div>
+                                </div> */}
                                 {holidayName === "Other" && (
                                   <div className="grid grid-cols-1 gap-4">
                                     <TextField
@@ -716,16 +779,16 @@ const Holidays = () => {
                       </h1>
                       <div>
                         <div className="flex justify-between py-2 border-b">
-                          <h1 className="font-semibold">Holiday Name</h1>
-                          <span>New Holiday</span>
+                          <h1 className="font-semibold">SOP Name</h1>
+                          <span>New Test SOP</span>
                         </div>
                       </div>
-                      <div>
+                      {/* <div>
                         <div className="flex justify-between py-2 border-b">
                           <h1 className="font-semibold">Date</h1>
                           <span>07/12/2024</span>
                         </div>
-                      </div>
+                      </div> */}
                       <div className="pt-8 pb-4">
                         {/* <p>details</p> */}
 
@@ -1000,7 +1063,7 @@ const Holidays = () => {
             <div className="sticky top-0 bg-white py-6 z-20 flex justify-between">
               <div>
                 <h2 className="text-3xl font-bold mb-4 uppercase">
-                  Delete Holiday
+                  Delete SOP
                 </h2>
               </div>
               <div>
@@ -1027,7 +1090,7 @@ const Holidays = () => {
               <div className="">
                 <div className=" mx-auto">
                   <h1 className="text-xl text-center my-2 font-bold">
-                    Are you sure you want to delete the holiday?
+                    Are you sure you want to delete the SOP?
                   </h1>
                   <Box
                     sx={{
@@ -1110,4 +1173,4 @@ const Holidays = () => {
   );
 };
 
-export default Holidays;
+export default SopCrud;

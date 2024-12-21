@@ -527,7 +527,7 @@ const ReceivedTickets = () => {
               className="bg-red-500 text-white px-3 py-1 rounded">
               Accept
             </button>
-            {authUser.user.role.roleTitle !== "Employee" && (
+            {/* {authUser.user.role.roleTitle !== "Employee" && (
               <button
                 // onClick={handleDelete}
                 // onClick={handleAssign}
@@ -536,7 +536,7 @@ const ReceivedTickets = () => {
                 className="bg-red-500 text-white px-3 py-1 rounded">
                 Assign
               </button>
-            )}
+            )} */}
           </div>
         );
       },

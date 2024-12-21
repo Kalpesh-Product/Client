@@ -12,8 +12,10 @@ import { TextField } from "@mui/material";
 import AgTable from "../../../../components/AgTable";
 import { toast } from "sonner";
 import axios from "axios";
+import useAuth from "../../../../hooks/useAuth";
 
 const UnresolvedTickets = () => {
+  const { auth: authUser } = useAuth();
   // const [user, setUser] = useState("");
   // useEffect(() => {
   //   const storedUser = JSON.parse(localStorage.getItem("user"));
@@ -63,7 +65,7 @@ const UnresolvedTickets = () => {
     return () => clearTimeout(timer);
   }, [hasRefreshed]);
 
-  const selectedDepartmentFilter = user.department; // Replace with the desired name or variable
+  const selectedDepartmentFilter = authUser.user.department[0].name; // Replace with the desired name or variable
 
   // Ticket With APIs & Local START
 
@@ -73,7 +75,7 @@ const UnresolvedTickets = () => {
 
   // state to hold the values of ticket form inputs
   const [createForm, setCreateForm] = useState({
-    raisedBy: user.name,
+    raisedBy: authUser.user.name,
     selectedDepartment: "",
     description: "",
   });
@@ -101,7 +103,7 @@ const UnresolvedTickets = () => {
     setCreateForm((prevForm) => ({
       ...prevForm, // Spread previous form values
       [name]: value, // Update the specific field being modified
-      raisedBy: user.name, // Ensure raisedBy is always set to user.name
+      raisedBy: authUser.user.name, // Ensure raisedBy is always set to authUser.user.name
     }));
 
     console.log("Updated Form:", createForm);
@@ -165,7 +167,7 @@ const UnresolvedTickets = () => {
       (ticket) =>
         ticket.selectedDepartment === selectedDepartmentFilter &&
         ticket.status !== "Closed" &&
-        ticket.assignedMember === user.name
+        ticket.assignedMember === authUser.user.name
     );
 
     // Set it on state (update the value of tickets)

@@ -21,7 +21,7 @@ import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import useAuth from "../../../hooks/useAuth";
 
-const Holidays = () => {
+const ManageLeaves = () => {
   const location = useLocation();
   const { auth } = useAuth();
 
@@ -32,7 +32,7 @@ const Holidays = () => {
 
   const columns = [
     { field: "id", headerName: "ID", width: 100 },
-    { field: "holidayName", headerName: "Holiday Name", width: 200 },
+    { field: "leaveType", headerName: "Leave Type", width: 200 },
     // {
     //   field: "priority",
     //   headerName: "Priority",
@@ -62,7 +62,8 @@ const Holidays = () => {
     //   type: "singleSelect",
     //   valueOptions: ["IT", "HR", "Tech", "Admin"],
     // },
-    { field: "date", headerName: "Date", width: 150 },
+    // { field: "date", headerName: "Date", width: 150 },
+    { field: "noOfLeaves", headerName: "No Of Leaves", width: 150 },
     // {
     //   field: "status",
     //   headerName: "Status",
@@ -201,84 +202,84 @@ const Holidays = () => {
   const allRows = [
     {
       id: 1,
-      holidayName: "Republic Day",
+      leaveType: "Sick Leave",
       priority: "High",
       status: "Pending",
       department: "IT",
-      date: "2024-01-26",
+      noOfLeaves: "6",
     },
     {
       id: 2,
-      holidayName: "New Year",
+      leaveType: "Casual Leave",
       priority: "Medium",
       status: "Pending",
       department: "HR",
-      date: "2024-01-01",
+      noOfLeaves: "2",
     },
     {
       id: 3,
-      holidayName: "Labor Day",
+      leaveType: "Priviledged Leave",
       priority: "High",
       status: "Pending",
       department: "Tech",
-      date: "2024-05-01",
+      noOfLeaves: "4",
     },
-    {
-      id: 4,
-      holidayName: "Independence Day",
-      priority: "Low",
-      status: "Pending",
-      department: "Admin",
-      date: "2024-08-15",
-    },
-    {
-      id: 5,
-      holidayName: "Gudi Padava",
-      priority: "Medium",
-      status: "Pending",
-      department: "HR",
-      date: "2024-04-09",
-    },
-    {
-      id: 6,
-      holidayName: "Goa Liberation Day",
-      priority: "High",
-      status: "Pending",
-      department: "IT",
-      date: "2024-12-19",
-    },
-    {
-      id: 7,
-      holidayName: "Ganesh Chaturthi",
-      priority: "Low",
-      status: "Pending",
-      department: "Tech",
-      date: "2024-09-07",
-    },
-    {
-      id: 8,
-      holidayName: "Gandhi Jayanti",
-      priority: "Low",
-      status: "Pending",
-      department: "Admin",
-      date: "2024-10-02",
-    },
-    {
-      id: 9,
-      holidayName: "Feast of St. Francis Xavier",
-      priority: "Medium",
-      status: "Pending",
-      department: "IT",
-      date: "2024-12-03",
-    },
-    {
-      id: 9,
-      holidayName: "Eid Al-Fitr",
-      priority: "Medium",
-      status: "Pending",
-      department: "IT",
-      date: "2024-04-11",
-    },
+    // {
+    //   id: 4,
+    //   holidayName: "Independence Day",
+    //   priority: "Low",
+    //   status: "Pending",
+    //   department: "Admin",
+    //   date: "2024-08-15",
+    // },
+    // {
+    //   id: 5,
+    //   holidayName: "Gudi Padava",
+    //   priority: "Medium",
+    //   status: "Pending",
+    //   department: "HR",
+    //   date: "2024-04-09",
+    // },
+    // {
+    //   id: 6,
+    //   holidayName: "Goa Liberation Day",
+    //   priority: "High",
+    //   status: "Pending",
+    //   department: "IT",
+    //   date: "2024-12-19",
+    // },
+    // {
+    //   id: 7,
+    //   holidayName: "Ganesh Chaturthi",
+    //   priority: "Low",
+    //   status: "Pending",
+    //   department: "Tech",
+    //   date: "2024-09-07",
+    // },
+    // {
+    //   id: 8,
+    //   holidayName: "Gandhi Jayanti",
+    //   priority: "Low",
+    //   status: "Pending",
+    //   department: "Admin",
+    //   date: "2024-10-02",
+    // },
+    // {
+    //   id: 9,
+    //   holidayName: "Feast of St. Francis Xavier",
+    //   priority: "Medium",
+    //   status: "Pending",
+    //   department: "IT",
+    //   date: "2024-12-03",
+    // },
+    // {
+    //   id: 9,
+    //   holidayName: "Eid Al-Fitr",
+    //   priority: "Medium",
+    //   status: "Pending",
+    //   department: "IT",
+    //   date: "2024-04-11",
+    // },
   ];
 
   const [rows, setRows] = React.useState(allRows);
@@ -325,10 +326,10 @@ const Holidays = () => {
 
   const newTicket = {
     id: rows.length + 1,
-    holidayName: "New Holiday",
+    leaveType: "New Leave",
     priority: "Medium",
     status: "Pending",
-    department: "IT",
+    noOfLeaves: "5",
     date: new Date().toISOString().split("T")[0], // Today's date
   };
 
@@ -404,7 +405,7 @@ const Holidays = () => {
   };
   // EDIT TICKET DETAILS MODAL END
 
-  const steps = ["Add Holiday", "Verify Details"];
+  const steps = ["Add Leave Tpye", "Verify Details"];
 
   const handleNextStep = (handleNext) => {
     // e.preventDefault();
@@ -479,7 +480,7 @@ const Holidays = () => {
               <button
                 onClick={openModal}
                 className="px-6 py-2 rounded-lg text-white wono-blue-dark hover:bg-[#3cbce7] transition-shadow shadow-md hover:shadow-lg active:shadow-inner">
-                + Add Holiday
+                + Add New Leave Type
               </button>
             </div>
           </div>
@@ -604,7 +605,7 @@ const Holidays = () => {
                                 </div> */}
                                 <div className="grid grid-cols-1 gap-4">
                                   <TextField
-                                    label="Holiday Name"
+                                    label="Leave Type"
                                     // value={newEvent.name}
                                     // onChange={(e) =>
                                     //   setnewEvent({ ...newEvent, name: e.target.value })
@@ -612,11 +613,9 @@ const Holidays = () => {
                                     fullWidth
                                   />
                                 </div>
-                                <div className="grid grid-cols-1 gap-4">
+                                {/* <div className="grid grid-cols-1 gap-4">
                                   <FormControl fullWidth>
-                                    {/* <InputLabel id="suggestion-select-label">
-                                      Ticket Title
-                                    </InputLabel> */}
+                            
                                     <LocalizationProvider
                                       dateAdapter={AdapterDayjs}>
                                       <DatePicker
@@ -641,7 +640,7 @@ const Holidays = () => {
                                       />
                                     </LocalizationProvider>
                                   </FormControl>
-                                </div>
+                                </div> */}
                                 {holidayName === "Other" && (
                                   <div className="grid grid-cols-1 gap-4">
                                     <TextField
@@ -655,16 +654,16 @@ const Holidays = () => {
                                   </div>
                                 )}
 
-                                {/* <div className="grid grid-cols-1 gap-4">
+                                <div className="grid grid-cols-1 gap-4">
                                   <TextField
-                                    label="Ticket Title"
+                                    label="Number Of Days"
                                     // value={newEvent.name}
                                     // onChange={(e) =>
                                     //   setnewEvent({ ...newEvent, name: e.target.value })
                                     // }
                                     fullWidth
                                   />
-                                </div> */}
+                                </div>
                               </div>
 
                               {/* Role & Department fields */}
@@ -716,14 +715,14 @@ const Holidays = () => {
                       </h1>
                       <div>
                         <div className="flex justify-between py-2 border-b">
-                          <h1 className="font-semibold">Holiday Name</h1>
-                          <span>New Holiday</span>
+                          <h1 className="font-semibold">Leave Type</h1>
+                          <span>New Leave</span>
                         </div>
                       </div>
                       <div>
                         <div className="flex justify-between py-2 border-b">
-                          <h1 className="font-semibold">Date</h1>
-                          <span>07/12/2024</span>
+                          <h1 className="font-semibold">Number Of Days</h1>
+                          <span>5</span>
                         </div>
                       </div>
                       <div className="pt-8 pb-4">
@@ -1110,4 +1109,4 @@ const Holidays = () => {
   );
 };
 
-export default Holidays;
+export default ManageLeaves;

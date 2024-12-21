@@ -11,7 +11,7 @@ import {
   ServerUptime,
 } from "../../Widgets/TechWidgets";
 import DoughnutChart from "../../Widgets/DoughnutGraph";
-import { WidgetSection } from "../Dashboard";
+import { ButtonSection, WidgetSection } from "../Dashboard";
 import {
   AttendanceRate,
   EmployeeCount,
@@ -100,6 +100,20 @@ import Payslips from "../hr/payslips/Payslips";
 import Onboarding from "../hr/onboarding/Onboarding";
 import CompanySettings from "../hr/company-settings/CompanySettings";
 import AllTickets from "../cms/tickets/AllTickets";
+import PastLeaves from "../hr/leaves/PastLeaves";
+import SubordinateDueApprovals from "../hr/leaves/SubordinateDueApprovals";
+import ManageLeaves from "../hr/leaves/ManageLeaves";
+import MyLeaves from "../hr/leaves/MyLeaves";
+import EmployeeAgreement from "../hr/employment-agreement/EmployeeAgreement";
+import EmployeeAgreementContainer from "../hr/employment-agreement/EmployeeAgreementContainer";
+import EmployeeAgreementDetails from "../hr/employment-agreement/EmployeeAgreementDetails";
+import SopLink from "../hr/company-handbook/components/SopLink";
+import PoliciesLink from "../hr/company-handbook/components/PoliciesLink";
+import SopCrud from "../hr/company-handbook/SopCrud";
+import PolicyCrud from "../hr/company-handbook/PolicyCrud";
+import SopDetails from "../hr/company-handbook/SopDetails";
+import PolicyDetails from "../hr/company-handbook/PolicyDetails";
+import MyLeavesButton from "../hr/leaves/MyLeavesButton";
 
 const DepartmentDash = () => {
   const navigate = useNavigate();
@@ -265,13 +279,16 @@ const DepartmentDash = () => {
         <LeaveWidget2 />,
         <LeaveWidget3 />,
         <LeaveWidget4 />,
-        // <AssetsCount count={customerServiceWidgetsData.totalAssets} />,
-        // <MaintenanceRequests
-        //   requests={customerServiceWidgetsData.pendingMaintenance}
-        // />,
-        // <AssetsAssigned assigned={customerServiceWidgetsData.assignedAssets} />,
-        // <AssetsInRepair count={customerServiceWidgetsData.assetsInRepair} />,
-        // <NewAssetsAdded added={customerServiceWidgetsData.newAssetsAdded} />,
+      ],
+    },
+    {
+      heading: "Company Handbook",
+      subModule: "company-handbook",
+      widgets: [
+        <SopLink />,
+        <PoliciesLink />,
+        // <LeaveWidget3 />,
+        // <LeaveWidget4 />,
       ],
     },
     {
@@ -628,6 +645,16 @@ const DepartmentDash = () => {
                         widgets={section.widgets}
                       />
                     ))}
+                  {/* {hrWidgets
+                    .filter((section) => section.subModule === "leaves")
+                    .map((section, index) => (
+                      <ButtonSection
+                        key={index}
+                        // heading={section.heading}
+                        widgets={section.widgets}
+                      />
+                    ))} */}
+
                   {authUser.user.role === "Admin" && (
                     <div className="flex w-full flex-1 flex-grow gap-x-4">
                       {/* <TicketsRemainingWidget
@@ -644,6 +671,10 @@ const DepartmentDash = () => {
                     </div>
                   )}
                   {/* <AssetAllocationWidget /> */}
+
+                  <div>
+                    <MyLeavesButton />
+                  </div>
                   <div className=" ">
                     <div className="flex w-full p-4 pb-4 pl-0 text-lg border-b-0  gap-4">
                       <h2 className="text-2xl  font-bold ">Pending Leaves</h2>
@@ -669,19 +700,41 @@ const DepartmentDash = () => {
                 {/* <MyLeaves /> */}
                 <div className="bg-gray-100 p-4 rounded-lg ">
                   <div className="flex w-full  pb-4 pl-0 text-lg border-b-0  gap-4">
-                    <h2 className="text-2xl  font-bold ">My Leaves</h2>
+                    <h2 className="text-2xl  font-bold ">Leave Requests</h2>
                   </div>
-                  <PendingLeaves />
+                  <MyLeaves />
                 </div>
               </>
-            ) : location.pathname === "/hr/leaves/leave-reports" ? (
+            ) : location.pathname === "/hr/leaves/past-leaves" ? (
               <>
                 {/* <LeaveReports /> */}
                 <div className="bg-gray-100 p-4 rounded-lg ">
                   <div className="flex w-full  pb-4 pl-0 text-lg border-b-0  gap-4">
-                    <h2 className="text-2xl  font-bold ">Leave Reports</h2>
+                    <h2 className="text-2xl  font-bold ">View Past Leaves</h2>
                   </div>
-                  <PendingLeaves />
+                  <PastLeaves />
+                </div>
+              </>
+            ) : location.pathname === "/hr/leaves/due-approvals" ? (
+              <>
+                {/* <LeaveReports /> */}
+                <div className="bg-gray-100 p-4 rounded-lg ">
+                  <div className="flex w-full  pb-4 pl-0 text-lg border-b-0  gap-4">
+                    <h2 className="text-2xl  font-bold ">
+                      Subordinate Due Approvals
+                    </h2>
+                  </div>
+                  <SubordinateDueApprovals />
+                </div>
+              </>
+            ) : location.pathname === "/hr/leaves/manage-leaves" ? (
+              <>
+                {/* <LeaveReports /> */}
+                <div className="bg-gray-100 p-4 rounded-lg ">
+                  <div className="flex w-full  pb-4 pl-0 text-lg border-b-0  gap-4">
+                    <h2 className="text-2xl  font-bold ">Manage Leaves</h2>
+                  </div>
+                  <ManageLeaves />
                 </div>
               </>
             ) : location.pathname === "/hr/payslips" ? (
@@ -712,6 +765,90 @@ const DepartmentDash = () => {
                     <h2 className="text-2xl  font-bold ">Policies</h2>
                   </div>
                   <Policies />
+                </div>
+              </>
+            ) : location.pathname === "/hr/employment-agreement" ? (
+              <>
+                {/* <LeaveReports /> */}
+                <div className="bg-gray-100 p-4 rounded-lg ">
+                  <div className="flex w-full  pb-4 pl-0 text-lg border-b-0  gap-4">
+                    <h2 className="text-2xl  font-bold ">
+                      Employment Agreement
+                    </h2>
+                  </div>
+                  <EmployeeAgreement />
+                </div>
+              </>
+            ) : location.pathname === "/hr/employment-agreement-details" ? (
+              <>
+                {/* <LeaveReports /> */}
+                <div className="bg-gray-100 p-4 rounded-lg ">
+                  <div className="flex w-full  pb-4 pl-0 text-lg border-b-0  gap-4">
+                    <h2 className="text-2xl  font-bold ">
+                      Employment Agreement
+                    </h2>
+                  </div>
+                  <EmployeeAgreementDetails />
+                </div>
+              </>
+            ) : location.pathname === "/hr/company-handbook" ? (
+              <>
+                {/* <LeaveReports /> */}
+                <div className="bg-gray-100 p-4 rounded-lg ">
+                  {/* <div className="flex w-full  pb-4 pl-0 text-lg border-b-0  gap-4">
+                    <h2 className="text-2xl  font-bold ">Company Handbook</h2>
+                  </div> */}
+                  {hrWidgets
+                    .filter(
+                      (section) => section.subModule === "company-handbook"
+                    )
+                    .map((section, index) => (
+                      <WidgetSection
+                        key={index}
+                        heading={section.heading}
+                        widgets={section.widgets}
+                      />
+                    ))}
+                </div>
+              </>
+            ) : location.pathname === "/hr/company-handbook/sop" ? (
+              <>
+                {/* <LeaveReports /> */}
+                <div className="bg-gray-100 p-4 rounded-lg ">
+                  <div className="flex w-full  pb-4 pl-0 text-lg border-b-0  gap-4">
+                    <h2 className="text-2xl  font-bold ">SOPs</h2>
+                  </div>
+                  <SopCrud />
+                </div>
+              </>
+            ) : location.pathname === "/hr/company-handbook/sop-details" ? (
+              <>
+                {/* <LeaveReports /> */}
+                <div className="bg-gray-100 p-4 rounded-lg ">
+                  <div className="flex w-full  pb-4 pl-0 text-lg border-b-0  gap-4">
+                    <h2 className="text-2xl  font-bold ">SOP Details</h2>
+                  </div>
+                  <SopDetails />
+                </div>
+              </>
+            ) : location.pathname === "/hr/company-handbook/policies" ? (
+              <>
+                {/* <LeaveReports /> */}
+                <div className="bg-gray-100 p-4 rounded-lg ">
+                  <div className="flex w-full  pb-4 pl-0 text-lg border-b-0  gap-4">
+                    <h2 className="text-2xl  font-bold ">Policies</h2>
+                  </div>
+                  <PolicyCrud />
+                </div>
+              </>
+            ) : location.pathname === "/hr/company-handbook/policy-details" ? (
+              <>
+                {/* <LeaveReports /> */}
+                <div className="bg-gray-100 p-4 rounded-lg ">
+                  <div className="flex w-full  pb-4 pl-0 text-lg border-b-0  gap-4">
+                    <h2 className="text-2xl  font-bold ">Policy Details</h2>
+                  </div>
+                  <PolicyDetails />
                 </div>
               </>
             ) : location.pathname === "/hr/holidays" ? (

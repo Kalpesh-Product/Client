@@ -14,8 +14,10 @@ import AgTable from "../../../../components/AgTable";
 import { motion } from "framer-motion";
 import { IoMdClose } from "react-icons/io";
 import axios from "axios";
+import useAuth from "../../../../hooks/useAuth";
 
 const AcceptedTickets = () => {
+  const { auth: authUser } = useAuth();
   const [closeTicketData, setCloseTicketData] = useState({
     _id: null,
 
@@ -79,7 +81,7 @@ const AcceptedTickets = () => {
     return () => clearTimeout(timer);
   }, [hasRefreshed]);
 
-  const selectedDepartmentFilter = user.department; // Replace with the desired name or variable
+  const selectedDepartmentFilter = authUser.user.department[0].name; // Replace with the desired name or variable
 
   // Ticket With APIs & Local START
 
@@ -89,7 +91,7 @@ const AcceptedTickets = () => {
 
   // state to hold the values of ticket form inputs
   const [createForm, setCreateForm] = useState({
-    raisedBy: user.name,
+    raisedBy: authUser.user.name,
     selectedDepartment: "",
     description: "",
   });
@@ -117,7 +119,7 @@ const AcceptedTickets = () => {
     setCreateForm((prevForm) => ({
       ...prevForm, // Spread previous form values
       [name]: value, // Update the specific field being modified
-      raisedBy: user.name, // Ensure raisedBy is always set to user.name
+      raisedBy: authUser.user.name, // Ensure raisedBy is always set to authUser.user.name
     }));
 
     console.log("Updated Form:", createForm);
@@ -182,7 +184,7 @@ const AcceptedTickets = () => {
         ticket.selectedDepartment === selectedDepartmentFilter &&
         ticket.accepted.acceptedStatus === true &&
         ticket.status !== "Closed" &&
-        ticket.assignedMember === user.name
+        ticket.assignedMember === authUser.user.name
     );
 
     // Set it on state (update the value of tickets)
