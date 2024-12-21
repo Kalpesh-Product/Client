@@ -3,23 +3,9 @@ import ModuleSidebar from "../../components/ModuleSidebar";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import TestSide from "../../components/Sidetest";
 import PayRollDash from "../hr/payroll/PayRollDash";
-import {
-  BudgetApproval,
-  CountCard,
-  CriticalAlerts,
-  PendingTasks,
-  ResolvedIssues,
-  ServerUptime,
-} from "../../Widgets/TechWidgets";
+import { BudgetApproval, CountCard } from "../../Widgets/TechWidgets";
 import DoughnutChart from "../../Widgets/DoughnutGraph";
 import { WidgetSection } from "../Dashboard";
-import {
-  AttendanceRate,
-  EmployeeCount,
-  LeaveRequests,
-  NewHires,
-  PayrollSummary,
-} from "../../Widgets/HR/WidgetsHR";
 import RevenueVsExpensesWidget from "../../Widgets/RevenueVsExpensesWidget";
 import ProgressDoughnutWidget from "../../Widgets/ProgressDoughnutWidget";
 import BarGraphWidget from "../../Widgets/BarGraphWidget";
@@ -89,7 +75,7 @@ import { TicketsRemainingWidget } from "../cms/tickets/components/TicketWidgets/
 import MyTickets from "../cms/tickets/components/MyTickets";
 import Budget from "../Budget";
 import AttendanceDash from "../hr/attendance/AttendanceDash";
-import LeaveWidgets from "../hr/leaves/Components/LeaveWidgets";
+import BasicCardCount from "../hr/leaves/Components/LeaveWidgets";
 import LeaveWidget2 from "../hr/leaves/Components/LeaveWidget2";
 import LeaveWidget3 from "../hr/leaves/Components/LeaveWidget3";
 import LeaveWidget4 from "../hr/leaves/Components/LeaveWidget4";
@@ -102,12 +88,16 @@ import Onboarding from "../hr/onboarding/Onboarding";
 import CompanySettings from "../hr/company-settings/CompanySettings";
 import AllTickets from "../cms/tickets/AllTickets";
 import { IoMdClose } from "react-icons/io";
+import LaptopMockup from "../../assets/builder-preview/Laptop/laptop-mockup.png";
 import AntiqueCafe from "../../assets/builder-preview/cafe-antique.png";
+import AntiqueCafeMobile from "../../assets/builder-preview/mobile/cafe-antique-mobile.png";
 import Caffo from "../../assets/builder-preview/cafe-caffo.png";
 import EditTemplate from "../website-builder/EditTemplate";
 import LineGraph from "../../components/Graphs/LineGraph";
 import BarGraphMUI from "../../components/Graphs/BarGraphMUI";
 import PieChartMUI from "../../components/Graphs/PieChartMUI";
+import GroupedBarGraph from "../../components/Graphs/GroupedBarGraph";
+import BasicTable from "../../components/Tables/BasicTable";
 
 const DepartmentDash = () => {
   const navigate = useNavigate();
@@ -147,6 +137,7 @@ const DepartmentDash = () => {
       description: "A clean and minimalistic HTML template",
       folder: "/templates/template-1",
       image: AntiqueCafe,
+      mobile: AntiqueCafeMobile,
       features: [
         "Website / Native Apps",
         "Payment Gateway",
@@ -477,29 +468,268 @@ const DepartmentDash = () => {
     {
       heading: "Visitor Analytics",
       widgets: [
-        <PieChartMUI data={techIndiaVisitors} />,
-        <PieChartMUI data={techGoaVisitors} />,
+        <PieChartMUI
+          title={"Country Wise Visitors"}
+          data={techIndiaVisitors}
+        />,
+        <PieChartMUI title={"State Wise Visitors"} data={techGoaVisitors} />,
       ],
     },
   ];
 
+  const hrPayrollExpenseData = {
+    labels: [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ],
+    datasets: [
+      {
+        label: "Payroll Expense ($)",
+        data: [
+          15000, 16000, 15500, 16200, 16800, 17000, 16500, 17200, 17500, 18000,
+          17800, 18500,
+        ],
+        borderColor: "rgba(255, 99, 132, 1)",
+        backgroundColor: "rgba(255, 99, 132, 0.2)",
+        tension: 0.4,
+      },
+    ],
+  };
+
+  const hrTargetAchievementData = {
+    labels: [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ],
+    datasets: [
+      {
+        label: "Target (%)",
+        data: [90, 92, 88, 95, 89, 94, 90, 97, 91, 98, 93, 99], // Example targets
+        backgroundColor: "rgba(54, 162, 235, 0.7)", // Blue
+      },
+      {
+        label: "Achievement (%)",
+        data: [85, 90, 88, 92, 87, 93, 89, 95, 90, 96, 94, 98], // Example achievements
+        backgroundColor: "rgba(75, 192, 192, 0.7)", // Teal
+      },
+    ],
+  };
+  const hrDeptWiseTaskData = {
+    labels: ["Tech", "Finance", "Sales", "IT", "Admin", "Maintenance"],
+    datasets: [
+      {
+        label: "Tasks Completed (%)",
+        data: [80, 85, 90, 88, 92, 87, 93, 91, 94, 96, 95, 98], // Completion percentage
+        backgroundColor: "rgba(75, 192, 192, 0.7)", // Teal
+      },
+      {
+        label: "Due Tasks Count",
+        data: [5, 3, 4, 2, 6, 3, 2, 4, 3, 1, 2, 1], // Count of due tasks
+        backgroundColor: "rgba(255, 99, 132, 0.7)", // Red
+      },
+    ],
+  };
+  const hrMaleFemale = [
+    { id: 0, value: 45, label: "Male" },
+    { id: 1, value: 55, label: "Female" },
+  ];
+  const holidaysAndEvents = [
+    {
+      id: 1,
+      date: "2024-12-04",
+      eventName: "Indian Navy Day",
+      region: "India",
+      description: "Celebrates the achievements and role of the Indian Navy.",
+    },
+    {
+      id: 2,
+      date: "2024-12-07",
+      eventName: "Armed Forces Flag Day",
+      region: "India",
+      description:
+        "Honors the martyrs and men in uniform who serve India’s armed forces.",
+    },
+    {
+      id: 3,
+      date: "2024-12-11",
+      eventName: "Gita Jayanti",
+      region: "India (Hindu Observance)",
+      description:
+        "Commemorates the birth of the Bhagavad Gita, a sacred Hindu scripture.",
+    },
+    {
+      id: 4,
+      date: "2024-12-23",
+      eventName: "Kisan Diwas (Farmer’s Day)",
+      region: "India",
+      description:
+        "Honors Indian farmers and commemorates the birth anniversary of Chaudhary Charan Singh.",
+    },
+    {
+      id: 5,
+      date: "2024-12-25",
+      eventName: "Christmas",
+      region: "India (Public Holiday)",
+      description:
+        "Celebrated widely across India to mark the birth of Jesus Christ.",
+    },
+    {
+      id: 6,
+      date: "2024-12-31",
+      eventName: "New Year’s Eve",
+      region: "Global / India",
+      description:
+        "Marks the final day of the year with festivities and gatherings.",
+    },
+  ];
+  const holidayTableColumns = [
+    { key: "date", label: "Date" },
+    { key: "eventName", label: "Holiday / Event" },
+    { key: "region", label: "Region" },
+    // { key: 'description', label: 'Description' },
+  ];
+
+  // Random data
+  const hrBirthdayData = [
+    { id: 1, name: "John Doe", age: 28, gender: "Male", city: "New York" },
+    { id: 2, name: "Alice Smith", age: 32, gender: "Female", city: "London" },
+    { id: 3, name: "Raj Kumar", age: 24, gender: "Male", city: "Delhi" },
+    { id: 4, name: "Emily Johnson", age: 27, gender: "Female", city: "Paris" },
+    { id: 5, name: "Chris Lee", age: 35, gender: "Male", city: "Seoul" },
+  ];
+
+  // Define the columns with keys matching data object properties
+  const hrBirthdayDataColumns = [
+    { key: "id", label: "ID" },
+    { key: "name", label: "Name" },
+    { key: "age", label: "Age" },
+    { key: "gender", label: "Gender" },
+    { key: "city", label: "City" },
+  ];
+
+  //Performance Listings
+  const topThreeEmployees = [
+    {
+      id: 1,
+      name: "John Doe",
+      department: "Sales",
+      performancePercentage: 97,
+    },
+    {
+      id: 2,
+      name: "Alice Smith",
+      department: "Engineering",
+      performancePercentage: 95,
+    },
+    {
+      id: 3,
+      name: "Priya Gupta",
+      department: "Marketing",
+      performancePercentage: 93,
+    },
+  ];
+  const topThreeEmployeesColumns = [
+    { key: "name", label: "Employee Name" },
+    { key: "department", label: "Department" },
+    { key: "performancePercentage", label: "Performance (%)" },
+  ];
+
+  //Rankings
+  const employeePerformances = [
+    {
+      id: 1,
+      name: 'Alice Smith',
+      department: 'Engineering',
+      performancePercentage: 96,
+    },
+    {
+      id: 2,
+      name: 'John Doe',
+      department: 'Sales',
+      performancePercentage: 93,
+    },
+    {
+      id: 3,
+      name: 'Priya Gupta',
+      department: 'Marketing',
+      performancePercentage: 88,
+    },
+    {
+      id: 4,
+      name: 'Raj Kumar',
+      department: 'Finance',
+      performancePercentage: 82,
+    },
+    {
+      id: 5,
+      name: 'Samuel Johnson',
+      department: 'Operations',
+      performancePercentage: 75,
+    },
+  ];
+
+  const employeePerformanceColumns = [
+    { key: 'name', label: 'Employee Name' },
+    { key: 'department', label: 'Department' },
+    { key: 'performancePercentage', label: 'Performance (%)' },
+  ];
+
   const hrWidgets = [
     {
-      heading: "Employee Overview",
+      heading: "Annual Payroll Expense",
       widgets: [
-        <EmployeeCount count={HrWidgetsData.employeeCount} />,
-        <LeaveRequests count={HrWidgetsData.leaveRequests} />,
-        <NewHires count={HrWidgetsData.newHires} />,
+        <LineGraph
+          graphXaxis={hrPayrollExpenseData.labels}
+          graphYaxis={hrPayrollExpenseData.datasets}
+          xAxisLabel="Allocated Budget"
+          graphHeight={500}
+          graphWidth={1250}
+        />,
       ],
     },
     {
       heading: "Leave Management",
       subModule: "leaves",
       widgets: [
-        <LeaveWidgets />,
-        <LeaveWidget2 />,
-        <LeaveWidget3 />,
-        <LeaveWidget4 />,
+        <BasicCardCount title={"Current Headcount"} data="6" />,
+        <BasicCardCount title={"Average Salary"} data={"45,000"} />,
+        <BasicCardCount title={"Average Monthly Employees"} data={"25"} />,
+        // <AssetsCount count={customerServiceWidgetsData.totalAssets} />,
+        // <MaintenanceRequests
+        //   requests={customerServiceWidgetsData.pendingMaintenance}
+        // />,
+        // <AssetsAssigned assigned={customerServiceWidgetsData.assignedAssets} />,
+        // <AssetsInRepair count={customerServiceWidgetsData.assetsInRepair} />,
+        // <NewAssetsAdded added={customerServiceWidgetsData.newAssetsAdded} />,
+      ],
+    },
+    {
+      heading: "Employee Data",
+      subModule: "leaves",
+      widgets: [
+        <BasicCardCount title={"Average Monthly Itrition"} data="6" />,
+        <BasicCardCount title={"Average Attendance"} data={"92%"} />,
+        <BasicCardCount title={"Average Working Hours"} data={"8.6"} />,
         // <AssetsCount count={customerServiceWidgetsData.totalAssets} />,
         // <MaintenanceRequests
         //   requests={customerServiceWidgetsData.pendingMaintenance}
@@ -512,8 +742,44 @@ const DepartmentDash = () => {
     {
       heading: "Payroll and Attendance",
       widgets: [
-        <PayrollSummary amount={HrWidgetsData.payrollAmount} />,
-        <AttendanceRate rate={HrWidgetsData.attendanceRate} />,
+        <GroupedBarGraph
+          labels={hrTargetAchievementData.labels}
+          datasets={hrTargetAchievementData.datasets}
+          graphWidth={1200} // Optional
+          graphHeight={500} // Optional
+        />,
+      ],
+    },
+    {
+      heading: "Performance",
+      widgets: [
+        <GroupedBarGraph
+          labels={hrDeptWiseTaskData.labels}
+          datasets={hrDeptWiseTaskData.datasets}
+          graphWidth={1200} // Optional
+          graphHeight={500} // Optional
+        />,
+      ],
+    },
+    {
+      heading: "",
+      widgets: [
+        <PieChartMUI title={"Gender data"} data={hrMaleFemale} />,
+        <PieChartMUI title={"City Wise %"} data={techGoaVisitors} />,
+      ],
+    },
+    {
+      heading: "Calendar Data",
+      widgets: [
+        <BasicTable data={hrBirthdayData} columns={hrBirthdayDataColumns} />,
+        <BasicTable data={holidaysAndEvents} columns={holidayTableColumns} />,
+      ],
+    },
+    {
+      heading: "Performance Data",
+      widgets: [
+        <BasicTable data={topThreeEmployees} columns={topThreeEmployeesColumns} />,
+        <BasicTable data={employeePerformances} columns={employeePerformanceColumns} />,
       ],
     },
   ];
@@ -777,13 +1043,13 @@ const DepartmentDash = () => {
                   <h2 className="text-2xl font-bold mb-6">
                     {selectedTheme.name}
                   </h2>
-                  <div className="flex flex-col lg:flex-row justify-between gap-16">
-                    <div className="h-[45vh] flex flex-col justify-between">
+                  <div className="flex flex-col lg:flex-row justify-between gap-[15rem] bg-white p-2 rounded-md">
+                    <div className="h-full flex flex-col gap-4 w-full">
                       <h1 className="text-3xl font-semibold">INCLUSIONS</h1>
                       {/* <p className="text-gray-700 mb-3">
                         {selectedTheme.description}
                       </p> */}
-                      <ul className="list-disc pl-5 my-3 text-xl">
+                      <ul className="list-disc pl-5 my-3 text-md">
                         {selectedTheme.features.map((feature, index) => (
                           <li key={index} className="text-gray-600">
                             {feature}
@@ -820,20 +1086,40 @@ const DepartmentDash = () => {
                         </button>
                       </div>
                     </div>
-                    <div className="w-[50%]">
-                      <img
-                        src={selectedTheme.image}
-                        alt={selectedTheme.name}
-                        className="w-full  lg:rounded-lg lg:h-full shadow-md object-cover"
-                      />
+                    <div>
+                      <div className="px-8">
+                        <div className="w-full rounded-t-md relative">
+                          <img
+                            className="relative"
+                            src={LaptopMockup}
+                            alt="LaptopMockup"
+                          />
+                          <div className="absolute top-[7.4%] left-[12.8%] h-full w-full">
+                            <div className="w-[383px] h-[238px] bg-red-500">
+                              <img
+                                src={selectedTheme.image}
+                                alt={selectedTheme.name}
+                                className="w-full h-full shadow-md object-cover"
+                              />
+                            </div>
+                          </div>
+                          <div className="absolute top-[22%] left-[72%] right-0 w-full h-full">
+                            <img
+                              src={selectedTheme.mobile}
+                              alt={selectedTheme.name}
+                              className="w-[20%] shadow-md object-cover"
+                            />
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
-                  <button
+                  {/* <button
                     onClick={() => navigate("/frontend/themes")}
                     className="mt-8 text-blue-500 underline"
                   >
                     Go Back
-                  </button>
+                  </button> */}
                 </div>
 
                 <NewModal open={open} onClose={handleClose}>
@@ -893,7 +1179,7 @@ const DepartmentDash = () => {
           <>
             {location.pathname === "/hr" ||
             location.pathname === "/hr/dashboard" ? (
-              <div className="bg-gray-100 p-4 rounded-lg  mt-4">
+              <div className="bg-gray-100 p-4 rounded-lg">
                 {hrWidgets.map((section, index) => (
                   <WidgetSection
                     key={index}

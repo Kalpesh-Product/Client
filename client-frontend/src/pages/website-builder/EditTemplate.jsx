@@ -106,6 +106,18 @@ function EditTemplate() {
 
   return (
     <div className="flex h-screen">
+      {/* Main Template Area */}
+      <main className="flex-1 bg-white p-4">
+        {htmlContent ? (
+          <iframe
+            ref={iframeRef}
+            title="Template Preview"
+            className="w-full h-full border rounded-lg shadow-md"
+          ></iframe>
+        ) : (
+          <p>Loading template...</p>
+        )}
+      </main>
       {/* Sidebar */}
       <aside className="w-1/4 bg-gray-100 p-4 overflow-y-auto">
         <h2 className="text-xl font-bold mb-4">Edit Template</h2>
@@ -131,19 +143,6 @@ function EditTemplate() {
           Export Template
         </button>
       </aside>
-
-      {/* Main Template Area */}
-      <main className="flex-1 bg-white p-4">
-        {htmlContent ? (
-          <iframe
-            ref={iframeRef}
-            title="Template Preview"
-            className="w-full h-full border rounded-lg shadow-md"
-          ></iframe>
-        ) : (
-          <p>Loading template...</p>
-        )}
-      </main>
     </div>
   );
 }

@@ -1,14 +1,14 @@
 import React from "react";
 
-const LeaveWidgets = () => {
+const BasicCardCount = ({title, data}) => {
   return (
     <div>
       <div className="p-4">
-        <h3 className="text-lg font-semibold">Sick Leaves Taken</h3>
-        <p className="text-3xl font-bold">8/12</p>
+        <h3 className="text-lg font-semibold">{title}</h3>
+        <p className="text-3xl font-bold">{data}</p>
       </div>
     </div>
   );
 };
 
-export default LeaveWidgets;
+export default BasicCardCount;

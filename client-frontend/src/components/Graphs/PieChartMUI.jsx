@@ -1,7 +1,7 @@
 import React from "react";
 import { PieChart } from "@mui/x-charts/PieChart";
 
-const PieChartMUI = ({ data }) => {
+const PieChartMUI = ({ data, title }) => {
   // Default data for site visits by city
   const defaultData = [
     // { id: 0, value: 25, label: 'Mumbai' },
@@ -15,7 +15,7 @@ const PieChartMUI = ({ data }) => {
 
   return (
     <div style={{ width: "100%", margin: "0" }}>
-      <h2 style={{ textAlign: "center" }}>Site Visits by City</h2>
+      <h2 style={{ textAlign: "center" }}>{title}</h2>
       <PieChart
         series={[{ data: pieData }]}
         width={500}
