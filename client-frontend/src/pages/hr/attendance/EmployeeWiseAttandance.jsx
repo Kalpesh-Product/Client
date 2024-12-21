@@ -174,7 +174,7 @@ export default function AttendanceListing() {
 
   const handleTimeFilterChange = (event) => {
     setTimeFilter(event.target.value);
-    // Adjust the data filtering logic based on the time filter
+    
   };
 
   const handleDepartmentFilterChange = (event) => {

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   FormControl,
   InputLabel,
@@ -11,6 +12,7 @@ import {
 
 const EmployeeAttandanceSummary = () => {
   const [timeFilter, setTimeFilter] = useState("today");
+  const navigate = useNavigate();
 
   // Mock data for demonstration
   const mockData = {
@@ -40,7 +42,11 @@ const EmployeeAttandanceSummary = () => {
   return (
     <div className="p-4 flex flex-col gap-2">
       {/* Dropdown Filter */}
-      <FormControl variant="outlined" size="small" className="w-48 mb-4 bg-white">
+      <FormControl
+        variant="outlined"
+        size="small"
+        className="w-48 mb-4 bg-white"
+      >
         <InputLabel id="time-filter-label">Filter</InputLabel>
         <Select
           labelId="time-filter-label"
@@ -56,7 +62,7 @@ const EmployeeAttandanceSummary = () => {
       </FormControl>
 
       {/* Dashboard Widgets */}
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-3 cursor-pointer" onClick={() => navigate("hr/attandence/shift-time-usage")}>
         {/* Employees Present */}
         <Card className="shadow-lg">
           <CardContent>

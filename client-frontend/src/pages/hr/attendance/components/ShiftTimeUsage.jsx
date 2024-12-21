@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   FormControl,
   InputLabel,
@@ -11,6 +12,7 @@ import {
 
 const ShiftTimeUseage = () => {
   const [timeFilter, setTimeFilter] = useState("today");
+  const navigate = useNavigate();
 
   // Mock data for demonstration
   const mockData = {
@@ -57,7 +59,7 @@ const ShiftTimeUseage = () => {
       </FormControl>
 
       {/* ShiftTimeUseage Widgets */}
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-3 cursor-pointer" onClick={() => navigate("/hr/attandence/shift-time-usage")}>
         {/* Average Hours */}
         <Card className="shadow-lg">
           <CardContent>

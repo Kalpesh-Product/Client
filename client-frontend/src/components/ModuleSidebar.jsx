@@ -105,11 +105,15 @@ const ModuleSidebar = ({ mainSideBar }) => {
       route: "/hr/attendance",
       icon: <HiOutlineClipboardList />,
       subMenus: [
-        {
-          title: "Employee wise Attendance",
-          route: "/hr/attandence/shift-time-usage",
-          icon: <BsFillPersonCheckFill />,
-        },
+        ...(authUser.user.role.roleTitle !== "Employee"
+          ? [
+              {
+                title: "Employee wise Attendance",
+                route: "/hr/attandence/shift-time-usage",
+                icon: <BsFillPersonCheckFill />,
+              },
+            ]
+          : []),
       ],
     },
     {
