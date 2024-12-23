@@ -59,18 +59,18 @@ const TestSide = () => {
     { name: "Calendar", icon: <FaRegCalendarAlt />, route: "/calendar" },
     { name: "Chat", icon: <HiOutlineChatAlt2 />, route: "/chat" },
     { name: "Access", icon: <SiAuthelia />, route: "/access" },
-    { name: "Profile", icon: <CgProfile />, route: "/profile" },
+    // { name: "Profile", icon: <CgProfile />, route: "/profile" },
   ];
 
   const defaultModules = [
     {
       id: 1,
-      title: "Assets",
-      route: "/assets",
+      title: "Meetings",
+      route: "/meetings",
       submenus: [
-        { id: 1, title: "Manage Assets", route: "/assets/manage" },
-        { id: 2, title: "Add Asset", route: "/assets/add" },
-        { id: 3, title: "Manage Categories", route: "/assets/categories" },
+        { id: 1, title: "Calendar", route: "/meetings/booking" },
+        { id: 2, title: "Add New Room", route: "/meetings/add-room" },
+        { id: 3, title: "Reports", route: "/meetings/reports" },
       ],
     },
     {
@@ -78,24 +78,24 @@ const TestSide = () => {
       title: "Tickets",
       route: "/tickets",
       submenus: [
-        { id: 1, title: "Open Tickets", route: "/tickets/open" },
-        { id: 2, title: "Closed Tickets", route: "/tickets/closed" },
-        { id: 3, title: "Create Ticket", route: "/tickets/create" },
+        { id: 1, title: "My Tickets", route: "/tickets/my-tickets" },
+        { id: 2, title: "View Tickets", route: "/tickets/view-tickets" },
+        { id: 3, title: "Members", route: "/tickets/members" },
+        { id: 4, title: "Ticket Reports", route: "/tickets/ticket-reports" },
+        { id: 5, title: "All Ticket", route: "/tickets/all-tickets" },
       ],
     },
     {
       id: 3,
-      title: "Meetings",
-      route: "/meetings",
+      title: "Assets",
+      route: "/assets",
       submenus: [
-        { id: 1, title: "Upcoming Meetings", route: "/meetings/upcoming" },
-        { id: 2, title: "Past Meetings", route: "/meetings/past" },
-        { id: 3, title: "Schedule Meeting", route: "/meetings/schedule" },
+        { id: 1, title: "Manage Assets", route: "/assets/manage" },
+        { id: 2, title: "My Assets", route: "/assets/my-assets" },
+        { id: 3, title: "Reports", route: "/assets/reports" },
       ],
     },
   ];
-
-  console.log(defaultModules.map((module, index)=>module.submenus.map((submenu)=> submenu.route[0])))
 
   const handleMenuOpen = (item) => {
     console.log(isSidebarOpen);
@@ -199,9 +199,9 @@ const TestSide = () => {
   const departmentMapping = {
     TopManagement: [
       "FRONTEND",
+      "HUMAN RESOURCE",
       "FINANCE",
       "SALES",
-      "HUMAN RESOURCE",
       "MAINTENANCE",
       "LEGAL",
       "IT",
@@ -235,7 +235,7 @@ const TestSide = () => {
     <div
       className={` ${
         isSidebarOpen ? "w-60" : "w-20"
-      } bg-white  border-gray-300 text-black flex flex-shrink-0  overflow-y-auto transition-all duration-300 z-[1]`}
+      } bg-white  border-gray-300 text-black flex flex-shrink-0 h-screen overflow-y-auto transition-all duration-300 z-[1]`}
     >
       <div className="flex relative w-full">
         {/*Dashboard */}
@@ -392,12 +392,12 @@ const TestSide = () => {
 
           <div>
             {defaultModules.map((module, moduleIndex) => (
-              <div onClick={()=>navigate(module.route)} key={module.id}>
-                {/* Check if submenus exist */}
+              <div key={module.id} className="justify-between hereItis">
+                {/* If there's only one submenu, show it directly */}
                 {module.submenus.length === 1 ? (
-                  // If there's only one submenu, show it directly
                   <div
                     className={`flex items-center border-b-[1px] py-3 gap-3 hover:wono-blue-dark pl-[1rem] hover:text-white hover:rounded-md cursor-pointer`}
+                    onClick={() => navigate(module.submenus[0].route)}
                   >
                     <div className="flex justify-center w-6 text-[1.3rem]">
                       {module.icon || <TbSection />} {/* Icon placeholder */}
@@ -409,7 +409,6 @@ const TestSide = () => {
                     )}
                   </div>
                 ) : (
-                  // If there are multiple submenus, show the dropdown
                   <>
                     <button
                       onClick={() => {
@@ -418,14 +417,17 @@ const TestSide = () => {
                         ); // Toggle dropdown for this module
                         setIsSidebarOpen(true);
                       }}
-                      className={`flex items-center border-b-[1px] px-4 py-3 w-full text-black bg-white hover:wono-blue-dark hover:rounded-md hover:text-white ${
+                      className={`flex justify-between items-center border-b-[1px] px-4 py-3 w-full text-black bg-white hover:wono-blue-dark hover:rounded-md hover:text-white ${
                         location.pathname === module.route
                           ? "wono-blue rounded-md wono-blue-text"
                           : "bg-white"
                       }`}
                     >
                       {isSidebarOpen ? (
-                        <div className="flex items-center justify-center">
+                        <div
+                          onClick={() => navigate(module.route)}
+                          className="flex items-center justify-center"
+                        >
                           <div className="flex justify-center w-6 text-2xl">
                             {module.icon || <TbSection />}
                           </div>
@@ -463,28 +465,21 @@ const TestSide = () => {
                         }`}
                       >
                         {module.submenus.map((submenu, index) => (
-                          <Tooltip
-                            title={submenu.title}
-                            placement="right"
+                          <li
                             key={index}
                             onClick={() => navigate(submenu.route)}
+                            className={`flex items-center border-b-[1px] py-3 gap-3 hover:wono-blue-dark pl-[1rem] hover:text-white hover:rounded-md cursor-pointer`}
                           >
-                            <div
-                              key={index}
-                              onClick={() => navigate(submenu.route)}
-                              className={`flex items-center border-b-[1px] py-3 gap-3 hover:wono-blue-dark pl-[1rem] hover:text-white hover:rounded-md`}
-                            >
-                              <div className="flex justify-center w-6 text-[1.3rem]">
-                                {submenu.icon || <TbSection />}{" "}
-                                {/* Icon placeholder */}
-                              </div>
-                              {isSidebarOpen && (
-                                <span className="pl-5 text-[0.8rem]">
-                                  {submenu.title}
-                                </span>
-                              )}
+                            <div className="flex justify-center w-6 text-[1.3rem]">
+                              {submenu.icon || <TbSection />}{" "}
+                              {/* Icon placeholder */}
                             </div>
-                          </Tooltip>
+                            {isSidebarOpen && (
+                              <span className="pl-5 text-[0.8rem]">
+                                {submenu.title}
+                              </span>
+                            )}
+                          </li>
                         ))}
                       </ul>
                     )}
@@ -493,6 +488,26 @@ const TestSide = () => {
               </div>
             ))}
           </div>
+
+          <Tooltip title={"Profile"} placement="right">
+            <div
+              onClick={() => {
+                navigate("/profile");
+              }}
+              className={`flex border-b-[1px] ${
+                isSidebarOpen ? "pl-[1rem]" : "justify-center"
+              } items-center cursor-pointer  py-3 hover:wono-blue-dark hover:text-white hover:rounded-md ${
+                location.pathname === "/profile"
+                  ? "wono-blue border-r-4 border-[#0DB4EA] rounded-tl-md rounded-bl-md text-[#0DB4EA]"
+                  : "bg-white"
+              }`}
+            >
+              <div className="flex justify-center w-6 text-2xl">
+                <CgProfile />
+              </div>
+              {isSidebarOpen && <span className="pl-5">Profile</span>}
+            </div>
+          </Tooltip>
         </div>
 
         <div

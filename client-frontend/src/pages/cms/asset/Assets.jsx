@@ -23,6 +23,8 @@ import {
   WiFiTraffic,
 } from "../../../Widgets/ITWidgets";
 import ManageAsset from "./ManageAsset";
+import MyAssets from "./MyAssets";
+import AssetReports from "./AssetReports";
 
 const Assets = () => {
   const { auth: authUser } = useAuth();
@@ -144,10 +146,14 @@ const Assets = () => {
             </div>
           </div>
         ) : location.pathname === "/assets/manage" ? (
-            <ManageAsset />
+          <ManageAsset />
+        ) : location.pathname === "/assets/my-assets" ? (
+          <MyAssets />
+        ) : location.pathname === "/assets/reports" ? (
+          <AssetReports />
         ) : (
           <>
-            <h1>Not defined</h1>
+            <h1>Coming Soon</h1>
           </>
         )}
       </div>

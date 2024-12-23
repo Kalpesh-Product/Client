@@ -14,9 +14,12 @@ import MyAssets from "../pages/cms/asset/MyAssets";
 import { NewModal } from "../components/NewModal";
 import { motion } from "framer-motion";
 import { IoMdClose } from "react-icons/io";
+import useAuth from "../hooks/useAuth";
 // import image from "../profile.jpg";
 
 const Profile = () => {
+  const { auth: authUser } = useAuth();
+  console.log(authUser)
   const [IsAccessModalOpen, setIsAccessModalOpen] = useState(false);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [checkedItems, setCheckedItems] = useState({});
@@ -130,7 +133,7 @@ const Profile = () => {
               />
             </span>
             <div>
-              <h2 class="text-xl font-semibold">{userData?.name}</h2>
+              <h2 class="text-xl font-semibold">{authUser?.user.name}</h2>
               <p class="text-gray-500">Active</p>
             </div>
           </div>
