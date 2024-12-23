@@ -8,7 +8,7 @@ const LeaveWidget2 = () => {
       <div>
         <div className="p-4" onClick={() => navigate("/hr/leaves/past-leaves")}>
           <h3 className="text-lg font-semibold text-center">Utilised Leaves</h3>
-          <p className="text-3xl font-bold text-center">4/12</p>
+          <p className="text-3xl font-bold text-center">2</p>
           <br />
           <div className="text-center">
             <span className="px-3 py-1 rounded-full text-sm font-medium text-blue-600 bg-blue-100">

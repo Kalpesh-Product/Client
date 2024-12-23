@@ -11,7 +11,7 @@ const DownloadableDiv = () => {
   const employeeDetails = {
     name: auth.user.name,
     employeeId: auth.user.empId,
-    designation: auth.user.designation.title,
+    designation: auth.user.role.roleTitle,
     department:
       auth.user.department.length > 1
         ? auth.user.department.map((dept) => dept.name).join(", ")
@@ -60,8 +60,7 @@ const DownloadableDiv = () => {
               select
               size="small"
               onChange={(e) => setMonth(e.target.value)}
-              sx={{ fontSize: "0.5rem" }}
-            >
+              sx={{ fontSize: "0.5rem" }}>
               <MenuItem value="December 2024">December 2024</MenuItem>
               <MenuItem value="November 2024">November 2024</MenuItem>
               <MenuItem value="October 2024">October 2024</MenuItem>
@@ -71,15 +70,13 @@ const DownloadableDiv = () => {
 
           <button
             onClick={downloadPDF}
-            className="wono-blue-dark text-white px-6 py-3 rounded shadow"
-          >
+            className="wono-blue-dark text-white px-6 py-3 rounded shadow">
             Download as PDF
           </button>
         </div>
         <div
           id="yellowDiv"
-          className="max-w-2xl mx-auto mt-10 border border-gray-300 rounded-lg shadow-lg p-8 bg-white"
-        >
+          className="max-w-2xl mx-auto mt-10 border border-gray-300 rounded-lg shadow-lg p-8 bg-white">
           <h1 className="text-2xl font-bold text-center mb-6">Pay Slip</h1>
 
           <div className="border-t border-gray-300 mb-4"></div>
