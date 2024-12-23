@@ -283,7 +283,7 @@ const Tasklistfirstmenu = () => {
   const [modalOpen, SetModalOpen] = useState(false);
   const [departmentFilter, setDepartmentFilter] = useState("");
   const [selectedRow, SetselectedRow] = useState(null);
-  const [activeTab,setActiveTab] = useState("tab-1");
+  const [activeTab, setActiveTab] = useState("tab-1");
 
   const navigate = useNavigate();
 
@@ -326,9 +326,8 @@ const Tasklistfirstmenu = () => {
   };
   return (
     <div className="min-h-screen">
-
-<div className="mx-auto">
-              <ul className="flex justify-center border-b mb-4">
+      <div className="mx-auto">
+        {/* <ul className="flex justify-center border-b mb-4">
                 <li className="w-1/2 text-center" role="presentation">
                   <button
                     className="text-lg py-2 w-full font-semibold hover:bg-gray-100 focus:bg-gray-200 "
@@ -345,9 +344,9 @@ const Tasklistfirstmenu = () => {
                     MY TASKS
                   </button>
                 </li>
-              </ul>
-              <div className="tab-content">
-                {activeTab === "tab-1" && (
+              </ul> */}
+        <div className="tab-content">
+          {/* {activeTab === "tab-1" && (
                   <div
                     className="tab-pane fade show active"
                     id="tab-1"
@@ -361,132 +360,125 @@ const Tasklistfirstmenu = () => {
                       <h1 className="font-medium text-3xl">Tickets Sections</h1>
                     </div>
                   </div>
-                )}
-                {activeTab === "tab-2" && (
-                  <div
-                    className="tab-pane fade show"
-                    id="tab-2"
-                    role="tabpanel"
-                  >
-                    <div
-                      className="flex flex-col items-center justify-center"
-                      data-aos="fade-up"
-                      data-aos-delay="100"
-                    >
-                      {/* Tab 2 Content */}
+                )} */}
+          {/* {activeTab === "tab-2" && ( */}
+          <div className="tab-pane fade show" id="tab-2" role="tabpanel">
+            <div
+              className="flex flex-col items-center justify-center"
+              data-aos="fade-up"
+              data-aos-delay="100"
+            >
+              {/* Tab 2 Content */}
 
-                      <div className="w-full p-6 motion-preset-blur-right-md  max-w-screen-xl mx-auto ">
-        <h2 className="text-2xl mb-4 ">TasksList</h2>
-        {/* <div className="grid grid-cols-4 gap-4">
+              <div className="w-full p-6 motion-preset-blur-right-md  max-w-screen-xl mx-auto ">
+                <h2 className="text-2xl mb-4 ">TasksList</h2>
+                {/* <div className="grid grid-cols-4 gap-4">
    
     
   </div> */}
 
-        <div className="bg-white p-2">
-          <div className="flex flex-wrap items-center justify-between  gap-4">
-            {/* Left Side: Search, Priority Dropdown, and Date Filter */}
+                <div className="bg-white p-2">
+                  <div className="flex flex-wrap items-center justify-between  gap-4">
+                    {/* Left Side: Search, Priority Dropdown, and Date Filter */}
 
-            {/* Search Field */}
-            <FormControl style={{ minWidth: 220 }}>
-              <TextField
-                variant="outlined"
-                size="small"
-                label="Search Projects"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-              />
-            </FormControl>
+                    {/* Search Field */}
+                    <FormControl style={{ minWidth: 220 }}>
+                      <TextField
+                        variant="outlined"
+                        size="small"
+                        label="Search Projects"
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                      />
+                    </FormControl>
 
-            {/* Priority Dropdown */}
+                    {/* Priority Dropdown */}
 
-            <FormControl size="small" style={{ minWidth: 220 }}>
-              {/* <InputLabel>Filter by Asset Name</InputLabel> */}
-              <TextField
-                label="Priority"
-                variant="outlined"
-                select
-                size="small"
-                onChange={(e) => setPriorityFilter(e.target.value)}
-              >
-                <MenuItem value="">All</MenuItem>
-                <MenuItem value="High">High</MenuItem>
-                <MenuItem value="Low">Low</MenuItem>
-                <MenuItem value="Medium">Medium</MenuItem>
-              </TextField>
-            </FormControl>
+                    <FormControl size="small" style={{ minWidth: 220 }}>
+                      {/* <InputLabel>Filter by Asset Name</InputLabel> */}
+                      <TextField
+                        label="Priority"
+                        variant="outlined"
+                        select
+                        size="small"
+                        onChange={(e) => setPriorityFilter(e.target.value)}
+                      >
+                        <MenuItem value="">All</MenuItem>
+                        <MenuItem value="High">High</MenuItem>
+                        <MenuItem value="Low">Low</MenuItem>
+                        <MenuItem value="Medium">Medium</MenuItem>
+                      </TextField>
+                    </FormControl>
 
-            {/* Date Filter */}
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <DatePicker
-                label="Date"
-                slotProps={{ textField: { size: "small" } }}
-                renderInput={(params) => (
-                  <TextField {...params} className="w-full md:w-1/4" />
-                )}
-              />
-            </LocalizationProvider>
+                    {/* Date Filter */}
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                      <DatePicker
+                        label="Date"
+                        slotProps={{ textField: { size: "small" } }}
+                        renderInput={(params) => (
+                          <TextField {...params} className="w-full md:w-1/4" />
+                        )}
+                      />
+                    </LocalizationProvider>
 
-            {/* Department Dropdown */}
+                    {/* Department Dropdown */}
 
-            <FormControl size="small" style={{ minWidth: 220 }}>
-              {/* <InputLabel>Filter by Asset Name</InputLabel> */}
-              <TextField
-                label="Department"
-                variant="outlined"
-                select
-                size="small"
-                onChange={(e) => setDepartmentFilter(e.target.value)}
-              >
-                <MenuItem value="">All Departments</MenuItem>
-                <MenuItem value="High">IT</MenuItem>
-                <MenuItem value="Low">HR</MenuItem>
-                <MenuItem value="Medium">TECH</MenuItem>
-                <MenuItem value="Medium">ADMIN</MenuItem>
-              </TextField>
-            </FormControl>
-          </div>
+                    <FormControl size="small" style={{ minWidth: 220 }}>
+                      {/* <InputLabel>Filter by Asset Name</InputLabel> */}
+                      <TextField
+                        label="Department"
+                        variant="outlined"
+                        select
+                        size="small"
+                        onChange={(e) => setDepartmentFilter(e.target.value)}
+                      >
+                        <MenuItem value="">All Departments</MenuItem>
+                        <MenuItem value="High">IT</MenuItem>
+                        <MenuItem value="Low">HR</MenuItem>
+                        <MenuItem value="Medium">TECH</MenuItem>
+                        <MenuItem value="Medium">ADMIN</MenuItem>
+                      </TextField>
+                    </FormControl>
+                  </div>
 
-          {/* Right Side: Assign Task Button */}
-          {/* <button className="px-4 py-2 bg-blue-500 text-white font-semibold rounded-md shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                  {/* Right Side: Assign Task Button */}
+                  {/* <button className="px-4 py-2 bg-blue-500 text-white font-semibold rounded-md shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400"
     onClick={assignTaskbtnClick}>
      + Assign Task
     </button> */}
 
-          {/* Tabular section */}
-          <div className="mt-5 overflow-auto w-full max-w-screen-xl mx-auto  motion-preset-blur-right-md">
-            <AgTable
-              data={filteredTasks} // Pass filtered rows
-              columns={columns}
-              initialState={{ pagination: { paginationModel } }}
-              pageSizeOptions={[5, 10]}
-              sx={{
-                "& .MuiDataGrid-root": {
-                  backgroundColor: "#f9fafb",
-                  borderRadius: "0.5rem",
-                  border: "none",
-                },
-                "& .MuiDataGrid-cell": {
-                  color: "#374151",
-                  fontSize: "0.875rem",
-                },
-                "& .MuiDataGrid-columnHeaders": {
-                  backgroundColor: "#f3f4f6",
-                  fontSize: "0.875rem",
-                  fontWeight: "bold",
-                  color: "#1f2937",
-                },
-              }}
-            />
+                  {/* Tabular section */}
+                  <div className="mt-5 overflow-auto w-full max-w-screen-xl mx-auto  motion-preset-blur-right-md">
+                    <AgTable
+                      data={filteredTasks} // Pass filtered rows
+                      columns={columns}
+                      initialState={{ pagination: { paginationModel } }}
+                      pageSizeOptions={[5, 10]}
+                      sx={{
+                        "& .MuiDataGrid-root": {
+                          backgroundColor: "#f9fafb",
+                          borderRadius: "0.5rem",
+                          border: "none",
+                        },
+                        "& .MuiDataGrid-cell": {
+                          color: "#374151",
+                          fontSize: "0.875rem",
+                        },
+                        "& .MuiDataGrid-columnHeaders": {
+                          backgroundColor: "#f3f4f6",
+                          fontSize: "0.875rem",
+                          fontWeight: "bold",
+                          color: "#1f2937",
+                        },
+                      }}
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-                      
-                    </div>
-                  </div>
-                )}
-              </div>
-            </div>
-      
 
       {modalOpen && (
         <NewModal open={modalOpen} onClose={closeModal}>

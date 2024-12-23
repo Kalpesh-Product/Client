@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Box from "@mui/material/Box";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
@@ -18,33 +18,94 @@ import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import useAuth from "../../../hooks/useAuth";
 import dayjs from "dayjs";
+import { AgGridReact } from "ag-grid-react";
 
 const Applicants = () => {
+  const [selectedValue,setSelectedValue] = useState("");
+
   const columns = [
-    { field: "id", headerName: "ID", width: 100 },
+    { field: "id", headerName: "ID" },
     { field: "Name", headerName: "Name", width: 200 },
-    { field: "Email", headerName: "Email", width: 200},
-
-    
-    { field: "date", headerName: "Date", width: 150 },
-   
+    { field: "Email", headerName: "Email"}, 
+    { field: "date", headerName: "Date"}, 
     {
-       field: "Role", headerName: "Role", width: 200 ,
-
-
+       field: "Role", headerName: "Role"
     },
     {
-       field: "Department", headerName: "Department", width: 200 ,
-
+       field: "Department", headerName: "Department"
     },
     {
-      field:"Resume", headerName: "Resume", width: 200, 
+      field:"ProfileLink", headerName: "Resume", 
+      cellRenderer: (params) => {
+        return (
+          <a
+            href={params.value}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-blue-500 underline hover:text-blue-700"
+          >
+            View Profile
+          </a>
+        );
+      }, 
+    },
 
+    {
+      field: "viewDetails",
+      headerName: "Status",
+      width: 150,
+      cellRenderer: (params) => {
+        const handleActionChange = (event) => {
+          const selectedAction = event.target.value;
 
+          const updatedData = params.api.getRowNode(params.node.id).data;
+          updatedData.viewDetails = selectedAction;
+          params.api.applyTransaction({ update: [updatedData] });
+
+          setSelectedValue(selectedAction); // Update the selected value dynamically
+          console.log("Selected Action:", selectedAction);
+        };
+
+        return (
+          <FormControl size="small" sx={{ width: "100%" }}>
+            <Select
+              value={params.data.viewDetails || ""} // Always forces the dropdown to display the SVG
+              onChange={handleActionChange}
+              displayEmpty
+              disableUnderline
+              IconComponent={() => null} // Removes the dropdown arrow
+              sx={{
+                "& .MuiSelect-select": {
+                  padding: "8px 16px",
+                  borderRadius: "0.375rem", // Tailwind rounded
+                  backgroundColor: "transparent",
+                  border: "none", // Removes border
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                },
+                "& fieldset": {
+                  border: "none", // Removes border in outlined variant
+                },
+              }}
+            >
+              <MenuItem value="" disabled>
+                Select Status
+              </MenuItem>
+              <MenuItem value="start">Approved</MenuItem>
+              <MenuItem value="pending">Rejected</MenuItem>
+              <MenuItem value="done">Done</MenuItem>
+            </Select>
+          </FormControl>
+        );
+      },
     },
     {
-      field: "delete",
-      headerName: "Delete",
+      field: "Manager", headerName: "Manager", width: 200 ,
+    },
+    {
+      field: "send",
+      headerName: "Send",
       width: 170,
       // renderCell: (params) => (
       cellRenderer: (params) => (
@@ -55,16 +116,16 @@ const Applicants = () => {
           // onClick={handleDeleteTicket}
           variant="contained"
           sx={{
-            backgroundColor: "red",
+            backgroundColor: "#3cbce7",
             color: "white",
             "&:hover": {
-              backgroundColor: "red",
+              backgroundColor: "#3cbce7",
             },
             padding: "4px 8px",
             borderRadius: "0.375rem",
           }}
         >
-          Delete
+          Send
         </Button>
       ),
     },
@@ -78,7 +139,10 @@ const Applicants = () => {
       Name: "Anushri Bhagat",
       Email: "anushri@gmail.com",
       date: "2024-01-26",
-      Department: "IT",
+      Role:"Frontend Developer",
+      Department: "Tech",
+      Manager:"Kalpesh Naik",
+      ProfileLink:"https://example.com/profile/john",
       Resume: "",
     },
     {
@@ -86,7 +150,10 @@ const Applicants = () => {
       Name: "Anushri Bhagat",
       Email: "anushri@gmail.com",
       date: "2024-01-26",
-      Department: "IT",
+      Role:"UI/UX Developer",
+      Department: "Tech",
+      Manager:"Kalpesh Naik",
+      ProfileLink:"https://example.com/profile/john",
       Resume: "",
       
     },
@@ -95,7 +162,10 @@ const Applicants = () => {
       Name: "Anushri Bhagat",
       Email: "anushri@gmail.com",
       date: "2024-01-26",
-      Department: "IT",
+      Role:"PHP Developer",
+      Department: "Tech",
+      Manager:"Kalpesh Naik",
+      ProfileLink:"https://example.com/profile/john",
       Resume: "",
     },
     {
@@ -103,7 +173,10 @@ const Applicants = () => {
       Name: "Anushri Bhagat",
       Email: "anushri@gmail.com",
       date: "2024-01-26",
-      Department: "IT",
+      Role:"Senior React Developer",
+      Department: "Tech",
+      Manager:"Kalpesh Naik",
+      ProfileLink:"https://example.com/profile/john",
       Resume: "",
     },
     {
@@ -111,7 +184,10 @@ const Applicants = () => {
       Name: "Anushri Bhagat",
       Email: "anushri@gmail.com",
       date: "2024-01-26",
-      Department: "IT",
+      Role:"React Developer Intern",
+      Department: "Tech",
+      Manager:"Kalpesh Naik",
+      ProfileLink:"https://example.com/profile/john",
       Resume: "",
     },
     {
@@ -119,7 +195,10 @@ const Applicants = () => {
       Name: "Anushri Bhagat",
       Email: "anushri@gmail.com",
       date: "2024-01-26",
-      Department: "IT",
+      Role:"Backend Developer",
+      Department: "Tech",
+      Manager:"Kalpesh Naik",
+      ProfileLink:"https://example.com/profile/john",
       Resume: "",
     },
     {
@@ -127,7 +206,10 @@ const Applicants = () => {
       Name: "Anushri Bhagat",
       Email: "anushri@gmail.com",
       date: "2024-01-26",
-      Department: "IT",
+      Role:"Manager",
+      Department: "Tech",
+      Manager:"Kalpesh Naik",
+      ProfileLink:"https://example.com/profile/john",
       Resume: "",
     },
     {
@@ -135,7 +217,10 @@ const Applicants = () => {
       Name: "Anushri Bhagat",
       Email: "anushri@gmail.com",
       date: "2024-01-26",
-      Department: "IT",
+      Role:"Sr. Angular developer",
+      Department: "Tech",
+      Manager:"Kalpesh Naik",
+      ProfileLink:"https://example.com/profile/john",
       Resume: "",
     },
     {
@@ -143,7 +228,10 @@ const Applicants = () => {
       Name: "Anushri Bhagat",
       Email: "anushri@gmail.com",
       date: "2024-01-26",
-      Department: "IT",
+      Role:"Jr. React Developer",
+      Department: "Tech",
+      Manager:"Kalpesh Naik",
+      ProfileLink:"https://example.com/profile/john",
       Resume: "",
     },
     {
@@ -151,7 +239,10 @@ const Applicants = () => {
       Name: "Anushri Bhagat",
       Email: "anushri@gmail.com",
       date: "2024-01-26",
-      Department: "IT",
+      Role:"PHP Developer",
+      Department: "Tech",
+      Manager:"Kalpesh Naik",
+      ProfileLink:"https://example.com/profile/john",
       Resume: "",
     },
   ];
@@ -169,11 +260,32 @@ const Applicants = () => {
           </div>
         </div>
       </div>
-      <AgTable
-        data={allRows} // Use the state here
-        columns={columns}
+
+      <div className="w-full overflow-hidden">
+      <div className="ag-theme-alpine w-full"
+                  style={{ height: 500, width: "100%" }}>
+      <AgGridReact
+        rowData={allRows} // Use the state here
+        columnDefs={columns}
+        domLayout="autoHeight"
         
       />
+      </div>
+      </div>
+      {/* <div
+                  className="ag-theme-alpine w-full"
+                  style={{ height: 500, width: "100%" }}
+                >
+                  <AgGridReact
+                    data={allRows} // Use the state here
+                    columns={columns}
+                    defaultColDef={{
+                      flex: 1, // Ensures columns are flexible
+                      resizable: true,
+                    }}
+                    domLayout="autoHeight"
+                  />
+                </div> */}
     </div>
   );
 };

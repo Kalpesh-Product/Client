@@ -1224,9 +1224,10 @@ const DepartmentDash = () => {
             ) : location.pathname === "/hr/cvdump" ? (
               <>
                 <div className="bg-gray-100 p-4 rounded-lg mt-4">
-                  <div className="mb-8 flex justify-between">
-                    <h1 className="text-3xl  font-bold">Key Insights</h1>
-                  </div>
+                  {/* <div className="mb-8 flex justify-between">
+                    <h1 className="text-3xl  font-bold">CV DUMP</h1>
+                  </div> */}
+                  <CvDump/>
                 </div>
               </>
             ) : location.pathname === "/hr/cvdump/applicants" ? (

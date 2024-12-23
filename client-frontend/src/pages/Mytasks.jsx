@@ -305,12 +305,12 @@ const Mytasks = () => {
                     className="text-lg py-2 w-full font-semibold hover:bg-gray-100 focus:bg-gray-200 "
                     onClick={() => setActiveTab("tab-2")}
                   >
-                    MY TASKS
+                    Rotein Tasks
                   </button>
                 </li>
               </ul>
               <div className="tab-content">
-                {activeTab === "tab-1" && (
+                {activeTab === "tab-2" && (
                   <div
                     className="tab-pane fade show active"
                     id="tab-1"
@@ -326,7 +326,7 @@ const Mytasks = () => {
                     </div>
                   </div>
                 )}
-                {activeTab === "tab-2" && (
+                {activeTab === "tab-1" && (
                   <div
                     className="tab-pane fade show"
                     id="tab-2"
