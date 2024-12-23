@@ -305,7 +305,7 @@ const Mytasks = () => {
                     className="text-lg py-2 w-full font-semibold hover:bg-gray-100 focus:bg-gray-200 "
                     onClick={() => setActiveTab("tab-2")}
                   >
-                    MY TASKS
+                    Rotein Tasks
                   </button>
                 </li>
               </ul>

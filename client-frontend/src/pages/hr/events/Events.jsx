@@ -16,6 +16,8 @@ import {
   TimePicker,
 } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+
+
 import dayjs from "dayjs";
 
 const Events = () => {
@@ -196,7 +198,7 @@ const Events = () => {
                               {/* <h1 className="text-xl text-center my-2 font-bold">
                     Add Ticket
                   </h1> */}
-                  
+                             <LocalizationProvider dateAdapter={AdapterDayjs}>
                               <Box
                                 sx={{
                                   maxWidth: 600,
@@ -225,14 +227,15 @@ const Events = () => {
                                       {/* <InputLabel id="suggestion-select-label">
                                       Ticket Title
                                     </InputLabel> */}
-                                      <LocalizationProvider
+                                      {/* <LocalizationProvider
                                         dateAdapter={AdapterDayjs}
-                                      >
+                                      > */}
                                         <DatePicker
                                           label="Date"
                                           value={formData.Date}
                                           onChange={handleDateChange}
                                           sx={{ width: "100%" }}
+                                          inputFormat="yyyy-MM-dd"
                                           // Convert string to Dayjs
                                           // onChange={(newDate) => {
                                           //   if (newDate) {
@@ -261,7 +264,7 @@ const Events = () => {
                                             />
                                           )}
                                         />
-                                      </LocalizationProvider>
+                                      {/* </LocalizationProvider> */}
                                       <TextField
                                         label="Agenda"
                                         variant="outlined"
@@ -278,6 +281,7 @@ const Events = () => {
                                   
                                 </div>
                               </Box>
+                              </LocalizationProvider>
                             </div>
                           </div>
                         </div>
