@@ -6,8 +6,11 @@ import {
   FaMoneyBillTrendUp,
   FaPlus,
   FaRegUser,
+  FaShop,
 } from "react-icons/fa6";
 import { RiAccountCircleLine } from "react-icons/ri";
+import { TiTick } from "react-icons/ti";
+import { CgSearchLoading } from "react-icons/cg";
 import {
   FaArrowLeft,
   FaRegCalendarAlt,
@@ -17,8 +20,16 @@ import {
   FaProjectDiagram,
 } from "react-icons/fa";
 
-import { MdMeetingRoom, MdTask, MdOutlinePayment } from "react-icons/md";
-import { TbReportSearch, TbSection } from "react-icons/tb";
+import {
+  MdMeetingRoom,
+  MdTask,
+  MdOutlinePayment,
+  MdOutlineAttachMoney,
+  MdRequestPage,
+  MdOutlineCommentBank,
+  MdOutlineAddShoppingCart,
+} from "react-icons/md";
+import { TbReportSearch } from "react-icons/tb";
 import { IoSettingsOutline } from "react-icons/io5";
 import { SiMarketo } from "react-icons/si";
 import { Tooltip } from "@mui/material";
@@ -386,65 +397,42 @@ const ModuleSidebar = ({ mainSideBar }) => {
   ];
   const finance = [
     {
-      title: "Assets",
+      title: "Budget",
       index: 0,
-      route: "/customer/kpi",
-      icon: <AiOutlineProduct />,
+      route: "/finance/budget",
+      icon: <MdOutlineAttachMoney />,
       subMenus: [
         {
-          title: "Manage asset",
-          route: "/customer/asset/manage",
-          icon: <MdOutlineManageAccounts />,
+          title: "Request Budget",
+          route: "/finance/budget/request",
+          icon: <MdRequestPage />,
         },
         {
-          title: "Reports",
-          route: "/customer/asset/reports",
-          icon: <TbReportSearch />,
+          title: "Approved Budget",
+          route: "/finance/budget/approved",
+          icon: <TiTick />,
+        },
+        {
+          title: "Payment Tracker",
+          route: "/finance/budget/payment-tracker",
+          icon: <MdOutlineCommentBank />,
         },
       ],
     },
     {
-      title: "Tickets",
+      title: "Vendor",
       index: 1,
-      route: "/customer/tickets",
-      icon: <HiOutlineClipboardList />,
+      route: "/finance/vendor",
+      icon: <FaShop />,
       subMenus: [
         {
-          title: "View Tickets",
-          route: "/customer/tickets/view-tickets",
-          icon: <HiOutlineClipboardList />,
-        },
-        {
-          title: "My Tickets",
-          route: "/customer/tickets/my-tickets",
-          icon: <HiOutlineClipboardList />,
-        },
-        {
-          title: "Ticket Reports",
-          route: "/customer/tickets/ticket-reports",
-          icon: <HiOutlineClipboardList />,
-        },
-      ],
-    },
-    {
-      title: "Meetings",
-      index: 2,
-      route: "/customer/meetings",
-      icon: <MdMeetingRoom />,
-      subMenus: [
-        {
-          title: "Calendar",
-          route: "/customer/meetings/booking",
-          icon: <FaRegCalendarAlt />,
-        },
-        {
-          title: "Add new Room",
-          route: "/customer/meetings/add-room",
-          icon: <FaPlus />,
+          title: "Vendor Actions",
+          route: "/finance/vendor/vendor-actions",
+          icon: <MdOutlineAddShoppingCart />,
         },
         {
           title: "Reports",
-          route: "/customer/meetings/reports",
+          route: "/finance/vendor/reports",
           icon: <TbReportSearch />,
         },
       ],
