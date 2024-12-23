@@ -61,37 +61,42 @@ const ModuleSidebar = ({ mainSideBar }) => {
 
   const frontendModules = [
     {
+      title: "Edit Live Theme",
+      route: "/frontend/live-theme",
+      icon: <HiColorSwatch />,
+    },
+    {
       title: "Themes",
       route: "/frontend/themes",
       icon: <HiColorSwatch />,
     },
-    {
-      title: "Updates",
-      route: "/frontend/updates",
-      icon: <GrDocumentUpdate />,
-    },
-    {
-      title: "Budget",
-      route: "/frontend/budget",
-      icon: <BsCashCoin />,
-      subMenus: [
-        {
-          title: "Budget Overview",
-          route: "/frontend/budget/overview",
-          icon: <BsCashCoin />,
-        },
-        {
-          title: "Budget Report",
-          route: "/frontend/budget/report",
-          icon: <BsCashCoin />,
-        },
-        {
-          title: "Payment Tracker",
-          route: "/frontend/budget/payment-tracker",
-          icon: <BsCashCoin />,
-        },
-      ],
-    },
+    // {
+    //   title: "Updates",
+    //   route: "/frontend/updates",
+    //   icon: <GrDocumentUpdate />,
+    // },
+    // {
+    //   title: "Budget",
+    //   route: "/frontend/budget",
+    //   icon: <BsCashCoin />,
+    //   subMenus: [
+    //     {
+    //       title: "Budget Overview",
+    //       route: "/frontend/budget/overview",
+    //       icon: <BsCashCoin />,
+    //     },
+    //     {
+    //       title: "Budget Report",
+    //       route: "/frontend/budget/report",
+    //       icon: <BsCashCoin />,
+    //     },
+    //     {
+    //       title: "Payment Tracker",
+    //       route: "/frontend/budget/payment-tracker",
+    //       icon: <BsCashCoin />,
+    //     },
+    //   ],
+    // },
   ];
 
   const hrModules = [

@@ -28,6 +28,7 @@ import Tasklist from "../pages/Tasklist";
 import TasklistTable from "../pages/TasklistTable";
 import PersistLogin from "../layouts/PersistLogin";
 import AuthLayout from "../layouts/AuthLayout";
+import Assets from "../pages/cms/asset/Assets";
 
 const router = createBrowserRouter([
   {
@@ -56,6 +57,14 @@ const router = createBrowserRouter([
               {
                 path: "/access",
                 element: <AccessPage />,
+              },
+              {
+                path: "/assets",
+                element: <Assets />,
+              },
+              {
+                path: "/assets/manage",
+                element: <Assets />,
               },
               {
                 path: "/landing",
@@ -259,6 +268,10 @@ const router = createBrowserRouter([
               },
               {
                 path: "/frontend/dashboard",
+                element: <DepartmentDash />,
+              },
+              {
+                path: "/frontend/live-theme",
                 element: <DepartmentDash />,
               },
               {
