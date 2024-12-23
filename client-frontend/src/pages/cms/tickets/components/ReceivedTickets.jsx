@@ -416,7 +416,7 @@ const ReceivedTickets = () => {
     { field: "raisedBy", headerName: "Raised By", width: 150 },
     {
       field: "selectedDepartment",
-      headerName: "Selected Department",
+      headerName: "From Department",
       width: 150,
     },
     { field: "description", headerName: "Ticket Title", width: 200 },
