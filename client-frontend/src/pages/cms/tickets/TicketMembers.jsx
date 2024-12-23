@@ -19,7 +19,7 @@ const TicketMembers = () => {
     { field: "id", headerName: "ID", width: 100 },
     { field: "name", headerName: "Name", width: 200 },
     { field: "email", headerName: "Email", width: 250 },
-    { field: "role", headerName: "Role", width: 150 },
+    // { field: "role", headerName: "Role", width: 150 },
     { field: "availability", headerName: "Availability", width: 150 },
     // {
     //   field: "action",
@@ -43,70 +43,69 @@ const TicketMembers = () => {
     //     </Button>
     //   ),
     // },
-    {
-      field: "viewDetails",
-      headerName: "Actions",
-      width: 150,
-      cellRenderer: (params) => {
-        const handleActionChange = (event) => {
-          const selectedAction = event.target.value;
+    // {
+    //   field: "viewDetails",
+    //   headerName: "Actions",
+    //   width: 150,
+    //   cellRenderer: (params) => {
+    //     const handleActionChange = (event) => {
+    //       const selectedAction = event.target.value;
 
-          if (selectedAction === "view") {
-            handleViewDetails(params.row);
-          } else if (selectedAction === "edit") {
-            handleEdit(params.row);
-          } else if (selectedAction === "delete") {
-            handleDelete(params.row);
-          }
-        };
+    //       if (selectedAction === "view") {
+    //         handleViewDetails(params.row);
+    //       } else if (selectedAction === "edit") {
+    //         handleEdit(params.row);
+    //       } else if (selectedAction === "delete") {
+    //         handleDelete(params.row);
+    //       }
+    //     };
 
-        return (
-          <FormControl size="small" sx={{ width: "100%" }}>
-            <Select
-              value="" // Always forces the dropdown to display the SVG
-              onChange={handleActionChange}
-              displayEmpty
-              disableUnderline
-              IconComponent={() => null} // Removes the dropdown arrow
-              sx={{
-                "& .MuiSelect-select": {
-                  padding: "8px 16px",
-                  borderRadius: "0.375rem", // Tailwind rounded
-                  backgroundColor: "transparent",
-                  border: "none", // Removes border
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                },
-                "& fieldset": {
-                  border: "none", // Removes border in outlined variant
-                },
-              }}>
-              <MenuItem value="" disabled>
-                <svg
-                  className="flex-none size-4 text-gray-600 dark:text-neutral-500"
-                  xmlns="http://www.w3.org/2000/svg"
-                  width={24}
-                  height={24}
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth={2}
-                  strokeLinecap="round"
-                  strokeLinejoin="round">
-                  <circle cx={12} cy={12} r={1} />
-                  <circle cx={12} cy={5} r={1} />
-                  <circle cx={12} cy={19} r={1} />
-                </svg>
-              </MenuItem>
-              {/* <MenuItem value="view">View Details</MenuItem>
-              <MenuItem value="edit">Edit</MenuItem> */}
-              <MenuItem value="delete">Delete</MenuItem>
-            </Select>
-          </FormControl>
-        );
-      },
-    },
+    //     return (
+    //       <FormControl size="small" sx={{ width: "100%" }}>
+    //         <Select
+    //           value="" // Always forces the dropdown to display the SVG
+    //           onChange={handleActionChange}
+    //           displayEmpty
+    //           disableUnderline
+    //           IconComponent={() => null} // Removes the dropdown arrow
+    //           sx={{
+    //             "& .MuiSelect-select": {
+    //               padding: "8px 16px",
+    //               borderRadius: "0.375rem", // Tailwind rounded
+    //               backgroundColor: "transparent",
+    //               border: "none", // Removes border
+    //               display: "flex",
+    //               alignItems: "center",
+    //               justifyContent: "center",
+    //             },
+    //             "& fieldset": {
+    //               border: "none", // Removes border in outlined variant
+    //             },
+    //           }}>
+    //           <MenuItem value="" disabled>
+    //             <svg
+    //               className="flex-none size-4 text-gray-600 dark:text-neutral-500"
+    //               xmlns="http://www.w3.org/2000/svg"
+    //               width={24}
+    //               height={24}
+    //               viewBox="0 0 24 24"
+    //               fill="none"
+    //               stroke="currentColor"
+    //               strokeWidth={2}
+    //               strokeLinecap="round"
+    //               strokeLinejoin="round">
+    //               <circle cx={12} cy={12} r={1} />
+    //               <circle cx={12} cy={5} r={1} />
+    //               <circle cx={12} cy={19} r={1} />
+    //             </svg>
+    //           </MenuItem>
+
+    //           <MenuItem value="delete">Delete</MenuItem>
+    //         </Select>
+    //       </FormControl>
+    //     );
+    //   },
+    // },
   ];
 
   const allRows = [

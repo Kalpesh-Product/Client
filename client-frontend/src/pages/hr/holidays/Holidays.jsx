@@ -20,6 +20,8 @@ import { IoMdClose } from "react-icons/io";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import useAuth from "../../../hooks/useAuth";
+import dayjs from "dayjs";
+import axios from "axios";
 
 const Holidays = () => {
   const location = useLocation();
@@ -29,6 +31,18 @@ const Holidays = () => {
   const [highlightEditedRow, setHighlightEditedRow] = React.useState(false);
 
   const [holidayName, setLeaveType] = useState(""); // State to track the selected option
+
+  const [holidayList, setHolidayList] = useState({
+      holiday:"",
+      date:null
+});
+
+const handleHolidayChange = (field, value) => {
+  setHolidayList((prev) => ({
+    ...prev,
+    [field]: value,
+  }));
+};
 
   const columns = [
     { field: "id", headerName: "ID", width: 100 },
@@ -104,8 +118,7 @@ const Holidays = () => {
             },
             padding: "4px 8px",
             borderRadius: "0.375rem",
-          }}
-        >
+          }}>
           Delete
         </Button>
       ),
@@ -347,10 +360,23 @@ const Holidays = () => {
   //   toast.success("New Ticket Created");
   //   closeModal(); // Optionally close the modal after the alert
   // };
-  const handleAddTicket = (newTicket) => {
+  const handleAddTicket = async (newTicket, holidayList) => {
     setRows((prevRows) => [newTicket, ...prevRows]); // Update the state
     toast.success("Added a new holiday.");
-    closeModal(); // Optionally close the modal after the alert
+    closeModal();
+    console.log(holidayList);
+    // Optionally close the modal after the alert
+    try{
+      const response = await axios.post("http://localhost:5000/api/holidays", holidayList);
+      alert(response.data.message);
+      alert('Holiday Added Successfully to database');
+
+    }catch(error){
+      console.log('Error Saving holiday',error);
+      alert('Failed to save holiday. Please try again');
+    }
+
+    
   };
 
   // ADD TICKET MODAL END
@@ -479,8 +505,7 @@ const Holidays = () => {
               <h1 className="text-3xl"></h1>
               <button
                 onClick={openModal}
-                className="px-6 py-2 rounded-lg text-white wono-blue-dark hover:bg-[#3cbce7] transition-shadow shadow-md hover:shadow-lg active:shadow-inner"
-              >
+                className="px-6 py-2 rounded-lg text-white wono-blue-dark hover:bg-[#3cbce7] transition-shadow shadow-md hover:shadow-lg active:shadow-inner">
                 + Add Holiday
               </button>
             </div>
@@ -574,8 +599,7 @@ const Holidays = () => {
                                 borderRadius: 2,
                               }}
                               // className="bg-white p-6 rounded-lg shadow-md mx-auto">
-                              className="bg-white py-6 rounded-lg"
-                            >
+                              className="bg-white py-6 rounded-lg">
                               {/* Personal Information */}
                               {/* <h2 className="text-lg font-semibold mb-4">Add Ticket</h2> */}
                               <div className="grid grid-cols-1 gap-4">
@@ -608,10 +632,9 @@ const Holidays = () => {
                                 <div className="grid grid-cols-1 gap-4">
                                   <TextField
                                     label="Holiday Name"
-                                    // value={newEvent.name}
-                                    // onChange={(e) =>
-                                    //   setnewEvent({ ...newEvent, name: e.target.value })
-                                    // }
+                                    value={holidayList.holiday}
+                                    
+                                    onChange={(e) => handleHolidayChange("holiday", e.target.value)}
                                     fullWidth
                                   />
                                 </div>
@@ -621,26 +644,22 @@ const Holidays = () => {
                                       Ticket Title
                                     </InputLabel> */}
                                     <LocalizationProvider
-                                      dateAdapter={AdapterDayjs}
-                                    >
+                                      dateAdapter={AdapterDayjs}>
                                       <DatePicker
                                         label="Date"
-                                        // value={formData.purchaseDate}
+                                        
                                         sx={{ width: "100%" }}
-                                        // onChange={(newDate) => {
-                                        //   if (newDate) {
-                                        //     setFormData({
-                                        //       ...formData,
-                                        //       purchaseDate: newDate, // Store the Dayjs object
-                                        //     });
-                                        //   }
-                                        // }}
-                                        format="DD/MM/YYYY" // Display format in the DatePicker
+                                        
+                                        value={holidayList.date ? dayjs(holidayList.date) : null} // Convert string to Dayjs
+                                        onChange={(newDate) => {
+                                          if (newDate) {
+                                            const formattedDate = newDate.format("YYYY-MM-DD"); // Format date
+                                            handleHolidayChange("date", formattedDate); // Store as string
+                                          }
+                                        }}
+                                        // format="DD/MM/YYYY" // Display format in the DatePicker
                                         renderInput={(params) => (
-                                          <TextField
-                                            {...params}
-                                            className="w-full"
-                                          />
+                                          <TextField {...params} className="w-full" />
                                         )}
                                       />
                                     </LocalizationProvider>
@@ -697,8 +716,7 @@ const Holidays = () => {
                           <button
                             className="wono-blue-dark text-white py-2 px-4 rounded-md hover:bg-blue-600 w-full"
                             // onClick={handleAddTicket}>
-                            onClick={() => handleNextStep(handleNext)}
-                          >
+                            onClick={() => handleNextStep(handleNext)}>
                             Next
                           </button>
                         </div>
@@ -722,13 +740,13 @@ const Holidays = () => {
                       <div>
                         <div className="flex justify-between py-2 border-b">
                           <h1 className="font-semibold">Holiday Name</h1>
-                          <span>New Holiday</span>
+                          <span>{holidayList.holiday}</span>
                         </div>
                       </div>
                       <div>
                         <div className="flex justify-between py-2 border-b">
                           <h1 className="font-semibold">Date</h1>
-                          <span>07/12/2024</span>
+                          <span>{holidayList.date}</span>
                         </div>
                       </div>
                       <div className="pt-8 pb-4">
@@ -736,7 +754,7 @@ const Holidays = () => {
 
                         <WonoButton
                           content={"Submit"}
-                          onClick={() => handleAddTicket(newTicket)}
+                          onClick={() => handleAddTicket(newTicket,holidayList)}
                         />
                       </div>
                     </div>
@@ -771,8 +789,7 @@ const Holidays = () => {
                 whileTap={{ scale: 0.9 }}
                 type="button"
                 onClick={closeDetailsModal}
-                className=" p-2 bg-white text-[red] border border-red-200 hover:border-red-400 text-2xl rounded-md mr-1"
-              >
+                className=" p-2 bg-white text-[red] border border-red-200 hover:border-red-400 text-2xl rounded-md mr-1">
                 <IoMdClose />
               </motion.button>
             </div>
@@ -879,8 +896,7 @@ const Holidays = () => {
                   whileTap={{ scale: 0.9 }}
                   type="button"
                   onClick={closeEditTicket}
-                  className=" p-2 bg-white text-[red] border border-red-200 hover:border-red-400 text-2xl rounded-md mr-1"
-                >
+                  className=" p-2 bg-white text-[red] border border-red-200 hover:border-red-400 text-2xl rounded-md mr-1">
                   <IoMdClose />
                 </motion.button>
               </div>
@@ -902,8 +918,7 @@ const Holidays = () => {
                       borderRadius: 2,
                     }}
                     // className="bg-white p-6 rounded-lg shadow-md mx-auto">
-                    className="bg-white p-6 rounded-lg mx-auto"
-                  >
+                    className="bg-white p-6 rounded-lg mx-auto">
                     {/* Personal Information */}
                     {/* <h2 className="text-lg font-semibold mb-4">Add Ticket</h2> */}
                     <div className="grid grid-cols-1 gap-4">
@@ -979,8 +994,7 @@ const Holidays = () => {
               <div className="flex justify-center items-center w-full">
                 <button
                   className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 w-full"
-                  onClick={handleEditTicket}
-                >
+                  onClick={handleEditTicket}>
                   Save
                 </button>
               </div>
@@ -1019,8 +1033,7 @@ const Holidays = () => {
                   whileTap={{ scale: 0.9 }}
                   type="button"
                   onClick={closeDeleteTicket}
-                  className=" p-2 bg-white text-[red] border border-red-200 hover:border-red-400 text-2xl rounded-md mr-1"
-                >
+                  className=" p-2 bg-white text-[red] border border-red-200 hover:border-red-400 text-2xl rounded-md mr-1">
                   <IoMdClose />
                 </motion.button>
                 {/* <button
@@ -1047,8 +1060,7 @@ const Holidays = () => {
                       borderRadius: 2,
                     }}
                     // className="bg-white p-6 rounded-lg shadow-md mx-auto">
-                    className="bg-white p-6 rounded-lg mx-auto"
-                  >
+                    className="bg-white p-6 rounded-lg mx-auto">
                     {/* Personal Information */}
                     {/* <h2 className="text-lg font-semibold mb-4">Add Ticket</h2> */}
                     <div className="grid grid-cols-1 gap-4">
@@ -1093,8 +1105,7 @@ const Holidays = () => {
                 <button
                   // className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600"
                   className="bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600 w-full"
-                  onClick={handleDeleteTicket}
-                >
+                  onClick={handleDeleteTicket}>
                   Delete
                 </button>
               </div>

@@ -34,23 +34,25 @@ import {
 } from "../Widgets/ITWidgets";
 import Sidetest from "../components/Sidetest";
 import TestSide from "../components/Sidetest";
+import { useNavigate } from "react-router-dom";
+// import { openModal } from "../pages/hr/MyLeaves";
+// import MyLeaves from "./hr/leaves/MyLeaves";
 
 export const WidgetSection = ({ heading, widgets }) => (
-  <div className="mt-0">
-    <h2 className="text-2xl font-semibold">{heading}</h2>
+  <div className="my-3 rounded-md bg-white w-full p-2">
+    <h2 className="text-2xl font-semibold p-2 bg-white">{heading}</h2>
     <div
-      className={`grid gap-4 mt-3
+      className={`grid gap-4 mt-0
     grid-cols-1
     sm:grid-cols-${Math.min(widgets.length, 2)}
     md:grid-cols-${Math.min(widgets.length, 3)}
     lg:grid-cols-${Math.min(widgets.length, 4)}
     
-  `}
-    >
+  `}>
       {widgets.map((Widget, index) => (
         <div
           key={index}
-          className="bg-white p-0 shadow-md rounded-lg h-full overflow-auto motion-preset-expand"
+          className="bg-white p-0 shadow-md  w-full h-full overflow-auto motion-preset-expand"
         >
           {Widget}
         </div>
@@ -58,6 +60,62 @@ export const WidgetSection = ({ heading, widgets }) => (
     </div>
   </div>
 );
+
+export const ButtonSection = ({ heading, widgets }) => {
+  const navigate = useNavigate();
+
+  return (
+    <div className="mt-0">
+      <h2 className="text-2xl font-semibold">{heading}</h2>
+      <div
+        className={`grid gap-4 mt-3
+    grid-cols-1
+    sm:grid-cols-${Math.min(widgets.length, 2)}
+    md:grid-cols-${Math.min(widgets.length, 3)}
+    lg:grid-cols-${Math.min(widgets.length, 4)}
+    
+  `}>
+        {/* {widgets.map((Widget, index) => (
+        <div
+          key={index}
+          className="bg-white p-0 shadow-md rounded-lg h-full overflow-auto motion-preset-expand">
+          {Widget}
+        </div>
+      ))} */}
+
+        {/* <div className="bg-white p-0 shadow-md rounded-lg h-full overflow-auto motion-preset-expand"> */}
+        <div className=" p-0 flex justify-center items-center  h-full overflow-auto motion-preset-expand">
+          <button
+            onClick={() => navigate("/hr/leaves/my-leaves")}
+            className="px-6 py-2 rounded-lg text-white wono-blue-dark hover:bg-[#3cbce7] transition-shadow shadow-md hover:shadow-lg active:shadow-inner">
+            View Applied Leaves
+          </button>
+        </div>
+        <div className=" p-0 flex justify-center items-center  h-full overflow-auto motion-preset-expand">
+          <button
+            onClick={() => navigate("/hr/leaves/past-leaves")}
+            className="px-6 py-2 rounded-lg text-white wono-blue-dark hover:bg-[#3cbce7] transition-shadow shadow-md hover:shadow-lg active:shadow-inner">
+            View Past Leaves
+          </button>
+        </div>
+        <div className=" p-0 flex justify-center items-center  h-full overflow-auto motion-preset-expand">
+          <button
+            onClick={() => navigate("/hr/leaves/my-leaves")}
+            className="px-6 py-2 rounded-lg text-white wono-blue-dark hover:bg-[#3cbce7] transition-shadow shadow-md hover:shadow-lg active:shadow-inner">
+            View Pending Leaves
+          </button>
+        </div>
+        <div className=" p-0 flex justify-center items-center  h-full overflow-auto motion-preset-expand">
+          <button
+            onClick={() => navigate("/hr/leaves/due-approvals")}
+            className="px-6 py-2 rounded-lg text-white wono-blue-dark hover:bg-[#3cbce7] transition-shadow shadow-md hover:shadow-lg active:shadow-inner">
+            Subordinate Due Approvals
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 const Dashboard = () => {
   const { auth } = useAuth();
@@ -179,6 +237,8 @@ const Dashboard = () => {
     },
   ];
 
+  console.log(auth)
+
   return (
     <div className="flex h-screen">
       {/* Sidebar */}
@@ -193,10 +253,10 @@ const Dashboard = () => {
       <div className="flex-1 bg-gray-100 p-8 overflow-y-auto">
         {/* Heading 1 */}
         <h1 className="text-3xl motion-preset-slide-right-md font-bold">
-          {auth.user.name}'s Dashboard
+          {auth?.user?.name}'s Dashboard
         </h1>
         <h2 className="my-5 motion-preset-slide-right-md">
-          BIZ Nest-{auth.user.role.roleTitle}-
+          BIZ Nest-{auth?.user?.role?.roleTitle}-
           {auth.user.department.length > 1
             ? auth.user.department.map((dept) => dept.name).join(", ")
             : auth.user.department[0].name}

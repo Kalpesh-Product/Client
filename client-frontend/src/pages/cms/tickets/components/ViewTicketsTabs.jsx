@@ -10,10 +10,11 @@ import ClosedTickets from "./ClosedTickets";
 import UnresolvedTickets from "./UnresolvedTickets";
 import AcceptedTickets from "./AcceptedTickets";
 import AssignedTickets from "./AssignedTickets";
+import ReceivedTickets from "./ReceivedTickets";
 
 const ViewTicketsTabs = () => {
   // For Departments
-  const [value, setValue] = React.useState("5");
+  const [value, setValue] = React.useState("2");
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -52,24 +53,24 @@ const ViewTicketsTabs = () => {
                 fontFamily: "Popins-Semibold",
                 padding: "0.5rem",
               }}>
-              {/* {user.role !== "Employee" && user.role !== "Admin" && (
-                <Tab
-                  label="External Tickets"
-                  value="2"
-                  sx={{
-                    textTransform: "uppercase",
-                    borderRight: "1px solid #e4e4e4",
-                  }}
-                />
-              )} */}
+              {/* {user.role !== "Employee" && user.role !== "Admin" && ( */}
               <Tab
+                label="Received Tickets"
+                value="2"
+                sx={{
+                  textTransform: "uppercase",
+                  borderRight: "1px solid #e4e4e4",
+                }}
+              />
+              {/* )} */}
+              {/* <Tab
                 label="Assigned Tickets"
                 value="5"
                 sx={{
                   textTransform: "uppercase",
                   borderRight: "1px solid #e4e4e4",
                 }}
-              />
+              /> */}
 
               <Tab
                 label="Accepted Tickets"
@@ -102,7 +103,7 @@ const ViewTicketsTabs = () => {
           </TabPanel>
 
           <TabPanel value="2">
-            <ExternalTickets />
+            <ReceivedTickets />
           </TabPanel>
 
           <TabPanel value="3">

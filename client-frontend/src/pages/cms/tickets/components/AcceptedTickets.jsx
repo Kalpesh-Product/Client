@@ -14,8 +14,24 @@ import AgTable from "../../../../components/AgTable";
 import { motion } from "framer-motion";
 import { IoMdClose } from "react-icons/io";
 import axios from "axios";
+import useAuth from "../../../../hooks/useAuth";
 
 const AcceptedTickets = () => {
+  const { auth: authUser } = useAuth();
+  const [closeTicketData, setCloseTicketData] = useState({
+    _id: null,
+
+    // closingMessage: "",
+    // typeOfIssue: "",
+  });
+
+  const [escalateTicketData, setEscalateTicketData] = useState({
+    _id: null,
+
+    // closingMessage: "",
+    // typeOfIssue: "",
+  });
+
   // const [user, setUser] = useState("");
   // useEffect(() => {
   //   const storedUser = JSON.parse(localStorage.getItem("user"));
@@ -65,7 +81,7 @@ const AcceptedTickets = () => {
     return () => clearTimeout(timer);
   }, [hasRefreshed]);
 
-  const selectedDepartmentFilter = user.department; // Replace with the desired name or variable
+  const selectedDepartmentFilter = authUser.user.department[0].name; // Replace with the desired name or variable
 
   // Ticket With APIs & Local START
 
@@ -75,7 +91,7 @@ const AcceptedTickets = () => {
 
   // state to hold the values of ticket form inputs
   const [createForm, setCreateForm] = useState({
-    raisedBy: user.name,
+    raisedBy: authUser.user.name,
     selectedDepartment: "",
     description: "",
   });
@@ -103,7 +119,7 @@ const AcceptedTickets = () => {
     setCreateForm((prevForm) => ({
       ...prevForm, // Spread previous form values
       [name]: value, // Update the specific field being modified
-      raisedBy: user.name, // Ensure raisedBy is always set to user.name
+      raisedBy: authUser.user.name, // Ensure raisedBy is always set to authUser.user.name
     }));
 
     console.log("Updated Form:", createForm);
@@ -168,7 +184,7 @@ const AcceptedTickets = () => {
         ticket.selectedDepartment === selectedDepartmentFilter &&
         ticket.accepted.acceptedStatus === true &&
         ticket.status !== "Closed" &&
-        ticket.assignedMember === user.name
+        ticket.assignedMember === authUser.user.name
     );
 
     // Set it on state (update the value of tickets)
@@ -185,9 +201,31 @@ const AcceptedTickets = () => {
     fetchmyTickets(); // this will run the fetchNotes function & fetch the tickets array from backend as our response (in network tab from developer tools)
   }, []); // we leave the array empty since we need it to run only once when the app starts up.
 
-  // Finction to delete a ticket
+  // Finction to close a ticket
 
-  // Function to edit the ticket
+  const handleCloseTicket = async () => {
+    // Temporary close login on button click
+    const responseFromBackend = await axios.put(
+      `/api/tickets/close-ticket/${closeTicketData._id}`
+    );
+    console.log(responseFromBackend);
+
+    toast.success("Ticket Closed");
+    closeCloseTicket(); // Optionally close the modal after the alert
+    fetchmyTickets();
+  };
+
+  // Function to escalate the ticket manually
+  const handleEscalateTicket = async () => {
+    // Temporary close login on button click
+    const responseFromBackend = await axios.put(
+      `/api/tickets/escalate-ticket/${escalateTicketData._id}`
+    );
+    console.log(responseFromBackend);
+    toast.success("Ticket Escalated");
+    closeDeleteTicket();
+    fetchmyTickets();
+  };
 
   // Ticket With APIs & Local END
 
@@ -455,29 +493,25 @@ const AcceptedTickets = () => {
       width: 200,
       cellRenderer: (params) => {
         const handleClose = async () => {
-          console.log("Closed ticket:", params.data._id);
+          console.log("Closing ticket:", params.data._id);
           // Implement your close logic here
 
-          // Temporary close login on button click
-          const responseFromBackend = await axios.put(
-            `/api/tickets/close-ticket/${params.data._id}`
-          );
-          console.log(responseFromBackend);
-          toast.success("Ticket Closed");
-
-          fetchmyTickets();
+          setCloseTicketData({
+            _id: params.data._id,
+          });
+          console.log(closeTicketData);
+          openCloseTicket();
         };
 
         const handleEscalate = async () => {
-          console.log("Escalated ticket:", params.data._id);
-          // Temporary close login on button click
-          const responseFromBackend = await axios.put(
-            `/api/tickets/escalate-ticket/${params.data._id}`
-          );
-          console.log(responseFromBackend);
-          toast.success("Ticket Escalated");
+          console.log("Escalating ticket:", params.data._id);
 
-          fetchmyTickets();
+          setEscalateTicketData({
+            _id: params.data._id,
+          });
+
+          console.log(escalateTicketData);
+          openDeleteTicket();
         };
 
         return (
@@ -486,6 +520,7 @@ const AcceptedTickets = () => {
               // onClick={handleEdit}
               // onClick={handleCloseTicket}
               onClick={handleClose}
+              // onClick={openCloseTicket}
               className="bg-red-500 text-white px-3 py-1 rounded">
               Close
             </button>
@@ -493,6 +528,7 @@ const AcceptedTickets = () => {
               // onClick={handleDelete}
               // onClick={handleDeleteTicket}
               onClick={handleEscalate}
+              // onClick={openDeleteTicket}
               className="bg-red-500 text-white px-3 py-1 rounded">
               Escalate
             </button>
@@ -635,10 +671,10 @@ const AcceptedTickets = () => {
   // Function to close the modal
   const closeCloseTicket = () => setIsCloseTicketOpen(false);
 
-  const handleCloseTicket = () => {
-    toast.success("Ticket Closed");
-    closeCloseTicket(); // Optionally close the modal after the alert
-  };
+  // const handleCloseTicket = () => {
+  //   toast.success("Ticket Closed");
+  //   closeCloseTicket(); // Optionally close the modal after the alert
+  // };
 
   // EDIT TICKET DETAILS MODAL END
 
@@ -1028,7 +1064,7 @@ const AcceptedTickets = () => {
               <div className="flex justify-center items-center w-full">
                 <button
                   className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 w-full"
-                  onClick={handleDeleteTicket}>
+                  onClick={handleEscalateTicket}>
                   {/* Yes (Close Ticket) */}
                   Save
                 </button>

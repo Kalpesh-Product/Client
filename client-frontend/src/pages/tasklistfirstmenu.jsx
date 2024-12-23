@@ -283,6 +283,8 @@ const Tasklistfirstmenu = () => {
   const [modalOpen, SetModalOpen] = useState(false);
   const [departmentFilter, setDepartmentFilter] = useState("");
   const [selectedRow, SetselectedRow] = useState(null);
+  const [activeTab,setActiveTab] = useState("tab-1");
+
   const navigate = useNavigate();
 
   const handleChange = (event) => {
@@ -323,8 +325,57 @@ const Tasklistfirstmenu = () => {
     navigate("/tasks/tasklist");
   };
   return (
-    <div className="flex min-h-screen">
-      <div className="w-full p-6 motion-preset-blur-right-md  max-w-screen-xl mx-auto ">
+    <div className="min-h-screen">
+
+<div className="mx-auto">
+              <ul className="flex justify-center border-b mb-4">
+                <li className="w-1/2 text-center" role="presentation">
+                  <button
+                    className="text-lg py-2 w-full font-semibold hover:bg-gray-100 focus:bg-gray-200 "
+                    onClick={() => setActiveTab("tab-1")}
+                  >
+                    TICKETS
+                  </button>
+                </li>
+                <li className="w-1/2 text-center" role="presentation">
+                  <button
+                    className="text-lg py-2 w-full font-semibold hover:bg-gray-100 focus:bg-gray-200 "
+                    onClick={() => setActiveTab("tab-2")}
+                  >
+                    MY TASKS
+                  </button>
+                </li>
+              </ul>
+              <div className="tab-content">
+                {activeTab === "tab-1" && (
+                  <div
+                    className="tab-pane fade show active"
+                    id="tab-1"
+                    role="tabpanel"
+                  >
+                    <div
+                      className="flex flex-col items-center justify-center"
+                      data-aos="fade-up"
+                      data-aos-delay="100"
+                    >
+                      <h1 className="font-medium text-3xl">Tickets Sections</h1>
+                    </div>
+                  </div>
+                )}
+                {activeTab === "tab-2" && (
+                  <div
+                    className="tab-pane fade show"
+                    id="tab-2"
+                    role="tabpanel"
+                  >
+                    <div
+                      className="flex flex-col items-center justify-center"
+                      data-aos="fade-up"
+                      data-aos-delay="100"
+                    >
+                      {/* Tab 2 Content */}
+
+                      <div className="w-full p-6 motion-preset-blur-right-md  max-w-screen-xl mx-auto ">
         <h2 className="text-2xl mb-4 ">TasksList</h2>
         {/* <div className="grid grid-cols-4 gap-4">
    
@@ -429,6 +480,13 @@ const Tasklistfirstmenu = () => {
           </div>
         </div>
       </div>
+                      
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+      
 
       {modalOpen && (
         <NewModal open={modalOpen} onClose={closeModal}>

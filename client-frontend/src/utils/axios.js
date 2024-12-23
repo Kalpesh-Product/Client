@@ -1,10 +1,10 @@
 import axios from "axios";
 
 export const api = axios.create({
-  baseURL: "http://localhost:5000",
+  baseURL: "https://client-be.vercel.app",
 });
 
 export const axiosPrivate = axios.create({
-  baseURL: "http://localhost:5000",
+  baseURL: "https://client-be.vercel.app",
   withCredentials: true,
 });

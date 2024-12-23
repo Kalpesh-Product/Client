@@ -14,7 +14,10 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { toast } from "sonner";
 import axios from "axios";
 
+import useAuth from "./../../../hooks/useAuth";
+
 const MyTicketsTable = () => {
+  const { auth: authUser } = useAuth();
   // const [user, setUser] = useState("");
   // useEffect(() => {
   //   const storedUser = JSON.parse(localStorage.getItem("user"));
@@ -64,7 +67,7 @@ const MyTicketsTable = () => {
     return () => clearTimeout(timer);
   }, [hasRefreshed]);
 
-  const selectedDepartmentFilter = user.department; // Replace with the desired name or variable
+  const selectedDepartmentFilter = authUser.user.department[0].name; // Replace with the desired name or variable
 
   // Ticket With APIs & Local START
 
@@ -74,7 +77,7 @@ const MyTicketsTable = () => {
 
   // state to hold the values of ticket form inputs
   const [createForm, setCreateForm] = useState({
-    raisedBy: user.name,
+    raisedBy: authUser.user.name,
     selectedDepartment: "",
     description: "",
   });
@@ -102,7 +105,7 @@ const MyTicketsTable = () => {
     setCreateForm((prevForm) => ({
       ...prevForm, // Spread previous form values
       [name]: value, // Update the specific field being modified
-      raisedBy: user.name, // Ensure raisedBy is always set to user.name
+      raisedBy: authUser.user.name, // Ensure raisedBy is always set to authUser.user.name
     }));
 
     console.log("Updated Form:", createForm);
@@ -163,9 +166,7 @@ const MyTicketsTable = () => {
 
     // Filter tickets where 'department' matches
     const filteredTickets = allTickets.filter(
-      (ticket) =>
-        ticket.selectedDepartment === selectedDepartmentFilter &&
-        ticket.assignedMember === user.name
+      (ticket) => ticket.selectedDepartment === selectedDepartmentFilter
     );
 
     // Set it on state (update the value of tickets)

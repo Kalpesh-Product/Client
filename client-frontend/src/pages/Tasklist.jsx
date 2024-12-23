@@ -13,12 +13,12 @@ const Tasklist = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [modalOpen, SetModalOpen] = useState(false);
   const [btnclicked, setbtnclicked] = useState("");
-  const [Editvalue,SetEditValue] = useState(false);
-  const [title,SetTitle] = useState("");
-  const [description,SetDescription] = useState("");
-  const [department,SetDepartment] = useState("");
-  
-  const [view,SetView] = useState("Grid View");
+  const [Editvalue, SetEditValue] = useState(false);
+  const [title, SetTitle] = useState("");
+  const [description, SetDescription] = useState("");
+  const [department, SetDepartment] = useState("");
+
+  const [view, SetView] = useState("Grid View");
 
   const [projectData, setProjectData] = useState({
     projectName: "",
@@ -28,7 +28,7 @@ const Tasklist = () => {
     Title: "",
     description: "",
     date: "",
-    status:""
+    status: "",
   });
 
   const [tasks, setTasks] = useState({
@@ -38,32 +38,25 @@ const Tasklist = () => {
         Department: "IT",
         description:
           "To discuss about the details of the projects which is important",
-        Assignes: [
-          "https://i.pravatar.cc/150?img=1",
-          "https://i.pravatar.cc/150?img=2",
-          "https://i.pravatar.cc/150?img=3",
-        ],
+        Assignees: ["John Doe", "Jane Smith", "Alex Johnson"],
       },
       {
         Title: "Launch a new digital marketing Campaign",
         Department: "Marketing",
         description:
           "To enhance the productivity and the materials of the projects which is very much effetives.",
-        Assignes: [
-          "https://i.pravatar.cc/150?img=4",
-          "https://i.pravatar.cc/150?img=5",
-          "https://i.pravatar.cc/150?img=6",
-        ],
+        Assignees: ["Siya Amonkar", "Chaya Shinde", "Priya Dessai"],
       },
       {
         Title: "Market Expansion strategy for new Product line",
         Department: "Finance",
         description:
           "To entertain the peacefull understanding anf training for the ppeople around us.",
-        Assignes: [
-          "https://i.pravatar.cc/150?img=7",
-          "https://i.pravatar.cc/150?img=8",
-          "https://i.pravatar.cc/150?img=9",
+        Assignees: [
+          "Vedashree Amonkar",
+          "Jaya Sankwalkar",
+          "Supriya Chaudhari",
+          "Gajanan Madkaikar",
         ],
       },
     ],
@@ -73,10 +66,11 @@ const Tasklist = () => {
         Department: "Sales",
         description:
           "To discuss about the details of the projects which is important",
-        Assignes: [
-          "https://i.pravatar.cc/150?img=7",
-          "https://i.pravatar.cc/150?img=8",
-          "https://i.pravatar.cc/150?img=9",
+        Assignees: [
+          "Saddhya Sawaikar",
+          "Sankalp Kalangutkar",
+          "Supriya Gaonkar",
+          "Neha Tari",
         ],
       },
       {
@@ -84,11 +78,7 @@ const Tasklist = () => {
         Department: "Operation",
         description:
           "To enhance the productivity and the materials of the projects which is very much effetives.",
-        Assignes: [
-          "https://i.pravatar.cc/150?img=1",
-          "https://i.pravatar.cc/150?img=2",
-          "https://i.pravatar.cc/150?img=3",
-        ],
+        Assignees: ["Jayesh Redkar", "Geeta parab", "Ashita Parab"],
       },
       {
         Title: "Employee Onboarding and training programme",
@@ -102,33 +92,21 @@ const Tasklist = () => {
         Title: "Annual Co-operate Conference and Networking Evets",
         Department: "Event Management",
         description: "Details about Task 7",
-        Assignes: [
-          "https://i.pravatar.cc/150?img=1",
-          "https://i.pravatar.cc/150?img=2",
-          "https://i.pravatar.cc/150?img=3",
-        ],
+        Assignees: ["Omkar Amonkar", "Neha Parab", "Sugandha Naik"],
       },
       {
         Title: "Data Privacy And GDPR Compliance initiative",
         Department: "Compliance and Regulatory",
         description:
           "To enhance the productivity and the materials of the projects which is very much effetives.",
-        Assignes: [
-          "https://i.pravatar.cc/150?img=7",
-          "https://i.pravatar.cc/150?img=8",
-          "https://i.pravatar.cc/150?img=9",
-        ],
+        Assignees: ["Govardhan Parab", "Dgymj Lodh", "Dold Peold"],
       },
       {
         Title: "Reducing Environmental impact and promoting Sustainability",
         Department: "Corporate Sustainability and Compliance",
         description:
           "To enhance the productivity and the materials of the projects which is very much effetives.",
-        Assignes: [
-          "https://i.pravatar.cc/150?img=7",
-          "https://i.pravatar.cc/150?img=8",
-          "https://i.pravatar.cc/150?img=9",
-        ],
+        Assignees: ["Wosh sudj", "Sodpl Weodl", "Qweusi Seuild"],
       },
     ],
     completed: [
@@ -136,197 +114,63 @@ const Tasklist = () => {
         Title: "Annual Co-operate Conference and Networking Evets",
         Department: "Event Management",
         description: "Details about Task 7",
-        Assignes: [
-          "https://i.pravatar.cc/150?img=1",
-          "https://i.pravatar.cc/150?img=2",
-          "https://i.pravatar.cc/150?img=3",
-        ],
+        Assignees: ["Riya Naik", "Parinda Raikar", "Amisha Naik"],
       },
       {
         Title: "Data Privacy And GDPR Compliance initiative",
         Department: "Compliance and Regulatory",
         description:
           "To enhance the productivity and the materials of the projects which is very much effetives.",
-        Assignes: [
-          "https://i.pravatar.cc/150?img=7",
-          "https://i.pravatar.cc/150?img=8",
-          "https://i.pravatar.cc/150?img=9",
-        ],
+        Assignees: ["Mahima Naik", "Angela Vaz", "Urvi Palang"],
       },
       {
         Title: "Reducing Environmental impact and promoting Sustainability",
         Department: "Corporate Sustainability and Compliance",
         description:
           "To enhance the productivity and the materials of the projects which is very much effetives.",
-        Assignes: [
-          "https://i.pravatar.cc/150?img=1",
-          "https://i.pravatar.cc/150?img=2",
-          "https://i.pravatar.cc/150?img=3",
-        ],
+        Assignees: ["Rami Naik", "Krutika Ghadi", "Rajeshwari Maheshwari"],
       },
     ],
   });
 
   const navigate = useNavigate();
 
+  // for Assignees
+
+  const getInitials = (name) => {
+    const words = name.split(" ");
+    const firstInitial = words[0][0];
+    const lastInitial = words[words.length - 1][0];
+    return `${firstInitial}${lastInitial}`;
+  };
+
+  // Function to generate a unique color
+  const generateColor = (name) => {
+    let hash = 0;
+    for (let i = 0; i < name.length; i++) {
+      hash = name.charCodeAt(i) + ((hash << 5) - hash);
+    }
+    const color = `hsl(${hash % 360}, 70%, 60%)`;
+    return color;
+  };
+
   const handleClick = (title) => {
     navigate("/tasks/tasklisttable", { state: { taskTitle: title } });
   };
 
-
-
   const handleActionChange = () => {};
 
-  // const tasks = {
-  //   ongoing: [
-  //     {
-  //       title: "Website Redesign",
-  //       department: "IT",
-  //       description:
-  //         "To discuss about the details of the projects which is important",
-  //       Assignes: [
-  //         "https://i.pravatar.cc/150?img=1",
-  //         "https://i.pravatar.cc/150?img=2",
-  //         "https://i.pravatar.cc/150?img=3",
-  //       ],
-  //     },
-  //     {
-  //       title: "Launch a new digital marketing Campaign",
-  //       department: "Marketing",
-  //       description:
-  //         "To enhance the productivity and the materials of the projects which is very much effetives.",
-  //       Assignes: [
-  //         "https://i.pravatar.cc/150?img=4",
-  //         "https://i.pravatar.cc/150?img=5",
-  //         "https://i.pravatar.cc/150?img=6",
-  //       ],
-  //     },
-  //     {
-  //       title: "Market Expansion strategy for new Product line",
-  //       department: "Finance",
-  //       description:
-  //         "To entertain the peacefull understanding anf training for the ppeople around us.",
-  //       Assignes: [
-  //         "https://i.pravatar.cc/150?img=7",
-  //         "https://i.pravatar.cc/150?img=8",
-  //         "https://i.pravatar.cc/150?img=9",
-  //       ],
-  //     },
-  //   ],
-  //   upcoming: [
-  //     {
-  //       title: "Financial forcasting and Budgeting",
-  //       department: "Sales",
-  //       description:
-  //         "To discuss about the details of the projects which is important",
-  //       Assignes: [
-  //         "https://i.pravatar.cc/150?img=7",
-  //         "https://i.pravatar.cc/150?img=8",
-  //         "https://i.pravatar.cc/150?img=9",
-  //       ],
-  //     },
-  //     {
-  //       title: "Bussiness Process optimizations and Automation",
-  //       department: "Operation",
-  //       description:
-  //         "To enhance the productivity and the materials of the projects which is very much effetives.",
-  //       Assignes: [
-  //         "https://i.pravatar.cc/150?img=1",
-  //         "https://i.pravatar.cc/150?img=2",
-  //         "https://i.pravatar.cc/150?img=3",
-  //       ],
-  //     },
-  //     {
-  //       title: "Employee Onboarding and training programme",
-  //       department: "Human Resources and Training",
-  //       description:
-  //         "To entertain the peacefull understanding anf training for the ppeople around us",
-  //     },
-  //   ],
-  //   pending: [
-  //     {
-  //       title: "Annual Co-operate Conference and Networking Evets",
-  //       department: "Event Management",
-  //       description: "Details about Task 7",
-  //       Assignes: [
-  //         "https://i.pravatar.cc/150?img=1",
-  //         "https://i.pravatar.cc/150?img=2",
-  //         "https://i.pravatar.cc/150?img=3",
-  //       ],
-  //     },
-  //     {
-  //       title: "Data Privacy And GDPR Compliance initiative",
-  //       department: "Compliance and Regulatory",
-  //       description:
-  //         "To enhance the productivity and the materials of the projects which is very much effetives.",
-  //       Assignes: [
-  //         "https://i.pravatar.cc/150?img=7",
-  //         "https://i.pravatar.cc/150?img=8",
-  //         "https://i.pravatar.cc/150?img=9",
-  //       ],
-  //     },
-  //     {
-  //       title: "Reducing Environmental impact and promoting Sustainability",
-  //       department: "Corporate Sustainability and Compliance",
-  //       description:
-  //         "To enhance the productivity and the materials of the projects which is very much effetives.",
-  //       Assignes: [
-  //         "https://i.pravatar.cc/150?img=7",
-  //         "https://i.pravatar.cc/150?img=8",
-  //         "https://i.pravatar.cc/150?img=9",
-  //       ],
-  //     },
-  //   ],
-  //   completed: [
-  //     {
-  //       title: "Annual Co-operate Conference and Networking Evets",
-  //       department: "Event Management",
-  //       description: "Details about Task 7",
-  //       Assignes: [
-  //         "https://i.pravatar.cc/150?img=1",
-  //         "https://i.pravatar.cc/150?img=2",
-  //         "https://i.pravatar.cc/150?img=3",
-  //       ],
-  //     },
-  //     {
-  //       title: "Data Privacy And GDPR Compliance initiative",
-  //       department: "Compliance and Regulatory",
-  //       description:
-  //         "To enhance the productivity and the materials of the projects which is very much effetives.",
-  //       Assignes: [
-  //         "https://i.pravatar.cc/150?img=7",
-  //         "https://i.pravatar.cc/150?img=8",
-  //         "https://i.pravatar.cc/150?img=9",
-  //       ],
-  //     },
-  //     {
-  //       title: "Reducing Environmental impact and promoting Sustainability",
-  //       department: "Corporate Sustainability and Compliance",
-  //       description:
-  //         "To enhance the productivity and the materials of the projects which is very much effetives.",
-  //       Assignes: [
-  //         "https://i.pravatar.cc/150?img=1",
-  //         "https://i.pravatar.cc/150?img=2",
-  //         "https://i.pravatar.cc/150?img=3",
-  //       ],
-  //     },
-  //   ],
-  // };
-
-  const setEditModalOpen =(value,title,description,department)=>{
+  const setEditModalOpen = (value, title, description, department) => {
     SetModalOpen(true);
     SetEditValue(true);
     SetDepartment(department);
     SetDescription(description);
     SetTitle(title);
     console.log("Opening MOdal of Edit");
-  }
+  };
 
-  const TaskCard = ({ Title, description, Department, Assignes = [] }) => (
-    <div
-      className="bg-gray-100 shadow-md bg-white rounded-lg p-3 mb-4"
-      
-    >
+  const TaskCard = ({ Title, description, Department, Assignees = [] }) => (
+    <div className="bg-gray-100 shadow-md bg-white rounded-lg p-3 mb-4">
       <div className="flex justify-between gap-5">
         <div>
           <p className="text-xs  py-2 px-2 bg-white rounded-full  my-2">
@@ -371,52 +215,69 @@ const Tasklist = () => {
                   <circle cx={12} cy={19} r={1} />
                 </svg>
               </MenuItem>
-              <MenuItem value="view" onClick={(value) => handleClick(title)}>View Details</MenuItem>
-              <MenuItem value="edit" onClick={(value,titlee,descriptions,department)=>setEditModalOpen("Edit",title,description,department)}>Edit</MenuItem>
+              <MenuItem value="view" onClick={(value) => handleClick(Title)}>
+                View Details
+              </MenuItem>
+              <MenuItem
+                value="edit"
+                onClick={(value, titlee, descriptions, department) =>
+                  setEditModalOpen("Edit", title, description, department)
+                }
+              >
+                Edit
+              </MenuItem>
               <MenuItem value="delete">Delete</MenuItem>
             </Select>
           </FormControl>
         </div>
       </div>
-     
+
       <h4 className="text-sm font-semibold">{Title}</h4>
       <p className="text-gray-600 my-5 text-xs">{description}</p>
       <div>
         <p className="text-xs font-bold">Assignees</p>
-        <Stack
-          spacing={-1}
-          direction="row"
-          sx={{
-            paddingTop: "5%", // Centers horizontally
-            // Centers vertically
-            width: "100%",
-            // Ensures it takes the full width of the cell
-          }}
-        >
-          {Assignes.map((src, index) => (
-            <Avatar
-              key={index} // Use a unique key for each Avatar component
-              src={src}
+
+        
+            <Stack
+              spacing={-1}
+              direction="row"
               sx={{
-                width: 30,
-                height: 30,
-                border: "1px solid white",
+                paddingTop: "5%",
+                width: "100%",
               }}
-            />
-          ))}
-        </Stack>
+            >
+              {Assignees.map((assignee, index) => {
+                const initials = getInitials(assignee);
+                const backgroundColor = generateColor(assignee);
+
+                return (
+                  <Avatar
+                    key={index}
+                    sx={{
+                      width: 10,
+                      height: 10,
+                      border: "1px solid white",
+                      padding:2,
+                      fontSize:15,
+                      backgroundColor,
+                    }}
+                  >
+                    {initials}
+                  </Avatar>
+                );
+              })}
+            </Stack>
+          
       </div>
     </div>
   );
-
- 
 
   const Column = ({ title, tasks, titleColor }) => (
     <div className="w-full lg:w-1/4 px-3">
       <h2 className={`text-xl font-bold ${titleColor} mb-4`}>{title}</h2>
       <div className="space-y-4">
         {tasks.map((task, index) => (
-          <TaskCard key={index} {...task} />
+          <TaskCard key={index} {...task}/>
         ))}
       </div>
     </div>
@@ -429,34 +290,35 @@ const Tasklist = () => {
 
   const closeModal = () => SetModalOpen(false);
 
-  //     const filteredRows =
-  // searchTerm === ""
-  //   ? allRows // show all rows if no department is selected
-  //   : allRows?.filter((row) => row.Name.toLowerCase().includes(searchTerm?.toLowerCase()));
+  const filterTasks = (tasks) => {
+    if (!searchTerm.trim()) return tasks; // No filtering if search term is empty
+    return tasks.filter(
+      (task) =>
+        task.Title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        task.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        task.Department.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  };
 
   return (
     <div className="flex min-h-screen">
       <div className="w-full p-6 motion-preset-blur-right-md  max-w-screen-xl mx-auto ">
         <h2 className="text-2xl  ">Projects</h2>
         <div className="flex flex-wrap items-center justify-between mt-5">
-          {/* Left Side: Search, Priority Dropdown, and Date Filter */}
-
-
-        {/* Grid View and Table View dropdown */}
           <div>
-          <TextField
-                    label="Select View"
-                    value={view}
-                    select
-                    size="large"
-                    onChange={(e) => SetView(e.target.value)}
-                  >
-                    {["Grid View","Table View"].map((type, index) => (
-                      <MenuItem key={index} value={type}>
-                        {type}
-                      </MenuItem>
-                    ))}
-                  </TextField>
+            <TextField
+              label="Select View"
+              value={view}
+              select
+              size="large"
+              onChange={(e) => SetView(e.target.value)}
+            >
+              {["Grid View", "Table View"].map((type, index) => (
+                <MenuItem key={index} value={type}>
+                  {type}
+                </MenuItem>
+              ))}
+            </TextField>
           </div>
           <div className="flex flex-wrap gap-1 ">
             {/* Search Field */}
@@ -466,13 +328,9 @@ const Tasklist = () => {
               value={searchTerm}
               fullWidth
               onChange={(e) => setSearchTerm(e.target.value)}
-             
               size="small"
             />
-            
-
           </div>
-         
 
           {/* Right Side: Assign Task Button */}
           <div className="flex space-x-4">
@@ -491,34 +349,36 @@ const Tasklist = () => {
             </button>
           </div>
         </div>
-{view === "Grid View" ? (<>
-  <div className=" mt-10">
-          <div className="flex flex-wrap -mx-4">
-            <Column
-              title="Upcoming"
-              tasks={tasks.upcoming}
-              titleColor="text-blue-600"
-            />
-            <Column
-              title="Pending"
-              tasks={tasks.pending}
-              titleColor="text-red-600"
-            />
-            <Column
-              title="Ongoing"
-              tasks={tasks.ongoing}
-              titleColor="text-orange-600"
-            />
-            <Column
-              title="Completed"
-              tasks={tasks.completed}
-              titleColor="text-green-600"
-            ></Column>
-          </div>
-        </div>
-</>):
-(<TasklistGrid/>)}
-       
+        {view === "Grid View" ? (
+          <>
+            <div className=" mt-10">
+              <div className="flex flex-wrap -mx-4">
+                <Column
+                  title="Upcoming"
+                  tasks={filterTasks(tasks.upcoming)}
+                  titleColor="text-blue-600"
+                />
+                <Column
+                  title="Pending"
+                  tasks={filterTasks(tasks.pending)}
+                  titleColor="text-red-600"
+                />
+                <Column
+                  title="Ongoing"
+                  tasks={filterTasks(tasks.ongoing)}
+                  titleColor="text-orange-600"
+                />
+                <Column
+                  title="Completed"
+                  tasks={filterTasks(tasks.completed)}
+                  titleColor="text-green-600"
+                ></Column>
+              </div>
+            </div>
+          </>
+        ) : (
+          <TasklistGrid />
+        )}
       </div>
       {modalOpen && (
         <NewModal open={modalOpen} onClose={closeModal}>
@@ -527,12 +387,18 @@ const Tasklist = () => {
             description={description}
             Title={title}
             EditValue={Editvalue}
-            title={btnclicked === "Add Task" ? "Add Task" : Editvalue ? "Edit Field" : "Add Project"}
+            title={
+              btnclicked === "Add Task"
+                ? "Add Task"
+                : Editvalue
+                ? "Edit Field"
+                : "Add Project"
+            }
             handleClose={closeModal}
             modalType={btnclicked}
-            projectData ={projectData}
+            projectData={projectData}
             setProjectData={setProjectData}
-            setTasks = {setTasks}
+            setTasks={setTasks}
             tasks={tasks}
           />
         </NewModal>

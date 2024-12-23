@@ -1,10 +1,47 @@
-import React from 'react';
+import React from "react";
 
 // ActiveTickets widget
 const ActiveTickets = ({ count, uptime }) => (
   <div className="p-4 bg-gray-700 text-white rounded-lg text-center">
     <h3 className="text-sm font-semibold">Active Tickets</h3>
     <p className="text-2xl font-bold">{count}</p>
+  </div>
+);
+
+const CountCard = ({ count, uptime, title, totalMonths, annualCost, deptCount, monthsPeriod }) => (
+  <div className="p-4  bg-gray-50 text-black rounded-lg text-start">
+    <div className="border-b-2 border-gray-200">
+      <h3 className="text-sm font-semibold">{title}</h3>
+      <p className="text-2xl font-bold">{count}</p>
+    </div>
+    <div className="flex mt-2 items-center gap-6 justify-start">
+      <div>
+        <h3 className="text-sm font-semibold">Annual Cost</h3>
+        <p className="text-sm">{annualCost}</p>
+      </div>
+      <div>
+        <h3 className="text-sm font-semibold">Total Members</h3>
+        <p className="text-sm">{deptCount}</p>
+      </div>
+      <div>
+        <h3 className="text-sm font-semibold">{monthsPeriod} Months</h3>
+        <p className="text-sm">{totalMonths}</p>
+      </div>
+    </div>
+  </div>
+);
+const BudgetApproval = ({ budgetStatus, count, title }) => (
+  <div className="p-4 bg-gray-50 text-black rounded-lg text-start">
+    <div>
+      <h3 className="text-sm font-semibold">{title}</h3>
+      <p className="text-2xl font-bold">{count}</p>
+    </div>
+    <div className="flex  mt-2 items-center justify-between">
+      <div>
+        <h3 className="text-md font-semibold">Approval Status</h3>
+        <p className="text-sm">{budgetStatus === false ? "Pending" : "Approved"}</p>
+      </div>
+    </div>
   </div>
 );
 
@@ -40,6 +77,12 @@ const CriticalAlerts = ({ count }) => (
   </div>
 );
 
-
-
-export  {ActiveTickets, PendingTasks, ResolvedIssues, ServerUptime, CriticalAlerts};
+export {
+  ActiveTickets,
+  CountCard,
+  BudgetApproval,
+  PendingTasks,
+  ResolvedIssues,
+  ServerUptime,
+  CriticalAlerts,
+};

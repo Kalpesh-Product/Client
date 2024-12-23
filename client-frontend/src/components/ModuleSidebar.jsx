@@ -126,17 +126,32 @@ const ModuleSidebar = ({ mainSideBar }) => {
           route: "/hr/leaves/my-leaves",
           icon: <HiOutlineClipboardList />,
         },
+        {
+          title: "View Past Leaves",
+          route: "/hr/leaves/past-leaves",
+          icon: <HiOutlineClipboardList />,
+        },
+        {
+          title: "Subordinate Due Approvals",
+          route: "/hr/leaves/due-approvals",
+          icon: <HiOutlineClipboardList />,
+        },
+        {
+          title: "Manage Leaves",
+          route: "/hr/leaves/manage-leaves",
+          icon: <HiOutlineClipboardList />,
+        },
 
-        ...(authUser.user.role === "Employee" &&
-        authUser.user.department === "Finance"
-          ? []
-          : [
-              {
-                title: "Reports",
-                route: "/hr/leaves/leave-reports",
-                icon: <HiOutlineClipboardList />,
-              },
-            ]),
+        // ...(authUser.user.role === "Employee" &&
+        // authUser.user.department === "Finance"
+        //   ? []
+        //   : [
+        //       {
+        //         title: "Reports",
+        //         route: "/hr/leaves/leave-reports",
+        //         icon: <HiOutlineClipboardList />,
+        //       },
+        //     ]),
       ],
     },
     {
@@ -167,25 +182,89 @@ const ModuleSidebar = ({ mainSideBar }) => {
       icon: <HiCurrencyDollar />,
     },
     {
-      title: "SOP",
-      route: "/hr/sops",
+      title: "Employment Agreement",
+      route: "/hr/employment-agreement",
       icon: <HiCurrencyDollar />,
     },
     {
-      title: "Policies",
-      route: "/hr/policies",
+      title: "Company Handbook",
+      route: "/hr/company-handbook",
       icon: <HiCurrencyDollar />,
+      subMenus: [
+        {
+          title: "SOP",
+          route: "/hr/company-handbook/sop",
+          icon: <HiOutlineClipboardList />,
+        },
+        {
+          title: "Policies",
+          route: "/hr/company-handbook/policies",
+          icon: <HiOutlineClipboardList />,
+        },
+      ],
     },
+    // {
+    //   title: "SOP",
+    //   route: "/hr/sops",
+    //   icon: <HiCurrencyDollar />,
+    // },
+    // {
+    //   title: "Policies",
+    //   route: "/hr/policies",
+    //   icon: <HiCurrencyDollar />,
+    // },
     {
       title: "Holidays",
       route: "/hr/holidays",
       icon: <HiCurrencyDollar />,
     },
     {
+      title: "Events",
+      route: "/hr/events",
+      icon: <IoSettingsOutline />,
+      
+    },
+    
+      // {
+      //   title: "Leaves",
+      //   route: "/hr/leaves",
+      //   icon: <HiOutlineClipboardList />,
+      //   subMenus: [
+      //     {
+      //       title: "My Leaves",
+      //       route: "/hr/leaves/my-leaves",
+      //       icon: <HiOutlineClipboardList />,
+      //     },
+  
+      //     ...(authUser.user.role === "Employee" && authUser.user.department === "Finance"
+      //       ? []
+      //       : [
+      //           {
+      //             title: "Reports",
+      //             route: "/hr/leaves/leave-reports",
+      //             icon: <HiOutlineClipboardList />,
+      //           },
+      //         ]),
+      //   ],
+      // },
+      {
+        title: "CV Dump",
+        route: "/hr/cvdump",
+        icon: <HiOutlineClipboardList />,
+        subMenus: [
+          {
+            title: "Applicants",
+            route: "/hr/cvdump/applicants",
+            icon: <HiOutlineClipboardList />,
+          },
+        ],
+      },    
+    {
       title: "Comapny Settings",
       route: "/hr/company-settings",
       icon: <IoSettingsOutline />,
     },
+    
   ];
 
   const itModules = [
@@ -195,8 +274,8 @@ const ModuleSidebar = ({ mainSideBar }) => {
       route: "/it/kpi",
       icon: <AiOutlineProduct />,
       subMenus: [
-        ...(authUser.user.department.find((dept) => dept.name === "IT") ||
-        authUser.user.department.find((dept) => dept.name === "Maintainence") ||
+        ...(authUser.user.department.map((dept) => dept.name === "IT") ||
+        authUser.user.department.map((dept) => dept.name === "Maintainence") ||
         authUser.user.role === "Master-Admin" ||
         authUser.user.role === "Super-Admin"
           ? [

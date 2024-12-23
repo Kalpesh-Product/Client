@@ -156,13 +156,12 @@ const Teams = () => {
     <div className='flex min-h-screen'>
        
         <div className='w-full p-6 motion-preset-blur-right-md  max-w-screen-xl mx-auto '>
-        {/* <h2 className="text-2xl  ">Team Members</h2> */}
-        {/* <div className="flex flex-wrap items-center justify-between "> */}
+       
         <h2 className="text-2xl mb-4">Team Members</h2>
 
         <div className='bg-white p-2'>
         <div className="flex flex-wrap items-center justify-between mt-4 ">
-    {/* Left Side: Search, Priority Dropdown, and Date Filter */}
+    
    
     
       {/* Search Field */}
