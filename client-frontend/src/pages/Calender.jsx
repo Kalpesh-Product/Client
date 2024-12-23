@@ -145,6 +145,7 @@ const Calender = () => {
 
         <div className="relative w-full pt-2">
           <FullCalendar
+            contentHeight={"auto"}
             displayEventTime={false}
             plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
             initialView="dayGridMonth"
