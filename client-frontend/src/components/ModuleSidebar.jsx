@@ -327,16 +327,16 @@ const ModuleSidebar = ({ mainSideBar }) => {
                 icon: <MdOutlineManageAccounts />,
               },
             ]),
-        ...(authUser.user.role === "Master-Admin" ||
-        authUser.user.role === "Super-Admin"
-          ? [
-              {
-                title: "All Tickets",
-                route: "/it/tickets/all-tickets",
-                icon: <MdOutlineManageAccounts />,
-              },
-            ]
-          : []),
+        // ...(authUser.user.role === "Master-Admin" ||
+        // authUser.user.role === "Super-Admin"
+        //   ? [
+        //       {
+        //         title: "All Tickets",
+        //         route: "/it/tickets/all-tickets",
+        //         icon: <MdOutlineManageAccounts />,
+        //       },
+        //     ]
+        //   : []),
 
         ...(authUser.user.role === "Employee" &&
         authUser.user.department.find((dept) => dept.name === "Finance")
