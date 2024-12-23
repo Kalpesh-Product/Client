@@ -126,6 +126,7 @@ import EmployeeAgreementPdfContainer from "../hr/employment-agreement/EmployeeAg
 import RaiseTicketButton from "../cms/tickets/components/RaiseTicketButton";
 import SopPdfContainer from "../hr/company-handbook/SopPdfContainer";
 import PolicyPdfContainer from "../hr/company-handbook/PolicyPdfContainer";
+import ThemeGrid from "../website-builder/ThemeGrid";
 
 const DepartmentDash = () => {
   const navigate = useNavigate();
@@ -196,8 +197,7 @@ const DepartmentDash = () => {
     (theme) => theme.id === (id ? parseInt(id, 10) : 1)
   );
 
-  console.log("Selected Theme is : ",selectedTheme)
-  
+  console.log("Selected Theme is : ", selectedTheme);
 
   const techWidgetsData = {
     activeTickets: 8,
@@ -763,8 +763,16 @@ const DepartmentDash = () => {
     {
       heading: "Calendar Data",
       widgets: [
-        <BasicTable data={hrBirthdayData} columns={hrBirthdayDataColumns} />,
-        <BasicTable data={holidaysAndEvents} columns={holidayTableColumns} />,
+        <BasicTable
+          title={"Upcoming birthdays"}
+          data={hrBirthdayData}
+          columns={hrBirthdayDataColumns}
+        />,
+        <BasicTable
+          title={"Upcoming Holidays"}
+          data={holidaysAndEvents}
+          columns={holidayTableColumns}
+        />,
       ],
     },
     {
@@ -944,7 +952,8 @@ const DepartmentDash = () => {
                     "& .MuiTabs-indicator": {
                       backgroundColor: "#0db4ea", // Custom indicator color
                     },
-                  }}>
+                  }}
+                >
                   <Tab label="Home" />
                   <Tab label="About" />
                   <Tab label="Gallery" />
@@ -1023,9 +1032,9 @@ const DepartmentDash = () => {
                 <EditTemplate template={themes[0]} />
               </div>
             ) : location.pathname === "/frontend/themes" ? (
-              <div className="p-6 w-full">
-                <h2 className="text-2xl font-bold mb-6">Themes</h2>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6">
+              <div className="w-full">
+                <h2 className="text-2xl font-bold mb-6 px-4 pt-2">Themes</h2>
+                {/* <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6">
                   {themes.map((theme) => (
                     <div
                       key={theme.id}
@@ -1041,7 +1050,7 @@ const DepartmentDash = () => {
                         />
                       </div>
 
-                      {/* <div className="p-4">
+                      <div className="p-4">
                         <h3 className="text-lg font-semibold">{theme.name}</h3>
                         <button
                           onClick={() =>
@@ -1051,9 +1060,12 @@ const DepartmentDash = () => {
                         >
                           View Details
                         </button>
-                      </div> */}
+                      </div>
                     </div>
                   ))}
+                </div> */}
+                <div>
+                  <ThemeGrid />
                 </div>
               </div>
             ) : location.pathname.includes("/frontend/themes/view-theme/") &&
@@ -1090,7 +1102,8 @@ const DepartmentDash = () => {
                           onClick={() =>
                             window.open(selectedTheme.demoLink, "_blank")
                           }
-                          className="wono-blue-dark text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition">
+                          className="wono-blue-dark text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition"
+                        >
                           View Demo
                         </button>
                         <button
@@ -1099,7 +1112,8 @@ const DepartmentDash = () => {
                               state: { stateTemplate: selectedTheme },
                             })
                           }
-                          className="wono-blue-dark w-full text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition">
+                          className="wono-blue-dark w-full text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition"
+                        >
                           Edit
                         </button>
                       </div>
@@ -1148,14 +1162,16 @@ const DepartmentDash = () => {
                         whileTap={{ scale: 0.9 }}
                         type="button"
                         onClick={handleClose}
-                        className="p-2 bg-white text-[red] border border-red-200 hover:border-red-400 text-2xl rounded-md">
+                        className="p-2 bg-white text-[red] border border-red-200 hover:border-red-400 text-2xl rounded-md"
+                      >
                         <IoMdClose />
                       </motion.button>
                     </div>
                     <iframe
                       src={selectedTheme.demoLink}
                       title="Theme Demo"
-                      className="w-full h-full rounded-lg shadow-md"></iframe>
+                      className="w-full h-full rounded-lg shadow-md"
+                    ></iframe>
                   </div>
                 </NewModal>
               </>
@@ -1227,7 +1243,7 @@ const DepartmentDash = () => {
                   {/* <div className="mb-8 flex justify-between">
                     <h1 className="text-3xl  font-bold">CV DUMP</h1>
                   </div> */}
-                  <CvDump/>
+                  <CvDump />
                 </div>
               </>
             ) : location.pathname === "/hr/cvdump/applicants" ? (
@@ -1762,7 +1778,8 @@ const DepartmentDash = () => {
                       </h2>
                       <button
                         className="py-1 px-2 text-sm wono-blue-dark text-white rounded-md"
-                        onClick={() => navigate("/it/tickets/view-tickets")}>
+                        onClick={() => navigate("/it/tickets/view-tickets")}
+                      >
                         View All
                       </button>
                     </div>
@@ -1846,7 +1863,8 @@ const DepartmentDash = () => {
           open={openTicket}
           onClose={handleCloseTicket}
           aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description">
+          aria-describedby="modal-modal-description"
+        >
           {/* <Box sx={style}> */}
           <Box sx={style}>
             <AddTicketForm />

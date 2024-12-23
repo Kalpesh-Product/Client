@@ -81,11 +81,11 @@ const ModuleSidebar = ({ mainSideBar }) => {
       route: "/frontend/themes",
       icon: <HiColorSwatch />,
     },
-    // {
-    //   title: "Updates",
-    //   route: "/frontend/updates",
-    //   icon: <GrDocumentUpdate />,
-    // },
+    {
+      title: "Updates",
+      route: "/frontend/updates",
+      icon: <GrDocumentUpdate />,
+    },
     // {
     //   title: "Budget",
     //   route: "/frontend/budget",
