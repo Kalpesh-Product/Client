@@ -10,6 +10,8 @@ import { api } from "../utils/axios";
 import { queryClient } from "../index";
 import FormStepper from "../components/FormStepper";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
+import { IoMdClose } from "react-icons/io";
+import { motion } from "framer-motion";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import {
   Checkbox,
@@ -22,11 +24,13 @@ import TestSide from "../components/Sidetest";
 import "../styles/CalenderModal.css";
 import dayjs from "dayjs";
 import { toast } from "sonner";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation } from "@tanstack/react-query";
 
 const Calender = () => {
   const [selectedDate, setSelectedDate] = useState(null);
   const [showModal, setShowModal] = useState(false);
+  const [showEventDetails, setShowEventDetails] = useState(false);
+  const [selectedEvent, setSelectedEvent] = useState(null);
   const [eventDetails, setEventDetails] = useState({
     title: "",
     description: "",
@@ -34,44 +38,39 @@ const Calender = () => {
     end: dayjs(),
     type: "event",
   });
-  const [isEditing, setIsEditing] = useState(false);
-  const [eventFilter, setEventFilter] = useState([
-    "holiday",
-    "meeting",
-    "event",
-  ]);
+  const [eventFilter, setEventFilter] = useState(["holiday", "event"]);
   const [events, setEvents] = useState([]);
   const [filteredEvents, setFilteredEvents] = useState([]);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setEventDetails((prev) => ({ ...prev, [name]: value }));
-  };
+  const { data: eventsData } = useQuery({
+    queryKey: ["events"],
+    queryFn: async () => {
+      try {
+        const response = await api.get("/api/events/all-events");
+        return response.data;
+      } catch (error) {
+        toast.error(error.message);
+        return [];
+      }
+    },
+  });
 
-  const handleDateChange = (field, newValue) => {
-    setEventDetails((prev) => ({ ...prev, [field]: newValue }));
-  };
-
-  const handleSubmit = async () => {
-    try {
-      if (isEditing) {
-        // Update event logic
-        await api.put(
-          `/api/events/update-event/${eventDetails.id}`,
-          eventDetails
-        );
-        toast.success("Event updated successfully");
-      } else {
-        // Create event logic
+  const { mutate } = useMutation({
+    mutationFn: async function () {
+      try {
         await api.post("/api/events/create-event", {
           ...eventDetails,
-          start: eventDetails.startDate.toISOString(), // Ensure ISO format
+          start: eventDetails.startDate.toISOString(),
           end: eventDetails.endDate.toISOString(),
         });
-
-        queryClient.invalidateQueries("events");
-        toast.success("Event created successfully");
+      } catch (error) {
+        toast.error(error.message);
       }
+    },
+    onSuccess: function () {
+      queryClient.invalidateQueries("events");
+      toast.success("Event created successfully");
+
       setShowModal(false);
       setEventDetails({
         title: "",
@@ -80,9 +79,15 @@ const Calender = () => {
         endDate: dayjs(),
         type: "event",
       });
-    } catch (error) {
-      toast.error("Failed to save event");
-    }
+    },
+  });
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setEventDetails((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleDateChange = (field, newValue) => {
+    setEventDetails((prev) => ({ ...prev, [field]: newValue }));
   };
 
   useEffect(() => {
@@ -96,31 +101,42 @@ const Calender = () => {
     }
   }, [eventFilter, events]);
 
-  const {
-    data: eventsData,
-    isLoading,
-    error,
-  } = useQuery({
-    queryKey: ["events"],
-    queryFn: async () => {
-      try {
-        const response = await api.get("/api/events/all-events");
-        return response.data;
-      } catch (error) {
-        toast.error(error.message);
-        return [];
-      }
-    },
-  });
+  const handleModalClose = () => {
+    setShowModal(false);
+    setEventDetails({
+      title: "",
+      description: "",
+      startDate: dayjs(),
+      endDate: dayjs(),
+      type: "event",
+    });
+  };
+
+  const handleEventClick = (info) => {
+    setSelectedEvent({
+      title: info.event.title,
+      description: info.event.extendedProps.description,
+      start: dayjs(info.event.start).format("YYYY-MM-DD"),
+      end: dayjs(info.event.end).format("YYYY-MM-DD"),
+      type: info.event.extendedProps.type,
+    });
+    setShowEventDetails(true);
+  };
+
+  useEffect(() => {
+    if (eventsData) {
+      setEvents(eventsData);
+    }
+  }, [eventsData]);
 
   return (
-    <div className="flex">
+    <div className="flex md:w-full">
       <TestSide />
       <div className="flex-1 p-6 bg-gray-100 h-screen overflow-y-auto">
         <div className="flex justify-between items-center">
           <h1 className="font-bold text-4xl pb-5">Calendar</h1>
           <FormGroup row>
-            {["holiday", "meeting", "event"].map((type) => (
+            {["holiday", "event"].map((type) => (
               <FormControlLabel
                 key={type}
                 control={
@@ -145,6 +161,7 @@ const Calender = () => {
 
         <div className="relative w-full pt-2">
           <FullCalendar
+            eventClick={handleEventClick}
             contentHeight={"auto"}
             displayEventTime={false}
             plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
@@ -157,7 +174,7 @@ const Calender = () => {
               right: "today prev,next",
             }}
             dateClick={(info) => {
-              const clickedDate = dayjs(info.date).startOf("day"); // Standardize the date
+              const clickedDate = dayjs(info.date).startOf("day"); 
               setSelectedDate(info.dateStr);
               setShowModal(true);
               setEventDetails((prev) => ({
@@ -165,18 +182,17 @@ const Calender = () => {
                 startDate: clickedDate,
                 endDate: clickedDate,
               }));
-              setIsEditing(false);
             }}
-            events={eventsData}
+            events={filteredEvents}
           />
         </div>
 
         {showModal && (
-          <NewModal open={showModal} onClose={() => setShowModal(false)}>
+          <NewModal open={showModal} onClose={handleModalClose}>
             <div className="flex flex-col gap-4 w-[50vw] mx-auto">
               <FormStepper
                 steps={["Event Details", "Confirmation"]}
-                handleClose={() => setShowModal(false)}
+                handleClose={handleModalClose}
               >
                 {(activeStep, handleNext) => {
                   switch (activeStep) {
@@ -260,9 +276,11 @@ const Calender = () => {
                     case 1:
                       return (
                         <div className="flex flex-col gap-4">
-                          <Typography variant="h6" fontWeight="bold">
-                            Confirm Event Details
-                          </Typography>
+                          <div>
+                            <Typography variant="h6" fontWeight="bold">
+                              Confirm Event Details
+                            </Typography>
+                          </div>
                           <p>
                             <strong>Title:</strong> {eventDetails.title}
                           </p>
@@ -287,9 +305,9 @@ const Calender = () => {
                               type="button"
                               variant="contained"
                               color="primary"
-                              onClick={handleSubmit}
+                              onClick={() => mutate()}
                             >
-                              {isEditing ? "Update Event" : "Create Event"}
+                              Create Event
                             </Button>
                           </div>
                         </div>
@@ -299,6 +317,43 @@ const Calender = () => {
                   }
                 }}
               </FormStepper>
+            </div>
+          </NewModal>
+        )}
+        {showEventDetails && selectedEvent && (
+          <NewModal
+            open={showEventDetails}
+            onClose={() => setShowEventDetails(false)}
+          >
+            <div className="flex flex-col gap-4 w-[50vw] mx-auto">
+              <div className="flex justify-between items-center">
+                <h2 className="text-xl font-bold">Event Details</h2>
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.9 }}
+                  type="button"
+                  onClick={() => setShowEventDetails(false)}
+                  className="p-2 bg-white text-red-500 border border-red-200 
+                                   hover:border-red-400 text-2xl rounded-md"
+                >
+                  <IoMdClose />
+                </motion.button>
+              </div>
+              <p>
+                <strong>Title:</strong> {selectedEvent.title}
+              </p>
+              <p>
+                <strong>Description:</strong> {selectedEvent.description}
+              </p>
+              <p>
+                <strong>Start Date:</strong> {selectedEvent.start}
+              </p>
+              <p>
+                <strong>End Date:</strong> {selectedEvent.end}
+              </p>
+              <p>
+                <strong>Type:</strong> {selectedEvent.type}
+              </p>
             </div>
           </NewModal>
         )}
