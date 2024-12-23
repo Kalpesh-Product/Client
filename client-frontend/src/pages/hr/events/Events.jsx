@@ -10,21 +10,50 @@ import TextField from "@mui/material/TextField";
 import { NewModal } from "../../../components/NewModal";
 import FormStepper from "../../../components/FormStepper";
 import WonoButton from "../../../components/Buttons/WonoButton";
-import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
+import {
+  DatePicker,
+  LocalizationProvider,
+  TimePicker,
+} from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
 
 const Events = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  
-    // Function to open the modal
-    const openModal = () => setIsModalOpen(true);
-  
-    // Function to close the modal
-    const closeModal = () => setIsModalOpen(false);
 
-    const steps = ["Add Events", "Verify Events"];
- 
+  const [formData, setFormData] = useState({
+    id: "",
+    Title: "",
+    Date: null,
+    Time: null,
+    Participants: "",
+    Agenda: "",
+  });
+
+  // Function to open the modal
+  const openModal = () => setIsModalOpen(true);
+
+  // Function to close the modal
+  const closeModal = () => setIsModalOpen(false);
+
+  const handleChange = (field) => (e) => {
+    setFormData({ ...formData, [field]: e.target.value });
+  };
+
+  const handleDateChange = (date) => {
+    setFormData({ ...formData, Date: date });
+  };
+
+  const handleTimeChange = (time) => {
+    setFormData({ ...formData, Time: time });
+  };
+
+  const handleNextStep = (e, handleNext) => {
+    e.preventDefault();
+    handleNext();
+  };
+
+  const steps = ["Add Events", "Verify Events"];
 
   const columns = [
     { field: "id", headerName: "ID", width: 100 },
@@ -125,164 +154,200 @@ const Events = () => {
           <div className="flex">
             <div className="mb-2 flex justify-between">
               <h1 className="text-3xl"></h1>
-              <button onClick={openModal}
-               className="px-6 py-2 rounded-lg text-white wono-blue-dark hover:bg-[#3cbce7] transition-shadow shadow-md hover:shadow-lg active:shadow-inner">
+              <button
+                onClick={openModal}
+                className="px-6 py-2 rounded-lg text-white wono-blue-dark hover:bg-[#3cbce7] transition-shadow shadow-md hover:shadow-lg active:shadow-inner"
+              >
                 + Add Events
               </button>
             </div>
           </div>
         </div>
         <AgTable
-        data ={allRows}
-        // Use the state here
-        columns={columns}
-        // Bind the state here
-      />
-       <NewModal open={isModalOpen} onClose={closeModal}>
-        <>
-          <FormStepper
-            steps={steps}
-            handleClose={closeModal}
-            children={(activeStep, handleNext) => {
-              if (activeStep === 0) {
-                return (
-                  <>
-                    <div className="bg-white  w-[31vw] rounded-lg z-10 relative overflow-y-auto max-h-[80vh]">
-                      {/* Modal Content */}
+          data={allRows}
+          // Use the state here
+          columns={columns}
+          // Bind the state here
+        />
+        <NewModal open={isModalOpen} onClose={closeModal}>
+          <>
+            <FormStepper
+              steps={steps}
+              handleClose={closeModal}
+              children={(activeStep, handleNext) => {
+                if (activeStep === 0) {
+                  return (
+                    <>
+                      <div className="bg-white  w-[31vw] rounded-lg z-10 relative overflow-y-auto max-h-[80vh]">
+                        {/* Modal Content */}
 
-                      {/* Modal Header */}
-                     
+                        {/* Modal Header */}
 
-                      {/* Modal Body START */}
-                      <div className=" w-full">
-                        {/* <div>AddT icket Form</div> */}
-                        <div className="">
-                          <div className=" mx-auto">
-                            {/* <h1 className="text-xl text-center my-2 font-bold">
+                        {/* Modal Body START */}
+                        <div className=" w-full">
+                          {/* <div>AddT icket Form</div> */}
+                          <div className="">
+                            <div className=" mx-auto">
+                              {/* <h1 className="text-xl text-center my-2 font-bold">
                     Add Ticket
                   </h1> */}
-                            <Box
-                              sx={{
-                                maxWidth: 600,
-                                paddingY: 3,
-                                bgcolor: "background.paper",
-                                borderRadius: 2,
-                              }}
-                              // className="bg-white p-6 rounded-lg shadow-md mx-auto">
-                              className="bg-white py-6 rounded-lg"
-                            >
-                              {/* Personal Information */}
-                              {/* <h2 className="text-lg font-semibold mb-4">Add Ticket</h2> */}
-                              <div className="grid grid-cols-1 gap-4">
-                                {/* Name, Mobile, Email, DOB fields */}
-                               
+                              <Box
+                                sx={{
+                                  maxWidth: 600,
+                                  paddingY: 3,
+                                  bgcolor: "background.paper",
+                                  borderRadius: 2,
+                                }}
+                                // className="bg-white p-6 rounded-lg shadow-md mx-auto">
+                                className="bg-white py-6 rounded-lg"
+                              >
+                                {/* Personal Information */}
+                                {/* <h2 className="text-lg font-semibold mb-4">Add Ticket</h2> */}
                                 <div className="grid grid-cols-1 gap-4">
-                                  <TextField
-                                    label="Event Name"
-                                    
-                                    fullWidth
-                                  />
-                                </div>
-                                <div className="grid grid-cols-1 gap-4">
-                                  <FormControl fullWidth>
-                                    {/* <InputLabel id="suggestion-select-label">
-                                      Ticket Title
-                                    </InputLabel> */}
-                                    <LocalizationProvider
-                                      dateAdapter={AdapterDayjs}
-                                    >
-                                      <DatePicker
-                                        label="Date"
-                                        
-                                        sx={{ width: "100%" }}
-                                        
-                                         // Convert string to Dayjs
-                                        onChange={(newDate) => {
-                                          if (newDate) {
-                                            const formattedDate = newDate.format("YYYY-MM-DD"); // Format date
-                                             // Store as string
-                                          }
-                                        }}
-                                        // format="DD/MM/YYYY" // Display format in the DatePicker
-                                        renderInput={(params) => (
-                                          <TextField {...params} className="w-full" />
-                                        )}
-                                      />
-                                    </LocalizationProvider>
-                                  </FormControl>
-                                </div>
-                               
+                                  {/* Name, Mobile, Email, DOB fields */}
+
                                   <div className="grid grid-cols-1 gap-4">
                                     <TextField
-                                      label="Agenda"
-                                      
+                                      label="Event Name"
+                                      value={formData.Title}
+                                      onChange={handleChange("Title")}
                                       fullWidth
                                     />
                                   </div>
-                                
+                                  <div className="grid grid-cols-1 gap-4">
+                                    <FormControl fullWidth>
+                                      {/* <InputLabel id="suggestion-select-label">
+                                      Ticket Title
+                                    </InputLabel> */}
+                                      <LocalizationProvider
+                                        dateAdapter={AdapterDayjs}
+                                      >
+                                        <DatePicker
+                                          label="Date"
+                                          value={formData.Date}
+                                          onChange={handleDateChange}
+                                          sx={{ width: "100%" }}
+                                          // Convert string to Dayjs
+                                          // onChange={(newDate) => {
+                                          //   if (newDate) {
+                                          //     const formattedDate = newDate.format("YYYY-MM-DD"); // Format date
+                                          //      // Store as string
+                                          //   }
+                                          // }}
+                                          // format="DD/MM/YYYY" // Display format in the DatePicker
+                                          renderInput={(params) => (
+                                            <TextField
+                                              {...params}
+                                              className="w-full"
+                                            />
+                                          )}
+                                        />
+                                        <br></br>
+                                        <TimePicker
+                                          label="Time"
+                                          value={formData.Time}
+                                          onChange={handleTimeChange}
+                                          renderInput={(params) => (
+                                            <TextField
+                                              {...params}
+                                              fullWidth
+                                              margin="normal"
+                                            />
+                                          )}
+                                        />
+                                      </LocalizationProvider>
+                                      <TextField
+                                        label="Agenda"
+                                        variant="outlined"
+                                        fullWidth
+                                        margin="normal"
+                                        multiline
+                                        rows={4}
+                                        value={formData.Agenda}
+                                        onChange={handleChange("Agenda")}
+                                      />
+                                    </FormControl>
+                                  </div>
 
-                              </div>
-
-                              
-                            </Box>
+                                  
+                                </div>
+                              </Box>
+                            </div>
                           </div>
                         </div>
+                        {/* Modal Body END */}
+
+                        {/* Modal Footer */}
+
+                        <div className="sticky bottom-0 bg-white py-6 z-20 flex justify-center">
+                          <div className="flex justify-center items-center w-full">
+                            <button
+                              className="wono-blue-dark text-white py-2 px-4 rounded-md hover:bg-blue-600 w-full"
+                              
+                              onClick={(e) => handleNextStep(e, handleNext)}
+                            >
+                              Next
+                            </button>
+                          </div>
+                        </div>
+                        {/* Close button */}
                       </div>
-                      {/* Modal Body END */}
+                    </>
+                  );
+                } else if (activeStep === 1) {
+                  return (
+                    <>
+                      <div className="p-6">
+                        <h1 className="text-2xl mb-4 py-3 font-semibold text-center">
+                          Are the provided details correct ?
+                        </h1>
+                        <div>
+                          <div className="flex justify-between py-2 border-b">
+                            <h1 className="font-semibold">Event Title</h1>
+                            <span>{formData.Title}</span>
+                          </div>
+                        </div>
+                        <div>
+                          <div className="flex justify-between py-2 border-b">
+                            <h1 className="font-semibold">Date</h1>
+                            <span>{formData.Date}</span>
+                          </div>
+                        </div>
+                        <div>
+                          <div className="flex justify-between py-2 border-b">
+                            <h1 className="font-semibold">Time</h1>
+                            <span>{formData.Time}</span>
+                          </div>
+                        </div>
+                        {/* <div>
+                          <div className="flex justify-between py-2 border-b">
+                            <h1 className="font-semibold">Participants</h1>
+                            <span>{formData.Participants}</span>
+                          </div>
+                        </div> */}
+                        <div>
+                          <div className="flex justify-between py-2 border-b">
+                            <h1 className="font-semibold">Agenda</h1>
+                            <span>{formData.Agenda}</span>
+                          </div>
+                        </div>
 
-                      {/* Modal Footer */}
+                        <div className="pt-8 pb-4">
+                          {/* <p>details</p> */}
 
-                      <div className="sticky bottom-0 bg-white py-6 z-20 flex justify-center">
-                        <div className="flex justify-center items-center w-full">
-                          <button
-                            className="wono-blue-dark text-white py-2 px-4 rounded-md hover:bg-blue-600 w-full"
-                            // onClick={handleAddTicket}>
-                            // onClick={() => handleNextStep(handleNext)}
-                          >
-                            Next
-                          </button>
+                          <WonoButton
+                            content={"Submit"}
+                            // onClick={() => handleAddTicket(newTicket,holidayList)}
+                          />
                         </div>
                       </div>
-                      {/* Close button */}
-                      
-                    </div>
-                  </>
-                );
-              } else if (activeStep === 1) {
-                return (
-                  <>
-                    <div className="p-6">
-                      <h1 className="text-2xl mb-4 py-3 font-semibold text-center">
-                        Are the provided details correct ?
-                      </h1>
-                      <div>
-                        <div className="flex justify-between py-2 border-b">
-                          <h1 className="font-semibold">Holiday Name</h1>
-                          <span></span>
-                        </div>
-                      </div>
-                      <div>
-                        <div className="flex justify-between py-2 border-b">
-                          <h1 className="font-semibold">Date</h1>
-                          <span></span>
-                        </div>
-                      </div>
-                      <div className="pt-8 pb-4">
-                        {/* <p>details</p> */}
-
-                        <WonoButton
-                          content={"Submit"}
-                          // onClick={() => handleAddTicket(newTicket,holidayList)}
-                        />
-                      </div>
-                    </div>
-                  </>
-                );
-              }
-            }}
-          />
-        </>
-      </NewModal>
+                    </>
+                  );
+                }
+              }}
+            />
+          </>
+        </NewModal>
       </div>
     </>
   );
