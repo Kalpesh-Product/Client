@@ -210,7 +210,6 @@ const router = createBrowserRouter([
                 path: "/hr/leaves/manage-leaves",
                 element: <DepartmentDash />,
               },
-             
 
               {
                 path: "/hr/payroll",
@@ -218,15 +217,15 @@ const router = createBrowserRouter([
               },
               {
                 path: "/hr/events",
-                element: <DepartmentDash/>
+                element: <DepartmentDash />,
               },
               {
-                path:"/hr/cvdump",
-                element: <DepartmentDash/>
+                path: "/hr/cvdump",
+                element: <DepartmentDash />,
               },
               {
-                path:"/hr/cvdump/applicants",
-                element: <DepartmentDash/>
+                path: "/hr/cvdump/applicants",
+                element: <DepartmentDash />,
               },
               {
                 path: "/hr/payroll/value",
@@ -255,6 +254,30 @@ const router = createBrowserRouter([
               },
               {
                 path: "/finance/dashboard",
+                element: <DepartmentDash />,
+              },
+              {
+                path: "/finance/budget",
+                element: <DepartmentDash />,
+              },
+              {
+                path: "/finance/budget/request",
+                element: <DepartmentDash />,
+              },
+              {
+                path: "/finance/budget/approved",
+                element: <DepartmentDash />,
+              },
+              {
+                path: "/finance/vendor",
+                element: <DepartmentDash />,
+              },
+              {
+                path: "/finance/vendor/vendor-actions",
+                element: <DepartmentDash />,
+              },
+              {
+                path: "/finance/vendor/reports",
                 element: <DepartmentDash />,
               },
               {
