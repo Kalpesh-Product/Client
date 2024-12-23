@@ -310,7 +310,7 @@ const Mytasks = () => {
                 </li>
               </ul>
               <div className="tab-content">
-                {activeTab === "tab-1" && (
+                {activeTab === "tab-2" && (
                   <div
                     className="tab-pane fade show active"
                     id="tab-1"
@@ -326,7 +326,7 @@ const Mytasks = () => {
                     </div>
                   </div>
                 )}
-                {activeTab === "tab-2" && (
+                {activeTab === "tab-1" && (
                   <div
                     className="tab-pane fade show"
                     id="tab-2"

@@ -272,7 +272,7 @@ const Applicants = () => {
       />
       </div>
       </div>
-      <div
+      {/* <div
                   className="ag-theme-alpine w-full"
                   style={{ height: 500, width: "100%" }}
                 >
@@ -285,7 +285,7 @@ const Applicants = () => {
                     }}
                     domLayout="autoHeight"
                   />
-                </div>
+                </div> */}
     </div>
   );
 };

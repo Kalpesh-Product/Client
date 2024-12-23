@@ -51,6 +51,11 @@ const Events = () => {
   const handleNextStep = (e, handleNext) => {
     e.preventDefault();
     handleNext();
+    // const formattedData = {
+    //   ...formData,
+    //   Date: formData.Date ? format(formData.Date, "yyyy-MM-dd") : "",
+    //   Time: formData.Time ? format(formData.Time, "HH:mm") : "",
+    // };
   };
 
   const steps = ["Add Events", "Verify Events"];
@@ -191,6 +196,7 @@ const Events = () => {
                               {/* <h1 className="text-xl text-center my-2 font-bold">
                     Add Ticket
                   </h1> */}
+                  
                               <Box
                                 sx={{
                                   maxWidth: 600,
