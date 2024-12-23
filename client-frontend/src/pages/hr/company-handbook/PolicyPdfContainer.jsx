@@ -14,10 +14,12 @@ import { motion } from "framer-motion";
 import { IoMdClose } from "react-icons/io";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import PayslipTest from "./PayslipTest";
-import DownloadableDiv from "./DownloadableDiv";
+import PolicyPdf from "./PolicyPdf";
+// import EmployeeAgreementPdf from "./EmployeeAgreementPdf";
+// import PayslipTest from "./PayslipTest";
+// import DownloadableDiv from "./DownloadableDiv";
 
-const Payslips = () => {
+const PolicyPdfContainer = () => {
   const location = useLocation();
 
   const [highlightFirstRow, setHighlightFirstRow] = React.useState(false);
@@ -485,7 +487,7 @@ const Payslips = () => {
       /> */}
 
       {/* <PayslipTest /> */}
-      <DownloadableDiv />
+      <PolicyPdf />
 
       {/* {location.pathname === "/customer/tickets/my-tickets" && (
         <div>
@@ -1077,4 +1079,4 @@ const Payslips = () => {
   );
 };
 
-export default Payslips;
+export default PolicyPdfContainer;

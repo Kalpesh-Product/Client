@@ -20,7 +20,7 @@ import { IoMdClose } from "react-icons/io";
 import axios from "axios";
 import useAuth from "../../../../hooks/useAuth";
 
-const MyTickets = () => {
+const RaiseTicketButton = () => {
   const { auth: authUser } = useAuth();
   const navigate = useNavigate();
   const [user, setUser] = useState("");
@@ -821,10 +821,10 @@ const MyTickets = () => {
   );
 
   return (
-    <div className="w-[72vw] md:w-full transition-all duration-200 ease-in-out bg-white p-2 rounded-md">
-      <div className="flex gap-4 mb-4 justify-between">
+    <div className=" transition-all duration-200 ease-in-out  p-2 rounded-md">
+      <div className="flex gap-4  justify-between">
         {/* <div className="pt-2">Filter :</div> */}
-        <div>
+        {/* <div>
           <FormControl size="small" style={{ minWidth: 220 }}>
             <TextField
               label="Filter by department"
@@ -841,7 +841,7 @@ const MyTickets = () => {
               <MenuItem value="Admin">Admin</MenuItem>
             </TextField>
           </FormControl>
-        </div>
+        </div> */}
 
         {/* {location.pathname === "/it/tickets" && (
           <div className="  bg-red-500">
@@ -866,20 +866,16 @@ const MyTickets = () => {
           </div>
         )} */}
 
+        {/* <div className="relative bg-red-500">
+          <h1 className="text-3xl mb-2"></h1>
+          <button
+            onClick={openModal}
+            className="w-[9.4rem] absolute top-[-960%] right-[-30rem] px-6 py-2 rounded-lg text-white wono-blue-dark hover:bg-[#3cbce7] transition-shadow shadow-md hover:shadow-lg active:shadow-inner">
+            Raise Ticket
+          </button>
+        </div> */}
+
         {/* {location.pathname === "/it/tickets" &&
-          ["Admin", "Super Admin", "Master Admin"].includes(
-            authUser.user.role.roleTitle
-          ) && (
-            <div className="relative bg-red-500">
-              <h1 className="text-3xl mb-2"></h1>
-              <button
-                onClick={openModal}
-                className="w-[9.4rem] absolute top-[-960%] right-[-30rem] px-6 py-2 rounded-lg text-white wono-blue-dark hover:bg-[#3cbce7] transition-shadow shadow-md hover:shadow-lg active:shadow-inner">
-                Raise Ticket
-              </button>
-            </div>
-          )}
-        {location.pathname === "/it/tickets" &&
           ["Employee"].includes(authUser.user.role.roleTitle) && (
             <div className="relative bg-red-500">
               <h1 className="text-3xl mb-2"></h1>
@@ -892,19 +888,16 @@ const MyTickets = () => {
           )} */}
 
         <div className="flex gap-4">
-          {location.pathname !== "/profile" &&
-            location.pathname !== "/it/tickets" && (
-              <div className="flex">
-                <div className="mb-2 flex justify-between">
-                  <h1 className="text-3xl"></h1>
-                  <button
-                    onClick={openModal}
-                    className=" px-6 py-2 rounded-lg text-white wono-blue-dark hover:bg-[#3cbce7] transition-shadow shadow-md hover:shadow-lg active:shadow-inner">
-                    Raise Ticket
-                  </button>
-                </div>
-              </div>
-            )}
+          <div className="flex">
+            <div className="mb-2 flex justify-between">
+              <h1 className="text-3xl"></h1>
+              <button
+                onClick={openModal}
+                className=" px-6 py-2 rounded-lg text-white wono-blue-dark hover:bg-[#3cbce7] transition-shadow shadow-md hover:shadow-lg active:shadow-inner">
+                Raise Ticket
+              </button>
+            </div>
+          </div>
 
           {visiblePaths.includes(location.pathname) && (
             <div className="flex">
@@ -926,11 +919,11 @@ const MyTickets = () => {
 
       {/* Tickets datatable START */}
 
-      <AgTable
+      {/* <AgTable
         // data={rows} // Use the state here
         data={myTickets} // Use the state here
         columns={columns3}
-      />
+      /> */}
 
       {/* Tickets datatable END */}
 
@@ -1591,4 +1584,4 @@ const MyTickets = () => {
   );
 };
 
-export default MyTickets;
+export default RaiseTicketButton;

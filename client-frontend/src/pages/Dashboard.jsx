@@ -52,8 +52,28 @@ export const WidgetSection = ({ heading, widgets }) => (
       {widgets.map((Widget, index) => (
         <div
           key={index}
-          className="bg-white p-0 shadow-md  w-full h-full overflow-auto motion-preset-expand"
-        >
+          className="bg-white p-0 shadow-md  w-full h-full overflow-auto motion-preset-expand">
+          {Widget}
+        </div>
+      ))}
+    </div>
+  </div>
+);
+export const WidgetSectionLeaveDashboard = ({ heading, widgets }) => (
+  <div className="mt-0">
+    <h2 className="text-2xl font-semibold">{heading}</h2>
+    <div
+      className={`grid gap-4 mt-3
+    grid-cols-1
+    sm:grid-cols-${Math.min(widgets.length, 2)}
+    md:grid-cols-${Math.min(widgets.length, 3)}
+    lg:grid-cols-${Math.min(widgets.length, 4)}
+    
+  `}>
+      {widgets.map((Widget, index) => (
+        <div
+          key={index}
+          className="bg-white p-0 shadow-md rounded-lg h-full overflow-auto motion-preset-expand">
           {Widget}
         </div>
       ))}
@@ -237,7 +257,7 @@ const Dashboard = () => {
     },
   ];
 
-  console.log(auth)
+  console.log(auth);
 
   return (
     <div className="flex h-screen">

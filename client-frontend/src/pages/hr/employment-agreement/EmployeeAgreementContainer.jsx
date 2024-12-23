@@ -2,7 +2,7 @@ import React from "react";
 import useAuth from "../../../hooks/useAuth";
 import EmployeeAgreement from "./EmployeeAgreement";
 
-import EmployeeAgreementDetailsContainer from "./EmployeeAgreementDetailsContainer";
+// import EmployeeAgreementDetailsContainer from "./EmployeeAgreementDetailsContainer";
 
 const EmployeeAgreementContainer = () => {
   const { auth: authUser } = useAuth();
@@ -13,9 +13,7 @@ const EmployeeAgreementContainer = () => {
         <EmployeeAgreement />
       ) : (
         // <div>For others</div>
-        <>
-          <EmployeeAgreementDetailsContainer />
-        </>
+        <>{/* <EmployeeAgreementDetailsContainer /> */}</>
       )}
     </>
   );

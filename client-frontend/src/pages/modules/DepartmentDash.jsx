@@ -5,7 +5,7 @@ import TestSide from "../../components/Sidetest";
 import PayRollDash from "../hr/payroll/PayRollDash";
 import { BudgetApproval, CountCard } from "../../Widgets/TechWidgets";
 import DoughnutChart from "../../Widgets/DoughnutGraph";
-import { WidgetSection } from "../Dashboard";
+import { WidgetSection, WidgetSectionLeaveDashboard } from "../Dashboard";
 import RevenueVsExpensesWidget from "../../Widgets/RevenueVsExpensesWidget";
 import ProgressDoughnutWidget from "../../Widgets/ProgressDoughnutWidget";
 import BarGraphWidget from "../../Widgets/BarGraphWidget";
@@ -76,7 +76,7 @@ import MyTickets from "../cms/tickets/components/MyTickets";
 import Budget from "../Budget";
 import AttendanceDash from "../hr/attendance/AttendanceDash";
 import BasicCardCount from "../../components/Cards/BasicCardCount";
-import LeaveWidgets from "../hr/leaves/Components/LeaveWidgets";
+import LeaveWidget1 from "../hr/leaves/Components/LeaveWidget1";
 import LeaveWidget2 from "../hr/leaves/Components/LeaveWidget2";
 import LeaveWidget3 from "../hr/leaves/Components/LeaveWidget3";
 import LeaveWidget4 from "../hr/leaves/Components/LeaveWidget4";
@@ -120,6 +120,12 @@ import DuePayout from "../hr/payroll/DuePayout";
 import EmployeeWiseAttandance from "../hr/attendance/EmployeeWiseAttandance";
 import Applicants from "../hr/cv-dump/Applicants";
 import CvDump from "../hr/cv-dump/CvDump";
+import LeaveWidgetsContainer from "../hr/leaves/Components/LeaveWidgetsContainer";
+import CompanyHandbookWidgetsContainer from "../hr/company-handbook/components/CompanyHandbookWidgetsContainer";
+import EmployeeAgreementPdfContainer from "../hr/employment-agreement/EmployeeAgreementPdfContainer";
+import RaiseTicketButton from "../cms/tickets/components/RaiseTicketButton";
+import SopPdfContainer from "../hr/company-handbook/SopPdfContainer";
+import PolicyPdfContainer from "../hr/company-handbook/PolicyPdfContainer";
 
 const DepartmentDash = () => {
   const navigate = useNavigate();
@@ -689,26 +695,26 @@ const DepartmentDash = () => {
         />,
       ],
     },
-    {
-      heading: "Leave Management",
-      subModule: "leaves",
-      widgets: [
-        <LeaveWidgets />,
-        <LeaveWidget2 />,
-        <LeaveWidget3 />,
-        <LeaveWidget4 />,
-      ],
-    },
-    {
-      heading: "Company Handbook",
-      subModule: "company-handbook",
-      widgets: [
-        <SopLink />,
-        <PoliciesLink />,
-        // <LeaveWidget3 />,
-        // <LeaveWidget4 />,
-      ],
-    },
+    // {
+    //   heading: "Leave Management",
+    //   subModule: "leaves",
+    //   widgets: [
+    //     <LeaveWidget1 />,
+    //     <LeaveWidget2 />,
+    //     <LeaveWidget3 />,
+    //     <LeaveWidget4 />,
+    //   ],
+    // },
+    // {
+    //   heading: "Company Handbook",
+    //   subModule: "company-handbook",
+    //   widgets: [
+    //     <SopLink />,
+    //     <PoliciesLink />,
+    //     // <LeaveWidget3 />,
+    //     // <LeaveWidget4 />,
+    //   ],
+    // },
     {
       heading: "Employee Data",
       subModule: "leaves",
@@ -938,8 +944,7 @@ const DepartmentDash = () => {
                     "& .MuiTabs-indicator": {
                       backgroundColor: "#0db4ea", // Custom indicator color
                     },
-                  }}
-                >
+                  }}>
                   <Tab label="Home" />
                   <Tab label="About" />
                   <Tab label="Gallery" />
@@ -1024,8 +1029,7 @@ const DepartmentDash = () => {
                   {themes.map((theme) => (
                     <div
                       key={theme.id}
-                      className="bg-gray-100 rounded-lg shadow-md overflow-visible hover:shadow-lg transition-shadow"
-                    >
+                      className="bg-gray-100 rounded-lg shadow-md overflow-visible hover:shadow-lg transition-shadow">
                       <div className="w-full h-full overflow-hidden rounded-md">
                         <img
                           src={theme.image}
@@ -1086,8 +1090,7 @@ const DepartmentDash = () => {
                           onClick={() =>
                             window.open(selectedTheme.demoLink, "_blank")
                           }
-                          className="wono-blue-dark text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition"
-                        >
+                          className="wono-blue-dark text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition">
                           View Demo
                         </button>
                         <button
@@ -1096,8 +1099,7 @@ const DepartmentDash = () => {
                               state: { stateTemplate: selectedTheme },
                             })
                           }
-                          className="wono-blue-dark w-full text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition"
-                        >
+                          className="wono-blue-dark w-full text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition">
                           Edit
                         </button>
                       </div>
@@ -1146,16 +1148,14 @@ const DepartmentDash = () => {
                         whileTap={{ scale: 0.9 }}
                         type="button"
                         onClick={handleClose}
-                        className="p-2 bg-white text-[red] border border-red-200 hover:border-red-400 text-2xl rounded-md"
-                      >
+                        className="p-2 bg-white text-[red] border border-red-200 hover:border-red-400 text-2xl rounded-md">
                         <IoMdClose />
                       </motion.button>
                     </div>
                     <iframe
                       src={selectedTheme.demoLink}
                       title="Theme Demo"
-                      className="w-full h-full rounded-lg shadow-md"
-                    ></iframe>
+                      className="w-full h-full rounded-lg shadow-md"></iframe>
                   </div>
                 </NewModal>
               </>
@@ -1257,7 +1257,7 @@ const DepartmentDash = () => {
             ) : location.pathname === "/hr/leaves" ? (
               <>
                 {/* Leave Widgets */}
-                {/* <LeaveWidgets /> */}
+                {/* <LeaveWidget1 /> */}
 
                 <div className="bg-gray-100 p-4 rounded-lg mt-4">
                   <div className="mb-8 flex justify-between">
@@ -1289,7 +1289,7 @@ const DepartmentDash = () => {
                     </div> */}
                   </div>
 
-                  {hrWidgets
+                  {/* {hrWidgets
                     .filter((section) => section.subModule === "leaves")
                     .map((section, index) => (
                       <WidgetSection
@@ -1297,7 +1297,17 @@ const DepartmentDash = () => {
                         heading={section.heading}
                         widgets={section.widgets}
                       />
-                    ))}
+                    ))} */}
+                  {/* {hrWidgets
+                    .filter((section) => section.subModule === "leaves")
+                    .map((section, index) => (
+                      <WidgetSectionLeaveDashboard
+                        key={index}
+                        heading={section.heading}
+                        widgets={section.widgets}
+                      />
+                    ))} */}
+                  <LeaveWidgetsContainer />
                   {/* {hrWidgets
                     .filter((section) => section.subModule === "leaves")
                     .map((section, index) => (
@@ -1330,7 +1340,9 @@ const DepartmentDash = () => {
                   </div>
                   <div className=" ">
                     <div className="flex w-full p-4 pb-4 pl-0 text-lg border-b-0  gap-4">
-                      <h2 className="text-2xl  font-bold ">Pending Leaves</h2>
+                      <h2 className="text-2xl  font-bold ">
+                        Leaves Pending For Approval
+                      </h2>
                     </div>
                     {/* <p>Today's tickets Table Component</p> */}
                     {/* <TodaysTickets /> */}
@@ -1441,7 +1453,8 @@ const DepartmentDash = () => {
                       Employment Agreement
                     </h2>
                   </div>
-                  <EmployeeAgreementDetails />
+                  {/* <EmployeeAgreementDetails /> */}
+                  <EmployeeAgreementPdfContainer />
                 </div>
               </>
             ) : location.pathname === "/hr/company-handbook" ? (
@@ -1451,17 +1464,18 @@ const DepartmentDash = () => {
                   {/* <div className="flex w-full  pb-4 pl-0 text-lg border-b-0  gap-4">
                     <h2 className="text-2xl  font-bold ">Company Handbook</h2>
                   </div> */}
-                  {hrWidgets
+                  {/* {hrWidgets
                     .filter(
                       (section) => section.subModule === "company-handbook"
                     )
                     .map((section, index) => (
-                      <WidgetSection
+                      <WidgetSectionLeaveDashboard
                         key={index}
                         heading={section.heading}
                         widgets={section.widgets}
                       />
-                    ))}
+                    ))} */}
+                  <CompanyHandbookWidgetsContainer />
                 </div>
               </>
             ) : location.pathname === "/hr/company-handbook/sop" ? (
@@ -1481,7 +1495,7 @@ const DepartmentDash = () => {
                   <div className="flex w-full  pb-4 pl-0 text-lg border-b-0  gap-4">
                     <h2 className="text-2xl  font-bold ">SOP Details</h2>
                   </div>
-                  <SopDetails />
+                  <SopPdfContainer />
                 </div>
               </>
             ) : location.pathname === "/hr/company-handbook/policies" ? (
@@ -1501,7 +1515,7 @@ const DepartmentDash = () => {
                   <div className="flex w-full  pb-4 pl-0 text-lg border-b-0  gap-4">
                     <h2 className="text-2xl  font-bold ">Policy Details</h2>
                   </div>
-                  <PolicyDetails />
+                  <PolicyPdfContainer />
                 </div>
               </>
             ) : location.pathname === "/hr/holidays" ? (
@@ -1677,6 +1691,7 @@ const DepartmentDash = () => {
                 <div className="bg-gray-100 p-4 rounded-lg mt-4">
                   <div className="mb-8 flex justify-between">
                     <h1 className="text-3xl  font-bold">Key Insights</h1>
+                    {/* <RaiseTicketButton /> */}
                     {/* <div className=" flex gap-4">
                 
 
@@ -1706,7 +1721,7 @@ const DepartmentDash = () => {
                   {customerServiceWidgets
                     .filter((section) => section.subModule === "ticket")
                     .map((section, index) => (
-                      <WidgetSection
+                      <WidgetSectionLeaveDashboard
                         key={index}
                         heading={section.heading}
                         widgets={section.widgets}
@@ -1734,6 +1749,10 @@ const DepartmentDash = () => {
                   {/* <AssetAllocationWidget /> */}
 
                   <div className=" ">
+                    <br />
+                    <div className="flex justify-center">
+                      <RaiseTicketButton />
+                    </div>
                     <div className="flex w-full p-4 pb-4 pl-0 text-lg border-b-0 gap-4">
                       {/* <h2 className="text-2xl font-bold">My Tickets</h2> */}
                       <h2 className="text-2xl font-bold">
@@ -1742,8 +1761,7 @@ const DepartmentDash = () => {
                       </h2>
                       <button
                         className="py-1 px-2 text-sm wono-blue-dark text-white rounded-md"
-                        onClick={() => navigate("/it/tickets/my-tickets")}
-                      >
+                        onClick={() => navigate("/it/tickets/view-tickets")}>
                         View All
                       </button>
                     </div>
@@ -1827,8 +1845,7 @@ const DepartmentDash = () => {
           open={openTicket}
           onClose={handleCloseTicket}
           aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
-        >
+          aria-describedby="modal-modal-description">
           {/* <Box sx={style}> */}
           <Box sx={style}>
             <AddTicketForm />
