@@ -1,16 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { DataGrid } from "@mui/x-data-grid";
-import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import { CSVLink } from "react-csv";
-import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import { toast } from "sonner";
-import AgTable from "../../../components/AgTable";
 import { useLocation } from "react-router-dom";
 import { NewModal } from "../../../components/NewModal";
 import FormStepper from "../../../components/FormStepper";
@@ -19,16 +14,24 @@ import { motion } from "framer-motion";
 import { IoMdClose } from "react-icons/io";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import useAuth from "../../../hooks/useAuth";
+import PolicyPdf from "./PolicyPdf";
+// import EmployeeAgreementPdf from "./EmployeeAgreementPdf";
+// import PayslipTest from "./PayslipTest";
+// import DownloadableDiv from "./DownloadableDiv";
 
-const ManageLeaves = () => {
+const PolicyPdfContainer = () => {
   const location = useLocation();
-  const { auth } = useAuth();
 
   const [highlightFirstRow, setHighlightFirstRow] = React.useState(false);
   const [highlightEditedRow, setHighlightEditedRow] = React.useState(false);
 
-  const [holidayName, setLeaveType] = useState(""); // State to track the selected option
+  const [leaveType, setLeaveType] = useState(""); // State to track the selected option
+
+  const [user, setUser] = useState("");
+  useEffect(() => {
+    const storedUser = JSON.parse(localStorage.getItem("user"));
+    setUser(storedUser);
+  }, []);
 
   const columns = [
     { field: "id", headerName: "ID", width: 100 },
@@ -55,61 +58,59 @@ const ManageLeaves = () => {
     //   },
     // },
 
-    // {
-    //   field: "department",
-    //   headerName: "Department",
-    //   width: 150,
-    //   type: "singleSelect",
-    //   valueOptions: ["IT", "HR", "Tech", "Admin"],
-    // },
-    // { field: "date", headerName: "Date", width: 150 },
-    { field: "noOfLeaves", headerName: "No Of Days", width: 150 },
-    // {
-    //   field: "status",
-    //   headerName: "Status",
-    //   width: 150,
-    //   type: "singleSelect",
-    //   valueOptions: ["Approved", "Pending", "Rejected"],
-    //   cellRenderer: (params) => {
-    //     const statusColors = {
-    //       Approved: "text-blue-600 bg-blue-100",
-    //       Pending: "text-red-600 bg-red-100",
-    //       Rejected: "text-yellow-600 bg-yellow-100",
-    //     };
-    //     const statusClass = statusColors[params.value] || "";
-    //     return (
-    //       <span
-    //         className={`px-3 py-1 rounded-full text-sm font-medium ${statusClass}`}>
-    //         {params.value}
-    //       </span>
-    //     );
-    //   },
-    // },
     {
-      field: "delete",
-      headerName: "Delete",
-      width: 170,
-      // renderCell: (params) => (
-      cellRenderer: (params) => (
-        <Button
-          size="small"
-          // onClick={() => handleDelete(params.row)}
-          onClick={openDeleteTicket}
-          // onClick={handleDeleteTicket}
-          variant="contained"
-          sx={{
-            backgroundColor: "red",
-            color: "white",
-            "&:hover": {
-              backgroundColor: "red",
-            },
-            padding: "4px 8px",
-            borderRadius: "0.375rem",
-          }}>
-          Delete
-        </Button>
-      ),
+      field: "department",
+      headerName: "Department",
+      width: 150,
+      type: "singleSelect",
+      valueOptions: ["IT", "HR", "Tech", "Admin"],
     },
+    { field: "requestDate", headerName: "Request Date", width: 150 },
+    {
+      field: "status",
+      headerName: "Status",
+      width: 150,
+      type: "singleSelect",
+      valueOptions: ["Approved", "Pending", "Rejected"],
+      cellRenderer: (params) => {
+        const statusColors = {
+          Approved: "text-blue-600 bg-blue-100",
+          Pending: "text-red-600 bg-red-100",
+          Rejected: "text-yellow-600 bg-yellow-100",
+        };
+        const statusClass = statusColors[params.value] || "";
+        return (
+          <span
+            className={`px-3 py-1 rounded-full text-sm font-medium ${statusClass}`}>
+            {params.value}
+          </span>
+        );
+      },
+    },
+    // {
+    //   field: "approve",
+    //   headerName: "Approve",
+    //   width: 170,
+    //   // renderCell: (params) => (
+    //   cellRenderer: (params) => (
+    //     <Button
+    //       size="small"
+    //       // onClick={() => handleDelete(params.row)}
+    //       //   onClick={handleAccept}
+    //       variant="contained"
+    //       sx={{
+    //         backgroundColor: "green",
+    //         color: "white",
+    //         "&:hover": {
+    //           backgroundColor: "green",
+    //         },
+    //         padding: "4px 8px",
+    //         borderRadius: "0.375rem",
+    //       }}>
+    //       Approve
+    //     </Button>
+    //   ),
+    // },
     // {
     //   field: "reject",
     //   headerName: "Reject",
@@ -206,80 +207,72 @@ const ManageLeaves = () => {
       priority: "High",
       status: "Pending",
       department: "IT",
-      noOfLeaves: "6",
+      requestDate: "2024-10-01",
     },
     {
       id: 2,
-      leaveType: "Casual Leave",
+      leaveType: "Sick Leave",
       priority: "Medium",
       status: "Pending",
       department: "HR",
-      noOfLeaves: "2",
+      requestDate: "2024-10-03",
     },
     {
       id: 3,
-      leaveType: "Priviledged Leave",
+      leaveType: "Sick Leave",
       priority: "High",
       status: "Pending",
       department: "Tech",
-      noOfLeaves: "4",
+      requestDate: "2024-10-05",
     },
-    // {
-    //   id: 4,
-    //   holidayName: "Independence Day",
-    //   priority: "Low",
-    //   status: "Pending",
-    //   department: "Admin",
-    //   date: "2024-08-15",
-    // },
-    // {
-    //   id: 5,
-    //   holidayName: "Gudi Padava",
-    //   priority: "Medium",
-    //   status: "Pending",
-    //   department: "HR",
-    //   date: "2024-04-09",
-    // },
-    // {
-    //   id: 6,
-    //   holidayName: "Goa Liberation Day",
-    //   priority: "High",
-    //   status: "Pending",
-    //   department: "IT",
-    //   date: "2024-12-19",
-    // },
-    // {
-    //   id: 7,
-    //   holidayName: "Ganesh Chaturthi",
-    //   priority: "Low",
-    //   status: "Pending",
-    //   department: "Tech",
-    //   date: "2024-09-07",
-    // },
-    // {
-    //   id: 8,
-    //   holidayName: "Gandhi Jayanti",
-    //   priority: "Low",
-    //   status: "Pending",
-    //   department: "Admin",
-    //   date: "2024-10-02",
-    // },
-    // {
-    //   id: 9,
-    //   holidayName: "Feast of St. Francis Xavier",
-    //   priority: "Medium",
-    //   status: "Pending",
-    //   department: "IT",
-    //   date: "2024-12-03",
-    // },
-    // {
-    //   id: 9,
-    //   holidayName: "Eid Al-Fitr",
-    //   priority: "Medium",
-    //   status: "Pending",
-    //   department: "IT",
-    //   date: "2024-04-11",
-    // },
+    {
+      id: 4,
+      leaveType: "Sick Leave",
+      priority: "Low",
+      status: "Pending",
+      department: "Admin",
+      requestDate: "2024-10-06",
+    },
+    {
+      id: 5,
+      leaveType: "Sick Leave",
+      priority: "Medium",
+      status: "Pending",
+      department: "HR",
+      requestDate: "2024-10-07",
+    },
+    {
+      id: 6,
+      leaveType: "Sick Leave",
+      priority: "High",
+      status: "Pending",
+      department: "IT",
+      requestDate: "2024-10-08",
+    },
+    {
+      id: 7,
+      leaveType: "Sick Leave",
+      priority: "Low",
+      status: "Pending",
+      department: "Tech",
+      requestDate: "2024-10-09",
+    },
+    {
+      id: 8,
+      leaveType: "Sick Leave",
+      priority: "Low",
+      status: "Pending",
+      department: "Admin",
+      requestDate: "2024-10-10",
+    },
+    {
+      id: 9,
+      leaveType: "Sick Leave",
+      priority: "Medium",
+      status: "Pending",
+      department: "IT",
+      requestDate: "2024-10-11",
+    },
   ];
 
   const [rows, setRows] = React.useState(allRows);
@@ -299,38 +292,38 @@ const ManageLeaves = () => {
 
   // Handlers for the buttons
   // const handleViewDetails = (row) => {
-  //   alert(`Viewing details for: ${row.holidayName}`);
+  //   alert(`Viewing details for: ${row.leaveType}`);
   // };
 
   // const handleEdit = (row) => {
-  //   alert(`Editing ticket: ${row.holidayName}`);
+  //   alert(`Editing ticket: ${row.leaveType}`);
   // };
 
   // const handleDelete = (row) => {
   //   if (
   //     window.confirm(
-  //       `Are you sure you want to delete ticket: ${row.holidayName}?`
+  //       `Are you sure you want to delete ticket: ${row.leaveType}?`
   //     )
   //   ) {
-  //     alert(`Deleted ticket: ${row.holidayName}`);
+  //     alert(`Deleted ticket: ${row.leaveType}`);
   //   }
   // };
 
   const csvHeaders = [
     { label: "ID", key: "id" },
-    { label: "Ticket Title", key: "holidayName" },
+    { label: "Ticket Title", key: "leaveType" },
     { label: "Priority", key: "priority" },
     { label: "Department", key: "department" },
-    { label: "Request Date", key: "date" },
+    { label: "Request Date", key: "requestDate" },
   ];
 
   const newTicket = {
     id: rows.length + 1,
-    leaveType: "New Leave",
+    leaveType: "Sick Leave",
     priority: "Medium",
     status: "Pending",
-    noOfLeaves: "5",
-    date: new Date().toISOString().split("T")[0], // Today's date
+    department: "IT",
+    requestDate: new Date().toISOString().split("T")[0], // Today's date
   };
 
   // ADD TICKET MODAL START
@@ -349,7 +342,7 @@ const ManageLeaves = () => {
   // };
   const handleAddTicket = (newTicket) => {
     setRows((prevRows) => [newTicket, ...prevRows]); // Update the state
-    toast.success("Added a new holiday.");
+    toast.success("Applied for a new leave.");
     closeModal(); // Optionally close the modal after the alert
   };
 
@@ -399,13 +392,13 @@ const ManageLeaves = () => {
   const closeDeleteTicket = () => setIsDeleteTicketOpen(false);
 
   const handleDeleteTicket = () => {
-    // setHighlightFirstRow(true); // Highlight the first row after editing a ticket
-    toast.success("Holiday Deleted");
+    setHighlightFirstRow(true); // Highlight the first row after editing a ticket
+    toast.success("Ticket Deleted");
     closeDeleteTicket(); // Optionally close the modal after the alert
   };
   // EDIT TICKET DETAILS MODAL END
 
-  const steps = ["Add Leave Tpye", "Verify Details"];
+  const steps = ["Apply Leave", "Verify Details"];
 
   const handleNextStep = (handleNext) => {
     // e.preventDefault();
@@ -434,24 +427,6 @@ const ManageLeaves = () => {
 
       <div className="flex gap-4 mb-4 justify-between">
         {/* <div className="pt-2">Filter :</div> */}
-        <div>
-          {/* <FormControl size="small" style={{ minWidth: 220 }}>
-            <TextField
-              label="Filter by department"
-              variant="outlined"
-              select
-              size="small"
-              onChange={handleChange}
-              value={department}
-              sx={{ fontSize: "0.5rem" }}>
-              <MenuItem value="">All</MenuItem>
-              <MenuItem value="IT">IT</MenuItem>
-              <MenuItem value="HR">HR</MenuItem>
-              <MenuItem value="Tech">Tech</MenuItem>
-              <MenuItem value="Admin">Admin</MenuItem>
-            </TextField>
-          </FormControl> */}
-        </div>
         {/* <div className=" flex">
           <CSVLink
             data={filteredRows} // Pass the filtered rows for CSV download
@@ -473,14 +448,14 @@ const ManageLeaves = () => {
           </div>
         </div> */}
 
-        {!auth.user.department.find((dept) => dept.name === "Finance") && (
+        {location.pathname === "/hr/leaves/my-leaves" && (
           <div className="flex">
             <div className="mb-2 flex justify-between">
               <h1 className="text-3xl"></h1>
               <button
                 onClick={openModal}
                 className="px-6 py-2 rounded-lg text-white wono-blue-dark hover:bg-[#3cbce7] transition-shadow shadow-md hover:shadow-lg active:shadow-inner">
-                + Add New Leave Type
+                + Apply Leave
               </button>
             </div>
           </div>
@@ -504,12 +479,15 @@ const ManageLeaves = () => {
         highlightFirstRow={false}
       /> */}
 
-      <AgTable
+      {/* <AgTable
         data={rows} // Use the state here
         columns={columns}
         highlightFirstRow={highlightFirstRow} // Bind the state here
         highlightEditedRow={highlightEditedRow} // Bind the state here
-      />
+      /> */}
+
+      {/* <PayslipTest /> */}
+      <PolicyPdf />
 
       {/* {location.pathname === "/customer/tickets/my-tickets" && (
         <div>
@@ -578,7 +556,7 @@ const ManageLeaves = () => {
                               {/* <h2 className="text-lg font-semibold mb-4">Add Ticket</h2> */}
                               <div className="grid grid-cols-1 gap-4">
                                 {/* Name, Mobile, Email, DOB fields */}
-                                {/* <div className="grid grid-cols-1 gap-4">
+                                <div className="grid grid-cols-1 gap-4">
                                   <FormControl fullWidth>
                                     <InputLabel id="leave-type-select-label">
                                       Leave Type
@@ -599,23 +577,15 @@ const ManageLeaves = () => {
                                       <MenuItem value="Annual Leave">
                                         Annual Leave
                                       </MenuItem>
-                               
+                                      {/* <MenuItem value="Admin">Admin</MenuItem> */}
                                     </Select>
                                   </FormControl>
-                                </div> */}
-                                <div className="grid grid-cols-1 gap-4">
-                                  <TextField
-                                    label="Leave Type"
-                                    // value={newEvent.name}
-                                    // onChange={(e) =>
-                                    //   setnewEvent({ ...newEvent, name: e.target.value })
-                                    // }
-                                    fullWidth
-                                  />
                                 </div>
-                                {/* <div className="grid grid-cols-1 gap-4">
+                                <div className="grid grid-cols-1 gap-4">
                                   <FormControl fullWidth>
-                            
+                                    {/* <InputLabel id="suggestion-select-label">
+                                      Ticket Title
+                                    </InputLabel> */}
                                     <LocalizationProvider
                                       dateAdapter={AdapterDayjs}>
                                       <DatePicker
@@ -640,8 +610,8 @@ const ManageLeaves = () => {
                                       />
                                     </LocalizationProvider>
                                   </FormControl>
-                                </div> */}
-                                {holidayName === "Other" && (
+                                </div>
+                                {leaveType === "Other" && (
                                   <div className="grid grid-cols-1 gap-4">
                                     <TextField
                                       label="Specify"
@@ -654,16 +624,16 @@ const ManageLeaves = () => {
                                   </div>
                                 )}
 
-                                <div className="grid grid-cols-1 gap-4">
+                                {/* <div className="grid grid-cols-1 gap-4">
                                   <TextField
-                                    label="Number Of Days"
+                                    label="Ticket Title"
                                     // value={newEvent.name}
                                     // onChange={(e) =>
                                     //   setnewEvent({ ...newEvent, name: e.target.value })
                                     // }
                                     fullWidth
                                   />
-                                </div>
+                                </div> */}
                               </div>
 
                               {/* Role & Department fields */}
@@ -716,13 +686,13 @@ const ManageLeaves = () => {
                       <div>
                         <div className="flex justify-between py-2 border-b">
                           <h1 className="font-semibold">Leave Type</h1>
-                          <span>New Leave</span>
+                          <span>Sick Leave</span>
                         </div>
                       </div>
                       <div>
                         <div className="flex justify-between py-2 border-b">
-                          <h1 className="font-semibold">Number Of Days</h1>
-                          <span>5</span>
+                          <h1 className="font-semibold">Date</h1>
+                          <span>07/12/2024</span>
                         </div>
                       </div>
                       <div className="pt-8 pb-4">
@@ -999,7 +969,7 @@ const ManageLeaves = () => {
             <div className="sticky top-0 bg-white py-6 z-20 flex justify-between">
               <div>
                 <h2 className="text-3xl font-bold mb-4 uppercase">
-                  Delete Holiday
+                  Delete Ticket
                 </h2>
               </div>
               <div>
@@ -1026,7 +996,7 @@ const ManageLeaves = () => {
               <div className="">
                 <div className=" mx-auto">
                   <h1 className="text-xl text-center my-2 font-bold">
-                    Are you sure you want to delete the holiday?
+                    Are you sure you want to delete the ticket?
                   </h1>
                   <Box
                     sx={{
@@ -1042,7 +1012,7 @@ const ManageLeaves = () => {
                     <div className="grid grid-cols-1 gap-4">
                       {/* Name, Mobile, Email, DOB fields */}
 
-                      {/* <div className="grid grid-cols-1 gap-4">
+                      <div className="grid grid-cols-1 gap-4">
                         <TextField
                           label="Reason for deleting"
                           // value={newEvent.name}
@@ -1052,7 +1022,7 @@ const ManageLeaves = () => {
                           // }
                           fullWidth
                         />
-                      </div> */}
+                      </div>
                     </div>
 
                     {/* Role & Department fields */}
@@ -1109,4 +1079,4 @@ const ManageLeaves = () => {
   );
 };
 
-export default ManageLeaves;
+export default PolicyPdfContainer;

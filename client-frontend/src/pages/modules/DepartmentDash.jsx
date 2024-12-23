@@ -124,6 +124,8 @@ import LeaveWidgetsContainer from "../hr/leaves/Components/LeaveWidgetsContainer
 import CompanyHandbookWidgetsContainer from "../hr/company-handbook/components/CompanyHandbookWidgetsContainer";
 import EmployeeAgreementPdfContainer from "../hr/employment-agreement/EmployeeAgreementPdfContainer";
 import RaiseTicketButton from "../cms/tickets/components/RaiseTicketButton";
+import SopPdfContainer from "../hr/company-handbook/SopPdfContainer";
+import PolicyPdfContainer from "../hr/company-handbook/PolicyPdfContainer";
 
 const DepartmentDash = () => {
   const navigate = useNavigate();
@@ -1509,7 +1511,7 @@ const DepartmentDash = () => {
                   <div className="flex w-full  pb-4 pl-0 text-lg border-b-0  gap-4">
                     <h2 className="text-2xl  font-bold ">SOP Details</h2>
                   </div>
-                  <SopDetails />
+                  <SopPdfContainer />
                 </div>
               </>
             ) : location.pathname === "/hr/company-handbook/policies" ? (
@@ -1529,7 +1531,7 @@ const DepartmentDash = () => {
                   <div className="flex w-full  pb-4 pl-0 text-lg border-b-0  gap-4">
                     <h2 className="text-2xl  font-bold ">Policy Details</h2>
                   </div>
-                  <PolicyDetails />
+                  <PolicyPdfContainer />
                 </div>
               </>
             ) : location.pathname === "/hr/holidays" ? (
