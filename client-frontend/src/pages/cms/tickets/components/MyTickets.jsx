@@ -180,7 +180,7 @@ const MyTickets = () => {
       toast.success("New Ticket Created");
       fetchmyTickets();
       closeModal();
-      navigate("/it/tickets/my-tickets");
+      navigate("/it/tickets/view-tickets");
     } catch (error) {
       console.log(error);
     }
@@ -511,7 +511,7 @@ const MyTickets = () => {
     },
     // { field: "requestDate", headerName: "Request Date", width: 150 },
 
-    ...(location.pathname === "/it/tickets/my-tickets"
+    ...(location.pathname === "/it/tickets/view-tickets"
       ? [
           {
             field: "actions",
@@ -798,7 +798,7 @@ const MyTickets = () => {
     // { label: "Escalated To", key: "escalatedTo" },
   ];
 
-  const visiblePaths = ["/profile", "/it/tickets/my-tickets"];
+  const visiblePaths = ["/profile", "/it/tickets/view-tickets"];
 
   // Code for filtering ticket messages
   const issues = [

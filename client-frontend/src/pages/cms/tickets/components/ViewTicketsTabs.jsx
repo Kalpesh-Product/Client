@@ -14,7 +14,7 @@ import ReceivedTickets from "./ReceivedTickets";
 
 const ViewTicketsTabs = () => {
   // For Departments
-  const [value, setValue] = React.useState("2");
+  const [value, setValue] = React.useState("1");
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -29,7 +29,7 @@ const ViewTicketsTabs = () => {
   return (
     <div>
       <div className=" w-full p-4 text-lg">
-        <h2 className="text-2xl  font-bold">Received Tickets</h2>
+        <h2 className="text-2xl  font-bold">All Tickets</h2>
       </div>
 
       <div className="bg-white mx-4 rounded-md">
@@ -55,6 +55,14 @@ const ViewTicketsTabs = () => {
               }}>
               {/* {user.role !== "Employee" && user.role !== "Admin" && ( */}
               <Tab
+                label="My Tickets"
+                value="1"
+                sx={{
+                  textTransform: "uppercase",
+                  borderRight: "1px solid #e4e4e4",
+                }}
+              />
+              <Tab
                 label="Received Tickets"
                 value="2"
                 sx={{
@@ -63,14 +71,6 @@ const ViewTicketsTabs = () => {
                 }}
               />
               {/* )} */}
-              {/* <Tab
-                label="Assigned Tickets"
-                value="5"
-                sx={{
-                  textTransform: "uppercase",
-                  borderRight: "1px solid #e4e4e4",
-                }}
-              /> */}
 
               <Tab
                 label="Accepted Tickets"

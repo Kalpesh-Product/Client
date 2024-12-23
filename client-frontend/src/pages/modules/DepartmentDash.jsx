@@ -1777,7 +1777,7 @@ const DepartmentDash = () => {
                       </h2>
                       <button
                         className="py-1 px-2 text-sm wono-blue-dark text-white rounded-md"
-                        onClick={() => navigate("/it/tickets/my-tickets")}>
+                        onClick={() => navigate("/it/tickets/view-tickets")}>
                         View All
                       </button>
                     </div>
