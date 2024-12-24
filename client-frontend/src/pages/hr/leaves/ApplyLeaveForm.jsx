@@ -481,8 +481,8 @@ const ApplyLeaveForm = () => {
                   }}
                   className="bg-white pt-3 pb-10 rounded-lg w-full">
                   {/* <div className="grid grid-cols-1 gap-4"> */}
-                  <div className="w-full  flex justify-between items-center">
-                    <div className="w-[300px]">
+                  <div className="w-full  flex justify-between items-center gap-4">
+                    <div className="w-full">
                       <FormControl fullWidth>
                         <InputLabel id="leave-type-select-label">
                           Leave Type
@@ -503,7 +503,7 @@ const ApplyLeaveForm = () => {
                         </Select>
                       </FormControl>
                     </div>
-                    <div className="w-[300px]">
+                    <div className="w-full">
                       <FormControl fullWidth>
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                           <DatePicker

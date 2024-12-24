@@ -130,6 +130,7 @@ import LeaveTabs from "../hr/leaves/LeaveTabs";
 import ThemeGrid from "../website-builder/ThemeGrid";
 import ViewTheme from "../website-builder/ViewTheme";
 import CompanyHandbookTabs from "../hr/company-handbook/CompanyHandbookTabs";
+import RaiseTicketForm from "../cms/tickets/components/RaiseTicketForm";
 
 const DepartmentDash = () => {
   const navigate = useNavigate();
@@ -1260,7 +1261,7 @@ const DepartmentDash = () => {
 
                 <div className="bg-gray-100 p-4 rounded-lg ">
                   <div className="mb-4 flex justify-between">
-                    <h1 className="text-2xl  font-bold">Leave Management</h1>
+                    <h1 className="text-2xl font-bold">Leave Management</h1>
                   </div>
 
                   <LeaveTabs />
@@ -1619,34 +1620,14 @@ const DepartmentDash = () => {
             ) : location.pathname === "/it/tickets" ? (
               <>
                 <div className="bg-gray-100 p-4 rounded-lg mt-4">
-                  <div className="mb-8 flex justify-between">
-                    <h1 className="text-3xl  font-bold">Key Insights</h1>
-                    {/* <RaiseTicketButton /> */}
-                    {/* <div className=" flex gap-4">
-                
-
-                      {user.role === "Employee" && user.department === "IT" && (
-                        <div>
-                          <span className="text-2xl">Status: </span>
-                          <button
-                            onClick={toggleStatus}
-                            className={`px-6 py-2 rounded-lg text-white transition-shadow shadow-md hover:shadow-lg active:shadow-inner ${
-                              isAvailable
-                                ? "bg-green-400 hover:bg-green-300"
-                                : "bg-red-400 hover:bg-red-300"
-                            }`}>
-                            {isAvailable ? "Available" : "Unavailable"}
-                          </button>
-                        </div>
-                      )}
-                 
-
-                      <button
-                        onClick={handleOpenTicket}
-                        className="px-6 py-2 rounded-lg text-white wono-blue-dark hover:bg-[#3cbce7] transition-shadow shadow-md hover:shadow-lg active:shadow-inner">
-                        Raise Ticket
-                      </button>
-                    </div> */}
+                  <div className="mb-4 flex justify-between">
+                    <h1 className="text-2xl font-bold">Ticket Management</h1>
+                  </div>
+                  <div className="mb-8 ">
+                    {/* <h1 className="text-3xl  font-bold">Ticket Management</h1> */}
+                    <div className="">
+                      <RaiseTicketForm />
+                    </div>
                   </div>
                   {customerServiceWidgets
                     .filter((section) => section.subModule === "ticket")

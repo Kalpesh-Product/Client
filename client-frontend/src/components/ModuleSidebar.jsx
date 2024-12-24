@@ -334,15 +334,15 @@ const ModuleSidebar = ({ mainSideBar }) => {
         //   route: "/it/tickets/my-tickets",
         //   icon: <HiOutlineClipboardList />,
         // },
-        ...(authUser.user.role === "Employee"
-          ? []
-          : [
-              {
-                title: "Members",
-                route: "/it/tickets/members",
-                icon: <MdOutlineManageAccounts />,
-              },
-            ]),
+        // ...(authUser.user.role === "Employee"
+        //   ? []
+        //   : [
+        //       {
+        //         title: "Members",
+        //         route: "/it/tickets/members",
+        //         icon: <MdOutlineManageAccounts />,
+        //       },
+        //     ]),
         // ...(authUser.user.role === "Master-Admin" ||
         // authUser.user.role === "Super-Admin"
         //   ? [
