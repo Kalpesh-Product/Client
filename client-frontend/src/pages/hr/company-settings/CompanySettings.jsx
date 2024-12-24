@@ -176,9 +176,6 @@ const CompanySettings = () => {
                 onClick={() => handleOpenModal("add-department")}
               />
             </div>
-            <h1 className="text-2xl font-semibold text-gray-500 my-3">
-              Admins
-            </h1>
             {loadingDepartments ? (
               <p>Loading departments...</p>
             ) : (

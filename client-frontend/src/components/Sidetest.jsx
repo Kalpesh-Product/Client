@@ -4,6 +4,7 @@ import {
   FaBuildingUser,
   FaCode,
   FaMoneyBillTrendUp,
+  FaPlus,
 } from "react-icons/fa6";
 import {
   FaArrowLeft,
@@ -21,12 +22,14 @@ import {
   MdAccountBalance,
   MdDashboard,
   MdLocalCafe,
+  MdMeetingRoom,
   MdOutlineLocalCafe,
+  MdOutlineManageAccounts,
   MdOutlineWifiTethering,
   MdPolicy,
 } from "react-icons/md";
-import { HiOutlineChatAlt2 } from "react-icons/hi";
-import { AiOutlineSecurityScan } from "react-icons/ai";
+import { HiOutlineChatAlt2, HiOutlineClipboardList } from "react-icons/hi";
+import { AiOutlineProduct, AiOutlineSecurityScan } from "react-icons/ai";
 import { RiCustomerService2Line, RiDashboardLine } from "react-icons/ri";
 import { useNavigate, useLocation, useParams } from "react-router-dom";
 import { BsCashCoin } from "react-icons/bs";
@@ -67,32 +70,90 @@ const TestSide = () => {
       id: 1,
       title: "Meetings",
       route: "/meetings",
+      icon: <MdMeetingRoom />,
       submenus: [
-        { id: 1, title: "Calendar", route: "/meetings/booking" },
-        { id: 2, title: "Add New Room", route: "/meetings/add-room" },
-        { id: 3, title: "Reports", route: "/meetings/reports" },
+        {
+          id: 1,
+          title: "Calendar",
+          icon: <FaRegCalendarAlt />,
+          route: "/meetings/booking",
+        },
+        {
+          id: 2,
+          title: "Add New Room",
+          icon: <FaPlus />,
+          route: "/meetings/add-room",
+        },
+        {
+          id: 3,
+          title: "Reports",
+          icon: <TbReportSearch />,
+          route: "/meetings/reports",
+        },
       ],
     },
     {
       id: 2,
       title: "Tickets",
       route: "/tickets",
+      icon: <HiOutlineClipboardList />,
       submenus: [
-        { id: 1, title: "My Tickets", route: "/tickets/my-tickets" },
-        { id: 2, title: "View Tickets", route: "/tickets/view-tickets" },
-        { id: 3, title: "Members", route: "/tickets/members" },
-        { id: 4, title: "Ticket Reports", route: "/tickets/ticket-reports" },
-        { id: 5, title: "All Ticket", route: "/tickets/all-tickets" },
+        // {
+        //   id: 1,
+        //   title: "My Tickets",
+        //   icon: <MdOutlineLocalCafe />,
+        //   route: "/tickets/my-tickets",
+        // },
+        {
+          id: 2,
+          title: "View Tickets",
+          icon: <MdOutlineLocalCafe />,
+          route: "/tickets/view-tickets",
+        },
+        {
+          id: 3,
+          title: "Members",
+          icon: <MdOutlineManageAccounts />,
+          route: "/tickets/members",
+        },
+        {
+          id: 4,
+          title: "Ticket Reports",
+          icon: <HiOutlineClipboardList />,
+          route: "/tickets/ticket-reports",
+        },
+        // {
+        //   id: 5,
+        //   title: "All Ticket",
+        //   icon: <HiOutlineClipboardList />,
+        //   route: "/tickets/all-tickets",
+        // },
       ],
     },
     {
       id: 3,
       title: "Assets",
       route: "/assets",
+      icon: <AiOutlineProduct />,
       submenus: [
-        { id: 1, title: "Manage Assets", route: "/assets/manage" },
-        { id: 2, title: "My Assets", route: "/assets/my-assets" },
-        { id: 3, title: "Reports", route: "/assets/reports" },
+        {
+          id: 1,
+          title: "Manage Assets",
+          icon: <MdOutlineManageAccounts />,
+          route: "/assets/manage",
+        },
+        // {
+        //   id: 2,
+        //   title: "My Assets",
+        //   icon: <MdOutlineLocalCafe />,
+        //   route: "/assets/my-assets",
+        // },
+        {
+          id: 3,
+          title: "Reports",
+          icon: <TbReportSearch />,
+          route: "/assets/reports",
+        },
       ],
     },
   ];
@@ -235,7 +296,7 @@ const TestSide = () => {
     <div
       className={` ${
         isSidebarOpen ? "w-60" : "w-20"
-      } bg-white  border-gray-300 text-black flex flex-shrink-0 h-screen overflow-y-auto transition-all duration-300 z-[1]`}
+      } bg-white  border-gray-300 text-black flex flex-shrink-0 h-[90vh] overflow-y-auto transition-all duration-300 z-[1]`}
     >
       <div className="flex relative w-full">
         {/*Dashboard */}
@@ -428,7 +489,7 @@ const TestSide = () => {
                           onClick={() => navigate(module.route)}
                           className="flex items-center justify-center"
                         >
-                          <div className="flex justify-center w-6 text-2xl">
+                          <div className="flex justify-center w-full text-2xl">
                             {module.icon || <TbSection />}
                           </div>
                           <span className="pl-5">{module.title}</span>

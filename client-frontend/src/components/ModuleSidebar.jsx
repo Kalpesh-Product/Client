@@ -81,11 +81,11 @@ const ModuleSidebar = ({ mainSideBar }) => {
       route: "/frontend/themes",
       icon: <HiColorSwatch />,
     },
-    // {
-    //   title: "Updates",
-    //   route: "/frontend/updates",
-    //   icon: <GrDocumentUpdate />,
-    // },
+    {
+      title: "Updates",
+      route: "/frontend/updates",
+      icon: <GrDocumentUpdate />,
+    },
     // {
     //   title: "Budget",
     //   route: "/frontend/budget",
@@ -546,7 +546,7 @@ const ModuleSidebar = ({ mainSideBar }) => {
       <div
         className={`${
           isSidebarOpen ? "w-60" : "w-20"
-        } bg-white text-black flex-shrink-0 h-full sticky top-10 overflow-y-auto transition-all duration-300`}>
+        } bg-white text-black flex-shrink-0 h-[90vh] sticky top-10 overflow-y-auto transition-all duration-300`}>
         {/*Dashboard */}
         <div className="flex flex-col gap-2 mt-5 px-3 relative">
           {/* Title/Dashboard */}
