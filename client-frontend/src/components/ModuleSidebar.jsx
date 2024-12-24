@@ -206,18 +206,18 @@ const ModuleSidebar = ({ mainSideBar }) => {
       title: "Company Handbook",
       route: "/hr/company-handbook",
       icon: <HiCurrencyDollar />,
-      subMenus: [
-        {
-          title: "SOP",
-          route: "/hr/company-handbook/sop",
-          icon: <HiOutlineClipboardList />,
-        },
-        {
-          title: "Policies",
-          route: "/hr/company-handbook/policies",
-          icon: <HiOutlineClipboardList />,
-        },
-      ],
+      // subMenus: [
+      //   {
+      //     title: "SOP",
+      //     route: "/hr/company-handbook/sop",
+      //     icon: <HiOutlineClipboardList />,
+      //   },
+      //   {
+      //     title: "Policies",
+      //     route: "/hr/company-handbook/policies",
+      //     icon: <HiOutlineClipboardList />,
+      //   },
+      // ],
     },
     // {
     //   title: "SOP",
@@ -334,15 +334,15 @@ const ModuleSidebar = ({ mainSideBar }) => {
         //   route: "/it/tickets/my-tickets",
         //   icon: <HiOutlineClipboardList />,
         // },
-        ...(authUser.user.role === "Employee"
-          ? []
-          : [
-              {
-                title: "Members",
-                route: "/it/tickets/members",
-                icon: <MdOutlineManageAccounts />,
-              },
-            ]),
+        // ...(authUser.user.role === "Employee"
+        //   ? []
+        //   : [
+        //       {
+        //         title: "Members",
+        //         route: "/it/tickets/members",
+        //         icon: <MdOutlineManageAccounts />,
+        //       },
+        //     ]),
         // ...(authUser.user.role === "Master-Admin" ||
         // authUser.user.role === "Super-Admin"
         //   ? [

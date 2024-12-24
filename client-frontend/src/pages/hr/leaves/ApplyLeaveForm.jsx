@@ -19,22 +19,52 @@ import { motion } from "framer-motion";
 import { IoMdClose } from "react-icons/io";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import useAuth from "../../../hooks/useAuth";
 
-const SopCrud = () => {
+const ApplyLeaveForm = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { auth } = useAuth();
 
   const [highlightFirstRow, setHighlightFirstRow] = React.useState(false);
   const [highlightEditedRow, setHighlightEditedRow] = React.useState(false);
 
-  const [holidayName, setLeaveType] = useState(""); // State to track the selected option
+  const [leaveType, setLeaveType] = useState(""); // State to track the selected option
+
+  const [user, setUser] = useState("");
+  useEffect(() => {
+    const storedUser = JSON.parse(localStorage.getItem("user"));
+    setUser(storedUser);
+  }, []);
 
   const columns = [
-    { field: "id", headerName: "ID", width: 100 },
-    { field: "sopName", headerName: "SOP Name", width: 200 },
-    // { field: "agreement", headerName: "Agreement", width: 200 },
+    // { field: "id", headerName: "ID", width: 100 },
+    { field: "fromDate", headerName: "From Date", width: 200 },
+    { field: "toDate", headerName: "To Date", width: 200 },
+    { field: "leaveType", headerName: "Leave Type", width: 200 },
+    { field: "leavePeriod", headerName: "Leave Period", width: 200 },
+    { field: "hours", headerName: "Hours", width: 200 },
+    { field: "description", headerName: "Description", width: 200 },
+    {
+      field: "status",
+      headerName: "Status",
+      width: 150,
+      type: "singleSelect",
+      valueOptions: ["Approved", "Pending", "Rejected"],
+      cellRenderer: (params) => {
+        const statusColors = {
+          Approved: "text-blue-600 bg-blue-100",
+          Pending: "text-red-600 bg-red-100",
+          Rejected: "text-yellow-600 bg-yellow-100",
+        };
+        const statusClass = statusColors[params.value] || "";
+        return (
+          <span
+            className={`px-3 py-1 rounded-full text-sm font-medium ${statusClass}`}>
+            {params.value}
+          </span>
+        );
+      },
+    },
+    { field: "approvedBy", headerName: "Approved By", width: 200 },
     // {
     //   field: "priority",
     //   headerName: "Priority",
@@ -64,97 +94,32 @@ const SopCrud = () => {
     //   type: "singleSelect",
     //   valueOptions: ["IT", "HR", "Tech", "Admin"],
     // },
-    { field: "date", headerName: "Date Added", width: 150 },
+    // { field: "requestDate", headerName: "Request Date", width: 150 },
+
     // {
-    //   field: "status",
-    //   headerName: "Status",
-    //   width: 150,
-    //   type: "singleSelect",
-    //   valueOptions: ["Approved", "Pending", "Rejected"],
-    //   cellRenderer: (params) => {
-    //     const statusColors = {
-    //       Approved: "text-blue-600 bg-blue-100",
-    //       Pending: "text-red-600 bg-red-100",
-    //       Rejected: "text-yellow-600 bg-yellow-100",
-    //     };
-    //     const statusClass = statusColors[params.value] || "";
-    //     return (
-    //       <span
-    //         className={`px-3 py-1 rounded-full text-sm font-medium ${statusClass}`}>
-    //         {params.value}
-    //       </span>
-    //     );
-    //   },
-    // },
-    // {
-    //   field: "delete",
-    //   headerName: "Delete",
+    //   field: "approve",
+    //   headerName: "Approve",
     //   width: 170,
     //   // renderCell: (params) => (
     //   cellRenderer: (params) => (
     //     <Button
     //       size="small"
     //       // onClick={() => handleDelete(params.row)}
-    //       onClick={openDeleteTicket}
-    //       // onClick={handleDeleteTicket}
+    //       //   onClick={handleAccept}
     //       variant="contained"
     //       sx={{
-    //         backgroundColor: "blue",
+    //         backgroundColor: "green",
     //         color: "white",
     //         "&:hover": {
-    //           backgroundColor: "blue",
+    //           backgroundColor: "green",
     //         },
     //         padding: "4px 8px",
     //         borderRadius: "0.375rem",
     //       }}>
-    //       View Details
+    //       Approve
     //     </Button>
     //   ),
     // },
-    {
-      field: "actions",
-      headerName: "Actions",
-      width: 170,
-      // renderCell: (params) => (
-      cellRenderer: (params) => (
-        <div className="flex gap-4">
-          <Button
-            size="small"
-            // onClick={() => handleDelete(params.row)}
-            onClick={() => navigate("/hr/company-handbook/sop-details")}
-            // onClick={handleDeleteTicket}
-            variant="contained"
-            sx={{
-              backgroundColor: "blue",
-              color: "white",
-              "&:hover": {
-                backgroundColor: "blue",
-              },
-              padding: "4px 8px",
-              borderRadius: "0.375rem",
-            }}>
-            View Details
-          </Button>
-          {/* <Button
-            size="small"
-            // onClick={() => handleDelete(params.row)}
-            onClick={openDeleteTicket}
-            // onClick={handleDeleteTicket}
-            variant="contained"
-            sx={{
-              backgroundColor: "red",
-              color: "white",
-              "&:hover": {
-                backgroundColor: "red",
-              },
-              padding: "4px 8px",
-              borderRadius: "0.375rem",
-            }}>
-            Delete
-          </Button> */}
-        </div>
-      ),
-    },
     // {
     //   field: "reject",
     //   headerName: "Reject",
@@ -247,86 +212,107 @@ const SopCrud = () => {
   const allRows = [
     {
       id: 1,
-      sopName: "Work From Home SOP",
-      agreement: "Republic Day",
+      fromDate: "Dec 29 2024",
+      toDate: "Dec 29 2024",
+      leaveType: "Privileged Leave",
+      leavePeriod: "Single",
+      hours: "9.00",
       priority: "High",
+      description: "Privileged Leave",
+      createdBy: "Allan Silveira",
+
       status: "Pending",
-      department: "IT",
-      date: "2024-01-26",
+      approvedBy: "Abrar Shaikh",
     },
     {
-      id: 2,
-      sopName: "Yearly Leaves SOP",
-      agreement: "New Year",
-      priority: "Medium",
-      status: "Pending",
-      department: "HR",
-      date: "2024-01-01",
+      id: 1,
+      fromDate: "Dec 26 2024",
+      toDate: "Dec 26 2024",
+      leaveType: "Privileged Leave",
+      leavePeriod: "Partial",
+      hours: "4.00",
+      priority: "High",
+      description: "Laptop Repair",
+      createdBy: "Allan Silveira",
+      status: "Rejected",
+      approvedBy: "Abrar Shaikh",
     },
     {
-      id: 3,
-      sopName: "Transport Facilities SOP",
-      agreement: "Labor Day",
+      id: 1,
+      fromDate: "Dec 22 2024",
+      toDate: "Dec 22 2024",
+      leaveType: "Privileged Leave",
+      leavePeriod: "Partial",
+      hours: "3.00",
       priority: "High",
-      status: "Pending",
-      department: "Tech",
-      date: "2024-05-01",
+      description: "Family Function",
+      createdBy: "Allan Silveira",
+      status: "Approved",
+      approvedBy: "Abrar Shaikh",
     },
     // {
-    //   id: 4,
-    //   holidayName: "Independence Day",
-    //   priority: "Low",
-    //   status: "Pending",
-    //   department: "Admin",
-    //   date: "2024-08-15",
-    // },
-    // {
-    //   id: 5,
-    //   holidayName: "Gudi Padava",
+    //   id: 2,
+    //   leaveType: "Sick Leave",
     //   priority: "Medium",
     //   status: "Pending",
     //   department: "HR",
-    //   date: "2024-04-09",
+    //   requestDate: "2024-10-03",
     // },
     // {
-    //   id: 6,
-    //   holidayName: "Goa Liberation Day",
+    //   id: 3,
+    //   leaveType: "Sick Leave",
     //   priority: "High",
     //   status: "Pending",
-    //   department: "IT",
-    //   date: "2024-12-19",
-    // },
-    // {
-    //   id: 7,
-    //   holidayName: "Ganesh Chaturthi",
-    //   priority: "Low",
-    //   status: "Pending",
     //   department: "Tech",
-    //   date: "2024-09-07",
+    //   requestDate: "2024-10-05",
     // },
     // {
-    //   id: 8,
-    //   holidayName: "Gandhi Jayanti",
+    //   id: 4,
+    //   leaveType: "Sick Leave",
     //   priority: "Low",
     //   status: "Pending",
     //   department: "Admin",
-    //   date: "2024-10-02",
+    //   requestDate: "2024-10-06",
+    // },
+    // {
+    //   id: 5,
+    //   leaveType: "Sick Leave",
+    //   priority: "Medium",
+    //   status: "Pending",
+    //   department: "HR",
+    //   requestDate: "2024-10-07",
+    // },
+    // {
+    //   id: 6,
+    //   leaveType: "Sick Leave",
+    //   priority: "High",
+    //   status: "Pending",
+    //   department: "IT",
+    //   requestDate: "2024-10-08",
+    // },
+    // {
+    //   id: 7,
+    //   leaveType: "Sick Leave",
+    //   priority: "Low",
+    //   status: "Pending",
+    //   department: "Tech",
+    //   requestDate: "2024-10-09",
+    // },
+    // {
+    //   id: 8,
+    //   leaveType: "Sick Leave",
+    //   priority: "Low",
+    //   status: "Pending",
+    //   department: "Admin",
+    //   requestDate: "2024-10-10",
     // },
     // {
     //   id: 9,
-    //   holidayName: "Feast of St. Francis Xavier",
+    //   leaveType: "Sick Leave",
     //   priority: "Medium",
     //   status: "Pending",
     //   department: "IT",
-    //   date: "2024-12-03",
-    // },
-    // {
-    //   id: 9,
-    //   holidayName: "Eid Al-Fitr",
-    //   priority: "Medium",
-    //   status: "Pending",
-    //   department: "IT",
-    //   date: "2024-04-11",
+    //   requestDate: "2024-10-11",
     // },
   ];
 
@@ -347,40 +333,45 @@ const SopCrud = () => {
 
   // Handlers for the buttons
   // const handleViewDetails = (row) => {
-  //   alert(`Viewing details for: ${row.holidayName}`);
+  //   alert(`Viewing details for: ${row.leaveType}`);
   // };
 
   // const handleEdit = (row) => {
-  //   alert(`Editing ticket: ${row.holidayName}`);
+  //   alert(`Editing ticket: ${row.leaveType}`);
   // };
 
   // const handleDelete = (row) => {
   //   if (
   //     window.confirm(
-  //       `Are you sure you want to delete ticket: ${row.holidayName}?`
+  //       `Are you sure you want to delete ticket: ${row.leaveType}?`
   //     )
   //   ) {
-  //     alert(`Deleted ticket: ${row.holidayName}`);
+  //     alert(`Deleted ticket: ${row.leaveType}`);
   //   }
   // };
 
   const csvHeaders = [
     { label: "ID", key: "id" },
-    { label: "Ticket Title", key: "holidayName" },
+    { label: "Ticket Title", key: "leaveType" },
     { label: "Priority", key: "priority" },
     { label: "Department", key: "department" },
-    { label: "Request Date", key: "date" },
+    { label: "Request Date", key: "requestDate" },
   ];
 
   const newTicket = {
     id: rows.length + 1,
-    sopName: "New Test SOP",
-    agreement: "Republic Day",
+    fromDate: "Dec 30 2024",
+    toDate: "Dec 30 2024",
+    leaveType: "Privileged Leave",
+    leavePeriod: "Single",
+    hours: "9.00",
     priority: "High",
-    status: "Pending",
-    department: "IT",
+    description: "Privileged Leave",
+    createdBy: "Allan Silveira",
 
-    date: new Date().toISOString().split("T")[0], // Today's date
+    status: "Pending",
+    approvedBy: "Kalpesh Naik",
+    requestDate: new Date().toISOString().split("T")[0], // Today's date
   };
 
   // ADD TICKET MODAL START
@@ -399,8 +390,9 @@ const SopCrud = () => {
   // };
   const handleAddTicket = (newTicket) => {
     setRows((prevRows) => [newTicket, ...prevRows]); // Update the state
-    toast.success("Added a new SOP.");
+    toast.success("Applied for a new leave.");
     closeModal(); // Optionally close the modal after the alert
+    navigate("/hr/leaves/my-leaves");
   };
 
   // ADD TICKET MODAL END
@@ -449,13 +441,13 @@ const SopCrud = () => {
   const closeDeleteTicket = () => setIsDeleteTicketOpen(false);
 
   const handleDeleteTicket = () => {
-    // setHighlightFirstRow(true); // Highlight the first row after editing a ticket
-    toast.success("SOP Deleted");
+    setHighlightFirstRow(true); // Highlight the first row after editing a ticket
+    toast.success("Ticket Deleted");
     closeDeleteTicket(); // Optionally close the modal after the alert
   };
   // EDIT TICKET DETAILS MODAL END
 
-  const steps = ["Add SOP", "Verify Details"];
+  const steps = ["Apply Leave", "Verify Details"];
 
   const handleNextStep = (handleNext) => {
     // e.preventDefault();
@@ -463,112 +455,102 @@ const SopCrud = () => {
   };
 
   return (
-    <div className="w-[72vw] md:w-full transition-all duration-200 ease-in-out bg-white p-2 rounded-md">
-      {/* <div className="bg-green-500">
-        <h2>Today's Tickets</h2>
-      </div> */}
+    <div className="w-full md:w-full transition-all duration-200 ease-in-out  p-2 pb-0 pt-10 rounded-md">
+      <div className="flex gap-4  justify-center w-full">
+        <div className="bg-white  w-full rounded-lg z-10 relative overflow-y-auto max-h-[80vh]">
+          {/* Modal Content */}
 
-      {/* <div>
-        <h2 className="text-lg">Today's Tickets</h2>
-        <br />
-      </div> */}
-
-      {/* <div className="mb-2 flex justify-between">
-        <h1 className="text-3xl"></h1>
-        <button
-          onClick={openModal}
-          className="px-6 py-2 rounded-lg text-white wono-blue-dark hover:bg-[#3cbce7] transition-shadow shadow-md hover:shadow-lg active:shadow-inner">
-          Raise Ticket
-        </button>
-      </div> */}
-
-      <div className="flex gap-4 mb-4 justify-between">
-        {/* <div className="pt-2">Filter :</div> */}
-        <div>
-          {/* <FormControl size="small" style={{ minWidth: 220 }}>
-            <TextField
-              label="Filter by department"
-              variant="outlined"
-              select
-              size="small"
-              onChange={handleChange}
-              value={department}
-              sx={{ fontSize: "0.5rem" }}>
-              <MenuItem value="">All</MenuItem>
-              <MenuItem value="IT">IT</MenuItem>
-              <MenuItem value="HR">HR</MenuItem>
-              <MenuItem value="Tech">Tech</MenuItem>
-              <MenuItem value="Admin">Admin</MenuItem>
-            </TextField>
-          </FormControl> */}
-        </div>
-        {/* <div className=" flex">
-          <CSVLink
-            data={filteredRows} // Pass the filtered rows for CSV download
-            headers={csvHeaders} // Pass the CSV headers
-            filename="tickets_report.csv" // Set the filename for the CSV file
-            className="wono-blue-dark hover:bg-blue-700 text-white text-sm font-bold py-2 px-4 rounded h-9 mt-2">
-            Export Report
-          </CSVLink>
-        </div> */}
-
-        {/* <div className=" flex">
-          <div className="mb-2 flex justify-between">
-            <h1 className="text-3xl"></h1>
-            <button
-              onClick={openModal}
-              className="px-6 py-2 rounded-lg text-white wono-blue-dark hover:bg-[#3cbce7] transition-shadow shadow-md hover:shadow-lg active:shadow-inner">
-              Raise Ticket
-            </button>
+          {/* Modal Header */}
+          <div>
+            <h2 className="text-3xl font-bold mb-4 text-center">
+              Apply For Leave
+            </h2>
           </div>
-        </div> */}
 
-        {/* {!auth.user.department.find((dept) => dept.name === "Finance") && (
-          <div className="flex">
-            <div className="mb-2 flex justify-between">
-              <h1 className="text-3xl"></h1>
-              <button
-                onClick={openModal}
-                className="px-6 py-2 rounded-lg text-white wono-blue-dark hover:bg-[#3cbce7] transition-shadow shadow-md hover:shadow-lg active:shadow-inner">
-                + Add SOP
-              </button>
+          {/* Modal Body START */}
+          <div className=" w-full">
+            {/* <div>AddT icket Form</div> */}
+            <div className="">
+              <div className=" mx-auto">
+                <Box
+                  sx={{
+                    Width: "100%",
+                    // paddingY: 3,
+                    bgcolor: "background.paper",
+                    borderRadius: 2,
+                  }}
+                  className="bg-white pt-3 pb-10 rounded-lg w-full">
+                  {/* <div className="grid grid-cols-1 gap-4"> */}
+                  <div className="w-full  flex justify-between items-center gap-4">
+                    <div className="w-full">
+                      <FormControl fullWidth>
+                        <InputLabel id="leave-type-select-label">
+                          Leave Type
+                        </InputLabel>
+                        <Select
+                          labelId="leave-type-select-label"
+                          id="leave-type-select"
+                          // value={department}
+                          label="Department"
+                          // onChange={handleChange}
+                        >
+                          <MenuItem value="Sick Leave">Sick Leave</MenuItem>
+                          <MenuItem value="Casual Leave">Casual Leave</MenuItem>
+                          <MenuItem value="Privileged Leave">
+                            Privileged Leave
+                          </MenuItem>
+                          {/* <MenuItem value="Admin">Admin</MenuItem> */}
+                        </Select>
+                      </FormControl>
+                    </div>
+                    <div className="w-full">
+                      <FormControl fullWidth>
+                        <LocalizationProvider dateAdapter={AdapterDayjs}>
+                          <DatePicker
+                            label="Date"
+                            sx={{ width: "100%" }}
+                            format="DD/MM/YYYY" // Display format in the DatePicker
+                            renderInput={(params) => (
+                              <TextField {...params} className="w-full" />
+                            )}
+                          />
+                        </LocalizationProvider>
+                      </FormControl>
+                    </div>
+                    <div className="sticky bottom-0 bg-white py-6 z-20 flex justify-center w-[200px]">
+                      <div className="flex justify-center items-center w-full">
+                        <button
+                          className="wono-blue-dark text-white py-2 px-4 rounded-md hover:bg-blue-600 w-full"
+                          // onClick={handleAddTicket}>
+                          // onClick={() => handleNextStep(handleNext)}
+                          onClick={() => handleAddTicket(newTicket)}>
+                          Apply
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </Box>
+              </div>
             </div>
           </div>
-        )} */}
-      </div>
+          {/* Modal Body END */}
 
-      {/* Tickets datatable START */}
+          {/* Modal Footer */}
 
-      {/* <DataGrid
-          rows={filteredRows}
-          columns={columns}
-          initialState={{ pagination: { paginationModel } }}
-          pageSizeOptions={[5, 10]}
-          sx={{ border: 0, width: "75vw" }}
-        /> */}
-
-      {/* <AgTable data={filteredRows} columns={columns} highlightFirstRow={true} /> */}
-      {/* <AgTable
-        data={filteredRows}
-        columns={columns}
-        highlightFirstRow={false}
-      /> */}
-
-      <AgTable
-        data={rows} // Use the state here
-        columns={columns}
-        highlightFirstRow={highlightFirstRow} // Bind the state here
-        highlightEditedRow={highlightEditedRow} // Bind the state here
-      />
-
-      {/* {location.pathname === "/customer/tickets/my-tickets" && (
-        <div>
-          <br />
-          <br />
-          <br />
-          <br />
+          {/* <div className="sticky bottom-0 bg-white py-6 z-20 flex justify-center">
+            <div className="flex justify-center items-center w-full">
+              <button
+                className="wono-blue-dark text-white py-2 px-4 rounded-md hover:bg-blue-600 w-full"
+                // onClick={handleAddTicket}>
+                // onClick={() => handleNextStep(handleNext)}
+              >
+                Next
+              </button>
+            </div>
+          </div> */}
+          {/* Close button */}
         </div>
-      )} */}
+      </div>
 
       {/* Tickets datatable END */}
 
@@ -628,58 +610,36 @@ const SopCrud = () => {
                               {/* <h2 className="text-lg font-semibold mb-4">Add Ticket</h2> */}
                               <div className="grid grid-cols-1 gap-4">
                                 {/* Name, Mobile, Email, DOB fields */}
-                                {/* <div className="grid grid-cols-1 gap-4">
+                                <div className="grid grid-cols-1 gap-4">
                                   <FormControl fullWidth>
-                                    <InputLabel id="select-employee-label">
-                                      Select Employee
+                                    <InputLabel id="leave-type-select-label">
+                                      Leave Type
                                     </InputLabel>
                                     <Select
-                                      labelId="select-employee-label"
-                                      id="select-employee"
+                                      labelId="leave-type-select-label"
+                                      id="leave-type-select"
                                       // value={department}
                                       label="Department"
                                       // onChange={handleChange}
                                     >
-                                      <MenuItem value="Kalpesh Naik">
-                                        Kalpesh Naik
+                                      <MenuItem value="Sick Leave">
+                                        Sick Leave
                                       </MenuItem>
-                                      <MenuItem value="Allan Silveira">
-                                        Allan Silveira
+                                      <MenuItem value="Casual Leave">
+                                        Casual Leave
                                       </MenuItem>
-                                      <MenuItem value="Aiwinraj KS">
-                                        Aiwinraj KS
+                                      <MenuItem value="Privileged Leave">
+                                        Privileged Leave
                                       </MenuItem>
+                                      {/* <MenuItem value="Admin">Admin</MenuItem> */}
                                     </Select>
                                   </FormControl>
-                                </div> */}
+                                </div>
                                 <div className="grid grid-cols-1 gap-4">
-                                  <TextField
-                                    label="SOP Name"
-                                    // value={newEvent.name}
-                                    // onChange={(e) =>
-                                    //   setnewEvent({ ...newEvent, name: e.target.value })
-                                    // }
-                                    fullWidth
-                                  />
-                                </div>
-                                <div>
-                                  <label
-                                    htmlFor="room-image"
-                                    className="block text-sm font-medium text-gray-700">
-                                    Upload SOP
-                                  </label>
-                                  <input
-                                    id="room-image"
-                                    type="file"
-                                    name="image"
-                                    accept="pdf/*"
-                                    // onChange={handleChange}
-                                    className="border-none mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
-                                  />
-                                </div>
-                                {/* <div className="grid grid-cols-1 gap-4">
                                   <FormControl fullWidth>
-                                  
+                                    {/* <InputLabel id="suggestion-select-label">
+                                      Ticket Title
+                                    </InputLabel> */}
                                     <LocalizationProvider
                                       dateAdapter={AdapterDayjs}>
                                       <DatePicker
@@ -704,8 +664,8 @@ const SopCrud = () => {
                                       />
                                     </LocalizationProvider>
                                   </FormControl>
-                                </div> */}
-                                {holidayName === "Other" && (
+                                </div>
+                                {leaveType === "Other" && (
                                   <div className="grid grid-cols-1 gap-4">
                                     <TextField
                                       label="Specify"
@@ -779,16 +739,16 @@ const SopCrud = () => {
                       </h1>
                       <div>
                         <div className="flex justify-between py-2 border-b">
-                          <h1 className="font-semibold">SOP Name</h1>
-                          <span>New Test SOP</span>
+                          <h1 className="font-semibold">Leave Type</h1>
+                          <span>Privileged Leave</span>
                         </div>
                       </div>
-                      {/* <div>
+                      <div>
                         <div className="flex justify-between py-2 border-b">
                           <h1 className="font-semibold">Date</h1>
-                          <span>07/12/2024</span>
+                          <span>Dec 30 2024</span>
                         </div>
-                      </div> */}
+                      </div>
                       <div className="pt-8 pb-4">
                         {/* <p>details</p> */}
 
@@ -1063,7 +1023,7 @@ const SopCrud = () => {
             <div className="sticky top-0 bg-white py-6 z-20 flex justify-between">
               <div>
                 <h2 className="text-3xl font-bold mb-4 uppercase">
-                  Delete SOP
+                  Delete Ticket
                 </h2>
               </div>
               <div>
@@ -1090,7 +1050,7 @@ const SopCrud = () => {
               <div className="">
                 <div className=" mx-auto">
                   <h1 className="text-xl text-center my-2 font-bold">
-                    Are you sure you want to delete the SOP?
+                    Are you sure you want to delete the ticket?
                   </h1>
                   <Box
                     sx={{
@@ -1106,7 +1066,7 @@ const SopCrud = () => {
                     <div className="grid grid-cols-1 gap-4">
                       {/* Name, Mobile, Email, DOB fields */}
 
-                      {/* <div className="grid grid-cols-1 gap-4">
+                      <div className="grid grid-cols-1 gap-4">
                         <TextField
                           label="Reason for deleting"
                           // value={newEvent.name}
@@ -1116,7 +1076,7 @@ const SopCrud = () => {
                           // }
                           fullWidth
                         />
-                      </div> */}
+                      </div>
                     </div>
 
                     {/* Role & Department fields */}
@@ -1173,4 +1133,4 @@ const SopCrud = () => {
   );
 };
 
-export default SopCrud;
+export default ApplyLeaveForm;

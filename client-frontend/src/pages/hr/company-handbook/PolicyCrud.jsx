@@ -135,7 +135,7 @@ const PolicyCrud = () => {
             }}>
             View Details
           </Button>
-          <Button
+          {/* <Button
             size="small"
             // onClick={() => handleDelete(params.row)}
             onClick={openDeleteTicket}
@@ -151,7 +151,7 @@ const PolicyCrud = () => {
               borderRadius: "0.375rem",
             }}>
             Delete
-          </Button>
+          </Button> */}
         </div>
       ),
     },
@@ -523,7 +523,7 @@ const PolicyCrud = () => {
           </div>
         </div> */}
 
-        {!auth.user.department.find((dept) => dept.name === "Finance") && (
+        {/* {!auth.user.department.find((dept) => dept.name === "Finance") && (
           <div className="flex">
             <div className="mb-2 flex justify-between">
               <h1 className="text-3xl"></h1>
@@ -534,7 +534,7 @@ const PolicyCrud = () => {
               </button>
             </div>
           </div>
-        )}
+        )} */}
       </div>
 
       {/* Tickets datatable START */}
