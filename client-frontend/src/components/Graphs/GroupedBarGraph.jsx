@@ -16,7 +16,7 @@ export default function GroupedBarGraph({
   datasets,
   graphWidth,
   graphHeight,
-  title
+  title,
 }) {
   // Prepare data for Chart.js
   const chartData = {
@@ -27,9 +27,9 @@ export default function GroupedBarGraph({
       backgroundColor:
         dataset.label === "Utilised"
           ? dataset.data.map((value) =>
-              value > 100 ? "rgb(255,145,169)" : "rgb(2,178,175)"
+              value > 100 ? "rgba(255, 0, 0, 1)" : "rgba(150, 255, 100, 1)"
             ) // Dynamic coloring for Utilised
-          : "rgb(114,190,241)", // Default color for Allocated
+          :  "rgba(0, 255, 0, 1)", // Default color for Allocated
     })),
   };
 
@@ -38,7 +38,7 @@ export default function GroupedBarGraph({
     maintainAspectRatio: false,
     scales: {
       x: {
-        stacked: false, // Set to true if you want stacking
+        stacked: true, // Set to true if you want stacking
         ticks: {
           font: {
             family: "Popins-Regular", // Custom font for x-axis
@@ -107,8 +107,8 @@ export default function GroupedBarGraph({
       legend: {
         display: true,
         labels: {
-          font : {
-            family: "Popins-Regular", 
+          font: {
+            family: "Popins-Regular",
           },
           generateLabels: (chart) => {
             return [
@@ -132,7 +132,10 @@ export default function GroupedBarGraph({
   };
 
   return (
-    <div className="p-4 pb-8" style={{ width: graphWidth, height: graphHeight }}>
+    <div
+      className="p-4 pb-8"
+      style={{ width: graphWidth, height: graphHeight }}
+    >
       <div>
         <h1 className="font-semibold text-2xl">{title}</h1>
       </div>
