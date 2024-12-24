@@ -110,12 +110,12 @@ const TestSide = () => {
           icon: <MdOutlineLocalCafe />,
           route: "/tickets/view-tickets",
         },
-        {
-          id: 3,
-          title: "Members",
-          icon: <MdOutlineManageAccounts />,
-          route: "/tickets/members",
-        },
+        // {
+        //   id: 3,
+        //   title: "Members",
+        //   icon: <MdOutlineManageAccounts />,
+        //   route: "/tickets/members",
+        // },
         {
           id: 4,
           title: "Ticket Reports",
@@ -296,8 +296,7 @@ const TestSide = () => {
     <div
       className={` ${
         isSidebarOpen ? "w-60" : "w-20"
-      } bg-white  border-gray-300 text-black flex flex-shrink-0 h-[90vh] overflow-y-auto transition-all duration-300 z-[1]`}
-    >
+      } bg-white  border-gray-300 text-black flex flex-shrink-0 h-[90vh] overflow-y-auto transition-all duration-300 z-[1]`}>
       <div className="flex relative w-full">
         {/*Dashboard */}
         <div className="mt-5 px-3 flex flex-col gap-2 w-full">
@@ -312,8 +311,7 @@ const TestSide = () => {
                 location.pathname === "/dashboard"
                   ? "wono-blue border-r-4 border-[#0DB4EA] rounded-tl-md rounded-bl-md text-[#0DB4EA]"
                   : "bg-white"
-              }`}
-            >
+              }`}>
               <div className="flex justify-center w-6 text-2xl">
                 <RiDashboardLine />
               </div>
@@ -333,8 +331,7 @@ const TestSide = () => {
                   navigate(filteredDepartments[0].route, {
                     state: { departmentName: filteredDepartments[0].name },
                   });
-                }}
-              >
+                }}>
                 <div className="flex justify-center w-6 text-[1.3rem]">
                   {filteredDepartments[0].icon}
                 </div>
@@ -357,8 +354,7 @@ const TestSide = () => {
                     location.pathname === "/:department"
                       ? "wono-blue rounded-md wono-blue-text"
                       : "bg-white"
-                  }`}
-                >
+                  }`}>
                   {isSidebarOpen ? (
                     <div className="flex items-center justify-center">
                       <div className="flex justify-center w-6 text-2xl">
@@ -379,8 +375,7 @@ const TestSide = () => {
                       stroke="currentColor"
                       className={`w-4 h-4 ml-3 transform ${
                         isDepartmentsOpen ? "rotate-180" : ""
-                      }`}
-                    >
+                      }`}>
                       <path
                         strokeLinecap="round"
                         strokeLinejoin="round"
@@ -397,8 +392,7 @@ const TestSide = () => {
                   <ul
                     className={`cursor-pointer ${
                       isSidebarOpen ? "px-3" : "px-0"
-                    }`}
-                  >
+                    }`}>
                     {filteredDepartments.map((dept, index) => (
                       <Tooltip title={dept.name} placement="right" key={index}>
                         <div
@@ -408,8 +402,7 @@ const TestSide = () => {
                               state: { departmentName: dept.name },
                             });
                           }}
-                          className={`flex items-center border-b-[1px] py-3 gap-3 hover:wono-blue-dark pl-[1rem] hover:text-white hover:rounded-md`}
-                        >
+                          className={`flex items-center border-b-[1px] py-3 gap-3 hover:wono-blue-dark pl-[1rem] hover:text-white hover:rounded-md`}>
                           <div className="flex justify-center w-6 text-[1.3rem]">
                             {dept.icon}
                           </div>
@@ -438,8 +431,7 @@ const TestSide = () => {
                   location.pathname === item.route
                     ? "wono-blue border-r-4 border-b-[0px]  border-[#0DB4EA] rounded-tl-md rounded-bl-md text-[#0DB4EA]"
                     : "bg-white"
-                } `}
-              >
+                } `}>
                 {/* <img src={item.icon} alt={item.name} className="w-6 h-6 mr-3" /> */}
                 <div className="flex justify-center w-6 text-[1.3rem]">
                   {item.icon}
@@ -458,8 +450,7 @@ const TestSide = () => {
                 {module.submenus.length === 1 ? (
                   <div
                     className={`flex items-center border-b-[1px] py-3 gap-3 hover:wono-blue-dark pl-[1rem] hover:text-white hover:rounded-md cursor-pointer`}
-                    onClick={() => navigate(module.submenus[0].route)}
-                  >
+                    onClick={() => navigate(module.submenus[0].route)}>
                     <div className="flex justify-center w-6 text-[1.3rem]">
                       {module.icon || <TbSection />} {/* Icon placeholder */}
                     </div>
@@ -482,13 +473,11 @@ const TestSide = () => {
                         location.pathname === module.route
                           ? "wono-blue rounded-md wono-blue-text"
                           : "bg-white"
-                      }`}
-                    >
+                      }`}>
                       {isSidebarOpen ? (
                         <div
                           onClick={() => navigate(module.route)}
-                          className="flex items-center justify-center"
-                        >
+                          className="flex items-center justify-center">
                           <div className="flex justify-center w-full text-2xl">
                             {module.icon || <TbSection />}
                           </div>
@@ -505,8 +494,7 @@ const TestSide = () => {
                           stroke="currentColor"
                           className={`w-4 h-4 ml-3 transform ${
                             expandedMenu === moduleIndex ? "rotate-180" : ""
-                          }`}
-                        >
+                          }`}>
                           <path
                             strokeLinecap="round"
                             strokeLinejoin="round"
@@ -523,14 +511,12 @@ const TestSide = () => {
                       <ul
                         className={`cursor-pointer ${
                           isSidebarOpen ? "px-3" : "px-0"
-                        }`}
-                      >
+                        }`}>
                         {module.submenus.map((submenu, index) => (
                           <li
                             key={index}
                             onClick={() => navigate(submenu.route)}
-                            className={`flex items-center border-b-[1px] py-3 gap-3 hover:wono-blue-dark pl-[1rem] hover:text-white hover:rounded-md cursor-pointer`}
-                          >
+                            className={`flex items-center border-b-[1px] py-3 gap-3 hover:wono-blue-dark pl-[1rem] hover:text-white hover:rounded-md cursor-pointer`}>
                             <div className="flex justify-center w-6 text-[1.3rem]">
                               {submenu.icon || <TbSection />}{" "}
                               {/* Icon placeholder */}
@@ -561,8 +547,7 @@ const TestSide = () => {
                 location.pathname === "/profile"
                   ? "wono-blue border-r-4 border-[#0DB4EA] rounded-tl-md rounded-bl-md text-[#0DB4EA]"
                   : "bg-white"
-              }`}
-            >
+              }`}>
               <div className="flex justify-center w-6 text-2xl">
                 <CgProfile />
               </div>
@@ -577,12 +562,10 @@ const TestSide = () => {
             isSidebarOpen ? "justify-end" : "justify-center "
           } items-center  bg-white text-black cursor-pointer fixed top-[6.8rem] ${
             isSidebarOpen ? "left-[14.3rem]" : "left-[4rem]"
-          } transition-all duration-300 rounded-md`}
-        >
+          } transition-all duration-300 rounded-md`}>
           <button
             onClick={toggleSidebar}
-            className="text-black text-[0.8rem] p-2 focus:outline-none text-end"
-          >
+            className="text-black text-[0.8rem] p-2 focus:outline-none text-end">
             {isSidebarOpen ? <FaArrowLeft /> : <FaArrowRightToBracket />}
           </button>
         </div>
