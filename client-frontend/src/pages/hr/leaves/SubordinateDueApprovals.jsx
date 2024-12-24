@@ -64,7 +64,7 @@ const SubordinateDueApprovals = () => {
         );
       },
     },
-    { field: "approvedBy", headerName: "Approved By", width: 200 },
+    // { field: "approvedBy", headerName: "Approved By", width: 200 },
     // {
     //   field: "priority",
     //   headerName: "Priority",
@@ -96,30 +96,48 @@ const SubordinateDueApprovals = () => {
     // },
     // { field: "requestDate", headerName: "Request Date", width: 150 },
 
-    // {
-    //   field: "approve",
-    //   headerName: "Approve",
-    //   width: 170,
-    //   // renderCell: (params) => (
-    //   cellRenderer: (params) => (
-    //     <Button
-    //       size="small"
-    //       // onClick={() => handleDelete(params.row)}
-    //       //   onClick={handleAccept}
-    //       variant="contained"
-    //       sx={{
-    //         backgroundColor: "green",
-    //         color: "white",
-    //         "&:hover": {
-    //           backgroundColor: "green",
-    //         },
-    //         padding: "4px 8px",
-    //         borderRadius: "0.375rem",
-    //       }}>
-    //       Approve
-    //     </Button>
-    //   ),
-    // },
+    {
+      field: "actions",
+      headerName: "Actions",
+      width: 170,
+      // renderCell: (params) => (
+      cellRenderer: (params) => (
+        <div className="flex gap-2">
+          <Button
+            size="small"
+            // onClick={() => handleDelete(params.row)}
+            //   onClick={handleAccept}
+            variant="contained"
+            sx={{
+              backgroundColor: "green",
+              color: "white",
+              "&:hover": {
+                backgroundColor: "green",
+              },
+              padding: "4px 8px",
+              borderRadius: "0.375rem",
+            }}>
+            Approve
+          </Button>
+          <Button
+            size="small"
+            // onClick={() => handleDelete(params.row)}
+            //   onClick={handleAccept}
+            variant="contained"
+            sx={{
+              backgroundColor: "#EF4444",
+              color: "white",
+              "&:hover": {
+                backgroundColor: "#DC2626",
+              },
+              padding: "4px 8px",
+              borderRadius: "0.375rem",
+            }}>
+            Reject
+          </Button>
+        </div>
+      ),
+    },
     // {
     //   field: "reject",
     //   headerName: "Reject",
