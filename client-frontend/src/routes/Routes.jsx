@@ -31,6 +31,7 @@ import AuthLayout from "../layouts/AuthLayout";
 import Assets from "../pages/cms/asset/Assets";
 import Tickets from "../pages/cms/tickets/Tickets";
 import RoomBookings from "../pages/cms/room-booking/RoomBookings";
+import TestPageAllan from "../pages/TestPageAllan";
 
 const router = createBrowserRouter([
   {
@@ -390,6 +391,10 @@ const router = createBrowserRouter([
               {
                 path: "/chat",
                 element: <ChatPage />,
+              },
+              {
+                path: "/test",
+                element: <TestPageAllan />,
               },
               {
                 path: "/it/tickets",
