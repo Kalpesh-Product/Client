@@ -56,7 +56,6 @@ const ClientHeader = () => {
         {/* Navigation Links */}
         <nav className="flex justify-start py-0 items-center">
           {/* Avatar Menu Trigger */}
-          {isRunning ? <h1 className="text-white">{timer}</h1> : ""}
           <IconButton onClick={handleMenuOpen} sx={{ py: 0 }}>
             <Avatar
               className="wono-blue-dark"
@@ -69,9 +68,11 @@ const ClientHeader = () => {
                   setAnchorEl(null);
                 }}
                 variant="h6"
-                sx={{ px: 2, py: "0", color: "white" }}>
+                sx={{ px: 2, py: "0", color: "white" }}
+              >
                 {authUser.user.name}
               </Typography>
+              {isRunning ? <p className="text-white text-sm">{timer}</p> : ""}
             </div>
           </IconButton>
 
@@ -87,20 +88,23 @@ const ClientHeader = () => {
             transformOrigin={{
               vertical: "top",
               horizontal: "center",
-            }}>
+            }}
+          >
             <div className="py-0">
               <MenuItem
                 onClick={() => {
                   navigate("/landing");
                   setAnchorEl(null);
-                }}>
+                }}
+              >
                 <Typography>Home</Typography>
               </MenuItem>
               <MenuItem
                 onClick={() => {
                   handleLogout();
                   handleMenuClose();
-                }}>
+                }}
+              >
                 <Typography>Logout</Typography>
               </MenuItem>
             </div>
@@ -121,7 +125,8 @@ const ClientHeader = () => {
             />
             <button
               onClick={() => setIsModalOpen(false)}
-              className="mt-4 w-full bg-red-500 text-white py-2 rounded-lg hover:bg-red-600">
+              className="mt-4 w-full bg-red-500 text-white py-2 rounded-lg hover:bg-red-600"
+            >
               Close
             </button>
           </div>

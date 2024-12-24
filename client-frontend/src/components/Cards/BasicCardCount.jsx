@@ -1,11 +1,21 @@
 import React from "react";
 
-const BasicCardCount = ({ title, data, theme, subText, titleSize }) => {
+const BasicCardCount = ({
+  title,
+  data,
+  theme,
+  subText,
+  titleSize,
+  onClick,
+  dataStyling,
+}) => {
   return (
-    <div>
+    <div onClick={onClick} className={`bg-${theme} rounded-md`}>
       <div className="p-4 flex justify-between">
         <div>
-          <p className="text-5xl font-bold">{data}</p>
+          <p className={dataStyling ? dataStyling : "text-5xl font-bold"}>
+            {data}
+          </p>
         </div>
         <div className={`bg-${theme} text-center flex flex-col`}>
           <h1 className={` font-semibold ${titleSize ? titleSize : "text-xl"}`}>

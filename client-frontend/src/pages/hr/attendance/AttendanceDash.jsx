@@ -94,25 +94,6 @@ const AttendanceDash = () => {
         <EmployeeAttandanceSummary />
         <CheckInOutData />
         <ShiftTimeUseage/>
-
-        <div className="grid gap-4" style={{ gridTemplateColumns: "18% 1fr" }}>
-          <div className="w-full flex flex-col gap-4">
-            <AttendanceRateWidget attendanceRate={95} increasePercentage={10} />
-            {/* Monthly Attendance Overview Widget */}
-            <MonthlyAttendanceOverviewWidget
-              totalDays={monthlyOverview.totalDays}
-              daysPresent={monthlyOverview.daysPresent}
-              attendanceRate={monthlyOverview.attendanceRate}
-            />
-          </div>
-
-          {/* Shift Schedule Widget */}
-          <ShiftScheduleWidget schedule={shiftSchedule} />
-        </div>
-        <div className="flex w-full">
-          {/* Employee Attendance Widget */}
-          <EmployeeAttendance data={employeeData} />
-        </div>
       </div>
     </div>
   );

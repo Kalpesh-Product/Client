@@ -1,16 +1,14 @@
 import React, { useState } from "react";
+import BasicCardCount from "../../../../components/Cards/BasicCardCount";
 import { useNavigate } from "react-router-dom";
 import {
   FormControl,
   InputLabel,
   Select,
   MenuItem,
-  Card,
-  CardContent,
-  Typography,
 } from "@mui/material";
 
-const EmployeeAttandanceSummary = () => {
+const EmployeeAttendanceSummary = () => {
   const [timeFilter, setTimeFilter] = useState("today");
   const navigate = useNavigate();
 
@@ -43,17 +41,15 @@ const EmployeeAttandanceSummary = () => {
     <div className="p-4 flex flex-col gap-2">
       {/* Dropdown Filter */}
       <FormControl
-        variant="outlined"
         size="small"
-        className="w-48 mb-4 bg-white"
+        className="w-56 mb-4 bg-white self-end"
       >
-        <InputLabel id="time-filter-label">Filter</InputLabel>
         <Select
           labelId="time-filter-label"
           id="time-filter"
-          label="Filter"
           value={timeFilter}
           onChange={handleFilterChange}
+          displayEmpty
         >
           <MenuItem value="today">Today</MenuItem>
           <MenuItem value="month">This Month</MenuItem>
@@ -62,45 +58,38 @@ const EmployeeAttandanceSummary = () => {
       </FormControl>
 
       {/* Dashboard Widgets */}
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-3 cursor-pointer" onClick={() => navigate("/hr/attandence/shift-time-usage")}>
+      <div
+        className="grid grid-cols-1 gap-4 md:grid-cols-3 cursor-pointer"
+        onClick={() => navigate("/hr/attandence/shift-time-usage")}
+      >
         {/* Employees Present */}
-        <Card className="shadow-lg">
-          <CardContent>
-            <Typography variant="h6" className="mb-2">
-              Employees Present
-            </Typography>
-            <Typography variant="h3" className="text-green-500">
-              {present}
-            </Typography>
-          </CardContent>
-        </Card>
+        <BasicCardCount
+          title="Employees Present"
+          data={present}
+          theme="white"
+          subText="Total present today"
+          onClick={() => navigate("/hr/attendance/details/present")}
+        />
 
         {/* Employees Absent */}
-        <Card className="shadow-lg">
-          <CardContent>
-            <Typography variant="h6" className="mb-2">
-              Employees Absent
-            </Typography>
-            <Typography variant="h3" className="text-red-500">
-              {absent}
-            </Typography>
-          </CardContent>
-        </Card>
+        <BasicCardCount
+          title="Employees Absent"
+          data={absent}
+          theme="white"
+          subText="Total absent today"
+          onClick={() => navigate("/hr/attendance/details/absent")}
+        />
 
         {/* Average Check-in Accuracy */}
-        <Card className="shadow-lg">
-          <CardContent>
-            <Typography variant="h6" className="mb-2">
-              Average Check-in Accuracy
-            </Typography>
-            <Typography variant="h3" className="text-blue-500">
-              {averageCheckin}%
-            </Typography>
-          </CardContent>
-        </Card>
+        <BasicCardCount
+          title="Average Check-in Accuracy"
+          data={`${averageCheckin}%`}
+          theme="white"
+          onClick={() => navigate("/hr/attendance/details/checkin-accuracy")}
+        />
       </div>
     </div>
   );
 };
 
-export default EmployeeAttandanceSummary;
+export default EmployeeAttendanceSummary;

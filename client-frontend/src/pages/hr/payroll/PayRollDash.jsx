@@ -1,12 +1,10 @@
 import { useState } from "react";
 import DepartmentPayrollChart from "./components/DepartmentPayrollChart";
-import PayrollWidgets from "./components/PayrollWidgets";
-import AgTable from "../../../components/AgTable";
-import { dummyData } from "../../../utils/payrollData";
-import { FormControl, MenuItem, Select, InputLabel } from "@mui/material";
-import { CSVLink } from "react-csv";
+import BasicCardCount from "../../../components/Cards/BasicCardCount";
+import { FormControl, MenuItem, Select } from "@mui/material";
 import useAuth from "../../../hooks/useAuth";
 import EmployeeCount from "./components/EmployeeCount";
+import { useNavigate } from "react-router-dom";
 
 const widgetsData = {
   "previous month": [
@@ -28,8 +26,8 @@ const widgetsData = {
 
 export default function PayRollDash() {
   const { auth } = useAuth();
+  const navigate = useNavigate();
   const [selectedFilter, setSelectedFilter] = useState("this month");
-  const [payrolls, setPayrolls] = useState(dummyData);
 
   const handleFilterChange = (e) => {
     setSelectedFilter(e.target.value);
@@ -51,6 +49,7 @@ export default function PayRollDash() {
             <h1 className="text-2xl font-semibold">Payroll</h1>
             <FormControl className="w-full md:w-1/4 bg-white">
               <Select
+                size="small"
                 value={selectedFilter}
                 onChange={handleFilterChange}
               >
@@ -62,11 +61,21 @@ export default function PayRollDash() {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
             {widgetsData[selectedFilter].map((item) => (
-              <PayrollWidgets
-                id={item.id}
+              <BasicCardCount
                 key={item.id}
                 title={item.title}
-                content={item.content}
+                data={item.content}
+                theme="white"
+                titleSize="text-xl"
+                onClick={
+                  item.id === 1
+                    ? () => navigate("/hr/payroll/value")
+                    : item.id === 2
+                    ? () => navigate("/hr/payroll/employee-count")
+                    : item.id === 3
+                    ? () => navigate("/hr/payroll/due-payout")
+                    : null
+                }
               />
             ))}
           </div>
