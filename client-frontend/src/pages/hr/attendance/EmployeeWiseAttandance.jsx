@@ -4,7 +4,7 @@ import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
 import { MenuItem, Select, FormControl } from "@mui/material";
 import { NewModal } from "../../../components/NewModal";
-import { IoMdArrowRoundBack, IoMdClose } from "react-icons/io";
+import {  IoMdClose } from "react-icons/io";
 import { motion } from "framer-motion";
 
 const dummyData = [
