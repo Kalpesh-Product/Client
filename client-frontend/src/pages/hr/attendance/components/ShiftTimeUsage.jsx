@@ -1,16 +1,9 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import {
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-  Card,
-  CardContent,
-  Typography,
-} from "@mui/material";
+import BasicCardCount from "../../../../components/Cards/BasicCardCount";
+import { FormControl, InputLabel, Select, MenuItem } from "@mui/material";
 
-const ShiftTimeUseage = () => {
+const ShiftTimeUsage = () => {
   const [timeFilter, setTimeFilter] = useState("today");
   const navigate = useNavigate();
 
@@ -43,14 +36,13 @@ const ShiftTimeUseage = () => {
   return (
     <div className="p-4 flex flex-col gap-2">
       {/* Dropdown Filter */}
-      <FormControl variant="outlined" size="small" className="w-48 mb-4 bg-white">
-        <InputLabel id="time-filter-label">Filter</InputLabel>
+      <FormControl size="small" className="w-56 mb-4 bg-white self-end">
         <Select
           labelId="time-filter-label"
           id="time-filter"
-          label="Filter"
           value={timeFilter}
           onChange={handleFilterChange}
+          displayEmpty
         >
           <MenuItem value="today">Today</MenuItem>
           <MenuItem value="month">This Month</MenuItem>
@@ -58,46 +50,40 @@ const ShiftTimeUseage = () => {
         </Select>
       </FormControl>
 
-      {/* ShiftTimeUseage Widgets */}
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-3 cursor-pointer" onClick={() => navigate("/hr/attandence/shift-time-usage")}>
+      {/* ShiftTimeUsage Widgets */}
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-3 cursor-pointer">
         {/* Average Hours */}
-        <Card className="shadow-lg">
-          <CardContent>
-            <Typography variant="h6" className="mb-2">
-              Average Hours
-            </Typography>
-            <Typography variant="h3" className="text-green-500">
-              {averageHours}
-            </Typography>
-          </CardContent>
-        </Card>
+        <BasicCardCount
+          title="Average Hours"
+          data={averageHours}
+          theme="white"
+          dataStyling={"text-3xl font-bold"}
+          subText="Hours worked on average"
+          onClick={() => navigate("/hr/attendance/details/average-hours")}
+        />
 
         {/* Average Break Time */}
-        <Card className="shadow-lg">
-          <CardContent>
-            <Typography variant="h6" className="mb-2">
-              Average Break Time
-            </Typography>
-            <Typography variant="h3" className="text-orange-500">
-              {averageBreakTime}
-            </Typography>
-          </CardContent>
-        </Card>
+        <BasicCardCount
+          title="Average Break Time"
+          data={averageBreakTime}
+          theme="white"
+          subText="Break time on average"
+          dataStyling={"text-3xl font-bold"}
+          onClick={() => navigate("/hr/attendance/details/average-break-time")}
+        />
 
         {/* Average Attendance */}
-        <Card className="shadow-lg">
-          <CardContent>
-            <Typography variant="h6" className="mb-2">
-              Average Attendance
-            </Typography>
-            <Typography variant="h3" className="text-blue-500">
-              {averageAttendance}
-            </Typography>
-          </CardContent>
-        </Card>
+        <BasicCardCount
+          title="Average Attendance"
+          data={averageAttendance}
+          theme="white"
+          dataStyling={"text-3xl font-bold"}
+          subText="Attendance percentage"
+          onClick={() => navigate("/hr/attendance/details/average-attendance")}
+        />
       </div>
     </div>
   );
 };
 
-export default ShiftTimeUseage;
+export default ShiftTimeUsage;

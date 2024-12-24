@@ -12,51 +12,76 @@ const ClockInOut = () => {
     handleResume,
   } = useTimer();
 
+  // Dummy data for elapsed hours and breaks
+  const elapsedHours = "4h 25m";
+  const breakDuration = "30m";
+
   return (
-    <div className="flex w-full items-center justify-center bg-gray-100 p-2">
-      <div className="w-full bg-white shadow-lg rounded-lg p-4">
-        <h1 className="text-2xl font-bold mb-6 text-gray-800">
+    <div className="flex w-full items-center justify-center bg-gray-100 py-6">
+      <div className="w-full max-w-4xl bg-white shadow-xl rounded-lg p-6">
+        <h1 className="text-3xl font-bold mb-8 text-gray-800 text-center">
           Attendance Dashboard
         </h1>
-        <div className="border rounded-lg p-4 bg-gray-50">
-          <h2 className="text-xl font-semibold mb-4 text-gray-700">Clock</h2>
-          <div className="space-y-6">
-            <div className="text-3xl font-bold text-gray-900 flex justify-center">
-              {timer}
+
+        <div className="flex flex-wrap gap-6">
+          {/* Clock Section */}
+          <div className="flex-1 border rounded-lg p-6 bg-gray-50">
+            <h2 className="text-xl font-semibold mb-6 text-gray-700">
+              Clock
+            </h2>
+            <div className="space-y-6">
+              <div className="text-4xl font-extrabold text-gray-900 flex justify-center">
+                {timer}
+              </div>
+              <div className="flex items-center justify-center space-x-4">
+                {!isRunning && !isPaused && (
+                  <button
+                    onClick={handleClockIn}
+                    className="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-8 rounded-lg shadow transition duration-200"
+                  >
+                    Clock In
+                  </button>
+                )}
+                {isPaused && (
+                  <button
+                    onClick={handleResume}
+                    className="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-8 rounded-lg shadow transition duration-200"
+                  >
+                    Resume
+                  </button>
+                )}
+                {isRunning && (
+                  <>
+                    <button
+                      onClick={handleClockOut}
+                      className="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-8 rounded-lg shadow transition duration-200"
+                    >
+                      Clock Out
+                    </button>
+                    <button
+                      onClick={handlePause}
+                      className="bg-yellow-500 hover:bg-yellow-600 text-white font-semibold py-2 px-8 rounded-lg shadow transition duration-200"
+                    >
+                      Break
+                    </button>
+                  </>
+                )}
+              </div>
             </div>
-            <div className="flex items-center justify-center space-x-4">
-              {!isRunning && !isPaused && (
-                <button
-                  onClick={handleClockIn}
-                  className="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-6 rounded transition duration-200"
-                >
-                  Clock In
-                </button>
-              )}
-              {isPaused && (
-                <button
-                  onClick={handleResume}
-                  className="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-6 rounded transition duration-200"
-                >
-                  Resume
-                </button>
-              )}
-              {isRunning && (
-                <>
-                  <button
-                    onClick={handleClockOut}
-                    className="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-6 rounded transition duration-200"
-                  >
-                    Clock Out
-                  </button>
-                  <button
-                    onClick={handlePause}
-                    className="bg-yellow-500 hover:bg-yellow-600 text-white font-semibold py-2 px-6 rounded transition duration-200"
-                  >
-                    Break
-                  </button>
-                </>
-              )}
+          </div>
+
+          {/* Synopsis Section */}
+          <div className="flex-1 border rounded-lg p-6 bg-gray-50">
+            <h2 className="text-xl font-semibold mb-6 text-gray-700">
+              Synopsis
+            </h2>
+            <div className="space-y-4">
+              <div className="text-lg font-medium text-gray-800">
+                Elapsed Time: <span className="text-gray-600">{elapsedHours}</span>
+              </div>
+              <div className="text-lg font-medium text-gray-800">
+                Break Duration: <span className="text-gray-600">{breakDuration}</span>
+              </div>
             </div>
           </div>
         </div>

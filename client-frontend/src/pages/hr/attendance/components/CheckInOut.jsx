@@ -1,13 +1,6 @@
 import React, { useState } from 'react';
-import {
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-  Card,
-  CardContent,
-  Typography,
-} from '@mui/material';
+import BasicCardCount from '../../../../components/Cards/BasicCardCount';
+import { FormControl, InputLabel, Select, MenuItem } from '@mui/material';
 
 const CheckInOutData = () => {
   const [timeFilter, setTimeFilter] = useState('today');
@@ -40,14 +33,13 @@ const CheckInOutData = () => {
   return (
     <div className="p-4 flex flex-col gap-2">
       {/* Dropdown Filter */}
-      <FormControl variant="outlined" size="small" className="w-48 mb-4 bg-white">
-        <InputLabel id="time-filter-label">Filter</InputLabel>
+      <FormControl variant="outlined" size="small" className="w-56 mb-4 bg-white self-end">
         <Select
           labelId="time-filter-label"
           id="time-filter"
-          label="Filter"
           value={timeFilter}
           onChange={handleFilterChange}
+
         >
           <MenuItem value="today">Today</MenuItem>
           <MenuItem value="month">This Month</MenuItem>
@@ -58,40 +50,34 @@ const CheckInOutData = () => {
       {/* CheckInOutData Widgets */}
       <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
         {/* Late Check-ins */}
-        <Card className="shadow-lg">
-          <CardContent>
-            <Typography variant="h6" className="mb-2">
-              Late Check-ins
-            </Typography>
-            <Typography variant="h3" className="text-yellow-500">
-              {lateCheckins}
-            </Typography>
-          </CardContent>
-        </Card>
+        <BasicCardCount
+          title="Late Check-ins"
+          data={lateCheckins}
+          theme="white"
+          dataStyling={"text-3xl font-bold"}
+          subText="Number of late check-ins"
+          titleSize="text-2xl"
+        />
 
         {/* Early Checkouts */}
-        <Card className="shadow-lg">
-          <CardContent>
-            <Typography variant="h6" className="mb-2">
-              Early Checkouts
-            </Typography>
-            <Typography variant="h3" className="text-red-500">
-              {earlyCheckouts}
-            </Typography>
-          </CardContent>
-        </Card>
+        <BasicCardCount
+          title="Early Checkouts"
+          data={earlyCheckouts}
+          theme="white"
+          dataStyling={"text-3xl font-bold"}
+          subText="Number of early checkouts"
+          titleSize="text-2xl"
+        />
 
         {/* Late Checkouts */}
-        <Card className="shadow-lg">
-          <CardContent>
-            <Typography variant="h6" className="mb-2">
-              Late Checkouts
-            </Typography>
-            <Typography variant="h3" className="text-blue-500">
-              {lateCheckouts}
-            </Typography>
-          </CardContent>
-        </Card>
+        <BasicCardCount
+          title="Late Checkouts"
+          data={lateCheckouts}
+          theme="white"
+          dataStyling={"text-3xl font-bold"}
+          subText="Number of late checkouts"
+          titleSize="text-2xl"
+        />
       </div>
     </div>
   );

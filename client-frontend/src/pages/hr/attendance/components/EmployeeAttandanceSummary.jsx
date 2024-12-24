@@ -41,17 +41,15 @@ const EmployeeAttendanceSummary = () => {
     <div className="p-4 flex flex-col gap-2">
       {/* Dropdown Filter */}
       <FormControl
-        variant="outlined"
         size="small"
-        className="w-48 mb-4 bg-white"
+        className="w-56 mb-4 bg-white self-end"
       >
-        <InputLabel id="time-filter-label">Filter</InputLabel>
         <Select
           labelId="time-filter-label"
           id="time-filter"
-          label="Filter"
           value={timeFilter}
           onChange={handleFilterChange}
+          displayEmpty
         >
           <MenuItem value="today">Today</MenuItem>
           <MenuItem value="month">This Month</MenuItem>
@@ -69,6 +67,7 @@ const EmployeeAttendanceSummary = () => {
           title="Employees Present"
           data={present}
           theme="white"
+          dataStyling={"text-3xl font-bold"}
           subText="Total present today"
           onClick={() => navigate("/hr/attendance/details/present")}
         />
@@ -78,6 +77,7 @@ const EmployeeAttendanceSummary = () => {
           title="Employees Absent"
           data={absent}
           theme="white"
+          dataStyling={"text-3xl font-bold"}
           subText="Total absent today"
           onClick={() => navigate("/hr/attendance/details/absent")}
         />
@@ -86,6 +86,7 @@ const EmployeeAttendanceSummary = () => {
         <BasicCardCount
           title="Average Check-in Accuracy"
           data={`${averageCheckin}%`}
+          dataStyling={"text-3xl font-bold"}
           theme="white"
           onClick={() => navigate("/hr/attendance/details/checkin-accuracy")}
         />
