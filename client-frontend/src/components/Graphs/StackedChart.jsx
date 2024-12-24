@@ -11,7 +11,7 @@ import {
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Tooltip, Legend);
 
-const StackedChart = () => {
+const StackedChart = ({title}) => {
   // Example data for the chart
   const data = {
     labels: [
@@ -49,11 +49,11 @@ const StackedChart = () => {
 
   // Configuration options for the chart
   const options = {
-    responsive: true,
-    maintainAspectRatio: false,
+    // responsive: true,
+    maintainAspectRatio: true,
     plugins: {
       legend: {
-        display: true,
+        display: false,
         position: "top",
       },
       tooltip: {
@@ -81,8 +81,9 @@ const StackedChart = () => {
   };
 
   return (
-    <div style={{ width: "800px", height: "400px" }}>
-      <Bar data={data} options={options} />
+    <div className="relative" style={{ width: "800px", height: "450px" }}>
+      <h1 className="sticky top-0 p-3 font-semibold">{title}</h1>
+      <Bar height={""} data={data} options={options} />
     </div>
   );
 };

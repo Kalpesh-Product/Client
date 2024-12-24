@@ -128,12 +128,12 @@ import SopPdfContainer from "../hr/company-handbook/SopPdfContainer";
 import PolicyPdfContainer from "../hr/company-handbook/PolicyPdfContainer";
 import ThemeGrid from "../website-builder/ThemeGrid";
 import ViewTheme from "../website-builder/ViewTheme";
-import BiznestHome from "../../assets/builder-preview/live-theme/biznest-home.jpeg"
-import BiznestAbout from "../../assets/builder-preview/live-theme/biznest-about.jpeg"
-import BiznestGallery from "../../assets/builder-preview/live-theme/biznest-gallery.jpeg"
-import BiznestContact from "../../assets/builder-preview/live-theme/biznest-contact.png"
+import BiznestHome from "../../assets/builder-preview/live-theme/biznest-home.jpeg";
+import BiznestAbout from "../../assets/builder-preview/live-theme/biznest-about.jpeg";
+import BiznestGallery from "../../assets/builder-preview/live-theme/biznest-gallery.jpeg";
+import BiznestContact from "../../assets/builder-preview/live-theme/biznest-contact.png";
 import StackedChart from "../../components/Graphs/StackedChart";
-
+import BasicGroupedBarGraph from "../../components/Graphs/BasicGroupedBarGraph";
 
 const DepartmentDash = () => {
   const navigate = useNavigate();
@@ -266,17 +266,24 @@ const DepartmentDash = () => {
     datasets: [
       {
         label: "Allocated",
+        barPercentage: 0.5,
+        barThickness: 6,
+        maxBarThickness: 8,
+        minBarLength: 2,
         data: Array(12).fill(100), // Allocated is always 100%
         backgroundColor: "rgba(100, 162, 235, 0.7)", // Blue
       },
       {
         label: "Utilised",
+        barPercentage: 0.5,
+        barThickness: 6,
+        maxBarThickness: 8,
+        minBarLength: 2,
         data: utilisedData, // Utilised values
       },
     ],
   };
-  
-  
+
   const techUniqueData = {
     months: [
       "April",
@@ -329,12 +336,12 @@ const DepartmentDash = () => {
     datasets: [
       {
         label: "Total Complaints",
-        data: [10, 2, 8, 5, 12, 9, 0, 0, 2, 7, 8, 0], // Example targets
+        data: [10, 2, 8, 5, 12, 9, 1, 3, 2, 7, 8, 0], // Example targets
         backgroundColor: "rgba(54, 162, 235, 0.7)", // Blue
       },
       {
         label: "Pending Complaints",
-        data: [2, 0, 1, 1, 3, 0, 0, 0, 1, 2, 1, 0], // Example achievements
+        data: [2, 0, 1, 1, 3, 0, 0, 1, 1, 2, 1, 0], // Example achievements
         backgroundColor: "rgba(75, 192, 192, 0.7)", // Teal
       },
     ],
@@ -365,6 +372,37 @@ const DepartmentDash = () => {
     ],
   };
 
+  const employeeData = [
+    { label: "Zomato", employees: 45 },
+    { label: "Swiggy", employees: 30 },
+    { label: "Uber Eats", employees: 20 },
+    { label: "DoorDash", employees: 25 },
+    { label: "Grubhub", employees: 10 },
+  ];
+
+  // Calculate total employees
+  const totalEmployees = employeeData.reduce(
+    (sum, company) => sum + company.employees,
+    0
+  );
+
+  // Define subtle pastel colors
+  const colors = [
+    "rgba(173, 216, 230, 0.8)", // Light Blue
+    "rgba(152, 251, 152, 0.8)", // Pale Green
+    "rgba(255, 182, 193, 0.8)", // Light Pink
+    "rgba(240, 230, 140, 0.8)", // Light Yellow
+    "rgba(221, 160, 221, 0.8)", // Plum
+  ];
+
+  // Prepare data for PieChartMUI
+  const pieChartData = employeeData.map((company, index) => ({
+    id: index,
+    value: ((company.employees / totalEmployees) * 100).toFixed(2), // Percentage
+    label: company.label,
+    color: colors[index % colors.length], // Assign subtle colors
+  }));
+
   const techIndiaVisitors = [
     { id: 0, value: 25, label: "Mumbai" },
     { id: 1, value: 20, label: "Delhi" },
@@ -393,7 +431,7 @@ const DepartmentDash = () => {
       ],
     },
     {
-      heading: "Budget Data",
+      heading: "",
       widgets: [
         <BasicCardCount
           theme={"white"}
@@ -419,30 +457,46 @@ const DepartmentDash = () => {
       ],
     },
     {
-      heading: "Unique Data",
+      heading: "",
+      widgets: [
+        <BarGraphMUI
+          graphHeight={460}
+          graphWidth={600}
+          title={"Unique Companies"}
+        />,
+        <StackedChart title={"Company Sectors"} />,
+      ],
+    },
+    {
+      heading: "",
       widgets: [
         <BarGraphMUI
           graphHeight={400}
           graphWidth={600}
-          title={"Unique Companies"}
+          title={"Unique Customers"}
+          data={techUniqueData}
         />,
-        <StackedChart />
-        // <BarGraphMUI
-        //   graphHeight={400}
-        //   graphWidth={600}
-        //   title={"Unique Customers"}
-        //   data={techUniqueData}
-        // />,
+        <PieChartMUI
+          data={pieChartData} // Pass calculated data
+          title="Employee Distribution by Company (%)"
+        />,
       ],
     },
     {
       heading: "Total Complaints",
       widgets: [
-        <GroupedBarGraph
+        // <GroupedBarGraph
+        //   labels={techAllocatedBudgetData.labels}
+        //   datasets={techTotalComplaints.datasets}
+        //   graphWidth={1200} // Optional
+        //   graphHeight={500} // Optional
+        // />,
+        <BasicGroupedBarGraph
           labels={techAllocatedBudgetData.labels}
           datasets={techTotalComplaints.datasets}
           graphWidth={1200} // Optional
           graphHeight={500} // Optional
+          yAxisFormat="number"
         />,
       ],
     },
@@ -458,13 +512,13 @@ const DepartmentDash = () => {
       ],
     },
     {
-      heading: "Visitor Analytics",
+      heading: " Site Visitor Analytics",
       widgets: [
         <PieChartMUI
-          title={"Country Wise Visitors"}
+          title={"State Wise Site Visitors"}
           data={techIndiaVisitors}
         />,
-        <PieChartMUI title={"State Wise Visitors"} data={techGoaVisitors} />,
+        <PieChartMUI title={"City Wise Site Visitors"} data={techGoaVisitors} />,
       ],
     },
   ];
@@ -996,22 +1050,38 @@ const DepartmentDash = () => {
                   {/* Modern Content Examples */}
                   {value === 0 && (
                     <div className="h-[90vh] overflow-y-auto">
-                      <img className="w-full" src={BiznestHome} alt="BiznestHome" />
+                      <img
+                        className="w-full"
+                        src={BiznestHome}
+                        alt="BiznestHome"
+                      />
                     </div>
                   )}
                   {value === 1 && (
                     <div className="h-[90vh] overflow-y-auto">
-                      <img className="w-full" src={BiznestAbout} alt="BiznestAbout" />
+                      <img
+                        className="w-full"
+                        src={BiznestAbout}
+                        alt="BiznestAbout"
+                      />
                     </div>
                   )}
                   {value === 2 && (
-                    <div className="h-[90vh] overflow-y-auto" >
-                      <img className="w-full" src={BiznestGallery} alt="BiznestGallery" />
+                    <div className="h-[90vh] overflow-y-auto">
+                      <img
+                        className="w-full"
+                        src={BiznestGallery}
+                        alt="BiznestGallery"
+                      />
                     </div>
                   )}
                   {value === 3 && (
-                    <div className="h-[90vh] overflow-y-auto" >
-                     <img className="w-full" src={BiznestContact} alt="BiznestContact" />
+                    <div className="h-[90vh] overflow-y-auto">
+                      <img
+                        className="w-full"
+                        src={BiznestContact}
+                        alt="BiznestContact"
+                      />
                     </div>
                   )}
                 </Box>

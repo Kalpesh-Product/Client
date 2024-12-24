@@ -52,7 +52,7 @@ export const WidgetSection = ({ heading, widgets }) => (
       {widgets.map((Widget, index) => (
         <div
           key={index}
-          className="bg-white p-0 shadow-md  w-full h-full overflow-auto motion-preset-expand">
+          className="bg-white p-0 w-full h-full overflow-auto motion-preset-expand">
           {Widget}
         </div>
       ))}
