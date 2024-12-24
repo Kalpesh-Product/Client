@@ -127,6 +127,8 @@ import RaiseTicketButton from "../cms/tickets/components/RaiseTicketButton";
 import SopPdfContainer from "../hr/company-handbook/SopPdfContainer";
 import PolicyPdfContainer from "../hr/company-handbook/PolicyPdfContainer";
 import LeaveTabs from "../hr/leaves/LeaveTabs";
+import ThemeGrid from "../website-builder/ThemeGrid";
+import ViewTheme from "../website-builder/ViewTheme";
 
 const DepartmentDash = () => {
   const navigate = useNavigate();
@@ -193,9 +195,11 @@ const DepartmentDash = () => {
   ];
   const { id } = useParams(); // Extract ID from the route
 
-  const selectedTheme = id
-    ? themes.find((theme) => theme.id === parseInt(id, 10))
-    : null;
+  const selectedTheme = themes.find(
+    (theme) => theme.id === (id ? parseInt(id, 10) : 1)
+  );
+
+  console.log("Selected Theme is : ", selectedTheme);
 
   const techWidgetsData = {
     activeTickets: 8,
@@ -237,11 +241,10 @@ const DepartmentDash = () => {
       ],
     },
   ];
+  const utilisedData = [123, 96, 100, 100, 90, 97, 100, 101, 113, 100, 93, 104];
+
   const techAllocatedBudgetData = {
     labels: [
-      "January",
-      "February",
-      "March",
       "April",
       "May",
       "June",
@@ -251,53 +254,25 @@ const DepartmentDash = () => {
       "October",
       "November",
       "December",
-    ],
-    datasets: [
-      {
-        label: "Approved Budget ($)",
-        data: [
-          4000, 6500, 7200, 8100, 9500, 10200, 9800, 11200, 10700, 12300, 11900,
-          13000,
-        ],
-        borderColor: "rgba(54, 162, 235, 1)",
-        backgroundColor: "rgba(54, 162, 235, 0.2)",
-        tension: 0.4,
-      },
-    ],
-  };
-  const techUtilisedBudgetData = {
-    labels: [
       "January",
       "February",
       "March",
-      "April",
-      "May",
-      "June",
-      "July",
-      "August",
-      "September",
-      "October",
-      "November",
-      "December",
     ],
     datasets: [
       {
-        label: "Approved Budget ($)",
-        data: [
-          3000, 7500, 4200, 3100, 8500, 10300, 9800, 11300, 13700, 15300, 16900,
-          23000,
-        ],
-        borderColor: "rgba(54, 162, 235, 1)",
-        backgroundColor: "rgba(54, 162, 235, 0.2)",
-        tension: 0.4,
+        label: "Allocated",
+        data: Array(12).fill(100), // Allocated is always 100%
+        backgroundColor: "rgba(100, 162, 235, 0.7)", // Blue
+      },
+      {
+        label: "Utilised",
+        data: utilisedData, // Utilised values
       },
     ],
   };
+
   const techUniqueData = {
     months: [
-      "January",
-      "February",
-      "March",
       "April",
       "May",
       "June",
@@ -307,14 +282,14 @@ const DepartmentDash = () => {
       "October",
       "November",
       "December",
+      "January",
+      "February",
+      "March",
     ],
     data: [15, 12, 4, 2, 5, 14, 12, 4, 1, 4, 5, 6],
   };
   const techSiteVisitors = {
     months: [
-      "January",
-      "February",
-      "March",
       "April",
       "May",
       "June",
@@ -324,14 +299,14 @@ const DepartmentDash = () => {
       "October",
       "November",
       "December",
+      "January",
+      "February",
+      "March",
     ],
     data: [15, 12, 4, 2, 5, 14, 12, 4, 1, 4, 5, 6],
   };
   const techTotalComplaints = {
     labels: [
-      "January",
-      "February",
-      "March",
       "April",
       "May",
       "June",
@@ -341,14 +316,20 @@ const DepartmentDash = () => {
       "October",
       "November",
       "December",
+      "January",
+      "February",
+      "March",
     ],
     datasets: [
       {
         label: "Total Complaints",
-        data: [15, 10, 2, 5, 6, 2, 5, 10, 12, 7, 2, 2],
-        borderColor: "rgba(54, 162, 235, 1)",
-        backgroundColor: "rgba(54, 162, 235, 0.2)",
-        tension: 0.4,
+        data: [10, 2, 8, 5, 12, 9, 0, 0, 2, 7, 8, 0], // Example targets
+        backgroundColor: "rgba(54, 162, 235, 0.7)", // Blue
+      },
+      {
+        label: "Pending Complaints",
+        data: [2, 0, 1, 1, 3, 0, 0, 0, 1, 2, 1, 0], // Example achievements
+        backgroundColor: "rgba(75, 192, 192, 0.7)", // Teal
       },
     ],
   };
@@ -395,49 +376,37 @@ const DepartmentDash = () => {
 
   const techWidgets = [
     {
-      heading: "Annual Budget Allotted",
+      heading: "Annual Budget",
       widgets: [
-        <LineGraph
-          graphXaxis={techAllocatedBudgetData.labels}
-          graphYaxis={techAllocatedBudgetData.datasets}
-          xAxisLabel="Allocated Budget"
-          graphHeight={500}
-          graphWidth={1250}
-        />,
-      ],
-    },
-    {
-      heading: "Annual Budget Utilised",
-      widgets: [
-        <LineGraph
-          graphXaxis={techUtilisedBudgetData.labels}
-          graphYaxis={techUtilisedBudgetData.datasets}
-          graphHeight={500}
-          graphWidth={1250}
+        <GroupedBarGraph
+          labels={techAllocatedBudgetData.labels}
+          datasets={techAllocatedBudgetData.datasets}
+          graphWidth={1200} // Optional
+          graphHeight={500} // Optional
         />,
       ],
     },
     {
       heading: "Budget Data",
       widgets: [
-        <CountCard
-          title="Projected Per Unit Cost"
-          count="3000"
-          totalMonths="12"
-          deptCount="5"
-          annualCost="10000"
-          monthsPeriod="Total"
+        <BasicCardCount
+          theme={"white"}
+          title={"Projected"}
+          subText={"(Per Unit Cost)"}
+          titleSize={"text-3xl"}
+          data={"23"}
         />,
-        <CountCard
-          title="Actual Per Unit Cost"
-          count="3000"
-          totalMonths="12"
-          deptCount="5"
-          annualCost="10000"
-          monthsPeriod="Existing"
+        <BasicCardCount
+          theme={"white"}
+          title={"Actual"}
+          subText={"(Per Unit Cost)"}
+          titleSize={"text-3xl"}
+          data={"23"}
         />,
+        // <BasicCardCount theme={"black"} title={"Additional Budget Requested"} data={"23"} />,
         <BudgetApproval
-          title="Additional Budget Requested"
+          theme={"black"}
+          title="Requested Budget"
           count="6000"
           budgetStatus={false}
         />,
@@ -462,24 +431,11 @@ const DepartmentDash = () => {
     {
       heading: "Total Complaints",
       widgets: [
-        <LineGraph
-          graphXaxis={techAllocatedBudgetData.labels}
-          graphYaxis={techTotalComplaints.datasets}
-          xAxisLabel="Total Complaints"
-          graphHeight={500}
-          graphWidth={1180}
-        />,
-      ],
-    },
-    {
-      heading: "Pending Complaints",
-      widgets: [
-        <LineGraph
-          graphXaxis={techAllocatedBudgetData.labels}
-          graphYaxis={techPendingComplaints.datasets}
-          xAxisLabel="Pending Complaints"
-          graphHeight={500}
-          graphWidth={1180}
+        <GroupedBarGraph
+          labels={techAllocatedBudgetData.labels}
+          datasets={techTotalComplaints.datasets}
+          graphWidth={1200} // Optional
+          graphHeight={500} // Optional
         />,
       ],
     },
@@ -508,9 +464,6 @@ const DepartmentDash = () => {
 
   const hrPayrollExpenseData = {
     labels: [
-      "January",
-      "February",
-      "March",
       "April",
       "May",
       "June",
@@ -520,17 +473,26 @@ const DepartmentDash = () => {
       "October",
       "November",
       "December",
+      "January",
+      "February",
+      "March",
     ],
     datasets: [
       {
-        label: "Payroll Expense ($)",
+        label: "Allocated",
         data: [
-          15000, 16000, 15500, 16200, 16800, 17000, 16500, 17200, 17500, 18000,
-          17800, 18500,
-        ],
-        borderColor: "rgba(255, 99, 132, 1)",
-        backgroundColor: "rgba(255, 99, 132, 0.2)",
-        tension: 0.4,
+          3000, 2500, 4000, 6000, 5000, 6400, 7900, 8000, 4000, 6000, 7000,
+          4500,
+        ], // Example targets
+        backgroundColor: "rgba(54, 162, 235, 0.7)", // Blue
+      },
+      {
+        label: "Utilised",
+        data: [
+          3100, 2400, 4000, 6000, 4500, 6200, 7900, 8100, 4500, 6000, 6500,
+          4700,
+        ], // Example achievements
+        backgroundColor: "rgba(75, 192, 192, 0.7)", // Teal
       },
     ],
   };
@@ -727,12 +689,11 @@ const DepartmentDash = () => {
     {
       heading: "Annual Payroll Expense",
       widgets: [
-        <LineGraph
-          graphXaxis={hrPayrollExpenseData.labels}
-          graphYaxis={hrPayrollExpenseData.datasets}
-          xAxisLabel="Allocated Budget"
-          graphHeight={500}
-          graphWidth={1250}
+        <GroupedBarGraph
+          labels={hrPayrollExpenseData.labels}
+          datasets={hrPayrollExpenseData.datasets}
+          graphWidth={1200} // Optional
+          graphHeight={500} // Optional
         />,
       ],
     },
@@ -804,8 +765,16 @@ const DepartmentDash = () => {
     {
       heading: "Calendar Data",
       widgets: [
-        <BasicTable data={hrBirthdayData} columns={hrBirthdayDataColumns} />,
-        <BasicTable data={holidaysAndEvents} columns={holidayTableColumns} />,
+        <BasicTable
+          title={"Upcoming birthdays"}
+          data={hrBirthdayData}
+          columns={hrBirthdayDataColumns}
+        />,
+        <BasicTable
+          title={"Upcoming Holidays"}
+          data={holidaysAndEvents}
+          columns={holidayTableColumns}
+        />,
       ],
     },
     {
@@ -1039,10 +1008,34 @@ const DepartmentDash = () => {
                   )}
                 </Box>
               </div>
-            ) : location.pathname === "/frontend/themes" ? (
+            ) : location.pathname.includes("/frontend/live-theme") ? (
               <div className="p-6 w-full">
-                <h2 className="text-2xl font-bold mb-6">Themes</h2>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6">
+                <h2 className="text-2xl font-bold mb-6">Edit Live Theme</h2>
+                {/* <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6">
+                  {themes.map((theme) => (
+                    <div
+                      key={theme.id}
+                      className="bg-gray-100 rounded-lg shadow-md overflow-visible hover:shadow-lg transition-shadow"
+                    >
+                      <div className="w-full h-full overflow-hidden rounded-md">
+                        <img
+                          src={theme.image}
+                          alt={theme.name}
+                          onClick={() =>
+                            navigate(`/frontend/themes/view-theme/${theme.id}`)
+                          }
+                          className="w-full h-56 object-cover transform hover:scale-110 transition duration-300 hover:cursor-pointer"
+                        />
+                      </div>
+                    </div>
+                  ))}
+                </div> */}
+                <EditTemplate template={themes[0]} />
+              </div>
+            ) : location.pathname === "/frontend/themes" ? (
+              <div className="w-full">
+                <h2 className="text-2xl font-bold mb-6 px-4 pt-2">Themes</h2>
+                {/* <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6">
                   {themes.map((theme) => (
                     <div
                       key={theme.id}
@@ -1058,7 +1051,7 @@ const DepartmentDash = () => {
                         />
                       </div>
 
-                      {/* <div className="p-4">
+                      <div className="p-4">
                         <h3 className="text-lg font-semibold">{theme.name}</h3>
                         <button
                           onClick={() =>
@@ -1068,24 +1061,23 @@ const DepartmentDash = () => {
                         >
                           View Details
                         </button>
-                      </div> */}
+                      </div>
                     </div>
                   ))}
+                </div> */}
+                <div>
+                  <ThemeGrid />
                 </div>
               </div>
-            ) : location.pathname.includes("/frontend/themes/view-theme/") &&
-              selectedTheme ? (
+            ) : location.pathname.includes("/frontend/themes/view-theme/") ? (
               <>
-                <div className="p-6 w-full">
+                {/* <div className="p-6 w-full">
                   <h2 className="text-2xl font-bold mb-6">
                     {selectedTheme.name}
                   </h2>
                   <div className="flex flex-col lg:flex-row justify-between gap-[15rem] bg-white p-2 rounded-md">
                     <div className="h-full flex flex-col gap-4 w-full">
                       <h1 className="text-3xl font-semibold">INCLUSIONS</h1>
-                      {/* <p className="text-gray-700 mb-3">
-                        {selectedTheme.description}
-                      </p> */}
                       <ul className="list-disc pl-5 my-3 text-md">
                         {selectedTheme.features.map((feature, index) => (
                           <li key={index} className="text-gray-600">
@@ -1094,29 +1086,22 @@ const DepartmentDash = () => {
                         ))}
                       </ul>
                       <div className="flex flex-col justify-between gap-2">
-                        {/* <button
-                          onClick={() => {
-                            setOpen(true);
-                          }}
-                          className="wono-blue-dark w-[50%] text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition"
-                        >
-                          View Demo
-                        </button> */}
-
                         <button
                           onClick={() =>
                             window.open(selectedTheme.demoLink, "_blank")
                           }
-                          className="wono-blue-dark text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition">
+                          className="wono-blue-dark text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition"
+                        >
                           View Demo
                         </button>
                         <button
                           onClick={() =>
                             navigate("/frontend/themes/edit-template", {
-                              state: { template: selectedTheme },
+                              state: { stateTemplate: selectedTheme },
                             })
                           }
-                          className="wono-blue-dark w-full text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition">
+                          className="wono-blue-dark w-full text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition"
+                        >
                           Edit
                         </button>
                       </div>
@@ -1149,13 +1134,8 @@ const DepartmentDash = () => {
                       </div>
                     </div>
                   </div>
-                  {/* <button
-                    onClick={() => navigate("/frontend/themes")}
-                    className="mt-8 text-blue-500 underline"
-                  >
-                    Go Back
-                  </button> */}
-                </div>
+                </div> */}
+                <ViewTheme />
 
                 <NewModal open={open} onClose={handleClose}>
                   <div className="motion-preset-expand w-full h-full">
@@ -1241,9 +1221,10 @@ const DepartmentDash = () => {
             ) : location.pathname === "/hr/cvdump" ? (
               <>
                 <div className="bg-gray-100 p-4 rounded-lg mt-4">
-                  <div className="mb-8 flex justify-between">
-                    <h1 className="text-3xl  font-bold">Key Insights</h1>
-                  </div>
+                  {/* <div className="mb-8 flex justify-between">
+                    <h1 className="text-3xl  font-bold">CV DUMP</h1>
+                  </div> */}
+                  <CvDump />
                 </div>
               </>
             ) : location.pathname === "/hr/cvdump/applicants" ? (

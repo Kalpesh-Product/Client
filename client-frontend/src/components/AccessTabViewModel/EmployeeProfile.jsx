@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import TextField from "@mui/material/TextField";
+import useAuth from "../../hooks/useAuth";
 
 const EmployeeProfile = ({ data }) => {
+  const { auth: authUser } = useAuth();
   const location = useLocation();
   const [isEditing, setIsEditing] = useState(false);
   const [userData, setUserData] = useState(null);
@@ -44,7 +46,7 @@ const EmployeeProfile = ({ data }) => {
     setIsEditing(false); // Exit edit mode
   };
 
-  if (!userData) return <p>Loading...</p>;
+  if (!authUser) return <p>Loading...</p>;
 
   const isProfilePage = location.pathname === "/profile";
   const isAccessPage = location.pathname === "/access";
@@ -73,7 +75,7 @@ const EmployeeProfile = ({ data }) => {
             <input
               name="role"
               value={
-                isAccessPage ? data?.role : isProfilePage ? userData.role : ""
+                isAccessPage ? data?.role : isProfilePage ? authUser.user.role.roleTitle : ""
               }
               onChange={handleChange}
               className={`text-gray-800 border ${
@@ -94,7 +96,7 @@ const EmployeeProfile = ({ data }) => {
                 isAccessPage
                   ? data?.department
                   : isProfilePage
-                  ? userData.department
+                  ? authUser.user.department?.map((dept)=>dept.name)
                   : ""
               }
               onChange={handleChange}
@@ -116,7 +118,7 @@ const EmployeeProfile = ({ data }) => {
                 isAccessPage
                   ? data?.designation
                   : isProfilePage
-                  ? userData.designation
+                  ? authUser.user.designation?.title
                   : ""
               }
               onChange={handleChange}
@@ -160,7 +162,7 @@ const EmployeeProfile = ({ data }) => {
                 isAccessPage
                   ? data?.company
                   : isProfilePage
-                  ? userData.company
+                  ? authUser.user.company?.companyName
                   : ""
               }
               onChange={handleChange}
@@ -175,7 +177,7 @@ const EmployeeProfile = ({ data }) => {
           <div className="flex items-center gap-20">
             <span className="w-24 font-semibold text-gray-600">Email:</span>
             <span className="text-gray-800">
-              {isAccessPage ? data?.email : isProfilePage ? userData.email : ""}
+              {isAccessPage ? data?.email : isProfilePage ? authUser.user.email : ""}
             </span>
           </div>
           <div className="flex items-center gap-20">
@@ -183,7 +185,7 @@ const EmployeeProfile = ({ data }) => {
             <input
               name="phone"
               value={
-                isAccessPage ? data?.phone : isProfilePage ? userData.Phone : ""
+                isAccessPage ? data?.phone : isProfilePage ? authUser.user.phone : ""
               }
               onChange={handleChange}
               className={`text-gray-800 border ${

@@ -45,7 +45,7 @@ const AgTable = React.memo(
 
     return (
       <div
-        className="ag-theme-alpine border-none"
+        className="ag-theme-alpine border-none w-full"
         style={{ width: "100%", fontFamily: "Popins-Regular" }}>
         <AgGridReact
           rowData={data}
@@ -59,6 +59,7 @@ const AgTable = React.memo(
           // rowStyle={rowStyle}
         />
       </div>
+      
     );
   }
 );

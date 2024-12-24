@@ -107,6 +107,7 @@ const TaskTicketsMainpg = () => {
             <br /> */}
             {/* <MyTicketsTable /> */}
             
+            
           </TabPanel>
 
           <TabPanel value="4">
@@ -124,7 +125,7 @@ const TaskTicketsMainpg = () => {
             </div>
             <br /> */}
             {/* <MyTicketsTable /> */}
-            
+            <MontlyTasks/>
           </TabPanel>
 
           <TabPanel value="6">
@@ -133,6 +134,7 @@ const TaskTicketsMainpg = () => {
             </div>
             <br /> */}
             {/* <MyTicketsTable /> */}
+            <AdditionalTasks/>
             
           </TabPanel>
         </TabContext>

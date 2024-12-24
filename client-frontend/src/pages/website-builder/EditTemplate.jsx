@@ -1,18 +1,20 @@
 import { useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
 
-function EditTemplate() {
+function EditTemplate({template}) {
   const location = useLocation();
-  const { template } = location.state || {};
+  const { stateTemplate } = location.state || {};
 
-  const [templateData, setTemplateData] = useState(template);
+  const [templateData, setTemplateData] = useState(template || stateTemplate || null);
   const [htmlContent, setHtmlContent] = useState("");
   const [editableElements, setEditableElements] = useState([]);
   const iframeRef = useRef(null); // Reference to the iframe
 
+  console.log("Passed template is : ",template)
+
   useEffect(() => {
-    if (template?.demoLink) {
-      fetch(template.demoLink)
+    if (templateData?.demoLink) {
+      fetch(templateData.demoLink)
         .then((response) => {
           if (!response.ok) {
             throw new Error("Failed to load template HTML");
@@ -37,10 +39,10 @@ function EditTemplate() {
         iframeDocument.close();
 
         // Dynamically append internal CSS from the template's folder
-        if (template?.folder) {
+        if (templateData?.folder) {
           const internalStylesheets = [
-            `${template.folder}/css/tailwind.css`,
-            `${template.folder}/css/tooplate-antique-cafe.css`,
+            `${templateData.folder}/css/tailwind.css`,
+            `${templateData.folder}/css/tooplate-antique-cafe.css`,
           ];
           internalStylesheets.forEach((href) => {
             const link = iframeDocument.createElement("link");
@@ -72,7 +74,7 @@ function EditTemplate() {
         setEditableElements(editableData);
       }
     }
-  }, [htmlContent, template?.folder]); // Re-run if folder or content changes
+  }, [htmlContent, templateData?.folder]); // Re-run if folder or content changes
 
   console.log(editableElements);
 

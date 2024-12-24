@@ -51,6 +51,7 @@ export default function PayRollDash() {
             <h1 className="text-2xl font-semibold">Payroll</h1>
             <FormControl className="w-full md:w-1/4 bg-white">
               <Select
+              size="small"
                 value={selectedFilter}
                 onChange={handleFilterChange}
               >

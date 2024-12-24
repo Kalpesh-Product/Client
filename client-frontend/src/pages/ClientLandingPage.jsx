@@ -741,16 +741,16 @@ const ClientLandingPage = () => {
 
   const [quickLaunchIcons, setQuickLaunchIcons] = useState([
     { id: 1, title: "Dashboard", iconSrc: dashboardImage },
-    { id: 2, title: "Services", iconSrc: servicesImage },
+    { id: 2, title: "HR", iconSrc: visitorCM },
     { id: 3, title: "Chat", iconSrc: chatImage },
     { id: 4, title: "Profile", iconSrc: profileImage },
     { id: 5, title: "Calendar", iconSrc: calendarImage },
     { id: 6, title: "Access", iconSrc: accessImage },
     { id: 7, title: "Tasks", iconSrc: tasksImage },
+    { id: 11, title: "Asset", iconSrc: budgetFA },
     { id: 8, title: "Ticket", iconSrc: ticketsImage },
     { id: 9, title: "Meeting", iconSrc: meetingImage },
     { id: 10, title: "Customer Service", iconSrc: customerServiceImage },
-    { id: 11, title: "Asset", iconSrc: dashboardImage },
   ]);
 
   // Toggle drag-and-drop functionality
@@ -1223,8 +1223,8 @@ const SortableCard = ({ id, title, iconSrc, isDragEnabled }) => {
       case "Dashboard":
         navigate("/dashboard");
         break;
-      case "Services":
-        navigate("/services");
+      case "HR":
+        navigate("/hr/dashboard");
         break;
       case "Chat":
         navigate("/chat");
