@@ -54,9 +54,8 @@ const CheckInOutData = () => {
           title="Late Check-ins"
           data={lateCheckins}
           theme="white"
-          dataStyling={"text-3xl font-bold"}
           subText="Number of late check-ins"
-          titleSize="text-2xl"
+          
         />
 
         {/* Early Checkouts */}
@@ -64,9 +63,8 @@ const CheckInOutData = () => {
           title="Early Checkouts"
           data={earlyCheckouts}
           theme="white"
-          dataStyling={"text-3xl font-bold"}
           subText="Number of early checkouts"
-          titleSize="text-2xl"
+          
         />
 
         {/* Late Checkouts */}
@@ -74,9 +72,8 @@ const CheckInOutData = () => {
           title="Late Checkouts"
           data={lateCheckouts}
           theme="white"
-          dataStyling={"text-3xl font-bold"}
           subText="Number of late checkouts"
-          titleSize="text-2xl"
+          
         />
       </div>
     </div>

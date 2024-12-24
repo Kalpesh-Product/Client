@@ -11,12 +11,12 @@ const ShiftTimeUsage = () => {
   const mockData = {
     today: {
       averageHours: 6,
-      averageBreakTime: "30 mins",
+      averageBreakTime: "30m",
       averageAttendance: "85%",
     },
     month: {
       averageHours: 7.5,
-      averageBreakTime: "45 mins",
+      averageBreakTime: "45m",
       averageAttendance: "90%",
     },
     annual: {
@@ -57,7 +57,6 @@ const ShiftTimeUsage = () => {
           title="Average Hours"
           data={averageHours}
           theme="white"
-          dataStyling={"text-3xl font-bold"}
           subText="Hours worked on average"
           onClick={() => navigate("/hr/attendance/details/average-hours")}
         />
@@ -68,7 +67,6 @@ const ShiftTimeUsage = () => {
           data={averageBreakTime}
           theme="white"
           subText="Break time on average"
-          dataStyling={"text-3xl font-bold"}
           onClick={() => navigate("/hr/attendance/details/average-break-time")}
         />
 
@@ -77,7 +75,6 @@ const ShiftTimeUsage = () => {
           title="Average Attendance"
           data={averageAttendance}
           theme="white"
-          dataStyling={"text-3xl font-bold"}
           subText="Attendance percentage"
           onClick={() => navigate("/hr/attendance/details/average-attendance")}
         />

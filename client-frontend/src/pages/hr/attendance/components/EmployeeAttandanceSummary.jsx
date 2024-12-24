@@ -67,7 +67,6 @@ const EmployeeAttendanceSummary = () => {
           title="Employees Present"
           data={present}
           theme="white"
-          dataStyling={"text-3xl font-bold"}
           subText="Total present today"
           onClick={() => navigate("/hr/attendance/details/present")}
         />
@@ -77,7 +76,6 @@ const EmployeeAttendanceSummary = () => {
           title="Employees Absent"
           data={absent}
           theme="white"
-          dataStyling={"text-3xl font-bold"}
           subText="Total absent today"
           onClick={() => navigate("/hr/attendance/details/absent")}
         />
@@ -86,7 +84,6 @@ const EmployeeAttendanceSummary = () => {
         <BasicCardCount
           title="Average Check-in Accuracy"
           data={`${averageCheckin}%`}
-          dataStyling={"text-3xl font-bold"}
           theme="white"
           onClick={() => navigate("/hr/attendance/details/checkin-accuracy")}
         />
