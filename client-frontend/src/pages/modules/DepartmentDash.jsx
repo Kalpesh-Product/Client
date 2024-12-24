@@ -754,12 +754,12 @@ const DepartmentDash = () => {
     {
       heading: "Annual Payroll Expense",
       widgets: [
-        <GroupedBarGraph
-          labels={hrPayrollExpenseData.labels}
-          datasets={hrPayrollExpenseData.datasets}
-          graphWidth={1200} // Optional
-          graphHeight={500} // Optional
-        />,
+        <BasicGroupedBarGraph 
+        labels={hrPayrollExpenseData.labels}
+        datasets={hrPayrollExpenseData.datasets}
+        graphWidth={1200} // Optional
+        graphHeight={500} // Optional
+        />
       ],
     },
     // {
@@ -801,23 +801,23 @@ const DepartmentDash = () => {
     {
       heading: "Payroll and Attendance",
       widgets: [
-        <GroupedBarGraph
-          labels={hrTargetAchievementData.labels}
-          datasets={hrTargetAchievementData.datasets}
-          graphWidth={1200} // Optional
-          graphHeight={500} // Optional
-        />,
+        <BasicGroupedBarGraph 
+        labels={hrTargetAchievementData.labels}
+        datasets={hrTargetAchievementData.datasets}
+        graphWidth={1200} // Optional
+        graphHeight={500} // Optional
+        />
       ],
     },
     {
       heading: "Performance",
       widgets: [
-        <GroupedBarGraph
-          labels={hrDeptWiseTaskData.labels}
-          datasets={hrDeptWiseTaskData.datasets}
-          graphWidth={1200} // Optional
-          graphHeight={500} // Optional
-        />,
+        <BasicGroupedBarGraph 
+        labels={hrDeptWiseTaskData.labels}
+        datasets={hrDeptWiseTaskData.datasets}
+        graphWidth={1200} // Optional
+        graphHeight={500} // Optional
+        /> 
       ],
     },
     {
@@ -848,10 +848,12 @@ const DepartmentDash = () => {
         <BasicTable
           data={topThreeEmployees}
           columns={topThreeEmployeesColumns}
+          title={"Top 3 performers"}
         />,
         <BasicTable
           data={employeePerformances}
           columns={employeePerformanceColumns}
+          title={"Top performers"}
         />,
       ],
     },
