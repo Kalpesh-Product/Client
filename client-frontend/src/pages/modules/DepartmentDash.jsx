@@ -1634,7 +1634,7 @@ const DepartmentDash = () => {
                     .map((section, index) => (
                       <WidgetSectionLeaveDashboard
                         key={index}
-                        heading={section.heading}
+                        // heading={section.heading}
                         widgets={section.widgets}
                       />
                     ))}
