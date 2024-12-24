@@ -61,7 +61,7 @@ const MontlyTasks = () => {
 
       <button
         onClick={addRow}
-        className="mt-4 w-50 justify-end w-50-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
+        className="mt-4 w-50 justify-end bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
       >
         Add More
       </button>

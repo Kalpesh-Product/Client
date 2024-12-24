@@ -16,6 +16,7 @@ import {
   TimePicker,
 } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 
 
 import dayjs from "dayjs";
@@ -26,7 +27,7 @@ const Events = () => {
   const [formData, setFormData] = useState({
     id: "",
     Title: "",
-    Date: null,
+    Date: dayjs(),
     Time: null,
     Participants: "",
     Agenda: "",
@@ -42,8 +43,8 @@ const Events = () => {
     setFormData({ ...formData, [field]: e.target.value });
   };
 
-  const handleDateChange = (date) => {
-    setFormData({ ...formData, Date: date });
+  const handleDateChange = (field,Date) => {
+    setFormData((prev) => ({ ...prev, [field]: Date }));
   };
 
   const handleTimeChange = (time) => {
@@ -185,6 +186,7 @@ const Events = () => {
                 if (activeStep === 0) {
                   return (
                     <>
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
                       <div className="bg-white  w-[31vw] rounded-lg z-10 relative overflow-y-auto max-h-[80vh]">
                         {/* Modal Content */}
 
@@ -198,7 +200,7 @@ const Events = () => {
                               {/* <h1 className="text-xl text-center my-2 font-bold">
                     Add Ticket
                   </h1> */}
-                             <LocalizationProvider dateAdapter={AdapterDayjs}>
+                             
                               <Box
                                 sx={{
                                   maxWidth: 600,
@@ -230,12 +232,28 @@ const Events = () => {
                                       {/* <LocalizationProvider
                                         dateAdapter={AdapterDayjs}
                                       > */}
-                                        <DatePicker
+                                       <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                        <DesktopDatePicker
                                           label="Date"
-                                          value={formData.Date}
-                                          onChange={handleDateChange}
+                                          
+                                          // value={
+                                          //   formData.Date ? dayjs(formData.Date) : null
+                                          // }
+                                          value={
+                                            formData.Date
+                                          }
+                                          
                                           sx={{ width: "100%" }}
-                                          inputFormat="yyyy-MM-dd"
+                                          // inputFormat="MM/DD/YYYY"
+                                          // onChange={(newValue) => {
+                                          //   if (newValue) {
+                                          //     const isoDate = dayjs(newValue).toISOString();
+                                          //     handleDateChange(isoDate); // Update with ISO format
+                                          //   }
+                                          // }}
+                                          onChange={(newValue) => {
+                                            handleDateChange("Date", newValue)
+                                          }}
                                           // Convert string to Dayjs
                                           // onChange={(newDate) => {
                                           //   if (newDate) {
@@ -251,8 +269,26 @@ const Events = () => {
                                             />
                                           )}
                                         />
+                                         </LocalizationProvider>
+                                        {/* <DesktopDatePicker
+                                                              label="Start Date"
+                                                              inputFormat="MM/DD/YYYY"
+                                                              value={
+                                                                formData.startDate ? dayjs(formData.startDate) : null
+                                                              }
+                                                              onChange={(newValue) => {
+                                                                if (newValue) {
+                                                                  const isoDate = dayjs(newValue).toISOString();
+                                                                  handleChange("startDate", isoDate); // Update with ISO format
+                                                                }
+                                                              }}
+                                                              renderInput={(params) => (
+                                                                <TextField {...params} fullWidth required />
+                                                              )}
+                                                            /> */}
+
                                         <br></br>
-                                        <TimePicker
+                                        {/* <TimePicker
                                           label="Time"
                                           value={formData.Time}
                                           onChange={handleTimeChange}
@@ -263,7 +299,7 @@ const Events = () => {
                                               margin="normal"
                                             />
                                           )}
-                                        />
+                                        /> */}
                                       {/* </LocalizationProvider> */}
                                       <TextField
                                         label="Agenda"
@@ -281,7 +317,7 @@ const Events = () => {
                                   
                                 </div>
                               </Box>
-                              </LocalizationProvider>
+                              
                             </div>
                           </div>
                         </div>
@@ -302,6 +338,7 @@ const Events = () => {
                         </div>
                         {/* Close button */}
                       </div>
+                      </LocalizationProvider>
                     </>
                   );
                 } else if (activeStep === 1) {
@@ -320,7 +357,7 @@ const Events = () => {
                         <div>
                           <div className="flex justify-between py-2 border-b">
                             <h1 className="font-semibold">Date</h1>
-                            <span>{formData.Date}</span>
+                            <span>{formData.Date.format("YYYY-MM-DD")}</span>
                           </div>
                         </div>
                         <div>
