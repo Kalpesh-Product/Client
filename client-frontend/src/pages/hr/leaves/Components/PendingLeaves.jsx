@@ -64,7 +64,7 @@ const PendingLeaves = () => {
         );
       },
     },
-    { field: "approvedBy", headerName: "Approved By", width: 200 },
+    // { field: "approvedBy", headerName: "Approved By", width: 200 },
     // {
     //   field: "priority",
     //   headerName: "Priority",
@@ -96,30 +96,30 @@ const PendingLeaves = () => {
     // },
     // { field: "requestDate", headerName: "Request Date", width: 150 },
 
-    // {
-    //   field: "approve",
-    //   headerName: "Approve",
-    //   width: 170,
-    //   // renderCell: (params) => (
-    //   cellRenderer: (params) => (
-    //     <Button
-    //       size="small"
-    //       // onClick={() => handleDelete(params.row)}
-    //       //   onClick={handleAccept}
-    //       variant="contained"
-    //       sx={{
-    //         backgroundColor: "green",
-    //         color: "white",
-    //         "&:hover": {
-    //           backgroundColor: "green",
-    //         },
-    //         padding: "4px 8px",
-    //         borderRadius: "0.375rem",
-    //       }}>
-    //       Approve
-    //     </Button>
-    //   ),
-    // },
+    {
+      field: "action",
+      headerName: "Action",
+      width: 170,
+      // renderCell: (params) => (
+      cellRenderer: (params) => (
+        <Button
+          size="small"
+          onClick={() => navigate("/hr/leaves/due-approvals")}
+          //   onClick={handleAccept}
+          variant="contained"
+          sx={{
+            backgroundColor: "blue",
+            color: "white",
+            "&:hover": {
+              backgroundColor: "blue",
+            },
+            padding: "4px 8px",
+            borderRadius: "0.375rem",
+          }}>
+          View Details
+        </Button>
+      ),
+    },
     // {
     //   field: "reject",
     //   headerName: "Reject",

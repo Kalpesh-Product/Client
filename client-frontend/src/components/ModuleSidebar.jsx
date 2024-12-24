@@ -72,6 +72,11 @@ const ModuleSidebar = ({ mainSideBar }) => {
 
   const frontendModules = [
     {
+      title: "Edit Live Theme",
+      route: "/frontend/live-theme",
+      icon: <HiColorSwatch />,
+    },
+    {
       title: "Themes",
       route: "/frontend/themes",
       icon: <HiColorSwatch />,
@@ -81,28 +86,28 @@ const ModuleSidebar = ({ mainSideBar }) => {
       route: "/frontend/updates",
       icon: <GrDocumentUpdate />,
     },
-    {
-      title: "Budget",
-      route: "/frontend/budget",
-      icon: <BsCashCoin />,
-      subMenus: [
-        {
-          title: "Budget Overview",
-          route: "/frontend/budget/overview",
-          icon: <BsCashCoin />,
-        },
-        {
-          title: "Budget Report",
-          route: "/frontend/budget/report",
-          icon: <BsCashCoin />,
-        },
-        {
-          title: "Payment Tracker",
-          route: "/frontend/budget/payment-tracker",
-          icon: <CgSearchLoading />,
-        },
-      ],
-    },
+    // {
+    //   title: "Budget",
+    //   route: "/frontend/budget",
+    //   icon: <BsCashCoin />,
+    //   subMenus: [
+    //     {
+    //       title: "Budget Overview",
+    //       route: "/frontend/budget/overview",
+    //       icon: <BsCashCoin />,
+    //     },
+    //     {
+    //       title: "Budget Report",
+    //       route: "/frontend/budget/report",
+    //       icon: <BsCashCoin />,
+    //     },
+    //     {
+    //       title: "Payment Tracker",
+    //       route: "/frontend/budget/payment-tracker",
+    //       icon: <BsCashCoin />,
+    //     },
+    //   ],
+    // },
   ];
 
   const hrModules = [
@@ -318,17 +323,17 @@ const ModuleSidebar = ({ mainSideBar }) => {
           ? []
           : [
               {
-                title: "Received Tickets",
+                title: "All Tickets",
                 route: "/it/tickets/view-tickets",
                 icon: <HiOutlineClipboardList />,
               },
             ]),
         ,
-        {
-          title: "My Tickets",
-          route: "/it/tickets/my-tickets",
-          icon: <HiOutlineClipboardList />,
-        },
+        // {
+        //   title: "My Tickets",
+        //   route: "/it/tickets/my-tickets",
+        //   icon: <HiOutlineClipboardList />,
+        // },
         ...(authUser.user.role === "Employee"
           ? []
           : [
@@ -338,16 +343,16 @@ const ModuleSidebar = ({ mainSideBar }) => {
                 icon: <MdOutlineManageAccounts />,
               },
             ]),
-        ...(authUser.user.role === "Master-Admin" ||
-        authUser.user.role === "Super-Admin"
-          ? [
-              {
-                title: "All Tickets",
-                route: "/it/tickets/all-tickets",
-                icon: <MdOutlineManageAccounts />,
-              },
-            ]
-          : []),
+        // ...(authUser.user.role === "Master-Admin" ||
+        // authUser.user.role === "Super-Admin"
+        //   ? [
+        //       {
+        //         title: "All Tickets",
+        //         route: "/it/tickets/all-tickets",
+        //         icon: <MdOutlineManageAccounts />,
+        //       },
+        //     ]
+        //   : []),
 
         ...(authUser.user.role === "Employee" &&
         authUser.user.department.find((dept) => dept.name === "Finance")
@@ -541,8 +546,7 @@ const ModuleSidebar = ({ mainSideBar }) => {
       <div
         className={`${
           isSidebarOpen ? "w-60" : "w-20"
-        } bg-white text-black flex-shrink-0 h-full sticky top-10 overflow-y-auto transition-all duration-300`}
-      >
+        } bg-white text-black flex-shrink-0 h-[90vh] sticky top-10 overflow-y-auto transition-all duration-300`}>
         {/*Dashboard */}
         <div className="flex flex-col gap-2 mt-5 px-3 relative">
           {/* Title/Dashboard */}
@@ -550,8 +554,7 @@ const ModuleSidebar = ({ mainSideBar }) => {
             onClick={() => navigate(`/${passedDepartment}/dashboard`)}
             className={`flex border-b-[1px] ${
               isSidebarOpen ? "pl-[1rem]" : "justify-center"
-            } items-center py-3 wono-blue wono-blue-text rounded-md `}
-          >
+            } items-center py-3 wono-blue wono-blue-text rounded-md `}>
             <div className="flex justify-center w-5 text-2xl">
               <MdOutlineViewModule />
             </div>
@@ -565,14 +568,12 @@ const ModuleSidebar = ({ mainSideBar }) => {
           {/* Collapse-button */}
           <Tooltip
             title={isSidebarOpen ? "Close" : "Collapse"}
-            placement="right"
-          >
+            placement="right">
             <button
               onClick={toggleSidebar}
               className={`text-black text-[0.8rem] p-2 hover:block  focus:outline-none text-end absolute top-[0.6rem] ${
                 isSidebarOpen ? "left-[11rem]" : "left-[3.2rem]"
-              } `}
-            >
+              } `}>
               {isSidebarOpen ? <FaArrowLeft /> : <FaArrowRightToBracket />}
             </button>
           </Tooltip>
@@ -596,8 +597,7 @@ const ModuleSidebar = ({ mainSideBar }) => {
                       location.pathname === route
                         ? "wono-blue border-r-4 border-[#0DB4EA] rounded-tl-md rounded-bl-md text-[#0DB4EA]"
                         : "bg-white"
-                    }`}
-                  >
+                    }`}>
                     <div className="flex justify-center w-5 text-2xl">
                       {icon}
                     </div>
@@ -614,8 +614,7 @@ const ModuleSidebar = ({ mainSideBar }) => {
                               stroke="currentColor"
                               className={`w-4 h-4 transform ${
                                 isDepartmentsOpen ? "rotate-180" : ""
-                              }`}
-                            >
+                              }`}>
                               <path
                                 strokeLinecap="round"
                                 strokeLinejoin="round"
@@ -642,16 +641,14 @@ const ModuleSidebar = ({ mainSideBar }) => {
                         <Tooltip
                           title={menu.title}
                           placement="right"
-                          key={subIndex}
-                        >
+                          key={subIndex}>
                           <div
                             onClick={() => navigate(menu.route)}
                             className={`flex items-center border-b-[1px] p-3 gap-3 cursor-pointer hover:wono-blue-dark hover:text-white hover:rounded-md  ${
                               location.pathname === menu.route
                                 ? "wono-blue border-r-4 border-b-[0px]  border-[#0DB4EA] rounded-tl-md rounded-bl-md text-[#0DB4EA]"
                                 : "bg-white"
-                            } `}
-                          >
+                            } `}>
                             <div className="flex justify-center w-6 text-[1rem]">
                               {menu.icon || <RiAppsLine />}
                             </div>
@@ -690,8 +687,7 @@ const ModuleSidebar = ({ mainSideBar }) => {
                     location.pathname === route
                       ? "wono-blue border-r-4 border-[#0DB4EA] rounded-tl-md rounded-bl-md text-[#0DB4EA]"
                       : "bg-white"
-                  }`}
-                >
+                  }`}>
                   <div className="flex justify-center w-5 text-2xl">{icon}</div>
 
                   {isSidebarOpen && (
@@ -733,16 +729,14 @@ const ModuleSidebar = ({ mainSideBar }) => {
                       <Tooltip
                         title={menu.title}
                         placement="right"
-                        key={subIndex}
-                      >
+                        key={subIndex}>
                         <div
                           onClick={() => navigate(menu.route)}
                           className={`flex items-center border-b-[1px] py-3 gap-3 cursor-pointer hover:wono-blue-dark hover:text-white hover:rounded-md  ${
                             location.pathname === menu.route
                               ? "wono-blue border-r-4 border-b-[0px]  border-[#0DB4EA] rounded-tl-md rounded-bl-md text-[#0DB4EA]"
                               : "bg-white"
-                          } `}
-                        >
+                          } `}>
                           <div className="flex justify-center w-6 text-[1rem]">
                             {menu.icon || <RiAppsLine />}
                           </div>
@@ -797,8 +791,7 @@ const ModuleSidebar = ({ mainSideBar }) => {
                     location.pathname === "/dashboard"
                       ? "wono-blue rounded-md text-[#0DB4EA]"
                       : "bg-white"
-                  }`}
-                >
+                  }`}>
                   <div className="flex justify-center w-6 text-[1.3rem]">
                     <FaCode />
                   </div>
@@ -821,8 +814,7 @@ const ModuleSidebar = ({ mainSideBar }) => {
                     location.pathname === "/dashboard"
                       ? "wono-blue rounded-md text-[#0DB4EA]"
                       : "bg-white"
-                  }`}
-                >
+                  }`}>
                   <div className="flex justify-center w-6 text-[1.3rem]">
                     <MdAccountBalance />
                   </div>
@@ -842,8 +834,7 @@ const ModuleSidebar = ({ mainSideBar }) => {
                     location.pathname === "/dashboard"
                       ? "wono-blue rounded-md text-[#0DB4EA]"
                       : "bg-white"
-                  }`}
-                >
+                  }`}>
                   <div className="flex justify-center w-6 text-[1.3rem]">
                     <BsCashCoin />
                   </div>
@@ -863,8 +854,7 @@ const ModuleSidebar = ({ mainSideBar }) => {
                     location.pathname === "/dashboard"
                       ? "wono-blue rounded-md text-[#0DB4EA]"
                       : "bg-white"
-                  }`}
-                >
+                  }`}>
                   <div className="flex justify-center w-6 text-[1.3rem]">
                     <FaBuildingUser />
                   </div>
@@ -887,8 +877,7 @@ const ModuleSidebar = ({ mainSideBar }) => {
                     location.pathname === "/dashboard"
                       ? "wono-blue rounded-md text-[#0DB4EA]"
                       : "bg-white"
-                  }`}
-                >
+                  }`}>
                   <div className="flex justify-center w-6 text-[1.3rem]">
                     <RiCustomerService2Line />
                   </div>
@@ -911,8 +900,7 @@ const ModuleSidebar = ({ mainSideBar }) => {
                     location.pathname === "/dashboard"
                       ? "wono-blue rounded-md text-[#0DB4EA]"
                       : "bg-white"
-                  }`}
-                >
+                  }`}>
                   <div className="flex justify-center w-6 text-[1.3rem]">
                     <SiMarketo />
                   </div>
@@ -935,8 +923,7 @@ const ModuleSidebar = ({ mainSideBar }) => {
                     location.pathname === "/dashboard"
                       ? "wono-blue rounded-md text-[#0DB4EA]"
                       : "bg-white"
-                  }`}
-                >
+                  }`}>
                   <div className="flex justify-center w-6 text-[1.3rem]">
                     <MdOutlineLocalCafe />
                   </div>
@@ -959,8 +946,7 @@ const ModuleSidebar = ({ mainSideBar }) => {
                     location.pathname === "/dashboard"
                       ? "wono-blue rounded-md text-[#0DB4EA]"
                       : "bg-white"
-                  }`}
-                >
+                  }`}>
                   <div className="flex justify-center w-6 text-[1.3rem]">
                     <MdOutlineWifiTethering />
                   </div>
@@ -980,8 +966,7 @@ const ModuleSidebar = ({ mainSideBar }) => {
                     location.pathname === "/dashboard"
                       ? "wono-blue rounded-md text-[#0DB4EA]"
                       : "bg-white"
-                  }`}
-                >
+                  }`}>
                   <div className="flex justify-center w-6 text-[1.3rem]">
                     <FaHandsHelping />
                   </div>
@@ -1004,8 +989,7 @@ const ModuleSidebar = ({ mainSideBar }) => {
                     location.pathname === "/dashboard"
                       ? "wono-blue rounded-md text-[#0DB4EA]"
                       : "bg-white"
-                  }`}
-                >
+                  }`}>
                   <div className="flex justify-center w-6 text-[1.3rem]">
                     <AiOutlineSecurityScan />
                   </div>

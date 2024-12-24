@@ -18,6 +18,7 @@ const handleRefreshToken = async (req, res, next) => {
         select: "roleTitle",
       })
       .populate({ path: "designation", select: "title" })
+      .populate({ path: "company", select: "companyName" })
       .lean();
     if (!user) return res.sendStatus(403);
 

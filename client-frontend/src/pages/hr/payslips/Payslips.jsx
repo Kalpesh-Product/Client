@@ -15,6 +15,7 @@ import { IoMdClose } from "react-icons/io";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import PayslipTest from "./PayslipTest";
+import DownloadableDiv from "./DownloadableDiv";
 
 const Payslips = () => {
   const location = useLocation();
@@ -483,7 +484,8 @@ const Payslips = () => {
         highlightEditedRow={highlightEditedRow} // Bind the state here
       /> */}
 
-      <PayslipTest />
+      {/* <PayslipTest /> */}
+      <DownloadableDiv />
 
       {/* {location.pathname === "/customer/tickets/my-tickets" && (
         <div>

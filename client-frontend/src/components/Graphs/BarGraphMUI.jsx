@@ -5,9 +5,6 @@ const BarGraphMUI = ({ data, title, graphWidth, graphHeight }) => {
   // Default data in case no data is passed from the parent component
   const defaultData = {
     months: [
-      "January",
-      "February",
-      "March",
       "April",
       "May",
       "June",
@@ -17,6 +14,9 @@ const BarGraphMUI = ({ data, title, graphWidth, graphHeight }) => {
       "October",
       "November",
       "December",
+      "January",
+      "February",
+      "March",
     ],
     uniqueCompanies: [10, 20, 15, 30, 25, 35, 40, 45, 50, 55, 60, 65],
   };

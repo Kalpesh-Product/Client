@@ -30,18 +30,16 @@ const CountCard = ({ count, uptime, title, totalMonths, annualCost, deptCount, m
     </div>
   </div>
 );
-const BudgetApproval = ({ budgetStatus, count, title }) => (
-  <div className="p-4 bg-gray-50 text-black rounded-lg text-start">
+const BudgetApproval = ({ budgetStatus, count, title, theme }) => (
+  <div className={`p-4 bg-${theme} text-white rounded-lg text-start flex justify-between h-full`}>
     <div>
       <h3 className="text-sm font-semibold">{title}</h3>
       <p className="text-2xl font-bold">{count}</p>
     </div>
-    <div className="flex  mt-2 items-center justify-between">
-      <div>
+      <div className="text-end">
         <h3 className="text-md font-semibold">Approval Status</h3>
         <p className="text-sm">{budgetStatus === false ? "Pending" : "Approved"}</p>
       </div>
-    </div>
   </div>
 );
 

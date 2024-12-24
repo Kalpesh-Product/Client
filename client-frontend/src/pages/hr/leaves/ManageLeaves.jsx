@@ -63,7 +63,7 @@ const ManageLeaves = () => {
     //   valueOptions: ["IT", "HR", "Tech", "Admin"],
     // },
     // { field: "date", headerName: "Date", width: 150 },
-    { field: "noOfLeaves", headerName: "No Of Leaves", width: 150 },
+    { field: "noOfLeaves", headerName: "No Of Days", width: 150 },
     // {
     //   field: "status",
     //   headerName: "Status",

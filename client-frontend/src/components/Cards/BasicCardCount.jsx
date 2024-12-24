@@ -1,11 +1,16 @@
 import React from "react";
 
-const BasicCardCount = ({title, data}) => {
+const BasicCardCount = ({ title, data, theme, subText, titleSize }) => {
   return (
     <div>
-      <div className="p-4">
-        <h3 className="text-lg font-semibold">{title}</h3>
-        <p className="text-3xl font-bold">{data}</p>
+      <div className="p-4 flex justify-between">
+        <div>
+          <p className="text-5xl font-bold">{data}</p>
+        </div>
+        <div className="text-center flex flex-col">
+          <h1 className={`bg-${theme} font-semibold ${titleSize ? titleSize : "text-xl"}`}>{title}</h1>
+          <h2 className="text-sm">{subText}</h2>
+        </div>
       </div>
     </div>
   );

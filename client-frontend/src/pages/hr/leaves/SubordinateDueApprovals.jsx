@@ -234,8 +234,8 @@ const SubordinateDueApprovals = () => {
       priority: "High",
       createdB: "Approved",
       createdBy: "Allan Silveira",
-      status: "Approved",
-      approvedBy: "Kalpesh Naik",
+      status: "Pending",
+      approvedBy: "N/A",
     },
     {
       id: 1,
@@ -247,8 +247,8 @@ const SubordinateDueApprovals = () => {
       priority: "High",
       createdB: "Approved",
       createdBy: "Allan Silveira",
-      status: "Approved",
-      approvedBy: "Kalpesh Naik",
+      status: "Pending",
+      approvedBy: "N/A",
     },
     // {
     //   id: 2,

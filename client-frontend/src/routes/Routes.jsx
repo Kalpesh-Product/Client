@@ -28,6 +28,9 @@ import Tasklist from "../pages/Tasklist";
 import TasklistTable from "../pages/TasklistTable";
 import PersistLogin from "../layouts/PersistLogin";
 import AuthLayout from "../layouts/AuthLayout";
+import Assets from "../pages/cms/asset/Assets";
+import Tickets from "../pages/cms/tickets/Tickets";
+import RoomBookings from "../pages/cms/room-booking/RoomBookings";
 
 const router = createBrowserRouter([
   {
@@ -56,6 +59,62 @@ const router = createBrowserRouter([
               {
                 path: "/access",
                 element: <AccessPage />,
+              },
+              {
+                path: "/assets",
+                element: <Assets />,
+              },
+              {
+                path: "/assets/manage",
+                element: <Assets />,
+              },
+              {
+                path: "/assets/my-assets",
+                element: <Assets />,
+              },
+              {
+                path: "/assets/reports",
+                element: <Assets />,
+              },
+              {
+                path: "/tickets",
+                element: <Tickets />,
+              },
+              {
+                path: "/tickets/my-tickets",
+                element: <Tickets />,
+              },
+              {
+                path: "/tickets/view-tickets",
+                element: <Tickets />,
+              },
+              {
+                path: "/tickets/members",
+                element: <Tickets />,
+              },
+              {
+                path: "/tickets/ticket-reports",
+                element: <Tickets />,
+              },
+              {
+                path: "/tickets/all-tickets",
+                element: <Tickets />,
+              },
+              {
+                path: "/meetings",
+                element: <RoomBookings />,
+              },
+              {
+                path: "/meetings/booking",
+                element: <RoomBookings />,
+              },
+              {
+                path: "/meetings/add-room",
+                element: <RoomBookings />,
+              },
+              {
+                path: "/meetings/reports",
+                element: <RoomBookings />,
               },
               {
                 path: "/landing",
@@ -285,11 +344,15 @@ const router = createBrowserRouter([
                 element: <DepartmentDash />,
               },
               {
+                path: "/frontend/live-theme",
+                element: <DepartmentDash />,
+              },
+              {
                 path: "/frontend/themes",
                 element: <DepartmentDash />,
               },
               {
-                path: "/frontend/themes/view-theme/:id",
+                path: "/frontend/themes/view-theme/",
                 element: <DepartmentDash />,
               },
               {
