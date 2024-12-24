@@ -12,6 +12,7 @@ import FormStepper from "../components/FormStepper";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { IoMdClose } from "react-icons/io";
 import { motion } from "framer-motion";
+import { format } from "date-fns";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import {
   Checkbox,
@@ -113,11 +114,16 @@ const Calender = () => {
   };
 
   const handleEventClick = (info) => {
+    const startDate = format(new Date(info.event.start), "do MMMM yyyy");
+    const endDate = info.event.end
+      ? format(new Date(info.event.end), "do MMMM yyyy")
+      : startDate;
+
     setSelectedEvent({
       title: info.event.title,
       description: info.event.extendedProps.description,
-      start: dayjs(info.event.start).format("YYYY-MM-DD"),
-      end: dayjs(info.event.end).format("YYYY-MM-DD"),
+      start: startDate,
+      end: endDate,
       type: info.event.extendedProps.type,
     });
     setShowEventDetails(true);
@@ -174,7 +180,7 @@ const Calender = () => {
               right: "today prev,next",
             }}
             dateClick={(info) => {
-              const clickedDate = dayjs(info.date).startOf("day"); 
+              const clickedDate = dayjs(info.date).startOf("day");
               setSelectedDate(info.dateStr);
               setShowModal(true);
               setEventDetails((prev) => ({
@@ -334,7 +340,7 @@ const Calender = () => {
                   type="button"
                   onClick={() => setShowEventDetails(false)}
                   className="p-2 bg-white text-red-500 border border-red-200 
-                                   hover:border-red-400 text-2xl rounded-md"
+                               hover:border-red-400 text-2xl rounded-md"
                 >
                   <IoMdClose />
                 </motion.button>

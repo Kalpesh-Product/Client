@@ -37,6 +37,7 @@ const getAllEvents = async (req, res, next) => {
         title: event.title,
         start: event.start,
         end: event.end,
+        allDay: event.allDay,
         description: event.description,
         backgroundColor: event.type === "holiday" ? "green" : "#5E5F9C",
         extendedProps: {
