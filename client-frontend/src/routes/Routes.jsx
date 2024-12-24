@@ -328,6 +328,10 @@ const router = createBrowserRouter([
                 element: <DepartmentDash />,
               },
               {
+                path: "/finance/budget/payment-tracker",
+                element: <DepartmentDash />,
+              },
+              {
                 path: "/finance/vendor",
                 element: <DepartmentDash />,
               },

@@ -128,12 +128,13 @@ import SopPdfContainer from "../hr/company-handbook/SopPdfContainer";
 import PolicyPdfContainer from "../hr/company-handbook/PolicyPdfContainer";
 import ThemeGrid from "../website-builder/ThemeGrid";
 import ViewTheme from "../website-builder/ViewTheme";
-import BiznestHome from "../../assets/builder-preview/live-theme/biznest-home.jpeg"
-import BiznestAbout from "../../assets/builder-preview/live-theme/biznest-about.jpeg"
-import BiznestGallery from "../../assets/builder-preview/live-theme/biznest-gallery.jpeg"
-import BiznestContact from "../../assets/builder-preview/live-theme/biznest-contact.png"
+import BiznestHome from "../../assets/builder-preview/live-theme/biznest-home.jpeg";
+import BiznestAbout from "../../assets/builder-preview/live-theme/biznest-about.jpeg";
+import BiznestGallery from "../../assets/builder-preview/live-theme/biznest-gallery.jpeg";
+import BiznestContact from "../../assets/builder-preview/live-theme/biznest-contact.png";
 import StackedChart from "../../components/Graphs/StackedChart";
-
+import BudgetDash from "../finance/BudgetDash";
+import PaymentTracker from "../finance/PaymentTracker";
 
 const DepartmentDash = () => {
   const navigate = useNavigate();
@@ -275,8 +276,7 @@ const DepartmentDash = () => {
       },
     ],
   };
-  
-  
+
   const techUniqueData = {
     months: [
       "April",
@@ -426,7 +426,7 @@ const DepartmentDash = () => {
           graphWidth={600}
           title={"Unique Companies"}
         />,
-        <StackedChart />
+        <StackedChart />,
         // <BarGraphMUI
         //   graphHeight={400}
         //   graphWidth={600}
@@ -996,22 +996,38 @@ const DepartmentDash = () => {
                   {/* Modern Content Examples */}
                   {value === 0 && (
                     <div className="h-[90vh] overflow-y-auto">
-                      <img className="w-full" src={BiznestHome} alt="BiznestHome" />
+                      <img
+                        className="w-full"
+                        src={BiznestHome}
+                        alt="BiznestHome"
+                      />
                     </div>
                   )}
                   {value === 1 && (
                     <div className="h-[90vh] overflow-y-auto">
-                      <img className="w-full" src={BiznestAbout} alt="BiznestAbout" />
+                      <img
+                        className="w-full"
+                        src={BiznestAbout}
+                        alt="BiznestAbout"
+                      />
                     </div>
                   )}
                   {value === 2 && (
-                    <div className="h-[90vh] overflow-y-auto" >
-                      <img className="w-full" src={BiznestGallery} alt="BiznestGallery" />
+                    <div className="h-[90vh] overflow-y-auto">
+                      <img
+                        className="w-full"
+                        src={BiznestGallery}
+                        alt="BiznestGallery"
+                      />
                     </div>
                   )}
                   {value === 3 && (
-                    <div className="h-[90vh] overflow-y-auto" >
-                     <img className="w-full" src={BiznestContact} alt="BiznestContact" />
+                    <div className="h-[90vh] overflow-y-auto">
+                      <img
+                        className="w-full"
+                        src={BiznestContact}
+                        alt="BiznestContact"
+                      />
                     </div>
                   )}
                 </Box>
@@ -1561,12 +1577,16 @@ const DepartmentDash = () => {
         {/* Finance submodules */}
         {location.pathname.startsWith("/finance") && (
           <>
-            {(location.pathname === "/finance" ||
-              location.pathname === "/finance/dashboard") && (
+            {location.pathname === "/finance" ||
+            location.pathname === "/finance/dashboard" ? (
               <div className="bg-gray-100 p-4 rounded-lg  mt-4">
                 <WidgetSection heading="Finance" widgets={financeWidgets} />
               </div>
-            )}
+            ) : location.pathname === "/finance/budget" ? (
+              <BudgetDash />
+            ) : location.pathname === "/finance/budget/payment-tracker" ? (
+              <PaymentTracker />
+            ) : null}
           </>
         )}
         {/* Sales submodules */}

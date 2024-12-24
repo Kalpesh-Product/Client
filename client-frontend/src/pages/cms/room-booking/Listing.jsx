@@ -182,6 +182,7 @@ export default function Listing() {
 
       <div className="w-full overflow-x-auto">
         <FullCalendar
+          contentHeight={"auto"}
           displayEventTime={false}
           displayEventEnd={false}
           plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}

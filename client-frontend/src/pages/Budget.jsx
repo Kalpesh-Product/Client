@@ -26,12 +26,13 @@ const Budget = () => {
   useEffect(() => {
     const storedUser = JSON.parse(localStorage.getItem("user"));
     setUSer(storedUser);
-  }, []);
+  }, []); 
 
   //   Budget category dropdown
   const handleViewChange = (event) => {
     setView(event.target.value);
   };
+
 
   // Quarter Change
   const handleQuarterChange = (event, newValue) => {
@@ -108,7 +109,7 @@ const expenseColumns = [
 
   return (
     <>
-      {location.pathname === "/frontend/budget" ? (
+      {location.pathname === "/finance/budget" ? (
         <>
           <div className="p-6 bg-gray-100 min-h-screen">
             <div className="max-w-7xl mx-auto bg-white shadow-md rounded-lg p-6">
