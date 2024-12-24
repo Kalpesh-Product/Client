@@ -27,7 +27,7 @@ const MontlyTasks = () => {
       
       
         {rows.map((row) => (
-          <div key={row.id} className="flex justify-between gap-10">
+          <div key={row.id} className="flex justify-between gap-10 mt-5">
             <input
               type="checkbox"
               className="form-checkbox h-5 w-5 text-blue-600"

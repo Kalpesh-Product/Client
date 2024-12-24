@@ -1,41 +1,335 @@
 import React, { useState } from "react";
-import Box from "@mui/material/Box";
-import InputLabel from "@mui/material/InputLabel";
+
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
-import { toast } from "sonner";
-import AgTable from "../../../components/AgTable";
-import { useLocation } from "react-router-dom";
-import { NewModal } from "../../../components/NewModal";
-import FormStepper from "../../../components/FormStepper";
-import WonoButton from "../../../components/Buttons/WonoButton";
-import { motion } from "framer-motion";
-import { IoMdClose } from "react-icons/io";
-import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import useAuth from "../../../hooks/useAuth";
-import dayjs from "dayjs";
+import Accordion from "@mui/material/Accordion";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import AccordionDetails from "@mui/material/AccordionDetails";
+
+import Typography from "@mui/material/Typography";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+
 import { AgGridReact } from "ag-grid-react";
+import AgTable from "../../../components/AgTable";
 
 const Applicants = () => {
-  const [selectedValue,setSelectedValue] = useState("");
+  const [selectedValue, setSelectedValue] = useState("");
+
+  const onRemarkChange = (department, rowId, value) => {
+    setEmployeeData((prevData) =>
+      prevData.map((row) => (row.id === rowId ? { ...row, remark: value } : row))
+    );
+  };
+
+  //new
+  const tableData = [
+    { department: "Finance", payroll: 2 },
+    { department: "HR", payroll: 2 },
+    { department: "Tech", payroll: 2 },
+    { department: "IT", payroll: 2 },
+    { department: "Sales", payroll: 2 },
+    { department: "Administration", payroll: 2 },
+  ];
+
+  const [employeeData,setEmployeeData] = useState({
+    Finance: [
+      {
+        Name: "John Doe",
+        Role: "Accountant",
+        salary: 5000,
+        Email: "anushri@gmail.com",
+        date: "2024-01-26",
+        Manager: "Kalpesh Naik",
+        ProfileLink: "https://example.com/profile/john",
+        Remark: ""
+      },
+      {
+        Name: "Jane Smith",
+        Role: "Auditor",
+        salary: 6000,
+        Email: "anushri@gmail.com",
+        date: "2024-01-26",
+        Manager: "Kalpesh Naik",
+        ProfileLink: "https://example.com/profile/john",
+        Remark: ""
+        
+
+        
+
+      },
+    ],
+    HR: [
+      {
+        Name: "Alice Brown",
+        Role: "Recruiter",
+        salary: 4000,
+        Email: "anushri@gmail.com",
+        date: "2024-01-26",
+        Manager: "Kalpesh Naik",
+        ProfileLink: "https://example.com/profile/john",
+        Remark: ""
+      },
+      {
+        Name: "Bob White",
+        Role: "HR Manager",
+        salary: 7000,
+        Email: "anushri@gmail.com",
+        date: "2024-01-26",
+        Manager: "Kalpesh Naik",
+        ProfileLink: "https://example.com/profile/john",
+        Remark: ""
+      },
+    ],
+    Tech: [
+      {
+        Name: "Charlie Green",
+        Role: "Developer",
+        salary: 8000,
+        Email: "anushri@gmail.com",
+        date: "2024-01-26",
+        Manager: "Kalpesh Naik",
+        ProfileLink: "https://example.com/profile/john",
+        Remark: ""
+      },
+
+      {
+        Name: "Daisy Blue",
+        Role: "Tester",
+        salary: 5000,
+        Email: "anushri@gmail.com",
+        date: "2024-01-26",
+        Manager: "Kalpesh Naik",
+        ProfileLink: "https://example.com/profile/john",
+        Remark: ""
+      },
+    ],
+    IT: [
+      {
+        Name: "Eve Black",
+        Role: "SysAdmin",
+        salary: 5500,
+        Email: "anushri@gmail.com",
+        date: "2024-01-26",
+        Manager: "Kalpesh Naik",
+        ProfileLink: "https://example.com/profile/john",
+        Remark: ""
+      },
+      {
+        Name: "Frank Red",
+        Role: "Network Admin",
+        salary: 6000,
+        Email: "anushri@gmail.com",
+        date: "2024-01-26",
+        Manager: "Kalpesh Naik",
+        ProfileLink: "https://example.com/profile/john",
+        Remark: ""
+      },
+    ],
+    Sales: [
+      {
+        Name: "Grace Pink",
+        Role: "Sales Exec",
+        salary: 4500,
+        Email: "anushri@gmail.com",
+        date: "2024-01-26",
+        Manager: "Kalpesh Naik",
+        ProfileLink: "https://example.com/profile/john",
+        Remark: ""
+      },
+      {
+        Name: "Hank Yellow",
+        Role: "Sales Manager",
+        salary: 6500,
+        Email: "anushri@gmail.com",
+        date: "2024-01-26",
+        Manager: "Kalpesh Naik",
+        ProfileLink: "https://example.com/profile/john",
+        Remark: ""
+      },
+    ],
+    Administration: [
+      {
+        Name: "Ivy Purple",
+        Role: "Admin Assistant",
+        salary: 4000,
+        Email: "anushri@gmail.com",
+        date: "2024-01-26",
+        Manager: "Kalpesh Naik",
+        ProfileLink: "https://example.com/profile/john",
+        Remark: ""
+      },
+      {
+        Name: "Jack Orange",
+        Role: "Office Manager",
+        salary: 6000,
+        Email: "anushri@gmail.com",
+        date: "2024-01-26",
+        Manager: "Kalpesh Naik",
+        ProfileLink: "https://example.com/profile/john",
+        Remark: ""
+      },
+    ],
+  
+
+  })
+
+  // const employeeData = {
+  //   Finance: [
+  //     {
+  //       Name: "John Doe",
+  //       Role: "Accountant",
+  //       salary: 5000,
+  //       Email: "anushri@gmail.com",
+  //       date: "2024-01-26",
+  //       Manager: "Kalpesh Naik",
+  //       ProfileLink: "https://example.com/profile/john",
+  //       Remark: ""
+  //     },
+  //     {
+  //       Name: "Jane Smith",
+  //       Role: "Auditor",
+  //       salary: 6000,
+  //       Email: "anushri@gmail.com",
+  //       date: "2024-01-26",
+  //       Manager: "Kalpesh Naik",
+  //       ProfileLink: "https://example.com/profile/john",
+  //       Remark: ""
+        
+
+        
+
+  //     },
+  //   ],
+  //   HR: [
+  //     {
+  //       Name: "Alice Brown",
+  //       Role: "Recruiter",
+  //       salary: 4000,
+  //       Email: "anushri@gmail.com",
+  //       date: "2024-01-26",
+  //       Manager: "Kalpesh Naik",
+  //       ProfileLink: "https://example.com/profile/john",
+  //       Remark: ""
+  //     },
+  //     {
+  //       Name: "Bob White",
+  //       Role: "HR Manager",
+  //       salary: 7000,
+  //       Email: "anushri@gmail.com",
+  //       date: "2024-01-26",
+  //       Manager: "Kalpesh Naik",
+  //       ProfileLink: "https://example.com/profile/john",
+  //       Remark: ""
+  //     },
+  //   ],
+  //   Tech: [
+  //     {
+  //       Name: "Charlie Green",
+  //       Role: "Developer",
+  //       salary: 8000,
+  //       Email: "anushri@gmail.com",
+  //       date: "2024-01-26",
+  //       Manager: "Kalpesh Naik",
+  //       ProfileLink: "https://example.com/profile/john",
+  //       Remark: ""
+  //     },
+
+  //     {
+  //       Name: "Daisy Blue",
+  //       Role: "Tester",
+  //       salary: 5000,
+  //       Email: "anushri@gmail.com",
+  //       date: "2024-01-26",
+  //       Manager: "Kalpesh Naik",
+  //       ProfileLink: "https://example.com/profile/john",
+  //       Remark: ""
+  //     },
+  //   ],
+  //   IT: [
+  //     {
+  //       Name: "Eve Black",
+  //       Role: "SysAdmin",
+  //       salary: 5500,
+  //       Email: "anushri@gmail.com",
+  //       date: "2024-01-26",
+  //       Manager: "Kalpesh Naik",
+  //       ProfileLink: "https://example.com/profile/john",
+  //       Remark: ""
+  //     },
+  //     {
+  //       Name: "Frank Red",
+  //       Role: "Network Admin",
+  //       salary: 6000,
+  //       Email: "anushri@gmail.com",
+  //       date: "2024-01-26",
+  //       Manager: "Kalpesh Naik",
+  //       ProfileLink: "https://example.com/profile/john",
+  //       Remark: ""
+  //     },
+  //   ],
+  //   Sales: [
+  //     {
+  //       Name: "Grace Pink",
+  //       Role: "Sales Exec",
+  //       salary: 4500,
+  //       Email: "anushri@gmail.com",
+  //       date: "2024-01-26",
+  //       Manager: "Kalpesh Naik",
+  //       ProfileLink: "https://example.com/profile/john",
+  //       Remark: ""
+  //     },
+  //     {
+  //       Name: "Hank Yellow",
+  //       Role: "Sales Manager",
+  //       salary: 6500,
+  //       Email: "anushri@gmail.com",
+  //       date: "2024-01-26",
+  //       Manager: "Kalpesh Naik",
+  //       ProfileLink: "https://example.com/profile/john",
+  //       Remark: ""
+  //     },
+  //   ],
+  //   Administration: [
+  //     {
+  //       Name: "Ivy Purple",
+  //       Role: "Admin Assistant",
+  //       salary: 4000,
+  //       Email: "anushri@gmail.com",
+  //       date: "2024-01-26",
+  //       Manager: "Kalpesh Naik",
+  //       ProfileLink: "https://example.com/profile/john",
+  //       Remark: ""
+  //     },
+  //     {
+  //       Name: "Jack Orange",
+  //       Role: "Office Manager",
+  //       salary: 6000,
+  //       Email: "anushri@gmail.com",
+  //       date: "2024-01-26",
+  //       Manager: "Kalpesh Naik",
+  //       ProfileLink: "https://example.com/profile/john",
+  //       Remark: ""
+  //     },
+  //   ],
+  // };
+
+  //new//
 
   const columns = [
     { field: "id", headerName: "ID" },
     { field: "Name", headerName: "Name", width: 200 },
-    { field: "Email", headerName: "Email"}, 
-    { field: "date", headerName: "Date"}, 
+    { field: "Email", headerName: "Email" },
+    { field: "date", headerName: "Date" },
     {
-       field: "Role", headerName: "Role"
+      field: "Role",
+      headerName: "Role",
     },
+
     {
-       field: "Department", headerName: "Department"
-    },
-    {
-      field:"ProfileLink", headerName: "Resume", 
+      field: "ProfileLink",
+      headerName: "Resume",
       cellRenderer: (params) => {
         return (
           <a
@@ -47,7 +341,7 @@ const Applicants = () => {
             View Profile
           </a>
         );
-      }, 
+      },
     },
 
     {
@@ -100,9 +394,35 @@ const Applicants = () => {
         );
       },
     },
+
     {
-      field: "Manager", headerName: "Manager", width: 200 ,
+      field: "Remark",
+      headerName: "Remark",
+      cellRenderer: (params) => {
+        // const department = params.context?.department; 
+        return (
+          <input
+          type="text"
+          placeholder="Add Remark"
+          value={params.data.remark}
+          onChange={(e) => onRemarkChange(params.data.id, e.target.value)}
+          style={{
+            width: "100%",
+            padding: "4px",
+            boxSizing: "border-box",
+          }}
+        />
+        );
+      },
+      width: 200,
     },
+
+    {
+      field: "Manager",
+      headerName: "Manager",
+      width: 200,
+    },
+
     {
       field: "send",
       headerName: "Send",
@@ -112,7 +432,7 @@ const Applicants = () => {
         <Button
           size="small"
           // onClick={() => handleDelete(params.row)}
-          
+
           // onClick={handleDeleteTicket}
           variant="contained"
           sx={{
@@ -129,9 +449,7 @@ const Applicants = () => {
         </Button>
       ),
     },
-    
   ];
-
 
   const allRows = [
     {
@@ -139,10 +457,10 @@ const Applicants = () => {
       Name: "Anushri Bhagat",
       Email: "anushri@gmail.com",
       date: "2024-01-26",
-      Role:"Frontend Developer",
+      Role: "Frontend Developer",
       Department: "Tech",
-      Manager:"Kalpesh Naik",
-      ProfileLink:"https://example.com/profile/john",
+      Manager: "Kalpesh Naik",
+      ProfileLink: "https://example.com/profile/john",
       Resume: "",
     },
     {
@@ -150,22 +468,21 @@ const Applicants = () => {
       Name: "Anushri Bhagat",
       Email: "anushri@gmail.com",
       date: "2024-01-26",
-      Role:"UI/UX Developer",
+      Role: "UI/UX Developer",
       Department: "Tech",
-      Manager:"Kalpesh Naik",
-      ProfileLink:"https://example.com/profile/john",
+      Manager: "Kalpesh Naik",
+      ProfileLink: "https://example.com/profile/john",
       Resume: "",
-      
     },
     {
       id: 3,
       Name: "Anushri Bhagat",
       Email: "anushri@gmail.com",
       date: "2024-01-26",
-      Role:"PHP Developer",
+      Role: "PHP Developer",
       Department: "Tech",
-      Manager:"Kalpesh Naik",
-      ProfileLink:"https://example.com/profile/john",
+      Manager: "Kalpesh Naik",
+      ProfileLink: "https://example.com/profile/john",
       Resume: "",
     },
     {
@@ -173,10 +490,10 @@ const Applicants = () => {
       Name: "Anushri Bhagat",
       Email: "anushri@gmail.com",
       date: "2024-01-26",
-      Role:"Senior React Developer",
+      Role: "Senior React Developer",
       Department: "Tech",
-      Manager:"Kalpesh Naik",
-      ProfileLink:"https://example.com/profile/john",
+      Manager: "Kalpesh Naik",
+      ProfileLink: "https://example.com/profile/john",
       Resume: "",
     },
     {
@@ -184,10 +501,10 @@ const Applicants = () => {
       Name: "Anushri Bhagat",
       Email: "anushri@gmail.com",
       date: "2024-01-26",
-      Role:"React Developer Intern",
+      Role: "React Developer Intern",
       Department: "Tech",
-      Manager:"Kalpesh Naik",
-      ProfileLink:"https://example.com/profile/john",
+      Manager: "Kalpesh Naik",
+      ProfileLink: "https://example.com/profile/john",
       Resume: "",
     },
     {
@@ -195,10 +512,10 @@ const Applicants = () => {
       Name: "Anushri Bhagat",
       Email: "anushri@gmail.com",
       date: "2024-01-26",
-      Role:"Backend Developer",
+      Role: "Backend Developer",
       Department: "Tech",
-      Manager:"Kalpesh Naik",
-      ProfileLink:"https://example.com/profile/john",
+      Manager: "Kalpesh Naik",
+      ProfileLink: "https://example.com/profile/john",
       Resume: "",
     },
     {
@@ -206,10 +523,10 @@ const Applicants = () => {
       Name: "Anushri Bhagat",
       Email: "anushri@gmail.com",
       date: "2024-01-26",
-      Role:"Manager",
+      Role: "Manager",
       Department: "Tech",
-      Manager:"Kalpesh Naik",
-      ProfileLink:"https://example.com/profile/john",
+      Manager: "Kalpesh Naik",
+      ProfileLink: "https://example.com/profile/john",
       Resume: "",
     },
     {
@@ -217,10 +534,10 @@ const Applicants = () => {
       Name: "Anushri Bhagat",
       Email: "anushri@gmail.com",
       date: "2024-01-26",
-      Role:"Sr. Angular developer",
+      Role: "Sr. Angular developer",
       Department: "Tech",
-      Manager:"Kalpesh Naik",
-      ProfileLink:"https://example.com/profile/john",
+      Manager: "Kalpesh Naik",
+      ProfileLink: "https://example.com/profile/john",
       Resume: "",
     },
     {
@@ -228,10 +545,10 @@ const Applicants = () => {
       Name: "Anushri Bhagat",
       Email: "anushri@gmail.com",
       date: "2024-01-26",
-      Role:"Jr. React Developer",
+      Role: "Jr. React Developer",
       Department: "Tech",
-      Manager:"Kalpesh Naik",
-      ProfileLink:"https://example.com/profile/john",
+      Manager: "Kalpesh Naik",
+      ProfileLink: "https://example.com/profile/john",
       Resume: "",
     },
     {
@@ -239,10 +556,10 @@ const Applicants = () => {
       Name: "Anushri Bhagat",
       Email: "anushri@gmail.com",
       date: "2024-01-26",
-      Role:"PHP Developer",
+      Role: "PHP Developer",
       Department: "Tech",
-      Manager:"Kalpesh Naik",
-      ProfileLink:"https://example.com/profile/john",
+      Manager: "Kalpesh Naik",
+      ProfileLink: "https://example.com/profile/john",
       Resume: "",
     },
   ];
@@ -254,24 +571,60 @@ const Applicants = () => {
         <div className="flex">
           <div className="mb-2 flex justify-between">
             <h1 className="text-3xl"></h1>
-            <button className="px-6 py-2 rounded-lg text-white wono-blue-dark hover:bg-[#3cbce7] transition-shadow shadow-md hover:shadow-lg active:shadow-inner">
+            {/* <button className="px-6 py-2 rounded-lg text-white wono-blue-dark hover:bg-[#3cbce7] transition-shadow shadow-md hover:shadow-lg active:shadow-inner">
               + Add Applicants
-            </button>
+            </button> */}
           </div>
         </div>
       </div>
 
-      <div className="w-full overflow-hidden">
-      <div className="ag-theme-alpine w-full"
-                  style={{ height: 500, width: "100%" }}>
-      <AgGridReact
-        rowData={allRows} // Use the state here
-        columnDefs={columns}
-        domLayout="autoHeight"
-        
-      />
-      </div>
-      </div>
+      {/* AGgRIDtABLE START */}
+
+      {/* <div className="w-full overflow-hidden">
+        <div
+          className="ag-theme-alpine w-full"
+          style={{ height: 500, width: "100%" }}
+        >
+          <AgGridReact
+            rowData={allRows} // Use the state here
+            columnDefs={columns}
+            domLayout="autoHeight"
+          />
+        </div>
+      </div> */}
+
+      {/* AGgRIDtABLE END */}
+
+      {/* Accordian Start */}
+      {tableData.map((department) => (
+        <Accordion key={department.department}>
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls={`${department.department}-content`}
+            id={`${department.department}-header`}
+          >
+            <div className="flex justify-between w-full px-2">
+              <Typography className="font-medium text-lg">
+                {department.department}
+              </Typography>
+              <Typography className="font-medium text-lg">
+                Applicants: {department.payroll.toLocaleString()}
+              </Typography>
+            </div>
+          </AccordionSummary>
+          <AccordionDetails>
+            <AgTable
+              data={employeeData[department.department] || []}
+              columns={columns}
+              paginationPageSize={5}
+              highlightFirstRow={false}
+              highlightEditedRow={false}
+            />
+          </AccordionDetails>
+        </Accordion>
+      ))}
+      {/* Accordion End */}
+
       {/* <div
                   className="ag-theme-alpine w-full"
                   style={{ height: 500, width: "100%" }}

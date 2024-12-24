@@ -18,8 +18,8 @@ import {
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 
-
 import dayjs from "dayjs";
+import { toast } from "sonner";
 
 const Events = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -43,12 +43,12 @@ const Events = () => {
     setFormData({ ...formData, [field]: e.target.value });
   };
 
-  const handleDateChange = (field,Date) => {
+  const handleDateChange = (field, Date) => {
     setFormData((prev) => ({ ...prev, [field]: Date }));
   };
 
-  const handleTimeChange = (time) => {
-    setFormData({ ...formData, Time: time });
+  const handleTimeChange = (field, Time) => {
+    setFormData({ ...formData, [field]: Time });
   };
 
   const handleNextStep = (e, handleNext) => {
@@ -59,6 +59,11 @@ const Events = () => {
     //   Date: formData.Date ? format(formData.Date, "yyyy-MM-dd") : "",
     //   Time: formData.Time ? format(formData.Time, "HH:mm") : "",
     // };
+  };
+
+  const handleAddTicket = () => {
+    toast.success("Event is Added Successfully");
+    setIsModalOpen(false);
   };
 
   const steps = ["Add Events", "Verify Events"];
@@ -186,91 +191,92 @@ const Events = () => {
                 if (activeStep === 0) {
                   return (
                     <>
-                    <LocalizationProvider dateAdapter={AdapterDayjs}>
-                      <div className="bg-white  w-[31vw] rounded-lg z-10 relative overflow-y-auto max-h-[80vh]">
-                        {/* Modal Content */}
+                      <LocalizationProvider dateAdapter={AdapterDayjs}>
+                        <div className="bg-white  w-[31vw] rounded-lg z-10 relative overflow-y-auto max-h-[80vh]">
+                          {/* Modal Content */}
 
-                        {/* Modal Header */}
+                          {/* Modal Header */}
 
-                        {/* Modal Body START */}
-                        <div className=" w-full">
-                          {/* <div>AddT icket Form</div> */}
-                          <div className="">
-                            <div className=" mx-auto">
-                              {/* <h1 className="text-xl text-center my-2 font-bold">
+                          {/* Modal Body START */}
+                          <div className=" w-full">
+                            {/* <div>AddT icket Form</div> */}
+                            <div className="">
+                              <div className=" mx-auto">
+                                {/* <h1 className="text-xl text-center my-2 font-bold">
                     Add Ticket
                   </h1> */}
-                             
-                              <Box
-                                sx={{
-                                  maxWidth: 600,
-                                  paddingY: 3,
-                                  bgcolor: "background.paper",
-                                  borderRadius: 2,
-                                }}
-                                // className="bg-white p-6 rounded-lg shadow-md mx-auto">
-                                className="bg-white py-6 rounded-lg"
-                              >
-                                {/* Personal Information */}
-                                {/* <h2 className="text-lg font-semibold mb-4">Add Ticket</h2> */}
-                                <div className="grid grid-cols-1 gap-4">
-                                  {/* Name, Mobile, Email, DOB fields */}
 
+                                <Box
+                                  sx={{
+                                    maxWidth: 600,
+                                    paddingY: 3,
+                                    bgcolor: "background.paper",
+                                    borderRadius: 2,
+                                  }}
+                                  // className="bg-white p-6 rounded-lg shadow-md mx-auto">
+                                  className="bg-white py-6 rounded-lg"
+                                >
+                                  {/* Personal Information */}
+                                  {/* <h2 className="text-lg font-semibold mb-4">Add Ticket</h2> */}
                                   <div className="grid grid-cols-1 gap-4">
-                                    <TextField
-                                      label="Event Name"
-                                      value={formData.Title}
-                                      onChange={handleChange("Title")}
-                                      fullWidth
-                                    />
-                                  </div>
-                                  <div className="grid grid-cols-1 gap-4">
-                                    <FormControl fullWidth>
-                                      {/* <InputLabel id="suggestion-select-label">
+                                    {/* Name, Mobile, Email, DOB fields */}
+
+                                    <div className="grid grid-cols-1 gap-4">
+                                      <TextField
+                                        label="Event Name"
+                                        value={formData.Title}
+                                        onChange={handleChange("Title")}
+                                        fullWidth
+                                      />
+                                    </div>
+                                    <div className="grid grid-cols-1 gap-4">
+                                      <FormControl fullWidth>
+                                        {/* <InputLabel id="suggestion-select-label">
                                       Ticket Title
                                     </InputLabel> */}
-                                      {/* <LocalizationProvider
+                                        {/* <LocalizationProvider
                                         dateAdapter={AdapterDayjs}
                                       > */}
-                                       <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                        <DesktopDatePicker
-                                          label="Date"
-                                          
-                                          // value={
-                                          //   formData.Date ? dayjs(formData.Date) : null
-                                          // }
-                                          value={
-                                            formData.Date
-                                          }
-                                          
-                                          sx={{ width: "100%" }}
-                                          // inputFormat="MM/DD/YYYY"
-                                          // onChange={(newValue) => {
-                                          //   if (newValue) {
-                                          //     const isoDate = dayjs(newValue).toISOString();
-                                          //     handleDateChange(isoDate); // Update with ISO format
-                                          //   }
-                                          // }}
-                                          onChange={(newValue) => {
-                                            handleDateChange("Date", newValue)
-                                          }}
-                                          // Convert string to Dayjs
-                                          // onChange={(newDate) => {
-                                          //   if (newDate) {
-                                          //     const formattedDate = newDate.format("YYYY-MM-DD"); // Format date
-                                          //      // Store as string
-                                          //   }
-                                          // }}
-                                          // format="DD/MM/YYYY" // Display format in the DatePicker
-                                          renderInput={(params) => (
-                                            <TextField
-                                              {...params}
-                                              className="w-full"
-                                            />
-                                          )}
-                                        />
-                                         </LocalizationProvider>
-                                        {/* <DesktopDatePicker
+                                        <LocalizationProvider
+                                          dateAdapter={AdapterDayjs}
+                                        >
+                                          <DesktopDatePicker
+                                            label="Date"
+                                            // value={
+                                            //   formData.Date ? dayjs(formData.Date) : null
+                                            // }
+                                            value={formData.Date}
+                                            sx={{ width: "100%" }}
+                                            // inputFormat="MM/DD/YYYY"
+                                            // onChange={(newValue) => {
+                                            //   if (newValue) {
+                                            //     const isoDate = dayjs(newValue).toISOString();
+                                            //     handleDateChange(isoDate); // Update with ISO format
+                                            //   }
+                                            // }}
+                                            onChange={(newValue) => {
+                                              handleDateChange(
+                                                "Date",
+                                                newValue
+                                              );
+                                            }}
+                                            // Convert string to Dayjs
+                                            // onChange={(newDate) => {
+                                            //   if (newDate) {
+                                            //     const formattedDate = newDate.format("YYYY-MM-DD"); // Format date
+                                            //      // Store as string
+                                            //   }
+                                            // }}
+                                            // format="DD/MM/YYYY" // Display format in the DatePicker
+                                            renderInput={(params) => (
+                                              <TextField
+                                                {...params}
+                                                className="w-full"
+                                              />
+                                            )}
+                                          />
+
+                                          {/* <DesktopDatePicker
                                                               label="Start Date"
                                                               inputFormat="MM/DD/YYYY"
                                                               value={
@@ -287,57 +293,61 @@ const Events = () => {
                                                               )}
                                                             /> */}
 
-                                        <br></br>
-                                        {/* <TimePicker
-                                          label="Time"
-                                          value={formData.Time}
-                                          onChange={handleTimeChange}
-                                          renderInput={(params) => (
-                                            <TextField
-                                              {...params}
-                                              fullWidth
-                                              margin="normal"
-                                            />
-                                          )}
-                                        /> */}
-                                      {/* </LocalizationProvider> */}
-                                      <TextField
-                                        label="Agenda"
-                                        variant="outlined"
-                                        fullWidth
-                                        margin="normal"
-                                        multiline
-                                        rows={4}
-                                        value={formData.Agenda}
-                                        onChange={handleChange("Agenda")}
-                                      />
-                                    </FormControl>
-                                  </div>
+                                          <br></br>
+                                          <TimePicker
+                                            label="Time"
+                                            value={formData.Time}
+                                            // onChange={handleTimeChange}
+                                            onChange={(newValue) => {
+                                              handleTimeChange(
+                                                "Time",
+                                                newValue
+                                              );
+                                            }}
+                                            renderInput={(params) => (
+                                              <TextField
+                                                {...params}
+                                                fullWidth
+                                                margin="normal"
+                                              />
+                                            )}
+                                          />
+                                        </LocalizationProvider>
 
-                                  
-                                </div>
-                              </Box>
-                              
+                                        {/* </LocalizationProvider> */}
+                                        <TextField
+                                          label="Agenda"
+                                          variant="outlined"
+                                          fullWidth
+                                          margin="normal"
+                                          multiline
+                                          rows={4}
+                                          value={formData.Agenda}
+                                          onChange={handleChange("Agenda")}
+                                        />
+                                      </FormControl>
+                                    </div>
+                                  </div>
+                                </Box>
+                              </div>
                             </div>
                           </div>
-                        </div>
-                        {/* Modal Body END */}
+                          {/* Modal Body END */}
 
-                        {/* Modal Footer */}
+                          {/* Modal Footer */}
 
-                        <div className="sticky bottom-0 bg-white py-6 z-20 flex justify-center">
-                          <div className="flex justify-center items-center w-full">
-                            <button
-                              className="wono-blue-dark text-white py-2 px-4 rounded-md hover:bg-blue-600 w-full"
-                              
-                              onClick={(e) => handleNextStep(e, handleNext)}
-                            >
-                              Next
-                            </button>
+                          <div className="sticky bottom-0 bg-white py-6 z-20 flex justify-center">
+                            <div className="flex justify-center items-center w-full">
+                              <button
+                                className="wono-blue-dark text-white py-2 px-4 rounded-md hover:bg-blue-600 w-full"
+                                onClick={(e) => handleNextStep(e, handleNext)}
+                              >
+                                Next
+                              </button>
+                            </div>
                           </div>
+                          {/* Close button */}
                         </div>
-                        {/* Close button */}
-                      </div>
                       </LocalizationProvider>
                     </>
                   );
@@ -363,7 +373,11 @@ const Events = () => {
                         <div>
                           <div className="flex justify-between py-2 border-b">
                             <h1 className="font-semibold">Time</h1>
-                            <span>{formData.Time}</span>
+                            <span>
+                              {formData.Time
+                                ? formData.Time.format("HH:mm") // Using dayjs for formatting
+                                : "No time selected"}
+                            </span>
                           </div>
                         </div>
                         {/* <div>
@@ -384,7 +398,7 @@ const Events = () => {
 
                           <WonoButton
                             content={"Submit"}
-                            // onClick={() => handleAddTicket(newTicket,holidayList)}
+                            onClick={handleAddTicket}
                           />
                         </div>
                       </div>
