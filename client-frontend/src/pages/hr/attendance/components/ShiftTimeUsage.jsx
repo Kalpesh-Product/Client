@@ -58,7 +58,7 @@ const ShiftTimeUsage = () => {
           data={averageHours}
           theme="white"
           subText="Hours worked on average"
-          onClick={() => navigate("/hr/attendance/details/average-hours")}
+          onClick={() => navigate("/hr/attandence/shift-time-usage")}
         />
 
         {/* Average Break Time */}
@@ -67,7 +67,7 @@ const ShiftTimeUsage = () => {
           data={averageBreakTime}
           theme="white"
           subText="Break time on average"
-          onClick={() => navigate("/hr/attendance/details/average-break-time")}
+          onClick={() => navigate("/hr/attandence/shift-time-usage")}
         />
 
         {/* Average Attendance */}
@@ -76,7 +76,7 @@ const ShiftTimeUsage = () => {
           data={averageAttendance}
           theme="white"
           subText="Attendance percentage"
-          onClick={() => navigate("/hr/attendance/details/average-attendance")}
+          onClick={() => navigate("/hr/attandence/shift-time-usage")}
         />
       </div>
     </div>

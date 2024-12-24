@@ -131,12 +131,13 @@ import ThemeGrid from "../website-builder/ThemeGrid";
 import ViewTheme from "../website-builder/ViewTheme";
 import CompanyHandbookTabs from "../hr/company-handbook/CompanyHandbookTabs";
 import RaiseTicketForm from "../cms/tickets/components/RaiseTicketForm";
-import BiznestHome from "../../assets/builder-preview/live-theme/biznest-home.jpeg";;
-import BiznestAbout from "../../assets/builder-preview/live-theme/biznest-about.jpeg";;
-import BiznestGallery from "../../assets/builder-preview/live-theme/biznest-gallery.jpeg";;
-import BiznestContact from "../../assets/builder-preview/live-theme/biznest-contact.png";;
+import BiznestHome from "../../assets/builder-preview/live-theme/biznest-home.jpeg";
+import BiznestAbout from "../../assets/builder-preview/live-theme/biznest-about.jpeg";
+import BiznestGallery from "../../assets/builder-preview/live-theme/biznest-gallery.jpeg";
+import BiznestContact from "../../assets/builder-preview/live-theme/biznest-contact.png";
 import StackedChart from "../../components/Graphs/StackedChart";
-import BasicGroupedBarGraph from "../../components/Graphs/BasicGroupedBarGraph";import BudgetDash from "../finance/BudgetDash";
+import BasicGroupedBarGraph from "../../components/Graphs/BasicGroupedBarGraph";
+import BudgetDash from "../finance/BudgetDash";
 import PaymentTracker from "../finance/PaymentTracker";
 
 const DepartmentDash = () => {
