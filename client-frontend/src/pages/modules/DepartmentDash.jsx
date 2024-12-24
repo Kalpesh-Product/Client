@@ -127,6 +127,7 @@ import RaiseTicketButton from "../cms/tickets/components/RaiseTicketButton";
 import SopPdfContainer from "../hr/company-handbook/SopPdfContainer";
 import PolicyPdfContainer from "../hr/company-handbook/PolicyPdfContainer";
 import ThemeGrid from "../website-builder/ThemeGrid";
+import ViewTheme from "../website-builder/ViewTheme";
 
 const DepartmentDash = () => {
   const navigate = useNavigate();
@@ -239,6 +240,8 @@ const DepartmentDash = () => {
       ],
     },
   ];
+  const utilisedData = [123, 96, 100, 100, 90, 97, 100, 101, 113, 100, 93, 104];
+
   const techAllocatedBudgetData = {
     labels: [
       "April",
@@ -257,22 +260,17 @@ const DepartmentDash = () => {
     datasets: [
       {
         label: "Allocated",
-        data: [
-          3000, 2500, 4000, 6000, 5000, 6400, 7900, 8000, 4000, 6000, 7000,
-          4500,
-        ], // Example targets
-        backgroundColor: "rgba(54, 162, 235, 0.7)", // Blue
+        data: Array(12).fill(100), // Allocated is always 100%
+        backgroundColor: "rgba(100, 162, 235, 0.7)", // Blue
       },
       {
         label: "Utilised",
-        data: [
-          3100, 2400, 4000, 6000, 4500, 6200, 7900, 8100, 4500, 6000, 6500,
-          4700,
-        ], // Example achievements
-        backgroundColor: "rgba(75, 192, 192, 0.7)", // Teal
+        data: utilisedData, // Utilised values
       },
     ],
   };
+  
+  
   const techUniqueData = {
     months: [
       "April",
@@ -393,12 +391,16 @@ const DepartmentDash = () => {
       widgets: [
         <BasicCardCount
           theme={"white"}
-          title={"Projected Per Unit Cost"}
+          title={"Projected"}
+          subText={"(Per Unit Cost)"}
+          titleSize={"text-3xl"}
           data={"23"}
         />,
         <BasicCardCount
           theme={"white"}
-          title={"Actual Per Unit Cost"}
+          title={"Actual"}
+          subText={"(Per Unit Cost)"}
+          titleSize={"text-3xl"}
           data={"23"}
         />,
         // <BasicCardCount theme={"black"} title={"Additional Budget Requested"} data={"23"} />,
@@ -1068,19 +1070,15 @@ const DepartmentDash = () => {
                   <ThemeGrid />
                 </div>
               </div>
-            ) : location.pathname.includes("/frontend/themes/view-theme/") &&
-              selectedTheme ? (
+            ) : location.pathname.includes("/frontend/themes/view-theme/") ? (
               <>
-                <div className="p-6 w-full">
+                {/* <div className="p-6 w-full">
                   <h2 className="text-2xl font-bold mb-6">
                     {selectedTheme.name}
                   </h2>
                   <div className="flex flex-col lg:flex-row justify-between gap-[15rem] bg-white p-2 rounded-md">
                     <div className="h-full flex flex-col gap-4 w-full">
                       <h1 className="text-3xl font-semibold">INCLUSIONS</h1>
-                      {/* <p className="text-gray-700 mb-3">
-                        {selectedTheme.description}
-                      </p> */}
                       <ul className="list-disc pl-5 my-3 text-md">
                         {selectedTheme.features.map((feature, index) => (
                           <li key={index} className="text-gray-600">
@@ -1089,15 +1087,6 @@ const DepartmentDash = () => {
                         ))}
                       </ul>
                       <div className="flex flex-col justify-between gap-2">
-                        {/* <button
-                          onClick={() => {
-                            setOpen(true);
-                          }}
-                          className="wono-blue-dark w-[50%] text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition"
-                        >
-                          View Demo
-                        </button> */}
-
                         <button
                           onClick={() =>
                             window.open(selectedTheme.demoLink, "_blank")
@@ -1146,13 +1135,8 @@ const DepartmentDash = () => {
                       </div>
                     </div>
                   </div>
-                  {/* <button
-                    onClick={() => navigate("/frontend/themes")}
-                    className="mt-8 text-blue-500 underline"
-                  >
-                    Go Back
-                  </button> */}
-                </div>
+                </div> */}
+                <ViewTheme />
 
                 <NewModal open={open} onClose={handleClose}>
                   <div className="motion-preset-expand w-full h-full">

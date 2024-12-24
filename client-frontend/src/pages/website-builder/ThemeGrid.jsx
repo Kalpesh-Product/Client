@@ -122,12 +122,12 @@ const ThemeGrid = () => {
             <div
               className="theme-grid w-full h-full overflow-hidden shadow-lg"
               key={index}
+              onClick={() => {
+                navigate("/frontend/themes/view-theme/", { state: { image } }); // Pass theme data
+                window.scrollTo({ top: 0, behavior: "instant" });
+              }}
             >
               <img
-                onClick={() => {
-                  navigate("/themes/products", { state: { image } });
-                  window.scrollTo({ top: 0, behavior: "instant" });
-                }}
                 src={image.src}
                 alt={image.alt}
                 className="w-full h-full object-cover transition-transform duration-200 hover:scale-110 cursor-pointer"
@@ -140,12 +140,16 @@ const ThemeGrid = () => {
           <div className="themePage-featured-grid grid grid-cols-2 gap-4">
             <div className="themePage-featured-grid-1 flex flex-col">
               <div className="themePage-featured-header">
-                <h1 className="text-4xl text-left mb-8">Customize it your way</h1>
+                <h1 className="text-4xl text-left mb-8">
+                  Customize it your way
+                </h1>
               </div>
               <div className="themePage-featured-content mb-8 pl-12">
                 <ul className="text-lg">
                   <li className="mb-2">1000's advanced web capabilities</li>
-                  <li className="mb-2">Intuitive drag and drop website editor</li>
+                  <li className="mb-2">
+                    Intuitive drag and drop website editor
+                  </li>
                   <li className="mb-2">
                     Powerful AI features for smart customization
                   </li>
@@ -180,7 +184,9 @@ const ThemeGrid = () => {
         <div className="themePage-website-features-section px-4 py-16 bg-white">
           <div className="themePage-website-features">
             <div className="themePage-website-header mb-16 text-left">
-              <h1 className="text-4xl">A website builder engineered for growth</h1>
+              <h1 className="text-4xl">
+                A website builder engineered for growth
+              </h1>
             </div>
             <div className="themePage-website-features-grid grid grid-cols-3 gap-32">
               {themeWebsiteGridData.map((item, index) => (
