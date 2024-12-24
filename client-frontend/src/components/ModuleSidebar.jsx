@@ -203,11 +203,11 @@ const ModuleSidebar = ({ mainSideBar }) => {
         },
       ],
     },
-    // {
-    //   title: "SOP",
-    //   route: "/hr/sops",
-    //   icon: <HiCurrencyDollar />,
-    // },
+    {
+      title: "SOP",
+      route: "/hr/sops",
+      icon: <HiCurrencyDollar />,
+    },
     // {
     //   title: "Policies",
     //   route: "/hr/policies",

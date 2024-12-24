@@ -126,6 +126,7 @@ import EmployeeAgreementPdfContainer from "../hr/employment-agreement/EmployeeAg
 import RaiseTicketButton from "../cms/tickets/components/RaiseTicketButton";
 import SopPdfContainer from "../hr/company-handbook/SopPdfContainer";
 import PolicyPdfContainer from "../hr/company-handbook/PolicyPdfContainer";
+import LeaveTabs from "../hr/leaves/LeaveTabs";
 
 const DepartmentDash = () => {
   const navigate = useNavigate();
@@ -1275,83 +1276,20 @@ const DepartmentDash = () => {
                 {/* Leave Widgets */}
                 {/* <LeaveWidget1 /> */}
 
-                <div className="bg-gray-100 p-4 rounded-lg mt-4">
-                  <div className="mb-8 flex justify-between">
-                    <h1 className="text-3xl  font-bold">Key Insights</h1>
-                    {/* <div className=" flex gap-4">
-                
-
-                      {user.role === "Employee" && user.department === "IT" && (
-                        <div>
-                          <span className="text-2xl">Status: </span>
-                          <button
-                            onClick={toggleStatus}
-                            className={`px-6 py-2 rounded-lg text-white transition-shadow shadow-md hover:shadow-lg active:shadow-inner ${
-                              isAvailable
-                                ? "bg-green-400 hover:bg-green-300"
-                                : "bg-red-400 hover:bg-red-300"
-                            }`}>
-                            {isAvailable ? "Available" : "Unavailable"}
-                          </button>
-                        </div>
-                      )}
-                 
-
-                      <button
-                        onClick={handleOpenTicket}
-                        className="px-6 py-2 rounded-lg text-white wono-blue-dark hover:bg-[#3cbce7] transition-shadow shadow-md hover:shadow-lg active:shadow-inner">
-                        Raise Ticket
-                      </button>
-                    </div> */}
+                <div className="bg-gray-100 p-4 rounded-lg ">
+                  <div className="mb-4 flex justify-between">
+                    <h1 className="text-2xl  font-bold">Leave Management</h1>
                   </div>
 
-                  {/* {hrWidgets
-                    .filter((section) => section.subModule === "leaves")
-                    .map((section, index) => (
-                      <WidgetSection
-                        key={index}
-                        heading={section.heading}
-                        widgets={section.widgets}
-                      />
-                    ))} */}
-                  {/* {hrWidgets
-                    .filter((section) => section.subModule === "leaves")
-                    .map((section, index) => (
-                      <WidgetSectionLeaveDashboard
-                        key={index}
-                        heading={section.heading}
-                        widgets={section.widgets}
-                      />
-                    ))} */}
-                  <LeaveWidgetsContainer />
-                  {/* {hrWidgets
-                    .filter((section) => section.subModule === "leaves")
-                    .map((section, index) => (
-                      <ButtonSection
-                        key={index}
-                        // heading={section.heading}
-                        widgets={section.widgets}
-                      />
-                    ))} */}
+                  <LeaveTabs />
 
-                  {authUser.user.role === "Admin" && (
-                    <div className="flex w-full flex-1 flex-grow gap-x-4">
-                      {/* <TicketsRemainingWidget
-                      totalStock={120}
-                      remainingStock={100}
-                      assetType="Tickets"
-                    />
+                  {/* <LeaveWidgetsContainer /> */}
 
-                    <TicketsRemainingWidget
-                      totalStock={3}
-                      remainingStock={1}
-                      assetType="Available Members"
-                    /> */}
-                    </div>
-                  )}
-                  {/* <AssetAllocationWidget /> */}
+                  {/* {authUser.user.role === "Admin" && (
+                    <div className="flex w-full flex-1 flex-grow gap-x-4"></div>
+                  )} */}
 
-                  <div>
+                  {/* <div>
                     <MyLeavesButton />
                   </div>
                   <div className=" ">
@@ -1360,17 +1298,10 @@ const DepartmentDash = () => {
                         Leaves Pending For Approval
                       </h2>
                     </div>
-                    {/* <p>Today's tickets Table Component</p> */}
-                    {/* <TodaysTickets /> */}
-                    {/* <MyTickets /> */}
-                    <PendingLeaves />
-                  </div>
-                  {/* <p>x</p> */}
-                </div>
 
-                {/* <p>Leave Widgets Here</p> */}
-                {/* Pending Leaves */}
-                {/* <p>Pending Leaves Here</p> */}
+                    <PendingLeaves />
+                  </div> */}
+                </div>
               </>
             ) : location.pathname === "/hr/leaves/pending-leaves" ? (
               <>

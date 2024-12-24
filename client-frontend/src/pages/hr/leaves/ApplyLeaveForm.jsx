@@ -20,7 +20,7 @@ import { IoMdClose } from "react-icons/io";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
-const SubordinateDueApprovals = () => {
+const ApplyLeaveForm = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -42,7 +42,7 @@ const SubordinateDueApprovals = () => {
     { field: "leaveType", headerName: "Leave Type", width: 200 },
     { field: "leavePeriod", headerName: "Leave Period", width: 200 },
     { field: "hours", headerName: "Hours", width: 200 },
-    { field: "createdBy", headerName: "Created By", width: 200 },
+    { field: "description", headerName: "Description", width: 200 },
     {
       field: "status",
       headerName: "Status",
@@ -64,7 +64,7 @@ const SubordinateDueApprovals = () => {
         );
       },
     },
-    // { field: "approvedBy", headerName: "Approved By", width: 200 },
+    { field: "approvedBy", headerName: "Approved By", width: 200 },
     // {
     //   field: "priority",
     //   headerName: "Priority",
@@ -96,50 +96,30 @@ const SubordinateDueApprovals = () => {
     // },
     // { field: "requestDate", headerName: "Request Date", width: 150 },
 
-    {
-      field: "actions",
-      headerName: "Actions",
-      width: 170,
-      // renderCell: (params) => (
-      cellRenderer: (params) => (
-        <div className="flex gap-2">
-          <Button
-            size="small"
-            // onClick={() => handleDelete(params.row)}
-            // onClick={handleAccept}
-            onClick={handleApprove}
-            variant="contained"
-            sx={{
-              backgroundColor: "green",
-              color: "white",
-              "&:hover": {
-                backgroundColor: "green",
-              },
-              padding: "4px 8px",
-              borderRadius: "0.375rem",
-            }}>
-            Approve
-          </Button>
-          <Button
-            size="small"
-            // onClick={() => handleDelete(params.row)}
-            // onClick={handleAccept}
-            onClick={handleReject}
-            variant="contained"
-            sx={{
-              backgroundColor: "#EF4444",
-              color: "white",
-              "&:hover": {
-                backgroundColor: "#DC2626",
-              },
-              padding: "4px 8px",
-              borderRadius: "0.375rem",
-            }}>
-            Reject
-          </Button>
-        </div>
-      ),
-    },
+    // {
+    //   field: "approve",
+    //   headerName: "Approve",
+    //   width: 170,
+    //   // renderCell: (params) => (
+    //   cellRenderer: (params) => (
+    //     <Button
+    //       size="small"
+    //       // onClick={() => handleDelete(params.row)}
+    //       //   onClick={handleAccept}
+    //       variant="contained"
+    //       sx={{
+    //         backgroundColor: "green",
+    //         color: "white",
+    //         "&:hover": {
+    //           backgroundColor: "green",
+    //         },
+    //         padding: "4px 8px",
+    //         borderRadius: "0.375rem",
+    //       }}>
+    //       Approve
+    //     </Button>
+    //   ),
+    // },
     // {
     //   field: "reject",
     //   headerName: "Reject",
@@ -229,54 +209,46 @@ const SubordinateDueApprovals = () => {
 
   // const [tickets, setTickets] = useState(allRows);
 
-  const handleApprove = () => {
-    toast.success("Leave Approved");
-  };
-
-  const handleReject = () => {
-    toast.error("Leave Rejected");
-  };
-
   const allRows = [
     {
       id: 1,
-      fromDate: "Nov 26 2024",
-      toDate: "Nov 26 2024",
+      fromDate: "Dec 29 2024",
+      toDate: "Dec 29 2024",
       leaveType: "Privileged Leave",
       leavePeriod: "Single",
       hours: "9.00",
       priority: "High",
-      createdB: "Pending",
+      description: "Privileged Leave",
       createdBy: "Allan Silveira",
 
       status: "Pending",
-      approvedBy: "N/A",
+      approvedBy: "Abrar Shaikh",
     },
     {
       id: 1,
-      fromDate: "Nov 7 2024",
-      toDate: "Nov 7 2024",
+      fromDate: "Dec 26 2024",
+      toDate: "Dec 26 2024",
       leaveType: "Privileged Leave",
       leavePeriod: "Partial",
       hours: "4.00",
       priority: "High",
-      createdB: "Approved",
+      description: "Laptop Repair",
       createdBy: "Allan Silveira",
-      status: "Pending",
-      approvedBy: "N/A",
+      status: "Rejected",
+      approvedBy: "Abrar Shaikh",
     },
     {
       id: 1,
-      fromDate: "Nov 2 2024",
-      toDate: "Nov 2 2024",
+      fromDate: "Dec 22 2024",
+      toDate: "Dec 22 2024",
       leaveType: "Privileged Leave",
       leavePeriod: "Partial",
       hours: "3.00",
       priority: "High",
-      createdB: "Approved",
+      description: "Family Function",
       createdBy: "Allan Silveira",
-      status: "Pending",
-      approvedBy: "N/A",
+      status: "Approved",
+      approvedBy: "Abrar Shaikh",
     },
     // {
     //   id: 2,
@@ -388,10 +360,17 @@ const SubordinateDueApprovals = () => {
 
   const newTicket = {
     id: rows.length + 1,
-    leaveType: "Sick Leave",
-    priority: "Medium",
+    fromDate: "Dec 30 2024",
+    toDate: "Dec 30 2024",
+    leaveType: "Privileged Leave",
+    leavePeriod: "Single",
+    hours: "9.00",
+    priority: "High",
+    description: "Privileged Leave",
+    createdBy: "Allan Silveira",
+
     status: "Pending",
-    department: "IT",
+    approvedBy: "Kalpesh Naik",
     requestDate: new Date().toISOString().split("T")[0], // Today's date
   };
 
@@ -413,6 +392,7 @@ const SubordinateDueApprovals = () => {
     setRows((prevRows) => [newTicket, ...prevRows]); // Update the state
     toast.success("Applied for a new leave.");
     closeModal(); // Optionally close the modal after the alert
+    navigate("/hr/leaves/my-leaves");
   };
 
   // ADD TICKET MODAL END
@@ -475,82 +455,102 @@ const SubordinateDueApprovals = () => {
   };
 
   return (
-    <div className="w-[72vw] md:w-full transition-all duration-200 ease-in-out bg-white p-2 rounded-md">
-      {/* <div className="bg-green-500">
-        <h2>Today's Tickets</h2>
-      </div> */}
+    <div className="w-full md:w-full transition-all duration-200 ease-in-out  p-2 pb-0 pt-10 rounded-md">
+      <div className="flex gap-4  justify-center w-full">
+        <div className="bg-white  w-full rounded-lg z-10 relative overflow-y-auto max-h-[80vh]">
+          {/* Modal Content */}
 
-      {/* <div>
-        <h2 className="text-lg">Today's Tickets</h2>
-        <br />
-      </div> */}
-
-      {/* <div className="mb-2 flex justify-between">
-        <h1 className="text-3xl"></h1>
-        <button
-          onClick={openModal}
-          className="px-6 py-2 rounded-lg text-white wono-blue-dark hover:bg-[#3cbce7] transition-shadow shadow-md hover:shadow-lg active:shadow-inner">
-          Raise Ticket
-        </button>
-      </div> */}
-
-      <div className="flex gap-4 mb-4 justify-between">
-        {/* <div className="pt-2">Filter :</div> */}
-
-        {/* <div className=" flex">
-          <CSVLink
-            data={filteredRows} // Pass the filtered rows for CSV download
-            headers={csvHeaders} // Pass the CSV headers
-            filename="tickets_report.csv" // Set the filename for the CSV file
-            className="wono-blue-dark hover:bg-blue-700 text-white text-sm font-bold py-2 px-4 rounded h-9 mt-2">
-            Export Report
-          </CSVLink>
-        </div> */}
-
-        {/* <div className=" flex">
-          <div className="mb-2 flex justify-between">
-            <h1 className="text-3xl"></h1>
-            <button
-              onClick={openModal}
-              className="px-6 py-2 rounded-lg text-white wono-blue-dark hover:bg-[#3cbce7] transition-shadow shadow-md hover:shadow-lg active:shadow-inner">
-              Raise Ticket
-            </button>
+          {/* Modal Header */}
+          <div>
+            <h2 className="text-3xl font-bold mb-4 text-center">
+              Apply For Leave
+            </h2>
           </div>
-        </div> */}
-      </div>
 
-      {/* Tickets datatable START */}
+          {/* Modal Body START */}
+          <div className=" w-full">
+            {/* <div>AddT icket Form</div> */}
+            <div className="">
+              <div className=" mx-auto">
+                <Box
+                  sx={{
+                    Width: "100%",
+                    // paddingY: 3,
+                    bgcolor: "background.paper",
+                    borderRadius: 2,
+                  }}
+                  className="bg-white pt-3 pb-10 rounded-lg w-full">
+                  {/* <div className="grid grid-cols-1 gap-4"> */}
+                  <div className="w-full  flex justify-between items-center">
+                    <div className="w-[300px]">
+                      <FormControl fullWidth>
+                        <InputLabel id="leave-type-select-label">
+                          Leave Type
+                        </InputLabel>
+                        <Select
+                          labelId="leave-type-select-label"
+                          id="leave-type-select"
+                          // value={department}
+                          label="Department"
+                          // onChange={handleChange}
+                        >
+                          <MenuItem value="Sick Leave">Sick Leave</MenuItem>
+                          <MenuItem value="Casual Leave">Casual Leave</MenuItem>
+                          <MenuItem value="Privileged Leave">
+                            Privileged Leave
+                          </MenuItem>
+                          {/* <MenuItem value="Admin">Admin</MenuItem> */}
+                        </Select>
+                      </FormControl>
+                    </div>
+                    <div className="w-[300px]">
+                      <FormControl fullWidth>
+                        <LocalizationProvider dateAdapter={AdapterDayjs}>
+                          <DatePicker
+                            label="Date"
+                            sx={{ width: "100%" }}
+                            format="DD/MM/YYYY" // Display format in the DatePicker
+                            renderInput={(params) => (
+                              <TextField {...params} className="w-full" />
+                            )}
+                          />
+                        </LocalizationProvider>
+                      </FormControl>
+                    </div>
+                    <div className="sticky bottom-0 bg-white py-6 z-20 flex justify-center w-[200px]">
+                      <div className="flex justify-center items-center w-full">
+                        <button
+                          className="wono-blue-dark text-white py-2 px-4 rounded-md hover:bg-blue-600 w-full"
+                          // onClick={handleAddTicket}>
+                          // onClick={() => handleNextStep(handleNext)}
+                          onClick={() => handleAddTicket(newTicket)}>
+                          Apply
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </Box>
+              </div>
+            </div>
+          </div>
+          {/* Modal Body END */}
 
-      {/* <DataGrid
-          rows={filteredRows}
-          columns={columns}
-          initialState={{ pagination: { paginationModel } }}
-          pageSizeOptions={[5, 10]}
-          sx={{ border: 0, width: "75vw" }}
-        /> */}
+          {/* Modal Footer */}
 
-      {/* <AgTable data={filteredRows} columns={columns} highlightFirstRow={true} /> */}
-      {/* <AgTable
-        data={filteredRows}
-        columns={columns}
-        highlightFirstRow={false}
-      /> */}
-
-      <AgTable
-        data={rows} // Use the state here
-        columns={columns}
-        highlightFirstRow={highlightFirstRow} // Bind the state here
-        highlightEditedRow={highlightEditedRow} // Bind the state here
-      />
-
-      {/* {location.pathname === "/customer/tickets/my-tickets" && (
-        <div>
-          <br />
-          <br />
-          <br />
-          <br />
+          {/* <div className="sticky bottom-0 bg-white py-6 z-20 flex justify-center">
+            <div className="flex justify-center items-center w-full">
+              <button
+                className="wono-blue-dark text-white py-2 px-4 rounded-md hover:bg-blue-600 w-full"
+                // onClick={handleAddTicket}>
+                // onClick={() => handleNextStep(handleNext)}
+              >
+                Next
+              </button>
+            </div>
+          </div> */}
+          {/* Close button */}
         </div>
-      )} */}
+      </div>
 
       {/* Tickets datatable END */}
 
@@ -628,8 +628,8 @@ const SubordinateDueApprovals = () => {
                                       <MenuItem value="Casual Leave">
                                         Casual Leave
                                       </MenuItem>
-                                      <MenuItem value="Annual Leave">
-                                        Annual Leave
+                                      <MenuItem value="Privileged Leave">
+                                        Privileged Leave
                                       </MenuItem>
                                       {/* <MenuItem value="Admin">Admin</MenuItem> */}
                                     </Select>
@@ -740,13 +740,13 @@ const SubordinateDueApprovals = () => {
                       <div>
                         <div className="flex justify-between py-2 border-b">
                           <h1 className="font-semibold">Leave Type</h1>
-                          <span>Sick Leave</span>
+                          <span>Privileged Leave</span>
                         </div>
                       </div>
                       <div>
                         <div className="flex justify-between py-2 border-b">
                           <h1 className="font-semibold">Date</h1>
-                          <span>07/12/2024</span>
+                          <span>Dec 30 2024</span>
                         </div>
                       </div>
                       <div className="pt-8 pb-4">
@@ -1133,4 +1133,4 @@ const SubordinateDueApprovals = () => {
   );
 };
 
-export default SubordinateDueApprovals;
+export default ApplyLeaveForm;
