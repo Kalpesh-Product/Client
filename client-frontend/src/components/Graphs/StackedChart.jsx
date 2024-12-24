@@ -11,7 +11,7 @@ import {
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Tooltip, Legend);
 
-const StackedChart = ({title}) => {
+const StackedChart = ({ title }) => {
   // Example data for the chart
   const data = {
     labels: [
@@ -49,12 +49,16 @@ const StackedChart = ({title}) => {
 
   // Configuration options for the chart
   const options = {
-    // responsive: true,
     maintainAspectRatio: true,
     plugins: {
       legend: {
-        display: false,
+        display: true,
         position: "top",
+        labels: {
+          font: {
+            family: "Popins-Regular", // Set font to Popins-Regular for legend
+          },
+        },
       },
       tooltip: {
         callbacks: {
@@ -64,17 +68,33 @@ const StackedChart = ({title}) => {
             return `${label}: ${value}`;
           },
         },
+        titleFont: {
+          family: "Popins-Regular", // Set font for tooltip title
+        },
+        bodyFont: {
+          family: "Popins-Regular", // Set font for tooltip body
+        },
       },
     },
     scales: {
       x: {
         stacked: true, // Enable stacking for x-axis
+        ticks: {
+          maxRotation: 0, // Prevent diagonal labels
+          minRotation: 0, // Prevent diagonal labels
+          font: {
+            family: "Popins-Regular", // Set font for x-axis ticks
+          },
+        },
       },
       y: {
         beginAtZero: true,
         stacked: true, // Enable stacking for y-axis
         ticks: {
           stepSize: 5, // Increment by 5 on y-axis
+          font: {
+            family: "Popins-Regular", // Set font for y-axis ticks
+          },
         },
       },
     },
@@ -82,7 +102,7 @@ const StackedChart = ({title}) => {
 
   return (
     <div className="relative" style={{ width: "800px", height: "450px" }}>
-      <h1 className="sticky top-0 p-3 font-semibold">{title}</h1>
+      <h1 className="sticky top-0 p-3 font-semibold text-2xl">{title}</h1>
       <Bar height={""} data={data} options={options} />
     </div>
   );

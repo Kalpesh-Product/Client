@@ -4,7 +4,7 @@ import { PieChart } from "@mui/x-charts/PieChart";
 const PieChartMUI = ({ data, title }) => {
   return (
     <div style={{ width: "100%", margin: "0" }}>
-      <h2 className="text-center mb-8">{title}</h2>
+      <h2 className="p-4 text-2xl">{title}</h2>
       <PieChart
         series={[
           {

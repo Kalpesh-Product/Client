@@ -12,14 +12,24 @@ import axios from "axios"
 const Onboarding = () => {
   const [openModal, setOpenModal] = useState(false);
   const [users, setUsers] = useState([]);
+  const [tableData, setTableData] = useState([]);
 
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await axios.get(
-          "/api/users/fetch-users"
-        );
+        const response = await axios.get("/api/users/fetch-users");
         setUsers(response.data.users);
+
+        // Map the response to match table columns
+        const formattedData = response.data.users.map((user) => ({
+          id: user.empId, // Assuming the field in the API is empID
+          department: user.department.map((dept)=>dept.name),
+          role: user.role.roleTitle,
+          manager: user.reportsTo?.name,
+          startDate: user.startDate, // Assuming the field in the API is startDate
+        }));
+
+        setTableData(formattedData);
       } catch (error) {
         console.error("Error fetching users:", error);
       }
@@ -27,50 +37,51 @@ const Onboarding = () => {
     fetchUsers();
   }, []);
 
+  console.log(users)
+
   const modalStyle = {
     width: "80vw",
     minHeight: "70vh",
   };
-  // Define columns
   const columns = [
     { headerName: "empID", field: "id", flex: 1 },
     { headerName: "Department", field: "department" },
     { headerName: "Role", field: "role" },
     { headerName: "Manager", field: "manager" },
-    { headerName: "Joined", field: "joinedDate" },
+    { headerName: "Started", field: "startDate" },
   ];
 
   // Sample data for the table
-  const tableData = [
-    {
-      id: "E101",
-      department: "Tech",
-      role: "Software Engineer",
-      manager: "John Doe",
-      joinedDate: "2023-01-15",
-    },
-    {
-      id: "E102",
-      department: "HR",
-      role: "HR Manager",
-      manager: "Jane Smith",
-      joinedDate: "2023-02-20",
-    },
-    {
-      id: "E103",
-      department: "Finance",
-      role: "Accountant",
-      manager: "Robert Brown",
-      joinedDate: "2023-03-10",
-    },
-    {
-      id: "E104",
-      department: "Tech",
-      role: "Frontend Developer",
-      manager: "John Doe",
-      joinedDate: "2023-04-25",
-    },
-  ];
+  // const tableData = [
+  //   {
+  //     id: "E101",
+  //     department: "Tech",
+  //     role: "Software Engineer",
+  //     manager: "John Doe",
+  //     joinedDate: "2023-01-15",
+  //   },
+  //   {
+  //     id: "E102",
+  //     department: "HR",
+  //     role: "HR Manager",
+  //     manager: "Jane Smith",
+  //     joinedDate: "2023-02-20",
+  //   },
+  //   {
+  //     id: "E103",
+  //     department: "Finance",
+  //     role: "Accountant",
+  //     manager: "Robert Brown",
+  //     joinedDate: "2023-03-10",
+  //   },
+  //   {
+  //     id: "E104",
+  //     department: "Tech",
+  //     role: "Frontend Developer",
+  //     manager: "John Doe",
+  //     joinedDate: "2023-04-25",
+  //   },
+  // ];
 
   const handleOpenModal = (type) => {
     setOpenModal(type);
@@ -82,6 +93,8 @@ const Onboarding = () => {
 
   const handleAddEmployee = () => {
     console.log("Employee add clicked");
+
+
   };
   return (
     <div>
@@ -98,11 +111,11 @@ const Onboarding = () => {
         </div>
 
         <div>
-          <div className="grid grid-cols-2">
+          {/* <div className="grid grid-cols-2">
             {users.map((user) => (
               <UserCard key={user._id} user={user} />
             ))}
-          </div>
+          </div> */}
         </div>
       </div>
 

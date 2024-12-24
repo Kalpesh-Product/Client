@@ -11,7 +11,14 @@ import {
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Tooltip, Legend);
 
-const BasicGroupedBarGraph = ({ labels, datasets, graphWidth, graphHeight, yAxisFormat = "number" }) => {
+const BasicGroupedBarGraph = ({
+  labels,
+  datasets,
+  graphWidth,
+  graphHeight,
+  yAxisFormat = "number",
+  title
+}) => {
   // Prepare data for Chart.js
   const chartData = {
     labels: labels, // x-axis labels
@@ -94,7 +101,10 @@ const BasicGroupedBarGraph = ({ labels, datasets, graphWidth, graphHeight, yAxis
   };
 
   return (
-    <div style={{ width: graphWidth, height: graphHeight }}>
+    <div className="p-4 pb-8" style={{ width: graphWidth, height: graphHeight }}>
+      <div>
+        <h1 className="font-semibold text-2xl">{title}</h1>
+      </div>
       <Bar data={chartData} options={options} />
     </div>
   );

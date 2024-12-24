@@ -46,6 +46,7 @@ const TestSide = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isActive, setIsActive] = useState(null);
   const [expandedMenu, setExpandedMenu] = useState(null);
+
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
     setIsDepartmentsOpen(false);
@@ -182,6 +183,12 @@ const TestSide = () => {
       setIsSidebarOpen(true);
     } else if (location.pathname === "/chat") {
       setIsSidebarOpen(true);
+    } else if (location.pathname === "/assets") {
+      setIsSidebarOpen(true);
+    } else if (location.pathname === "/tickets") {
+      setIsSidebarOpen(true);
+    } else if (location.pathname === "/meetings") {
+      setIsSidebarOpen(true);
     } else {
       setIsSidebarOpen(false);
     }
@@ -289,7 +296,6 @@ const TestSide = () => {
 
   const handleActive = (index) => {
     setIsActive(index);
-    console.log("Menu clicked");
   };
 
   return (
@@ -475,7 +481,7 @@ const TestSide = () => {
                       onClick={() => {
                         setExpandedMenu((prev) =>
                           prev === moduleIndex ? null : moduleIndex
-                        ); // Toggle dropdown for this module
+                        ); 
                         setIsSidebarOpen(true);
                       }}
                       className={`flex justify-between items-center border-b-[1px] px-4 py-3 w-full text-black bg-white hover:wono-blue-dark hover:rounded-md hover:text-white ${
@@ -489,13 +495,15 @@ const TestSide = () => {
                           onClick={() => navigate(module.route)}
                           className="flex items-center justify-center"
                         >
-                          <div className="flex justify-center w-full text-2xl">
+                          <div className="flex justify-center w-full text-xl">
                             {module.icon || <TbSection />}
                           </div>
                           <span className="pl-5">{module.title}</span>
                         </div>
                       ) : (
-                        <span>{module.icon || <TbSection />}</span>
+                        <div className="flex justify-center w-6">
+                        {module.icon || <TbSection />}
+                      </div>
                       )}
                       {isSidebarOpen ? (
                         <svg
@@ -531,7 +539,7 @@ const TestSide = () => {
                             onClick={() => navigate(submenu.route)}
                             className={`flex items-center border-b-[1px] py-3 gap-3 hover:wono-blue-dark pl-[1rem] hover:text-white hover:rounded-md cursor-pointer`}
                           >
-                            <div className="flex justify-center w-6 text-[1.3rem]">
+                            <div className="flex justify-center w-6 text-sm">
                               {submenu.icon || <TbSection />}{" "}
                               {/* Icon placeholder */}
                             </div>

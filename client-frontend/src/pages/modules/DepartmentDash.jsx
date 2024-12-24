@@ -427,11 +427,11 @@ const DepartmentDash = () => {
           datasets={techAllocatedBudgetData.datasets}
           graphWidth={1200} // Optional
           graphHeight={500} // Optional
+          title={"Annual Budget"}
         />,
       ],
     },
     {
-      heading: "",
       widgets: [
         <BasicCardCount
           theme={"white"}
@@ -457,10 +457,9 @@ const DepartmentDash = () => {
       ],
     },
     {
-      heading: "",
       widgets: [
         <BarGraphMUI
-          graphHeight={460}
+          graphHeight={400}
           graphWidth={600}
           title={"Unique Companies"}
         />,
@@ -468,10 +467,9 @@ const DepartmentDash = () => {
       ],
     },
     {
-      heading: "",
       widgets: [
         <BarGraphMUI
-          graphHeight={400}
+          graphHeight={350}
           graphWidth={600}
           title={"Unique Customers"}
           data={techUniqueData}
@@ -497,6 +495,7 @@ const DepartmentDash = () => {
           graphWidth={1200} // Optional
           graphHeight={500} // Optional
           yAxisFormat="number"
+          title="Complaints Section"
         />,
       ],
     },
@@ -1339,7 +1338,6 @@ const DepartmentDash = () => {
 
                 <div className="bg-gray-100 p-4 rounded-lg mt-4">
                   <div className="mb-8 flex justify-between">
-                    <h1 className="text-3xl  font-bold">Key Insights</h1>
                     {/* <div className=" flex gap-4">
                 
 
@@ -1716,7 +1714,6 @@ const DepartmentDash = () => {
               <>
                 <div className="bg-gray-100 p-4 rounded-lg  mt-4 h-[90vh] overflow-y-auto">
                   <div className="mb-8 flex justify-between">
-                    <h1 className="text-3xl font-semibold">Key Insights</h1>
                   </div>
                   {customerServiceWidgets
                     .filter((section) => section.subModule === "asset")
@@ -1768,7 +1765,6 @@ const DepartmentDash = () => {
               <>
                 <div className="bg-gray-100 p-4 rounded-lg mt-4">
                   <div className="mb-8 flex justify-between">
-                    <h1 className="text-3xl  font-bold">Key Insights</h1>
                     {/* <RaiseTicketButton /> */}
                     {/* <div className=" flex gap-4">
                 

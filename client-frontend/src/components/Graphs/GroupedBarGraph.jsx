@@ -16,6 +16,7 @@ export default function GroupedBarGraph({
   datasets,
   graphWidth,
   graphHeight,
+  title
 }) {
   // Prepare data for Chart.js
   const chartData = {
@@ -131,7 +132,10 @@ export default function GroupedBarGraph({
   };
 
   return (
-    <div style={{ width: graphWidth, height: graphHeight }}>
+    <div className="p-4 pb-8" style={{ width: graphWidth, height: graphHeight }}>
+      <div>
+        <h1 className="font-semibold text-2xl">{title}</h1>
+      </div>
       <Bar data={chartData} options={options} />
     </div>
   );
