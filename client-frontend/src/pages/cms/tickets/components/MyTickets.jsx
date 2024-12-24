@@ -211,7 +211,9 @@ const MyTickets = () => {
   // useeffect for displaying the tickets array after fetching from backend response
   useEffect(() => {
     // anything you put in here will run when the app starts
-    fetchmyTickets(); // this will run the fetchTickets function & fetch the tickets array from backend as our response (in network tab from developer tools)
+    fetchmyTickets();
+    console.log(myTickets);
+    // this will run the fetchTickets function & fetch the tickets array from backend as our response (in network tab from developer tools)
   }, []); // we leave the array empty since we need it to run only once when the app starts up.
 
   // Finction to delete a ticket

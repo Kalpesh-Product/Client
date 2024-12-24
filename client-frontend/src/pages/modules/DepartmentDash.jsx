@@ -1661,9 +1661,9 @@ const DepartmentDash = () => {
 
                   <div className=" ">
                     <br />
-                    <div className="flex justify-center">
+                    {/* <div className="flex justify-center">
                       <RaiseTicketButton />
-                    </div>
+                    </div> */}
                     <div className="flex w-full p-4 pb-4 pl-0 text-lg border-b-0 gap-4">
                       {/* <h2 className="text-2xl font-bold">My Tickets</h2> */}
                       <h2 className="text-2xl font-bold">
