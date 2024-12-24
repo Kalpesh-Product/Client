@@ -7,10 +7,9 @@ const BasicCardCount = ({
   subText,
   titleSize,
   onClick,
-  className,
 }) => {
   return (
-    <div onClick={onClick}>
+    <div onClick={onClick} className={`bg-${theme} rounded-md`}>
       <div className="p-4 flex justify-between">
         <div>
           <p className="text-5xl font-bold">{data}</p>

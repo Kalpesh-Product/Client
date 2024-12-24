@@ -68,6 +68,7 @@ const EmployeeAttendanceSummary = () => {
         <BasicCardCount
           title="Employees Present"
           data={present}
+          theme="white"
           subText="Total present today"
           onClick={() => navigate("/hr/attendance/details/present")}
         />
@@ -76,6 +77,7 @@ const EmployeeAttendanceSummary = () => {
         <BasicCardCount
           title="Employees Absent"
           data={absent}
+          theme="white"
           subText="Total absent today"
           onClick={() => navigate("/hr/attendance/details/absent")}
         />
@@ -84,6 +86,7 @@ const EmployeeAttendanceSummary = () => {
         <BasicCardCount
           title="Average Check-in Accuracy"
           data={`${averageCheckin}%`}
+          theme="white"
           onClick={() => navigate("/hr/attendance/details/checkin-accuracy")}
         />
       </div>
