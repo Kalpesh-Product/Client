@@ -18,9 +18,22 @@ const Applicants = () => {
   const [selectedValue, setSelectedValue] = useState("");
 
   const onRemarkChange = (department, rowId, value) => {
-    setEmployeeData((prevData) =>
-      prevData.map((row) => (row.id === rowId ? { ...row, remark: value } : row))
-    );
+    setEmployeeData((prevData) => {
+      console.log("prevData:", prevData);
+      console.log("department:", department);
+  
+      if (!prevData[department]) {
+        console.error(`Department "${department}" not found in data.`);
+        return prevData; // Return the current state without changes
+      }
+  
+      return {
+        ...prevData,
+        [department]: prevData[department].map((row) =>
+          row.id === rowId ? { ...row, Remark: value } : row
+        ),
+      };
+    });
   };
 
   //new
@@ -36,6 +49,7 @@ const Applicants = () => {
   const [employeeData,setEmployeeData] = useState({
     Finance: [
       {
+        id: 1,
         Name: "John Doe",
         Role: "Accountant",
         salary: 5000,
@@ -46,6 +60,7 @@ const Applicants = () => {
         Remark: ""
       },
       {
+        id: 2,
         Name: "Jane Smith",
         Role: "Auditor",
         salary: 6000,
@@ -62,6 +77,7 @@ const Applicants = () => {
     ],
     HR: [
       {
+        id: 3,
         Name: "Alice Brown",
         Role: "Recruiter",
         salary: 4000,
@@ -72,6 +88,7 @@ const Applicants = () => {
         Remark: ""
       },
       {
+        id: 4,
         Name: "Bob White",
         Role: "HR Manager",
         salary: 7000,
@@ -84,6 +101,7 @@ const Applicants = () => {
     ],
     Tech: [
       {
+        id: 5,
         Name: "Charlie Green",
         Role: "Developer",
         salary: 8000,
@@ -95,6 +113,7 @@ const Applicants = () => {
       },
 
       {
+        id: 6,
         Name: "Daisy Blue",
         Role: "Tester",
         salary: 5000,
@@ -107,6 +126,7 @@ const Applicants = () => {
     ],
     IT: [
       {
+        id: 7,
         Name: "Eve Black",
         Role: "SysAdmin",
         salary: 5500,
@@ -117,6 +137,7 @@ const Applicants = () => {
         Remark: ""
       },
       {
+        id: 8,
         Name: "Frank Red",
         Role: "Network Admin",
         salary: 6000,
@@ -129,6 +150,7 @@ const Applicants = () => {
     ],
     Sales: [
       {
+        id: 9,
         Name: "Grace Pink",
         Role: "Sales Exec",
         salary: 4500,
@@ -139,6 +161,7 @@ const Applicants = () => {
         Remark: ""
       },
       {
+        id: 10,
         Name: "Hank Yellow",
         Role: "Sales Manager",
         salary: 6500,
@@ -151,6 +174,7 @@ const Applicants = () => {
     ],
     Administration: [
       {
+        id: 11,
         Name: "Ivy Purple",
         Role: "Admin Assistant",
         salary: 4000,
@@ -161,6 +185,7 @@ const Applicants = () => {
         Remark: ""
       },
       {
+        id: 12,
         Name: "Jack Orange",
         Role: "Office Manager",
         salary: 6000,
@@ -399,13 +424,13 @@ const Applicants = () => {
       field: "Remark",
       headerName: "Remark",
       cellRenderer: (params) => {
-        // const department = params.context?.department; 
+         const department = params.context?.department; 
         return (
           <input
           type="text"
           placeholder="Add Remark"
           value={params.data.remark}
-          onChange={(e) => onRemarkChange(params.data.id, e.target.value)}
+          onChange={(e) => onRemarkChange(department,params.data.id, e.target.value)}
           style={{
             width: "100%",
             padding: "4px",
