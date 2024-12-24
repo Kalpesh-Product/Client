@@ -206,24 +206,24 @@ const ModuleSidebar = ({ mainSideBar }) => {
       title: "Company Handbook",
       route: "/hr/company-handbook",
       icon: <HiCurrencyDollar />,
-      subMenus: [
-        {
-          title: "SOP",
-          route: "/hr/company-handbook/sop",
-          icon: <HiOutlineClipboardList />,
-        },
-        {
-          title: "Policies",
-          route: "/hr/company-handbook/policies",
-          icon: <HiOutlineClipboardList />,
-        },
-      ],
+      // subMenus: [
+      //   {
+      //     title: "SOP",
+      //     route: "/hr/company-handbook/sop",
+      //     icon: <HiOutlineClipboardList />,
+      //   },
+      //   {
+      //     title: "Policies",
+      //     route: "/hr/company-handbook/policies",
+      //     icon: <HiOutlineClipboardList />,
+      //   },
+      // ],
     },
-    {
-      title: "SOP",
-      route: "/hr/sops",
-      icon: <HiCurrencyDollar />,
-    },
+    // {
+    //   title: "SOP",
+    //   route: "/hr/sops",
+    //   icon: <HiCurrencyDollar />,
+    // },
     // {
     //   title: "Policies",
     //   route: "/hr/policies",

@@ -5,8 +5,9 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import AgTable from "../../../components/AgTable";
+import PolicyCrud from "./PolicyCrud";
 
-const PayrollValue = () => {
+const PolicyAccordians = () => {
   // Table Data
   const tableData = [
     { department: "Finance", payroll: 35000 },
@@ -59,8 +60,8 @@ const PayrollValue = () => {
   ];
 
   return (
-    <div className="p-4 bg-gray-100 w-[80vw] md:w-full">
-      <h2 className="text-2xl font-bold text-gray-800 mb-6">Payroll Table</h2>
+    <div className="p-4 bg-white w-[80vw] md:w-full">
+      {/* <h2 className="text-2xl font-bold text-gray-800 mb-6">Payroll Table</h2> */}
       {tableData.map((department) => (
         <Accordion key={department.department}>
           <AccordionSummary
@@ -72,18 +73,20 @@ const PayrollValue = () => {
                 {department.department}
               </Typography>
               <Typography className="font-medium text-lg">
-                Payroll: ₹ {department.payroll.toLocaleString()}
+                {/* Payroll: ₹ {department.payroll.toLocaleString()} */}
+                Policies: 3
               </Typography>
             </div>
           </AccordionSummary>
           <AccordionDetails>
-            <AgTable
+            {/* <AgTable
               data={employeeData[department.department] || []}
               columns={employeeColumns}
               paginationPageSize={5}
               highlightFirstRow={false}
               highlightEditedRow={false}
-            />
+            /> */}
+            <PolicyCrud />
           </AccordionDetails>
         </Accordion>
       ))}
@@ -91,4 +94,4 @@ const PayrollValue = () => {
   );
 };
 
-export default PayrollValue;
+export default PolicyAccordians;

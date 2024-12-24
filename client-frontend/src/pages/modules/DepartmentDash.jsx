@@ -129,6 +129,7 @@ import PolicyPdfContainer from "../hr/company-handbook/PolicyPdfContainer";
 import LeaveTabs from "../hr/leaves/LeaveTabs";
 import ThemeGrid from "../website-builder/ThemeGrid";
 import ViewTheme from "../website-builder/ViewTheme";
+import CompanyHandbookTabs from "../hr/company-handbook/CompanyHandbookTabs";
 
 const DepartmentDash = () => {
   const navigate = useNavigate();
@@ -1389,9 +1390,9 @@ const DepartmentDash = () => {
               <>
                 {/* <LeaveReports /> */}
                 <div className="bg-gray-100 p-4 rounded-lg ">
-                  {/* <div className="flex w-full  pb-4 pl-0 text-lg border-b-0  gap-4">
+                  <div className="flex w-full  pb-4 pl-0 text-lg border-b-0  gap-4">
                     <h2 className="text-2xl  font-bold ">Company Handbook</h2>
-                  </div> */}
+                  </div>
                   {/* {hrWidgets
                     .filter(
                       (section) => section.subModule === "company-handbook"
@@ -1403,7 +1404,8 @@ const DepartmentDash = () => {
                         widgets={section.widgets}
                       />
                     ))} */}
-                  <CompanyHandbookWidgetsContainer />
+                  {/* <CompanyHandbookWidgetsContainer /> */}
+                  <CompanyHandbookTabs />
                 </div>
               </>
             ) : location.pathname === "/hr/company-handbook/sop" ? (

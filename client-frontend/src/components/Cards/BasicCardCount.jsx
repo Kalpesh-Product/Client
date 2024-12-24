@@ -8,7 +8,12 @@ const BasicCardCount = ({ title, data, theme, subText, titleSize }) => {
           <p className="text-5xl font-bold">{data}</p>
         </div>
         <div className="text-center flex flex-col">
-          <h1 className={`bg-${theme} font-semibold ${titleSize ? titleSize : "text-xl"}`}>{title}</h1>
+          <h1
+            className={`bg-${theme} font-semibold ${
+              titleSize ? titleSize : "text-xl"
+            }`}>
+            {title}
+          </h1>
           <h2 className="text-sm">{subText}</h2>
         </div>
       </div>
