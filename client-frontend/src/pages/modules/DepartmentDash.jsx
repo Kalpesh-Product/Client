@@ -131,12 +131,13 @@ import ThemeGrid from "../website-builder/ThemeGrid";
 import ViewTheme from "../website-builder/ViewTheme";
 import CompanyHandbookTabs from "../hr/company-handbook/CompanyHandbookTabs";
 import RaiseTicketForm from "../cms/tickets/components/RaiseTicketForm";
-import BiznestHome from "../../assets/builder-preview/live-theme/biznest-home.jpeg";
-import BiznestAbout from "../../assets/builder-preview/live-theme/biznest-about.jpeg";
-import BiznestGallery from "../../assets/builder-preview/live-theme/biznest-gallery.jpeg";
-import BiznestContact from "../../assets/builder-preview/live-theme/biznest-contact.png";
+import BiznestHome from "../../assets/builder-preview/live-theme/biznest-home.jpeg";;
+import BiznestAbout from "../../assets/builder-preview/live-theme/biznest-about.jpeg";;
+import BiznestGallery from "../../assets/builder-preview/live-theme/biznest-gallery.jpeg";;
+import BiznestContact from "../../assets/builder-preview/live-theme/biznest-contact.png";;
 import StackedChart from "../../components/Graphs/StackedChart";
-import BasicGroupedBarGraph from "../../components/Graphs/BasicGroupedBarGraph";
+import BasicGroupedBarGraph from "../../components/Graphs/BasicGroupedBarGraph";import BudgetDash from "../finance/BudgetDash";
+import PaymentTracker from "../finance/PaymentTracker";
 
 const DepartmentDash = () => {
   const navigate = useNavigate();
@@ -1561,12 +1562,16 @@ const DepartmentDash = () => {
         {/* Finance submodules */}
         {location.pathname.startsWith("/finance") && (
           <>
-            {(location.pathname === "/finance" ||
-              location.pathname === "/finance/dashboard") && (
+            {location.pathname === "/finance" ||
+            location.pathname === "/finance/dashboard" ? (
               <div className="bg-gray-100 p-4 rounded-lg  mt-4">
                 <WidgetSection heading="Finance" widgets={financeWidgets} />
               </div>
-            )}
+            ) : location.pathname === "/finance/budget" ? (
+              <BudgetDash />
+            ) : location.pathname === "/finance/budget/payment-tracker" ? (
+              <PaymentTracker />
+            ) : null}
           </>
         )}
         {/* Sales submodules */}

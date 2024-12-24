@@ -2,13 +2,14 @@ const Event = require("../../models/Events");
 
 const createEvent = async (req, res, next) => {
   try {
-    const { title, type, description, start, end } = req.body;
+    const { title, type, description, start, end, participants } = req.body;
     const newEvent = new Event({
       title,
       type,
       description,
       start,
       end,
+      participants: [...participants],
     });
 
     if (!title || !type || !description || !start || !end) {
@@ -52,4 +53,27 @@ const getAllEvents = async (req, res, next) => {
   }
 };
 
-module.exports = { createEvent, getAllEvents };
+const getNormalEvents = async (req, res, next) => {
+  try {
+    const normalEvents = await Event.find();
+    const filteredEvents = normalEvents.filter(
+      (event) => event.type === "event"
+    );
+    res.status(200).json(filteredEvents);
+  } catch (error) {
+    next(error);
+  }
+};
+const getHolidays = async (req, res, next) => {
+  try {
+    const normalEvents = await Event.find();
+    const filteredEvents = normalEvents.filter(
+      (event) => event.type === "holiday"
+    );
+    res.status(200).json(filteredEvents);
+  } catch (error) {
+    next(error);
+  }
+};
+
+module.exports = { createEvent, getAllEvents, getNormalEvents, getHolidays };
