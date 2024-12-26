@@ -47,7 +47,6 @@ const Tickets = () => {
         {location.pathname === "/tickets" ? (
           <div className="bg-gray-100 p-4 rounded-lg mt-4">
             <div className="mb-8 flex justify-between">
-              <h1 className="text-3xl  font-bold">Key Insights</h1>
               {/* <div className=" flex gap-4">
               
 

@@ -20,7 +20,7 @@ import { IoMdClose } from "react-icons/io";
 import axios from "axios";
 import useAuth from "../../../../hooks/useAuth";
 
-const MyTickets = () => {
+const RaiseTicketForm = () => {
   const { auth: authUser } = useAuth();
   const navigate = useNavigate();
   const [user, setUser] = useState("");
@@ -211,9 +211,7 @@ const MyTickets = () => {
   // useeffect for displaying the tickets array after fetching from backend response
   useEffect(() => {
     // anything you put in here will run when the app starts
-    fetchmyTickets();
-    console.log(myTickets);
-    // this will run the fetchTickets function & fetch the tickets array from backend as our response (in network tab from developer tools)
+    fetchmyTickets(); // this will run the fetchTickets function & fetch the tickets array from backend as our response (in network tab from developer tools)
   }, []); // we leave the array empty since we need it to run only once when the app starts up.
 
   // Finction to delete a ticket
@@ -823,90 +821,218 @@ const MyTickets = () => {
   );
 
   return (
-    <div className="w-[72vw] md:w-full transition-all duration-200 ease-in-out bg-white p-2 rounded-md">
-      <div className="flex gap-4 mb-4 justify-between">
-        {/* <div className="pt-2">Filter :</div> */}
-        <div>
-          <FormControl size="small" style={{ minWidth: 220 }}>
-            <TextField
-              label="Filter by department"
-              variant="outlined"
-              select
-              size="small"
-              onChange={handleChange}
-              value={department}
-              sx={{ fontSize: "0.5rem" }}>
-              <MenuItem value="">All</MenuItem>
-              <MenuItem value="IT">IT</MenuItem>
-              <MenuItem value="HR">HR</MenuItem>
-              <MenuItem value="Tech">Tech</MenuItem>
-              <MenuItem value="Admin">Admin</MenuItem>
-            </TextField>
-          </FormControl>
-        </div>
+    <div className=" transition-all duration-200 ease-in-out bg-white  p-2 rounded-md">
+      <form onSubmit={createMyTicket}>
+        <div className="bg-white  w-full rounded-lg z-10 relative overflow-y-auto max-h-[80vh] mx-auto">
+          {/* Modal Content */}
 
-        {/* {location.pathname === "/it/tickets" && (
-          <div className="  bg-red-500">
-            <div className=" relative mb-2 flex justify-between">
+          {/* Modal Header */}
+          <div className="sticky top-0 bg-white pt-6 z-20 flex justify-center">
+            <div className="flex justify-center">
+              <h2 className="text-3xl font-bold mb-4 text-center">
+                Raise A Ticket
+              </h2>
+            </div>
+            {/* <div>
+                      
+                          <motion.button
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.9 }}
+                            type="button"
+                            onClick={closeModal}
+                            className=" p-2 bg-white text-[red] border border-red-200 hover:border-red-400 text-2xl rounded-md mr-1">
+                            <IoMdClose />
+                          </motion.button>
+                        </div> */}
+          </div>
+
+          {/* Modal Body START */}
+          <div className=" w-full">
+            {/* <div>AddT icket Form</div> */}
+            <div className="">
+              <div className=" mx-auto">
+                {/* <h1 className="text-xl text-center my-2 font-bold">
+                                Add Ticket
+                            </h1> */}
+                <Box
+                  sx={{
+                    Width: "100%",
+                    paddingY: 3,
+                    bgcolor: "background.paper",
+                    borderRadius: 2,
+                  }}
+                  // className="bg-white p-6 rounded-lg shadow-md mx-auto">
+                  className="bg-white pt-3 pb-10 rounded-lg w-full">
+                  {/* Personal Information */}
+                  {/* <h2 className="text-lg font-semibold mb-4">Add Ticket</h2> */}
+                  {/* <div className="grid grid-cols-1 gap-4"> */}
+                  <div className="w-full  flex justify-between items-center gap-4">
+                    {/* Name, Mobile, Email, DOB fields */}
+                    <div className="w-full">
+                      <FormControl fullWidth>
+                        <InputLabel id="department-select-label">
+                          Department
+                        </InputLabel>
+                        <Select
+                          labelId="department-select-label"
+                          id="department-select"
+                          value={createForm.selectedDepartment}
+                          label="Department"
+                          name="selectedDepartment"
+                          onChange={updateCreateFormField}>
+                          <MenuItem value="IT">IT</MenuItem>
+                          <MenuItem value="HR">HR</MenuItem>
+                          <MenuItem value="Tech">Tech</MenuItem>
+                          <MenuItem value="Admin">Admin</MenuItem>
+                          {/* <MenuItem value="Finance">
+                                          Finance
+                                        </MenuItem>
+                                        <MenuItem value="Maintenance">
+                                          Maintenance
+                                        </MenuItem>
+                                        <MenuItem value="Sales">Sales</MenuItem> */}
+                        </Select>
+                      </FormControl>
+                    </div>
+                    <div className="w-full">
+                      <FormControl fullWidth>
+                        <InputLabel id="suggestion-select-label">
+                          Ticket Title
+                        </InputLabel>
+                        <Select
+                          labelId="suggestion-select-label"
+                          id="suggestion-select"
+                          // value={department}
+                          // value="IT" // Hardcoded value for department
+                          value={createForm.description}
+                          label="Ticket Title"
+                          // onChange={handleChange}
+                          name="description"
+                          onChange={updateCreateFormField}
+                          // onChange={(e) =>
+                          //   setTicketTitle(e.target.value)
+                          // }
+                          // Update state on selection
+                        >
+                          {/* <MenuItem value="Wifi is not working">
+                                          Wifi is not working
+                                        </MenuItem>
+                                        <MenuItem value="Wifi is slow">
+                                          Wifi is slow
+                                        </MenuItem>
+                                        <MenuItem value="Laptop screen malfunctioning">
+                                          Laptop screen malfunctioning
+                                        </MenuItem>
+                                        <MenuItem value="Attendance data is incorrect">
+                                          Attendance data is incorrect
+                                        </MenuItem>
+                                        <MenuItem value="Salary Not received">
+                                          Salary Not received
+                                        </MenuItem>
+                                        <MenuItem value="Discussion of new SOP">
+                                          Discussion of new SOP
+                                        </MenuItem>
+                                        <MenuItem value="ggs">ggs</MenuItem> */}
+                          {filteredIssues.map((issue, index) => (
+                            <MenuItem key={index} value={issue.message}>
+                              {issue.message}
+                            </MenuItem>
+                          ))}
+                          {/* <MenuItem value="Other">Other</MenuItem> */}
+                        </Select>
+                      </FormControl>
+                    </div>
+                    <div className="sticky bottom-0 bg-white py-6 z-20 flex justify-center min-w-40">
+                      <div className="flex justify-center items-center w-full">
+                        <button
+                          type="submit"
+                          className="wono-blue-dark text-white py-2 px-4 rounded-md hover:bg-blue-600 w-full"
+                          // onClick={handleAddTicket}>
+                          //   onClick={() => handleNextStep(handleNext)}
+                        >
+                          Raise Ticket
+                        </button>
+                      </div>
+                    </div>
+                    {/* {ticketTitle === "Other" && (
+                                    <div className="grid grid-cols-1 gap-4">
+                                      <TextField
+                                        label="Specify"
+                                        // value={newEvent.name}
+                                        // onChange={(e) =>
+                                        //   setnewEvent({ ...newEvent, name: e.target.value })
+                                        // }
+                                        fullWidth
+                                      />
+                                    </div>
+                                  )} */}
+
+                    {/* <div className="grid grid-cols-1 gap-4">
+                                  <TextField
+                                    label="Ticket Title"
+                                    // value={newEvent.name}
+                                    // onChange={(e) =>
+                                    //   setnewEvent({ ...newEvent, name: e.target.value })
+                                    // }
+                                    fullWidth
+                                  />
+                                </div> */}
+                  </div>
+
+                  {/* Role & Department fields */}
+
+                  {/* <div className="col-span-2 flex gap-4">
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.9 }}
+                  className="w-full py-2 px-4 bg-blue-600 text-white rounded mt-4"
+                  //   onClick={handleSaveEvent}
+                  onClick={() => navigate("/customer/tickets")}>
+                  Save
+                </motion.button>
+          
+              </div> */}
+                </Box>
+              </div>
+            </div>
+          </div>
+          {/* Modal Body END */}
+
+          {/* Modal Footer */}
+
+          {/* <div className="sticky bottom-0 bg-white py-6 z-20 flex justify-center">
+            <div className="flex justify-center items-center w-full">
+              <button
+                type="submit"
+                className="wono-blue-dark text-white py-2 px-4 rounded-md hover:bg-blue-600 w-full"
+                // onClick={handleAddTicket}>
+                //   onClick={() => handleNextStep(handleNext)}
+              >
+                Raise Ticket
+              </button>
+            </div>
+          </div> */}
+          {/* Close button */}
+          {/* <button
+                className="bg-blue-500 text-white py-2 px-4 my-4 rounded-lg hover:bg-blue-600"
+                onClick={closeModal}>
+                Close
+              </button> */}
+        </div>
+      </form>
+
+      <div className="flex gap-4  justify-between">
+        <div className="flex gap-4">
+          {/* <div className="flex">
+            <div className="mb-2 flex justify-between">
               <h1 className="text-3xl"></h1>
               <button
                 onClick={openModal}
-                className="absolute bottom-4 right-4 px-6 py-2 rounded-lg text-white wono-blue-dark hover:bg-[#3cbce7] transition-shadow shadow-md hover:shadow-lg active:shadow-inner">
+                className=" px-6 py-2 rounded-lg text-white wono-blue-dark hover:bg-[#3cbce7] transition-shadow shadow-md hover:shadow-lg active:shadow-inner">
                 Raise Ticket
               </button>
             </div>
-          </div>
-        )} */}
-        {/* {location.pathname === "/it/tickets" && (
-          <div className="relative bg-red-500">
-            <h1 className="text-3xl mb-2"></h1>
-            <button
-              onClick={openModal}
-              className="w-[9.4rem] absolute top-[-960%] right-[-30rem] px-6 py-2 rounded-lg text-white wono-blue-dark hover:bg-[#3cbce7] transition-shadow shadow-md hover:shadow-lg active:shadow-inner">
-              Raise Ticket
-            </button>
-          </div>
-        )} */}
-
-        {/* {location.pathname === "/it/tickets" &&
-          ["Admin", "Super Admin", "Master Admin"].includes(
-            authUser.user.role.roleTitle
-          ) && (
-            <div className="relative bg-red-500">
-              <h1 className="text-3xl mb-2"></h1>
-              <button
-                onClick={openModal}
-                className="w-[9.4rem] absolute top-[-960%] right-[-30rem] px-6 py-2 rounded-lg text-white wono-blue-dark hover:bg-[#3cbce7] transition-shadow shadow-md hover:shadow-lg active:shadow-inner">
-                Raise Ticket
-              </button>
-            </div>
-          )}
-        {location.pathname === "/it/tickets" &&
-          ["Employee"].includes(authUser.user.role.roleTitle) && (
-            <div className="relative bg-red-500">
-              <h1 className="text-3xl mb-2"></h1>
-              <button
-                onClick={openModal}
-                className="w-[9.4rem] absolute top-[-560%] right-[-30rem] px-6 py-2 rounded-lg text-white wono-blue-dark hover:bg-[#3cbce7] transition-shadow shadow-md hover:shadow-lg active:shadow-inner">
-                Raise Ticket
-              </button>
-            </div>
-          )} */}
-
-        <div className="flex gap-4">
-          {location.pathname !== "/profile" &&
-            location.pathname !== "/it/tickets" && (
-              <div className="flex">
-                <div className="mb-2 flex justify-between">
-                  <h1 className="text-3xl"></h1>
-                  <button
-                    onClick={openModal}
-                    className=" px-6 py-2 rounded-lg text-white wono-blue-dark hover:bg-[#3cbce7] transition-shadow shadow-md hover:shadow-lg active:shadow-inner">
-                    Raise Ticket
-                  </button>
-                </div>
-              </div>
-            )}
+          </div> */}
 
           {visiblePaths.includes(location.pathname) && (
             <div className="flex">
@@ -928,11 +1054,11 @@ const MyTickets = () => {
 
       {/* Tickets datatable START */}
 
-      <AgTable
+      {/* <AgTable
         // data={rows} // Use the state here
         data={myTickets} // Use the state here
         columns={columns3}
-      />
+      /> */}
 
       {/* Tickets datatable END */}
 
@@ -970,7 +1096,7 @@ const MyTickets = () => {
                             <IoMdClose />
                           </motion.button>
                         </div>
-                      </div> */}
+                        </div> */}
 
                         {/* Modal Body START */}
                         <div className=" w-full">
@@ -978,8 +1104,8 @@ const MyTickets = () => {
                           <div className="">
                             <div className=" mx-auto">
                               {/* <h1 className="text-xl text-center my-2 font-bold">
-                    Add Ticket
-                  </h1> */}
+                                Add Ticket
+                            </h1> */}
                               <Box
                                 sx={{
                                   maxWidth: 600,
@@ -1593,4 +1719,4 @@ const MyTickets = () => {
   );
 };
 
-export default MyTickets;
+export default RaiseTicketForm;

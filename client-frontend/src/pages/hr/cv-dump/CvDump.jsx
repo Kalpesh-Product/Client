@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { FormControl, MenuItem, Select, InputLabel } from "@mui/material";
 import { dummyData } from "../../../utils/payrollData";
+import BasicCardCount from "../../../components/Cards/BasicCardCount";
 // import DepartmentPayrollChart from "./components/DepartmentPayrollChart";
 // import PayrollSummary from "./components/PayrollSummary";
 // import PayrollWidgets from "./components/PayrollWidgets";
@@ -8,6 +9,31 @@ import { dummyData } from "../../../utils/payrollData";
 const CvDump = () => {
   const [selectedFilter, setSelectedFilter] = useState("this month");
   const [payrolls, setPayrolls] = useState(dummyData);
+
+  const widgets = [
+    <BasicCardCount
+      theme={"white"}
+      title={"Total CVs Received"}
+      
+      titleSize={"text-3xl"}
+      data={"23"}
+    />,
+    <BasicCardCount
+      theme={"white"}
+      title={"Monthly CV Received"}
+      
+      titleSize={"text-2xl"}
+      data={"23"}
+    />,
+
+    <BasicCardCount
+      theme={"white"}
+      title={"Annually CV Received"}
+      
+      titleSize={"text-2xl"}
+      data={"23"}
+    />,
+  ];
 
   const widgetsData = {
     "previous month": [
@@ -34,48 +60,15 @@ const CvDump = () => {
   return (
     <div className="p-4 bg-gray-100 w-[80vw] md:w-full mt-2">
       <div className="w-full flex justify-between items-center mb-6">
-        <div className="text-2xl font-semibold">CV DUMP</div>
-        <FormControl className="w-full md:w-1/4 bg-white">
-          <Select value={selectedFilter} onChange={handleFilterChange}>
-            <MenuItem value="previous month">Previous Month</MenuItem>
-            <MenuItem value="this month">This Month</MenuItem>
-            <MenuItem value="annual">Annual</MenuItem>
-          </Select>
-        </FormControl>
+        <div className="text-3xl font-bold">CV DUMP</div>
+        <div></div>
       </div>
-      <div class="flex flex-wrap justify-center gap-4 p-6">
-        <div class="flex-1 max-w-[30%] bg-white border border-gray-200 rounded-lg shadow-lg">
-          {/* <img class="rounded-t-lg" src="https://via.placeholder.com/300x200" alt="Card Image 1"> */}
-          <div class="p-6">
-            <h5 class="text-lg font-bold mb-2">Card Title 1</h5>
-            <p class="text-gray-700 mb-4">
-              This is a brief description for the first card. It provides some
-              information about the content.
-            </p>
+      <div className="flex flex-row gap-2">
+        {widgets.map((widget, index) => (
+          <div key={index} className="flex-1 bg-white  rounded-md p-6 gap-10 ">
+            {widget}
           </div>
-        </div>
-
-        <div class="flex-1 max-w-[30%] bg-white border border-gray-200 rounded-lg shadow-lg">
-          {/* <img class="rounded-t-lg" src="https://via.placeholder.com/300x200" alt="Card Image 2"> */}
-          <div class="p-6">
-            <h5 class="text-lg font-bold mb-2">Card Title 2</h5>
-            <p class="text-gray-700 mb-4">
-              This is a brief description for the second card. It provides some
-              information about the content.
-            </p>
-          </div>
-        </div>
-
-        <div class="flex-1 max-w-[30%] bg-white border border-gray-200 rounded-lg shadow-lg">
-          {/* <img class="rounded-t-lg" src="https://via.placeholder.com/300x200" alt="Card Image 3"> */}
-          <div class="p-6">
-            <h5 class="text-lg font-bold mb-2">Card Title 3</h5>
-            <p class="text-gray-700 mb-4">
-              This is a brief description for the third card. It provides some
-              information about the content.
-            </p>
-          </div>
-        </div>
+        ))}
       </div>
     </div>
   );

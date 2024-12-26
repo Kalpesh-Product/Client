@@ -135,8 +135,28 @@ const Reports = () => {
 
         {/* Reports widgets START */}
 
-        <div className="mt-0">
-          <h2 className="text-2xl font-semibold"></h2>
+        <div className="">
+          <h2 className="text-xl font-semibold">Customer Support</h2>
+          <div className={`grid gap-4 grid-cols-4`}>
+            {externalReportWidgetsData.map((widget, index) => (
+              <div
+                key={index}
+                className="bg-white p-0 shadow-md rounded-lg h-full overflow-auto">
+                <ReportWidget1
+                  title={widget.title}
+                  subtitle={widget.subtitle}
+                  link={widget.link}
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Reports widgets END */}
+        {/* Reports widgets START */}
+
+        <div className="">
+          <h2 className="text-xl font-semibold mt-6 mb-4">Sales</h2>
           <div className={`grid gap-4 grid-cols-4`}>
             {externalReportWidgetsData.map((widget, index) => (
               <div

@@ -126,13 +126,17 @@ import EmployeeAgreementPdfContainer from "../hr/employment-agreement/EmployeeAg
 import RaiseTicketButton from "../cms/tickets/components/RaiseTicketButton";
 import SopPdfContainer from "../hr/company-handbook/SopPdfContainer";
 import PolicyPdfContainer from "../hr/company-handbook/PolicyPdfContainer";
+import LeaveTabs from "../hr/leaves/LeaveTabs";
 import ThemeGrid from "../website-builder/ThemeGrid";
 import ViewTheme from "../website-builder/ViewTheme";
+import CompanyHandbookTabs from "../hr/company-handbook/CompanyHandbookTabs";
+import RaiseTicketForm from "../cms/tickets/components/RaiseTicketForm";
 import BiznestHome from "../../assets/builder-preview/live-theme/biznest-home.jpeg";
 import BiznestAbout from "../../assets/builder-preview/live-theme/biznest-about.jpeg";
 import BiznestGallery from "../../assets/builder-preview/live-theme/biznest-gallery.jpeg";
 import BiznestContact from "../../assets/builder-preview/live-theme/biznest-contact.png";
 import StackedChart from "../../components/Graphs/StackedChart";
+import BasicGroupedBarGraph from "../../components/Graphs/BasicGroupedBarGraph";
 import BudgetDash from "../finance/BudgetDash";
 import PaymentTracker from "../finance/PaymentTracker";
 
@@ -267,11 +271,19 @@ const DepartmentDash = () => {
     datasets: [
       {
         label: "Allocated",
+        barPercentage: 0.5,
+        barThickness: 6,
+        maxBarThickness: 8,
+        minBarLength: 2,
         data: Array(12).fill(100), // Allocated is always 100%
         backgroundColor: "rgba(100, 162, 235, 0.7)", // Blue
       },
       {
         label: "Utilised",
+        barPercentage: 0.5,
+        barThickness: 6,
+        maxBarThickness: 8,
+        minBarLength: 2,
         data: utilisedData, // Utilised values
       },
     ],
@@ -329,12 +341,12 @@ const DepartmentDash = () => {
     datasets: [
       {
         label: "Total Complaints",
-        data: [10, 2, 8, 5, 12, 9, 0, 0, 2, 7, 8, 0], // Example targets
+        data: [10, 2, 8, 5, 12, 9, 1, 3, 2, 7, 8, 0], // Example targets
         backgroundColor: "rgba(54, 162, 235, 0.7)", // Blue
       },
       {
         label: "Pending Complaints",
-        data: [2, 0, 1, 1, 3, 0, 0, 0, 1, 2, 1, 0], // Example achievements
+        data: [2, 0, 1, 1, 3, 0, 0, 1, 1, 2, 1, 0], // Example achievements
         backgroundColor: "rgba(75, 192, 192, 0.7)", // Teal
       },
     ],
@@ -365,6 +377,37 @@ const DepartmentDash = () => {
     ],
   };
 
+  const employeeData = [
+    { label: "Zomato", employees: 45 },
+    { label: "Swiggy", employees: 30 },
+    { label: "Uber Eats", employees: 20 },
+    { label: "DoorDash", employees: 25 },
+    { label: "Grubhub", employees: 10 },
+  ];
+
+  // Calculate total employees
+  const totalEmployees = employeeData.reduce(
+    (sum, company) => sum + company.employees,
+    0
+  );
+
+  // Define subtle pastel colors
+  const colors = [
+    "rgba(173, 216, 230, 0.8)", // Light Blue
+    "rgba(152, 251, 152, 0.8)", // Pale Green
+    "rgba(255, 182, 193, 0.8)", // Light Pink
+    "rgba(240, 230, 140, 0.8)", // Light Yellow
+    "rgba(221, 160, 221, 0.8)", // Plum
+  ];
+
+  // Prepare data for PieChartMUI
+  const pieChartData = employeeData.map((company, index) => ({
+    id: index,
+    value: ((company.employees / totalEmployees) * 100).toFixed(2), // Percentage
+    label: company.label,
+    color: colors[index % colors.length], // Assign subtle colors
+  }));
+
   const techIndiaVisitors = [
     { id: 0, value: 25, label: "Mumbai" },
     { id: 1, value: 20, label: "Delhi" },
@@ -389,11 +432,11 @@ const DepartmentDash = () => {
           datasets={techAllocatedBudgetData.datasets}
           graphWidth={1200} // Optional
           graphHeight={500} // Optional
+          title={"Annual Budget"}
         />,
       ],
     },
     {
-      heading: "Budget Data",
       widgets: [
         <BasicCardCount
           theme={"white"}
@@ -419,30 +462,45 @@ const DepartmentDash = () => {
       ],
     },
     {
-      heading: "Unique Data",
       widgets: [
         <BarGraphMUI
           graphHeight={400}
           graphWidth={600}
           title={"Unique Companies"}
         />,
-        <StackedChart />,
-        // <BarGraphMUI
-        //   graphHeight={400}
-        //   graphWidth={600}
-        //   title={"Unique Customers"}
-        //   data={techUniqueData}
-        // />,
+        <StackedChart title={"Company Sectors"} />,
+      ],
+    },
+    {
+      widgets: [
+        <BarGraphMUI
+          graphHeight={350}
+          graphWidth={600}
+          title={"Unique Customers"}
+          data={techUniqueData}
+        />,
+        <PieChartMUI
+          data={pieChartData} // Pass calculated data
+          title="Employee Distribution by Company (%)"
+        />,
       ],
     },
     {
       heading: "Total Complaints",
       widgets: [
-        <GroupedBarGraph
+        // <GroupedBarGraph
+        //   labels={techAllocatedBudgetData.labels}
+        //   datasets={techTotalComplaints.datasets}
+        //   graphWidth={1200} // Optional
+        //   graphHeight={500} // Optional
+        // />,
+        <BasicGroupedBarGraph
           labels={techAllocatedBudgetData.labels}
           datasets={techTotalComplaints.datasets}
           graphWidth={1200} // Optional
           graphHeight={500} // Optional
+          yAxisFormat="number"
+          title="Complaints Section"
         />,
       ],
     },
@@ -458,13 +516,13 @@ const DepartmentDash = () => {
       ],
     },
     {
-      heading: "Visitor Analytics",
+      heading: " Site Visitor Analytics",
       widgets: [
         <PieChartMUI
-          title={"Country Wise Visitors"}
+          title={"State Wise Site Visitors"}
           data={techIndiaVisitors}
         />,
-        <PieChartMUI title={"State Wise Visitors"} data={techGoaVisitors} />,
+        <PieChartMUI title={"City Wise Site Visitors"} data={techGoaVisitors} />,
       ],
     },
   ];
@@ -961,8 +1019,7 @@ const DepartmentDash = () => {
                     "& .MuiTabs-indicator": {
                       backgroundColor: "#0db4ea", // Custom indicator color
                     },
-                  }}
-                >
+                  }}>
                   <Tab label="Home" />
                   <Tab label="About" />
                   <Tab label="Gallery" />
@@ -1169,16 +1226,14 @@ const DepartmentDash = () => {
                         whileTap={{ scale: 0.9 }}
                         type="button"
                         onClick={handleClose}
-                        className="p-2 bg-white text-[red] border border-red-200 hover:border-red-400 text-2xl rounded-md"
-                      >
+                        className="p-2 bg-white text-[red] border border-red-200 hover:border-red-400 text-2xl rounded-md">
                         <IoMdClose />
                       </motion.button>
                     </div>
                     <iframe
                       src={selectedTheme.demoLink}
                       title="Theme Demo"
-                      className="w-full h-full rounded-lg shadow-md"
-                    ></iframe>
+                      className="w-full h-full rounded-lg shadow-md"></iframe>
                   </div>
                 </NewModal>
               </>
@@ -1283,83 +1338,20 @@ const DepartmentDash = () => {
                 {/* Leave Widgets */}
                 {/* <LeaveWidget1 /> */}
 
-                <div className="bg-gray-100 p-4 rounded-lg mt-4">
-                  <div className="mb-8 flex justify-between">
-                    <h1 className="text-3xl  font-bold">Key Insights</h1>
-                    {/* <div className=" flex gap-4">
-                
-
-                      {user.role === "Employee" && user.department === "IT" && (
-                        <div>
-                          <span className="text-2xl">Status: </span>
-                          <button
-                            onClick={toggleStatus}
-                            className={`px-6 py-2 rounded-lg text-white transition-shadow shadow-md hover:shadow-lg active:shadow-inner ${
-                              isAvailable
-                                ? "bg-green-400 hover:bg-green-300"
-                                : "bg-red-400 hover:bg-red-300"
-                            }`}>
-                            {isAvailable ? "Available" : "Unavailable"}
-                          </button>
-                        </div>
-                      )}
-                 
-
-                      <button
-                        onClick={handleOpenTicket}
-                        className="px-6 py-2 rounded-lg text-white wono-blue-dark hover:bg-[#3cbce7] transition-shadow shadow-md hover:shadow-lg active:shadow-inner">
-                        Raise Ticket
-                      </button>
-                    </div> */}
+                <div className="bg-gray-100 p-4 rounded-lg ">
+                  <div className="mb-4 flex justify-between">
+                    <h1 className="text-2xl font-bold">Leave Management</h1>
                   </div>
 
-                  {/* {hrWidgets
-                    .filter((section) => section.subModule === "leaves")
-                    .map((section, index) => (
-                      <WidgetSection
-                        key={index}
-                        heading={section.heading}
-                        widgets={section.widgets}
-                      />
-                    ))} */}
-                  {/* {hrWidgets
-                    .filter((section) => section.subModule === "leaves")
-                    .map((section, index) => (
-                      <WidgetSectionLeaveDashboard
-                        key={index}
-                        heading={section.heading}
-                        widgets={section.widgets}
-                      />
-                    ))} */}
-                  <LeaveWidgetsContainer />
-                  {/* {hrWidgets
-                    .filter((section) => section.subModule === "leaves")
-                    .map((section, index) => (
-                      <ButtonSection
-                        key={index}
-                        // heading={section.heading}
-                        widgets={section.widgets}
-                      />
-                    ))} */}
+                  <LeaveTabs />
 
-                  {authUser.user.role === "Admin" && (
-                    <div className="flex w-full flex-1 flex-grow gap-x-4">
-                      {/* <TicketsRemainingWidget
-                      totalStock={120}
-                      remainingStock={100}
-                      assetType="Tickets"
-                    />
+                  {/* <LeaveWidgetsContainer /> */}
 
-                    <TicketsRemainingWidget
-                      totalStock={3}
-                      remainingStock={1}
-                      assetType="Available Members"
-                    /> */}
-                    </div>
-                  )}
-                  {/* <AssetAllocationWidget /> */}
+                  {/* {authUser.user.role === "Admin" && (
+                    <div className="flex w-full flex-1 flex-grow gap-x-4"></div>
+                  )} */}
 
-                  <div>
+                  {/* <div>
                     <MyLeavesButton />
                   </div>
                   <div className=" ">
@@ -1368,17 +1360,10 @@ const DepartmentDash = () => {
                         Leaves Pending For Approval
                       </h2>
                     </div>
-                    {/* <p>Today's tickets Table Component</p> */}
-                    {/* <TodaysTickets /> */}
-                    {/* <MyTickets /> */}
-                    <PendingLeaves />
-                  </div>
-                  {/* <p>x</p> */}
-                </div>
 
-                {/* <p>Leave Widgets Here</p> */}
-                {/* Pending Leaves */}
-                {/* <p>Pending Leaves Here</p> */}
+                    <PendingLeaves />
+                  </div> */}
+                </div>
               </>
             ) : location.pathname === "/hr/leaves/pending-leaves" ? (
               <>
@@ -1485,9 +1470,9 @@ const DepartmentDash = () => {
               <>
                 {/* <LeaveReports /> */}
                 <div className="bg-gray-100 p-4 rounded-lg ">
-                  {/* <div className="flex w-full  pb-4 pl-0 text-lg border-b-0  gap-4">
+                  <div className="flex w-full  pb-4 pl-0 text-lg border-b-0  gap-4">
                     <h2 className="text-2xl  font-bold ">Company Handbook</h2>
-                  </div> */}
+                  </div>
                   {/* {hrWidgets
                     .filter(
                       (section) => section.subModule === "company-handbook"
@@ -1499,7 +1484,8 @@ const DepartmentDash = () => {
                         widgets={section.widgets}
                       />
                     ))} */}
-                  <CompanyHandbookWidgetsContainer />
+                  {/* <CompanyHandbookWidgetsContainer /> */}
+                  <CompanyHandbookTabs />
                 </div>
               </>
             ) : location.pathname === "/hr/company-handbook/sop" ? (
@@ -1666,7 +1652,6 @@ const DepartmentDash = () => {
               <>
                 <div className="bg-gray-100 p-4 rounded-lg  mt-4 h-[90vh] overflow-y-auto">
                   <div className="mb-8 flex justify-between">
-                    <h1 className="text-3xl font-semibold">Key Insights</h1>
                   </div>
                   {customerServiceWidgets
                     .filter((section) => section.subModule === "asset")
@@ -1717,41 +1702,21 @@ const DepartmentDash = () => {
             ) : location.pathname === "/it/tickets" ? (
               <>
                 <div className="bg-gray-100 p-4 rounded-lg mt-4">
-                  <div className="mb-8 flex justify-between">
-                    <h1 className="text-3xl  font-bold">Key Insights</h1>
-                    {/* <RaiseTicketButton /> */}
-                    {/* <div className=" flex gap-4">
-                
-
-                      {user.role === "Employee" && user.department === "IT" && (
-                        <div>
-                          <span className="text-2xl">Status: </span>
-                          <button
-                            onClick={toggleStatus}
-                            className={`px-6 py-2 rounded-lg text-white transition-shadow shadow-md hover:shadow-lg active:shadow-inner ${
-                              isAvailable
-                                ? "bg-green-400 hover:bg-green-300"
-                                : "bg-red-400 hover:bg-red-300"
-                            }`}>
-                            {isAvailable ? "Available" : "Unavailable"}
-                          </button>
-                        </div>
-                      )}
-                 
-
-                      <button
-                        onClick={handleOpenTicket}
-                        className="px-6 py-2 rounded-lg text-white wono-blue-dark hover:bg-[#3cbce7] transition-shadow shadow-md hover:shadow-lg active:shadow-inner">
-                        Raise Ticket
-                      </button>
-                    </div> */}
+                  <div className="mb-4 flex justify-between">
+                    <h1 className="text-2xl font-bold">Ticket Management</h1>
+                  </div>
+                  <div className="mb-8 ">
+                    {/* <h1 className="text-3xl  font-bold">Ticket Management</h1> */}
+                    <div className="">
+                      <RaiseTicketForm />
+                    </div>
                   </div>
                   {customerServiceWidgets
                     .filter((section) => section.subModule === "ticket")
                     .map((section, index) => (
                       <WidgetSectionLeaveDashboard
                         key={index}
-                        heading={section.heading}
+                        // heading={section.heading}
                         widgets={section.widgets}
                       />
                     ))}
@@ -1778,9 +1743,9 @@ const DepartmentDash = () => {
 
                   <div className=" ">
                     <br />
-                    <div className="flex justify-center">
+                    {/* <div className="flex justify-center">
                       <RaiseTicketButton />
-                    </div>
+                    </div> */}
                     <div className="flex w-full p-4 pb-4 pl-0 text-lg border-b-0 gap-4">
                       {/* <h2 className="text-2xl font-bold">My Tickets</h2> */}
                       <h2 className="text-2xl font-bold">
@@ -1789,8 +1754,7 @@ const DepartmentDash = () => {
                       </h2>
                       <button
                         className="py-1 px-2 text-sm wono-blue-dark text-white rounded-md"
-                        onClick={() => navigate("/it/tickets/view-tickets")}
-                      >
+                        onClick={() => navigate("/it/tickets/view-tickets")}>
                         View All
                       </button>
                     </div>
@@ -1874,8 +1838,7 @@ const DepartmentDash = () => {
           open={openTicket}
           onClose={handleCloseTicket}
           aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
-        >
+          aria-describedby="modal-modal-description">
           {/* <Box sx={style}> */}
           <Box sx={style}>
             <AddTicketForm />
