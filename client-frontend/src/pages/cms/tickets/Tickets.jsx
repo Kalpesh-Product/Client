@@ -113,8 +113,7 @@ const Tickets = () => {
                 </h2>
                 <button
                   className="py-1 px-2 text-sm wono-blue-dark text-white rounded-md"
-                  onClick={() => navigate("/my-tickets")}
-                >
+                  onClick={() => navigate("/my-tickets")}>
                   View All
                 </button>
               </div>

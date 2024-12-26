@@ -162,13 +162,23 @@ const UnresolvedTickets = () => {
 
     const allTickets = responseFromBackend.data.tickets;
 
-    // Filter tickets where 'department' matches
-    const filteredTickets = allTickets.filter(
-      (ticket) =>
-        ticket.selectedDepartment === selectedDepartmentFilter &&
-        ticket.status !== "Closed" &&
-        ticket.assignedMember === authUser.user.name
-    );
+    if (selectedDepartmentFilter === "TopManagement") {
+      // Filter tickets where 'department' matches
+      var filteredTickets = allTickets.filter(
+        (ticket) =>
+          ticket.escalatedDepartment === selectedDepartmentFilter &&
+          ticket.status !== "Closed" &&
+          ticket.escalation.isEscalated === true
+      );
+    } else {
+      // Filter tickets where 'department' matches
+      var filteredTickets = allTickets.filter(
+        (ticket) =>
+          ticket.selectedDepartment === selectedDepartmentFilter &&
+          ticket.status !== "Closed" &&
+          ticket.escalation.isEscalated === true
+      );
+    }
 
     // Set it on state (update the value of tickets)
     // setMyTickets(responseFromBackend.data.tickets); // setNotes will update the value of tickets from null to the current array of tickets
@@ -394,7 +404,7 @@ const UnresolvedTickets = () => {
   ];
 
   const columns3 = [
-    { field: "ticketId", headerName: "ID", width: 100 },
+    // { field: "ticketId", headerName: "ID", width: 100 },
     { field: "raisedBy", headerName: "Raised By", width: 150 },
     {
       field: "selectedDepartment",
@@ -595,9 +605,13 @@ const UnresolvedTickets = () => {
 
   // nesting the mongoDB value for escalatedTo
 
+  // const ticketsForTable = myTickets.map((ticket) => ({
+  //   ...ticket,
+  //   escalatedTo: ticket.escalation?.escalationToAdmin?.escalatedTo || "N/A",
+  // }));
   const ticketsForTable = myTickets.map((ticket) => ({
     ...ticket,
-    escalatedTo: ticket.escalation?.escalationToAdmin?.escalatedTo || "N/A",
+    escalatedTo: ticket.escalation?.currentlyEscalatedTo || "N/A",
   }));
 
   return (
