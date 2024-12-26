@@ -12,7 +12,7 @@ export default function MainLayout() {
       {!hideHeader && <ClientHeader />}
 
       <div className="h-full overflow-y-hidden flex">
-        <MainSideBar />
+        {location.pathname !== "/" ? <MainSideBar /> : null}
 
         <div className="w-full">
           <Outlet />
