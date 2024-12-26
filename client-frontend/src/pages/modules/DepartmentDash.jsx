@@ -978,8 +978,8 @@ const DepartmentDash = () => {
 
   return (
     <div className="flex">
-      <TestSide />
-      <ModuleSidebar />
+      
+      {/* <ModuleSidebar /> */}
 
       <div className="w-full overflow-y-auto bg-gray-100 h-[90vh]">
         {/* Frontend submodules */}
