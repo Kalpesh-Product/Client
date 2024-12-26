@@ -217,7 +217,7 @@ const ViewTheme = () => {
         </div>
       </div>
 
-      <div class="product-page-reccomendations-section bg-blue-100">
+      <div class="product-page-reccomendations-section bg-white">
         <div class="product-page-reccomendations px-8 py-3">
           <div class="product-page-reccomendations-header mb-8">
             <h2 class="font-medium text-2xl">Few more suggestions for you</h2>

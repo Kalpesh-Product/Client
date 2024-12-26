@@ -26,6 +26,7 @@ import "../styles/CalenderModal.css";
 import dayjs from "dayjs";
 import { toast } from "sonner";
 import { useQuery, useMutation } from "@tanstack/react-query";
+import UsersSelect from "../components/UsersSelect";
 
 const Calender = () => {
   const [selectedDate, setSelectedDate] = useState(null);
@@ -251,6 +252,7 @@ const Calender = () => {
                               )}
                             />
                           </LocalizationProvider>
+                          <UsersSelect />
                           <TextField
                             select
                             label="Event Type"

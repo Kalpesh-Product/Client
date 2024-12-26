@@ -128,6 +128,13 @@ import SopPdfContainer from "../hr/company-handbook/SopPdfContainer";
 import PolicyPdfContainer from "../hr/company-handbook/PolicyPdfContainer";
 import ThemeGrid from "../website-builder/ThemeGrid";
 import ViewTheme from "../website-builder/ViewTheme";
+import BiznestHome from "../../assets/builder-preview/live-theme/biznest-home.jpeg";
+import BiznestAbout from "../../assets/builder-preview/live-theme/biznest-about.jpeg";
+import BiznestGallery from "../../assets/builder-preview/live-theme/biznest-gallery.jpeg";
+import BiznestContact from "../../assets/builder-preview/live-theme/biznest-contact.png";
+import StackedChart from "../../components/Graphs/StackedChart";
+import BudgetDash from "../finance/BudgetDash";
+import PaymentTracker from "../finance/PaymentTracker";
 
 const DepartmentDash = () => {
   const navigate = useNavigate();
@@ -269,8 +276,7 @@ const DepartmentDash = () => {
       },
     ],
   };
-  
-  
+
   const techUniqueData = {
     months: [
       "April",
@@ -420,12 +426,13 @@ const DepartmentDash = () => {
           graphWidth={600}
           title={"Unique Companies"}
         />,
-        <BarGraphMUI
-          graphHeight={400}
-          graphWidth={600}
-          title={"Unique Customers"}
-          data={techUniqueData}
-        />,
+        <StackedChart />,
+        // <BarGraphMUI
+        //   graphHeight={400}
+        //   graphWidth={600}
+        //   title={"Unique Customers"}
+        //   data={techUniqueData}
+        // />,
       ],
     },
     {
@@ -962,7 +969,7 @@ const DepartmentDash = () => {
                   <Tab label="Contact" />
                 </Tabs>
 
-                <Box sx={{ padding: 2 }}>
+                <Box>
                   {value === 0 && (
                     <Typography variant="h6" gutterBottom>
                       Home
@@ -985,27 +992,43 @@ const DepartmentDash = () => {
                   )}
                 </Box>
 
-                <Box sx={{ padding: 2 }}>
+                <Box>
                   {/* Modern Content Examples */}
                   {value === 0 && (
-                    <Typography variant="body1">
-                      <p>Edit home section of the website here</p>
-                    </Typography>
+                    <div className="h-[90vh] overflow-y-auto">
+                      <img
+                        className="w-full"
+                        src={BiznestHome}
+                        alt="BiznestHome"
+                      />
+                    </div>
                   )}
                   {value === 1 && (
-                    <Typography variant="body1">
-                      <p>Edit about section of the website here</p>
-                    </Typography>
+                    <div className="h-[90vh] overflow-y-auto">
+                      <img
+                        className="w-full"
+                        src={BiznestAbout}
+                        alt="BiznestAbout"
+                      />
+                    </div>
                   )}
                   {value === 2 && (
-                    <Typography variant="body1">
-                      <p>Edit Gallery section of the website here</p>
-                    </Typography>
+                    <div className="h-[90vh] overflow-y-auto">
+                      <img
+                        className="w-full"
+                        src={BiznestGallery}
+                        alt="BiznestGallery"
+                      />
+                    </div>
                   )}
                   {value === 3 && (
-                    <Typography variant="body1">
-                      <p>Edit Contact section of the website here</p>
-                    </Typography>
+                    <div className="h-[90vh] overflow-y-auto">
+                      <img
+                        className="w-full"
+                        src={BiznestContact}
+                        alt="BiznestContact"
+                      />
+                    </div>
                   )}
                 </Box>
               </div>
@@ -1554,12 +1577,16 @@ const DepartmentDash = () => {
         {/* Finance submodules */}
         {location.pathname.startsWith("/finance") && (
           <>
-            {(location.pathname === "/finance" ||
-              location.pathname === "/finance/dashboard") && (
+            {location.pathname === "/finance" ||
+            location.pathname === "/finance/dashboard" ? (
               <div className="bg-gray-100 p-4 rounded-lg  mt-4">
                 <WidgetSection heading="Finance" widgets={financeWidgets} />
               </div>
-            )}
+            ) : location.pathname === "/finance/budget" ? (
+              <BudgetDash />
+            ) : location.pathname === "/finance/budget/payment-tracker" ? (
+              <PaymentTracker />
+            ) : null}
           </>
         )}
         {/* Sales submodules */}

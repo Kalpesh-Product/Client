@@ -71,11 +71,11 @@ const ModuleSidebar = ({ mainSideBar }) => {
   const { department } = useParams();
 
   const frontendModules = [
-    {
-      title: "Edit Live Theme",
-      route: "/frontend/live-theme",
-      icon: <HiColorSwatch />,
-    },
+    // {
+    //   title: "Edit Live Theme",
+    //   route: "/frontend/live-theme",
+    //   icon: <HiColorSwatch />,
+    // },
     {
       title: "Themes",
       route: "/frontend/themes",
