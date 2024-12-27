@@ -109,6 +109,8 @@ const MyTickets = () => {
     raisedBy: authUser.user.name,
     selectedDepartment: "",
     description: "",
+    ticketPriority: "",
+    status: "",
   });
 
   // we need to get the name of the input field while typing(changing using onChange) & we need to get the new value. so we get both of those of the default html event that gets passed here (we put an e for the event)
@@ -241,18 +243,20 @@ const MyTickets = () => {
   };
 
   // View  details before update
-  const toggleUpdate = (ticketToBeDisplayedBeforeUpdating) => {
-    // this function should preload the state with the values of the ticket we're editing
-    // Get the current ticket
-    // console.log(ticket);
-    // Set state on update form
-    setUpdateForm({
-      raisedBy: authUser.user.name,
-      selectedDepartment: ticketToBeDisplayedBeforeUpdating.selectedDepartment,
-      description: ticketToBeDisplayedBeforeUpdating.description,
-      _id: ticketToBeDisplayedBeforeUpdating._id,
-    });
-  };
+  // const toggleUpdate = (ticketToBeDisplayedBeforeUpdating) => {
+  //   // this function should preload the state with the values of the ticket we're editing
+  //   // Get the current ticket
+  //   // console.log(ticket);
+  //   // Set state on update form
+  //   setUpdateForm({
+  //     // raisedBy: authUser.user.name,
+  //     raisedBy: ticketToBeDisplayedBeforeUpdating.raisedBy,
+  //     selectedDepartment: ticketToBeDisplayedBeforeUpdating.selectedDepartment,
+  //     description: ticketToBeDisplayedBeforeUpdating.description,
+  //     ticketPriority: ticketToBeDisplayedBeforeUpdating.ticketPriority,
+  //     _id: ticketToBeDisplayedBeforeUpdating._id,
+  //   });
+  // };
 
   // Function to edit the ticket
 
@@ -482,7 +486,7 @@ const MyTickets = () => {
   //   },
   // ];
   const columns3 = [
-    { field: "ticketId", headerName: "ID", width: 80 },
+    // { field: "ticketId", headerName: "ID", width: 80 },
     { field: "raisedBy", headerName: "Raised By", width: 150 },
     {
       field: "selectedDepartment",
@@ -490,6 +494,27 @@ const MyTickets = () => {
       width: 150,
     },
     { field: "description", headerName: "Ticket Title", width: 200 },
+    {
+      field: "ticketPriority",
+      headerName: "Priority",
+      width: 150,
+      type: "singleSelect",
+      valueOptions: ["High", "Medium", "Low"],
+      cellRenderer: (params) => {
+        const statusColors = {
+          Medium: "text-blue-600 bg-blue-100",
+          High: "text-red-600 bg-red-100",
+          Low: "text-yellow-600 bg-yellow-100",
+        };
+        const statusClass = statusColors[params.value] || "";
+        return (
+          <span
+            className={`px-3 py-1 rounded-full text-sm font-medium ${statusClass}`}>
+            {params.value}
+          </span>
+        );
+      },
+    },
     {
       field: "status",
       headerName: "Status",
@@ -543,9 +568,12 @@ const MyTickets = () => {
 
                 // Toggling update
                 setUpdateForm({
-                  raisedBy: authUser.user.name,
+                  // raisedBy: authUser.user.name,
+                  raisedBy: params.data.raisedBy,
                   selectedDepartment: params.data.selectedDepartment,
                   description: params.data.description,
+                  ticketPriority: params.data.ticketPriority,
+                  status: params.data.status,
                   _id: params.data._id,
                 });
 
@@ -586,7 +614,7 @@ const MyTickets = () => {
                     className="bg-blue-300 text-white px-3 py-1 rounded">
                     Details
                   </button>
-                  <button
+                  {/* <button
                     // onClick={handleEdit}
                     // onClick={openEditTicket}
                     onClick={() => {
@@ -595,7 +623,7 @@ const MyTickets = () => {
                     }}
                     className="bg-blue-500 text-white px-3 py-1 rounded">
                     Edit
-                  </button>
+                  </button> */}
                   <button
                     onClick={handleDelete}
                     className="bg-red-500 text-white px-3 py-1 rounded">
@@ -1223,13 +1251,13 @@ const MyTickets = () => {
                 <br />
                 <p>
                   <span className="font-bold">Ticket Priority : </span>
-                  <span>High</span>
+                  <span>{updateForm.ticketPriority}</span>
                 </p>
                 <br />
                 <p>
                   <span className="font-bold">Ticket Status : </span>
-                  <span>Closed</span>
-                  <br />
+                  <span>{updateForm.status}</span>
+                  {/* <br />
                   &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
                   &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
                   <span className="text-gray-500">
@@ -1246,7 +1274,7 @@ const MyTickets = () => {
                   &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
                   <span className="text-gray-500">
                     2024-12-09 - 13:15 - Closed
-                  </span>
+                  </span> */}
                 </p>
                 <br />
                 <p>

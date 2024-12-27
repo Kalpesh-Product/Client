@@ -837,21 +837,19 @@ const ClientLandingPage = () => {
           <div className="flex gap-4 pr-20">
             {/* Add More Button */}
             {auth.user.role.roleTitle === "Master Admin" ||
-            auth.user.role.roleTitle=== "Super Admin" ||
+            auth.user.role.roleTitle === "Super Admin" ||
             auth.user.role.roleTitle === "Admin" ? (
               <div className="flex justify-center">
                 <button
                   className="bg-blue-500 text-white py-3 px-8 rounded-lg hover:bg-blue-600"
-                  onClick={openModal}
-                >
+                  onClick={openModal}>
                   Add More
                 </button>
               </div>
             ) : null}
             <button
               onClick={toggleDragAndDrop}
-              className="bg-blue-500 text-white py-2 px-6 rounded-lg hover:bg-blue-600 mt-4 md:mt-0"
-            >
+              className="bg-blue-500 text-white py-2 px-6 rounded-lg hover:bg-blue-600 mt-4 md:mt-0">
               {/* Organize */}
               {isDragEnabled ? "Save Changes" : "Organize"}
             </button>
@@ -861,12 +859,10 @@ const ClientLandingPage = () => {
           {isDragEnabled ? (
             <DndContext
               collisionDetection={closestCorners}
-              onDragEnd={handleDragEnd}
-            >
+              onDragEnd={handleDragEnd}>
               <SortableContext
                 items={quickLaunchIcons.map((icon) => icon.id)}
-                strategy={verticalListSortingStrategy}
-              >
+                strategy={verticalListSortingStrategy}>
                 <IconGrid
                   isDragEnabled={isDragEnabled}
                   quickLaunchIcons={quickLaunchIcons}
@@ -907,8 +903,7 @@ const ClientLandingPage = () => {
                   {/* Close button */}
                   <button
                     className="bg-blue-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-600"
-                    onClick={closeModal}
-                  >
+                    onClick={closeModal}>
                     X
                   </button>
                 </div>
@@ -1145,8 +1140,7 @@ const ClientLandingPage = () => {
                   {/* Add button */}
                   <button
                     className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600"
-                    onClick={handleAddServices}
-                  >
+                    onClick={handleAddServices}>
                     Add
                   </button>
                 </div>
@@ -1267,8 +1261,7 @@ const SortableCard = ({ id, title, iconSrc, isDragEnabled }) => {
       onClick={handleClick} // Navigate on click
       className={`flex flex-col items-center text-center cursor-pointer p-4 bg-white border-2 rounded-lg ${
         isDragEnabled ? "border-blue-500" : "border-white"
-      }`}
-    >
+      }`}>
       <img src={iconSrc} alt={title} className="w-16 h-16 mb-4" />
       <p className="text-lg font-medium">{title}</p>
     </div>
@@ -1328,8 +1321,7 @@ const Card = ({ title, iconSrc, isSelected, handleSelect }) => {
       className={`relative w-32 h-32 border-2 rounded-lg p-3 transition-shadow duration-300 cursor-pointer flex flex-col justify-center items-center ${
         isSelected ? "border-blue-500 shadow-lg" : "border-gray-300"
       }`}
-      onClick={() => handleSelect(title)}
-    >
+      onClick={() => handleSelect(title)}>
       <input
         type="checkbox"
         checked={isSelected}

@@ -7,8 +7,8 @@ import { TimerProvider } from "./contexts/TimerContext";
 import axios from "axios";
 import AuthContextProvider from "./contexts/AuthContext";
 
-// axios.defaults.baseURL = "http://localhost:5000";
-axios.defaults.baseURL = "https://client-be.vercel.app";
+axios.defaults.baseURL = "http://localhost:5000";
+// axios.defaults.baseURL = "https://client-be.vercel.app";
 
 export const queryClient = new QueryClient();
 
