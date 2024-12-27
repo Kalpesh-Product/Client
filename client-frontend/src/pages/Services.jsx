@@ -701,7 +701,7 @@ const Services = () => {
   console.log("From profile section : ", user);
   return (
     <div className="flex">
-      <TestSide />
+      
       <div className="p-6 flex-1 h-screen overflow-y-auto">
         <div>
           {/* {user.department === "TopManagement" || user.department === "Tech" ? (

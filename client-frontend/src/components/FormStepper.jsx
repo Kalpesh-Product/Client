@@ -4,8 +4,10 @@ import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
 import { IoMdArrowRoundBack, IoMdClose } from "react-icons/io";
 import { motion } from "framer-motion";
+import { useLocation } from "react-router-dom";
 
 const FormStepper = ({ steps, children, handleClose }) => {
+  const location = useLocation();
   const [activeStep, setActiveStep] = useState(0);
 
   const handleNext = () => {
@@ -23,7 +25,8 @@ const FormStepper = ({ steps, children, handleClose }) => {
           {activeStep > 0 && ( // Render the Back button only if not on the first step
             <button
               onClick={handleBack}
-              className="p-3 wono-blue-dark rounded-md text-white flex items-center gap-2">
+              className="p-3 wono-blue-dark rounded-md text-white flex items-center gap-2"
+            >
               <IoMdArrowRoundBack />
               Back
             </button>
@@ -32,23 +35,29 @@ const FormStepper = ({ steps, children, handleClose }) => {
         <Stepper
           activeStep={activeStep}
           alternativeLabel
-          sx={{ width: "100%" }}>
+          sx={{ width: "100%" }}
+        >
           {steps.map((label) => (
             <Step key={label}>
               <StepLabel>{label}</StepLabel>
             </Step>
           ))}
         </Stepper>
-        <div>
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.9 }}
-            type="button"
-            onClick={handleClose}
-            className=" p-2 bg-white text-[red] border border-red-200 hover:border-red-400 text-2xl rounded-md">
-            <IoMdClose />
-          </motion.button>
-        </div>
+        {!location.pathname === "/hr/onboarding" ? (
+          <>
+            <div>
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.9 }}
+                type="button"
+                onClick={handleClose}
+                className=" p-2 bg-white text-[red] border border-red-200 hover:border-red-400 text-2xl rounded-md"
+              >
+                <IoMdClose />
+              </motion.button>
+            </div>
+          </>
+        ) : null}
       </div>
 
       <div style={{ marginTop: "20px" }}>

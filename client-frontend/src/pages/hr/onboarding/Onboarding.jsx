@@ -101,16 +101,20 @@ const Onboarding = () => {
       <h1 className="wono-title">Onboarding</h1>
       <div>
         <div className="bg-white rounded-md p-2">
-          <div className="flex justify-end pb-3">
+          <div>
+          <OnBoardingForm handleClose={handleCloseModal} />
+          </div>
+          {/* <div className="flex justify-end pb-3">
             <WonoButton
               content={"Add Employee"}
               onClick={() => handleOpenModal("add")}
             />
-          </div>
-          <AgTable data={tableData} columns={columns} />
+          </div> */}
+          {/* <AgTable data={tableData} columns={columns} /> */}
         </div>
 
         <div>
+       
           {/* <div className="grid grid-cols-2">
             {users.map((user) => (
               <UserCard key={user._id} user={user} />
@@ -118,7 +122,7 @@ const Onboarding = () => {
           </div> */}
         </div>
       </div>
-
+{/* 
       <NewModal
         styles={modalStyle}
         open={!!openModal}
@@ -129,7 +133,7 @@ const Onboarding = () => {
             <OnBoardingForm handleClose={handleCloseModal} />
           </>
         )}
-      </NewModal>
+      </NewModal> */}
     </div>
   );
 };

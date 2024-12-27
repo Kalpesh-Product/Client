@@ -35,6 +35,7 @@ import {
 import Sidetest from "../components/Sidetest";
 import TestSide from "../components/Sidetest";
 import { useNavigate } from "react-router-dom";
+import MainSideBar from "../components/Sidebar/MainSideBar";
 // import { openModal } from "../pages/hr/MyLeaves";
 // import MyLeaves from "./hr/leaves/MyLeaves";
 
@@ -261,15 +262,8 @@ const Dashboard = () => {
 
   return (
     <div className="flex h-screen">
-      {/* Sidebar */}
-      {/* <ClientSidebar className="sticky top-0" /> */}
-      {/* <div className="sticky top-10">
-
-      <Sidetest />
-      </div> */}
-
-      <TestSide />
-
+      {/*  */}
+      {/* <MainSideBar /> */}
       <div className="flex-1 bg-gray-100 p-8 overflow-y-auto">
         {/* Heading 1 */}
         <h1 className="text-3xl motion-preset-slide-right-md font-bold">

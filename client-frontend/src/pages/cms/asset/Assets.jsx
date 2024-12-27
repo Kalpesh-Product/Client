@@ -105,7 +105,7 @@ const Assets = () => {
   return (
     <div className="flex min-h-screen bg-slate-50 flex-1 w-full">
       <div>
-        <TestSide />
+        
       </div>
       <div className="w-full h-screen overflow-auto">
         {location.pathname === "/assets" ? (
