@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import BiznestLogo from "../LandingPageImages/biz-nest.png";
 import { BsFillGridFill } from "react-icons/bs";
+import { FaBell } from "react-icons/fa";
 import MainModules from "./MainModules";
 import {
   Avatar,
@@ -11,7 +12,7 @@ import {
   Popover,
   Button,
 } from "@mui/material";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useTimer } from "../contexts/TimerContext";
 import useAuth from "../hooks/useAuth";
 import useLogout from "../hooks/useLogout";
@@ -24,7 +25,6 @@ const ClientHeader = () => {
   const [isModelOpen, setIsModalOpen] = useState(false);
   const { auth: authUser } = useAuth();
   const logout = useLogout();
-  const location = useLocation();
 
   const handlePopoverOpen = (event) => {
     setPopoverAnchorEl(event.currentTarget);
@@ -68,30 +68,27 @@ const ClientHeader = () => {
         {/* Navigation Links */}
         <nav className="flex justify-between py-0 items-center w-[15%]">
           {/* Popover */}
-          {location.pathname === "/" ? null : (
-            <>
-              <span onClick={handlePopoverOpen} className="p-4 cursor-pointer">
-                <BsFillGridFill />
-              </span>
-              <Popover
-                open={isPopoverOpen}
-                anchorEl={popoverAnchorEl}
-                onClose={handlePopoverClose}
-                anchorOrigin={{
-                  vertical: "bottom",
-                  horizontal: "center",
-                }}
-                transformOrigin={{
-                  vertical: "top",
-                  horizontal: "center",
-                }}
-              >
-                <div className="p-4 min-w-[25vw]">
-                  <MainModules closePopover={handlePopoverClose} />
-                </div>
-              </Popover>
-            </>
-          )}
+          <span onClick={handlePopoverOpen} className="p-4 cursor-pointer">
+            <BsFillGridFill />
+          </span>
+          <Popover
+            open={isPopoverOpen}
+            anchorEl={popoverAnchorEl}
+            onClose={handlePopoverClose}
+            anchorOrigin={{
+              vertical: "bottom",
+              horizontal: "center",
+            }}
+            transformOrigin={{
+              vertical: "top",
+              horizontal: "center",
+            }}
+          >
+            <div className="p-4 min-w-[25vw]">
+              <MainModules closePopover={handlePopoverClose} />
+            </div>
+          </Popover>
+
           {/* Avatar Menu Trigger */}
           <IconButton onClick={handleMenuOpen} sx={{ py: 0 }}>
             <Avatar
