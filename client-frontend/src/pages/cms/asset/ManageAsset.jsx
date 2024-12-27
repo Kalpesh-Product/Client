@@ -133,8 +133,7 @@ const ManageAsset = () => {
                 cursor: "pointer",
                 height: "100%",
               }}
-              onClick={() => handleViewDetails(params.data)}
-            >
+              onClick={() => handleViewDetails(params.data)}>
               Details
             </button>
             {/* <button
@@ -205,8 +204,7 @@ const ManageAsset = () => {
                 cursor: "pointer",
                 height: "100%",
               }}
-              onClick={() => handleAssignAsset(params.data)}
-            >
+              onClick={() => handleAssignAsset(params.data)}>
               Assign
             </button>
           </div>
@@ -277,8 +275,7 @@ const ManageAsset = () => {
                   cursor: "pointer",
                   height: "100%",
                 }}
-                onClick={() => setApproval(true)}
-              >
+                onClick={() => setApproval(true)}>
                 Approve
               </button>
               <button
@@ -292,8 +289,7 @@ const ManageAsset = () => {
                   cursor: "pointer",
                   height: "100%",
                 }}
-                onClick={() => setApproval(false)}
-              >
+                onClick={() => setApproval(false)}>
                 Reject
               </button>
             </div>
@@ -374,8 +370,7 @@ const ManageAsset = () => {
               borderTopRightRadius: "10px",
               fontFamily: "Popins-Semibold",
               padding: "0.5rem",
-            }}
-          >
+            }}>
             {/* 0 */}
             <Tab sx={{ borderRight: "1px solid #e4e4e4" }} label="Add Assets" />
             {/* 1 */}
@@ -418,8 +413,7 @@ const ManageAsset = () => {
                       size="small"
                       value={selectedAssetName}
                       onChange={(e) => setSelectedAssetName(e.target.value)}
-                      sx={{ fontSize: "0.5rem" }}
-                    >
+                      sx={{ fontSize: "0.5rem" }}>
                       <MenuItem value="">All</MenuItem>
                       {[
                         ...new Set(assetsData.map((asset) => asset.category)),
@@ -431,7 +425,8 @@ const ManageAsset = () => {
                     </TextField>
                   </FormControl>
 
-                  {authUser?.department?.map((dept)=>dept.name) === "TopManagement" && (
+                  {authUser?.department?.map((dept) => dept.name) ===
+                    "TopManagement" && (
                     <>
                       <FormControl size="small" style={{ minWidth: 220 }}>
                         {/* <InputLabel>Filter by Asset Name</InputLabel> */}
@@ -443,8 +438,7 @@ const ManageAsset = () => {
                           value={selectedDepartment}
                           onChange={(e) =>
                             setSelectedDepartment(e.target.value)
-                          }
-                        >
+                          }>
                           <MenuItem value="">All</MenuItem>
                           <MenuItem value="IT">IT</MenuItem>
                           <MenuItem value="Maintainance">Maintainance</MenuItem>
@@ -456,8 +450,7 @@ const ManageAsset = () => {
 
                 <button
                   onClick={() => handleOpenModal("add")}
-                  className="wono-blue-dark p-2 rounded-md text-white"
-                >
+                  className="wono-blue-dark p-2 rounded-md text-white">
                   Add Asset
                 </button>
               </div>
@@ -491,8 +484,7 @@ const ManageAsset = () => {
                       size="small"
                       value={selectedAssetName}
                       onChange={(e) => setSelectedAssetName(e.target.value)}
-                      sx={{ fontSize: "0.5rem" }}
-                    >
+                      sx={{ fontSize: "0.5rem" }}>
                       <MenuItem value="">All</MenuItem>
                       {[
                         ...new Set(assetsData.map((asset) => asset.category)),
@@ -516,8 +508,7 @@ const ManageAsset = () => {
                           value={selectedDepartment}
                           onChange={(e) =>
                             setSelectedDepartment(e.target.value)
-                          }
-                        >
+                          }>
                           <MenuItem value="">All</MenuItem>
                           <MenuItem value="IT">IT</MenuItem>
                           <MenuItem value="Maintainance">Maintainance</MenuItem>
@@ -592,8 +583,7 @@ const ManageAsset = () => {
                   whileTap={{ scale: 0.9 }}
                   type="button"
                   onClick={handleCloseModal}
-                  className="p-2 bg-white text-[red] border border-red-200 hover:border-red-400 text-2xl rounded-md"
-                >
+                  className="p-2 bg-white text-[red] border border-red-200 hover:border-red-400 text-2xl rounded-md">
                   <IoMdClose />
                 </motion.button>
               </div>
@@ -604,8 +594,7 @@ const ManageAsset = () => {
                   variant="contained"
                   onClick={handleEdit}
                   disabled={isEditing}
-                  sx={{ backgroundColor: "#0db4ea", color: "#fff" }}
-                >
+                  sx={{ backgroundColor: "#0db4ea", color: "#fff" }}>
                   Edit
                 </Button>
               </div>
@@ -682,8 +671,7 @@ const ManageAsset = () => {
                   value={formData.department || ""}
                   onChange={handleInputChange}
                   disabled={!isEditing}
-                  select
-                >
+                  select>
                   <MenuItem value="">
                     <em>Select Department</em> {/* Placeholder */}
                   </MenuItem>
@@ -697,8 +685,7 @@ const ManageAsset = () => {
                   name="status"
                   value={formData.status || ""}
                   onChange={handleInputChange}
-                  disabled
-                >
+                  disabled>
                   <MenuItem value="Active">Active</MenuItem>
                 </TextField>
                 <TextField
@@ -714,7 +701,11 @@ const ManageAsset = () => {
                     label="Purchase Date"
                     disabled={!isEditing}
                     renderInput={(params) => (
-                      <TextField  sx={{display:'flex',height:'100%'}} {...params} className="w-full md:w-1/4" />
+                      <TextField
+                        sx={{ display: "flex", height: "100%" }}
+                        {...params}
+                        className="w-full md:w-1/4"
+                      />
                     )}
                   />
                 </LocalizationProvider>
@@ -725,7 +716,7 @@ const ManageAsset = () => {
                   onChange={handleInputChange}
                   fullWidth
                   disabled={!isEditing}
-                  sx={{height:'100%'}}
+                  sx={{ height: "100%" }}
                 />
               </div>
 
@@ -738,8 +729,7 @@ const ManageAsset = () => {
                     backgroundColor: "#0db4ea",
                     color: "#fff",
                     width: "full",
-                  }}
-                >
+                  }}>
                   Save
                 </Button>
               )}

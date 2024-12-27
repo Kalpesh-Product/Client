@@ -206,11 +206,34 @@ const MainSideBar = () => {
             {
               title: "My Leaves",
               route: "/hr/leaves/my-leaves",
+              icon: <HiOutlineClipboardList />,
             },
             {
               title: "View Past Leaves",
               route: "/hr/leaves/past-leaves",
+              icon: <HiOutlineClipboardList />,
             },
+            {
+              title: "Subordinate Due Approvals",
+              route: "/hr/leaves/due-approvals",
+              icon: <HiOutlineClipboardList />,
+            },
+            {
+              title: "Manage Leaves",
+              route: "/hr/leaves/manage-leaves",
+              icon: <HiOutlineClipboardList />,
+            },
+
+            // ...(authUser.user.role === "Employee" &&
+            // authUser.user.department === "Finance"
+            //   ? []
+            //   : [
+            //       {
+            //         title: "Reports",
+            //         route: "/hr/leaves/leave-reports",
+            //         icon: <HiOutlineClipboardList />,
+            //       },
+            //     ]),
           ],
         },
         {

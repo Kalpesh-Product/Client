@@ -182,7 +182,7 @@ const MyTickets = () => {
       toast.success("New Ticket Created");
       fetchmyTickets();
       closeModal();
-      navigate("/it/tickets/view-tickets");
+      navigate("/tickets/view-tickets");
     } catch (error) {
       console.log(error);
     }
@@ -538,7 +538,7 @@ const MyTickets = () => {
     },
     // { field: "requestDate", headerName: "Request Date", width: 150 },
 
-    ...(location.pathname === "/it/tickets/view-tickets"
+    ...(location.pathname === "/tickets/view-tickets"
       ? [
           {
             field: "actions",
@@ -828,7 +828,7 @@ const MyTickets = () => {
     // { label: "Escalated To", key: "escalatedTo" },
   ];
 
-  const visiblePaths = ["/profile", "/it/tickets/view-tickets"];
+  const visiblePaths = ["/profile", "/tickets/view-tickets"];
 
   // Code for filtering ticket messages
   const issues = [
@@ -873,7 +873,7 @@ const MyTickets = () => {
           </FormControl>
         </div>
 
-        {/* {location.pathname === "/it/tickets" && (
+        {/* {location.pathname === "/tickets" && (
           <div className="  bg-red-500">
             <div className=" relative mb-2 flex justify-between">
               <h1 className="text-3xl"></h1>
@@ -885,7 +885,7 @@ const MyTickets = () => {
             </div>
           </div>
         )} */}
-        {/* {location.pathname === "/it/tickets" && (
+        {/* {location.pathname === "/tickets" && (
           <div className="relative bg-red-500">
             <h1 className="text-3xl mb-2"></h1>
             <button
@@ -896,7 +896,7 @@ const MyTickets = () => {
           </div>
         )} */}
 
-        {/* {location.pathname === "/it/tickets" &&
+        {/* {location.pathname === "/tickets" &&
           ["Admin", "Super Admin", "Master Admin"].includes(
             authUser.user.role.roleTitle
           ) && (
@@ -909,7 +909,7 @@ const MyTickets = () => {
               </button>
             </div>
           )}
-        {location.pathname === "/it/tickets" &&
+        {location.pathname === "/tickets" &&
           ["Employee"].includes(authUser.user.role.roleTitle) && (
             <div className="relative bg-red-500">
               <h1 className="text-3xl mb-2"></h1>
@@ -923,7 +923,7 @@ const MyTickets = () => {
 
         <div className="flex gap-4">
           {location.pathname !== "/profile" &&
-            location.pathname !== "/it/tickets" && (
+            location.pathname !== "/tickets" && (
               <div className="flex">
                 <div className="mb-2 flex justify-between">
                   <h1 className="text-3xl"></h1>

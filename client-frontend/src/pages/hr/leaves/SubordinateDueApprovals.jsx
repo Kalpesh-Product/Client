@@ -19,10 +19,15 @@ import { motion } from "framer-motion";
 import { IoMdClose } from "react-icons/io";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import useAuth from "../../../hooks/useAuth";
+import axios from "axios";
 
 const SubordinateDueApprovals = () => {
+  const { auth: authUser } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
+
+  const [myLeaves, setMyLeaves] = useState([]);
 
   const [highlightFirstRow, setHighlightFirstRow] = React.useState(false);
   const [highlightEditedRow, setHighlightEditedRow] = React.useState(false);
@@ -35,6 +40,35 @@ const SubordinateDueApprovals = () => {
     setUser(storedUser);
   }, []);
 
+  const takenByFilter = authUser.user.name; // Replace with the desired name or variable
+  // function that fetches our tickets
+  const fetchmyLeaves = async () => {
+    // Fetch the tickets
+    const responseFromBackend = await axios.get("/api/leaves/view-all-leaves"); // the function is not running yet. we want the function to run as soon as the app starts up, so we do that in a useEffect (react hook).
+
+    const allLeaves = responseFromBackend.data.leaves;
+
+    // Filter tickets where 'takenBy' matches
+    const filteredLeaves = allLeaves.filter(
+      (leave) => leave.takenBy !== takenByFilter
+    );
+
+    // Set it on state (update the value of tickets)
+    // setMyTickets(responseFromBackend.data.tickets); // setTickets will update the value of tickets from null to the current array of tickets
+    // Update state with filtered tickets
+    setMyLeaves(filteredLeaves);
+    // console.log(responseFromBackend);
+    // console.log(responseFromBackend.data.tickets);
+  };
+
+  // useeffect for displaying the tickets array after fetching from backend response
+  useEffect(() => {
+    // anything you put in here will run when the app starts
+    fetchmyLeaves();
+    console.log(myLeaves);
+    // this will run the fetchTickets function & fetch the tickets array from backend as our response (in network tab from developer tools)
+  }, []); // we leave the array empty since we need it to run only once when the app starts up.
+
   const columns = [
     // { field: "id", headerName: "ID", width: 100 },
     { field: "fromDate", headerName: "From Date", width: 200 },
@@ -42,7 +76,7 @@ const SubordinateDueApprovals = () => {
     { field: "leaveType", headerName: "Leave Type", width: 200 },
     { field: "leavePeriod", headerName: "Leave Period", width: 200 },
     { field: "hours", headerName: "Hours", width: 200 },
-    { field: "createdBy", headerName: "Created By", width: 200 },
+    { field: "takenBy", headerName: "Created By", width: 200 },
     {
       field: "status",
       headerName: "Status",
@@ -96,49 +130,172 @@ const SubordinateDueApprovals = () => {
     // },
     // { field: "requestDate", headerName: "Request Date", width: 150 },
 
+    // {
+    //   field: "actions",
+    //   headerName: "Actions",
+    //   width: 170,
+    //   // renderCell: (params) => (
+    //   cellRenderer: (params) => (
+    //     <div className="flex gap-2">
+    //       <Button
+    //         size="small"
+    //         // onClick={() => handleDelete(params.row)}
+    //         // onClick={handleAccept}
+    //         onClick={handleApprove}
+    //         variant="contained"
+    //         sx={{
+    //           backgroundColor: "green",
+    //           color: "white",
+    //           "&:hover": {
+    //             backgroundColor: "green",
+    //           },
+    //           padding: "4px 8px",
+    //           borderRadius: "0.375rem",
+    //         }}>
+    //         Approve
+    //       </Button>
+    //       <Button
+    //         size="small"
+    //         // onClick={() => handleDelete(params.row)}
+    //         // onClick={handleAccept}
+    //         onClick={handleReject}
+    //         variant="contained"
+    //         sx={{
+    //           backgroundColor: "#EF4444",
+    //           color: "white",
+    //           "&:hover": {
+    //             backgroundColor: "#DC2626",
+    //           },
+    //           padding: "4px 8px",
+    //           borderRadius: "0.375rem",
+    //         }}>
+    //         Reject
+    //       </Button>
+    //     </div>
+    //   ),
+    // },
+
     {
       field: "actions",
       headerName: "Actions",
-      width: 170,
-      // renderCell: (params) => (
-      cellRenderer: (params) => (
-        <div className="flex gap-2">
-          <Button
-            size="small"
-            // onClick={() => handleDelete(params.row)}
-            // onClick={handleAccept}
-            onClick={handleApprove}
-            variant="contained"
-            sx={{
-              backgroundColor: "green",
-              color: "white",
-              "&:hover": {
-                backgroundColor: "green",
-              },
-              padding: "4px 8px",
-              borderRadius: "0.375rem",
-            }}>
-            Approve
-          </Button>
-          <Button
-            size="small"
-            // onClick={() => handleDelete(params.row)}
-            // onClick={handleAccept}
-            onClick={handleReject}
-            variant="contained"
-            sx={{
-              backgroundColor: "#EF4444",
-              color: "white",
-              "&:hover": {
-                backgroundColor: "#DC2626",
-              },
-              padding: "4px 8px",
-              borderRadius: "0.375rem",
-            }}>
-            Reject
-          </Button>
-        </div>
-      ),
+      width: 200,
+      cellRenderer: (params) => {
+        // const viewDetails = () => {
+        //   console.log("View Ticket Details:", params.data._id);
+        //   // Implement your edit logic here
+        //   // toggleUpdate()
+
+        //   // Toggling update
+        //   setUpdateForm({
+        //     raisedBy: authUser.user.name,
+        //     selectedDepartment: params.data.selectedDepartment,
+        //     description: params.data.description,
+        //     _id: params.data._id,
+        //   });
+
+        //   console.log(setUpdateForm);
+        // };
+
+        // Check if params.data is defined
+        if (!params.data) {
+          return null; // Return nothing if data is undefined
+        }
+
+        const handleApprove = async () => {
+          console.log("Approved Leave:", params.data._id);
+          // Implement your edit logic here
+
+          const responseFromBackend = await axios.put(
+            `/api/leaves/approve-leave/${params.data._id}`,
+            {
+              // selectedDepartment: newUpdatedTicketDepartment,
+              approvedBy: authUser.user.name,
+            }
+          );
+
+          const newLeaves = [...myLeaves];
+          const leaveIndex = myLeaves.findIndex((myLeave) => {
+            return myLeave._id === params.data._id; // finds the index of the leave which is updated (leave whose id was in the button). We find the index so that we can update the leave at that index
+          });
+          newLeaves[leaveIndex] = responseFromBackend.data.myLeave; // The leave at that particular index is now equal to the response we got from updating the leave
+          setMyLeaves(newLeaves); // Set the leaves array to our updated array
+          // Clear update form state
+
+          fetchmyLeaves();
+
+          toast.success("Leave Approved");
+        };
+        //  toggleUpdateForm(ticket);
+
+        const handleReject = async () => {
+          console.log("Rejected Leave:", params.data._id);
+
+          const responseFromBackend = await axios.put(
+            `/api/leaves/reject-leave/${params.data._id}`,
+            {
+              // selectedDepartment: newUpdatedTicketDepartment,
+              approvedBy: authUser.user.name,
+            }
+          );
+
+          const newLeaves = [...myLeaves];
+          const leaveIndex = myLeaves.findIndex((myLeave) => {
+            return myLeave._id === params.data._id; // finds the index of the leave which is updated (leave whose id was in the button). We find the index so that we can update the leave at that index
+          });
+          newLeaves[leaveIndex] = responseFromBackend.data.myLeave; // The leave at that particular index is now equal to the response we got from updating the leave
+          setMyLeaves(newLeaves); // Set the leaves array to our updated array
+          // Clear update form state
+          console.log(params.data.status);
+          fetchmyLeaves();
+
+          toast.error("Leave Rejected");
+        };
+
+        return (
+          <div className="flex space-x-2">
+            {params.data.status === "Pending" && (
+              <>
+                <button
+                  onClick={handleApprove}
+                  // onClick={openEditTicket}
+                  // onClick={() => {
+                  //   handleEdit();
+                  //   openDetailsModal();
+                  // }}
+                  className="bg-green-500 text-white px-3 py-1 rounded">
+                  Approve
+                </button>
+
+                <button
+                  onClick={handleReject}
+                  className="bg-red-500 text-white px-3 py-1 rounded">
+                  Reject
+                </button>
+              </>
+            )}
+            {params.data.status !== "Pending" && (
+              <>
+                <button
+                  // onClick={handleApprove}
+                  // onClick={openEditTicket}
+                  // onClick={() => {
+                  //   handleEdit();
+                  //   openDetailsModal();
+                  // }}
+                  className="bg-green-200 text-white px-3 py-1 rounded">
+                  Approve
+                </button>
+
+                <button
+                  // onClick={handleReject}
+                  className="bg-red-200 text-white px-3 py-1 rounded">
+                  Reject
+                </button>
+              </>
+            )}
+          </div>
+        );
+      },
     },
     // {
     //   field: "reject",
@@ -229,14 +386,6 @@ const SubordinateDueApprovals = () => {
 
   // const [tickets, setTickets] = useState(allRows);
 
-  const handleApprove = () => {
-    toast.success("Leave Approved");
-  };
-
-  const handleReject = () => {
-    toast.error("Leave Rejected");
-  };
-
   const allRows = [
     {
       id: 1,
@@ -247,7 +396,7 @@ const SubordinateDueApprovals = () => {
       hours: "9.00",
       priority: "High",
       createdB: "Pending",
-      createdBy: "Allan Silveira",
+      takenBy: "Allan Silveira",
 
       status: "Pending",
       approvedBy: "N/A",
@@ -261,7 +410,7 @@ const SubordinateDueApprovals = () => {
       hours: "4.00",
       priority: "High",
       createdB: "Approved",
-      createdBy: "Allan Silveira",
+      takenBy: "Allan Silveira",
       status: "Pending",
       approvedBy: "N/A",
     },
@@ -274,7 +423,7 @@ const SubordinateDueApprovals = () => {
       hours: "3.00",
       priority: "High",
       createdB: "Approved",
-      createdBy: "Allan Silveira",
+      takenBy: "Allan Silveira",
       status: "Pending",
       approvedBy: "N/A",
     },
@@ -537,7 +686,8 @@ const SubordinateDueApprovals = () => {
       /> */}
 
       <AgTable
-        data={rows} // Use the state here
+        // data={rows} // Use the state here
+        data={myLeaves} // Use the state here
         columns={columns}
         highlightFirstRow={highlightFirstRow} // Bind the state here
         highlightEditedRow={highlightEditedRow} // Bind the state here
