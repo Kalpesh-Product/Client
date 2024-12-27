@@ -1,21 +1,21 @@
 import React, { useState } from "react";
 import BiznestLogo from "../LandingPageImages/biz-nest.png";
-import { BsFillGridFill } from "react-icons/bs";
-import { FaBell } from "react-icons/fa";
-import MainModules from "./MainModules";
 import {
   Avatar,
   Menu,
   MenuItem,
   Typography,
   IconButton,
+  Box,
+  Divider,
   Popover,
-  Button,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useTimer } from "../contexts/TimerContext";
 import useAuth from "../hooks/useAuth";
 import useLogout from "../hooks/useLogout";
+import { BsFillGridFill } from "react-icons/bs";
+import MainModules from "../components/MainModules"
 
 const ClientHeader = () => {
   const navigate = useNavigate();
@@ -49,7 +49,7 @@ const ClientHeader = () => {
     navigate("/auth");
   };
 
-  const isPopoverOpen = Boolean(popoverAnchorEl);
+  const isModulePopover = Boolean(popoverAnchorEl);
 
   return (
     <>
@@ -75,7 +75,7 @@ const ClientHeader = () => {
           </span>
           <Popover
             sx={{ marginTop: "1rem" }}
-            open={isPopoverOpen}
+            open={isModulePopover}
             anchorEl={popoverAnchorEl}
             onClose={handlePopoverClose}
             anchorOrigin={{
@@ -149,7 +149,7 @@ const ClientHeader = () => {
             open={isPopoverOpen}
             anchorEl={anchorEl}
             onClose={handleMenuClose}
-            sx={{marginTop:'1rem'}}
+            sx={{ marginTop: "1rem" }}
             anchorOrigin={{
               vertical: "bottom",
               horizontal: "center",
