@@ -23,6 +23,73 @@ const createLeaveType = async (req, res) => {
   }
 };
 
+// GET - Fetch all leave types
+const fetchAllLeaveTypes = async (req, res) => {
+  try {
+    // Find the leaves
+    const listOfAllLeaveTypes = await LeaveType.find();
+    // Respond with them
+    res.json({ leavesTypes: listOfAllLeaveTypes });
+  } catch (error) {
+    console.log(error);
+    res.sendStatus(400);
+  }
+};
+
+// DELETE - delete leave type
+
+const deleteLeaveType = async (req, res) => {
+  try {
+    // get id off the url
+    const leaveTypeIdFromTheUrl = req.params.id;
+
+    // Delete the record
+    await LeaveType.deleteOne({ _id: leaveTypeIdFromTheUrl });
+
+    // Respond with a message (eg: leave deleted)
+    res.json({ success: "Leave Deleted" });
+  } catch (error) {
+    console.log(error);
+    res.sendStatus(400);
+  }
+};
+
+// PUT - soft delete leave type
+
+const softDeleteLeaveType = async (req, res) => {
+  try {
+    // Get the id off the url
+    const leaveIdFromTheUrl = req.params.id;
+
+    // Get the data off the req body
+    // const assignedMemberFromRequestBody = req.body.assignedMember;
+    // const descriptionFromRequestBody = req.body.description;
+
+    // Find and update the record
+    await LeaveType.findOneAndUpdate(
+      { _id: leaveIdFromTheUrl },
+      {
+        // assignedMember: assignedMemberFromRequestBody,
+        // description: descriptionFromRequestBody,
+        // "accepted.acceptedStatus": true,
+        deletedStatus: true,
+      },
+      { new: true } // Returns the updated document
+    );
+
+    //   Find updated leave (using it's id)
+    const updatedLeave = await LeaveType.findById(leaveIdFromTheUrl);
+
+    // Respond with the updated leave (after finding it)
+    res.json({ leaveType: updatedLeave });
+  } catch (error) {
+    console.log(error);
+    res.sendStatus(400);
+  }
+};
 module.exports = {
   createLeaveType,
+  fetchAllLeaveTypes,
+  deleteLeaveType,
+  softDeleteLeaveType,
 };

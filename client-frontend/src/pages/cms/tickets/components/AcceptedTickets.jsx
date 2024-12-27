@@ -535,7 +535,7 @@ const AcceptedTickets = () => {
               className="bg-red-500 text-white px-3 py-1 rounded">
               Close
             </button>
-            {authUser.user.role.roleTitle === "Master Admin" && (
+            {authUser.user.role.roleTitle !== "Master Admin" && (
               <button
                 // onClick={handleDelete}
                 // onClick={handleDeleteTicket}

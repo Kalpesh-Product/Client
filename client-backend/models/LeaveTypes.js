@@ -15,6 +15,10 @@ const leaveTypeSchema = new mongoose.Schema(
       type: Number,
       default: 3,
     },
+    deletedStatus: {
+      type: Boolean,
+      default: false,
+    },
   },
   {
     timestamps: true, // Enable timestamps

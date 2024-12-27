@@ -19,10 +19,90 @@ import { motion } from "framer-motion";
 import { IoMdClose } from "react-icons/io";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import useAuth from "../../../hooks/useAuth";
+import axios from "axios";
+import dayjs from "dayjs";
 
 const ApplyLeaveForm = () => {
+  const { auth: authUser } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
+
+  const [myLeaves, setMyLeaves] = useState([]);
+
+  const [createForm, setCreateForm] = useState({
+    takenBy: authUser.user.name,
+    leaveType: "",
+    fromDate: dayjs(),
+  });
+
+  const updateCreateFormField = (value, customField = null) => {
+    if (customField) {
+      // Ensure the value is a Dayjs object before formatting
+      const formattedValue =
+        value && typeof value.format === "function"
+          ? value.format("DD/MM/YYYY")
+          : "";
+
+      setCreateForm((prevForm) => ({
+        ...prevForm,
+        [customField]: formattedValue,
+      }));
+    } else {
+      // Handle standard input fields
+      const { name, value: inputValue } = value.target;
+      setCreateForm((prevForm) => ({
+        ...prevForm,
+        [name]: inputValue,
+      }));
+    }
+
+    console.log(createForm);
+  };
+
+  // Function to create the ticket
+  const createMyLeave = async (e) => {
+    try {
+      console.log("submitted x");
+      console.log(createForm);
+      e.preventDefault(); // prevents the page from reloading when the form is submitted
+
+      // Create the leave
+
+      // const responseFromBackend = await axios.post(
+      //   // the 2 arguments are: the link to post the values, the values to be sent for post method
+      //   // "/api/leaves/create-leave",
+      //   "http://localhost:5000/api/leaves/create-leave",
+      //   createForm
+      // );
+
+      const responseFromBackend = await axios.post(
+        "/api/leaves/create-leave",
+        createForm
+      );
+
+      console.log(responseFromBackend);
+
+      // Update state
+      setMyLeaves([...myLeaves, responseFromBackend.data.leave]); // adds our newly created leave to the array of leaves. The variable leave was created in out backend for response
+      // console.log("submit");
+      // console.log(responseFromBackend);
+
+      // Clear form state
+      setCreateForm({
+        takenBy: authUser.user.name,
+        leaveType: "",
+        fromDate: "",
+      });
+      toast.success("New Leave Created");
+      // fetchmyLeaves();
+
+      closeModal();
+      navigate("/hr/leaves/my-leaves");
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const [highlightFirstRow, setHighlightFirstRow] = React.useState(false);
   const [highlightEditedRow, setHighlightEditedRow] = React.useState(false);
@@ -470,68 +550,92 @@ const ApplyLeaveForm = () => {
           {/* Modal Body START */}
           <div className=" w-full">
             {/* <div>AddT icket Form</div> */}
-            <div className="">
-              <div className=" mx-auto">
-                <Box
-                  sx={{
-                    Width: "100%",
-                    // paddingY: 3,
-                    bgcolor: "background.paper",
-                    borderRadius: 2,
-                  }}
-                  className="bg-white pt-3 pb-10 rounded-lg w-full">
-                  {/* <div className="grid grid-cols-1 gap-4"> */}
-                  <div className="w-full  flex justify-between items-center gap-4">
-                    <div className="w-full">
-                      <FormControl fullWidth>
-                        <InputLabel id="leave-type-select-label">
-                          Leave Type
-                        </InputLabel>
-                        <Select
-                          labelId="leave-type-select-label"
-                          id="leave-type-select"
-                          // value={department}
-                          label="Department"
-                          // onChange={handleChange}
-                        >
-                          <MenuItem value="Sick Leave">Sick Leave</MenuItem>
-                          <MenuItem value="Casual Leave">Casual Leave</MenuItem>
-                          <MenuItem value="Privileged Leave">
-                            Privileged Leave
-                          </MenuItem>
-                          {/* <MenuItem value="Admin">Admin</MenuItem> */}
-                        </Select>
-                      </FormControl>
-                    </div>
-                    <div className="w-full">
-                      <FormControl fullWidth>
-                        <LocalizationProvider dateAdapter={AdapterDayjs}>
-                          <DatePicker
-                            label="Date"
-                            sx={{ width: "100%" }}
-                            format="DD/MM/YYYY" // Display format in the DatePicker
-                            renderInput={(params) => (
-                              <TextField {...params} className="w-full" />
-                            )}
-                          />
-                        </LocalizationProvider>
-                      </FormControl>
-                    </div>
-                    <div className="sticky bottom-0 bg-white py-6 z-20 flex justify-center w-[200px]">
-                      <div className="flex justify-center items-center w-full">
-                        <button
-                          className="wono-blue-dark text-white py-2 px-4 rounded-md hover:bg-blue-600 w-full"
-                          // onClick={handleAddTicket}>
-                          // onClick={() => handleNextStep(handleNext)}
-                          onClick={() => handleAddTicket(newTicket)}>
-                          Apply
-                        </button>
+            <form onSubmit={createMyLeave}>
+              <div className="">
+                <div className=" mx-auto">
+                  <Box
+                    sx={{
+                      Width: "100%",
+                      // paddingY: 3,
+                      bgcolor: "background.paper",
+                      borderRadius: 2,
+                    }}
+                    className="bg-white pt-3 pb-10 rounded-lg w-full">
+                    {/* <div className="grid grid-cols-1 gap-4"> */}
+                    <div className="w-full  flex justify-between items-center gap-4">
+                      <div className="w-full">
+                        <FormControl fullWidth>
+                          <InputLabel id="leave-type-select-label">
+                            Leave Type
+                          </InputLabel>
+                          <Select
+                            labelId="leave-type-select-label"
+                            id="leave-type-select"
+                            // value={department}
+                            label="Department"
+                            value={createForm.leaveType}
+                            name="leaveType"
+                            // onChange={handleChange}
+                            // onChange={updateCreateFormField}
+                            onChange={(e) => updateCreateFormField(e)}
+                            // onChange={handleChange}
+                          >
+                            <MenuItem value="Sick Leave">Sick Leave</MenuItem>
+                            <MenuItem value="Casual Leave">
+                              Casual Leave
+                            </MenuItem>
+                            <MenuItem value="Privileged Leave">
+                              Privileged Leave
+                            </MenuItem>
+                            {/* <MenuItem value="Admin">Admin</MenuItem> */}
+                          </Select>
+                        </FormControl>
+                      </div>
+                      <div className="w-full">
+                        <FormControl fullWidth>
+                          <LocalizationProvider dateAdapter={AdapterDayjs}>
+                            <DatePicker
+                              label="Date"
+                              sx={{ width: "100%" }}
+                              name="fromDate"
+                              // value={formData.purchaseDate}
+                              // value={createForm.fromDate}
+                              // onChange={updateCreateFormField}
+
+                              value={
+                                createForm.fromDate
+                                  ? dayjs(createForm.fromDate, "DD/MM/YYYY")
+                                  : null
+                              } // Parse stored string back into Dayjs object
+                              onChange={(newDate) =>
+                                updateCreateFormField(newDate, "fromDate")
+                              }
+                              format="DD/MM/YYYY" // Display format in the DatePicker
+                              renderInput={(params) => (
+                                <TextField {...params} className="w-full" />
+                              )}
+                            />
+                          </LocalizationProvider>
+                        </FormControl>
+                      </div>
+                      <div className="sticky bottom-0 bg-white py-6 z-20 flex justify-center w-[200px]">
+                        <div className="flex justify-center items-center w-full">
+                          <button
+                            type="submit"
+                            className="wono-blue-dark text-white py-2 px-4 rounded-md hover:bg-blue-600 w-full"
+                            // onClick={handleAddTicket}>
+                            // onClick={() => handleNextStep(handleNext)}
+                            // onClick={() => handleAddTicket(newTicket)}
+                          >
+                            Apply
+                          </button>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </Box>
+                  </Box>
+                </div>
               </div>
-            </div>
+            </form>
           </div>
           {/* Modal Body END */}
 

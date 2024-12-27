@@ -20,10 +20,130 @@ import { IoMdClose } from "react-icons/io";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import useAuth from "../../../hooks/useAuth";
+import axios from "axios";
 
 const ManageLeaves = () => {
   const location = useLocation();
   const { auth } = useAuth();
+
+  const [myLeaves, setMyLeaves] = useState([]);
+
+  const [createForm, setCreateForm] = useState({
+    leaveType: "",
+    noOfDays: "",
+  });
+
+  const [entryToDelete, setEntryToDelete] = useState("");
+
+  const updateCreateFormField = (e) => {
+    // console.log("hey");
+    console.log(createForm);
+
+    // const { name, value } = e.target;
+    const target = e.target; // We first access the target property of the event object e, which represents the element that triggered the event.
+    const name = target.name; // Next, we extract the name and value properties from the target object and assign them to variables.
+    const value = target.value;
+    // const triggeredHtmlElement = e.target;
+    // const nameAttributeOfTheTriggeredElement = triggeredHtmlElement.name;
+    // const valueAttributeOfTheTriggeredElement = triggeredHtmlElement.value;
+
+    // now we update the state
+    // setCreateForm({
+    //   ...createForm, // creates a duplicate of the createForm object
+    //   // name: value, // this will update the key of name, but we don't need the key of name, we need whatever the variable is equal to
+    //   [name]: value, // this will find the keys (name attributes) and update its values (value attributes) to whatever is changed by the JS event.
+    // });
+
+    setCreateForm((prevForm) => ({
+      ...prevForm, // Spread previous form values
+      [name]: value, // Update the specific field being modified
+      // takenBy: authUser.user.name, // Ensure raisedBy is always set to authUser.user.name
+    }));
+
+    console.log("Updated Form:", createForm);
+    console.log("Updated Field:", { name, value });
+
+    console.log({ name, value });
+  };
+
+  // Function to create the ticket
+  const createMyLeave = async (e) => {
+    try {
+      console.log("submitted x");
+      console.log(createForm);
+      e.preventDefault(); // prevents the page from reloading when the form is submitted
+
+      // Create the leave
+
+      // const responseFromBackend = await axios.post(
+      //   // the 2 arguments are: the link to post the values, the values to be sent for post method
+      //   // "/api/leaves/create-leave",
+      //   "http://localhost:5000/api/leaves/create-leave",
+      //   createForm
+      // );
+
+      const responseFromBackend = await axios.post(
+        "/api/leaves/create-leave-type",
+        createForm
+      );
+
+      console.log(responseFromBackend);
+
+      toast.success("New Leave Created");
+      fetchmyLeaves();
+      closeModal();
+
+      // Update state
+      setMyLeaves([...myLeaves, responseFromBackend.data.leaveType]); // adds our newly created leave to the array of leaves. The variable leave was created in out backend for response
+      // console.log("submit");
+      // console.log(responseFromBackend);
+
+      // Clear form state
+      setCreateForm({
+        leaveType: "",
+        noOfDays: "",
+      });
+      // toast.success("New Leave Created");
+      // fetchmyLeaves();
+      // closeModal();
+      // navigate("/leaves/view-leaves");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  // const takenByFilter = authUser.user.name; // Replace with the desired name or variable
+  // function that fetches our tickets
+  const fetchmyLeaves = async () => {
+    // Fetch the tickets
+    const responseFromBackend = await axios.get(
+      "/api/leaves/view-all-leave-types"
+    ); // the function is not running yet. we want the function to run as soon as the app starts up, so we do that in a useEffect (react hook).
+
+    const allLeaves = responseFromBackend.data.leavesTypes;
+    console.log(allLeaves);
+    // Filter tickets where 'takenBy' matches
+    // const filteredLeaves = allLeaves.filter(
+    //   (leave) => leave.takenBy === takenByFilter
+    // );
+
+    // Set it on state (update the value of tickets)
+    // setMyTickets(responseFromBackend.data.tickets); // setTickets will update the value of tickets from null to the current array of tickets
+    // Update state with filtered tickets
+    // setMyLeaves(filteredLeaves);
+    setMyLeaves(allLeaves);
+    console.log(allLeaves);
+    // console.log(responseFromBackend);
+    // console.log(responseFromBackend.data.tickets);
+  };
+
+  // useeffect for displaying the tickets array after fetching from backend response
+  useEffect(() => {
+    // anything you put in here will run when the app starts
+    fetchmyLeaves();
+    console.log(myLeaves);
+    // this will run the fetchTickets function & fetch the tickets array from backend as our response (in network tab from developer tools)
+  }, []); // we leave the array empty since we need it to run only once when the app starts up.
 
   const [highlightFirstRow, setHighlightFirstRow] = React.useState(false);
   const [highlightEditedRow, setHighlightEditedRow] = React.useState(false);
@@ -31,7 +151,7 @@ const ManageLeaves = () => {
   const [holidayName, setLeaveType] = useState(""); // State to track the selected option
 
   const columns = [
-    { field: "id", headerName: "ID", width: 100 },
+    // { field: "leaveTypeId", headerName: "ID", width: 100 },
     { field: "leaveType", headerName: "Leave Type", width: 200 },
     // {
     //   field: "priority",
@@ -63,7 +183,7 @@ const ManageLeaves = () => {
     //   valueOptions: ["IT", "HR", "Tech", "Admin"],
     // },
     // { field: "date", headerName: "Date", width: 150 },
-    { field: "noOfLeaves", headerName: "No Of Days", width: 150 },
+    { field: "noOfDays", headerName: "No Of Days", width: 150 },
     // {
     //   field: "status",
     //   headerName: "Status",
@@ -85,30 +205,175 @@ const ManageLeaves = () => {
     //     );
     //   },
     // },
+    // {
+    //   field: "delete",
+    //   headerName: "Delete",
+    //   width: 170,
+    //   // renderCell: (params) => (
+    //   cellRenderer: (params) => (
+    //     <Button
+    //       size="small"
+    //       // onClick={() => handleDelete(params.row)}
+    //       onClick={openDeleteTicket}
+    //       // onClick={handleDeleteTicket}
+    //       variant="contained"
+    //       sx={{
+    //         backgroundColor: "red",
+    //         color: "white",
+    //         "&:hover": {
+    //           backgroundColor: "red",
+    //         },
+    //         padding: "4px 8px",
+    //         borderRadius: "0.375rem",
+    //       }}>
+    //       Delete
+    //     </Button>
+    //   ),
+    // },
+
     {
-      field: "delete",
-      headerName: "Delete",
-      width: 170,
-      // renderCell: (params) => (
-      cellRenderer: (params) => (
-        <Button
-          size="small"
-          // onClick={() => handleDelete(params.row)}
-          onClick={openDeleteTicket}
-          // onClick={handleDeleteTicket}
-          variant="contained"
-          sx={{
-            backgroundColor: "red",
-            color: "white",
-            "&:hover": {
-              backgroundColor: "red",
-            },
-            padding: "4px 8px",
-            borderRadius: "0.375rem",
-          }}>
-          Delete
-        </Button>
-      ),
+      field: "actions",
+      headerName: "Actions",
+      width: 200,
+      cellRenderer: (params) => {
+        const handleDelete = () => {
+          console.log("Deleting leave:", params.data._id);
+          // Update state to remove the leave
+          // setMyLeaves((prevLeaves) =>
+          //   prevLeaves.filter((leave) => leave._id !== params.data._id)
+          // );
+
+          openDeleteTicket();
+
+          setEntryToDelete(params.data._id);
+          console.log(entryToDelete);
+
+          // const responseFromBackend = await axios.delete(
+          //   `/api/leaves/delete-leave-type/${params.data._id}`
+          // );
+          // console.log(responseFromBackend);
+
+          // // Update state
+          // // we heve to filter out the one we deleted
+          // const newLeaves = [...myLeaves].filter((leave) => {
+          //   return leave._id !== params.data._id; // return leaves where leave._id is not equal to the id we passed in (idOfTheLeaveToBeDeleted). This will return an array of leaves that meet this condition.
+          // });
+
+          // setMyLeaves(newLeaves); // assigns newLeaves as the new value of the leaves state variable.
+        };
+        // columns.forEach((column) => {
+        //   column.cellClassRules = {
+        //     ...column.cellClassRules,
+        //     "row-revoked": (params) => params.data.deletedStatus === true,
+        //   };
+        // });
+
+        return (
+          <>
+            {params.data.deletedStatus === true ? (
+              <p>Deleted</p>
+            ) : (
+              <div className="flex space-x-2 group">
+                {params.data.deletedStatus !== true && (
+                  <button
+                    onClick={handleDelete}
+                    className="bg-red-500 text-white px-3 py-1 rounded">
+                    Delete
+                  </button>
+                )}
+                {params.data.deletedStatus === true && (
+                  <button
+                    // onClick={handleDelete}
+                    className="bg-red-200 text-white px-3 py-1 rounded ">
+                    Delete
+                  </button>
+                )}
+              </div>
+            )}
+          </>
+        );
+
+        // const viewDetails = () => {
+        //   console.log("View Ticket Details:", params.data._id);
+        //   // Implement your edit logic here
+        //   // toggleUpdate()
+
+        //   // Toggling update
+        //   setUpdateForm({
+        //     raisedBy: authUser.user.name,
+        //     selectedDepartment: params.data.selectedDepartment,
+        //     description: params.data.description,
+        //     _id: params.data._id,
+        //   });
+
+        //   console.log(setUpdateForm);
+        // };
+
+        // const handleEdit = () => {
+        //   console.log("Editing ticket:", params.data._id);
+        //   // Implement your edit logic here
+        //   // toggleUpdate()
+
+        //   // Toggling update
+        //   setUpdateForm({
+        //     // raisedBy: authUser.user.name,
+        //     raisedBy: params.data.raisedBy,
+        //     selectedDepartment: params.data.selectedDepartment,
+        //     description: params.data.description,
+        //     ticketPriority: params.data.ticketPriority,
+        //     status: params.data.status,
+        //     _id: params.data._id,
+        //   });
+
+        //   console.log(setUpdateForm);
+        // };
+        //  toggleUpdateForm(ticket);
+
+        // const handleDelete = () => {
+        //   console.log("Deleting leave:", params.data._id);
+        //   // Update state to remove the leave
+        //   // setMyLeaves((prevLeaves) =>
+        //   //   prevLeaves.filter((leave) => leave._id !== params.data._id)
+        //   // );
+
+        //   openDeleteTicket();
+
+        //   setEntryToDelete(params.data._id);
+        //   console.log(entryToDelete);
+
+        //   // const responseFromBackend = await axios.delete(
+        //   //   `/api/leaves/delete-leave-type/${params.data._id}`
+        //   // );
+        //   // console.log(responseFromBackend);
+
+        //   // // Update state
+        //   // // we heve to filter out the one we deleted
+        //   // const newLeaves = [...myLeaves].filter((leave) => {
+        //   //   return leave._id !== params.data._id; // return leaves where leave._id is not equal to the id we passed in (idOfTheLeaveToBeDeleted). This will return an array of leaves that meet this condition.
+        //   // });
+
+        //   // setMyLeaves(newLeaves); // assigns newLeaves as the new value of the leaves state variable.
+        // };
+
+        // return (
+        //   <div className="flex space-x-2 group">
+        //     {params.data.deletedStatus !== true && (
+        //       <button
+        //         onClick={handleDelete}
+        //         className="bg-red-500 text-white px-3 py-1 rounded">
+        //         Delete
+        //       </button>
+        //     )}
+        //     {params.data.deletedStatus === true && (
+        //       <button
+        //         // onClick={handleDelete}
+        //         className="bg-red-200 text-white px-3 py-1 rounded ">
+        //         Delete
+        //       </button>
+        //     )}
+        //   </div>
+        // );
+      },
     },
     // {
     //   field: "reject",
@@ -398,9 +663,22 @@ const ManageLeaves = () => {
   // Function to close the modal
   const closeDeleteTicket = () => setIsDeleteTicketOpen(false);
 
-  const handleDeleteTicket = () => {
+  const handleDeleteTicket = async () => {
+    const responseFromBackend = await axios.put(
+      `/api/leaves/soft-delete-leave-type/${entryToDelete}`
+    );
+    console.log(responseFromBackend);
+
+    // Update state
+    // we heve to filter out the one we deleted
+    // const newLeaves = [...myLeaves].filter((leave) => {
+    //   return leave._id !== entryToDelete; // return leaves where leave._id is not equal to the id we passed in (idOfTheLeaveToBeDeleted). This will return an array of leaves that meet this condition.
+    // });
+
+    // setMyLeaves(newLeaves); // assigns newLeaves as the new value of the leaves state variable.
+    fetchmyLeaves();
     // setHighlightFirstRow(true); // Highlight the first row after editing a ticket
-    toast.success("Holiday Deleted");
+    toast.success("Leave Type Deleted");
     closeDeleteTicket(); // Optionally close the modal after the alert
   };
   // EDIT TICKET DETAILS MODAL END
@@ -411,6 +689,13 @@ const ManageLeaves = () => {
     // e.preventDefault();
     handleNext();
   };
+
+  columns.forEach((column) => {
+    column.cellClassRules = {
+      ...column.cellClassRules,
+      "row-revoked": (params) => params.data.deletedStatus === true,
+    };
+  });
 
   return (
     <div className="w-[72vw] md:w-full transition-all duration-200 ease-in-out bg-white p-2 rounded-md">
@@ -505,7 +790,8 @@ const ManageLeaves = () => {
       /> */}
 
       <AgTable
-        data={rows} // Use the state here
+        // data={rows} // Use the state here
+        data={myLeaves} // Use the state here
         columns={columns}
         highlightFirstRow={highlightFirstRow} // Bind the state here
         highlightEditedRow={highlightEditedRow} // Bind the state here
@@ -527,18 +813,19 @@ const ManageLeaves = () => {
 
       <NewModal open={isModalOpen} onClose={closeModal}>
         <>
-          <FormStepper
-            steps={steps}
-            handleClose={closeModal}
-            children={(activeStep, handleNext) => {
-              if (activeStep === 0) {
-                return (
-                  <>
-                    <div className="bg-white  w-[31vw] rounded-lg z-10 relative overflow-y-auto max-h-[80vh]">
-                      {/* Modal Content */}
+          <form onSubmit={createMyLeave}>
+            <FormStepper
+              steps={steps}
+              handleClose={closeModal}
+              children={(activeStep, handleNext) => {
+                if (activeStep === 0) {
+                  return (
+                    <>
+                      <div className="bg-white  w-[31vw] rounded-lg z-10 relative overflow-y-auto max-h-[80vh]">
+                        {/* Modal Content */}
 
-                      {/* Modal Header */}
-                      {/* <div className="sticky top-0 bg-white pt-6 z-20 flex justify-between">
+                        {/* Modal Header */}
+                        {/* <div className="sticky top-0 bg-white pt-6 z-20 flex justify-between">
                         <div>
                           <h2 className="text-3xl font-bold mb-4 uppercase">
                             Raise Ticket
@@ -557,28 +844,28 @@ const ManageLeaves = () => {
                         </div>
                       </div> */}
 
-                      {/* Modal Body START */}
-                      <div className=" w-full">
-                        {/* <div>AddT icket Form</div> */}
-                        <div className="">
-                          <div className=" mx-auto">
-                            {/* <h1 className="text-xl text-center my-2 font-bold">
+                        {/* Modal Body START */}
+                        <div className=" w-full">
+                          {/* <div>AddT icket Form</div> */}
+                          <div className="">
+                            <div className=" mx-auto">
+                              {/* <h1 className="text-xl text-center my-2 font-bold">
                     Add Ticket
                   </h1> */}
-                            <Box
-                              sx={{
-                                maxWidth: 600,
-                                paddingY: 3,
-                                bgcolor: "background.paper",
-                                borderRadius: 2,
-                              }}
-                              // className="bg-white p-6 rounded-lg shadow-md mx-auto">
-                              className="bg-white py-6 rounded-lg">
-                              {/* Personal Information */}
-                              {/* <h2 className="text-lg font-semibold mb-4">Add Ticket</h2> */}
-                              <div className="grid grid-cols-1 gap-4">
-                                {/* Name, Mobile, Email, DOB fields */}
-                                {/* <div className="grid grid-cols-1 gap-4">
+                              <Box
+                                sx={{
+                                  maxWidth: 600,
+                                  paddingY: 3,
+                                  bgcolor: "background.paper",
+                                  borderRadius: 2,
+                                }}
+                                // className="bg-white p-6 rounded-lg shadow-md mx-auto">
+                                className="bg-white py-6 rounded-lg">
+                                {/* Personal Information */}
+                                {/* <h2 className="text-lg font-semibold mb-4">Add Ticket</h2> */}
+                                <div className="grid grid-cols-1 gap-4">
+                                  {/* Name, Mobile, Email, DOB fields */}
+                                  {/* <div className="grid grid-cols-1 gap-4">
                                   <FormControl fullWidth>
                                     <InputLabel id="leave-type-select-label">
                                       Leave Type
@@ -603,17 +890,20 @@ const ManageLeaves = () => {
                                     </Select>
                                   </FormControl>
                                 </div> */}
-                                <div className="grid grid-cols-1 gap-4">
-                                  <TextField
-                                    label="Leave Type"
-                                    // value={newEvent.name}
-                                    // onChange={(e) =>
-                                    //   setnewEvent({ ...newEvent, name: e.target.value })
-                                    // }
-                                    fullWidth
-                                  />
-                                </div>
-                                {/* <div className="grid grid-cols-1 gap-4">
+                                  <div className="grid grid-cols-1 gap-4">
+                                    <TextField
+                                      label="Leave Type"
+                                      value={createForm.leaveType}
+                                      name="leaveType"
+                                      onChange={updateCreateFormField}
+                                      // value={newEvent.name}
+                                      // onChange={(e) =>
+                                      //   setnewEvent({ ...newEvent, name: e.target.value })
+                                      // }
+                                      fullWidth
+                                    />
+                                  </div>
+                                  {/* <div className="grid grid-cols-1 gap-4">
                                   <FormControl fullWidth>
                             
                                     <LocalizationProvider
@@ -641,10 +931,28 @@ const ManageLeaves = () => {
                                     </LocalizationProvider>
                                   </FormControl>
                                 </div> */}
-                                {holidayName === "Other" && (
+                                  {holidayName === "Other" && (
+                                    <div className="grid grid-cols-1 gap-4">
+                                      <TextField
+                                        label="Specify"
+                                        value={createForm.leaveType}
+                                        name="leaveType"
+                                        onChange={updateCreateFormField}
+                                        // value={newEvent.name}
+                                        // onChange={(e) =>
+                                        //   setnewEvent({ ...newEvent, name: e.target.value })
+                                        // }
+                                        fullWidth
+                                      />
+                                    </div>
+                                  )}
+
                                   <div className="grid grid-cols-1 gap-4">
                                     <TextField
-                                      label="Specify"
+                                      label="Number Of Days"
+                                      value={createForm.noOfDays}
+                                      name="noOfDays"
+                                      onChange={updateCreateFormField}
                                       // value={newEvent.name}
                                       // onChange={(e) =>
                                       //   setnewEvent({ ...newEvent, name: e.target.value })
@@ -652,23 +960,11 @@ const ManageLeaves = () => {
                                       fullWidth
                                     />
                                   </div>
-                                )}
-
-                                <div className="grid grid-cols-1 gap-4">
-                                  <TextField
-                                    label="Number Of Days"
-                                    // value={newEvent.name}
-                                    // onChange={(e) =>
-                                    //   setnewEvent({ ...newEvent, name: e.target.value })
-                                    // }
-                                    fullWidth
-                                  />
                                 </div>
-                              </div>
 
-                              {/* Role & Department fields */}
+                                {/* Role & Department fields */}
 
-                              {/* <div className="col-span-2 flex gap-4">
+                                {/* <div className="col-span-2 flex gap-4">
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.9 }}
@@ -679,66 +975,74 @@ const ManageLeaves = () => {
                 </motion.button>
           
               </div> */}
-                            </Box>
+                              </Box>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                      {/* Modal Body END */}
+                        {/* Modal Body END */}
 
-                      {/* Modal Footer */}
+                        {/* Modal Footer */}
 
-                      <div className="sticky bottom-0 bg-white py-6 z-20 flex justify-center">
-                        <div className="flex justify-center items-center w-full">
-                          <button
-                            className="wono-blue-dark text-white py-2 px-4 rounded-md hover:bg-blue-600 w-full"
-                            // onClick={handleAddTicket}>
-                            onClick={() => handleNextStep(handleNext)}>
-                            Next
-                          </button>
+                        <div className="sticky bottom-0 bg-white py-6 z-20 flex justify-center">
+                          <div className="flex justify-center items-center w-full">
+                            <button
+                              className="wono-blue-dark text-white py-2 px-4 rounded-md hover:bg-blue-600 w-full"
+                              // onClick={handleAddTicket}>
+                              onClick={() => handleNextStep(handleNext)}>
+                              Next
+                            </button>
+                          </div>
                         </div>
-                      </div>
-                      {/* Close button */}
-                      {/* <button
+                        {/* Close button */}
+                        {/* <button
                 className="bg-blue-500 text-white py-2 px-4 my-4 rounded-lg hover:bg-blue-600"
                 onClick={closeModal}>
                 Close
               </button> */}
-                    </div>
-                  </>
-                );
-              } else if (activeStep === 1) {
-                return (
-                  <>
-                    <div className="p-6">
-                      <h1 className="text-2xl mb-4 py-3 font-semibold text-center">
-                        Are the provided details correct ?
-                      </h1>
-                      <div>
-                        <div className="flex justify-between py-2 border-b">
-                          <h1 className="font-semibold">Leave Type</h1>
-                          <span>New Leave</span>
-                        </div>
                       </div>
-                      <div>
-                        <div className="flex justify-between py-2 border-b">
-                          <h1 className="font-semibold">Number Of Days</h1>
-                          <span>5</span>
+                    </>
+                  );
+                } else if (activeStep === 1) {
+                  return (
+                    <>
+                      <div className="p-6">
+                        <h1 className="text-2xl mb-4 py-3 font-semibold text-center">
+                          Are the provided details correct ?
+                        </h1>
+                        <div>
+                          <div className="flex justify-between py-2 border-b">
+                            <h1 className="font-semibold">Leave Type</h1>
+                            <span>{createForm.leaveType}</span>
+                          </div>
                         </div>
-                      </div>
-                      <div className="pt-8 pb-4">
-                        {/* <p>details</p> */}
+                        <div>
+                          <div className="flex justify-between py-2 border-b">
+                            <h1 className="font-semibold">Number Of Days</h1>
+                            <span>{createForm.noOfDays}</span>
+                          </div>
+                        </div>
+                        <div className="pt-8 pb-4">
+                          {/* <p>details</p> */}
 
-                        <WonoButton
-                          content={"Submit"}
-                          onClick={() => handleAddTicket(newTicket)}
-                        />
+                          <button
+                            type="submit"
+                            // onClick={console.log("submitted")}
+                            className=" p-2 bg-white wono-blue-dark w-full text-white rounded-md">
+                            Submit
+                          </button>
+
+                          {/* <WonoButton
+                            content={"Submit"}
+                            onClick={() => handleAddTicket(newTicket)}
+                          /> */}
+                        </div>
                       </div>
-                    </div>
-                  </>
-                );
-              }
-            }}
-          />
+                    </>
+                  );
+                }
+              }}
+            />
+          </form>
         </>
       </NewModal>
 
@@ -999,7 +1303,7 @@ const ManageLeaves = () => {
             <div className="sticky top-0 bg-white py-6 z-20 flex justify-between">
               <div>
                 <h2 className="text-3xl font-bold mb-4 uppercase">
-                  Delete Holiday
+                  Delete Leave Type
                 </h2>
               </div>
               <div>
@@ -1026,7 +1330,7 @@ const ManageLeaves = () => {
               <div className="">
                 <div className=" mx-auto">
                   <h1 className="text-xl text-center my-2 font-bold">
-                    Are you sure you want to delete the holiday?
+                    Are you sure you want to delete the leave type?
                   </h1>
                   <Box
                     sx={{

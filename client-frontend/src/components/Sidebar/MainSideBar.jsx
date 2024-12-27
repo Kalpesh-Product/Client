@@ -203,11 +203,34 @@ const MainSideBar = () => {
             {
               title: "My Leaves",
               route: "/hr/leaves/my-leaves",
+              icon: <HiOutlineClipboardList />,
             },
             {
               title: "View Past Leaves",
               route: "/hr/leaves/past-leaves",
+              icon: <HiOutlineClipboardList />,
             },
+            {
+              title: "Subordinate Due Approvals",
+              route: "/hr/leaves/due-approvals",
+              icon: <HiOutlineClipboardList />,
+            },
+            {
+              title: "Manage Leaves",
+              route: "/hr/leaves/manage-leaves",
+              icon: <HiOutlineClipboardList />,
+            },
+
+            // ...(authUser.user.role === "Employee" &&
+            // authUser.user.department === "Finance"
+            //   ? []
+            //   : [
+            //       {
+            //         title: "Reports",
+            //         route: "/hr/leaves/leave-reports",
+            //         icon: <HiOutlineClipboardList />,
+            //       },
+            //     ]),
           ],
         },
         {
@@ -384,8 +407,7 @@ const MainSideBar = () => {
         <li
           key={idx}
           className="cursor-pointer py-3 pl-4 hover:wono-blue-dark  hover:rounded-md hover:text-white border-b-2 border-gray-200 motion-preset-slide-down-sm"
-          onClick={() => navigate(subMenu.route)}
-        >
+          onClick={() => navigate(subMenu.route)}>
           {subMenu.title}
         </li>
       ))}
@@ -398,8 +420,7 @@ const MainSideBar = () => {
     <div
       className={` ${
         isSidebarOpen ? "w-60" : "w-20"
-      } bg-white  border-gray-300 text-black flex flex-shrink-0 h-[90vh] overflow-y-auto transition-all duration-300 z-[1]`}
-    >
+      } bg-white  border-gray-300 text-black flex flex-shrink-0 h-[90vh] overflow-y-auto transition-all duration-300 z-[1]`}>
       <div className="flex relative w-full">
         {/*Dashboard */}
         <div className="mt-5 px-3 flex flex-col gap-2 w-full">
@@ -414,8 +435,7 @@ const MainSideBar = () => {
                 location.pathname === "/dashboard"
                   ? "wono-blue border-r-4 border-[#0DB4EA] rounded-tl-md rounded-bl-md text-[#0DB4EA]"
                   : "bg-white"
-              }`}
-            >
+              }`}>
               <div className="flex justify-center w-6 text-2xl">
                 <RiDashboardLine />
               </div>
@@ -432,9 +452,8 @@ const MainSideBar = () => {
                     className="py-3 px-4 flex justify-between items-center"
                     onClick={() => {
                       setDepartmentDrop(!departmentDrop);
-                      setIsSidebarOpen(true)
-                    }}
-                  >
+                      setIsSidebarOpen(true);
+                    }}>
                     <div className="flex gap-6 items-center">
                       <div className="text-xl">
                         <TbSection />
@@ -459,8 +478,7 @@ const MainSideBar = () => {
                               setIsSidebarOpen(true);
                               dept.modules && toggleDepartment(index);
                               navigate(dept.route);
-                            }}
-                          >
+                            }}>
                             <div className="flex w-full justify-between items-center">
                               <div className="flex">
                                 <div className="text-xl">{dept.icon}</div>
@@ -489,8 +507,7 @@ const MainSideBar = () => {
                             {dept.modules.map((module, idx) => (
                               <li
                                 key={idx}
-                                className="pt-0 motion-preset-slide-down-lg"
-                              >
+                                className="pt-0 motion-preset-slide-down-lg">
                                 <div
                                   className={`cursor-pointer  flex pl-5 pr-2 py-3 justify-between hover:wono-blue-dark hover:text-white hover:rounded-md ${
                                     isActive(module.route)
@@ -500,8 +517,7 @@ const MainSideBar = () => {
                                   onClick={() => {
                                     module.subMenus && toggleModule(idx);
                                     navigate(module.route);
-                                  }}
-                                >
+                                  }}>
                                   <div className="flex items-center gap-4">
                                     <span>{module.icon}</span>
                                     <span>{module.title}</span>
@@ -612,8 +628,7 @@ const MainSideBar = () => {
                         setIsSidebarOpen(true);
                         dept.modules && toggleDepartment(index);
                         navigate(dept.route);
-                      }}
-                    >
+                      }}>
                       <div className="flex w-full justify-between items-center">
                         <div className="flex">
                           <div className="text-xl">{dept.icon}</div>
@@ -641,8 +656,7 @@ const MainSideBar = () => {
                         {dept.modules.map((module, idx) => (
                           <li
                             key={idx}
-                            className="pt-0 motion-preset-slide-down-lg"
-                          >
+                            className="pt-0 motion-preset-slide-down-lg">
                             <div
                               className={`cursor-pointer  flex pl-5 pr-2 py-3 justify-between hover:wono-blue-dark hover:text-white hover:rounded-md ${
                                 isActive(module.route)
@@ -652,8 +666,7 @@ const MainSideBar = () => {
                               onClick={() => {
                                 module.subMenus && toggleModule(idx);
                                 navigate(module.route);
-                              }}
-                            >
+                              }}>
                               <div className="flex items-center gap-4">
                                 <span>{module.icon}</span>
                                 <span>{module.title}</span>
@@ -761,8 +774,7 @@ const MainSideBar = () => {
                   location.pathname === item.route
                     ? "wono-blue border-r-4 border-b-[0px]  border-[#0DB4EA] rounded-tl-md rounded-bl-md text-[#0DB4EA]"
                     : "bg-white"
-                } `}
-              >
+                } `}>
                 {/* <img src={item.icon} alt={item.name} className="w-6 h-6 mr-3" /> */}
                 <div className="flex justify-center w-6 text-[1.3rem]">
                   {item.icon}
@@ -785,8 +797,7 @@ const MainSideBar = () => {
                     onClick={() => {
                       module.submenus && toggleModule(index);
                       navigate(module.route);
-                    }}
-                  >
+                    }}>
                     <div className="text-2xl">{module.icon}</div>
                     {isSidebarOpen && (
                       <span className="pl-4">{module.title}</span>
@@ -808,20 +819,17 @@ const MainSideBar = () => {
                                 ? "wono-blue border-r-4 border-[#0DB4EA] rounded-tl-md rounded-bl-md text-[#0DB4EA]"
                                 : "bg-white border-b-[1px] border-gray-200"
                             } `}
-                            onClick={() => navigate(submenu.route)}
-                          >
+                            onClick={() => navigate(submenu.route)}>
                             <div
                               className={`flex ${
                                 isSidebarOpen
                                   ? "justify-start pl-2"
                                   : "justify-center"
-                              }`}
-                            >
+                              }`}>
                               <div
                                 className={`${
                                   isSidebarOpen ? "text-md" : "text-xl"
-                                }`}
-                              >
+                                }`}>
                                 {submenu.icon}
                               </div>
                               {isSidebarOpen && (
@@ -849,8 +857,7 @@ const MainSideBar = () => {
                 location.pathname === "/profile"
                   ? "wono-blue border-r-4 border-[#0DB4EA] rounded-tl-md rounded-bl-md text-[#0DB4EA]"
                   : "bg-white"
-              }`}
-            >
+              }`}>
               <div className="flex justify-center w-6 text-2xl">
                 <CgProfile />
               </div>
@@ -865,12 +872,10 @@ const MainSideBar = () => {
             isSidebarOpen ? "justify-end" : "justify-center "
           } items-center  bg-white text-black cursor-pointer fixed top-[6.8rem] ${
             isSidebarOpen ? "left-[14.3rem]" : "left-[4rem]"
-          } transition-all duration-300 rounded-md`}
-        >
+          } transition-all duration-300 rounded-md`}>
           <button
             onClick={toggleSidebar}
-            className="text-black text-[0.8rem] p-2 focus:outline-none text-end"
-          >
+            className="text-black text-[0.8rem] p-2 focus:outline-none text-end">
             {isSidebarOpen ? <FaArrowLeft /> : <FaArrowRightToBracket />}
           </button>
         </div>
