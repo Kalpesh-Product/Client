@@ -1236,7 +1236,7 @@ const SortableCard = ({ id, title, iconSrc, isDragEnabled }) => {
         navigate("/tasks");
         break;
       case "Ticket":
-        navigate("/it/tickets");
+        navigate("/tickets");
         break;
       case "Meeting":
         navigate("/it/meetings");
