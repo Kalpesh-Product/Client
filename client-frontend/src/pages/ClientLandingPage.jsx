@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { toast } from "sonner";
-import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 
@@ -88,6 +87,7 @@ import {
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
+import { NewModal } from "../components/NewModal";
 
 const ClientLandingPage = () => {
   const navigate = useNavigate();
@@ -836,8 +836,8 @@ const ClientLandingPage = () => {
           </h1>
           <div className="flex gap-4 pr-20">
             {/* Add More Button */}
-            {auth.user.role.roleTitle === "Master Admin" ||
-            auth.user.role.roleTitle=== "Super Admin" ||
+            {auth.user.role.roleTitle === "Master-Admin" ||
+            auth.user.role.roleTitle === "Super-Admin" ||
             auth.user.role.roleTitle === "Admin" ? (
               <div className="flex justify-center">
                 <button
@@ -878,307 +878,210 @@ const ClientLandingPage = () => {
           )}
         </div>
       </div>
-      {/* MODAL CODE */}
-      {/* <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100"> */}
       <div className="flex flex-col items-center justify-center  bg-gray-100">
-        {/* Button to open the modal */}
-        {/* <button
-          className="bg-blue-500 text-white py-2 px-6 rounded-lg hover:bg-blue-600"
-          onClick={openModal}>
-          Open Modal
-        </button> */}
 
         {/* Modal */}
         {isModalOpen && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-            <div className="absolute inset-0" onClick={closeModal}></div>
+          <NewModal open={isModalOpen}>
+            {/* Modal Content */}
 
-            <div className="bg-white w-11/12 max-w-[90%] pl-8 pr-8  rounded-lg shadow-lg z-10 relative overflow-y-auto max-h-[80vh]">
-              {/* Modal Content */}
-
-              {/* Modal Header-Footer */}
-              <div className="sticky top-0 bg-white py-6 z-20 flex justify-between">
-                <div>
-                  <h2 className="text-3xl font-bold mb-4 uppercase">
-                    Add Services
-                  </h2>
-                </div>
-                <div>
-                  {/* Close button */}
-                  <button
-                    className="bg-blue-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-600"
-                    onClick={closeModal}
-                  >
-                    X
-                  </button>
-                </div>
-              </div>
-              {/* <div className="mb-6">
-                <div>
-                  <h2 className="text-xl md:text-2xl font-bold mb-8 ps-[7rem] uppercase">
-                    Frontend
-                  </h2>
-                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-8 mb-12">
-                    <Card title="Tasks" iconSrc={dashboardIcon} />
-                    <Card title="Ticket" iconSrc={dashboardIcon} />
-                    <Card title="Meeting" iconSrc={dashboardIcon} />
-                    <Card title="Customer Service" iconSrc={dashboardIcon} />
-                  </div>
-                </div>
-                <div>
-                  <h2 className="text-xl md:text-2xl  font-bold mb-8 ps-[7rem] uppercase">
-                    HR
-                  </h2>
-                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-8 mb-12">
-                    <Card title="Tasks" iconSrc={dashboardIcon} />
-                    <Card title="Ticket" iconSrc={dashboardIcon} />
-                    <Card title="Meeting" iconSrc={dashboardIcon} />
-                    <Card title="Customer Service" iconSrc={dashboardIcon} />
-                  </div>
-                </div>
-              </div> */}
-
-              <div className="mb-6">
-                {/* Frontend Section */}
-                {/* <div>
-                  <h2 className="text-xl md:text-2xl font-bold mb-8 ps-[7rem] uppercase">
-                    Frontend
-                  </h2>
-
-                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-8 mb-12">
-                    {services_frontend.map((service) => (
-                      <Card
-                        key={service.id}
-                        title={service.title}
-                        iconSrc={service.image}
-                      />
-                    ))}
-                  </div>
-                </div> */}
-
-                {/* <div>
-                  <h2 className="text-xl md:text-2xl font-bold mb-8 ps-[7rem] uppercase">
-                    Frontend
-                  </h2>
-                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-8 mb-12">
-                    {services_frontend.map((service) => (
-                      <Card
-                        key={service.id}
-                        title={service.title}
-                        iconSrc={service.image}
-                        isSelected={selectedCards.includes(service.title)}
-                        handleSelect={handleSelect}
-                      />
-                    ))}
-                  </div>
-                </div> */}
-
-                {auth.user.department === "TopManagement" ||
-                auth.user.department === "Tech" ? (
-                  <div>
-                    <h2 className="text-xl md:text-2xl font-bold mb-8 ps-[7rem] uppercase">
-                      Frontend
-                    </h2>
-                    <div className="grid grid-cols-2 sm:grid-cols-6 gap-8 mb-12">
-                      {services_frontend.map((service) => (
-                        <div className="flex justify-center items-center">
-                          <Card
-                            key={service.id}
-                            title={service.title}
-                            iconSrc={service.image}
-                            // isSelected={selectedCards.includes(service.title)}
-                            isSelected={
-                              selectedCards.includes(service.title) ||
-                              quickLaunchIcons.some(
-                                (icon) => icon.title === service.title
-                              )
-                            }
-                            handleSelect={handleSelect}
-                          />
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                ) : null}
-
-                {/* Finance & Accounting Section */}
-
-                {auth.user.department === "TopManagement" ||
-                auth.user.department === "Finance" ? (
-                  <div>
-                    <h2 className="text-xl md:text-2xl font-bold mb-8 ps-[7rem] uppercase">
-                      Finance & Accounting
-                    </h2>
-                    <div className="grid grid-cols-2 sm:grid-cols-6 gap-8 mb-12">
-                      {services_financeAccounting.map((service) => (
-                        <div className="flex justify-center items-center">
-                          <Card
-                            key={service.id}
-                            title={service.title}
-                            iconSrc={service.image}
-                            isSelected={
-                              selectedCards.includes(service.title) ||
-                              quickLaunchIcons.some(
-                                (icon) => icon.title === service.title
-                              )
-                            }
-                            handleSelect={handleSelect}
-                          />
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                ) : null}
-
-                {/* Sales & Marketing Section */}
-                {auth.user.department === "TopManagement" ? (
-                  <div>
-                    <h2 className="text-xl md:text-2xl font-bold mb-8 ps-[7rem] uppercase">
-                      Sales & Marketing
-                    </h2>
-                    <div className="grid grid-cols-2 sm:grid-cols-6 gap-8 mb-12">
-                      {services_salesMarketing.map((service) => (
-                        <div className="flex justify-center items-center">
-                          <Card
-                            key={service.id}
-                            title={service.title}
-                            iconSrc={service.image}
-                            isSelected={
-                              selectedCards.includes(service.title) ||
-                              quickLaunchIcons.some(
-                                (icon) => icon.title === service.title
-                              )
-                            }
-                            handleSelect={handleSelect}
-                          />
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                ) : null}
-
-                {/* HR Section */}
-                {auth.user.department === "TopManagement" ? (
-                  <div>
-                    <h2 className="text-xl md:text-2xl font-bold mb-8 ps-[7rem] uppercase">
-                      HR Support
-                    </h2>
-                    <div className="grid grid-cols-2 sm:grid-cols-6 gap-8 mb-12">
-                      {services_hrSupport.map((service) => (
-                        <div className="flex justify-center items-center">
-                          <Card
-                            key={service.id}
-                            title={service.title}
-                            iconSrc={service.image}
-                            isSelected={
-                              selectedCards.includes(service.title) ||
-                              quickLaunchIcons.some(
-                                (icon) => icon.title === service.title
-                              )
-                            }
-                            handleSelect={handleSelect}
-                          />
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                ) : null}
-
-                {/* Customer Management Section */}
-                {auth.user.department === "TopManagement" ? (
-                  <div>
-                    <h2 className="text-xl md:text-2xl font-bold mb-8 ps-[7rem] uppercase">
-                      Customer Management
-                    </h2>
-                    <div className="grid grid-cols-2 sm:grid-cols-6 gap-8 mb-12">
-                      {services_customerManagement.map((service) => (
-                        <div className="flex justify-center items-center">
-                          <Card
-                            key={service.id}
-                            title={service.title}
-                            iconSrc={service.image}
-                            isSelected={
-                              selectedCards.includes(service.title) ||
-                              quickLaunchIcons.some(
-                                (icon) => icon.title === service.title
-                              )
-                            }
-                            handleSelect={handleSelect}
-                          />
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                ) : null}
-
-                {/* Reports & Analytics Section */}
-                {auth.user.department === "TopManagement" ? (
-                  <div>
-                    <h2 className="text-xl md:text-2xl font-bold mb-8 ps-[7rem] uppercase">
-                      Reports & Analytics
-                    </h2>
-                    <div className="grid grid-cols-2 sm:grid-cols-6 gap-8 mb-12">
-                      {services_reportsAnalytics.map((service) => (
-                        <div className="flex justify-center items-center">
-                          <Card
-                            key={service.id}
-                            title={service.title}
-                            iconSrc={service.image}
-                            isSelected={
-                              selectedCards.includes(service.title) ||
-                              quickLaunchIcons.some(
-                                (icon) => icon.title === service.title
-                              )
-                            }
-                            handleSelect={handleSelect}
-                          />
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                ) : null}
-              </div>
-              {/* Modal Header-Footer */}
-
-              <div className="sticky bottom-0 bg-white py-6 z-20 flex justify-center">
-                <div className="flex justify-center items-center">
-                  {/* Add button */}
-                  <button
-                    className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600"
-                    onClick={handleAddServices}
-                  >
-                    Add
-                  </button>
-                </div>
-              </div>
-              {/* Close button */}
-              {/* <button
-                className="bg-blue-500 text-white py-2 px-4 my-4 rounded-lg hover:bg-blue-600"
-                onClick={closeModal}>
-                Close
-              </button> */}
+            {/* Modal Header */}
+            <div className="top-0 bg-white z-10 flex justify-between items-center">
+              <h2 className="text-3xl font-bold mb-4 uppercase">
+                Add Services
+              </h2>
+              <button
+                className="bg-blue-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-600"
+                onClick={closeModal}
+              >
+                X
+              </button>
             </div>
-          </div>
+
+            <div className="h-full overflow-y-auto top-0 px-6 py-4">
+              {auth.user.department.map((dept) => dept === "TopManagement") ||
+              auth.user.department.map((dept) => dept === "Tech") ? (
+                <div>
+                  <h2 className="text-xl md:text-2xl font-bold mb-8 ps-[7rem] uppercase">
+                    Frontend
+                  </h2>
+                  <div className="grid grid-cols-2 sm:grid-cols-6 gap-8 mb-12">
+                    {services_frontend.map((service) => (
+                      <div className="flex justify-center items-center">
+                        <Card
+                          key={service.id}
+                          title={service.title}
+                          iconSrc={service.image}
+                          isSelected={
+                            selectedCards.includes(service.title) ||
+                            quickLaunchIcons.some(
+                              (icon) => icon.title === service.title
+                            )
+                          }
+                          handleSelect={handleSelect}
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ) : null}
+              {/* Finance & Accounting Section */}
+
+              {auth.user.department.map((dept) => dept) === "TopManagement" ||
+              auth.user.department.map((dept) => dept) === "Finance" ? (
+                <div>
+                  <h2 className="text-xl md:text-2xl font-bold mb-8 ps-[7rem] uppercase">
+                    Finance & Accounting
+                  </h2>
+                  <div className="grid grid-cols-2 sm:grid-cols-6 gap-8 mb-12">
+                    {services_financeAccounting.map((service) => (
+                      <div className="flex justify-center items-center">
+                        <Card
+                          key={service.id}
+                          title={service.title}
+                          iconSrc={service.image}
+                          isSelected={
+                            selectedCards.includes(service.title) ||
+                            quickLaunchIcons.some(
+                              (icon) => icon.title === service.title
+                            )
+                          }
+                          handleSelect={handleSelect}
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ) : null}
+
+              {/* Sales & Marketing Section */}
+              {auth.user.department.map((dept) => dept === "TopManagement") ? (
+                <div>
+                  <h2 className="text-xl md:text-2xl font-bold mb-8 ps-[7rem] uppercase">
+                    Sales & Marketing
+                  </h2>
+                  <div className="grid grid-cols-2 sm:grid-cols-6 gap-8 mb-12">
+                    {services_salesMarketing.map((service) => (
+                      <div className="flex justify-center items-center">
+                        <Card
+                          key={service.id}
+                          title={service.title}
+                          iconSrc={service.image}
+                          isSelected={
+                            selectedCards.includes(service.title) ||
+                            quickLaunchIcons.some(
+                              (icon) => icon.title === service.title
+                            )
+                          }
+                          handleSelect={handleSelect}
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ) : null}
+
+              {/* HR Section */}
+              {auth.user.department.map((dept) => dept === "TopManagement") ? (
+                <div>
+                  <h2 className="text-xl md:text-2xl font-bold mb-8 ps-[7rem] uppercase">
+                    HR Support
+                  </h2>
+                  <div className="grid grid-cols-2 sm:grid-cols-6 gap-8 mb-12">
+                    {services_hrSupport.map((service) => (
+                      <div className="flex justify-center items-center">
+                        <Card
+                          key={service.id}
+                          title={service.title}
+                          iconSrc={service.image}
+                          isSelected={
+                            selectedCards.includes(service.title) ||
+                            quickLaunchIcons.some(
+                              (icon) => icon.title === service.title
+                            )
+                          }
+                          handleSelect={handleSelect}
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ) : null}
+
+              {/* Customer Management Section */}
+              {auth.user.department.map((dept) => dept === "TopManagement") ? (
+                <div>
+                  <h2 className="text-xl md:text-2xl font-bold mb-8 ps-[7rem] uppercase">
+                    Customer Management
+                  </h2>
+                  <div className="grid grid-cols-2 sm:grid-cols-6 gap-8 mb-12">
+                    {services_customerManagement.map((service) => (
+                      <div className="flex justify-center items-center">
+                        <Card
+                          key={service.id}
+                          title={service.title}
+                          iconSrc={service.image}
+                          isSelected={
+                            selectedCards.includes(service.title) ||
+                            quickLaunchIcons.some(
+                              (icon) => icon.title === service.title
+                            )
+                          }
+                          handleSelect={handleSelect}
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ) : null}
+
+              {/* Reports & Analytics Section */}
+              {auth.user.department.map((dept) => dept === "TopManagement") ? (
+                <div>
+                  <h2 className="text-xl md:text-2xl font-bold mb-8 ps-[7rem] uppercase">
+                    Reports & Analytics
+                  </h2>
+                  <div className="grid grid-cols-2 sm:grid-cols-6 gap-8 mb-12">
+                    {services_reportsAnalytics.map((service) => (
+                      <div className="flex justify-center items-center">
+                        <Card
+                          key={service.id}
+                          title={service.title}
+                          iconSrc={service.image}
+                          isSelected={
+                            selectedCards.includes(service.title) ||
+                            quickLaunchIcons.some(
+                              (icon) => icon.title === service.title
+                            )
+                          }
+                          handleSelect={handleSelect}
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ) : null}
+            </div>
+            {/* Modal Header-Footer */}
+
+            <div className="sticky bottom-0 bg-white py-6 z-20 flex justify-center">
+              <div className="flex justify-center items-center">
+                {/* Add button */}
+                <button
+                  className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600"
+                  onClick={handleAddServices}
+                >
+                  Add
+                </button>
+              </div>
+            </div>
+          </NewModal>
         )}
       </div>
     </>
   );
 };
 
-// Card Component
-const CardNS = ({ title, iconSrc, onClick }) => {
-  return (
-    <div
-      className="flex flex-col items-center text-center cursor-pointer"
-      onClick={onClick} // Attach onClick event here
-    >
-      <img src={iconSrc} alt={title} className="w-16 h-16 mb-4" />
-      <p className="text-lg font-medium">{title}</p>
-    </div>
-  );
-};
-
-// Sortable Card Component
 // const SortableCard = ({ id, title, iconSrc, isDragEnabled }) => {
 //   const { attributes, listeners, setNodeRef, transform, transition } =
 //     useSortable({ id });
@@ -1275,22 +1178,6 @@ const SortableCard = ({ id, title, iconSrc, isDragEnabled }) => {
   );
 };
 
-// Icon Grid Component (for reusability)
-// const IconGrid = ({ quickLaunchIcons, isDragEnabled }) => (
-//   <div className="grid grid-cols-2 sm:grid-cols-5 gap-8 mb-12">
-//     {quickLaunchIcons.map((icon) => (
-//       <SortableCard
-//         key={icon.id}
-//         id={icon.id}
-//         title={icon.title}
-//         iconSrc={icon.iconSrc}
-//         isDragEnabled={{ isDragEnabled }}
-//       />
-//     ))}
-//   </div>
-// );
-
-// IconGrid Component (for reusability)
 const IconGrid = ({ quickLaunchIcons, isDragEnabled }) => (
   <div className="grid grid-cols-2 sm:grid-cols-5 gap-8 mb-12">
     {quickLaunchIcons.map((icon) => (
@@ -1308,22 +1195,6 @@ const IconGrid = ({ quickLaunchIcons, isDragEnabled }) => (
 // Card Component in popup
 const Card = ({ title, iconSrc, isSelected, handleSelect }) => {
   return (
-    // <div
-    //   className={`relative w-40 h-40 border-2 rounded-lg p-4 transition-shadow duration-300 cursor-pointer flex flex-col justify-center items-center ${
-    //     isSelected ? "border-blue-500 shadow-lg" : "border-gray-300"
-    //   }`}
-    //   onClick={() => handleSelect(title)}>
-    //   <input
-    //     type="checkbox"
-    //     checked={isSelected}
-    //     onChange={() => handleSelect(title)}
-    //     className="absolute top-2 right-2 form-checkbox h-5 w-5 text-blue-600"
-    //     onClick={(e) => e.stopPropagation()} // Prevent card click on checkbox click
-    //   />
-    //   <img src={iconSrc} alt={title} className="w-16 h-16 mb-4" />
-    //   <p className="text-lg font-medium">{title}</p>
-    // </div>
-
     <div
       className={`relative w-32 h-32 border-2 rounded-lg p-3 transition-shadow duration-300 cursor-pointer flex flex-col justify-center items-center ${
         isSelected ? "border-blue-500 shadow-lg" : "border-gray-300"
