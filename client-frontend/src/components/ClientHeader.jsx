@@ -72,6 +72,7 @@ const ClientHeader = () => {
             <BsFillGridFill />
           </span>
           <Popover
+            sx={{ marginTop: "1rem" }}
             open={isPopoverOpen}
             anchorEl={popoverAnchorEl}
             onClose={handlePopoverClose}
