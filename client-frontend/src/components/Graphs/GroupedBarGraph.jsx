@@ -16,6 +16,7 @@ export default function GroupedBarGraph({
   datasets,
   graphWidth,
   graphHeight,
+  title,
 }) {
   // Prepare data for Chart.js
   const chartData = {
@@ -26,9 +27,9 @@ export default function GroupedBarGraph({
       backgroundColor:
         dataset.label === "Utilised"
           ? dataset.data.map((value) =>
-              value > 100 ? "rgba(255, 0, 0, 1)" : "rgba(0, 255, 0, 1)"
+              value > 100 ? "rgba(255, 0, 0, 1)" : "rgba(150, 255, 100, 1)"
             ) // Dynamic coloring for Utilised
-          : "rgba(54, 162, 235, 0.7)", // Default color for Allocated
+          :  "rgba(0, 255, 0, 1)", // Default color for Allocated
     })),
   };
 
@@ -37,19 +38,32 @@ export default function GroupedBarGraph({
     maintainAspectRatio: false,
     scales: {
       x: {
-        stacked: false, // Set to true if you want stacking
+        stacked: true, // Set to true if you want stacking
+        ticks: {
+          font: {
+            family: "Popins-Regular", // Custom font for x-axis
+          },
+        },
       },
       y: {
         beginAtZero: true,
         ticks: {
           callback: (value) => `${value}%`, // Add % to y-axis values
+          font: {
+            family: "Popins-Regular", // Custom font for x-axis
+          },
         },
       },
     },
     plugins: {
       tooltip: {
         enabled: true,
+        displayColors: true, // Display the color indicator for each dataset
         callbacks: {
+          title: function (context) {
+            // Show the month (title)
+            return context[0].label; // Example: "March"
+          },
           label: function (context) {
             // Get Allocated and Utilised values
             const allocated =
@@ -63,45 +77,52 @@ export default function GroupedBarGraph({
 
             // Return custom tooltip content
             return [
-              `Allocated Budget: ${allocated}%`,
-              `Utilised Budget: ${utilised}%`,
-              `${status}: ${Math.abs(difference)}%`, // Show exceeded or remaining percentage
+              `Allocated: ${allocated}%`,
+              `Utilised: ${utilised}%`,
+              `${status}: ${Math.abs(difference)}%`,
             ];
           },
         },
-        displayColors: false, // Disable color boxes in the tooltip
         titleFont: {
           size: 14,
-          weight: "bold",
+          weight: "bold", // Bold title font
+          family: "Popins-Regular", // Custom font for title
         },
         bodyFont: {
           size: 12,
-          weight : "bold",
-          display : "flex"
+          weight: "normal", // Regular body font
+          family: "Popins-Regular", // Custom font for body
         },
-        backgroundColor: "rgba(255, 255, 255, 0.9)", // White background
+        bodySpacing: 8, // Add spacing between body lines
+        backgroundColor: "rgba(255, 255, 255, 1)", // White background
         titleColor: "#000", // Black title
         bodyColor: "#000", // Black body text
-        borderColor: "rgba(0, 0, 0, 0.1)",
+        borderColor: "rgba(0, 0, 0, 0.1)", // Light border
         borderWidth: 1,
-        padding: 10,
+        padding: 10, // Adjust padding
+        boxWidth: 10, // Adjust indicator width
+        boxHeight: 10, // Adjust indicator height
       },
+
       legend: {
         display: true,
         labels: {
+          font: {
+            family: "Popins-Regular",
+          },
           generateLabels: (chart) => {
             return [
               {
                 text: "Allocated", // Custom label for Allocated
-                fillStyle: "rgba(54, 162, 235, 0.7)", // Blue color
+                fillStyle: "rgb(114,190,241)", // Blue color
               },
               {
                 text: "Exceeded Budget", // Custom label for exceeded budget
-                fillStyle: "rgba(255, 0, 0, 1)", // Red color
+                fillStyle: "rgb(255,145,169)", // Red color
               },
               {
                 text: "Utilized", // Custom label for utilized
-                fillStyle: "rgba(0, 255, 0, 1)", // Green color
+                fillStyle: "rgb(2,178,175)", // Green color
               },
             ];
           },
@@ -111,7 +132,13 @@ export default function GroupedBarGraph({
   };
 
   return (
-    <div style={{ width: graphWidth, height: graphHeight }}>
+    <div
+      className="p-4 pb-8"
+      style={{ width: graphWidth, height: graphHeight }}
+    >
+      <div>
+        <h1 className="font-semibold text-2xl">{title}</h1>
+      </div>
       <Bar data={chartData} options={options} />
     </div>
   );

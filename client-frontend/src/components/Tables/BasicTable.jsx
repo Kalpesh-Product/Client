@@ -13,7 +13,7 @@ import {
 const BasicTable = ({ data, columns, title }) => {
   return (
     <>
-    <div className="pl-3">
+    <div className="pl-3 my-3">
       <h1>{title ? title : ""}</h1>
     </div>
       <TableContainer component={Paper}>

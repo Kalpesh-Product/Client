@@ -26,7 +26,7 @@ const BarGraphMUI = ({ data, title, graphWidth, graphHeight }) => {
 
   return (
     <div style={{ width: "100%", maxWidth: "700px", margin: "0" }}>
-      {/* <h2 style={{ textAlign: "center" }}>{title}</h2> */}
+      <h2 className="p-4 text-2xl">{title}</h2>
       <BarChart
         width={graphWidth}
         height={graphHeight}

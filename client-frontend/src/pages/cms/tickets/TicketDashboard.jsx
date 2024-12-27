@@ -6,7 +6,7 @@ import TestLink from "./TestLink";
 const TicketDashboard = () => {
   return (
     <div className="flex">
-      <TestSide />
+      
       <ModuleSidebar />
       <div>
         <p>TicketDashboard</p>

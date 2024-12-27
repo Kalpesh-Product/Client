@@ -35,12 +35,13 @@ import {
 import Sidetest from "../components/Sidetest";
 import TestSide from "../components/Sidetest";
 import { useNavigate } from "react-router-dom";
+import MainSideBar from "../components/Sidebar/MainSideBar";
 // import { openModal } from "../pages/hr/MyLeaves";
 // import MyLeaves from "./hr/leaves/MyLeaves";
 
 export const WidgetSection = ({ heading, widgets }) => (
-  <div className="my-3 rounded-md bg-white w-full p-2">
-    <h2 className="text-2xl font-semibold p-2 bg-white">{heading}</h2>
+  <div className="my-3 rounded-md w-full p-2">
+    {/* <h2 className="text-2xl font-semibold p-2 bg-white">{heading ? heading : ''}</h2> */}
     <div
       className={`grid gap-4 mt-0
     grid-cols-1
@@ -52,7 +53,7 @@ export const WidgetSection = ({ heading, widgets }) => (
       {widgets.map((Widget, index) => (
         <div
           key={index}
-          className="bg-white p-0 shadow-md  w-full h-full overflow-auto motion-preset-expand">
+          className="bg-white p-0 w-full h-full overflow-auto rounded-md motion-preset-expand">
           {Widget}
         </div>
       ))}
@@ -261,15 +262,8 @@ const Dashboard = () => {
 
   return (
     <div className="flex h-screen">
-      {/* Sidebar */}
-      {/* <ClientSidebar className="sticky top-0" /> */}
-      {/* <div className="sticky top-10">
-
-      <Sidetest />
-      </div> */}
-
-      <TestSide />
-
+      {/*  */}
+      {/* <MainSideBar /> */}
       <div className="flex-1 bg-gray-100 p-8 overflow-y-auto">
         {/* Heading 1 */}
         <h1 className="text-3xl motion-preset-slide-right-md font-bold">

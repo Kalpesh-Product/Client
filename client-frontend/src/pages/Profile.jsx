@@ -104,7 +104,7 @@ const Profile = () => {
   return (
     <div class="flex min-h-screen">
       {/* Sidebar */}
-      <TestSide />
+      
 
       {/* Main Content */}
       <div class="flex-1 p-6 h-screen overflow-y-auto motion-preset-blur-right-md bg-gray-100">

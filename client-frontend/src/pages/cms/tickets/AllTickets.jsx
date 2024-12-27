@@ -7,7 +7,7 @@ import AllTicketsTable from "./components/AllTicketsTable";
 const AllTickets = () => {
   return (
     <div className="flex w-full">
-      {/* <TestSide /> */}
+      {/*  */}
       {/* <TestLink /> */}
       <div className="w-full">
         <div className="p-4">

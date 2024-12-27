@@ -68,7 +68,7 @@ export default function Access() {
   return (
     <div className="flex min-h-screen bg-slate-50">
       {/* Sidebar */}
-      <TestSide />
+      
 
       {/* Main Content */}
       <main className="flex-1 p-4 ml-4 md:p-8 motion-preset-blur-right-md overflow-y-auto">

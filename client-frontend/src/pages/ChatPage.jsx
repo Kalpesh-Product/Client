@@ -181,7 +181,7 @@ export default function ChatPage() {
 
   return (
     <div className="flex h-full bg-gray-100 overflow-auto">
-      <TestSide />
+      
       <div className="h-full flex flex-col w-full">
     <div className="h-[90vh] overflow-auto flex flex-1">
       <aside className="w-1/4 bg-white p-4 shadow-lg border-r border-gray-300 h-[90vh] overflow-y-auto">
