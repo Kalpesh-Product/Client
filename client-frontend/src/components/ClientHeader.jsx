@@ -1,6 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import BiznestLogo from "../LandingPageImages/biz-nest.png";
-import { Avatar, IconButton, Typography, Popover, Divider, Box } from "@mui/material";
+import { BsFillGridFill } from "react-icons/bs";
+import { FaBell } from "react-icons/fa";
+import MainModules from "./MainModules";
+import {
+  Avatar,
+  Menu,
+  MenuItem,
+  Typography,
+  IconButton,
+  Popover,
+  Button,
+} from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useTimer } from "../contexts/TimerContext";
 import useAuth from "../hooks/useAuth";
@@ -10,19 +21,17 @@ const ClientHeader = () => {
   const navigate = useNavigate();
   const { timer, isRunning } = useTimer();
   const [anchorEl, setAnchorEl] = useState(null);
-  const [image, setImage] = useState("");
+  const [popoverAnchorEl, setPopoverAnchorEl] = useState(null);
   const [isModelOpen, setIsModalOpen] = useState(false);
   const { auth: authUser } = useAuth();
   const logout = useLogout();
 
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = () => setImage(reader.result); // set the image to display in the container
-      reader.readAsDataURL(file);
-    }
-    setIsModalOpen(false);
+  const handlePopoverOpen = (event) => {
+    setPopoverAnchorEl(event.currentTarget);
+  };
+
+  const handlePopoverClose = () => {
+    setPopoverAnchorEl(null);
   };
 
   const handleMenuOpen = (event) => {
@@ -39,6 +48,9 @@ const ClientHeader = () => {
     await logout();
     navigate("/auth");
   };
+
+  const isPopoverOpen = Boolean(popoverAnchorEl);
+
   return (
     <>
       <header className="bg-black text-white py-4 px-6 pr-16 flex justify-between items-center sticky top-0 z-40">
@@ -56,7 +68,30 @@ const ClientHeader = () => {
           </span>
         </div>
         {/* Navigation Links */}
-        <nav className="flex justify-start py-0 items-center">
+        <nav className="flex justify-between py-0 items-center w-[15%]">
+          {/* Popover */}
+          <span onClick={handlePopoverOpen} className="p-4 cursor-pointer">
+            <BsFillGridFill />
+          </span>
+          <Popover
+            sx={{ marginTop: "1rem" }}
+            open={isPopoverOpen}
+            anchorEl={popoverAnchorEl}
+            onClose={handlePopoverClose}
+            anchorOrigin={{
+              vertical: "bottom",
+              horizontal: "center",
+            }}
+            transformOrigin={{
+              vertical: "top",
+              horizontal: "center",
+            }}
+          >
+            <div className="p-4 min-w-[25vw]">
+              <MainModules closePopover={handlePopoverClose} />
+            </div>
+          </Popover>
+
           {/* Avatar Menu Trigger */}
           <IconButton onClick={handleMenuOpen} sx={{ py: 0 }}>
             <Avatar
@@ -192,8 +227,8 @@ const ClientHeader = () => {
           </Popover>
         </nav>
       </header>
-      {/* Modal for Image Upload */}
 
+      {/* Modal for Image Upload */}
       {isModelOpen && (
         <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center">
           <div className="bg-white p-6 rounded-lg shadow-lg w-80">
@@ -201,7 +236,6 @@ const ClientHeader = () => {
             <input
               type="file"
               accept="image/*"
-              onChange={handleImageChange}
               className="block w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer focus:outline-none"
             />
             <button
