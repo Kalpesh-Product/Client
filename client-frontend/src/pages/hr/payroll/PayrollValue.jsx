@@ -59,8 +59,8 @@ const PayrollValue = () => {
   ];
 
   return (
-    <div className="p-4 bg-gray-100 w-[80vw] md:w-full">
-      <h2 className="text-2xl font-bold text-gray-800 mb-6">Payroll Table</h2>
+    <div className="p-6 bg-gray-100 w-[80vw] md:w-full">
+      <h2 className="text-3xl font-bold text-gray-800 mb-6">Payroll Table</h2>
       {tableData.map((department) => (
         <Accordion key={department.department}>
           <AccordionSummary

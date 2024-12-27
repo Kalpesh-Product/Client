@@ -66,12 +66,11 @@ export default function Access() {
     }
   };
   return (
-    <div className="flex min-h-screen bg-slate-50">
-      {/* Sidebar */}
+    <div className="flex min-h-screen overflow-y-auto bg-slate-50">
       
 
       {/* Main Content */}
-      <main className="flex-1 p-4 ml-4 md:p-8 motion-preset-blur-right-md overflow-y-auto">
+      <main className="flex-1 p-6 md:p-6 motion-preset-blur-right-md h-screen overflow-y-auto">
         <div className="flex flex-col md:flex-row justify-between items-center mb-8">
           <h1 className="text-3xl md:text-4xl font-bold mb-4 md:mb-0">
             Access
@@ -83,102 +82,6 @@ export default function Access() {
             <HierarchyTree data={data} />
           </div>
         </div>
-
-        {/* <div>
-          <TableBody>
-            {editedRoles.map((role) => (
-              <>
-              
-                <TableRow key={role._id}>
-                  <TableCell rowSpan={role.modulePermissions.length + 1}>
-                    <strong>{role.roleTitle}</strong>
-                  </TableCell>
-                </TableRow>
-                {role.modulePermissions.map((modulePermission, moduleIndex) => (
-                  <>
-               
-                    <TableRow key={`${role._id}-${moduleIndex}`}>
-                      <TableCell>
-                        <strong>{modulePermission.module.moduleTitle}</strong>
-                      </TableCell>
-                      <TableCell colSpan={2}>
-                
-                        Read:{" "}
-                        <Switch
-                          checked={modulePermission.modulePermissions.read}
-                          onChange={() =>
-                            handleToggle(
-                              role._id,
-                              moduleIndex,
-                              null,
-                              "modulePermissions.read"
-                            )
-                          }
-                          disabled={!isEditing}
-                        />
-                        Write:{" "}
-                        <Switch
-                          checked={modulePermission.modulePermissions.write}
-                          onChange={() =>
-                            handleToggle(
-                              role._id,
-                              moduleIndex,
-                              null,
-                              "modulePermissions.write"
-                            )
-                          }
-                          disabled={!isEditing}
-                        />
-                      </TableCell>
-                    </TableRow>
-
-           
-                    {modulePermission.subModulePermissions.map(
-                      (subModulePermission, subIndex) => (
-                        <TableRow
-                          key={`${role._id}-${moduleIndex}-${subIndex}`}
-                        >
-                          <TableCell>
-                            {subModulePermission.subModule.subModuleTitle}
-                          </TableCell>
-                          <TableCell>
-                    
-                            Read:{" "}
-                            <Switch
-                              checked={subModulePermission.permissions.read}
-                              onChange={() =>
-                                handleToggle(
-                                  role._id,
-                                  moduleIndex,
-                                  subIndex,
-                                  "subModulePermissions.read"
-                                )
-                              }
-                              disabled={!isEditing}
-                            />
-                            Write:{" "}
-                            <Switch
-                              checked={subModulePermission.permissions.write}
-                              onChange={() =>
-                                handleToggle(
-                                  role._id,
-                                  moduleIndex,
-                                  subIndex,
-                                  "subModulePermissions.write"
-                                )
-                              }
-                              disabled={!isEditing}
-                            />
-                          </TableCell>
-                        </TableRow>
-                      )
-                    )}
-                  </>
-                ))}
-              </>
-            ))}
-          </TableBody>
-        </div> */}
       </main>
     </div>
   );

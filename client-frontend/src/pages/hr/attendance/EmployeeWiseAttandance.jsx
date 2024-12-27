@@ -192,8 +192,8 @@ const AttendanceListing = () => {
   ];
 
   return (
-    <section className="p-4 bg-gray-100 w-[80vw] md:w-full">
-      <h1 className="text-2xl font-bold text-gray-800 mb-6">
+    <section className="p-6 bg-gray-100 w-[80vw] md:w-full">
+      <h1 className="text-3xl font-bold text-gray-800 mb-6">
         Attendance Listing
       </h1>
 

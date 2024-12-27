@@ -84,6 +84,9 @@ const AttendanceDash = () => {
   return (
     <div className="p-6">
       <div className="flex flex-col gap-4">
+        <h1 className="text-3xl font-bold text-gray-800">
+          Attendance Dashboard
+        </h1>
         <ClockInOut />
         {/* Monthly Details Widget */}
         {/* <MonthlyDetailsWidget
@@ -93,7 +96,7 @@ const AttendanceDash = () => {
         /> */}
         <EmployeeAttandanceSummary />
         <CheckInOutData />
-        <ShiftTimeUseage/>
+        <ShiftTimeUseage />
       </div>
     </div>
   );

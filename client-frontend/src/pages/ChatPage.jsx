@@ -180,7 +180,7 @@ export default function ChatPage() {
   });
 
   return (
-    <div className="flex h-full bg-gray-100 overflow-auto">
+    <div className="flex h-full p-6 py-2 bg-gray-100 overflow-auto">
       
       <div className="h-full flex flex-col w-full">
     <div className="h-[90vh] overflow-auto flex flex-1">

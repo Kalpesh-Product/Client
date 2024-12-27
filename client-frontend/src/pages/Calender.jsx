@@ -141,7 +141,7 @@ const Calender = () => {
       
       <div className="flex-1 p-6 bg-gray-100 h-screen overflow-y-auto">
         <div className="flex justify-between items-center">
-          <h1 className="font-bold text-4xl pb-5">Calendar</h1>
+          <h1 className="font-bold text-3xl pb-5">Calendar</h1>
           <FormGroup row>
             {["holiday", "event"].map((type) => (
               <FormControlLabel

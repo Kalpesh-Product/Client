@@ -18,7 +18,7 @@ import {
   SalesTarget,
   SalesTrendGraph,
 } from "../../Widgets/SalesWidgets";
-import { Tabs, Tab, Box, Typography } from "@mui/material";
+import { Tabs, Tab, Box, Typography, Breadcrumbs } from "@mui/material";
 import {
   NetworkIssuesResolved,
   PCFixes,
@@ -522,7 +522,10 @@ const DepartmentDash = () => {
           title={"State Wise Site Visitors"}
           data={techIndiaVisitors}
         />,
-        <PieChartMUI title={"City Wise Site Visitors"} data={techGoaVisitors} />,
+        <PieChartMUI
+          title={"City Wise Site Visitors"}
+          data={techGoaVisitors}
+        />,
       ],
     },
   ];
@@ -754,12 +757,12 @@ const DepartmentDash = () => {
     {
       heading: "Annual Payroll Expense",
       widgets: [
-        <BasicGroupedBarGraph 
-        labels={hrPayrollExpenseData.labels}
-        datasets={hrPayrollExpenseData.datasets}
-        graphWidth={1200} // Optional
-        graphHeight={500} // Optional
-        />
+        <BasicGroupedBarGraph
+          labels={hrPayrollExpenseData.labels}
+          datasets={hrPayrollExpenseData.datasets}
+          graphWidth={1200} // Optional
+          graphHeight={500} // Optional
+        />,
       ],
     },
     // {
@@ -801,23 +804,23 @@ const DepartmentDash = () => {
     {
       heading: "Payroll and Attendance",
       widgets: [
-        <BasicGroupedBarGraph 
-        labels={hrTargetAchievementData.labels}
-        datasets={hrTargetAchievementData.datasets}
-        graphWidth={1200} // Optional
-        graphHeight={500} // Optional
-        />
+        <BasicGroupedBarGraph
+          labels={hrTargetAchievementData.labels}
+          datasets={hrTargetAchievementData.datasets}
+          graphWidth={1200} // Optional
+          graphHeight={500} // Optional
+        />,
       ],
     },
     {
       heading: "Performance",
       widgets: [
-        <BasicGroupedBarGraph 
-        labels={hrDeptWiseTaskData.labels}
-        datasets={hrDeptWiseTaskData.datasets}
-        graphWidth={1200} // Optional
-        graphHeight={500} // Optional
-        /> 
+        <BasicGroupedBarGraph
+          labels={hrDeptWiseTaskData.labels}
+          datasets={hrDeptWiseTaskData.datasets}
+          graphWidth={1200} // Optional
+          graphHeight={500} // Optional
+        />,
       ],
     },
     {
@@ -977,18 +980,17 @@ const DepartmentDash = () => {
   };
 
   return (
-    <div className="flex">
-      
+    <div className="flex  overflow-y-auto bg-gray-100">
       {/* <ModuleSidebar /> */}
 
-      <div className="w-full overflow-y-auto bg-gray-100 h-[90vh]">
+      <div className="w-full bg-white">
         {/* Frontend submodules */}
         {location.pathname.startsWith("/frontend") && (
           <>
             {location.pathname === "/frontend" ||
             location.pathname === "/frontend/dashboard" ? (
               <div>
-                <div className="bg-gray-100 p-4 rounded-lg h-screen overflow-auto w-full">
+                <div className="bg-white p-4 py-2 h-screen overflow-auto w-full rounded-md">
                   <h1 className="text-3xl font-bold mb-4">
                     Frontend Dashboard
                   </h1>
@@ -1021,7 +1023,8 @@ const DepartmentDash = () => {
                     "& .MuiTabs-indicator": {
                       backgroundColor: "#0db4ea", // Custom indicator color
                     },
-                  }}>
+                  }}
+                >
                   <Tab label="Home" />
                   <Tab label="About" />
                   <Tab label="Gallery" />
@@ -1093,7 +1096,7 @@ const DepartmentDash = () => {
               </div>
             ) : location.pathname.includes("/frontend/live-theme") ? (
               <div className="p-6 w-full">
-                <h2 className="text-2xl font-bold mb-6">Edit Live Theme</h2>
+                <h2 className="text-3xl font-bold mb-6">Edit Live Theme</h2>
                 {/* <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6">
                   {themes.map((theme) => (
                     <div
@@ -1116,8 +1119,8 @@ const DepartmentDash = () => {
                 <EditTemplate template={themes[0]} />
               </div>
             ) : location.pathname === "/frontend/themes" ? (
-              <div className="w-full">
-                <h2 className="text-2xl font-bold mb-6 px-4 pt-2">Themes</h2>
+              <div className="w-full p-6">
+                <h2 className="text-3xl font-bold mb-6">Themes</h2>
                 {/* <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6">
                   {themes.map((theme) => (
                     <div
@@ -1228,14 +1231,16 @@ const DepartmentDash = () => {
                         whileTap={{ scale: 0.9 }}
                         type="button"
                         onClick={handleClose}
-                        className="p-2 bg-white text-[red] border border-red-200 hover:border-red-400 text-2xl rounded-md">
+                        className="p-2 bg-white text-[red] border border-red-200 hover:border-red-400 text-2xl rounded-md"
+                      >
                         <IoMdClose />
                       </motion.button>
                     </div>
                     <iframe
                       src={selectedTheme.demoLink}
                       title="Theme Demo"
-                      className="w-full h-full rounded-lg shadow-md"></iframe>
+                      className="w-full h-full rounded-lg shadow-md"
+                    ></iframe>
                   </div>
                 </NewModal>
               </>
@@ -1275,7 +1280,7 @@ const DepartmentDash = () => {
           <>
             {location.pathname === "/hr" ||
             location.pathname === "/hr/dashboard" ? (
-              <div className="bg-gray-100 p-4 rounded-lg">
+              <div className="bg-gray-100 p-6 rounded-lg">
                 {hrWidgets.map((section, index) => (
                   <WidgetSection
                     key={index}
@@ -1294,9 +1299,9 @@ const DepartmentDash = () => {
               </>
             ) : location.pathname === "/hr/events" ? (
               <>
-                <div className="bg-gray-100 p-4 rounded-lg ">
+                <div className="bg-gray-100 p-6 rounded-lg ">
                   <div className="flex w-full  pb-4 pl-0 text-lg border-b-0  gap-4">
-                    <h2 className="text-2xl  font-bold ">Events</h2>
+                    <h2 className="text-3xl  font-bold ">Events</h2>
                   </div>
                   <Events />
                 </div>
@@ -1416,9 +1421,9 @@ const DepartmentDash = () => {
             ) : location.pathname === "/hr/payslips" ? (
               <>
                 {/* <LeaveReports /> */}
-                <div className="bg-gray-100 p-4 rounded-lg ">
+                <div className="bg-gray-100 p-6 rounded-lg ">
                   <div className="flex w-full  pb-4 pl-0 text-lg border-b-0  gap-4">
-                    <h2 className="text-2xl  font-bold ">Payslip</h2>
+                    <h2 className="text-3xl  font-bold ">Payslip</h2>
                   </div>
                   <Payslips />
                 </div>
@@ -1446,9 +1451,9 @@ const DepartmentDash = () => {
             ) : location.pathname === "/hr/employment-agreement" ? (
               <>
                 {/* <LeaveReports /> */}
-                <div className="bg-gray-100 p-4 rounded-lg ">
+                <div className="bg-gray-100 p-6 rounded-lg ">
                   <div className="flex w-full  pb-4 pl-0 text-lg border-b-0  gap-4">
-                    <h2 className="text-2xl  font-bold ">
+                    <h2 className="text-3xl  font-bold ">
                       Employment Agreement
                     </h2>
                   </div>
@@ -1471,9 +1476,9 @@ const DepartmentDash = () => {
             ) : location.pathname === "/hr/company-handbook" ? (
               <>
                 {/* <LeaveReports /> */}
-                <div className="bg-gray-100 p-4 rounded-lg ">
+                <div className="bg-gray-100 p-6 rounded-lg ">
                   <div className="flex w-full  pb-4 pl-0 text-lg border-b-0  gap-4">
-                    <h2 className="text-2xl  font-bold ">Company Handbook</h2>
+                    <h2 className="text-3xl  font-bold ">Company Handbook</h2>
                   </div>
                   {/* {hrWidgets
                     .filter(
@@ -1533,9 +1538,9 @@ const DepartmentDash = () => {
             ) : location.pathname === "/hr/holidays" ? (
               <>
                 {/* <LeaveReports /> */}
-                <div className="bg-gray-100 p-4 rounded-lg ">
+                <div className="bg-gray-100 p-6 rounded-lg ">
                   <div className="flex w-full  pb-4 pl-0 text-lg border-b-0  gap-4">
-                    <h2 className="text-2xl  font-bold ">Holidays</h2>
+                    <h2 className="text-3xl  font-bold ">Holidays</h2>
                   </div>
                   <Holidays />
                 </div>
@@ -1653,8 +1658,7 @@ const DepartmentDash = () => {
             ) : location.pathname === "/it/kpi" ? (
               <>
                 <div className="bg-gray-100 p-4 rounded-lg  mt-4 h-[90vh] overflow-y-auto">
-                  <div className="mb-8 flex justify-between">
-                  </div>
+                  <div className="mb-8 flex justify-between"></div>
                   {customerServiceWidgets
                     .filter((section) => section.subModule === "asset")
                     .map((section, index) => (
@@ -1756,7 +1760,8 @@ const DepartmentDash = () => {
                       </h2>
                       <button
                         className="py-1 px-2 text-sm wono-blue-dark text-white rounded-md"
-                        onClick={() => navigate("/it/tickets/view-tickets")}>
+                        onClick={() => navigate("/it/tickets/view-tickets")}
+                      >
                         View All
                       </button>
                     </div>
@@ -1840,7 +1845,8 @@ const DepartmentDash = () => {
           open={openTicket}
           onClose={handleCloseTicket}
           aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description">
+          aria-describedby="modal-modal-description"
+        >
           {/* <Box sx={style}> */}
           <Box sx={style}>
             <AddTicketForm />
