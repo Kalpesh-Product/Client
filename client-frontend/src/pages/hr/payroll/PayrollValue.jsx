@@ -118,8 +118,8 @@ const PayrollValue = () => {
   };
 
   return (
-    <main>
-      <Typography variant="h4" component="h2" className="mb-4">
+    <main className="p-4">
+      <Typography variant="h4" component="h2" className="mt-4 mb-2">
         Payroll Table
       </Typography>
       <TableContainer
