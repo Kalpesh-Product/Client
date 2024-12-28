@@ -10,18 +10,31 @@ const BasicCardCount = ({
   dataStyling,
 }) => {
   return (
-    <div onClick={onClick} className={`bg-${theme} rounded-md`}>
-      <div className="p-4 flex justify-between">
-        <div>
-          <p className={dataStyling ? dataStyling : "text-5xl font-bold"}>
+    <div
+      onClick={onClick}
+      className={`rounded-md shadow-lg transform transition duration-300 hover:scale-105 cursor-pointer bg-${theme}`}
+    >
+      <div className="p-6 flex flex-col items-center">
+        <div className="mb-4">
+          <p
+            className={
+              dataStyling
+                ? dataStyling
+                : "text-5xl font-extrabold text-gray-800"
+            }
+          >
             {data}
           </p>
         </div>
-        <div className={`bg-${theme} text-center flex flex-col`}>
-          <h1 className={` font-semibold ${titleSize ? titleSize : "text-xl"}`}>
+        <div className="text-center">
+          <h1
+            className={`font-semibold ${
+              titleSize ? titleSize : "text-2xl"
+            } text-gray-700`}
+          >
             {title}
           </h1>
-          <h2 className="text-sm">{subText}</h2>
+          {subText && <h2 className="text-sm text-gray-500 mt-2">{subText}</h2>}
         </div>
       </div>
     </div>
