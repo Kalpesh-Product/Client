@@ -487,7 +487,13 @@ const PolicyPdfContainer = () => {
       /> */}
 
       {/* <PayslipTest /> */}
-      <PolicyPdf />
+
+      <div className="flex justify-center items-center ">
+        <div className=" w-50 border border-black">
+          <PolicyPdf />
+          {/* <EmployeeAgreementPdf /> */}
+        </div>
+      </div>
 
       {/* {location.pathname === "/customer/tickets/my-tickets" && (
         <div>

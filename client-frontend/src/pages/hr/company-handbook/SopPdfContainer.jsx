@@ -487,7 +487,13 @@ const SopPdfContainer = () => {
       /> */}
 
       {/* <PayslipTest /> */}
-      <SopPdf />
+
+      <div className="flex justify-center items-center">
+        <div className=" w-50 border border-black">
+          <SopPdf />
+          {/* <EmployeeAgreementPdf /> */}
+        </div>
+      </div>
 
       {/* {location.pathname === "/customer/tickets/my-tickets" && (
         <div>
@@ -639,16 +645,16 @@ const SopPdfContainer = () => {
                               {/* Role & Department fields */}
 
                               {/* <div className="col-span-2 flex gap-4">
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.9 }}
-                  className="w-full py-2 px-4 bg-blue-600 text-white rounded mt-4"
-                  //   onClick={handleSaveEvent}
-                  onClick={() => navigate("/customer/tickets")}>
-                  Save
-                </motion.button>
-          
-              </div> */}
+                                <motion.button
+                                  whileHover={{ scale: 1.05 }}
+                                  whileTap={{ scale: 0.9 }}
+                                  className="w-full py-2 px-4 bg-blue-600 text-white rounded mt-4"
+                                  //   onClick={handleSaveEvent}
+                                  onClick={() => navigate("/customer/tickets")}>
+                                  Save
+                                </motion.button>
+                          
+                              </div> */}
                             </Box>
                           </div>
                         </div>
