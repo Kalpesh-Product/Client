@@ -124,7 +124,7 @@ const PayrollValue = () => {
       </Typography>
       <TableContainer
         component={Paper}
-        className="p-4 bg-gray-100 w-[80vw] md:w-full"
+        className="p-4 bg-white w-[80vw] md:w-full"
       >
         <Table>
           <TableHead>

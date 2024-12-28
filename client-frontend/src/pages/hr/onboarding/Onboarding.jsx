@@ -100,7 +100,7 @@ const Onboarding = () => {
     <div>
       <h1 className="wono-title">Onboarding</h1>
       <div>
-        <div className="bg-white rounded-md p-2">
+        <div className="bg-white rounded-md py-4">
           <div>
           <OnBoardingForm handleClose={handleCloseModal} />
           </div>

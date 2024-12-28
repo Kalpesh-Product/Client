@@ -94,7 +94,7 @@ const BarGraphWidget = () => {
   };
 
   return (
-    <div className="bg-white p-6 rounded-lg text-center">
+    <div className="bg-white p-4 rounded-lg text-center">
       <h3 className="text-xl font-semibold mb-4">Quarterly Sales</h3>
       <div style={{ height: '300px' }}>
         <Bar data={data} options={options} />

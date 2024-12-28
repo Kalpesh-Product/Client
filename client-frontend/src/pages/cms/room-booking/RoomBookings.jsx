@@ -14,13 +14,13 @@ const RoomBookings = () => {
   const location = useLocation();
 
   return (
-    <div className="flex min-h-screen bg-slate-50 flex-1 w-full">
+    <div className="flex min-h-screen bg-white flex-1 w-full">
       <div>
         
       </div>
       <div className="w-full h-screen overflow-auto">
         {location.pathname === "/meetings" ? (
-          <div className="p-4 pt-0 w-full">
+          <div className="w-full">
             <RoomBookingDash />
           </div>
         ) : location.pathname === "/meetings/booking" ? (

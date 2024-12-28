@@ -393,7 +393,7 @@ const ManageAsset = () => {
         </div>
         <div>
           {activeTab === 0 && (
-            <div className="w-[72vw] md:w-full transition-all duration-200 ease-in-out bg-white p-2">
+            <div className="w-[72vw] md:w-full transition-all duration-200 ease-in-out bg-white p-0">
               <div className="flex justify-between gap-4 pb-4">
                 <div className="flex gap-4">
                   <TextField
@@ -464,7 +464,7 @@ const ManageAsset = () => {
             </div>
           )}
           {activeTab === 1 && (
-            <div className="w-[72vw] md:w-full transition-all duration-200 ease-in-out bg-white p-2">
+            <div className="w-[72vw] md:w-full transition-all duration-200 ease-in-out bg-white p-0">
               <div className="flex justify-between gap-4 pb-4">
                 <div className="flex gap-4">
                   <TextField

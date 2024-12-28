@@ -255,7 +255,7 @@ const ClientHeader = () => {
               {/* <Typography variant="h6" sx={{ px: 2, py: "0", color: "white" }}>
                 {authUser.user.name}
               </Typography> */}
-              {isRunning ? <p className="text-white text-sm">{timer}</p> : ""}
+              {isRunning ? <p onClick={()=>navigate('/hr/attendance')} className="text-white text-sm motion-preset-slide-up-lg">{timer}</p> : ""}
             </div>
           </IconButton>
 
@@ -346,7 +346,7 @@ const ClientHeader = () => {
       {/* Modal for Image Upload */}
       {isModelOpen && (
         <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center">
-          <div className="bg-white p-6 rounded-lg shadow-lg w-80">
+          <div className="bg-white p-4 rounded-lg shadow-lg w-80">
             <h3 className="text-xl font-semibold mb-4">Upload Company Logo</h3>
             <input
               type="file"

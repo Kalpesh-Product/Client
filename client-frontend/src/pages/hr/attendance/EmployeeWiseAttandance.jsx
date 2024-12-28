@@ -192,12 +192,12 @@ const AttendanceListing = () => {
   ];
 
   return (
-    <section className="p-6 bg-gray-100 w-[80vw] md:w-full">
-      <h1 className="text-3xl font-bold text-gray-800 mb-6">
+    <section className="p-4 bg-white w-[80vw] md:w-full">
+      <h1 className="text-2xl font-bold text-gray-800 mb-6">
         Attendance Listing
       </h1>
 
-      <div className="bg-white rounded-md p-4">
+      <div className="bg-white rounded-md">
         <div className="flex flex-col h-full md:flex-row md:items-center md:space-x-4 mb-4">
           <FormControl className="w-full md:w-1/4">
             <Select

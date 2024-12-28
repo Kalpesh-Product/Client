@@ -834,8 +834,8 @@ const ReceivedTickets = () => {
                       bgcolor: "background.paper",
                       borderRadius: 2,
                     }}
-                    // className="bg-white p-6 rounded-lg shadow-md mx-auto">
-                    className="bg-white p-6 rounded-lg mx-auto">
+                    // className="bg-white p-4 rounded-lg shadow-md mx-auto">
+                    className="bg-white p-4 rounded-lg mx-auto">
                     {/* Personal Information */}
                     {/* <h2 className="text-lg font-semibold mb-4">Add Ticket</h2> */}
                     <div className="grid grid-cols-1 gap-4">

@@ -34,6 +34,9 @@
   .wono-bg{
     background-color: #E6EEF5;
   }
+  .gray-underline{
+    border-bottom: 1px solid rgb(209, 209, 209);
+  }
 }
 
 @font-face {

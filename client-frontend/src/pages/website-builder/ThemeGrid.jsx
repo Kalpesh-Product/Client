@@ -107,7 +107,7 @@ const ThemeGrid = () => {
   return (
     <div>
       <div>
-        <div className="themePage-content-header px-4 pt-8 bg-white">
+        <div className="themePage-content-header bg-white">
           <h3 className="text-left text-4xl font-medium mb-4">
             Top Theme Recommendations
           </h3>
@@ -117,7 +117,7 @@ const ThemeGrid = () => {
           </span>
         </div>
 
-        <div className="themePage-content-grid grid grid-cols-2 gap-8 px-4 py-16 bg-white">
+        <div className="themePage-content-grid grid grid-cols-2 gap-8 py-4 bg-white">
           {themeImages.map((image, index) => (
             <div
               className="theme-grid w-full h-full overflow-hidden shadow-lg"
@@ -136,15 +136,15 @@ const ThemeGrid = () => {
           ))}
         </div>
 
-        <div className="themePage-featured flex items-center justify-center px-4 py-16 bg-white">
+        <div className="themePage-featured flex items-center justify-center py-4 bg-white">
           <div className="themePage-featured-grid grid grid-cols-2 gap-4">
-            <div className="themePage-featured-grid-1 flex flex-col">
+            <div className="themePage-featured-grid-1 flex flex-col justify-center">
               <div className="themePage-featured-header">
                 <h1 className="text-4xl text-left mb-8">
                   Customize it your way
                 </h1>
               </div>
-              <div className="themePage-featured-content mb-8 pl-12">
+              <div className="themePage-featured-content mb-8 pl-2">
                 <ul className="text-lg">
                   <li className="mb-2">1000's advanced web capabilities</li>
                   <li className="mb-2">
@@ -181,17 +181,17 @@ const ThemeGrid = () => {
           </div>
         </div>
 
-        <div className="themePage-website-features-section px-4 py-16 bg-white">
+        <div className="themePage-website-features-section py-4 bg-white">
           <div className="themePage-website-features">
-            <div className="themePage-website-header mb-16 text-left">
+            <div className="themePage-website-header mb-4 text-left">
               <h1 className="text-4xl">
                 A website builder engineered for growth
               </h1>
             </div>
-            <div className="themePage-website-features-grid grid grid-cols-3 gap-32">
+            <div className="themePage-website-features-grid grid grid-cols-3 gap-8 my-8">
               {themeWebsiteGridData.map((item, index) => (
                 <div key={index} className="text-left">
-                  <h4 className="font-medium">{item.title}</h4>
+                  <h4 className="font-semibold">{item.title}</h4>
                   <p>{item.description}</p>
                 </div>
               ))}
@@ -210,7 +210,7 @@ const ThemeGrid = () => {
           </div>
         </div>
 
-        <div className="themePage-website-support-section bg-blue-100 px-4 py-16 flex items-center">
+        <div className="themePage-website-support-section py-4 flex items-center">
           <div className="themePage-website-support flex flex-col items-center">
             <div className="themePage-website-support-header text-left mb-8 w-full">
               <h1 className="text-4xl">We're here for you</h1>

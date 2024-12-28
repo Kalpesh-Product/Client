@@ -68,7 +68,7 @@ export const WidgetSectionLeaveDashboard = ({ heading, widgets }) => (
       <h2 className="text-5xl font-semibold">{heading}</h2>
     </div>
     <div
-      className={`grid gap-0 mt-3
+      className={`grid gap-4 mt-3
     grid-cols-1
     sm:grid-cols-${Math.min(widgets.length, 2)}
     md:grid-cols-${Math.min(widgets.length, 3)}
@@ -275,7 +275,7 @@ const Dashboard = () => {
     <div className="flex h-screen">
       {/*  */}
       {/* <MainSideBar /> */}
-      <div className="flex-1 bg-white p-6 overflow-y-auto">
+      <div className="flex-1 bg-white p-4 overflow-y-auto">
         {/* Heading 1 */}
         <h1 className="text-3xl motion-preset-slide-right-md font-bold">
           {auth?.user?.name}'s Dashboard

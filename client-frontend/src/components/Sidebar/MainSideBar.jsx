@@ -497,7 +497,7 @@ const MainSideBar = () => {
                               }`}
                               onClick={() => {
                                 setIsSidebarOpen(true);
-                                dept.modules && toggleDepartment(index);
+                                
                                 navigate(dept.route);
                               }}
                             >
@@ -512,7 +512,9 @@ const MainSideBar = () => {
                                 </div>
                                 <div>
                                   {isSidebarOpen && dept.modules && (
-                                    <span className="ml-auto transition-all">
+                                    <span onClick={()=>{
+                                      dept.modules && toggleDepartment(index);
+                                    }} className="ml-auto transition-all">
                                       {expandedDepartment === index ? (
                                         <FaChevronUp />
                                       ) : (

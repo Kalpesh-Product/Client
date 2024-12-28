@@ -107,8 +107,8 @@ const Profile = () => {
       
 
       {/* Main Content */}
-      <div class="flex-1 p-6 h-screen overflow-y-auto motion-preset-blur-right-md bg-gray-100">
-        <h1 class="text-3xl font-bold mb-4">Profile</h1>
+      <div class="flex-1 p-4 h-full overflow-y-auto motion-preset-blur-right-md bg-white">
+        <h1 class="text-2xl font-bold mb-4">Profile</h1>
         <div class="flex items-center p-4 bg-white rounded-lg shadow-md justify-between">
           <div class="flex flex-row gap-3 relative">
             <div
@@ -343,7 +343,7 @@ const Profile = () => {
         <NewModal
           open={uploadProfileImage}
           onClose={() => setUploadProfileImage(false)}>
-          <div className="bg-white p-6 rounded-lg w-80">
+          <div className="bg-white p-4 rounded-lg w-80">
             <div className="flex justify-between pb-8 items-center">
               <div>
                 <h3 className="text-xl font-semibold mb-4">
@@ -380,7 +380,7 @@ const Profile = () => {
       {/* modal for service access */}
       {IsAccessModalOpen && (
         <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center">
-          <div className="bg-white p-6 rounded-lg shadow-lg w-100">
+          <div className="bg-white p-4 rounded-lg shadow-lg w-100">
             <div className="mx-auto">
               <ul className="flex justify-center border-b mb-4">
                 <li className="w-1/2 text-center" role="presentation">
@@ -440,7 +440,7 @@ const Profile = () => {
       {/* modal for update profile */}
       {isUpdateModalOpen && (
         <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center">
-          <div className="bg-white p-6 rounded-lg shadow-lg w-80">
+          <div className="bg-white p-4 rounded-lg shadow-lg w-80">
             <h3 className="text-xl font-bold text-center mb-4">
               Update Profile
             </h3>

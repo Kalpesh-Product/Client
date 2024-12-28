@@ -66,13 +66,13 @@ export default function Access() {
     }
   };
   return (
-    <div className="flex min-h-screen overflow-y-auto bg-slate-50">
+    <div className="flex min-h-screen overflow-y-auto ">
       
 
       {/* Main Content */}
-      <main className="flex-1 p-6 md:p-6 motion-preset-blur-right-md h-screen overflow-y-auto">
+      <main className="flex-1 p-4 md:p-4 motion-preset-blur-right-md h-screen overflow-y-auto">
         <div className="flex flex-col md:flex-row justify-between items-center mb-8">
-          <h1 className="text-3xl md:text-4xl font-bold mb-4 md:mb-0">
+          <h1 className="text-2xl md:text-2xl font-bold mb-4 md:mb-0">
             Access
           </h1>
         </div>

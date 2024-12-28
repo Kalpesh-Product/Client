@@ -101,10 +101,14 @@ const StackedChart = ({ title }) => {
   };
 
   return (
-    <div className="relative" style={{ width: "800px", height: "450px" }}>
-      <h1 className="sticky top-0 p-3 font-semibold text-2xl">{title}</h1>
-      <Bar height={""} data={data} options={options} />
-    </div>
+    <>
+      <div className="gray-underline p-2 mb-4">
+        <h1 className="text-xl">{title}</h1>
+      </div>
+      <div className="relative" style={{ width: "800px", height: "450px" }}>
+        <Bar height={""} data={data} options={options} />
+      </div>
+    </>
   );
 };
 

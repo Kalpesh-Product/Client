@@ -42,11 +42,11 @@ export default function PayRollDash() {
     auth.user.role.roleTitle === "Super-Admin";
 
   return (
-    <div className="p-6 bg-gray-100 w-[80vw] md:w-full">
+    <div className="p-4 bg-white w-[80vw] md:w-full">
       {isAdmin ? (
         <>
           <div className="w-full flex justify-between items-center mb-6">
-            <h1 className="text-3xl font-semibold">Payroll</h1>
+            <h1 className="text-2xl font-semibold">Payroll</h1>
             <FormControl className="w-full md:w-1/4 bg-white">
               <Select
                 size="small"

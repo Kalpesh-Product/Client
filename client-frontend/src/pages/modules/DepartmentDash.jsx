@@ -990,8 +990,8 @@ const DepartmentDash = () => {
             {location.pathname === "/frontend" ||
             location.pathname === "/frontend/dashboard" ? (
               <div>
-                <div className="bg-white p-4 py-2 h-screen overflow-auto w-full rounded-md">
-                  <h1 className="text-3xl font-bold mb-4">
+                <div className="bg-white p-4 h-screen overflow-auto w-full rounded-md">
+                  <h1 className="text-2xl font-bold mb-4">
                     Frontend Dashboard
                   </h1>
                   {techWidgets.map((section, index) => (
@@ -1095,8 +1095,8 @@ const DepartmentDash = () => {
                 </Box>
               </div>
             ) : location.pathname.includes("/frontend/live-theme") ? (
-              <div className="p-6 w-full">
-                <h2 className="text-3xl font-bold mb-6">Edit Live Theme</h2>
+              <div className="p-4 w-full">
+                <h2 className="text-2xl font-bold mb-6">Edit Live Theme</h2>
                 {/* <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6">
                   {themes.map((theme) => (
                     <div
@@ -1119,8 +1119,8 @@ const DepartmentDash = () => {
                 <EditTemplate template={themes[0]} />
               </div>
             ) : location.pathname === "/frontend/themes" ? (
-              <div className="w-full p-6">
-                <h2 className="text-3xl font-bold mb-6">Themes</h2>
+              <div className="w-full p-4">
+                <h2 className="text-2xl font-bold mb-6">Themes</h2>
                 {/* <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6">
                   {themes.map((theme) => (
                     <div
@@ -1163,7 +1163,7 @@ const DepartmentDash = () => {
                   </h2>
                   <div className="flex flex-col lg:flex-row justify-between gap-[15rem] bg-white p-2 rounded-md">
                     <div className="h-full flex flex-col gap-4 w-full">
-                      <h1 className="text-3xl font-semibold">INCLUSIONS</h1>
+                      <h1 className="text-2xlfont-semibold">INCLUSIONS</h1>
                       <ul className="list-disc pl-5 my-3 text-md">
                         {selectedTheme.features.map((feature, index) => (
                           <li key={index} className="text-gray-600">
@@ -1280,7 +1280,7 @@ const DepartmentDash = () => {
           <>
             {location.pathname === "/hr" ||
             location.pathname === "/hr/dashboard" ? (
-              <div className="bg-white px-6 rounded-lg">
+              <div className="bg-white px-4 rounded-lg">
                 {hrWidgets.map((section, index) => (
                   <WidgetSection
                     key={index}
@@ -1299,18 +1299,18 @@ const DepartmentDash = () => {
               </>
             ) : location.pathname === "/hr/events" ? (
               <>
-                <div className="bg-white p-6 rounded-lg ">
+                <div className="bg-white p-4 rounded-lg ">
                   <div className="flex w-full  pl-0 text-lg border-b-0  gap-4">
-                    <h2 className="text-3xl  font-bold ">Events</h2>
+                    <h2 className="text-2xl font-bold ">Events</h2>
                   </div>
                   <Events />
                 </div>
               </>
             ) : location.pathname === "/hr/cvdump" ? (
               <>
-                <div className="bg-white p-4 rounded-lg mt-4">
+                <div className="bg-white p-4 rounded-lg">
                   {/* <div className="mb-8 flex justify-between">
-                    <h1 className="text-3xl  font-bold">CV DUMP</h1>
+                    <h1 className="text-2xl font-bold">CV DUMP</h1>
                   </div> */}
                   <CvDump />
                 </div>
@@ -1421,9 +1421,9 @@ const DepartmentDash = () => {
             ) : location.pathname === "/hr/payslips" ? (
               <>
                 {/* <LeaveReports /> */}
-                <div className="bg-gray-100 p-6 rounded-lg ">
+                <div className="bg-white p-4 rounded-lg ">
                   <div className="flex w-full  pl-0 text-lg border-b-0  gap-4">
-                    <h2 className="text-3xl  font-bold ">Payslip</h2>
+                    <h2 className="text-2xl font-bold ">Payslip</h2>
                   </div>
                   <Payslips />
                 </div>
@@ -1451,9 +1451,9 @@ const DepartmentDash = () => {
             ) : location.pathname === "/hr/employment-agreement" ? (
               <>
                 {/* <LeaveReports /> */}
-                <div className="bg-gray-100 p-6 rounded-lg ">
+                <div className="bg-white p-4 rounded-lg ">
                   <div className="flex w-full  pl-0 text-lg border-b-0  gap-4">
-                    <h2 className="text-3xl  font-bold ">
+                    <h2 className="text-2xl font-bold ">
                       Employment Agreement
                     </h2>
                   </div>
@@ -1476,9 +1476,9 @@ const DepartmentDash = () => {
             ) : location.pathname === "/hr/company-handbook" ? (
               <>
                 {/* <LeaveReports /> */}
-                <div className="bg-gray-100 p-6 rounded-lg ">
+                <div className="bg-white p-4 rounded-lg ">
                   <div className="flex w-full  pl-0 text-lg border-b-0  gap-4">
-                    <h2 className="text-3xl  font-bold ">Company Handbook</h2>
+                    <h2 className="text-2xl font-bold ">Company Handbook</h2>
                   </div>
                   {/* {hrWidgets
                     .filter(
@@ -1538,9 +1538,9 @@ const DepartmentDash = () => {
             ) : location.pathname === "/hr/holidays" ? (
               <>
                 {/* <LeaveReports /> */}
-                <div className="bg-gray-100 p-6 rounded-lg ">
+                <div className="bg-white p-4 rounded-lg ">
                   <div className="flex w-full  pl-0 text-lg border-b-0  gap-4">
-                    <h2 className="text-3xl  font-bold ">Holidays</h2>
+                    <h2 className="text-2xl font-bold ">Holidays</h2>
                   </div>
                   <Holidays />
                 </div>
@@ -1707,12 +1707,12 @@ const DepartmentDash = () => {
               </>
             ) : location.pathname === "/it/tickets" ? (
               <>
-                <div className="bg-white p-4 rounded-lg mt-4">
+                <div className="bg-white p-4 rounded-lg">
                   <div className="mb-4 flex justify-between">
                     <h1 className="text-2xl font-bold">Ticket Management</h1>
                   </div>
                   <div className="mb-8 ">
-                    {/* <h1 className="text-3xl  font-bold">Ticket Management</h1> */}
+                    {/* <h1 className="text-2xl font-bold">Ticket Management</h1> */}
                     <div className="">
                       <RaiseTicketForm />
                     </div>

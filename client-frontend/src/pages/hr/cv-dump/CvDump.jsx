@@ -15,7 +15,7 @@ const CvDump = () => {
       theme={"white"}
       title={"Total CVs Received"}
       
-      titleSize={"text-3xl"}
+      titleSize={"text-2xl"}
       data={"23"}
     />,
     <BasicCardCount
@@ -58,14 +58,14 @@ const CvDump = () => {
   };
 
   return (
-    <div className="p-4 bg-gray-100 w-[80vw] md:w-full mt-2">
+    <div className=" bg-white w-[80vw] md:w-full">
       <div className="w-full flex justify-between items-center mb-6">
-        <div className="text-3xl font-bold">CV DUMP</div>
+        <div className="text-2xl font-bold">CV DUMP</div>
         <div></div>
       </div>
       <div className="flex flex-row gap-2">
         {widgets.map((widget, index) => (
-          <div key={index} className="flex-1 bg-white  rounded-md p-6 gap-10 ">
+          <div key={index} className="flex-1 bg-white  rounded-md gap-10 ">
             {widget}
           </div>
         ))}

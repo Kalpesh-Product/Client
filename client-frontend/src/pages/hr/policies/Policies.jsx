@@ -119,7 +119,7 @@ const Policies = () => {
         <NewModal
           open={uploadProfileImage}
           onClose={() => setUploadProfileImage(false)}>
-          <div className="bg-white p-6 rounded-lg w-80">
+          <div className="bg-white p-4 rounded-lg w-80">
             <div className="flex justify-between pb-8 items-center">
               <div>
                 <h3 className="text-xl font-semibold mb-4">Upload Policy</h3>

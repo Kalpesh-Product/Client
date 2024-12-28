@@ -13,7 +13,7 @@ const ThemePreview = ({ themes }) => {
   }
 
   return (
-    <div className="p-6 w-full">
+    <div className="p-4 w-full">
       <h2 className="text-2xl font-bold mb-6">{theme.name}</h2>
       <div className="flex flex-col lg:flex-row gap-6">
         <img

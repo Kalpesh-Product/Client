@@ -34,7 +34,7 @@ const TestDashboard = () => {
 
       {/* Main content */}
       <div className="flex-1 bg-gray-100 p-8 overflow-y-auto">
-        <div className="bg-white p-6 rounded-lg shadow-md">
+        <div className="bg-white p-4 rounded-lg shadow-md">
           <h1 className="text-xl font-semibold">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quis suscipit beatae similique voluptates odit vel modi atque dolore fugiat libero facilis soluta pariatur, repudiandae minus maiores dolores. Accusantium, ullam laborum.</h1>
           <h1 className="text-xl font-semibold">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quis suscipit beatae similique voluptates odit vel modi atque dolore fugiat libero facilis soluta pariatur, repudiandae minus maiores dolores. Accusantium, ullam laborum.</h1>
           <h1 className="text-xl font-semibold">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quis suscipit beatae similique voluptates odit vel modi atque dolore fugiat libero facilis soluta pariatur, repudiandae minus maiores dolores. Accusantium, ullam laborum.</h1>

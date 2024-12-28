@@ -161,7 +161,7 @@ const Events = () => {
   ];
   return (
     <>
-      <div className="w-[72vw] md:w-full transition-all duration-200 ease-in-out bg-white p-2 rounded-md">
+      <div className="w-[72vw] md:w-full transition-all duration-200 ease-in-out bg-white p-0 rounded-md">
         <div className="flex gap-4 mb-4 justify-between">
           <div></div>
           <div className="flex">
@@ -213,7 +213,7 @@ const Events = () => {
                                     bgcolor: "background.paper",
                                     borderRadius: 2,
                                   }}
-                                  // className="bg-white p-6 rounded-lg shadow-md mx-auto">
+                                  // className="bg-white p-4 rounded-lg shadow-md mx-auto">
                                   className="bg-white py-6 rounded-lg"
                                 >
                                   {/* Personal Information */}
