@@ -19,7 +19,7 @@ import {
 } from "react-icons/fa";
 import { GoPersonAdd } from "react-icons/go";
 import { TbReportSearch, TbSection } from "react-icons/tb";
-import { IoIosChatboxes } from "react-icons/io";
+import { IoIosChatboxes, IoMdNotifications } from "react-icons/io";
 import { SiAuthelia, SiMarketo } from "react-icons/si";
 import { CgProfile } from "react-icons/cg";
 import { Toolbar, Tooltip } from "@mui/material";
@@ -86,6 +86,11 @@ const MainSideBar = () => {
     { name: "Calendar", icon: <FaRegCalendarAlt />, route: "/calendar" },
     { name: "Chat", icon: <HiOutlineChatAlt2 />, route: "/chat" },
     { name: "Access", icon: <SiAuthelia />, route: "/access" },
+    {
+      name: "Notifications",
+      icon: <IoMdNotifications />,
+      route: "/notifications",
+    },
     // { name: "Profile", icon: <CgProfile />, route: "/profile" },
   ];
 
@@ -432,7 +437,7 @@ const MainSideBar = () => {
                     className="py-3 px-4 flex justify-between items-center"
                     onClick={() => {
                       setDepartmentDrop(!departmentDrop);
-                      setIsSidebarOpen(true)
+                      setIsSidebarOpen(true);
                     }}
                   >
                     <div className="flex gap-6 items-center">
