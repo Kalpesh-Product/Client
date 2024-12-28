@@ -32,6 +32,7 @@ import Assets from "../pages/cms/asset/Assets";
 import Tickets from "../pages/cms/tickets/Tickets";
 import RoomBookings from "../pages/cms/room-booking/RoomBookings";
 import TestPageAllan from "../pages/TestPageAllan";
+import Notifications from "../pages/Notifications"
 
 const router = createBrowserRouter([
   {
@@ -447,6 +448,10 @@ const router = createBrowserRouter([
               {
                 path: "/tasks/dashboard",
                 element: <DepartmentDash />,
+              },
+              {
+                path: "/notifications",
+                element: <Notifications />,
               },
             ],
           },
