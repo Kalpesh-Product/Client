@@ -29,7 +29,7 @@ export default function MainLayout() {
         <div className="w-full h-[88vh] p-2 overflow-y-auto">
           <div className="bg-white">
             {location.pathname !== "/" && (
-              <div className="px-4 pt-4 pb-2 mb-6 flex gap-4 justify-start w-full border-b-2 border-gray-100">
+              <div className="px-4 pt-4 pb-2 flex gap-4 justify-start w-full border-b-2 border-gray-100">
                 <button className="rounded-full p-1 hover:bg-gray-200 hover:cursor-pointer" onClick={() => setIsSidebarOpen(!isSidebarOpen)}>
                   {isSidebarOpen ? <FaChevronLeft /> : <GiHamburgerMenu />}
                 </button>

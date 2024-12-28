@@ -464,7 +464,7 @@ const MainSideBar = () => {
                       className={`py-3 px-4 flex justify-between items-center hover:wono-blue-dark hover:text-white cursor-pointer rounded-md`}
                       onClick={() => {
                         setDepartmentDrop(!departmentDrop);
-                        setSidebarOpen(true);
+                        setIsSidebarOpen(true);
                       }}
                     >
                       <div className="flex gap-6 items-center">
@@ -491,7 +491,7 @@ const MainSideBar = () => {
                                   : "bg-white border-b-[1px] border-gray-200"
                               }`}
                               onClick={() => {
-                                setSidebarOpen(true);
+                                setIsSidebarOpen(true);
                                 dept.modules && toggleDepartment(index);
                                 navigate(dept.route);
                               }}

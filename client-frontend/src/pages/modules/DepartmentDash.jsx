@@ -980,7 +980,7 @@ const DepartmentDash = () => {
   };
 
   return (
-    <div className="flex  overflow-y-auto bg-gray-100">
+    <div className="flex  overflow-y-auto bg-white">
       {/* <ModuleSidebar /> */}
 
       <div className="w-full bg-white">
@@ -1280,7 +1280,7 @@ const DepartmentDash = () => {
           <>
             {location.pathname === "/hr" ||
             location.pathname === "/hr/dashboard" ? (
-              <div className="bg-gray-100 p-6 rounded-lg">
+              <div className="bg-white px-6 rounded-lg">
                 {hrWidgets.map((section, index) => (
                   <WidgetSection
                     key={index}
@@ -1292,15 +1292,15 @@ const DepartmentDash = () => {
             ) : location.pathname === "/hr/onboarding" ? (
               <>
                 {/* <LeaveReports /> */}
-                <div className="bg-gray-100 p-4 rounded-lg ">
-                  <div className="flex w-full  pb-4 pl-0 text-lg border-b-0  gap-4"></div>
+                <div className="bg-white p-4 rounded-lg ">
+                  <div className="flex w-full  pl-0 text-lg border-b-0  gap-4"></div>
                   <Onboarding />
                 </div>
               </>
             ) : location.pathname === "/hr/events" ? (
               <>
-                <div className="bg-gray-100 p-6 rounded-lg ">
-                  <div className="flex w-full  pb-4 pl-0 text-lg border-b-0  gap-4">
+                <div className="bg-white p-6 rounded-lg ">
+                  <div className="flex w-full  pl-0 text-lg border-b-0  gap-4">
                     <h2 className="text-3xl  font-bold ">Events</h2>
                   </div>
                   <Events />
@@ -1308,7 +1308,7 @@ const DepartmentDash = () => {
               </>
             ) : location.pathname === "/hr/cvdump" ? (
               <>
-                <div className="bg-gray-100 p-4 rounded-lg mt-4">
+                <div className="bg-white p-4 rounded-lg mt-4">
                   {/* <div className="mb-8 flex justify-between">
                     <h1 className="text-3xl  font-bold">CV DUMP</h1>
                   </div> */}
@@ -1317,8 +1317,8 @@ const DepartmentDash = () => {
               </>
             ) : location.pathname === "/hr/cvdump/applicants" ? (
               <>
-                <div className="bg-gray-100 p-4 rounded-lg ">
-                  <div className="flex w-full  pb-4 pl-0 text-lg border-b-0  gap-4">
+                <div className="bg-white p-4 rounded-lg ">
+                  <div className="flex w-full  pl-0 text-lg border-b-0  gap-4">
                     <h2 className="text-2xl  font-bold ">Applicants</h2>
                   </div>
                   <Applicants />
@@ -1327,8 +1327,8 @@ const DepartmentDash = () => {
             ) : location.pathname === "/hr/company-settings" ? (
               <>
                 {/* <LeaveReports /> */}
-                <div className="bg-gray-100 p-4 rounded-lg ">
-                  <div className="flex w-full  pb-4 pl-0 text-lg border-b-0  gap-4"></div>
+                <div className="bg-white p-4 rounded-lg ">
+                  <div className="flex w-full  pl-0 text-lg border-b-0  gap-4"></div>
                   <CompanySettings />
                 </div>
               </>
@@ -1345,7 +1345,7 @@ const DepartmentDash = () => {
                 {/* Leave Widgets */}
                 {/* <LeaveWidget1 /> */}
 
-                <div className="bg-gray-100 p-4 rounded-lg ">
+                <div className="bg-white p-4 rounded-lg ">
                   <div className="mb-4 flex justify-between">
                     <h1 className="text-2xl font-bold">Leave Management</h1>
                   </div>
@@ -1379,8 +1379,8 @@ const DepartmentDash = () => {
             ) : location.pathname === "/hr/leaves/my-leaves" ? (
               <>
                 {/* <MyLeaves /> */}
-                <div className="bg-gray-100 p-4 rounded-lg ">
-                  <div className="flex w-full  pb-4 pl-0 text-lg border-b-0  gap-4">
+                <div className="bg-white p-4 rounded-lg ">
+                  <div className="flex w-full  pl-0 text-lg border-b-0  gap-4">
                     <h2 className="text-2xl  font-bold ">Leave Requests</h2>
                   </div>
                   <MyLeaves />
@@ -1389,8 +1389,8 @@ const DepartmentDash = () => {
             ) : location.pathname === "/hr/leaves/past-leaves" ? (
               <>
                 {/* <LeaveReports /> */}
-                <div className="bg-gray-100 p-4 rounded-lg ">
-                  <div className="flex w-full  pb-4 pl-0 text-lg border-b-0  gap-4">
+                <div className="bg-white p-4 rounded-lg ">
+                  <div className="flex w-full  pl-0 text-lg border-b-0  gap-4">
                     <h2 className="text-2xl  font-bold ">View Past Leaves</h2>
                   </div>
                   <PastLeaves />
@@ -1399,8 +1399,8 @@ const DepartmentDash = () => {
             ) : location.pathname === "/hr/leaves/due-approvals" ? (
               <>
                 {/* <LeaveReports /> */}
-                <div className="bg-gray-100 p-4 rounded-lg ">
-                  <div className="flex w-full  pb-4 pl-0 text-lg border-b-0  gap-4">
+                <div className="bg-white p-4 rounded-lg ">
+                  <div className="flex w-full  pl-0 text-lg border-b-0  gap-4">
                     <h2 className="text-2xl  font-bold ">
                       Subordinate Due Approvals
                     </h2>
@@ -1411,8 +1411,8 @@ const DepartmentDash = () => {
             ) : location.pathname === "/hr/leaves/manage-leaves" ? (
               <>
                 {/* <LeaveReports /> */}
-                <div className="bg-gray-100 p-4 rounded-lg ">
-                  <div className="flex w-full  pb-4 pl-0 text-lg border-b-0  gap-4">
+                <div className="bg-white p-4 rounded-lg ">
+                  <div className="flex w-full  pl-0 text-lg border-b-0  gap-4">
                     <h2 className="text-2xl  font-bold ">Manage Leaves</h2>
                   </div>
                   <ManageLeaves />
@@ -1422,7 +1422,7 @@ const DepartmentDash = () => {
               <>
                 {/* <LeaveReports /> */}
                 <div className="bg-gray-100 p-6 rounded-lg ">
-                  <div className="flex w-full  pb-4 pl-0 text-lg border-b-0  gap-4">
+                  <div className="flex w-full  pl-0 text-lg border-b-0  gap-4">
                     <h2 className="text-3xl  font-bold ">Payslip</h2>
                   </div>
                   <Payslips />
@@ -1431,8 +1431,8 @@ const DepartmentDash = () => {
             ) : location.pathname === "/hr/sops" ? (
               <>
                 {/* <LeaveReports /> */}
-                <div className="bg-gray-100 p-4 rounded-lg ">
-                  <div className="flex w-full  pb-4 pl-0 text-lg border-b-0  gap-4">
+                <div className="bg-white p-4 rounded-lg ">
+                  <div className="flex w-full  pl-0 text-lg border-b-0  gap-4">
                     <h2 className="text-2xl  font-bold ">SOPs</h2>
                   </div>
                   <Sops />
@@ -1441,8 +1441,8 @@ const DepartmentDash = () => {
             ) : location.pathname === "/hr/policies" ? (
               <>
                 {/* <LeaveReports /> */}
-                <div className="bg-gray-100 p-4 rounded-lg ">
-                  <div className="flex w-full  pb-4 pl-0 text-lg border-b-0  gap-4">
+                <div className="bg-white p-4 rounded-lg ">
+                  <div className="flex w-full  pl-0 text-lg border-b-0  gap-4">
                     <h2 className="text-2xl  font-bold ">Policies</h2>
                   </div>
                   <Policies />
@@ -1452,7 +1452,7 @@ const DepartmentDash = () => {
               <>
                 {/* <LeaveReports /> */}
                 <div className="bg-gray-100 p-6 rounded-lg ">
-                  <div className="flex w-full  pb-4 pl-0 text-lg border-b-0  gap-4">
+                  <div className="flex w-full  pl-0 text-lg border-b-0  gap-4">
                     <h2 className="text-3xl  font-bold ">
                       Employment Agreement
                     </h2>
@@ -1463,8 +1463,8 @@ const DepartmentDash = () => {
             ) : location.pathname === "/hr/employment-agreement-details" ? (
               <>
                 {/* <LeaveReports /> */}
-                <div className="bg-gray-100 p-4 rounded-lg ">
-                  <div className="flex w-full  pb-4 pl-0 text-lg border-b-0  gap-4">
+                <div className="bg-white p-4 rounded-lg ">
+                  <div className="flex w-full  pl-0 text-lg border-b-0  gap-4">
                     <h2 className="text-2xl  font-bold ">
                       Employment Agreement
                     </h2>
@@ -1477,7 +1477,7 @@ const DepartmentDash = () => {
               <>
                 {/* <LeaveReports /> */}
                 <div className="bg-gray-100 p-6 rounded-lg ">
-                  <div className="flex w-full  pb-4 pl-0 text-lg border-b-0  gap-4">
+                  <div className="flex w-full  pl-0 text-lg border-b-0  gap-4">
                     <h2 className="text-3xl  font-bold ">Company Handbook</h2>
                   </div>
                   {/* {hrWidgets
@@ -1498,8 +1498,8 @@ const DepartmentDash = () => {
             ) : location.pathname === "/hr/company-handbook/sop" ? (
               <>
                 {/* <LeaveReports /> */}
-                <div className="bg-gray-100 p-4 rounded-lg ">
-                  <div className="flex w-full  pb-4 pl-0 text-lg border-b-0  gap-4">
+                <div className="bg-white p-4 rounded-lg ">
+                  <div className="flex w-full  pl-0 text-lg border-b-0  gap-4">
                     <h2 className="text-2xl  font-bold ">SOPs</h2>
                   </div>
                   <SopCrud />
@@ -1508,8 +1508,8 @@ const DepartmentDash = () => {
             ) : location.pathname === "/hr/company-handbook/sop-details" ? (
               <>
                 {/* <LeaveReports /> */}
-                <div className="bg-gray-100 p-4 rounded-lg ">
-                  <div className="flex w-full  pb-4 pl-0 text-lg border-b-0  gap-4">
+                <div className="bg-white p-4 rounded-lg ">
+                  <div className="flex w-full  pl-0 text-lg border-b-0  gap-4">
                     <h2 className="text-2xl  font-bold ">SOP Details</h2>
                   </div>
                   <SopPdfContainer />
@@ -1518,8 +1518,8 @@ const DepartmentDash = () => {
             ) : location.pathname === "/hr/company-handbook/policies" ? (
               <>
                 {/* <LeaveReports /> */}
-                <div className="bg-gray-100 p-4 rounded-lg ">
-                  <div className="flex w-full  pb-4 pl-0 text-lg border-b-0  gap-4">
+                <div className="bg-white p-4 rounded-lg ">
+                  <div className="flex w-full  pl-0 text-lg border-b-0  gap-4">
                     <h2 className="text-2xl  font-bold ">Policies</h2>
                   </div>
                   <PolicyCrud />
@@ -1528,8 +1528,8 @@ const DepartmentDash = () => {
             ) : location.pathname === "/hr/company-handbook/policy-details" ? (
               <>
                 {/* <LeaveReports /> */}
-                <div className="bg-gray-100 p-4 rounded-lg ">
-                  <div className="flex w-full  pb-4 pl-0 text-lg border-b-0  gap-4">
+                <div className="bg-white p-4 rounded-lg ">
+                  <div className="flex w-full  pl-0 text-lg border-b-0  gap-4">
                     <h2 className="text-2xl  font-bold ">Policy Details</h2>
                   </div>
                   <PolicyPdfContainer />
@@ -1539,7 +1539,7 @@ const DepartmentDash = () => {
               <>
                 {/* <LeaveReports /> */}
                 <div className="bg-gray-100 p-6 rounded-lg ">
-                  <div className="flex w-full  pb-4 pl-0 text-lg border-b-0  gap-4">
+                  <div className="flex w-full  pl-0 text-lg border-b-0  gap-4">
                     <h2 className="text-3xl  font-bold ">Holidays</h2>
                   </div>
                   <Holidays />
@@ -1572,7 +1572,7 @@ const DepartmentDash = () => {
           <>
             {location.pathname === "/finance" ||
             location.pathname === "/finance/dashboard" ? (
-              <div className="bg-gray-100 p-4 rounded-lg  mt-4">
+              <div className="bg-white p-4 rounded-lg  mt-4">
                 <WidgetSection heading="Finance" widgets={financeWidgets} />
               </div>
             ) : location.pathname === "/finance/budget" ? (
@@ -1587,7 +1587,7 @@ const DepartmentDash = () => {
           <>
             {(location.pathname === "/sales" ||
               location.pathname === "/sales/dashboard") && (
-              <div className="bg-gray-100 p-4 rounded-lg  mt-4">
+              <div className="bg-white p-4 rounded-lg  mt-4">
                 {salesWidgets.map((section, index) => (
                   <WidgetSection
                     key={index}
@@ -1604,7 +1604,7 @@ const DepartmentDash = () => {
           <>
             {location.pathname === "/it" ||
             location.pathname === "/it/dashboard" ? (
-              <div className="bg-gray-100 p-4 rounded-lg  mt-4 flex flex-col gap-4">
+              <div className="bg-white p-4 rounded-lg  mt-4 flex flex-col gap-4">
                 <div className="bg-white rounded-md p-2">
                   {customerServiceWidgets
                     .filter((section) => section.subModule === "asset")
@@ -1657,7 +1657,7 @@ const DepartmentDash = () => {
               </div>
             ) : location.pathname === "/it/kpi" ? (
               <>
-                <div className="bg-gray-100 p-4 rounded-lg  mt-4 h-[90vh] overflow-y-auto">
+                <div className="bg-white p-4 rounded-lg  mt-4 h-[90vh] overflow-y-auto">
                   <div className="mb-8 flex justify-between"></div>
                   {customerServiceWidgets
                     .filter((section) => section.subModule === "asset")
@@ -1707,7 +1707,7 @@ const DepartmentDash = () => {
               </>
             ) : location.pathname === "/it/tickets" ? (
               <>
-                <div className="bg-gray-100 p-4 rounded-lg mt-4">
+                <div className="bg-white p-4 rounded-lg mt-4">
                   <div className="mb-4 flex justify-between">
                     <h1 className="text-2xl font-bold">Ticket Management</h1>
                   </div>

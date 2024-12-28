@@ -4,6 +4,9 @@ import {
   Avatar,
   Menu,
   MenuItem,
+  Tabs,
+  Tab,
+  Badge,
   Typography,
   IconButton,
   Box,
@@ -15,21 +18,34 @@ import { useTimer } from "../contexts/TimerContext";
 import useAuth from "../hooks/useAuth";
 import useLogout from "../hooks/useLogout";
 import { BsFillGridFill } from "react-icons/bs";
-import MainModules from "../components/MainModules"
+import MainModules from "../components/MainModules";
+import { IoMdNotifications } from "react-icons/io";
 
 const ClientHeader = () => {
   const navigate = useNavigate();
   const { timer, isRunning } = useTimer();
   const [anchorEl, setAnchorEl] = useState(null);
   const [popoverAnchorEl, setPopoverAnchorEl] = useState(null);
+  const [notificationPopoverAnchorEl, setNotificationPopoverAnchorEl] =
+    useState(null);
   const [isModelOpen, setIsModalOpen] = useState(false);
+  const [activeTab, setActiveTab] = useState(0);
   const { auth: authUser } = useAuth();
   const logout = useLogout();
 
   const handlePopoverOpen = (event) => {
     setPopoverAnchorEl(event.currentTarget);
   };
+  const handleNotificationPopoverOpen = (event) => {
+    setNotificationPopoverAnchorEl(event.currentTarget);
+  };
+  const handlNotificationsClose = () => {
+    setNotificationPopoverAnchorEl(null);
+  };
 
+  const handleTabChange = (event, newValue) => {
+    setActiveTab(newValue);
+  };
   const handlePopoverClose = () => {
     setPopoverAnchorEl(null);
   };
@@ -50,6 +66,61 @@ const ClientHeader = () => {
   };
 
   const isModulePopover = Boolean(popoverAnchorEl);
+  const isNotificationPopver = Boolean(notificationPopoverAnchorEl);
+
+  // Example data for notifications
+  const notifications = [
+    {
+      type: "all",
+      items: [
+        {
+          name: "John Doe",
+          message: "You have a new comment on your post.",
+          profilePic: "/path-to-profile.jpg",
+          count: 2,
+        },
+        {
+          name: "Jane Smith",
+          message: "Your team updated the project.",
+          profilePic: "/path-to-profile.jpg",
+          count: 0,
+        },
+      ],
+    },
+    {
+      type: "team",
+      items: [
+        {
+          name: "Team Lead",
+          message: "New task assigned to you.",
+          profilePic: "/path-to-profile.jpg",
+          count: 3,
+        },
+      ],
+    },
+    {
+      type: "direct",
+      items: [
+        {
+          name: "Alex Johnson",
+          message: "Can we discuss the meeting?",
+          profilePic: "/path-to-profile.jpg",
+          count: 1,
+        },
+      ],
+    },
+  ];
+
+  const getNotificationsForTab = () => {
+    if (activeTab === 0)
+      return notifications.find((n) => n.type === "all").items;
+    if (activeTab === 1)
+      return notifications.find((n) => n.type === "team").items;
+    if (activeTab === 2)
+      return notifications.find((n) => n.type === "direct").items;
+  };
+
+  const currentNotifications = getNotificationsForTab();
 
   return (
     <>
@@ -69,7 +140,87 @@ const ClientHeader = () => {
         </div>
         {/* Navigation Links */}
         <nav className="flex justify-between py-0 items-center w-[15%]">
-          {/* Popover */}
+          <span
+            onClick={handleNotificationPopoverOpen}
+            className="p-4 cursor-pointer"
+          >
+            <IoMdNotifications />
+          </span>
+
+          <Popover
+            open={isNotificationPopver}
+            anchorEl={notificationPopoverAnchorEl}
+            onClose={handlNotificationsClose}
+            sx={{ marginTop: "1rem" }}
+            anchorOrigin={{
+              vertical: "bottom",
+              horizontal: "center",
+            }}
+            transformOrigin={{
+              vertical: "top",
+              horizontal: "center",
+            }}
+          >
+            <div className="w-full p-3">
+              <Box className="w-full p-1">
+                {/* Tabs */}
+                <Tabs
+                  value={activeTab}
+                  onChange={handleTabChange}
+                  variant="fullWidth"
+                  indicatorColor="primary"
+                  textColor="primary"
+                >
+                  <Tab label="All" />
+                  <Tab label="Team" />
+                  <Tab label="Direct" />
+                </Tabs>
+
+                {/* Notifications Content */}
+                <Box mt={2}>
+                  {currentNotifications.map((notification, index) => (
+                    <div
+                      key={index}
+                      className="flex justify-start gap-5 items-center w-full border-b pb-2 mb-2"
+                    >
+                      <Box className="flex flex-col">
+                        <div className="flex gap-3 items-center">
+                          <div className="flex items-start justify-center">
+                            {/* Profile Picture */}
+                            <Avatar
+                              alt={notification.name}
+                              src={notification.profilePic}
+                              sx={{ width: 30, height: 30, mr: 0 }}
+                            />
+                          </div>
+                          <div className="px-1 py-0">
+                            {/* Name */}
+                            <span className="font-semibold">
+                              {notification.name}
+                            </span>
+                            <div>
+                              <span>{notification.message}</span>
+                            </div>
+                          </div>
+                        </div>
+                      </Box>
+                      <div className="flex pr-4">
+                        {/* Message Count */}
+                        {notification.count > 0 && (
+                          <Badge
+                            badgeContent={notification.count}
+                            color="error"
+                          />
+                        )}
+                      </div>
+                    </div>
+                  ))}
+                </Box>
+              </Box>
+            </div>
+          </Popover>
+
+          {/* Module */}
           <span onClick={handlePopoverOpen} className="p-4 cursor-pointer">
             <BsFillGridFill />
           </span>
@@ -107,42 +258,6 @@ const ClientHeader = () => {
               {isRunning ? <p className="text-white text-sm">{timer}</p> : ""}
             </div>
           </IconButton>
-
-          <div></div>
-
-          {/* Menu */}
-          {/* <Menu
-            anchorEl={anchorEl}
-            open={Boolean(anchorEl)}
-            onClose={handleMenuClose}
-            anchorOrigin={{
-              vertical: "bottom",
-              horizontal: "center",
-            }}
-            transformOrigin={{
-              vertical: "top",
-              horizontal: "center",
-            }}
-          >
-            <div className="py-0">
-              <MenuItem
-                onClick={() => {
-                  navigate("/landing");
-                  setAnchorEl(null);
-                }}
-              >
-                <Typography>Home</Typography>
-              </MenuItem>
-              <MenuItem
-                onClick={() => {
-                  handleLogout();
-                  handleMenuClose();
-                }}
-              >
-                <Typography>Logout</Typography>
-              </MenuItem>
-            </div>
-          </Menu> */}
 
           {/* Popover */}
           <Popover

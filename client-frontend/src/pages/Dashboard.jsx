@@ -40,7 +40,7 @@ import MainSideBar from "../components/Sidebar/MainSideBar";
 // import MyLeaves from "./hr/leaves/MyLeaves";
 
 export const WidgetSection = ({ heading, widgets }) => (
-  <div className="my-3 rounded-md  w-full p-2 ">
+  <div className="my-4 rounded-md  w-full p-0 ">
     {/* <h2 className="text-2xl font-semibold p-2 bg-white">{heading ? heading : ''}</h2> */}
     <div
       className={`grid gap-4 mt-0
@@ -68,7 +68,7 @@ export const WidgetSectionLeaveDashboard = ({ heading, widgets }) => (
       <h2 className="text-5xl font-semibold">{heading}</h2>
     </div>
     <div
-      className={`grid gap-4 mt-3
+      className={`grid gap-0 mt-3
     grid-cols-1
     sm:grid-cols-${Math.min(widgets.length, 2)}
     md:grid-cols-${Math.min(widgets.length, 3)}
@@ -275,7 +275,7 @@ const Dashboard = () => {
     <div className="flex h-screen">
       {/*  */}
       {/* <MainSideBar /> */}
-      <div className="flex-1 bg-gray-100 p-6 overflow-y-auto">
+      <div className="flex-1 bg-white p-6 overflow-y-auto">
         {/* Heading 1 */}
         <h1 className="text-3xl motion-preset-slide-right-md font-bold">
           {auth?.user?.name}'s Dashboard
@@ -290,22 +290,22 @@ const Dashboard = () => {
         {/* Conditionally render widgets based on user role */}
         {(auth.user.role.roleTitle === "Master-Admin" ||
           auth.user.role.roleTitle === "Super-Admin") && (
-          <div className="grid grid-cols-1 md:grid-cols-1 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-1 gap-0">
             {/* Sales Widget */}
-            <div className="bg-white p-4  rounded-lg  ">
+            <div className="bg-white rounded-lg  ">
               <WidgetSection heading="Sales" widgets={allWidgets.Sales} />
             </div>
 
             {/* Finance Widget */}
-            <div className="bg-white p-4  rounded-lg  ">
+            <div className="bg-white   rounded-lg  ">
               <WidgetSection heading="Finance" widgets={allWidgets.Finance} />
             </div>
 
             {/* Other Widgets */}
-            <div className="bg-white p-4  rounded-lg  ">
+            <div className="bg-white   rounded-lg  ">
               <WidgetSection heading="Tech" widgets={allWidgets.Tech} />
             </div>
-            <div className="bg-white p-4  rounded-lg  ">
+            <div className="bg-white   rounded-lg  ">
               <WidgetSection heading="IT" widgets={allWidgets.IT} />
             </div>
           </div>
