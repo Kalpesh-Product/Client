@@ -54,7 +54,7 @@ export const WidgetSection = ({ heading, widgets }) => (
       {widgets.map((Widget, index) => (
         <div
           key={index}
-          className="bg-white py-0 w-full h-full shadow-md overflow-auto border-2 border-gray-100 rounded-md motion-preset-expand"
+          className="bg-white py-0 w-full h-full overflow-auto border-2 border-gray-100 rounded-md motion-preset-expand"
         >
           {Widget}
         </div>
@@ -97,7 +97,7 @@ export const ButtonSection = ({ heading, widgets }) => {
       <div
         className={`grid gap-4 mt-3
     grid-cols-1
-    sm:grid-cols-${Math.min(widgets.length, 1)}
+    sm:grid-cols-${Math.min(widgets.length, 2)}
     md:grid-cols-${Math.min(widgets.length, 3)}
     lg:grid-cols-${Math.min(widgets.length, 4)}
     
