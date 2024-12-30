@@ -298,8 +298,8 @@ const MyTickets = () => {
   const [ticketTitle, setTicketTitle] = useState(""); // State to track the selected option
 
   const columns = [
-    { field: "id", headerName: "ID", width: 100 },
-    { field: "ticketTitle", headerName: "Ticket Title", width: 200 },
+    { field: "id", headerName: "ID", flex: 1 },
+    { field: "ticketTitle", headerName: "Ticket Title", flex: 1 },
     {
       field: "priority",
       headerName: "Priority",
@@ -329,7 +329,7 @@ const MyTickets = () => {
       type: "singleSelect",
       valueOptions: ["IT", "HR", "Tech", "Admin"],
     },
-    { field: "requestDate", headerName: "Request Date", width: 150 },
+    { field: "requestDate", headerName: "Request Date", flex: 1 },
     {
       field: "status",
       headerName: "Status",
@@ -468,13 +468,13 @@ const MyTickets = () => {
   // ];
   const columns3 = [
     // { field: "ticketId", headerName: "ID", width: 80 },
-    { field: "raisedBy", headerName: "Raised By", width: 150 },
+    { field: "raisedBy", headerName: "Raised By", flex: 1 },
     {
       field: "selectedDepartment",
       headerName: "Selected Department",
       width: 150,
     },
-    { field: "description", headerName: "Ticket Title", width: 200 },
+    { field: "description", headerName: "Ticket Title", flex: 1 },
     {
       field: "ticketPriority",
       headerName: "Priority",

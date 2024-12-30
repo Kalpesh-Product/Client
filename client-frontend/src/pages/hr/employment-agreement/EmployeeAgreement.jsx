@@ -115,8 +115,8 @@ const EmployeeAgreement = () => {
   const [holidayName, setLeaveType] = useState(""); // State to track the selected option
 
   const columns = [
-    { field: "employmentAgreementId", headerName: "ID", width: 100 },
-    { field: "employee", headerName: "Employee Name", width: 200 },
+    { field: "employmentAgreementId", headerName: "ID", flex: 1 },
+    { field: "employee", headerName: "Employee Name", flex: 1 },
 
     {
       field: "actions",

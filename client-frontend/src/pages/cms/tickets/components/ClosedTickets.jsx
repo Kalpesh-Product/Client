@@ -181,8 +181,8 @@ const ClosedTickets = () => {
   // Ticket With APIs & Local END
 
   const columns = [
-    { field: "id", headerName: "ID", width: 100 },
-    { field: "ticketTitle", headerName: "Ticket Title", width: 220 },
+    { field: "id", headerName: "ID", flex: 1 },
+    { field: "ticketTitle", headerName: "Ticket Title", flex: 1 },
     {
       field: "priority",
       headerName: "Priority",
@@ -227,7 +227,7 @@ const ClosedTickets = () => {
         <span className="text-gray-800">Machindranath Parkar</span> // Display fixed value
       ),
     },
-    { field: "requestDate", headerName: "Request Date", width: 220 },
+    { field: "requestDate", headerName: "Request Date", flex: 1 },
 
     // {
     //   field: "viewDetails",
@@ -363,14 +363,14 @@ const ClosedTickets = () => {
   ];
 
   const columns3 = [
-    // { field: "ticketId", headerName: "ID", width: 100 },
-    { field: "raisedBy", headerName: "Raised By", width: 150 },
+    // { field: "ticketId", headerName: "ID", flex: 1 },
+    { field: "raisedBy", headerName: "Raised By", flex: 1 },
     {
       field: "selectedDepartment",
       headerName: "Selected Department",
       width: 150,
     },
-    { field: "description", headerName: "Ticket Title", width: 200 },
+    { field: "description", headerName: "Ticket Title", flex: 1 },
     {
       field: "status",
       headerName: "Status",
@@ -392,7 +392,7 @@ const ClosedTickets = () => {
         );
       },
     },
-    // { field: "requestDate", headerName: "Request Date", width: 150 },
+    // { field: "requestDate", headerName: "Request Date", flex: 1},
     // {
     //   field: "actions",
     //   headerName: "Actions",

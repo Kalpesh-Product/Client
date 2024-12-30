@@ -12,8 +12,8 @@ import { TextField } from "@mui/material";
 
 const ExternalTickets = () => {
   const columns = [
-    { field: "id", headerName: "ID", width: 100 },
-    { field: "ticketTitle", headerName: "Ticket Title", width: 200 },
+    { field: "id", headerName: "ID", flex: 1 },
+    { field: "ticketTitle", headerName: "Ticket Title", flex: 1 },
     {
       field: "priority",
       headerName: "Priority",
@@ -42,7 +42,7 @@ const ExternalTickets = () => {
       type: "singleSelect",
       valueOptions: ["IT", "HR", "Tech", "Admin"],
     },
-    { field: "requestDate", headerName: "Request Date", width: 190 },
+    { field: "requestDate", headerName: "Request Date", flex: 1 },
 
     // {
     //   field: "viewDetails",
