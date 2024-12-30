@@ -546,7 +546,7 @@ const MainSideBar = () => {
                                     placement="right"
                                   >
                                     <div
-                                      className={`cursor-pointer  flex pl-5 pr-2 py-3 justify-between hover:wono-blue-dark hover:text-white hover:rounded-md ${
+                                      className={`cursor-pointer  flex pl-5 pr-2 py-2 justify-between hover:wono-blue-dark hover:text-white hover:rounded-md ${
                                         isActive(module.route)
                                           ? "wono-blue border-r-4 border-[#0DB4EA] rounded-tl-md rounded-bl-md text-[#0DB4EA]"
                                           : "bg-white border-b-[1px] border-gray-200"

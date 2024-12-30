@@ -150,165 +150,19 @@ const EmployeeAgreement = () => {
   const [holidayName, setLeaveType] = useState(""); // State to track the selected option
 
   const columns = [
-    { field: "employmentAgreementId", headerName: "ID", width: 100 },
-    { field: "employee", headerName: "Employee Name", width: 200 },
-    // { field: "agreement", headerName: "Agreement", width: 200 },
-    // {
-    //   field: "priority",
-    //   headerName: "Priority",
-    //   width: 150,
-    //   type: "singleSelect",
-    //   valueOptions: ["High", "Medium", "Low"],
-    //   cellRenderer: (params) => {
-    //     const statusColors = {
-    //       Medium: "text-blue-600 bg-blue-100",
-    //       High: "text-red-600 bg-red-100",
-    //       Low: "text-yellow-600 bg-yellow-100",
-    //     };
-    //     const statusClass = statusColors[params.value] || "";
-    //     return (
-    //       <span
-    //         className={`px-3 py-1 rounded-full text-sm font-medium ${statusClass}`}>
-    //         {params.value}
-    //       </span>
-    //     );
-    //   },
-    // },
-
-    // {
-    //   field: "department",
-    //   headerName: "Department",
-    //   width: 150,
-    //   type: "singleSelect",
-    //   valueOptions: ["IT", "HR", "Tech", "Admin"],
-    // },
-    // { field: "date", headerName: "Date Added", width: 150 },
-    // {
-    //   field: "status",
-    //   headerName: "Status",
-    //   width: 150,
-    //   type: "singleSelect",
-    //   valueOptions: ["Approved", "Pending", "Rejected"],
-    //   cellRenderer: (params) => {
-    //     const statusColors = {
-    //       Approved: "text-blue-600 bg-blue-100",
-    //       Pending: "text-red-600 bg-red-100",
-    //       Rejected: "text-yellow-600 bg-yellow-100",
-    //     };
-    //     const statusClass = statusColors[params.value] || "";
-    //     return (
-    //       <span
-    //         className={`px-3 py-1 rounded-full text-sm font-medium ${statusClass}`}>
-    //         {params.value}
-    //       </span>
-    //     );
-    //   },
-    // },
-    // {
-    //   field: "delete",
-    //   headerName: "Delete",
-    //   width: 170,
-    //   // renderCell: (params) => (
-    //   cellRenderer: (params) => (
-    //     <Button
-    //       size="small"
-    //       // onClick={() => handleDelete(params.row)}
-    //       onClick={openDeleteTicket}
-    //       // onClick={handleDeleteTicket}
-    //       variant="contained"
-    //       sx={{
-    //         backgroundColor: "blue",
-    //         color: "white",
-    //         "&:hover": {
-    //           backgroundColor: "blue",
-    //         },
-    //         padding: "4px 8px",
-    //         borderRadius: "0.375rem",
-    //       }}>
-    //       View Details
-    //     </Button>
-    //   ),
-    // },
-    // {
-    //   field: "actions",
-    //   headerName: "Actions",
-    //   width: 170,
-    //   // renderCell: (params) => (
-    //   cellRenderer: (params) => (
-    //     <div className="flex gap-4">
-    //       <Button
-    //         size="small"
-    //         // onClick={() => handleDelete(params.row)}
-    //         onClick={() => navigate("/hr/employment-agreement-details")}
-    //         // onClick={handleDeleteTicket}
-    //         variant="contained"
-    //         sx={{
-    //           backgroundColor: "blue",
-    //           color: "white",
-    //           "&:hover": {
-    //             backgroundColor: "blue",
-    //           },
-    //           padding: "4px 8px",
-    //           borderRadius: "0.375rem",
-    //         }}>
-    //         View Details
-    //       </Button>
-    //       <Button
-    //         size="small"
-    //         // onClick={() => handleDelete(params.row)}
-    //         onClick={openDeleteTicket}
-    //         // onClick={handleDeleteTicket}
-    //         variant="contained"
-    //         sx={{
-    //           backgroundColor: "red",
-    //           color: "white",
-    //           "&:hover": {
-    //             backgroundColor: "red",
-    //           },
-    //           padding: "4px 8px",
-    //           borderRadius: "0.375rem",
-    //         }}>
-    //         Delete
-    //       </Button>
-    //     </div>
-    //   ),
-    // },
+    { field: "employmentAgreementId", headerName: "ID", flex:1},
+    { field: "employee", headerName: "Employee Name", flex:1 },
     {
       field: "actions",
       headerName: "Actions",
-      width: 200,
       cellRenderer: (params) => {
         const handleDelete = () => {
           console.log("Deleting leave:", params.data._id);
-          // Update state to remove the leave
-          // setMyLeaves((prevLeaves) =>
-          //   prevLeaves.filter((leave) => leave._id !== params.data._id)
-          // );
-
           openDeleteTicket();
-
           setEntryToDelete(params.data._id);
           console.log(entryToDelete);
-
-          // const responseFromBackend = await axios.delete(
-          //   `/api/leaves/delete-leave-type/${params.data._id}`
-          // );
-          // console.log(responseFromBackend);
-
-          // // Update state
-          // // we heve to filter out the one we deleted
-          // const newLeaves = [...myLeaves].filter((leave) => {
-          //   return leave._id !== params.data._id; // return leaves where leave._id is not equal to the id we passed in (idOfTheLeaveToBeDeleted). This will return an array of leaves that meet this condition.
-          // });
-
-          // setMyLeaves(newLeaves); // assigns newLeaves as the new value of the leaves state variable.
         };
-        // columns.forEach((column) => {
-        //   column.cellClassRules = {
-        //     ...column.cellClassRules,
-        //     "row-revoked": (params) => params.data.deletedStatus === true,
-        //   };
-        // });
+
 
         return (
           <>
@@ -862,8 +716,8 @@ const EmployeeAgreement = () => {
       <AgTable
         data={myLeaves} // Use the state here
         columns={columns}
-        highlightFirstRow={highlightFirstRow} // Bind the state here
-        highlightEditedRow={highlightEditedRow} // Bind the state here
+        // highlightFirstRow={highlightFirstRow} 
+        // highlightEditedRow={highlightEditedRow} 
       />
 
       {/* {location.pathname === "/customer/tickets/my-tickets" && (

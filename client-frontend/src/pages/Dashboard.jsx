@@ -97,7 +97,7 @@ export const ButtonSection = ({ heading, widgets }) => {
       <div
         className={`grid gap-4 mt-3
     grid-cols-1
-    sm:grid-cols-${Math.min(widgets.length, 2)}
+    sm:grid-cols-${Math.min(widgets.length, 1)}
     md:grid-cols-${Math.min(widgets.length, 3)}
     lg:grid-cols-${Math.min(widgets.length, 4)}
     

@@ -105,7 +105,7 @@ const StackedChart = ({ title }) => {
       <div className="gray-underline p-2 mb-4">
         <h1 className="text-xl">{title}</h1>
       </div>
-      <div className="relative" style={{ width: "800px", height: "450px" }}>
+      <div className="relative" style={{ width: "100%", height: "100%" }}>
         <Bar height={""} data={data} options={options} />
       </div>
     </>
