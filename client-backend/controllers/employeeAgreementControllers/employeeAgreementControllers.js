@@ -29,7 +29,7 @@ const fetchAllEmploymentAgreements = async (req, res) => {
     // Find the leaves
     const listOfAllEmploymentAgreements = await EmploymentAgreement.find();
     // Respond with them
-    res.json({ leavesTypes: listOfAllEmploymentAgreements });
+    res.json({ employmentAgreements: listOfAllEmploymentAgreements });
   } catch (error) {
     console.log(error);
     res.sendStatus(400);
@@ -38,30 +38,30 @@ const fetchAllEmploymentAgreements = async (req, res) => {
 
 // DELETE - delete leave type
 
-const deleteEmploymentAgreement = async (req, res) => {
-  try {
-    // get id off the url
-    const employmentAgreementIdFromTheUrl = req.params.id;
+// const deleteEmploymentAgreement = async (req, res) => {
+//   try {
+//     // get id off the url
+//     const employmentAgreementIdFromTheUrl = req.params.id;
 
-    // Delete the record
-    await EmploymentAgreement.deleteOne({
-      _id: employmentAgreementIdFromTheUrl,
-    });
+//     // Delete the record
+//     await EmploymentAgreement.deleteOne({
+//       _id: employmentAgreementIdFromTheUrl,
+//     });
 
-    // Respond with a message (eg: leave deleted)
-    res.json({ success: "Leave Deleted" });
-  } catch (error) {
-    console.log(error);
-    res.sendStatus(400);
-  }
-};
+//     // Respond with a message (eg: leave deleted)
+//     res.json({ success: "Leave Deleted" });
+//   } catch (error) {
+//     console.log(error);
+//     res.sendStatus(400);
+//   }
+// };
 
 // PUT - soft delete leave type
 
 const softDeleteEmploymentAgreement = async (req, res) => {
   try {
     // Get the id off the url
-    const leaveIdFromTheUrl = req.params.id;
+    const employmentAgreementIdFromTheUrl = req.params.id;
 
     // Get the data off the req body
     // const assignedMemberFromRequestBody = req.body.assignedMember;
@@ -69,7 +69,7 @@ const softDeleteEmploymentAgreement = async (req, res) => {
 
     // Find and update the record
     await EmploymentAgreement.findOneAndUpdate(
-      { _id: leaveIdFromTheUrl },
+      { _id: employmentAgreementIdFromTheUrl },
       {
         // assignedMember: assignedMemberFromRequestBody,
         // description: descriptionFromRequestBody,
@@ -80,10 +80,12 @@ const softDeleteEmploymentAgreement = async (req, res) => {
     );
 
     //   Find updated leave (using it's id)
-    const updatedLeave = await EmploymentAgreement.findById(leaveIdFromTheUrl);
+    const updatedEmploymentAgreement = await EmploymentAgreement.findById(
+      employmentAgreementIdFromTheUrl
+    );
 
     // Respond with the updated leave (after finding it)
-    res.json({ employmentAgreement: updatedLeave });
+    res.json({ employmentAgreement: updatedEmploymentAgreement });
   } catch (error) {
     console.log(error);
     res.sendStatus(400);
@@ -92,6 +94,6 @@ const softDeleteEmploymentAgreement = async (req, res) => {
 module.exports = {
   createEmploymentAgreement,
   fetchAllEmploymentAgreements,
-  deleteEmploymentAgreement,
+  // deleteEmploymentAgreement,
   softDeleteEmploymentAgreement,
 };

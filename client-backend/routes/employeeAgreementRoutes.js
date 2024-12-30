@@ -7,17 +7,20 @@ router.post(
   employmentAgreementController.createEmploymentAgreement
 );
 
-// View All Leave types
-// router.get("/view-all-leave-types", leaveTypeController.fetchAllLeaveTypes);
+// View All Employment Agreements
+router.get(
+  "/view-all-employment-agreements",
+  employmentAgreementController.fetchAllEmploymentAgreements
+);
 
 // // Delete Leave type
 // router.delete("/delete-leave-type/:id", leaveTypeController.deleteLeaveType);
 
-// // Soft Delete Leave type
-// router.put(
-//   "/soft-delete-leave-type/:id",
-//   leaveTypeController.softDeleteLeaveType
-// );
+// // Soft Delete Employment Agreement
+router.put(
+  "/soft-delete-employment-agreement/:id",
+  employmentAgreementController.softDeleteEmploymentAgreement
+);
 
 // ROUTES FOR LEAVE TYPES END
 
