@@ -67,7 +67,7 @@ const PayrollValue = () => {
                 aria-label="expand row"
                 size="small"
                 onClick={(e) => {
-                  e.stopPropagation(); // Prevent table row click event
+                  e.stopPropagation();
                   setOpen(!open);
                 }}
                 sx={{ marginLeft: 1 }}
