@@ -1,45 +1,47 @@
 const mongoose = require("mongoose");
 
 const projectSchema = new mongoose.Schema({
-            
- 
-  department: {
+  projectName:{
+    type:String,
+    required:true
+  },
+  Department: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Department",
   },
- 
+  description: {
+    type: String,
+    required: true,
+  },
+  project:{
+    type: String,
+    required: true,
+  },
   assignedTo: [
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
     },
   ],
-  description: {
+  priority:{
     type: String,
     required: true,
+
   },
-  assignedDate: {
+  startdate: {
     type: Date,
     required: true,
   },
-//   assignedTime: {
-//     type: String,
-//     required: true,
-//     match: /^([0-1]\d|2[0-3]):([0-5]\d)(:[0-5]\d)?$/,
-//   },
+  enddate:{
+    type: Date,
+    required: true,
+  },
+
   status: {
     type: String,
     required: true,
   },
-  deadLineDate: {
-    type: Date,
-    required: true,
-  },
-//   deadLineTime: {
-//     type: String,
-//     required: true,
-//     match: /^([0-1]\d|2[0-3]):([0-5]\d)(:[0-5]\d)?$/,
-//   },
+  
   extension: {
     isExtended: {
       type: Boolean,

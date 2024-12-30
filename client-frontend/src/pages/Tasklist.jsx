@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import AssignTaskForm from "../components/TaskManagement/AssignTaskForm";
 import { NewModal } from "../components/NewModal";
 import { useNavigate } from "react-router-dom";
@@ -8,6 +8,7 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { Stack, Avatar, TextField } from "@mui/material";
+import axios from "axios";
 
 const Tasklist = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -18,6 +19,8 @@ const Tasklist = () => {
   const [description, SetDescription] = useState("");
   const [department, SetDepartment] = useState("");
   const [priorityFilter, setPriorityFilter] = useState("");
+  const [projects, setProjects] = useState([]);
+
 
   const [departmentFilter, setDepartmentFilter] = useState("");
    const [allRows, setAllRows] = useState([
@@ -137,119 +140,87 @@ const Tasklist = () => {
           },
         ]);
 
+        useEffect(() => {
+          const fetchData = async () => {
+            try{
+
+            
+            const data = await fetchProjects();
+
+            setProjects(data || []);
+            const groupedTasks = {
+              ongoing: [],
+              upcoming: [],
+              pending: [],
+              completed: [],
+            };
+      
+            projects.forEach((project) => {
+              switch (project.status.toLowerCase()) {
+                case "ongoing":
+                  groupedTasks.ongoing.push(project);
+                  break;
+                case "upcoming":
+                  groupedTasks.upcoming.push(project);
+                  break;
+                case "pending":
+                  groupedTasks.pending.push(project);
+                  break;
+                case "completed":
+                  groupedTasks.completed.push(project);
+                  break;
+                default:
+                  console.warn(`Unknown status: ${project.status}`);
+              }
+            });
+      
+            setTasks(groupedTasks);
+          
+            }catch(error){
+              console.error("Error fetching projects:", error);
+            } // Populate projects state with the fetched data
+          };
+      
+          fetchData(); // Call the async function
+        }, []);
+
+        const fetchProjects = async () => {
+          try {
+            const response = await axios.get("http://localhost:5000/api/tasks/get-projects");
+            console.log("Projects:", response.data.projects);
+            return response.data.projects;
+          } catch (error) {
+            console.error("Error fetching projects:", error);
+            return [];
+          }
+        };
+
 
   const [view, SetView] = useState("Grid View");
 
   const [projectData, setProjectData] = useState({
-    projectName: "",
-    category: "",
+   
     Department: "",
     assignees: [],
     Title: "",
     description: "",
-    date: "",
+    startdate: null,
+    enddate:null,
     status: "",
   });
 
   const [tasks, setTasks] = useState({
     ongoing: [
-      {
-        Title: "Website Redesign",
-        Department: "IT",
-        description:
-          "To discuss about the details of the projects which is important",
-        Assignees: ["John Doe", "Jane Smith", "Alex Johnson"],
-      },
-      {
-        Title: "Launch a new digital marketing Campaign",
-        Department: "Marketing",
-        description:
-          "To enhance the productivity and the materials of the projects which is very much effetives.",
-        Assignees: ["Siya Amonkar", "Chaya Shinde", "Priya Dessai"],
-      },
-      {
-        Title: "Market Expansion strategy for new Product line",
-        Department: "Finance",
-        description:
-          "To entertain the peacefull understanding anf training for the ppeople around us.",
-        Assignees: [
-          "Vedashree Amonkar",
-          "Jaya Sankwalkar",
-          "Supriya Chaudhari",
-          "Gajanan Madkaikar",
-        ],
-      },
+      
     ],
     upcoming: [
-      {
-        Title: "Financial forcasting and Budgeting",
-        Department: "Sales",
-        description:
-          "To discuss about the details of the projects which is important",
-        Assignees: [
-          "Saddhya Sawaikar",
-          "Sankalp Kalangutkar",
-          "Supriya Gaonkar",
-          "Neha Tari",
-        ],
-      },
-      {
-        Title: "Bussiness Process optimizations and Automation",
-        Department: "Operation",
-        description:
-          "To enhance the productivity and the materials of the projects which is very much effetives.",
-        Assignees: ["Jayesh Redkar", "Geeta parab", "Ashita Parab"],
-      },
-      {
-        Title: "Employee Onboarding and training programme",
-        Department: "Human Resources and Training",
-        description:
-          "To entertain the peacefull understanding anf training for the ppeople around us",
-      },
+      
     ],
     pending: [
-      {
-        Title: "Annual Co-operate Conference and Networking Evets",
-        Department: "Event Management",
-        description: "Details about Task 7",
-        Assignees: ["Omkar Amonkar", "Neha Parab", "Sugandha Naik"],
-      },
-      {
-        Title: "Data Privacy And GDPR Compliance initiative",
-        Department: "Compliance and Regulatory",
-        description:
-          "To enhance the productivity and the materials of the projects which is very much effetives.",
-        Assignees: ["Govardhan Parab", "Dgymj Lodh", "Dold Peold"],
-      },
-      {
-        Title: "Reducing Environmental impact and promoting Sustainability",
-        Department: "Corporate Sustainability and Compliance",
-        description:
-          "To enhance the productivity and the materials of the projects which is very much effetives.",
-        Assignees: ["Wosh sudj", "Sodpl Weodl", "Qweusi Seuild"],
-      },
+      
     ],
     completed: [
-      {
-        Title: "Annual Co-operate Conference and Networking Evets",
-        Department: "Event Management",
-        description: "Details about Task 7",
-        Assignees: ["Riya Naik", "Parinda Raikar", "Amisha Naik"],
-      },
-      {
-        Title: "Data Privacy And GDPR Compliance initiative",
-        Department: "Compliance and Regulatory",
-        description:
-          "To enhance the productivity and the materials of the projects which is very much effetives.",
-        Assignees: ["Mahima Naik", "Angela Vaz", "Urvi Palang"],
-      },
-      {
-        Title: "Reducing Environmental impact and promoting Sustainability",
-        Department: "Corporate Sustainability and Compliance",
-        description:
-          "To enhance the productivity and the materials of the projects which is very much effetives.",
-        Assignees: ["Rami Naik", "Krutika Ghadi", "Rajeshwari Maheshwari"],
-      },
+     
     ],
   });
 
@@ -293,7 +264,7 @@ const Tasklist = () => {
     console.log("Opening MOdal of Edit");
   };
 
-  const TaskCard = ({ Title, description, Department, Assignees = [] }) => (
+  const TaskCard = ( { projectName, description, Department, Assignees = [] }) => (
     <div className="bg-gray-100 shadow-md bg-white rounded-lg p-3 mb-4">
       <div className="flex justify-between gap-5">
         <div>
@@ -339,13 +310,13 @@ const Tasklist = () => {
                   <circle cx={12} cy={19} r={1} />
                 </svg>
               </MenuItem>
-              <MenuItem value="view" onClick={(value) => handleClick(Title)}>
+              <MenuItem value="view" onClick={(value) => handleClick(projectName)}>
                 View Details
               </MenuItem>
               <MenuItem
                 value="edit"
                 onClick={(value, value1, value2, value3,value4) =>
-                  setEditModalOpen(value, Title, description, Department,Assignees)
+                  setEditModalOpen(value, projectName, description, Department,Assignees)
                 }
               >
                 Edit
@@ -356,7 +327,7 @@ const Tasklist = () => {
         </div>
       </div>
 
-      <h4 className="text-sm font-semibold">{Title}</h4>
+      <h4 className="text-sm font-semibold">{projectName}</h4>
       <p className="text-gray-600 my-5 text-xs">{description}</p>
       <div>
         <p className="text-xs font-bold">Assignees</p>
