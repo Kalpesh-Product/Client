@@ -170,6 +170,7 @@ const Calender = () => {
 
         <div className="relative w-full pt-2">
           <FullCalendar
+            dayMaxEvents={2}
             eventClick={handleEventClick}
             contentHeight={"auto"}
             displayEventTime={false}
