@@ -144,7 +144,7 @@ const ClientHeader = () => {
             onClick={handleNotificationPopoverOpen}
             className="p-4 cursor-pointer"
           >
-            <IoMdNotifications />
+            <IoMdNotifications size={30}/>
           </span>
 
           <Popover
@@ -222,7 +222,7 @@ const ClientHeader = () => {
 
           {/* Module */}
           <span onClick={handlePopoverOpen} className="p-4 cursor-pointer">
-            <BsFillGridFill />
+            <BsFillGridFill size={30}/>
           </span>
           <Popover
             sx={{ marginTop: "1rem" }}

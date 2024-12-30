@@ -182,6 +182,11 @@ export default function Listing() {
 
       <div className="w-full overflow-x-auto">
         <FullCalendar
+          headerToolbar={{
+            left: "today",
+            center: "prev title next",
+            right: "dayGridMonth,timeGridWeek,timeGridDay",
+          }}
           contentHeight={"auto"}
           displayEventTime={false}
           displayEventEnd={false}
@@ -201,11 +206,6 @@ export default function Listing() {
           }}
           weekends={true}
           eventClick={handleEventClick}
-          headerToolbar={{
-            left: "dayGridMonth,timeGridWeek,timeGridDay",
-            center: "title",
-            right: "today prev,next",
-          }}
           dayCellClassNames={(arg) => {
             const date = new Date(arg.date);
             const today = new Date();

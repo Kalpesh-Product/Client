@@ -31,10 +31,10 @@
     line-height: 2rem /* 32px */;
     font-weight: 600;
   }
-  .wono-bg{
-    background-color: #E6EEF5;
+  .wono-bg {
+    background-color: #e6eef5;
   }
-  .gray-underline{
+  .gray-underline {
     border-bottom: 1px solid rgb(209, 209, 209);
   }
 }
@@ -60,7 +60,7 @@ body {
 .row-revoked {
   background-color: #f5f5f5;
   color: #b0b0b0;
-  pointer-events: none; /* Prevent interaction */
+  pointer-events: none;
 }
 
 .fc .fc-view-harness {
@@ -73,6 +73,34 @@ body {
 .fc .fc-toolbar {
   background-color: white;
 }
+
+.fc-toolbar-chunk {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.fc .fc-button-primary {
+  background-color: royalblue;
+  border-color: #0056b3;
+  color: #fff;
+  font-size: 16px;
+  padding: 8px 16px;
+  border-radius: 5px;
+  box-shadow: 0 4px 6px rgba(75, 63, 63, 0.1);
+  transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.fc-button-primary:hover {
+  background-color: #0056b3;
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+
+.fc-button-primary:active {
+  background-color: #003f7f; /* Darker background for active state */
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2); /* Subtle shadow change */
+}
+
 .fc .fc-button-primary::first-letter {
   text-transform: uppercase;
 }
@@ -81,6 +109,11 @@ body {
   color: gray;
   cursor: no-drop;
 }
+
+.fc-theme-standard .fc-popover {
+  z-index: 999;
+}
+
 /* .css-si86to-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input.css-si86to-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input.css-si86to-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input  {
   padding-right: 0px !important;
 

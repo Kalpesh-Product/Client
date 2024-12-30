@@ -140,7 +140,7 @@ const Calender = () => {
   }, [eventsData]);
 
   return (
-    <div className="flex md:w-full">
+    <div className="flex w-[70%] md:w-full">
       <div className="flex-1 p-4 bg-white h-screen overflow-y-auto">
         <div className="flex justify-between items-center">
           <h1 className="font-bold text-2xl pb-5">Calendar</h1>
@@ -168,8 +168,13 @@ const Calender = () => {
           </FormGroup>
         </div>
 
-        <div className="relative w-full pt-2">
+        <div className="relative w-[70%] pt-2 md:w-full">
           <FullCalendar
+            headerToolbar={{
+              left: "today",
+              center: "prev title next",
+              right: "dayGridMonth,timeGridWeek,timeGridDay",
+            }}
             dayMaxEvents={2}
             eventClick={handleEventClick}
             contentHeight={"auto"}
@@ -178,11 +183,6 @@ const Calender = () => {
             initialView="dayGridMonth"
             eventDisplay="block"
             weekends={true}
-            headerToolbar={{
-              left: "dayGridMonth,timeGridWeek,timeGridDay",
-              center: "title",
-              right: "today prev,next",
-            }}
             dateClick={(info) => {
               const clickedDate = dayjs(info.date).startOf("day");
               setSelectedDate(info.dateStr);
