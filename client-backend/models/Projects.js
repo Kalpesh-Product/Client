@@ -15,7 +15,7 @@ const projectSchema = new mongoose.Schema({
   },
   project:{
     type: String,
-    required: true,
+    
   },
   assignedTo: [
     {
@@ -25,7 +25,7 @@ const projectSchema = new mongoose.Schema({
   ],
   priority:{
     type: String,
-    required: true,
+    
 
   },
   startdate: {
