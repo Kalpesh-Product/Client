@@ -8,7 +8,6 @@ import {
   TableRow,
   Collapse,
   IconButton,
-  Typography,
   Paper,
 } from "@mui/material";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
