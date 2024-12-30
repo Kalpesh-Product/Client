@@ -102,7 +102,7 @@ const CompanySettings = () => {
 
   return (
     <>
-      <Box sx={{ bgcolor: "background.paper", padding: 2, borderRadius: 2 }}>
+      <Box sx={{ bgcolor: "background.paper", borderRadius: 2 }}>
         <Tabs value={activeTab} onChange={handleChangeTab} variant="fullWidth">
           <Tab label="Company" />
           <Tab label="Departments" />

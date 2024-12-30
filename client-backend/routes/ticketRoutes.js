@@ -19,6 +19,9 @@ router.put("/edit-ticket/:id", ticketController.updateTicket);
 // Accept Ticket
 router.put("/accept-ticket/:id", ticketController.acceptTicket);
 
+// Assign Ticket
+router.put("/assign-ticket/:id", ticketController.assignTicket);
+
 // Close Ticket
 router.put("/close-ticket/:id", ticketController.closeTicket);
 

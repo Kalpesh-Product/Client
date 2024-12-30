@@ -38,7 +38,7 @@ const EmployeeAttendanceSummary = () => {
   const { present, absent, averageCheckin } = mockData[timeFilter];
 
   return (
-    <div className="p-4 flex flex-col gap-2">
+    <div className="flex flex-col gap-2">
       {/* Dropdown Filter */}
       <FormControl
         size="small"

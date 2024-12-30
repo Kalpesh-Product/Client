@@ -40,7 +40,7 @@ import MainSideBar from "../components/Sidebar/MainSideBar";
 // import MyLeaves from "./hr/leaves/MyLeaves";
 
 export const WidgetSection = ({ heading, widgets }) => (
-  <div className="my-3 rounded-md w-full p-2">
+  <div className="my-4 rounded-md  w-full p-0 ">
     {/* <h2 className="text-2xl font-semibold p-2 bg-white">{heading ? heading : ''}</h2> */}
     <div
       className={`grid gap-4 mt-0
@@ -49,11 +49,13 @@ export const WidgetSection = ({ heading, widgets }) => (
     md:grid-cols-${Math.min(widgets.length, 3)}
     lg:grid-cols-${Math.min(widgets.length, 4)}
     
-  `}>
+  `}
+    >
       {widgets.map((Widget, index) => (
         <div
           key={index}
-          className="bg-white p-0 w-full h-full overflow-auto rounded-md motion-preset-expand">
+          className="bg-white p-0 w-full h-full shadow-md overflow-auto border-2 border-gray-100 rounded-md motion-preset-expand"
+        >
           {Widget}
         </div>
       ))}
@@ -62,7 +64,9 @@ export const WidgetSection = ({ heading, widgets }) => (
 );
 export const WidgetSectionLeaveDashboard = ({ heading, widgets }) => (
   <div className="mt-0">
-    <h2 className="text-2xl font-semibold">{heading}</h2>
+    <div className="border-b-2 border-gray-100">
+      <h2 className="text-5xl font-semibold">{heading}</h2>
+    </div>
     <div
       className={`grid gap-4 mt-3
     grid-cols-1
@@ -70,11 +74,13 @@ export const WidgetSectionLeaveDashboard = ({ heading, widgets }) => (
     md:grid-cols-${Math.min(widgets.length, 3)}
     lg:grid-cols-${Math.min(widgets.length, 4)}
     
-  `}>
+  `}
+    >
       {widgets.map((Widget, index) => (
         <div
           key={index}
-          className="bg-white p-0 shadow-md rounded-lg h-full overflow-auto motion-preset-expand">
+          className="bg-white p-0 shadow-md rounded-lg h-full overflow-auto motion-preset-expand"
+        >
           {Widget}
         </div>
       ))}
@@ -95,7 +101,8 @@ export const ButtonSection = ({ heading, widgets }) => {
     md:grid-cols-${Math.min(widgets.length, 3)}
     lg:grid-cols-${Math.min(widgets.length, 4)}
     
-  `}>
+  `}
+      >
         {/* {widgets.map((Widget, index) => (
         <div
           key={index}
@@ -108,28 +115,32 @@ export const ButtonSection = ({ heading, widgets }) => {
         <div className=" p-0 flex justify-center items-center  h-full overflow-auto motion-preset-expand">
           <button
             onClick={() => navigate("/hr/leaves/my-leaves")}
-            className="px-6 py-2 rounded-lg text-white wono-blue-dark hover:bg-[#3cbce7] transition-shadow shadow-md hover:shadow-lg active:shadow-inner">
+            className="px-6 py-2 rounded-lg text-white wono-blue-dark hover:bg-[#3cbce7] transition-shadow shadow-md hover:shadow-lg active:shadow-inner"
+          >
             View Applied Leaves
           </button>
         </div>
         <div className=" p-0 flex justify-center items-center  h-full overflow-auto motion-preset-expand">
           <button
             onClick={() => navigate("/hr/leaves/past-leaves")}
-            className="px-6 py-2 rounded-lg text-white wono-blue-dark hover:bg-[#3cbce7] transition-shadow shadow-md hover:shadow-lg active:shadow-inner">
+            className="px-6 py-2 rounded-lg text-white wono-blue-dark hover:bg-[#3cbce7] transition-shadow shadow-md hover:shadow-lg active:shadow-inner"
+          >
             View Past Leaves
           </button>
         </div>
         <div className=" p-0 flex justify-center items-center  h-full overflow-auto motion-preset-expand">
           <button
             onClick={() => navigate("/hr/leaves/my-leaves")}
-            className="px-6 py-2 rounded-lg text-white wono-blue-dark hover:bg-[#3cbce7] transition-shadow shadow-md hover:shadow-lg active:shadow-inner">
+            className="px-6 py-2 rounded-lg text-white wono-blue-dark hover:bg-[#3cbce7] transition-shadow shadow-md hover:shadow-lg active:shadow-inner"
+          >
             View Pending Leaves
           </button>
         </div>
         <div className=" p-0 flex justify-center items-center  h-full overflow-auto motion-preset-expand">
           <button
             onClick={() => navigate("/hr/leaves/due-approvals")}
-            className="px-6 py-2 rounded-lg text-white wono-blue-dark hover:bg-[#3cbce7] transition-shadow shadow-md hover:shadow-lg active:shadow-inner">
+            className="px-6 py-2 rounded-lg text-white wono-blue-dark hover:bg-[#3cbce7] transition-shadow shadow-md hover:shadow-lg active:shadow-inner"
+          >
             Subordinate Due Approvals
           </button>
         </div>
@@ -264,7 +275,7 @@ const Dashboard = () => {
     <div className="flex h-screen">
       {/*  */}
       {/* <MainSideBar /> */}
-      <div className="flex-1 bg-gray-100 p-8 overflow-y-auto">
+      <div className="flex-1 bg-white p-4 overflow-y-auto">
         {/* Heading 1 */}
         <h1 className="text-3xl motion-preset-slide-right-md font-bold">
           {auth?.user?.name}'s Dashboard
@@ -279,22 +290,22 @@ const Dashboard = () => {
         {/* Conditionally render widgets based on user role */}
         {(auth.user.role.roleTitle === "Master-Admin" ||
           auth.user.role.roleTitle === "Super-Admin") && (
-          <div className="grid grid-cols-1 md:grid-cols-1 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-1 gap-0">
             {/* Sales Widget */}
-            <div className="bg-white p-4  rounded-lg  ">
+            <div className="bg-white rounded-lg  ">
               <WidgetSection heading="Sales" widgets={allWidgets.Sales} />
             </div>
 
             {/* Finance Widget */}
-            <div className="bg-white p-4  rounded-lg  ">
+            <div className="bg-white   rounded-lg  ">
               <WidgetSection heading="Finance" widgets={allWidgets.Finance} />
             </div>
 
             {/* Other Widgets */}
-            <div className="bg-white p-4  rounded-lg  ">
+            <div className="bg-white   rounded-lg  ">
               <WidgetSection heading="Tech" widgets={allWidgets.Tech} />
             </div>
-            <div className="bg-white p-4  rounded-lg  ">
+            <div className="bg-white   rounded-lg  ">
               <WidgetSection heading="IT" widgets={allWidgets.IT} />
             </div>
           </div>

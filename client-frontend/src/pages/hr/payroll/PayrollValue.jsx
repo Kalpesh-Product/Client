@@ -1,10 +1,18 @@
 import React, { useState } from "react";
-import Accordion from "@mui/material/Accordion";
-import AccordionSummary from "@mui/material/AccordionSummary";
-import AccordionDetails from "@mui/material/AccordionDetails";
-import Typography from "@mui/material/Typography";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import AgTable from "../../../components/AgTable";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Collapse,
+  IconButton,
+  Typography,
+  Paper,
+} from "@mui/material";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 
 const PayrollValue = () => {
   // Table Data
@@ -45,49 +53,95 @@ const PayrollValue = () => {
     ],
   };
 
-  // Columns for Employee Table
-  const employeeColumns = [
-    { headerName: "Name", field: "name", sortable: true, filter: true },
-    { headerName: "Role", field: "role", sortable: true, filter: true },
-    {
-      headerName: "Salary (₹)",
-      field: "salary",
-      sortable: true,
-      filter: true,
-      valueFormatter: (params) => `₹${params.value.toLocaleString()}`,
-    },
-  ];
+  const Row = ({ department }) => {
+    const [open, setOpen] = useState(false);
+
+    return (
+      <>
+        <TableRow>
+          <TableCell>
+            <IconButton
+              aria-label="expand row"
+              size="small"
+              onClick={() => setOpen(!open)}
+            >
+              {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+            </IconButton>
+          </TableCell>
+          <TableCell component="th" scope="row">
+            {department.department}
+          </TableCell>
+          <TableCell align="right">
+            ₹ {department.payroll.toLocaleString()}
+          </TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell sx={{ paddingBottom: 0, paddingTop: 0 }} colSpan={3}>
+            <Collapse in={open} timeout="auto" unmountOnExit>
+              <Table
+                size="medium"
+                aria-label="employees"
+                sx={{ margin: "10px 0", padding: "10px" }}
+              >
+                <TableHead>
+                  <TableRow>
+                    <TableCell sx={{ padding: "8px" }}>Name</TableCell>
+                    <TableCell sx={{ padding: "8px" }}>Role</TableCell>
+                    <TableCell align="right" sx={{ padding: "8px" }}>
+                      Salary (₹)
+                    </TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {(employeeData[department.department] || []).map(
+                    (employee) => (
+                      <TableRow key={employee.name}>
+                        <TableCell sx={{ padding: "8px" }}>
+                          {employee.name}
+                        </TableCell>
+                        <TableCell sx={{ padding: "8px" }}>
+                          {employee.role}
+                        </TableCell>
+                        <TableCell align="right" sx={{ padding: "8px" }}>
+                          ₹ {employee.salary.toLocaleString()}
+                        </TableCell>
+                      </TableRow>
+                    )
+                  )}
+                </TableBody>
+              </Table>
+            </Collapse>
+          </TableCell>
+        </TableRow>
+      </>
+    );
+  };
 
   return (
-    <div className="p-4 bg-gray-100 w-[80vw] md:w-full">
-      <h2 className="text-2xl font-bold text-gray-800 mb-6">Payroll Table</h2>
-      {tableData.map((department) => (
-        <Accordion key={department.department}>
-          <AccordionSummary
-            expandIcon={<ExpandMoreIcon />}
-            aria-controls={`${department.department}-content`}
-            id={`${department.department}-header`}>
-            <div className="flex justify-between w-full px-2">
-              <Typography className="font-medium text-lg">
-                {department.department}
-              </Typography>
-              <Typography className="font-medium text-lg">
-                Payroll: ₹ {department.payroll.toLocaleString()}
-              </Typography>
-            </div>
-          </AccordionSummary>
-          <AccordionDetails>
-            <AgTable
-              data={employeeData[department.department] || []}
-              columns={employeeColumns}
-              paginationPageSize={5}
-              highlightFirstRow={false}
-              highlightEditedRow={false}
-            />
-          </AccordionDetails>
-        </Accordion>
-      ))}
-    </div>
+    <main className="p-4">
+      <Typography variant="h4" component="h2" className="mt-4 mb-2">
+        Payroll Table
+      </Typography>
+      <TableContainer
+        component={Paper}
+        className="p-4 bg-white w-[80vw] md:w-full"
+      >
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell />
+              <TableCell>Department</TableCell>
+              <TableCell align="right">Total Payroll (₹)</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {tableData.map((department) => (
+              <Row key={department.department} department={department} />
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </main>
   );
 };
 

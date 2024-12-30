@@ -43,7 +43,7 @@ const FormStepper = ({ steps, children, handleClose }) => {
             </Step>
           ))}
         </Stepper>
-        {!location.pathname === "/hr/onboarding" ? (
+        {location.pathname !== "/hr/onboarding" ? (
           <>
             <div>
               <motion.button

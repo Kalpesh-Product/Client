@@ -371,7 +371,7 @@ const TasklistGrid = ({allRows,setAllRows,filterTasks,filteredRows}) => {
   return (
    <div >
          <div
-            className="mt-5 overflow-auto w-full max-w-screen-xl mx-auto  motion-preset-blur-right-md "
+            className="mt-5 overflow-auto w-full motion-preset-blur-right-md "
             style={{ fontFamily: "Popins-Regular" }}
           >
             {/* <Paper sx={{ height: 400, width: "100%", alignItems:"center" , display:"flex", justifyContent:"center"}}> */}

@@ -4,7 +4,7 @@ export default function MyPayroll({ payrollDetails }) {
     payrollDetails;
 
   return (
-    <div className="bg-white shadow-lg rounded-lg p-6 w-full mt-2">
+    <div className="bg-white shadow-lg rounded-lg p-4 w-full mt-2">
       <h2 className="text-2xl font-bold text-gray-800 mb-4">My Payroll</h2>
       <div className="border-b pb-4 mb-4">
         <h3 className="text-lg font-semibold text-gray-700">

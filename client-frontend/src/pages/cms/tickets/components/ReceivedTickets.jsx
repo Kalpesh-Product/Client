@@ -164,13 +164,24 @@ const ReceivedTickets = () => {
 
     const allTickets = responseFromBackend.data.tickets;
 
-    // Filter tickets where 'department' matches
-    const filteredTickets = allTickets.filter(
-      (ticket) =>
-        ticket.selectedDepartment === selectedDepartmentFilter &&
-        ticket.accepted.acceptedStatus === false &&
-        ticket.status !== "Closed"
-    );
+    if (selectedDepartmentFilter === "TopManagement") {
+      // Filter tickets where 'department' matches
+      var filteredTickets = allTickets.filter(
+        (ticket) =>
+          ticket.escalatedDepartment === selectedDepartmentFilter &&
+          ticket.accepted.acceptedStatus === false &&
+          ticket.status !== "Closed"
+      );
+    } else {
+      // Filter tickets where 'department' matches
+      var filteredTickets = allTickets.filter(
+        (ticket) =>
+          ticket.selectedDepartment === selectedDepartmentFilter &&
+          ticket.accepted.acceptedStatus === false &&
+          ticket.status !== "Closed" &&
+          ticket.escalation.isEscalated === false
+      );
+    }
 
     // Set it on state (update the value of tickets)
     // setMyTickets(responseFromBackend.data.tickets); // setNotes will update the value of tickets from null to the current array of tickets
@@ -412,7 +423,7 @@ const ReceivedTickets = () => {
   ];
 
   const columns3 = [
-    { field: "ticketId", headerName: "ID", width: 100 },
+    // { field: "ticketId", headerName: "ID", width: 100 },
     { field: "raisedBy", headerName: "Raised By", width: 150 },
     {
       field: "selectedDepartment",
@@ -527,7 +538,7 @@ const ReceivedTickets = () => {
               className="bg-red-500 text-white px-3 py-1 rounded">
               Accept
             </button>
-            {/* {authUser.user.role.roleTitle !== "Employee" && (
+            {/* {authUser.user.role.roleTitle === "Admin" && (
               <button
                 // onClick={handleDelete}
                 // onClick={handleAssign}
@@ -823,31 +834,35 @@ const ReceivedTickets = () => {
                       bgcolor: "background.paper",
                       borderRadius: 2,
                     }}
-                    // className="bg-white p-6 rounded-lg shadow-md mx-auto">
-                    className="bg-white p-6 rounded-lg mx-auto">
+                    // className="bg-white p-4 rounded-lg shadow-md mx-auto">
+                    className="bg-white p-4 rounded-lg mx-auto">
                     {/* Personal Information */}
                     {/* <h2 className="text-lg font-semibold mb-4">Add Ticket</h2> */}
                     <div className="grid grid-cols-1 gap-4">
                       {/* Name, Mobile, Email, DOB fields */}
-                      {/* <div className="grid grid-cols-1 gap-4">
+                      <div className="grid grid-cols-1 gap-4">
                         <FormControl fullWidth>
                           <InputLabel id="department-select-label">
-                            Department
+                            Select Team Member
                           </InputLabel>
                           <Select
                             labelId="department-select-label"
                             id="department-select"
                             // value={department}
-                            label="Department"
+                            label="Select Team Member"
                             // onChange={handleChange}
                           >
-                            <MenuItem value="IT">IT</MenuItem>
-                            <MenuItem value="HR">HR</MenuItem>
-                            <MenuItem value="Tech">Tech</MenuItem>
-                            <MenuItem value="Admin">Admin</MenuItem>
+                            <MenuItem value="Faizan Shaikh">
+                              Faizan Shaikh
+                            </MenuItem>
+                            <MenuItem value="Rajiv Kumar Pal">
+                              Rajiv Kumar Pal
+                            </MenuItem>
+                            <MenuItem value="Desmon Goes">Desmon Goes</MenuItem>
+                            {/* <MenuItem value="Admin">Admin</MenuItem> */}
                           </Select>
                         </FormControl>
-                      </div> */}
+                      </div>
                       {/* <div className="grid grid-cols-1 gap-4">
                         <TextField
                           label="Name"

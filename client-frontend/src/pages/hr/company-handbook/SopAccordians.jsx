@@ -50,6 +50,9 @@ const SopAccordians = () => {
   const employeeColumns = [
     { headerName: "Name", field: "name", sortable: true, filter: true },
     { headerName: "Role", field: "role", sortable: true, filter: true },
+    // { field: "id", headerName: "ID", width: 100 },
+    // { field: "employeeName", headerName: "Employee Name", width: 200 },
+    // { field: "date", headerName: "Date Added", width: 150 },
     {
       headerName: "Salary (₹)",
       field: "salary",

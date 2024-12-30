@@ -94,7 +94,7 @@ const MyPayslips = () => {
   ];
 
   return (
-    <div className="bg-white shadow-lg rounded-lg p-6 w-full mt-2">
+    <div className="bg-white shadow-lg rounded-lg p-4 w-full mt-2">
       <h1 className="text-2xl font-bold text-gray-800 mb-4">My Payslips</h1>
       <AgTable
         data={payslips}

@@ -406,7 +406,7 @@ const SopPdfContainer = () => {
   };
 
   return (
-    <div className="w-[72vw] md:w-full transition-all duration-200 ease-in-out bg-white p-2 rounded-md">
+    <div className="w-[72vw] md:w-full transition-all duration-200 ease-in-out bg-white p-0 rounded-md">
       {/* <div className="bg-green-500">
         <h2>Today's Tickets</h2>
       </div> */}
@@ -487,7 +487,13 @@ const SopPdfContainer = () => {
       /> */}
 
       {/* <PayslipTest /> */}
-      <SopPdf />
+
+      <div className="flex justify-center items-center">
+        <div className=" w-50 border border-black">
+          <SopPdf />
+          {/* <EmployeeAgreementPdf /> */}
+        </div>
+      </div>
 
       {/* {location.pathname === "/customer/tickets/my-tickets" && (
         <div>
@@ -550,7 +556,7 @@ const SopPdfContainer = () => {
                                 bgcolor: "background.paper",
                                 borderRadius: 2,
                               }}
-                              // className="bg-white p-6 rounded-lg shadow-md mx-auto">
+                              // className="bg-white p-4 rounded-lg shadow-md mx-auto">
                               className="bg-white py-6 rounded-lg">
                               {/* Personal Information */}
                               {/* <h2 className="text-lg font-semibold mb-4">Add Ticket</h2> */}
@@ -639,16 +645,16 @@ const SopPdfContainer = () => {
                               {/* Role & Department fields */}
 
                               {/* <div className="col-span-2 flex gap-4">
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.9 }}
-                  className="w-full py-2 px-4 bg-blue-600 text-white rounded mt-4"
-                  //   onClick={handleSaveEvent}
-                  onClick={() => navigate("/customer/tickets")}>
-                  Save
-                </motion.button>
-          
-              </div> */}
+                                <motion.button
+                                  whileHover={{ scale: 1.05 }}
+                                  whileTap={{ scale: 0.9 }}
+                                  className="w-full py-2 px-4 bg-blue-600 text-white rounded mt-4"
+                                  //   onClick={handleSaveEvent}
+                                  onClick={() => navigate("/customer/tickets")}>
+                                  Save
+                                </motion.button>
+                          
+                              </div> */}
                             </Box>
                           </div>
                         </div>
@@ -863,8 +869,8 @@ const SopPdfContainer = () => {
                       bgcolor: "background.paper",
                       borderRadius: 2,
                     }}
-                    // className="bg-white p-6 rounded-lg shadow-md mx-auto">
-                    className="bg-white p-6 rounded-lg mx-auto">
+                    // className="bg-white p-4 rounded-lg shadow-md mx-auto">
+                    className="bg-white p-4 rounded-lg mx-auto">
                     {/* Personal Information */}
                     {/* <h2 className="text-lg font-semibold mb-4">Add Ticket</h2> */}
                     <div className="grid grid-cols-1 gap-4">
@@ -1005,8 +1011,8 @@ const SopPdfContainer = () => {
                       bgcolor: "background.paper",
                       borderRadius: 2,
                     }}
-                    // className="bg-white p-6 rounded-lg shadow-md mx-auto">
-                    className="bg-white p-6 rounded-lg mx-auto">
+                    // className="bg-white p-4 rounded-lg shadow-md mx-auto">
+                    className="bg-white p-4 rounded-lg mx-auto">
                     {/* Personal Information */}
                     {/* <h2 className="text-lg font-semibold mb-4">Add Ticket</h2> */}
                     <div className="grid grid-cols-1 gap-4">

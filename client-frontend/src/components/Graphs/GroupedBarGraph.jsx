@@ -29,7 +29,7 @@ export default function GroupedBarGraph({
           ? dataset.data.map((value) =>
               value > 100 ? "rgba(255, 0, 0, 1)" : "rgba(150, 255, 100, 1)"
             ) // Dynamic coloring for Utilised
-          :  "rgba(0, 255, 0, 1)", // Default color for Allocated
+          : "rgba(0, 255, 0, 1)", // Default color for Allocated
     })),
   };
 
@@ -132,14 +132,16 @@ export default function GroupedBarGraph({
   };
 
   return (
-    <div
-      className="p-4 pb-8"
-      style={{ width: graphWidth, height: graphHeight }}
-    >
-      <div>
-        <h1 className="font-semibold text-2xl">{title}</h1>
+    <>
+      <div className="gray-underline p-2 mb-4">
+        <h1 className="text-xl">{title}</h1>
       </div>
-      <Bar data={chartData} options={options} />
-    </div>
+      <div
+        className="p-4 pb-8"
+        style={{ width: graphWidth, height: graphHeight }}
+      >
+        <Bar data={chartData} options={options} />
+      </div>
+    </>
   );
 }

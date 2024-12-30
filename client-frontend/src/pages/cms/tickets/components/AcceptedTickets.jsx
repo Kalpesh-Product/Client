@@ -178,14 +178,25 @@ const AcceptedTickets = () => {
 
     const allTickets = responseFromBackend.data.tickets;
 
-    // Filter tickets where 'department' matches
-    const filteredTickets = allTickets.filter(
-      (ticket) =>
-        ticket.selectedDepartment === selectedDepartmentFilter &&
-        ticket.accepted.acceptedStatus === true &&
-        ticket.status !== "Closed" &&
-        ticket.assignedMember === authUser.user.name
-    );
+    if (selectedDepartmentFilter === "TopManagement") {
+      // Filter tickets where 'department' matches
+      var filteredTickets = allTickets.filter(
+        (ticket) =>
+          ticket.escalatedDepartment === selectedDepartmentFilter &&
+          ticket.accepted.acceptedStatus === true &&
+          ticket.status !== "Closed" &&
+          ticket.assignedMember === authUser.user.name
+      );
+    } else {
+      // Filter tickets where 'department' matches
+      var filteredTickets = allTickets.filter(
+        (ticket) =>
+          ticket.selectedDepartment === selectedDepartmentFilter &&
+          ticket.accepted.acceptedStatus === true &&
+          ticket.status !== "Closed" &&
+          ticket.assignedMember === authUser.user.name
+      );
+    }
 
     // Set it on state (update the value of tickets)
     // setMyTickets(responseFromBackend.data.tickets); // setNotes will update the value of tickets from null to the current array of tickets
@@ -457,7 +468,7 @@ const AcceptedTickets = () => {
   ];
 
   const columns3 = [
-    { field: "ticketId", headerName: "ID", width: 100 },
+    // { field: "ticketId", headerName: "ID", width: 100 },
     { field: "raisedBy", headerName: "Raised By", width: 150 },
     {
       field: "selectedDepartment",
@@ -524,14 +535,16 @@ const AcceptedTickets = () => {
               className="bg-red-500 text-white px-3 py-1 rounded">
               Close
             </button>
-            <button
-              // onClick={handleDelete}
-              // onClick={handleDeleteTicket}
-              onClick={handleEscalate}
-              // onClick={openDeleteTicket}
-              className="bg-red-500 text-white px-3 py-1 rounded">
-              Escalate
-            </button>
+            {authUser.user.role.roleTitle !== "Master Admin" && (
+              <button
+                // onClick={handleDelete}
+                // onClick={handleDeleteTicket}
+                onClick={handleEscalate}
+                // onClick={openDeleteTicket}
+                className="bg-red-500 text-white px-3 py-1 rounded">
+                Escalate
+              </button>
+            )}
           </div>
         );
       },
@@ -793,8 +806,8 @@ const AcceptedTickets = () => {
                       bgcolor: "background.paper",
                       borderRadius: 2,
                     }}
-                    // className="bg-white p-6 rounded-lg shadow-md mx-auto">
-                    className="bg-white p-6 rounded-lg mx-auto">
+                    // className="bg-white p-4 rounded-lg shadow-md mx-auto">
+                    className="bg-white p-4 rounded-lg mx-auto">
                     {/* Personal Information */}
                     {/* <h2 className="text-lg font-semibold mb-4">Add Ticket</h2> */}
                     <div className="grid grid-cols-1 gap-4">
@@ -947,8 +960,8 @@ const AcceptedTickets = () => {
                       bgcolor: "background.paper",
                       borderRadius: 2,
                     }}
-                    // className="bg-white p-6 rounded-lg shadow-md mx-auto">
-                    className="bg-white p-6 rounded-lg mx-auto">
+                    // className="bg-white p-4 rounded-lg shadow-md mx-auto">
+                    className="bg-white p-4 rounded-lg mx-auto">
                     {/* Personal Information */}
                     {/* <h2 className="text-lg font-semibold mb-4">Add Ticket</h2> */}
                     <div className="grid grid-cols-1 gap-4">

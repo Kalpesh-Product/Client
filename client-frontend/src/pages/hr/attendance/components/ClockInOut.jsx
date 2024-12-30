@@ -17,11 +17,9 @@ const ClockInOut = () => {
   const breakDuration = "30m";
 
   return (
-    <div className="flex w-full items-center justify-center bg-gray-100 py-6">
+    <div className="flex w-full items-center justify-center bg-gray-100 py-0">
       <div className="w-full  bg-white shadow-xl rounded-lg p-6">
-        <h1 className="text-3xl font-bold mb-8 text-gray-800 text-center">
-          Attendance Dashboard
-        </h1>
+   
 
         <div className="flex flex-wrap gap-6">
           {/* Clock Section */}

@@ -42,7 +42,7 @@ export default function PayRollDash() {
     auth.user.role.roleTitle === "Super-Admin";
 
   return (
-    <div className="p-4 bg-gray-100 w-[80vw] md:w-full mt-4">
+    <div className="p-4 bg-white w-[80vw] md:w-full">
       {isAdmin ? (
         <>
           <div className="w-full flex justify-between items-center mb-6">

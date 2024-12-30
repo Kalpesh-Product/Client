@@ -325,7 +325,7 @@ const TasklistTable = () => {
   };
   return (
     <div className="flex min-h-screen">
-      <div className="w-full p-6 motion-preset-blur-right-md  max-w-screen-xl mx-auto ">
+      <div className="w-full p-4 motion-preset-blur-right-md ">
         <div className="flex flex-row justify-between">
           <h2 className="text-2xl">{taskTitle}</h2>
           <button

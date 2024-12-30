@@ -19,10 +19,149 @@ import { motion } from "framer-motion";
 import { IoMdClose } from "react-icons/io";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import useAuth from "../../../hooks/useAuth";
+import axios from "axios";
+import dayjs from "dayjs";
 
 const MyLeaves = () => {
+  const { auth: authUser } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
+
+  const [myLeaves, setMyLeaves] = useState([]);
+  // state to hold the values of ticket form inputs
+  const [createForm, setCreateForm] = useState({
+    takenBy: authUser.user.name,
+    leaveType: "",
+    fromDate: dayjs(),
+  });
+
+  // we need to get the name of the input field while typing(changing using onChange) & we need to get the new value. so we get both of those of the default html event that gets passed here (we put an e for the event)
+  // const updateCreateFormField = (e) => {
+  //   // console.log("hey");
+  //   console.log(createForm);
+
+  //   // const { name, value } = e.target;
+  //   const target = e.target; // We first access the target property of the event object e, which represents the element that triggered the event.
+  //   const name = target.name; // Next, we extract the name and value properties from the target object and assign them to variables.
+  //   const value = target.value;
+  //   // const triggeredHtmlElement = e.target;
+  //   // const nameAttributeOfTheTriggeredElement = triggeredHtmlElement.name;
+  //   // const valueAttributeOfTheTriggeredElement = triggeredHtmlElement.value;
+
+  //   // now we update the state
+  //   // setCreateForm({
+  //   //   ...createForm, // creates a duplicate of the createForm object
+  //   //   // name: value, // this will update the key of name, but we don't need the key of name, we need whatever the variable is equal to
+  //   //   [name]: value, // this will find the keys (name attributes) and update its values (value attributes) to whatever is changed by the JS event.
+  //   // });
+
+  //   setCreateForm((prevForm) => ({
+  //     ...prevForm, // Spread previous form values
+  //     [name]: value, // Update the specific field being modified
+  //     takenBy: authUser.user.name, // Ensure raisedBy is always set to authUser.user.name
+  //   }));
+
+  //   console.log("Updated Form:", createForm);
+  //   console.log("Updated Field:", { name, value });
+
+  //   console.log({ name, value });
+  // };
+
+  const updateCreateFormField = (value, customField = null) => {
+    if (customField) {
+      // Ensure the value is a Dayjs object before formatting
+      const formattedValue =
+        value && typeof value.format === "function"
+          ? value.format("DD/MM/YYYY")
+          : "";
+
+      setCreateForm((prevForm) => ({
+        ...prevForm,
+        [customField]: formattedValue,
+      }));
+    } else {
+      // Handle standard input fields
+      const { name, value: inputValue } = value.target;
+      setCreateForm((prevForm) => ({
+        ...prevForm,
+        [name]: inputValue,
+      }));
+    }
+
+    console.log(createForm);
+  };
+
+  // Function to create the ticket
+  const createMyLeave = async (e) => {
+    try {
+      console.log("submitted x");
+      console.log(createForm);
+      e.preventDefault(); // prevents the page from reloading when the form is submitted
+
+      // Create the leave
+
+      // const responseFromBackend = await axios.post(
+      //   // the 2 arguments are: the link to post the values, the values to be sent for post method
+      //   // "/api/leaves/create-leave",
+      //   "http://localhost:5000/api/leaves/create-leave",
+      //   createForm
+      // );
+
+      const responseFromBackend = await axios.post(
+        "/api/leaves/create-leave",
+        createForm
+      );
+
+      console.log(responseFromBackend);
+
+      // Update state
+      setMyLeaves([...myLeaves, responseFromBackend.data.leave]); // adds our newly created leave to the array of leaves. The variable leave was created in out backend for response
+      // console.log("submit");
+      // console.log(responseFromBackend);
+
+      // Clear form state
+      setCreateForm({
+        takenBy: authUser.user.name,
+        leaveType: "",
+        fromDate: "",
+      });
+      toast.success("New Leave Created");
+      fetchmyLeaves();
+      closeModal();
+      // navigate("/leaves/view-leaves");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const takenByFilter = authUser.user.name; // Replace with the desired name or variable
+  // function that fetches our tickets
+  const fetchmyLeaves = async () => {
+    // Fetch the tickets
+    const responseFromBackend = await axios.get("/api/leaves/view-all-leaves"); // the function is not running yet. we want the function to run as soon as the app starts up, so we do that in a useEffect (react hook).
+
+    const allLeaves = responseFromBackend.data.leaves;
+
+    // Filter tickets where 'takenBy' matches
+    const filteredLeaves = allLeaves.filter(
+      (leave) => leave.takenBy === takenByFilter
+    );
+
+    // Set it on state (update the value of tickets)
+    // setMyTickets(responseFromBackend.data.tickets); // setTickets will update the value of tickets from null to the current array of tickets
+    // Update state with filtered tickets
+    setMyLeaves(filteredLeaves);
+    // console.log(responseFromBackend);
+    // console.log(responseFromBackend.data.tickets);
+  };
+
+  // useeffect for displaying the tickets array after fetching from backend response
+  useEffect(() => {
+    // anything you put in here will run when the app starts
+    fetchmyLeaves();
+    console.log(myLeaves);
+    // this will run the fetchTickets function & fetch the tickets array from backend as our response (in network tab from developer tools)
+  }, []); // we leave the array empty since we need it to run only once when the app starts up.
 
   const [highlightFirstRow, setHighlightFirstRow] = React.useState(false);
   const [highlightEditedRow, setHighlightEditedRow] = React.useState(false);
@@ -454,7 +593,7 @@ const MyLeaves = () => {
   };
 
   return (
-    <div className="w-[72vw] md:w-full transition-all duration-200 ease-in-out bg-white p-2 rounded-md">
+    <div className="w-[72vw] md:w-full transition-all duration-200 ease-in-out bg-white p-0 rounded-md">
       {/* <div className="bg-green-500">
         <h2>Today's Tickets</h2>
       </div> */}
@@ -545,7 +684,8 @@ const MyLeaves = () => {
       /> */}
 
       <AgTable
-        data={rows} // Use the state here
+        // data={rows} // Use the state here
+        data={myLeaves} // Use the state here
         columns={columns}
         highlightFirstRow={highlightFirstRow} // Bind the state here
         highlightEditedRow={highlightEditedRow} // Bind the state here
@@ -567,20 +707,21 @@ const MyLeaves = () => {
 
       <NewModal open={isModalOpen} onClose={closeModal}>
         <>
-          <FormStepper
-            steps={steps}
-            handleClose={closeModal}
-            children={(activeStep, handleNext) => {
-              if (activeStep === 0) {
-                return (
-                  <>
-                    <div className="bg-white  w-[31vw] rounded-lg z-10 relative overflow-y-auto max-h-[80vh]">
-                      {/* Modal Content */}
+          <form onSubmit={createMyLeave}>
+            <FormStepper
+              steps={steps}
+              handleClose={closeModal}
+              children={(activeStep, handleNext) => {
+                if (activeStep === 0) {
+                  return (
+                    <>
+                      <div className="bg-white  w-[31vw] rounded-lg z-10 relative overflow-y-auto max-h-[80vh]">
+                        {/* Modal Content */}
 
-                      {/* Modal Header */}
-                      {/* <div className="sticky top-0 bg-white pt-6 z-20 flex justify-between">
+                        {/* Modal Header */}
+                        {/* <div className="sticky top-0 bg-white pt-6 z-20 flex justify-between">
                         <div>
-                          <h2 className="text-3xl font-bold mb-4 uppercase">
+                          <h2 className="text-2xl font-bold mb-4 uppercase">
                             Raise Ticket
                           </h2>
                         </div>
@@ -597,96 +738,120 @@ const MyLeaves = () => {
                         </div>
                       </div> */}
 
-                      {/* Modal Body START */}
-                      <div className=" w-full">
-                        {/* <div>AddT icket Form</div> */}
-                        <div className="">
-                          <div className=" mx-auto">
-                            {/* <h1 className="text-xl text-center my-2 font-bold">
+                        {/* Modal Body START */}
+                        <div className=" w-full">
+                          {/* <div>AddT icket Form</div> */}
+                          <div className="">
+                            <div className=" mx-auto">
+                              {/* <h1 className="text-xl text-center my-2 font-bold">
                     Add Ticket
                   </h1> */}
-                            <Box
-                              sx={{
-                                maxWidth: 600,
-                                paddingY: 3,
-                                bgcolor: "background.paper",
-                                borderRadius: 2,
-                              }}
-                              // className="bg-white p-6 rounded-lg shadow-md mx-auto">
-                              className="bg-white py-6 rounded-lg">
-                              {/* Personal Information */}
-                              {/* <h2 className="text-lg font-semibold mb-4">Add Ticket</h2> */}
-                              <div className="grid grid-cols-1 gap-4">
-                                {/* Name, Mobile, Email, DOB fields */}
+                              <Box
+                                sx={{
+                                  maxWidth: 600,
+                                  paddingY: 3,
+                                  bgcolor: "background.paper",
+                                  borderRadius: 2,
+                                }}
+                                // className="bg-white p-4 rounded-lg shadow-md mx-auto">
+                                className="bg-white py-6 rounded-lg">
+                                {/* Personal Information */}
+                                {/* <h2 className="text-lg font-semibold mb-4">Add Ticket</h2> */}
                                 <div className="grid grid-cols-1 gap-4">
-                                  <FormControl fullWidth>
-                                    <InputLabel id="leave-type-select-label">
-                                      Leave Type
-                                    </InputLabel>
-                                    <Select
-                                      labelId="leave-type-select-label"
-                                      id="leave-type-select"
-                                      // value={department}
-                                      label="Department"
-                                      // onChange={handleChange}
-                                    >
-                                      <MenuItem value="Sick Leave">
-                                        Sick Leave
-                                      </MenuItem>
-                                      <MenuItem value="Casual Leave">
-                                        Casual Leave
-                                      </MenuItem>
-                                      <MenuItem value="Privileged Leave">
-                                        Privileged Leave
-                                      </MenuItem>
-                                      {/* <MenuItem value="Admin">Admin</MenuItem> */}
-                                    </Select>
-                                  </FormControl>
-                                </div>
-                                <div className="grid grid-cols-1 gap-4">
-                                  <FormControl fullWidth>
-                                    {/* <InputLabel id="suggestion-select-label">
+                                  {/* Name, Mobile, Email, DOB fields */}
+                                  <div className="grid grid-cols-1 gap-4">
+                                    <FormControl fullWidth>
+                                      <InputLabel id="leave-type-select-label">
+                                        Leave Type
+                                      </InputLabel>
+                                      <Select
+                                        labelId="leave-type-select-label"
+                                        id="leave-type-select"
+                                        // value={department}
+                                        label="Department"
+                                        value={createForm.leaveType}
+                                        name="leaveType"
+                                        // onChange={handleChange}
+                                        // onChange={updateCreateFormField}
+                                        onChange={(e) =>
+                                          updateCreateFormField(e)
+                                        }>
+                                        <MenuItem value="Sick Leave">
+                                          Sick Leave
+                                        </MenuItem>
+                                        <MenuItem value="Casual Leave">
+                                          Casual Leave
+                                        </MenuItem>
+                                        <MenuItem value="Privileged Leave">
+                                          Privileged Leave
+                                        </MenuItem>
+                                        {/* <MenuItem value="Admin">Admin</MenuItem> */}
+                                      </Select>
+                                    </FormControl>
+                                  </div>
+                                  <div className="grid grid-cols-1 gap-4">
+                                    <FormControl fullWidth>
+                                      {/* <InputLabel id="suggestion-select-label">
                                       Ticket Title
                                     </InputLabel> */}
-                                    <LocalizationProvider
-                                      dateAdapter={AdapterDayjs}>
-                                      <DatePicker
-                                        label="Date"
-                                        // value={formData.purchaseDate}
-                                        sx={{ width: "100%" }}
-                                        // onChange={(newDate) => {
-                                        //   if (newDate) {
-                                        //     setFormData({
-                                        //       ...formData,
-                                        //       purchaseDate: newDate, // Store the Dayjs object
-                                        //     });
-                                        //   }
-                                        // }}
-                                        format="DD/MM/YYYY" // Display format in the DatePicker
-                                        renderInput={(params) => (
-                                          <TextField
-                                            {...params}
-                                            className="w-full"
-                                          />
-                                        )}
-                                      />
-                                    </LocalizationProvider>
-                                  </FormControl>
-                                </div>
-                                {leaveType === "Other" && (
-                                  <div className="grid grid-cols-1 gap-4">
-                                    <TextField
-                                      label="Specify"
-                                      // value={newEvent.name}
-                                      // onChange={(e) =>
-                                      //   setnewEvent({ ...newEvent, name: e.target.value })
-                                      // }
-                                      fullWidth
-                                    />
-                                  </div>
-                                )}
+                                      <LocalizationProvider
+                                        dateAdapter={AdapterDayjs}>
+                                        <DatePicker
+                                          label="Date"
+                                          name="fromDate"
+                                          // value={formData.purchaseDate}
+                                          // value={createForm.fromDate}
+                                          // onChange={updateCreateFormField}
 
-                                {/* <div className="grid grid-cols-1 gap-4">
+                                          value={
+                                            createForm.fromDate
+                                              ? dayjs(
+                                                  createForm.fromDate,
+                                                  "DD/MM/YYYY"
+                                                )
+                                              : null
+                                          } // Parse stored string back into Dayjs object
+                                          onChange={(newDate) =>
+                                            updateCreateFormField(
+                                              newDate,
+                                              "fromDate"
+                                            )
+                                          }
+                                          format="DD/MM/YYYY" // Ensure consistent display format
+                                          sx={{ width: "100%" }}
+                                          // onChange={(newDate) => {
+                                          //   if (newDate) {
+                                          //     setFormData({
+                                          //       ...formData,
+                                          //       purchaseDate: newDate, // Store the Dayjs object
+                                          //     });
+                                          //   }
+                                          // }}
+                                          // format="DD/MM/YYYY" // Display format in the DatePicker
+                                          renderInput={(params) => (
+                                            <TextField
+                                              {...params}
+                                              className="w-full"
+                                            />
+                                          )}
+                                        />
+                                      </LocalizationProvider>
+                                    </FormControl>
+                                  </div>
+                                  {leaveType === "Other" && (
+                                    <div className="grid grid-cols-1 gap-4">
+                                      <TextField
+                                        label="Specify"
+                                        // value={newEvent.name}
+                                        // onChange={(e) =>
+                                        //   setnewEvent({ ...newEvent, name: e.target.value })
+                                        // }
+                                        fullWidth
+                                      />
+                                    </div>
+                                  )}
+
+                                  {/* <div className="grid grid-cols-1 gap-4">
                                   <TextField
                                     label="Ticket Title"
                                     // value={newEvent.name}
@@ -696,11 +861,11 @@ const MyLeaves = () => {
                                     fullWidth
                                   />
                                 </div> */}
-                              </div>
+                                </div>
 
-                              {/* Role & Department fields */}
+                                {/* Role & Department fields */}
 
-                              {/* <div className="col-span-2 flex gap-4">
+                                {/* <div className="col-span-2 flex gap-4">
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.9 }}
@@ -711,66 +876,72 @@ const MyLeaves = () => {
                 </motion.button>
           
               </div> */}
-                            </Box>
+                              </Box>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                      {/* Modal Body END */}
+                        {/* Modal Body END */}
 
-                      {/* Modal Footer */}
+                        {/* Modal Footer */}
 
-                      <div className="sticky bottom-0 bg-white py-6 z-20 flex justify-center">
-                        <div className="flex justify-center items-center w-full">
-                          <button
-                            className="wono-blue-dark text-white py-2 px-4 rounded-md hover:bg-blue-600 w-full"
-                            // onClick={handleAddTicket}>
-                            onClick={() => handleNextStep(handleNext)}>
-                            Next
-                          </button>
+                        <div className="sticky bottom-0 bg-white py-6 z-20 flex justify-center">
+                          <div className="flex justify-center items-center w-full">
+                            <button
+                              className="wono-blue-dark text-white py-2 px-4 rounded-md hover:bg-blue-600 w-full"
+                              // onClick={handleAddTicket}>
+                              onClick={() => handleNextStep(handleNext)}>
+                              Next
+                            </button>
+                          </div>
                         </div>
-                      </div>
-                      {/* Close button */}
-                      {/* <button
+                        {/* Close button */}
+                        {/* <button
                 className="bg-blue-500 text-white py-2 px-4 my-4 rounded-lg hover:bg-blue-600"
                 onClick={closeModal}>
                 Close
               </button> */}
-                    </div>
-                  </>
-                );
-              } else if (activeStep === 1) {
-                return (
-                  <>
-                    <div className="p-6">
-                      <h1 className="text-2xl mb-4 py-3 font-semibold text-center">
-                        Are the provided details correct ?
-                      </h1>
-                      <div>
-                        <div className="flex justify-between py-2 border-b">
-                          <h1 className="font-semibold">Leave Type</h1>
-                          <span>Privileged Leave</span>
+                      </div>
+                    </>
+                  );
+                } else if (activeStep === 1) {
+                  return (
+                    <>
+                      <div className="p-6">
+                        <h1 className="text-2xl mb-4 py-3 font-semibold text-center">
+                          Are the provided details correct ?
+                        </h1>
+                        <div>
+                          <div className="flex justify-between py-2 border-b">
+                            <h1 className="font-semibold">Leave Type</h1>
+                            <span>{createForm.leaveType}</span>
+                          </div>
+                        </div>
+                        <div>
+                          <div className="flex justify-between py-2 border-b">
+                            <h1 className="font-semibold">Date</h1>
+                            <span>{createForm.fromDate}</span>
+                          </div>
+                        </div>
+                        <div className="pt-8 pb-4">
+                          {/* <p>details</p> */}
+                          <button
+                            type="submit"
+                            // onClick={console.log("submitted")}
+                            className=" p-2 bg-white wono-blue-dark w-full text-white rounded-md">
+                            Submit
+                          </button>
+                          {/* <WonoButton
+                            content={"Submit"}
+                            onClick={() => handleAddTicket(newTicket)}
+                          /> */}
                         </div>
                       </div>
-                      <div>
-                        <div className="flex justify-between py-2 border-b">
-                          <h1 className="font-semibold">Date</h1>
-                          <span>Dec 30 2024</span>
-                        </div>
-                      </div>
-                      <div className="pt-8 pb-4">
-                        {/* <p>details</p> */}
-
-                        <WonoButton
-                          content={"Submit"}
-                          onClick={() => handleAddTicket(newTicket)}
-                        />
-                      </div>
-                    </div>
-                  </>
-                );
-              }
-            }}
-          />
+                    </>
+                  );
+                }
+              }}
+            />
+          </form>
         </>
       </NewModal>
 
@@ -786,7 +957,7 @@ const MyLeaves = () => {
           {/* DetailsModal Header */}
           <div className="sticky top-0 bg-white py-6 z-20 flex justify-between">
             <div>
-              <h2 className="text-3xl font-bold mb-4 uppercase">
+              <h2 className="text-2xl font-bold mb-4 uppercase">
                 Ticket Details
               </h2>
             </div>
@@ -893,7 +1064,7 @@ const MyLeaves = () => {
             {/* EditTicket Header */}
             <div className="sticky top-0 bg-white py-6 z-20 flex justify-between">
               <div>
-                <h2 className="text-3xl font-bold mb-4 uppercase">
+                <h2 className="text-2xl font-bold mb-4 uppercase">
                   Edit Ticket
                 </h2>
               </div>
@@ -925,8 +1096,8 @@ const MyLeaves = () => {
                       bgcolor: "background.paper",
                       borderRadius: 2,
                     }}
-                    // className="bg-white p-6 rounded-lg shadow-md mx-auto">
-                    className="bg-white p-6 rounded-lg mx-auto">
+                    // className="bg-white p-4 rounded-lg shadow-md mx-auto">
+                    className="bg-white p-4 rounded-lg mx-auto">
                     {/* Personal Information */}
                     {/* <h2 className="text-lg font-semibold mb-4">Add Ticket</h2> */}
                     <div className="grid grid-cols-1 gap-4">
@@ -1030,7 +1201,7 @@ const MyLeaves = () => {
             {/* DeleteTicket Header */}
             <div className="sticky top-0 bg-white py-6 z-20 flex justify-between">
               <div>
-                <h2 className="text-3xl font-bold mb-4 uppercase">
+                <h2 className="text-2xl font-bold mb-4 uppercase">
                   Delete Ticket
                 </h2>
               </div>
@@ -1067,8 +1238,8 @@ const MyLeaves = () => {
                       bgcolor: "background.paper",
                       borderRadius: 2,
                     }}
-                    // className="bg-white p-6 rounded-lg shadow-md mx-auto">
-                    className="bg-white p-6 rounded-lg mx-auto">
+                    // className="bg-white p-4 rounded-lg shadow-md mx-auto">
+                    className="bg-white p-4 rounded-lg mx-auto">
                     {/* Personal Information */}
                     {/* <h2 className="text-lg font-semibold mb-4">Add Ticket</h2> */}
                     <div className="grid grid-cols-1 gap-4">

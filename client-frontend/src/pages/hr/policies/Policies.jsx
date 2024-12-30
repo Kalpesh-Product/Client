@@ -6,7 +6,7 @@ import Tab from "@mui/material/Tab";
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
-import PdfViewer from "../sops/PdfViewer";
+import PdfViewer from "../sops/PdfViewerOld";
 import PdfViewer2 from "../sops/PdfViewer2";
 
 import { motion } from "framer-motion";
@@ -119,7 +119,7 @@ const Policies = () => {
         <NewModal
           open={uploadProfileImage}
           onClose={() => setUploadProfileImage(false)}>
-          <div className="bg-white p-6 rounded-lg w-80">
+          <div className="bg-white p-4 rounded-lg w-80">
             <div className="flex justify-between pb-8 items-center">
               <div>
                 <h3 className="text-xl font-semibold mb-4">Upload Policy</h3>

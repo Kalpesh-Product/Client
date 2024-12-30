@@ -37,7 +37,7 @@ const ProgressDoughnutWidget = () => {
   };
 
   return (
-    <div className="bg-white p-6 rounded-lg text-center">
+    <div className="bg-white p-4 rounded-lg text-center">
       <h3 className="text-xl font-semibold mb-4">Progress Towards Goal</h3>
       <div className="mb-4">
         <Pie data={data} options={options} />

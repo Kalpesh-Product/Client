@@ -53,7 +53,7 @@ const RevenueVsExpensesWidget = () => {
   };
 
   return (
-    <div className="bg-white p-6 rounded-lg flex flex-col h-full">
+    <div className="bg-white p-4 rounded-lg flex flex-col h-full">
       <h3 className="text-xl font-semibold mb-4">Revenue vs Expenses</h3>
       <div className="space-y-4 flex-grow">
         <div className="flex justify-between">

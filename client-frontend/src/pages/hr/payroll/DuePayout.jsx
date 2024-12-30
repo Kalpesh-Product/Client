@@ -77,7 +77,7 @@ export default function DuePayout() {
   const tableData = getTableDataWithPayout(data.users);
 
   return (
-    <div className="p-4 bg-gray-100 w-[80vw] md:w-full">
+    <div className="p-4 bg-white w-[80vw] md:w-full">
       <h2 className="text-2xl font-bold text-gray-800 mb-6">Due Payouts</h2>
       <AgTable
         data={tableData}

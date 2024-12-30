@@ -11,8 +11,10 @@ import UnresolvedTickets from "./UnresolvedTickets";
 import AcceptedTickets from "./AcceptedTickets";
 import AssignedTickets from "./AssignedTickets";
 import ReceivedTickets from "./ReceivedTickets";
+import useAuth from "../../../../hooks/useAuth";
 
 const ViewTicketsTabs = () => {
+  const { auth: authUser } = useAuth();
   // For Departments
   const [value, setValue] = React.useState("1");
 
@@ -55,7 +57,8 @@ const ViewTicketsTabs = () => {
               }}>
               {/* {user.role !== "Employee" && user.role !== "Admin" && ( */}
               <Tab
-                label="My Tickets"
+                // label="My Tickets"
+                label="Raised By Me"
                 value="1"
                 sx={{
                   textTransform: "uppercase",
@@ -71,7 +74,16 @@ const ViewTicketsTabs = () => {
                 }}
               />
               {/* )} */}
-
+              {/* {authUser.user.role.roleTitle !== "Master-Admin" && (
+                <Tab
+                  label="Assigned Tickets"
+                  value="5"
+                  sx={{
+                    textTransform: "uppercase",
+                    borderRight: "1px solid #e4e4e4",
+                  }}
+                />
+              )} */}
               <Tab
                 label="Accepted Tickets"
                 value="6"
@@ -80,14 +92,16 @@ const ViewTicketsTabs = () => {
                   borderRight: "1px solid #e4e4e4",
                 }}
               />
-              <Tab
-                label="Unresolved Tickets"
-                value="4"
-                sx={{
-                  textTransform: "uppercase",
-                  borderRight: "1px solid #e4e4e4",
-                }}
-              />
+              {authUser.user.role.roleTitle !== "Master-Admin" && (
+                <Tab
+                  label="Escalated Tickets"
+                  value="4"
+                  sx={{
+                    textTransform: "uppercase",
+                    borderRight: "1px solid #e4e4e4",
+                  }}
+                />
+              )}
               <Tab
                 label="Closed Tickets"
                 value="3"

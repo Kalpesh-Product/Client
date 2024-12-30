@@ -2,7 +2,7 @@ import React from "react";
 
 const EmployeeAttendance = ({ data }) => {
   return (
-    <div className="bg-white shadow-md rounded-lg p-6 w-full">
+    <div className="bg-white shadow-md rounded-lg p-4 w-full">
       <h2 className="text-xl font-semibold">Employee Attendance</h2>
 
       {/* Section 1: Summary and Search Filter */}

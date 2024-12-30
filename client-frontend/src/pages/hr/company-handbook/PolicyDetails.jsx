@@ -13,7 +13,7 @@ import { motion } from "framer-motion";
 import { IoMdClose } from "react-icons/io";
 // import { NewModal } from "../../../components/NewModal";
 import { NewModal } from "../../../components/NewModal";
-import PdfViewer from "../sops/PdfViewer";
+import PdfViewer from "../sops/PdfViewerOld";
 import PdfViewer2 from "../sops/PdfViewer2";
 
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
@@ -113,7 +113,7 @@ const PolicyDetails = () => {
         <NewModal
           open={uploadProfileImage}
           onClose={() => setUploadProfileImage(false)}>
-          <div className="bg-white p-6 rounded-lg w-80">
+          <div className="bg-white p-4 rounded-lg w-80">
             <div className="flex justify-between pb-8 items-center">
               <div>
                 <h3 className="text-xl font-semibold mb-4">Upload SOP</h3>

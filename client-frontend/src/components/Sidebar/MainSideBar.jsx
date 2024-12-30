@@ -19,7 +19,7 @@ import {
 } from "react-icons/fa";
 import { GoPersonAdd } from "react-icons/go";
 import { TbReportSearch, TbSection } from "react-icons/tb";
-import { IoIosChatboxes } from "react-icons/io";
+import { IoIosChatboxes, IoMdNotifications } from "react-icons/io";
 import { SiAuthelia, SiMarketo } from "react-icons/si";
 import { CgProfile } from "react-icons/cg";
 import { Toolbar, Tooltip } from "@mui/material";
@@ -32,6 +32,7 @@ import {
   MdOutlineLocalCafe,
   MdOutlineManageAccounts,
   MdOutlinePayment,
+  MdOutlineSubdirectoryArrowRight,
   MdOutlineWifiTethering,
   MdPolicy,
 } from "react-icons/md";
@@ -57,23 +58,25 @@ import {
 import useAuth from "../../hooks/useAuth";
 import { GrDocumentUpdate } from "react-icons/gr";
 import { IoSettingsOutline } from "react-icons/io5";
-// import { useSidebar } from "./GlobalContext";
+import { useSidebar } from "../../contexts/SideBarContext";
 
 const MainSideBar = () => {
   const { auth: authUser } = useAuth();
+  const { isSidebarOpen, setIsSidebarOpen } = useSidebar();
   const navigate = useNavigate();
   const location = useLocation();
   const [user, setUser] = useState("");
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [sideBarOpen, setSidebarOpen] = useState(isSidebarOpen);
   const [departmentDrop, setDepartmentDrop] = useState(null);
   const [expandedDepartment, setExpandedDepartment] = useState(null);
   const [expandedModule, setExpandedModule] = useState(null);
 
-  const toggleSidebar = () => {
-    setIsSidebarOpen(!isSidebarOpen);
-    setExpandedDepartment(false);
-    // setExpandedModule(false);
-  };
+  // const toggleSidebar = () => {
+  //   setIsSidebarOpen(isSidebarOpen);
+  //   setExpandedDepartment(false);
+  // };
+
+  console.log("in sidebar comp : ", isSidebarOpen);
 
   // Menu items array (without DASHBOARD)
   const menuItems = [
@@ -86,6 +89,11 @@ const MainSideBar = () => {
     { name: "Calendar", icon: <FaRegCalendarAlt />, route: "/calendar" },
     { name: "Chat", icon: <HiOutlineChatAlt2 />, route: "/chat" },
     { name: "Access", icon: <SiAuthelia />, route: "/access" },
+    {
+      name: "Notifications",
+      icon: <IoMdNotifications />,
+      route: "/notifications",
+    },
     // { name: "Profile", icon: <CgProfile />, route: "/profile" },
   ];
 
@@ -191,7 +199,7 @@ const MainSideBar = () => {
           subMenus: [
             {
               title: "Employee wise Attendance",
-              route: "/hr/attendance/shift-time-usage",
+              route: "/hr/attandence/shift-time-usage",
             },
           ],
         },
@@ -203,11 +211,34 @@ const MainSideBar = () => {
             {
               title: "My Leaves",
               route: "/hr/leaves/my-leaves",
+              icon: <HiOutlineClipboardList />,
             },
             {
               title: "View Past Leaves",
               route: "/hr/leaves/past-leaves",
+              icon: <HiOutlineClipboardList />,
             },
+            {
+              title: "Subordinate Due Approvals",
+              route: "/hr/leaves/due-approvals",
+              icon: <HiOutlineClipboardList />,
+            },
+            {
+              title: "Manage Leaves",
+              route: "/hr/leaves/manage-leaves",
+              icon: <HiOutlineClipboardList />,
+            },
+
+            // ...(authUser.user.role === "Employee" &&
+            // authUser.user.department === "Finance"
+            //   ? []
+            //   : [
+            //       {
+            //         title: "Reports",
+            //         route: "/hr/leaves/leave-reports",
+            //         icon: <HiOutlineClipboardList />,
+            //       },
+            //     ]),
           ],
         },
         {
@@ -386,7 +417,12 @@ const MainSideBar = () => {
           className="cursor-pointer py-3 pl-4 hover:wono-blue-dark  hover:rounded-md hover:text-white border-b-2 border-gray-200 motion-preset-slide-down-sm"
           onClick={() => navigate(subMenu.route)}
         >
-          {subMenu.title}
+          <div className="flex items-center gap-3">
+            <div>
+              <MdOutlineSubdirectoryArrowRight />
+            </div>
+            {isSidebarOpen ? <div>{subMenu.title}</div> : ""}
+          </div>
         </li>
       ))}
     </ul>
@@ -395,136 +431,163 @@ const MainSideBar = () => {
   console.log(departmentDrop);
 
   return (
-    <div
-      className={` ${
-        isSidebarOpen ? "w-60" : "w-20"
-      } bg-white  border-gray-300 text-black flex flex-shrink-0 h-[90vh] overflow-y-auto transition-all duration-300 z-[1]`}
-    >
-      <div className="flex relative w-full">
-        {/*Dashboard */}
-        <div className="mt-5 px-3 flex flex-col gap-2 w-full">
-          <Tooltip title={"Dashboard"} placement="right">
-            <div
-              onClick={() => {
-                navigate("/dashboard");
-              }}
-              className={`flex border-b-[1px] ${
-                isSidebarOpen ? "pl-[1rem]" : "justify-center"
-              } items-center cursor-pointer  py-3 hover:wono-blue-dark hover:text-white hover:rounded-md ${
-                location.pathname === "/dashboard"
-                  ? "wono-blue border-r-4 border-[#0DB4EA] rounded-tl-md rounded-bl-md text-[#0DB4EA]"
-                  : "bg-white"
-              }`}
-            >
-              <div className="flex justify-center w-6 text-2xl">
-                <RiDashboardLine />
+    <div className={`flex flex-col h-[87vh] bg-gray p-2`}>
+      <div
+        // onMouseEnter={() => setIsSidebarOpen(true)}
+        // onMouseLeave={() => setIsSidebarOpen(false)}
+        className={`${
+          isSidebarOpen ? "w-60 rounded-md" : "w-20 rounded-lg"
+        } bg-white border-2  text-black flex flex-shrink-0 h-[87vh] overflow-y-auto transition-all duration-300 z-[1]`}
+      >
+        <div className="flex relative w-full">
+          {/*Dashboard */}
+          <div className="p-3 flex flex-col gap-2 w-full">
+            <Tooltip title={"Dashboard"} placement="right">
+              <div
+                onClick={() => {
+                  navigate("/dashboard");
+                }}
+                className={`flex border-b-[1px] ${
+                  isSidebarOpen ? "pl-[1rem]" : "justify-center"
+                } items-center cursor-pointer  py-3 hover:wono-blue-dark hover:text-white hover:rounded-md ${
+                  location.pathname === "/dashboard"
+                    ? "wono-blue border-r-4 border-[#0DB4EA] rounded-tl-md rounded-bl-md text-[#0DB4EA]"
+                    : "bg-white"
+                }`}
+              >
+                <div className="flex justify-center w-6 text-2xl">
+                  <RiDashboardLine />
+                </div>
+                {isSidebarOpen && <span className="pl-5">Dashboard</span>}
               </div>
-              {isSidebarOpen && <span className="pl-5">Dashboard</span>}
-            </div>
-          </Tooltip>
+            </Tooltip>
 
-          {/* Department dropdown */}
-          <ul>
-            {filteredDepartments.length > 1 ? (
-              <>
-                <Tooltip title="Department" placement="right">
-                  <div
-                    className="py-3 px-4 flex justify-between items-center"
-                    onClick={() => {
-                      setDepartmentDrop(!departmentDrop);
-                      setIsSidebarOpen(true)
-                    }}
-                  >
-                    <div className="flex gap-6 items-center">
-                      <div className="text-xl">
-                        <TbSection />
+            {/* Department dropdown */}
+            <ul>
+              {filteredDepartments.length > 1 ? (
+                <>
+                  <Tooltip title="Department" placement="right">
+                    <div
+                      className={`py-3 px-4 flex justify-between items-center hover:wono-blue-dark hover:text-white cursor-pointer rounded-md`}
+                      onClick={() => {
+                        setDepartmentDrop(!departmentDrop);
+                        setIsSidebarOpen(true);
+                      }}
+                    >
+                      <div className="flex gap-6 items-center">
+                        <div className="text-xl">
+                          <TbSection />
+                        </div>
+                        {isSidebarOpen && <span>Departments</span>}
                       </div>
-                      {isSidebarOpen && <span>Departments</span>}
+                      <>{departmentDrop ? <FaChevronUp /> : <FaAngleDown />}</>
                     </div>
-                    <>{departmentDrop ? <FaChevronUp /> : <FaAngleDown />}</>
-                  </div>
-                </Tooltip>
-                {departmentDrop ? (
-                  <div className="motion-preset-slide-down-sm">
-                    {filteredDepartments.map((dept, index) => (
-                      <li key={index} className="border-b">
-                        <Tooltip title={dept.name} placement="right">
-                          <div
-                            className={`cursor-pointer flex items-center py-3 px-4  hover:wono-blue-dark hover:text-white hover:rounded-md  ${
-                              isActive(dept.route)
-                                ? "wono-blue border-r-4 border-[#0DB4EA] rounded-tl-md rounded-bl-md text-[#0DB4EA]"
-                                : "bg-white border-b-[1px] border-gray-200"
-                            }`}
-                            onClick={() => {
-                              setIsSidebarOpen(true);
-                              dept.modules && toggleDepartment(index);
-                              navigate(dept.route);
-                            }}
-                          >
-                            <div className="flex w-full justify-between items-center">
-                              <div className="flex">
-                                <div className="text-xl">{dept.icon}</div>
-                                <div>
-                                  {isSidebarOpen && (
-                                    <span className="pl-4">{dept.name}</span>
-                                  )}
-                                </div>
-                              </div>
-                              <div>
-                                {isSidebarOpen && dept.modules && (
-                                  <span className="ml-auto transition-all">
-                                    {expandedDepartment === index ? (
-                                      <FaChevronUp />
-                                    ) : (
-                                      <FaAngleDown />
+                  </Tooltip>
+                  {departmentDrop ? (
+                    <div className="">
+                      {filteredDepartments.map((dept, index) => (
+                        <li
+                          key={index}
+                          className="border-b motion-preset-slide-down-sm"
+                        >
+                          <Tooltip title={dept.name} placement="right">
+                            <div
+                              className={`cursor-pointer flex items-center py-3 px-4  hover:wono-blue-dark hover:text-white hover:rounded-md  ${
+                                isActive(dept.route)
+                                  ? "wono-blue border-r-4 border-[#0DB4EA] rounded-tl-md rounded-bl-md text-[#0DB4EA]"
+                                  : "bg-white border-b-[1px] border-gray-200"
+                              }`}
+                              onClick={() => {
+                                setIsSidebarOpen(true);
+
+                                navigate(dept.route);
+                              }}
+                            >
+                              <div className="flex w-full justify-between items-center">
+                                <div className="flex">
+                                  <div className="text-xl">{dept.icon}</div>
+                                  <div>
+                                    {isSidebarOpen && (
+                                      <span className="pl-4">{dept.name}</span>
                                     )}
-                                  </span>
-                                )}
-                              </div>
-                            </div>
-                          </div>
-                        </Tooltip>
-                        {expandedDepartment === index && dept.modules && (
-                          <ul className="pl-1">
-                            {dept.modules.map((module, idx) => (
-                              <li
-                                key={idx}
-                                className="pt-0 motion-preset-slide-down-lg"
-                              >
-                                <div
-                                  className={`cursor-pointer  flex pl-5 pr-2 py-3 justify-between hover:wono-blue-dark hover:text-white hover:rounded-md ${
-                                    isActive(module.route)
-                                      ? "wono-blue border-r-4 border-[#0DB4EA] rounded-tl-md rounded-bl-md text-[#0DB4EA]"
-                                      : "bg-white border-b-[1px] border-gray-200"
-                                  } `}
-                                  onClick={() => {
-                                    module.subMenus && toggleModule(idx);
-                                    navigate(module.route);
-                                  }}
-                                >
-                                  <div className="flex items-center gap-4">
-                                    <span>{module.icon}</span>
-                                    <span>{module.title}</span>
                                   </div>
-                                  {module.subMenus && (
-                                    <span>
-                                      {expandedModule === idx ? "-" : "+"}
+                                </div>
+                                <div>
+                                  {isSidebarOpen && dept.modules && (
+                                    <span
+                                      onClick={() => {
+                                        dept.modules && toggleDepartment(index);
+                                      }}
+                                      className="ml-auto transition-all"
+                                    >
+                                      {expandedDepartment === index ? (
+                                        <FaChevronUp />
+                                      ) : (
+                                        <FaAngleDown />
+                                      )}
                                     </span>
                                   )}
                                 </div>
-                                {expandedModule === idx &&
-                                  module.subMenus &&
-                                  renderSubMenus(module.subMenus)}
-                              </li>
-                            ))}
-                          </ul>
-                        )}
-                      </li>
-                    ))}
-                  </div>
-                ) : (
-                  <>
-                    {/* {filteredDepartments.map((dept, index) => (
+                              </div>
+                            </div>
+                          </Tooltip>
+                          {expandedDepartment === index && dept.modules && (
+                            <ul className="pl-1">
+                              {dept.modules.map((module, idx) => (
+                                <li
+                                  key={idx}
+                                  className="pt-0 motion-preset-slide-down-lg"
+                                >
+                                  <Tooltip
+                                    title={module.title}
+                                    placement="right"
+                                  >
+                                    <div
+                                      className={`cursor-pointer  flex pl-5 pr-2 py-3 justify-between hover:wono-blue-dark hover:text-white hover:rounded-md ${
+                                        isActive(module.route)
+                                          ? "wono-blue border-r-4 border-[#0DB4EA] rounded-tl-md rounded-bl-md text-[#0DB4EA]"
+                                          : "bg-white border-b-[1px] border-gray-200"
+                                      } `}
+                                      onClick={() => {
+                                        module.subMenus && toggleModule(idx);
+                                        navigate(module.route);
+                                        setIsSidebarOpen(true);
+                                      }}
+                                    >
+                                      <div className="flex w-full items-center justify-between">
+                                        <div className="flex items-center gap-4">
+                                          <span>{module.icon}</span>
+                                          {isSidebarOpen ? (
+                                            <span>{module.title}</span>
+                                          ) : (
+                                            ""
+                                          )}
+                                        </div>
+                                        {module.subMenus && isSidebarOpen && (
+                                          <span>
+                                            {expandedModule === idx ? (
+                                              <FaChevronUp />
+                                            ) : (
+                                              <FaAngleDown />
+                                            )}
+                                          </span>
+                                        )}
+                                      </div>
+                                    </div>
+                                  </Tooltip>
+                                  {expandedModule === idx &&
+                                    module.subMenus &&
+                                    renderSubMenus(module.subMenus)}
+                                </li>
+                              ))}
+                            </ul>
+                          )}
+                        </li>
+                      ))}
+                    </div>
+                  ) : (
+                    <>
+                      {/* {filteredDepartments.map((dept, index) => (
                   <li key={index} className="border-b">
                     <div
                       className={`cursor-pointer flex items-center py-3 px-4  hover:wono-blue-dark hover:text-white hover:rounded-md  ${
@@ -595,113 +658,141 @@ const MainSideBar = () => {
                     )}
                   </li>
                 ))} */}
-                  </>
-                )}
-              </>
-            ) : (
-              <>
-                {filteredDepartments.map((dept, index) => (
-                  <li key={index} className="border-b">
+                    </>
+                  )}
+                </>
+              ) : (
+                <>
+                  {filteredDepartments.map((dept, index) => (
+                    <li key={index} className="border-b">
+                      <div
+                        className={`cursor-pointer flex items-center py-3 px-4  hover:wono-blue-dark hover:text-white hover:rounded-md  ${
+                          isActive(dept.route)
+                            ? "wono-blue border-r-4 border-[#0DB4EA] rounded-tl-md rounded-bl-md text-[#0DB4EA]"
+                            : "bg-white border-b-[1px] border-gray-200"
+                        }`}
+                        onClick={() => {
+                          setSidebarOpen(true);
+                          dept.modules && toggleDepartment(index);
+                          navigate(dept.route);
+                        }}
+                      >
+                        <div className="flex w-full justify-between items-center">
+                          <div className="flex">
+                            <div className="text-xl">{dept.icon}</div>
+                            <div>
+                              {isSidebarOpen && (
+                                <span className="pl-4">{dept.name}</span>
+                              )}
+                            </div>
+                          </div>
+                          <div>
+                            {isSidebarOpen && dept.modules && (
+                              <span className="ml-auto transition-all">
+                                {expandedDepartment === index ? (
+                                  <FaChevronUp />
+                                ) : (
+                                  <FaAngleDown />
+                                )}
+                              </span>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                      {expandedDepartment === index && dept.modules && (
+                        <ul className="pl-1">
+                          {dept.modules.map((module, idx) => (
+                            <li
+                              key={idx}
+                              className="pt-0 motion-preset-slide-down-md"
+                            >
+                              <Tooltip title={module.title} placement="right">
+                                <div
+                                  className={`items-center flex pl-5 pr-2 py-3 justify-between hover:wono-blue-dark hover:text-white hover:rounded-md ${
+                                    isActive(module.route)
+                                      ? "wono-blue border-r-4 border-[#0DB4EA] rounded-tl-md rounded-bl-md text-[#0DB4EA]"
+                                      : "bg-white border-b-[1px] border-gray-200"
+                                  } `}
+                                  onClick={() => {
+                                    module.subMenus && toggleModule(idx);
+                                    navigate(module.route);
+                                    setIsSidebarOpen(true);
+                                  }}
+                                >
+                                  <div className="flex items-center gap-4">
+                                    <span>{module.icon}</span>
+                                    <span>{module.name}</span>
+                                  </div>
+                                  {module.subMenus && (
+                                    <span>
+                                      {expandedModule === idx ? (
+                                        <FaChevronUp />
+                                      ) : (
+                                        <FaAngleDown />
+                                      )}
+                                    </span>
+                                  )}
+                                </div>
+                              </Tooltip>
+                              {expandedModule === idx &&
+                                module.subMenus &&
+                                renderSubMenus(module.subMenus)}
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+                    </li>
+                  ))}
+                </>
+              )}
+            </ul>
+
+            {menuItems.map((item, index) => (
+              <Tooltip title={item.name} placement="right">
+                <div
+                  key={index}
+                  onClick={() => handleMenuOpen(item)}
+                  className={`cursor-pointer flex ${
+                    isSidebarOpen
+                      ? "pl-[1rem] hover:wono-blue-dark hover:rounded-md hover:text-white"
+                      : "justify-center"
+                  } items-center border-b-[1px] py-3 ${
+                    location.pathname === item.route
+                      ? "wono-blue border-r-4 border-b-[0px]  border-[#0DB4EA] rounded-tl-md rounded-bl-md text-[#0DB4EA]"
+                      : "bg-white"
+                  } `}
+                >
+                  {/* <img src={item.icon} alt={item.name} className="w-6 h-6 mr-3" /> */}
+                  <div className="flex justify-center w-6 text-[1.3rem]">
+                    {item.icon}
+                  </div>
+                  {isSidebarOpen && <span className="pl-5">{item.name}</span>}
+                </div>
+              </Tooltip>
+            ))}
+
+            <div>
+              {defaultModules.map((module, index) => (
+                <Tooltip title={module.title} placement="right">
+                  <div key={index} className="border-b">
                     <div
-                      className={`cursor-pointer flex items-center py-3 px-4  hover:wono-blue-dark hover:text-white hover:rounded-md  ${
-                        isActive(dept.route)
+                      className={`cursor-pointer flex items-center py-3 px-4 hover:wono-blue-dark hover:text-white hover:rounded-md ${
+                        isActive(module.route)
                           ? "wono-blue border-r-4 border-[#0DB4EA] rounded-tl-md rounded-bl-md text-[#0DB4EA]"
                           : "bg-white border-b-[1px] border-gray-200"
                       }`}
                       onClick={() => {
-                        setIsSidebarOpen(true);
-                        dept.modules && toggleDepartment(index);
-                        navigate(dept.route);
+                        module.submenus && toggleModule(index);
+                        navigate(module.route);
                       }}
                     >
-                      <div className="flex w-full justify-between items-center">
-                        <div className="flex">
-                          <div className="text-xl">{dept.icon}</div>
-                          <div>
-                            {isSidebarOpen && (
-                              <span className="pl-4">{dept.name}</span>
-                            )}
-                          </div>
-                        </div>
-                        <div>
-                          {isSidebarOpen && dept.modules && (
-                            <span className="ml-auto transition-all">
-                              {expandedDepartment === index ? (
-                                <FaChevronUp />
-                              ) : (
-                                <FaAngleDown />
-                              )}
-                            </span>
-                          )}
-                        </div>
-                      </div>
-                    </div>
-                    {expandedDepartment === index && dept.modules && (
-                      <ul className="pl-1">
-                        {dept.modules.map((module, idx) => (
-                          <li
-                            key={idx}
-                            className="pt-0 motion-preset-slide-down-lg"
-                          >
-                            <div
-                              className={`cursor-pointer  flex pl-5 pr-2 py-3 justify-between hover:wono-blue-dark hover:text-white hover:rounded-md ${
-                                isActive(module.route)
-                                  ? "wono-blue border-r-4 border-[#0DB4EA] rounded-tl-md rounded-bl-md text-[#0DB4EA]"
-                                  : "bg-white border-b-[1px] border-gray-200"
-                              } `}
-                              onClick={() => {
-                                module.subMenus && toggleModule(idx);
-                                navigate(module.route);
-                              }}
-                            >
-                              <div className="flex items-center gap-4">
-                                <span>{module.icon}</span>
-                                <span>{module.title}</span>
-                              </div>
-                              {module.subMenus && (
-                                <span>
-                                  {expandedModule === idx ? "-" : "+"}
-                                </span>
-                              )}
-                            </div>
-                            {expandedModule === idx &&
-                              module.subMenus &&
-                              renderSubMenus(module.subMenus)}
-                          </li>
-                        ))}
-                      </ul>
-                    )}
-                  </li>
-                ))}
-              </>
-            )}
-            {/* {filteredDepartments.map((dept, index) => (
-              <li key={index} className="border-b">
-                <div
-                  className={`cursor-pointer flex items-center py-3 px-4  hover:wono-blue-dark hover:text-white hover:rounded-md  ${
-                    isActive(dept.route)
-                      ? "wono-blue border-r-4 border-[#0DB4EA] rounded-tl-md rounded-bl-md text-[#0DB4EA]"
-                      : "bg-white border-b-[1px] border-gray-200"
-                  }`}
-                  onClick={() => {
-                    setIsSidebarOpen(true);
-                    dept.modules && toggleDepartment(index);
-                    navigate(dept.route);
-                  }}
-                >
-                  <div className="flex w-full justify-between items-center">
-                    <div className="flex">
-                      <div className="text-xl">{dept.icon}</div>
-                      <div>
-                        {isSidebarOpen && (
-                          <span className="pl-4">{dept.name}</span>
-                        )}
-                      </div>
-                    </div>
-                    <div>
-                      {isSidebarOpen && dept.modules && (
-                        <span className="ml-auto transition-all">
-                          {expandedDepartment === index ? (
+                      <div className="text-2xl">{module.icon}</div>
+                      {isSidebarOpen && (
+                        <span className="pl-4">{module.title}</span>
+                      )}
+                      {isSidebarOpen && module.submenus && (
+                        <span className="ml-auto">
+                          {expandedModule === index ? (
                             <FaChevronUp />
                           ) : (
                             <FaAngleDown />
@@ -709,170 +800,83 @@ const MainSideBar = () => {
                         </span>
                       )}
                     </div>
-                  </div>
-                </div>
-                {expandedDepartment === index && dept.modules && (
-                  <ul className="pl-1">
-                    {dept.modules.map((module, idx) => (
-                      <li
-                        key={idx}
-                        className="pt-0 motion-preset-slide-down-lg"
-                      >
-                        <div
-                          className={`cursor-pointer  flex pl-5 pr-2 py-3 justify-between hover:wono-blue-dark hover:text-white hover:rounded-md ${
-                            isActive(module.route)
-                              ? "wono-blue border-r-4 border-[#0DB4EA] rounded-tl-md rounded-bl-md text-[#0DB4EA]"
-                              : "bg-white border-b-[1px] border-gray-200"
-                          } `}
-                          onClick={() => {
-                            module.subMenus && toggleModule(idx);
-                            navigate(module.route);
-                          }}
-                        >
-                          <div className="flex items-center gap-4">
-                            <span>{module.icon}</span>
-                            <span>{module.title}</span>
-                          </div>
-                          {module.subMenus && (
-                            <span>{expandedModule === idx ? "-" : "+"}</span>
-                          )}
-                        </div>
-                        {expandedModule === idx &&
-                          module.subMenus &&
-                          renderSubMenus(module.subMenus)}
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </li>
-            ))} */}
-          </ul>
-
-          {menuItems.map((item, index) => (
-            <Tooltip title={item.name} placement="right">
-              <div
-                key={index}
-                onClick={() => handleMenuOpen(item)}
-                className={`cursor-pointer flex ${
-                  isSidebarOpen
-                    ? "pl-[1rem] hover:wono-blue-dark hover:rounded-md hover:text-white"
-                    : "justify-center"
-                } items-center border-b-[1px] py-3 ${
-                  location.pathname === item.route
-                    ? "wono-blue border-r-4 border-b-[0px]  border-[#0DB4EA] rounded-tl-md rounded-bl-md text-[#0DB4EA]"
-                    : "bg-white"
-                } `}
-              >
-                {/* <img src={item.icon} alt={item.name} className="w-6 h-6 mr-3" /> */}
-                <div className="flex justify-center w-6 text-[1.3rem]">
-                  {item.icon}
-                </div>
-                {isSidebarOpen && <span className="pl-5">{item.name}</span>}
-              </div>
-            </Tooltip>
-          ))}
-
-          <div>
-            {defaultModules.map((module, index) => (
-              <Tooltip title={module.title} placement="right">
-                <div key={index} className="border-b">
-                  <div
-                    className={`cursor-pointer flex items-center py-3 px-4 hover:wono-blue-dark hover:text-white hover:rounded-md ${
-                      isActive(module.route)
-                        ? "wono-blue border-r-4 border-[#0DB4EA] rounded-tl-md rounded-bl-md text-[#0DB4EA]"
-                        : "bg-white border-b-[1px] border-gray-200"
-                    }`}
-                    onClick={() => {
-                      module.submenus && toggleModule(index);
-                      navigate(module.route);
-                    }}
-                  >
-                    <div className="text-2xl">{module.icon}</div>
-                    {isSidebarOpen && (
-                      <span className="pl-4">{module.title}</span>
-                    )}
-                    {isSidebarOpen && module.submenus && (
-                      <span className="ml-auto">
-                        {expandedModule === index ? "-" : "+"}
-                      </span>
-                    )}
-                  </div>
-                  {expandedModule === index && module.submenus && (
-                    <div className="pl-4">
-                      {module.submenus.map((submenu, idx) => (
-                        <Tooltip title={submenu.title} placement="right">
-                          <div
-                            key={idx}
-                            className={`cursor-pointer py-3 hover:wono-blue-dark hover:text-white hover:rounded-md ${
-                              isActive(submenu.route)
-                                ? "wono-blue border-r-4 border-[#0DB4EA] rounded-tl-md rounded-bl-md text-[#0DB4EA]"
-                                : "bg-white border-b-[1px] border-gray-200"
-                            } `}
-                            onClick={() => navigate(submenu.route)}
-                          >
+                    {expandedModule === index && module.submenus && (
+                      <div className="pl-4">
+                        {module.submenus.map((submenu, idx) => (
+                          <Tooltip title={submenu.title} placement="right">
                             <div
-                              className={`flex ${
-                                isSidebarOpen
-                                  ? "justify-start pl-2"
-                                  : "justify-center"
-                              }`}
+                              key={idx}
+                              className={`cursor-pointer py-3 hover:wono-blue-dark hover:text-white hover:rounded-md ${
+                                isActive(submenu.route)
+                                  ? "wono-blue border-r-4 border-[#0DB4EA] rounded-tl-md rounded-bl-md text-[#0DB4EA]"
+                                  : "bg-white border-b-[1px] border-gray-200"
+                              } `}
+                              onClick={() => navigate(submenu.route)}
                             >
                               <div
-                                className={`${
-                                  isSidebarOpen ? "text-md" : "text-xl"
+                                className={`flex ${
+                                  isSidebarOpen
+                                    ? "justify-start pl-2"
+                                    : "justify-center"
                                 }`}
                               >
-                                {submenu.icon}
+                                <div
+                                  className={`${
+                                    isSidebarOpen ? "text-md" : "text-xl"
+                                  }`}
+                                >
+                                  {submenu.icon}
+                                </div>
+                                {isSidebarOpen && (
+                                  <span className="pl-4">{submenu.title}</span>
+                                )}
                               </div>
-                              {isSidebarOpen && (
-                                <span className="pl-4">{submenu.title}</span>
-                              )}
                             </div>
-                          </div>
-                        </Tooltip>
-                      ))}
-                    </div>
-                  )}
+                          </Tooltip>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                </Tooltip>
+              ))}
+            </div>
+
+            <Tooltip title={"Profile"} placement="right">
+              <div
+                onClick={() => {
+                  navigate("/profile");
+                }}
+                className={`flex border-b-[1px] ${
+                  isSidebarOpen ? "pl-[1rem]" : "justify-center"
+                } items-center cursor-pointer  py-3 hover:wono-blue-dark hover:text-white hover:rounded-md ${
+                  location.pathname === "/profile"
+                    ? "wono-blue border-r-4 border-[#0DB4EA] rounded-tl-md rounded-bl-md text-[#0DB4EA]"
+                    : "bg-white"
+                }`}
+              >
+                <div className="flex justify-center w-6 text-2xl">
+                  <CgProfile />
                 </div>
-              </Tooltip>
-            ))}
+                {isSidebarOpen && <span className="pl-5">Profile</span>}
+              </div>
+            </Tooltip>
           </div>
 
-          <Tooltip title={"Profile"} placement="right">
-            <div
-              onClick={() => {
-                navigate("/profile");
-              }}
-              className={`flex border-b-[1px] ${
-                isSidebarOpen ? "pl-[1rem]" : "justify-center"
-              } items-center cursor-pointer  py-3 hover:wono-blue-dark hover:text-white hover:rounded-md ${
-                location.pathname === "/profile"
-                  ? "wono-blue border-r-4 border-[#0DB4EA] rounded-tl-md rounded-bl-md text-[#0DB4EA]"
-                  : "bg-white"
-              }`}
-            >
-              <div className="flex justify-center w-6 text-2xl">
-                <CgProfile />
-              </div>
-              {isSidebarOpen && <span className="pl-5">Profile</span>}
-            </div>
-          </Tooltip>
-        </div>
-
-        <div
-          onClick={toggleSidebar}
-          className={`flex ${
-            isSidebarOpen ? "justify-end" : "justify-center "
-          } items-center  bg-white text-black cursor-pointer fixed top-[6.8rem] ${
-            isSidebarOpen ? "left-[14.3rem]" : "left-[4rem]"
-          } transition-all duration-300 rounded-md`}
-        >
-          <button
+          {/* <div
             onClick={toggleSidebar}
-            className="text-black text-[0.8rem] p-2 focus:outline-none text-end"
+            className={`flex ${
+              isSidebarOpen ? "justify-end" : "justify-center "
+            } items-center  bg-white text-black cursor-pointer fixed top-[6.8rem] ${
+              isSidebarOpen ? "left-[14.3rem]" : "left-[4rem]"
+            } transition-all duration-300 rounded-md`}
           >
-            {isSidebarOpen ? <FaArrowLeft /> : <FaArrowRightToBracket />}
-          </button>
+            <button
+              onClick={toggleSidebar}
+              className="text-black text-[0.8rem] p-2 focus:outline-none text-end"
+            >
+              {isSidebarOpen ? <FaArrowLeft /> : <FaArrowRightToBracket />}
+            </button>
+          </div> */}
         </div>
       </div>
     </div>

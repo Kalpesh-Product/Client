@@ -155,7 +155,7 @@ const Teams = () => {
   return (
     <div className='flex min-h-screen'>
        
-        <div className='w-full p-6 motion-preset-blur-right-md  max-w-screen-xl mx-auto '>
+        <div className='w-full p-4 motion-preset-blur-right-md '>
        
         <h2 className="text-2xl mb-4">Team Members</h2>
 

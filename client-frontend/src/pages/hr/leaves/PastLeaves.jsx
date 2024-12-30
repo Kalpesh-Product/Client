@@ -19,10 +19,15 @@ import { motion } from "framer-motion";
 import { IoMdClose } from "react-icons/io";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import useAuth from "../../../hooks/useAuth";
+import axios from "axios";
 
 const PastLeaves = () => {
+  const { auth: authUser } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
+
+  const [myLeaves, setMyLeaves] = useState([]);
 
   const [highlightFirstRow, setHighlightFirstRow] = React.useState(false);
   const [highlightEditedRow, setHighlightEditedRow] = React.useState(false);
@@ -34,6 +39,35 @@ const PastLeaves = () => {
     const storedUser = JSON.parse(localStorage.getItem("user"));
     setUser(storedUser);
   }, []);
+
+  const takenByFilter = authUser.user.name; // Replace with the desired name or variable
+  // function that fetches our tickets
+  const fetchmyLeaves = async () => {
+    // Fetch the tickets
+    const responseFromBackend = await axios.get("/api/leaves/view-all-leaves"); // the function is not running yet. we want the function to run as soon as the app starts up, so we do that in a useEffect (react hook).
+
+    const allLeaves = responseFromBackend.data.leaves;
+
+    // Filter tickets where 'takenBy' matches
+    const filteredLeaves = allLeaves.filter(
+      (leave) => leave.takenBy === takenByFilter && leave.status !== "Pending"
+    );
+
+    // Set it on state (update the value of tickets)
+    // setMyTickets(responseFromBackend.data.tickets); // setTickets will update the value of tickets from null to the current array of tickets
+    // Update state with filtered tickets
+    setMyLeaves(filteredLeaves);
+    // console.log(responseFromBackend);
+    // console.log(responseFromBackend.data.tickets);
+  };
+
+  // useeffect for displaying the tickets array after fetching from backend response
+  useEffect(() => {
+    // anything you put in here will run when the app starts
+    fetchmyLeaves();
+    console.log(myLeaves);
+    // this will run the fetchTickets function & fetch the tickets array from backend as our response (in network tab from developer tools)
+  }, []); // we leave the array empty since we need it to run only once when the app starts up.
 
   const columns = [
     // { field: "id", headerName: "ID", width: 100 },
@@ -447,7 +481,7 @@ const PastLeaves = () => {
   };
 
   return (
-    <div className="w-[72vw] md:w-full transition-all duration-200 ease-in-out bg-white p-2 rounded-md">
+    <div className="w-[72vw] md:w-full transition-all duration-200 ease-in-out bg-white p-0 rounded-md">
       {/* <div className="bg-green-500">
         <h2>Today's Tickets</h2>
       </div> */}
@@ -509,7 +543,8 @@ const PastLeaves = () => {
       /> */}
 
       <AgTable
-        data={rows} // Use the state here
+        // data={rows} // Use the state here
+        data={myLeaves} // Use the state here
         columns={columns}
         highlightFirstRow={highlightFirstRow} // Bind the state here
         highlightEditedRow={highlightEditedRow} // Bind the state here
@@ -544,7 +579,7 @@ const PastLeaves = () => {
                       {/* Modal Header */}
                       {/* <div className="sticky top-0 bg-white pt-6 z-20 flex justify-between">
                         <div>
-                          <h2 className="text-3xl font-bold mb-4 uppercase">
+                          <h2 className="text-2xl font-bold mb-4 uppercase">
                             Raise Ticket
                           </h2>
                         </div>
@@ -576,7 +611,7 @@ const PastLeaves = () => {
                                 bgcolor: "background.paper",
                                 borderRadius: 2,
                               }}
-                              // className="bg-white p-6 rounded-lg shadow-md mx-auto">
+                              // className="bg-white p-4 rounded-lg shadow-md mx-auto">
                               className="bg-white py-6 rounded-lg">
                               {/* Personal Information */}
                               {/* <h2 className="text-lg font-semibold mb-4">Add Ticket</h2> */}
@@ -750,7 +785,7 @@ const PastLeaves = () => {
           {/* DetailsModal Header */}
           <div className="sticky top-0 bg-white py-6 z-20 flex justify-between">
             <div>
-              <h2 className="text-3xl font-bold mb-4 uppercase">
+              <h2 className="text-2xl font-bold mb-4 uppercase">
                 Ticket Details
               </h2>
             </div>
@@ -857,7 +892,7 @@ const PastLeaves = () => {
             {/* EditTicket Header */}
             <div className="sticky top-0 bg-white py-6 z-20 flex justify-between">
               <div>
-                <h2 className="text-3xl font-bold mb-4 uppercase">
+                <h2 className="text-2xl font-bold mb-4 uppercase">
                   Edit Ticket
                 </h2>
               </div>
@@ -889,8 +924,8 @@ const PastLeaves = () => {
                       bgcolor: "background.paper",
                       borderRadius: 2,
                     }}
-                    // className="bg-white p-6 rounded-lg shadow-md mx-auto">
-                    className="bg-white p-6 rounded-lg mx-auto">
+                    // className="bg-white p-4 rounded-lg shadow-md mx-auto">
+                    className="bg-white p-4 rounded-lg mx-auto">
                     {/* Personal Information */}
                     {/* <h2 className="text-lg font-semibold mb-4">Add Ticket</h2> */}
                     <div className="grid grid-cols-1 gap-4">
@@ -994,7 +1029,7 @@ const PastLeaves = () => {
             {/* DeleteTicket Header */}
             <div className="sticky top-0 bg-white py-6 z-20 flex justify-between">
               <div>
-                <h2 className="text-3xl font-bold mb-4 uppercase">
+                <h2 className="text-2xl font-bold mb-4 uppercase">
                   Delete Ticket
                 </h2>
               </div>
@@ -1031,8 +1066,8 @@ const PastLeaves = () => {
                       bgcolor: "background.paper",
                       borderRadius: 2,
                     }}
-                    // className="bg-white p-6 rounded-lg shadow-md mx-auto">
-                    className="bg-white p-6 rounded-lg mx-auto">
+                    // className="bg-white p-4 rounded-lg shadow-md mx-auto">
+                    className="bg-white p-4 rounded-lg mx-auto">
                     {/* Personal Information */}
                     {/* <h2 className="text-lg font-semibold mb-4">Add Ticket</h2> */}
                     <div className="grid grid-cols-1 gap-4">

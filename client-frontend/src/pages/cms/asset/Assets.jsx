@@ -103,15 +103,15 @@ const Assets = () => {
   ];
 
   return (
-    <div className="flex min-h-screen bg-slate-50 flex-1 w-full">
+    <div className="flex min-h-screen bg-white flex-1 w-full">
       <div>
         
       </div>
       <div className="w-full h-screen overflow-auto">
         {location.pathname === "/assets" ? (
-          <div className="p-4 pt-0 w-full">
-            <div className="bg-gray-100 p-4 rounded-lg  mt-4 flex flex-col gap-4">
-              <div className="bg-white rounded-md p-2">
+          <div className="w-full">
+            <div className=" p-4 rounded-lg flex flex-col gap-4">
+              <div className="bg-white rounded-md">
                 {customerServiceWidgets
                   .filter((section) => section.subModule === "asset")
                   .map((section, index) => (

@@ -105,8 +105,8 @@ const Reports = () => {
     <div className="flex min-h-screen">
       
       {/* <ModuleSidebar /> */}
-      <div className="w-full p-6 motion-preset-blur-right-md">
-        <h2 className="text-3xl font-bold">Reports</h2>
+      <div className="w-full p-4 motion-preset-blur-right-md">
+        <h2 className="text-2xl font-bold">Reports</h2>
 
         <h2 className="text-2xl py-6">My Reports</h2>
 

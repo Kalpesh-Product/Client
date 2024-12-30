@@ -95,7 +95,7 @@ const Events = () => {
 
   return (
     <>
-      <div className="w-[72vw] md:w-full transition-all duration-200 ease-in-out bg-white p-2 rounded-md">
+      <div className="w-[72vw] md:w-full transition-all duration-200 ease-in-out bg-white p-0 rounded-md">
         <div className="flex gap-4 mb-4 justify-between">
           <div></div>
           <div className="flex">

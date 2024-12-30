@@ -17,7 +17,7 @@ const BasicGroupedBarGraph = ({
   graphWidth,
   graphHeight,
   yAxisFormat = "number",
-  title
+  title,
 }) => {
   // Prepare data for Chart.js
   const chartData = {
@@ -101,12 +101,18 @@ const BasicGroupedBarGraph = ({
   };
 
   return (
-    <div className="p-4 pb-8" style={{ width: graphWidth, height: graphHeight }}>
-      <div>
-        <h1 className="font-semibold text-2xl">{title}</h1>
+    <>
+      <div className="gray-underline p-2">
+        <h1 className="text-xl">{title}</h1>
       </div>
-      <Bar data={chartData} options={options} />
-    </div>
+      <div
+        className="p-4 pb-8"
+        style={{ width: graphWidth, height: graphHeight }}
+      >
+        <div></div>
+        <Bar data={chartData} options={options} />
+      </div>
+    </>
   );
 };
 

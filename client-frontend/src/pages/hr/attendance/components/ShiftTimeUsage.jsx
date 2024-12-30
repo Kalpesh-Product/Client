@@ -34,7 +34,7 @@ const ShiftTimeUsage = () => {
     mockData[timeFilter];
 
   return (
-    <div className="p-4 flex flex-col gap-2">
+    <div className="p-6 flex flex-col gap-2">
       {/* Dropdown Filter */}
       <FormControl size="small" className="w-56 mb-4 bg-white self-end">
         <Select

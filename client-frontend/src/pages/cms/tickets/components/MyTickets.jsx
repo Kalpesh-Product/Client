@@ -109,6 +109,8 @@ const MyTickets = () => {
     raisedBy: authUser.user.name,
     selectedDepartment: "",
     description: "",
+    ticketPriority: "",
+    status: "",
   });
 
   // we need to get the name of the input field while typing(changing using onChange) & we need to get the new value. so we get both of those of the default html event that gets passed here (we put an e for the event)
@@ -180,7 +182,7 @@ const MyTickets = () => {
       toast.success("New Ticket Created");
       fetchmyTickets();
       closeModal();
-      navigate("/it/tickets/view-tickets");
+      navigate("/tickets/view-tickets");
     } catch (error) {
       console.log(error);
     }
@@ -241,18 +243,20 @@ const MyTickets = () => {
   };
 
   // View  details before update
-  const toggleUpdate = (ticketToBeDisplayedBeforeUpdating) => {
-    // this function should preload the state with the values of the ticket we're editing
-    // Get the current ticket
-    // console.log(ticket);
-    // Set state on update form
-    setUpdateForm({
-      raisedBy: authUser.user.name,
-      selectedDepartment: ticketToBeDisplayedBeforeUpdating.selectedDepartment,
-      description: ticketToBeDisplayedBeforeUpdating.description,
-      _id: ticketToBeDisplayedBeforeUpdating._id,
-    });
-  };
+  // const toggleUpdate = (ticketToBeDisplayedBeforeUpdating) => {
+  //   // this function should preload the state with the values of the ticket we're editing
+  //   // Get the current ticket
+  //   // console.log(ticket);
+  //   // Set state on update form
+  //   setUpdateForm({
+  //     // raisedBy: authUser.user.name,
+  //     raisedBy: ticketToBeDisplayedBeforeUpdating.raisedBy,
+  //     selectedDepartment: ticketToBeDisplayedBeforeUpdating.selectedDepartment,
+  //     description: ticketToBeDisplayedBeforeUpdating.description,
+  //     ticketPriority: ticketToBeDisplayedBeforeUpdating.ticketPriority,
+  //     _id: ticketToBeDisplayedBeforeUpdating._id,
+  //   });
+  // };
 
   // Function to edit the ticket
 
@@ -482,7 +486,7 @@ const MyTickets = () => {
   //   },
   // ];
   const columns3 = [
-    { field: "ticketId", headerName: "ID", width: 80 },
+    // { field: "ticketId", headerName: "ID", width: 80 },
     { field: "raisedBy", headerName: "Raised By", width: 150 },
     {
       field: "selectedDepartment",
@@ -490,6 +494,27 @@ const MyTickets = () => {
       width: 150,
     },
     { field: "description", headerName: "Ticket Title", width: 200 },
+    {
+      field: "ticketPriority",
+      headerName: "Priority",
+      width: 150,
+      type: "singleSelect",
+      valueOptions: ["High", "Medium", "Low"],
+      cellRenderer: (params) => {
+        const statusColors = {
+          Medium: "text-blue-600 bg-blue-100",
+          High: "text-red-600 bg-red-100",
+          Low: "text-yellow-600 bg-yellow-100",
+        };
+        const statusClass = statusColors[params.value] || "";
+        return (
+          <span
+            className={`px-3 py-1 rounded-full text-sm font-medium ${statusClass}`}>
+            {params.value}
+          </span>
+        );
+      },
+    },
     {
       field: "status",
       headerName: "Status",
@@ -513,7 +538,7 @@ const MyTickets = () => {
     },
     // { field: "requestDate", headerName: "Request Date", width: 150 },
 
-    ...(location.pathname === "/it/tickets/view-tickets"
+    ...(location.pathname === "/tickets/view-tickets"
       ? [
           {
             field: "actions",
@@ -543,9 +568,12 @@ const MyTickets = () => {
 
                 // Toggling update
                 setUpdateForm({
-                  raisedBy: authUser.user.name,
+                  // raisedBy: authUser.user.name,
+                  raisedBy: params.data.raisedBy,
                   selectedDepartment: params.data.selectedDepartment,
                   description: params.data.description,
+                  ticketPriority: params.data.ticketPriority,
+                  status: params.data.status,
                   _id: params.data._id,
                 });
 
@@ -586,7 +614,7 @@ const MyTickets = () => {
                     className="bg-blue-300 text-white px-3 py-1 rounded">
                     Details
                   </button>
-                  <button
+                  {/* <button
                     // onClick={handleEdit}
                     // onClick={openEditTicket}
                     onClick={() => {
@@ -595,7 +623,7 @@ const MyTickets = () => {
                     }}
                     className="bg-blue-500 text-white px-3 py-1 rounded">
                     Edit
-                  </button>
+                  </button> */}
                   <button
                     onClick={handleDelete}
                     className="bg-red-500 text-white px-3 py-1 rounded">
@@ -800,7 +828,7 @@ const MyTickets = () => {
     // { label: "Escalated To", key: "escalatedTo" },
   ];
 
-  const visiblePaths = ["/profile", "/it/tickets/view-tickets"];
+  const visiblePaths = ["/profile", "/tickets/view-tickets"];
 
   // Code for filtering ticket messages
   const issues = [
@@ -823,7 +851,7 @@ const MyTickets = () => {
   );
 
   return (
-    <div className="w-[72vw] md:w-full transition-all duration-200 ease-in-out bg-white p-2 rounded-md">
+    <div className="w-[72vw] md:w-full transition-all duration-200 ease-in-out bg-white p-0 rounded-md">
       <div className="flex gap-4 mb-4 justify-between">
         {/* <div className="pt-2">Filter :</div> */}
         <div>
@@ -845,7 +873,7 @@ const MyTickets = () => {
           </FormControl>
         </div>
 
-        {/* {location.pathname === "/it/tickets" && (
+        {/* {location.pathname === "/tickets" && (
           <div className="  bg-red-500">
             <div className=" relative mb-2 flex justify-between">
               <h1 className="text-3xl"></h1>
@@ -857,7 +885,7 @@ const MyTickets = () => {
             </div>
           </div>
         )} */}
-        {/* {location.pathname === "/it/tickets" && (
+        {/* {location.pathname === "/tickets" && (
           <div className="relative bg-red-500">
             <h1 className="text-3xl mb-2"></h1>
             <button
@@ -868,7 +896,7 @@ const MyTickets = () => {
           </div>
         )} */}
 
-        {/* {location.pathname === "/it/tickets" &&
+        {/* {location.pathname === "/tickets" &&
           ["Admin", "Super Admin", "Master Admin"].includes(
             authUser.user.role.roleTitle
           ) && (
@@ -881,7 +909,7 @@ const MyTickets = () => {
               </button>
             </div>
           )}
-        {location.pathname === "/it/tickets" &&
+        {location.pathname === "/tickets" &&
           ["Employee"].includes(authUser.user.role.roleTitle) && (
             <div className="relative bg-red-500">
               <h1 className="text-3xl mb-2"></h1>
@@ -895,7 +923,7 @@ const MyTickets = () => {
 
         <div className="flex gap-4">
           {location.pathname !== "/profile" &&
-            location.pathname !== "/it/tickets" && (
+            location.pathname !== "/tickets" && (
               <div className="flex">
                 <div className="mb-2 flex justify-between">
                   <h1 className="text-3xl"></h1>
@@ -987,7 +1015,7 @@ const MyTickets = () => {
                                   bgcolor: "background.paper",
                                   borderRadius: 2,
                                 }}
-                                // className="bg-white p-6 rounded-lg shadow-md mx-auto">
+                                // className="bg-white p-4 rounded-lg shadow-md mx-auto">
                                 className="bg-white py-6 rounded-lg">
                                 {/* Personal Information */}
                                 {/* <h2 className="text-lg font-semibold mb-4">Add Ticket</h2> */}
@@ -1223,13 +1251,13 @@ const MyTickets = () => {
                 <br />
                 <p>
                   <span className="font-bold">Ticket Priority : </span>
-                  <span>High</span>
+                  <span>{updateForm.ticketPriority}</span>
                 </p>
                 <br />
                 <p>
                   <span className="font-bold">Ticket Status : </span>
-                  <span>Closed</span>
-                  <br />
+                  <span>{updateForm.status}</span>
+                  {/* <br />
                   &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
                   &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
                   <span className="text-gray-500">
@@ -1246,7 +1274,7 @@ const MyTickets = () => {
                   &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
                   <span className="text-gray-500">
                     2024-12-09 - 13:15 - Closed
-                  </span>
+                  </span> */}
                 </p>
                 <br />
                 <p>
@@ -1329,8 +1357,8 @@ const MyTickets = () => {
                         bgcolor: "background.paper",
                         borderRadius: 2,
                       }}
-                      // className="bg-white p-6 rounded-lg shadow-md mx-auto">
-                      className="bg-white p-6 rounded-lg mx-auto">
+                      // className="bg-white p-4 rounded-lg shadow-md mx-auto">
+                      className="bg-white p-4 rounded-lg mx-auto">
                       {/* Personal Information */}
                       {/* <h2 className="text-lg font-semibold mb-4">Add Ticket</h2> */}
                       <div className="grid grid-cols-1 gap-4">
@@ -1519,8 +1547,8 @@ const MyTickets = () => {
                       bgcolor: "background.paper",
                       borderRadius: 2,
                     }}
-                    // className="bg-white p-6 rounded-lg shadow-md mx-auto">
-                    className="bg-white p-6 rounded-lg mx-auto">
+                    // className="bg-white p-4 rounded-lg shadow-md mx-auto">
+                    className="bg-white p-4 rounded-lg mx-auto">
                     {/* Personal Information */}
                     {/* <h2 className="text-lg font-semibold mb-4">Add Ticket</h2> */}
                     <div className="grid grid-cols-1 gap-4">
