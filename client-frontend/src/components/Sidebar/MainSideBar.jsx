@@ -449,16 +449,16 @@ const MainSideBar = () => {
                 }}
                 className={`flex border-b-[1px] ${
                   isSidebarOpen ? "pl-[1rem]" : "justify-center"
-                } items-center cursor-pointer  py-2 hover:wono-blue-dark hover:text-white hover:rounded-md ${
+                } items-center cursor-pointer  py-4 hover:wono-blue-dark hover:text-white hover:rounded-md ${
                   location.pathname === "/dashboard"
                     ? "wono-blue border-r-4 border-[#0DB4EA] rounded-tl-md rounded-bl-md text-[#0DB4EA]"
                     : "bg-white"
                 }`}
               >
-                <div className="flex justify-center w-6 text-xl">
+                <div className="flex justify-center w-6 text-md">
                   <RiDashboardLine />
                 </div>
-                {isSidebarOpen && <span className="pl-5">Dashboard</span>}
+                {isSidebarOpen && <span className="pl-5 text-md">Dashboard</span>}
               </div>
             </Tooltip>
 
@@ -468,7 +468,7 @@ const MainSideBar = () => {
                 <>
                   <Tooltip title="Department" placement="right">
                     <div
-                      className={`py-2 px-4 flex border-b-[1px] border-gray-200 ${
+                      className={`py-4 px-4 flex border-b-[1px] border-gray-200 ${
                         !isSidebarOpen ? "justify-center" : "justify-between"
                       } items-center hover:wono-blue-dark hover:text-white cursor-pointer rounded-md`}
                       onClick={() => {
@@ -477,10 +477,10 @@ const MainSideBar = () => {
                       }}
                     >
                       <div className="flex gap-6 items-center">
-                        <div className="text-xl">
+                        <div className="text-md">
                           <TbSection />
                         </div>
-                        {isSidebarOpen && <span>Departments</span>}
+                        {isSidebarOpen && <span className="text-md">Departments</span>}
                       </div>
                       <>
                         {isSidebarOpen &&
@@ -494,7 +494,7 @@ const MainSideBar = () => {
                         <li key={index} className="border-b">
                           <Tooltip title={dept.name} placement="right">
                             <div
-                              className={`cursor-pointer flex items-center py-2 px-4  hover:wono-blue-dark hover:text-white hover:rounded-md  ${
+                              className={`cursor-pointer flex items-center py-4 px-4  hover:wono-blue-dark hover:text-white hover:rounded-md  ${
                                 isActive(dept.route)
                                   ? "wono-blue border-r-4 border-[#0DB4EA] rounded-tl-md rounded-bl-md text-[#0DB4EA]"
                                   : "bg-white border-b-[1px] border-gray-200"
@@ -506,11 +506,11 @@ const MainSideBar = () => {
                               }}
                             >
                               <div className="flex w-full pl-4 justify-between items-center">
-                                <div className="flex">
-                                  <div className="text-xl">{dept.icon}</div>
+                                <div className="flex items-center">
+                                  <div className="text-md">{dept.icon}</div>
                                   <div>
                                     {isSidebarOpen && (
-                                      <span className="pl-4">{dept.name}</span>
+                                      <span className="pl-4 text-md">{dept.name}</span>
                                     )}
                                   </div>
                                 </div>
@@ -546,7 +546,7 @@ const MainSideBar = () => {
                                     placement="right"
                                   >
                                     <div
-                                      className={`cursor-pointer  flex pl-5 pr-2 py-3 justify-between hover:wono-blue-dark hover:text-white hover:rounded-md ${
+                                      className={`cursor-pointer  flex pl-5 pr-2 py-4 justify-between hover:wono-blue-dark hover:text-white hover:rounded-md ${
                                         isActive(module.route)
                                           ? "wono-blue border-r-4 border-[#0DB4EA] rounded-tl-md rounded-bl-md text-[#0DB4EA]"
                                           : "bg-white border-b-[1px] border-gray-200"
@@ -559,9 +559,9 @@ const MainSideBar = () => {
                                     >
                                       <div className="flex w-full items-center justify-between">
                                         <div className="flex items-center gap-4">
-                                          <span>{module.icon}</span>
+                                          <span className="text-md">{module.icon}</span>
                                           {isSidebarOpen ? (
-                                            <span>{module.title}</span>
+                                            <span className="text-md">{module.title}</span>
                                           ) : (
                                             ""
                                           )}
@@ -687,17 +687,17 @@ const MainSideBar = () => {
                     isSidebarOpen
                       ? "pl-[1rem] hover:wono-blue-dark hover:rounded-md hover:text-white"
                       : "justify-center"
-                  } items-center border-b-[1px] py-2 ${
+                  } items-center border-b-[1px] py-4 ${
                     location.pathname === item.route
                       ? "wono-blue border-r-4 border-b-[0px]  border-[#0DB4EA] rounded-tl-md rounded-bl-md text-[#0DB4EA]"
                       : "bg-white"
                   } `}
                 >
                   {/* <img src={item.icon} alt={item.name} className="w-6 h-6 mr-3" /> */}
-                  <div className="flex justify-center w-6 text-[1.3rem]">
+                  <div className="flex justify-center w-6 text-md">
                     {item.icon}
                   </div>
-                  {isSidebarOpen && <span className="pl-5">{item.name}</span>}
+                  {isSidebarOpen && <span className="pl-5 text-md">{item.name}</span>}
                 </div>
               </Tooltip>
             ))}
@@ -707,7 +707,7 @@ const MainSideBar = () => {
                 <Tooltip title={module.title} placement="right">
                   <div key={index} className="border-b">
                     <div
-                      className={`cursor-pointer flex justify-center items-center py-2 px-4 hover:wono-blue-dark hover:text-white hover:rounded-md ${
+                      className={`cursor-pointer flex justify-center items-center py-4 px-4 hover:wono-blue-dark hover:text-white hover:rounded-md ${
                         isActive(module.route)
                           ? "wono-blue border-r-4 border-[#0DB4EA] rounded-tl-md rounded-bl-md text-[#0DB4EA]"
                           : "bg-white border-b-[1px] border-gray-200"
@@ -717,9 +717,9 @@ const MainSideBar = () => {
                         navigate(module.route);
                       }}
                     >
-                      <div className="text-xl">{module.icon}</div>
+                      <div className="text-md">{module.icon}</div>
                       {isSidebarOpen && (
-                        <span className="pl-5">{module.title}</span>
+                        <span className="pl-5 text-md">{module.title}</span>
                       )}
                       {isSidebarOpen && module.submenus && (
                         <span className="ml-auto">
@@ -737,7 +737,7 @@ const MainSideBar = () => {
                           <Tooltip title={submenu.title} placement="right">
                             <div
                               key={idx}
-                              className={`cursor-pointer py-2 hover:wono-blue-dark hover:text-white hover:rounded-md ${
+                              className={`cursor-pointer py-4 hover:wono-blue-dark hover:text-white hover:rounded-md ${
                                 isActive(submenu.route)
                                   ? "wono-blue border-r-4 border-[#0DB4EA] rounded-tl-md rounded-bl-md text-[#0DB4EA]"
                                   : "bg-white border-b-[1px] border-gray-200"
@@ -753,7 +753,7 @@ const MainSideBar = () => {
                               >
                                 <div
                                   className={`${
-                                    isSidebarOpen ? "text-md" : "text-xl"
+                                    isSidebarOpen ? "text-md" : "text-md"
                                   }`}
                                 >
                                   {submenu.icon}
@@ -779,16 +779,16 @@ const MainSideBar = () => {
                 }}
                 className={`flex border-b-[1px] ${
                   isSidebarOpen ? "pl-[1rem]" : "justify-center"
-                } items-center cursor-pointer  py-2 hover:wono-blue-dark hover:text-white hover:rounded-md ${
+                } items-center cursor-pointer  py-4 hover:wono-blue-dark hover:text-white hover:rounded-md ${
                   location.pathname === "/profile"
                     ? "wono-blue border-r-4 border-[#0DB4EA] rounded-tl-md rounded-bl-md text-[#0DB4EA]"
                     : "bg-white"
                 }`}
               >
-                <div className="flex justify-center w-6 text-2xl">
+                <div className="flex justify-center w-6 text-md">
                   <CgProfile />
                 </div>
-                {isSidebarOpen && <span className="pl-5">Profile</span>}
+                {isSidebarOpen && <span className="pl-5 text-md">Profile</span>}
               </div>
             </Tooltip>
           </div>
