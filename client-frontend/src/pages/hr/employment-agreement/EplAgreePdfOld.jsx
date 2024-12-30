@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { Document, Page } from "react-pdf";
 // import pdf1 from "./sop-pdfs/sop-wfh.pdf";
-import pdf1 from "../sops/sop-pdfs/dummy-employment-agreement.pdf";
+// import pdf1 from "../sops/sop-pdfs/dummy-employment-agreement.pdf";
+import pdf1 from "https://www.sec.gov/Archives/edgar/data/1141197/000110313204000018/exhibit101.pdf";
 
 function EmployeeAgreementPdf() {
   const [numPages, setNumPages] = useState();

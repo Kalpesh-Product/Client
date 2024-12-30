@@ -48,25 +48,6 @@ const RaiseTicketForm = () => {
   // }, [refreshTrigger]); // Depend on refreshTrigger to re-run the effect
 
   // [[[[[[[]]]]]]]
-  const [hasRefreshed, setHasRefreshed] = useState(false);
-
-  useEffect(() => {
-    // Fetch the user from localStorage and update state
-    const storedUser = JSON.parse(localStorage.getItem("user"));
-    setUser(storedUser);
-    fetchmyTickets();
-
-    // Set a timeout to run the effect one more time after 2 seconds
-    const timer = setTimeout(() => {
-      if (!hasRefreshed) {
-        setHasRefreshed(true); // Mark as refreshed
-        fetchmyTickets(); // Run your fetching logic one more time
-      }
-    }, 1000);
-
-    // Cleanup to clear the timeout
-    return () => clearTimeout(timer);
-  }, [hasRefreshed]);
 
   // ]]]]]]]]
   // [[[[[]]]]]
@@ -829,9 +810,7 @@ const RaiseTicketForm = () => {
           {/* Modal Header */}
           <div className="sticky top-0  z-20 flex justify-center">
             <div className="flex justify-center">
-              <h2 className="text-3xl font-bold text-center">
-                Raise A Ticket
-              </h2>
+              <h2 className="text-3xl font-bold text-center">Raise A Ticket</h2>
             </div>
             {/* <div>
                       

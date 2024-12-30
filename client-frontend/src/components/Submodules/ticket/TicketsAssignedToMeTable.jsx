@@ -10,8 +10,8 @@ import { CSVLink } from "react-csv";
 
 const TicketsAssignedToMeTable = () => {
   const columns = [
-    { field: "id", headerName: "ID", width: 100 },
-    { field: "ticketTitle", headerName: "Ticket Title", width: 250 },
+    { field: "id", headerName: "ID", flex: 1 },
+    { field: "ticketTitle", headerName: "Ticket Title", flex: 1 },
     {
       field: "status",
       headerName: "Status",
@@ -26,7 +26,7 @@ const TicketsAssignedToMeTable = () => {
       type: "singleSelect",
       valueOptions: ["IT", "HR", "Tech", "Admin"],
     },
-    { field: "requestDate", headerName: "Request Date", width: 250 },
+    { field: "requestDate", headerName: "Request Date", flex: 1 },
   ];
 
   const allRows = [

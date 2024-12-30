@@ -45,26 +45,6 @@ const UnresolvedTickets = () => {
   //   return () => clearTimeout(timer);
   // }, [refreshTrigger]); // Depend on refreshTrigger to re-run the effect
 
-  const [hasRefreshed, setHasRefreshed] = useState(false);
-
-  useEffect(() => {
-    // Fetch the user from localStorage and update state
-    const storedUser = JSON.parse(localStorage.getItem("user"));
-    setUser(storedUser);
-    fetchmyTickets();
-
-    // Set a timeout to run the effect one more time after 2 seconds
-    const timer = setTimeout(() => {
-      if (!hasRefreshed) {
-        setHasRefreshed(true); // Mark as refreshed
-        fetchmyTickets(); // Run your fetching logic one more time
-      }
-    }, 1000);
-
-    // Cleanup to clear the timeout
-    return () => clearTimeout(timer);
-  }, [hasRefreshed]);
-
   const selectedDepartmentFilter = authUser.user.department[0].name; // Replace with the desired name or variable
 
   // Ticket With APIs & Local START
@@ -201,8 +181,8 @@ const UnresolvedTickets = () => {
   // Ticket With APIs & Local END
 
   const columns = [
-    { field: "id", headerName: "ID", width: 100 },
-    { field: "ticketTitle", headerName: "Ticket Title", width: 200 },
+    { field: "id", headerName: "ID", flex: 1 },
+    { field: "ticketTitle", headerName: "Ticket Title", flex: 1 },
     {
       field: "priority",
       headerName: "Priority",
@@ -244,7 +224,7 @@ const UnresolvedTickets = () => {
       headerName: "Escalated To",
       width: 200,
     },
-    { field: "requestDate", headerName: "Request Date", width: 150 },
+    { field: "requestDate", headerName: "Request Date", flex: 1 },
 
     // {
     //   field: "viewDetails",
@@ -405,13 +385,13 @@ const UnresolvedTickets = () => {
 
   const columns3 = [
     // { field: "ticketId", headerName: "ID", width: 100 },
-    { field: "raisedBy", headerName: "Raised By", width: 150 },
+    { field: "raisedBy", headerName: "Raised By", flex: 1 },
     {
       field: "selectedDepartment",
       headerName: "Selected Department",
       width: 150,
     },
-    { field: "description", headerName: "Ticket Title", width: 200 },
+    { field: "description", headerName: "Ticket Title", flex: 1 },
     {
       field: "status",
       headerName: "Status",

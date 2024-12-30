@@ -61,26 +61,6 @@ const AcceptedTickets = () => {
   //   return () => clearTimeout(timer);
   // }, [refreshTrigger]); // Depend on refreshTrigger to re-run the effect
 
-  const [hasRefreshed, setHasRefreshed] = useState(false);
-
-  useEffect(() => {
-    // Fetch the user from localStorage and update state
-    const storedUser = JSON.parse(localStorage.getItem("user"));
-    setUser(storedUser);
-    fetchmyTickets();
-
-    // Set a timeout to run the effect one more time after 2 seconds
-    const timer = setTimeout(() => {
-      if (!hasRefreshed) {
-        setHasRefreshed(true); // Mark as refreshed
-        fetchmyTickets(); // Run your fetching logic one more time
-      }
-    }, 1000);
-
-    // Cleanup to clear the timeout
-    return () => clearTimeout(timer);
-  }, [hasRefreshed]);
-
   const selectedDepartmentFilter = authUser.user.department[0].name; // Replace with the desired name or variable
 
   // Ticket With APIs & Local START
@@ -241,8 +221,8 @@ const AcceptedTickets = () => {
   // Ticket With APIs & Local END
 
   const columns = [
-    { field: "id", headerName: "ID", width: 100 },
-    { field: "ticketTitle", headerName: "Ticket Title", width: 200 },
+    { field: "id", headerName: "ID", flex: 1 },
+    { field: "ticketTitle", headerName: "Ticket Title", flex: 1 },
     {
       field: "priority",
       headerName: "Priority",
@@ -279,7 +259,7 @@ const AcceptedTickets = () => {
         <span className="text-gray-800">Faizan Shaikh</span> // Display fixed value
       ),
     },
-    { field: "requestDate", headerName: "Request Date", width: 190 },
+    { field: "requestDate", headerName: "Request Date", flex: 1 },
 
     // {
     //   field: "viewDetails",
@@ -468,14 +448,14 @@ const AcceptedTickets = () => {
   ];
 
   const columns3 = [
-    // { field: "ticketId", headerName: "ID", width: 100 },
-    { field: "raisedBy", headerName: "Raised By", width: 150 },
+    // { field: "ticketId", headerName: "ID", flex: 1},
+    { field: "raisedBy", headerName: "Raised By", flex: 1 },
     {
       field: "selectedDepartment",
       headerName: "Selected Department",
       width: 150,
     },
-    { field: "description", headerName: "Ticket Title", width: 200 },
+    { field: "description", headerName: "Ticket Title", flex: 1 },
     {
       field: "status",
       headerName: "Status",
@@ -497,7 +477,7 @@ const AcceptedTickets = () => {
         );
       },
     },
-    // { field: "requestDate", headerName: "Request Date", width: 150 },
+    // { field: "requestDate", headerName: "Request Date", flex: 1 },
     {
       field: "actions",
       headerName: "Actions",

@@ -33,8 +33,8 @@ const EmployeeAgreementPdfContainer = () => {
   }, []);
 
   const columns = [
-    { field: "id", headerName: "ID", width: 100 },
-    { field: "leaveType", headerName: "Leave Type", width: 200 },
+    { field: "id", headerName: "ID", flex: 1 },
+    { field: "leaveType", headerName: "Leave Type", flex: 1 },
     // {
     //   field: "priority",
     //   headerName: "Priority",
@@ -64,7 +64,7 @@ const EmployeeAgreementPdfContainer = () => {
       type: "singleSelect",
       valueOptions: ["IT", "HR", "Tech", "Admin"],
     },
-    { field: "requestDate", headerName: "Request Date", width: 150 },
+    { field: "requestDate", headerName: "Request Date", flex: 1 },
     {
       field: "status",
       headerName: "Status",

@@ -169,7 +169,7 @@ const Tasklist = () => {
   const fetchProjects = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:5000/api/tasks/get-projects"
+        "/api/tasks/get-projects"
       );
       console.log("Projects:", response.data.projects);
       return response.data.projects;

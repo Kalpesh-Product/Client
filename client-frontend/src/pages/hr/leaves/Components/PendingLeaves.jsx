@@ -37,12 +37,12 @@ const PendingLeaves = () => {
 
   const columns = [
     // { field: "id", headerName: "ID", width: 100 },
-    { field: "fromDate", headerName: "From Date", width: 200 },
-    { field: "toDate", headerName: "To Date", width: 200 },
-    { field: "leaveType", headerName: "Leave Type", width: 200 },
-    { field: "leavePeriod", headerName: "Leave Period", width: 200 },
-    { field: "hours", headerName: "Hours", width: 200 },
-    { field: "createdBy", headerName: "Created By", width: 200 },
+    { field: "fromDate", headerName: "From Date", flex: 1 },
+    { field: "toDate", headerName: "To Date", flex: 1 },
+    { field: "leaveType", headerName: "Leave Type", flex: 1 },
+    { field: "leavePeriod", headerName: "Leave Period", flex: 1 },
+    { field: "hours", headerName: "Hours", flex: 1 },
+    { field: "createdBy", headerName: "Created By", flex: 1 },
     {
       field: "status",
       headerName: "Status",

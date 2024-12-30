@@ -151,8 +151,8 @@ const ManageLeaves = () => {
   const [holidayName, setLeaveType] = useState(""); // State to track the selected option
 
   const columns = [
-    // { field: "leaveTypeId", headerName: "ID", width: 100 },
-    { field: "leaveType", headerName: "Leave Type", width: 200 },
+    // { field: "leaveTypeId", headerName: "ID", flex: 1},
+    { field: "leaveType", headerName: "Leave Type", flex: 1 },
     // {
     //   field: "priority",
     //   headerName: "Priority",
@@ -183,7 +183,7 @@ const ManageLeaves = () => {
     //   valueOptions: ["IT", "HR", "Tech", "Admin"],
     // },
     // { field: "date", headerName: "Date", width: 150 },
-    { field: "noOfDays", headerName: "No Of Days", width: 150 },
+    { field: "noOfDays", headerName: "No Of Days", flex: 1 },
     // {
     //   field: "status",
     //   headerName: "Status",

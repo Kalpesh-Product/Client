@@ -32,8 +32,8 @@ const PolicyCrud = () => {
   const [holidayName, setLeaveType] = useState(""); // State to track the selected option
 
   const columns = [
-    { field: "id", headerName: "ID", width: 100 },
-    { field: "policyName", headerName: "Policy Name", width: 200 },
+    { field: "id", headerName: "ID", flex: 1 },
+    { field: "policyName", headerName: "Policy Name", flex: 1 },
     // { field: "agreement", headerName: "Agreement", width: 200 },
     // {
     //   field: "priority",
@@ -64,7 +64,7 @@ const PolicyCrud = () => {
     //   type: "singleSelect",
     //   valueOptions: ["IT", "HR", "Tech", "Admin"],
     // },
-    { field: "date", headerName: "Date Added", width: 150 },
+    { field: "date", headerName: "Date Added", flex: 1 },
     // {
     //   field: "status",
     //   headerName: "Status",
