@@ -486,7 +486,12 @@ const EmployeeAgreementPdfContainer = () => {
       /> */}
 
       {/* <PayslipTest /> */}
-      <EmployeeAgreementPdf />
+
+      <div className="flex justify-center items-center ">
+        <div className=" w-50 border border-black">
+          <EmployeeAgreementPdf />
+        </div>
+      </div>
 
       {/* {location.pathname === "/customer/tickets/my-tickets" && (
         <div>

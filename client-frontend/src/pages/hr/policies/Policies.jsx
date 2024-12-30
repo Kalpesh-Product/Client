@@ -6,7 +6,7 @@ import Tab from "@mui/material/Tab";
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
-import PdfViewer from "../sops/PdfViewer";
+import PdfViewer from "../sops/PdfViewerOld";
 import PdfViewer2 from "../sops/PdfViewer2";
 
 import { motion } from "framer-motion";

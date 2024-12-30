@@ -13,7 +13,7 @@ import { motion } from "framer-motion";
 import { IoMdClose } from "react-icons/io";
 // import { NewModal } from "../../../components/NewModal";
 import { NewModal } from "../../../components/NewModal";
-import PdfViewer from "../sops/PdfViewer";
+import PdfViewer from "../sops/PdfViewerOld";
 import PdfViewer2 from "../sops/PdfViewer2";
 
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
