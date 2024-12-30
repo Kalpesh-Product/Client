@@ -1,11 +1,13 @@
 const mongoose = require("mongoose");
 
 const taskSchema = new mongoose.Schema({
-  taskId: {
+  taskName :{
     type: String,
-    unique: true,
     required: true,
+    
   },
+ 
+  
   department: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Department",
@@ -26,11 +28,11 @@ const taskSchema = new mongoose.Schema({
   },
   assignedDate: {
     type: Date,
-    required: true,
+    
   },
   assignedTime: {
     type: String,
-    required: true,
+   
     match: /^([0-1]\d|2[0-3]):([0-5]\d)(:[0-5]\d)?$/,
   },
   status: {
@@ -39,11 +41,11 @@ const taskSchema = new mongoose.Schema({
   },
   deadLineDate: {
     type: Date,
-    required: true,
+   
   },
   deadLineTime: {
     type: String,
-    required: true,
+    
     match: /^([0-1]\d|2[0-3]):([0-5]\d)(:[0-5]\d)?$/,
   },
   extension: {

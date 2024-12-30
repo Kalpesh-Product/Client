@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   TextField,
   Button,
@@ -20,6 +20,8 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
 import FormStepper from "../../components/FormStepper";
 import WonoButton from "../../components/Buttons/WonoButton";
+import axios from "axios";
+import dayjs from "dayjs";
 
 const extractNames = (data) => {
   const names = [];
@@ -42,6 +44,9 @@ const AssignTaskForm = ({
   EditValue,
   department,
   description,
+  SetTitle,
+  SetDepartment,
+  SetDescription,
   Title,
   projectTitle,
   projectData,
@@ -51,19 +56,43 @@ const AssignTaskForm = ({
 }) => {
   const [selectedOptions, setSelectedOptions] = useState([]);
 
-  const projectTitles = [
-    ...tasks.ongoing.map((task) => task.Title),
-    ...tasks.upcoming.map((task) => task.Title),
-    ...tasks.pending.map((task) =>task.Title),
-    ...tasks.completed.map((tasks) =>tasks.Title),
-  ];
+  const [departments, setDepartments] = useState([]);
+  const [selectedDepartment, setSelectedDepartment] = useState("");
+
+  useEffect(() => {
+    const fetchDepartments = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:5000/api/departments/get-departments"
+        ); // Update with your backend URL
+        setDepartments(response.data.departments || []);
+
+        console.log(departments);
+      } catch (error) {
+        console.error("Error fetching departments:", error);
+      }
+      console.log(departments);
+    };
+    fetchDepartments();
+  }, []);
+
+  const projectTitles =
+    modalType !== "Delete_Row"
+      ? [
+          ...tasks.ongoing.map((task) => task.Title),
+          ...tasks.upcoming.map((task) => task.Title),
+          ...tasks.pending.map((task) => task.Title),
+          ...tasks.completed.map((tasks) => tasks.Title),
+        ]
+      : [];
 
   const [formData, setFormData] = useState({
     taskName: "",
-    date: "",
+    date: null,
     priority: "",
     status: "",
     project: "",
+    description: "",
   });
 
   const [membersData, setMembersData] = useState({
@@ -109,6 +138,12 @@ const AssignTaskForm = ({
   const navigate = useNavigate();
 
   const names = extractNames(data);
+
+  const handleEditField = (e) => {
+    SetDepartment(e.target.value);
+    SetDescription(e.target.value);
+    SetTitle(e.target.value);
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -206,6 +241,67 @@ const AssignTaskForm = ({
     handleNext();
   };
 
+  const handleAddProject = async (project) => {
+    setProjectData({
+      Department: "",
+      assignees: [],
+      Title: "",
+      description: "",
+
+      status: "",
+    });
+
+    handleClose();
+    console.log(project);
+    // Optionally close the modal after the alert
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/api/tasks/create-project",
+        project
+      );
+      alert(response.data.message);
+      alert("Projects Added Successfully to database");
+      toast.success("Added a new projects.");
+    } catch (error) {
+      console.log("Error Saving projects", error);
+      alert("Failed to save projects. Please try again");
+      toast.error("Projects could not be saved");
+    }
+  };
+
+  const handleDateChange = (newValue) => {
+    const formattedDate = newValue ? dayjs(newValue).format("YYYY-MM-DD") : "";
+    setProjectData((prev) => ({ ...prev, startdate: formattedDate }));
+  };
+  const handleDate2change = (newValue) => {
+    const formattedDate = newValue ? dayjs(newValue).format("YYYY-MM-DD") : "";
+    setProjectData((prev) => ({ ...prev, enddate: formattedDate }));
+  };
+
+  const handleAddTasks = async (tasks) => {
+    handleClose();
+    setTasks({
+      taskName: "",
+      priority: "",
+      status: "",
+      project: "",
+      description: "",
+    });
+
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/api/tasks/create-tasks",
+        tasks
+      );
+
+      alert("Tasks Added Successfully to database");
+      toast.success("Added a new tasks.");
+    } catch (error) {
+      console.log("Error Saving tasks", error);
+      alert("Failed to save Tasks. Please try again");
+      toast.error("Tasks could not be saved");
+    }
+  };
   return (
     <div>
       <Box
@@ -226,7 +322,6 @@ const AssignTaskForm = ({
           >
             {/* {title} */}
           </Typography>
-          
         </div>
         <form onSubmit={handleSubmit}>
           {location.pathname === "/tasks/teams" ? (
@@ -301,6 +396,27 @@ const AssignTaskForm = ({
                 </Grid>
               </div>
             </>
+          ) : modalType === "Delete_Row" ? (
+            <>
+              <div className="container">
+                <div className="main">
+                  <h1>Are You Sure you want to delete ?</h1>
+                </div>
+                <div className="btns">
+                  <Button variant="contained" color="red" fullWidth>
+                    Delete
+                  </Button>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    fullWidth
+                    onClick={() => handleClose()}
+                  >
+                    Close
+                  </Button>
+                </div>
+              </div>
+            </>
           ) : modalType === "Add Task" ? (
             <>
               <FormStepper
@@ -359,6 +475,18 @@ const AssignTaskForm = ({
                             </TextField>
                           </Grid>
 
+                          <Grid item xs={12}>
+                            <TextField
+                              name="description"
+                              label="Tasks Description"
+                              value={formData.description}
+                              fullWidth
+                              onChange={handleChange}
+                              multiline
+                              rows={4}
+                            />
+                          </Grid>
+
                           {/* Asset Type Dropdown */}
                           <Grid item xs={12}>
                             <TextField
@@ -381,7 +509,23 @@ const AssignTaskForm = ({
                           <Grid item xs={12}>
                             <LocalizationProvider dateAdapter={AdapterDayjs}>
                               <DatePicker
-                                label="Date"
+                                label=" Start Date"
+                                // slotProps={{ textField: { size: "small" } }}
+                                sx={{ width: "-webkit-fill-available" }}
+                                renderInput={(params) => (
+                                  <TextField
+                                    {...params}
+                                    className="w-full md:w-1/4"
+                                  />
+                                )}
+                              />
+                            </LocalizationProvider>
+                          </Grid>
+
+                          <Grid item xs={12}>
+                            <LocalizationProvider dateAdapter={AdapterDayjs}>
+                              <DatePicker
+                                label="End Date"
                                 // slotProps={{ textField: { size: "small" } }}
                                 sx={{ width: "-webkit-fill-available" }}
                                 renderInput={(params) => (
@@ -451,7 +595,11 @@ const AssignTaskForm = ({
                             <span>{formData.status || "N/A"}</span>
                           </div>
                         </div>
-                        <Button variant="contained" color="primary">
+                        <Button
+                          variant="contained"
+                          color="primary"
+                          onClick={() => handleAddTasks(formData)}
+                        >
                           Submit
                         </Button>
                       </>
@@ -521,11 +669,11 @@ const AssignTaskForm = ({
                               value={insideAddTask.priority}
                               onChange={handleChange}
                             >
-                              {priorityType.map((type, index) => (
+                              {/* {priorityType.map((type, index) => (
                                 <MenuItem key={index} value={type}>
                                   {type}
                                 </MenuItem>
-                              ))}
+                              ))} */}
                             </TextField>
                           </Grid>
 
@@ -596,14 +744,23 @@ const AssignTaskForm = ({
                               onChange={handleChange}
                             />
                           </Grid>
+
+                          {/* Department */}
                           <Grid item xs={12}>
                             <TextField
+                              label="Department"
                               name="Department"
-                              label="Project Category"
-                              value={projectData.Department}
+                              select
                               fullWidth
+                              value={projectData.Department}
                               onChange={handleChange}
-                            />
+                            >
+                              {departments?.map((dept) => (
+                                <MenuItem key={dept._id} value={dept.name}>
+                                  {dept.name}
+                                </MenuItem>
+                              ))}
+                            </TextField>
                           </Grid>
 
                           {/* Description */}
@@ -646,7 +803,36 @@ const AssignTaskForm = ({
                           <Grid item xs={12}>
                             <LocalizationProvider dateAdapter={AdapterDayjs}>
                               <DatePicker
-                                label="Date"
+                                label=" Start Date"
+                                value={
+                                  projectData.startdate
+                                    ? dayjs(projectData.startdate)
+                                    : null
+                                }
+                                onChange={handleDateChange}
+                                //
+                                // slotProps={{ textField: { size: "small" } }}
+                                sx={{ width: "-webkit-fill-available" }}
+                                renderInput={(params) => (
+                                  <TextField
+                                    {...params}
+                                    className="w-full md:w-1/4"
+                                  />
+                                )}
+                              />
+                            </LocalizationProvider>
+                          </Grid>
+
+                          <Grid item xs={12}>
+                            <LocalizationProvider dateAdapter={AdapterDayjs}>
+                              <DatePicker
+                                label="End Date"
+                                value={
+                                  projectData.enddate
+                                    ? dayjs(projectData.enddate)
+                                    : null
+                                }
+                                onChange={handleDate2change}
                                 // slotProps={{ textField: { size: "small" } }}
                                 sx={{ width: "-webkit-fill-available" }}
                                 renderInput={(params) => (
@@ -684,8 +870,6 @@ const AssignTaskForm = ({
                           >
                             Next
                           </Button>
-
-                          
                         </div>
                       </>
                     );
@@ -728,6 +912,7 @@ const AssignTaskForm = ({
                           variant="contained"
                           color="primary"
                           type="submit"
+                          onClick={() => handleAddProject(projectData)}
                         >
                           Submit
                         </Button>
@@ -736,28 +921,6 @@ const AssignTaskForm = ({
                   }
                 }}
               ></FormStepper>
-            </>
-          ) : modalType === "Delete_Row" ? (
-            <>
-              <div className="container">
-                <div className="main">
-                  <h1>Are You Sure you want to delete ?</h1>
-                </div>
-                <div className="btns">
-                  <Button
-                   variant="contained"
-                   color="red"
-                   fullWidth>
-                     Delete
-                  </Button>
-                  <Button
-                   variant="contained"
-                   color="primary"
-                   fullWidth>
-                     Close
-                  </Button>
-                </div>
-              </div>
             </>
           ) : EditValue ? (
             <>
@@ -771,21 +934,31 @@ const AssignTaskForm = ({
                         {/* Asset Number */}
                         <Grid item xs={12}>
                           <TextField
-                            label="Department"
+                            name="department"
+                            label="Departments"
                             value={department}
+                            onChange={(e) => SetDepartment(e.target.value)}
                             fullWidth
                           />
                         </Grid>
                         <Grid item xs={12}>
-                          <TextField label="Title" value={Title} fullWidth />
+                          <TextField
+                            label="Title"
+                            name="Title"
+                            value={Title}
+                            fullWidth
+                            onChange={(e) => SetTitle(e.target.value)}
+                          />
                         </Grid>
                         <Grid item xs={12}>
                           <TextField
-                            label="description"
+                            label="descriptions"
+                            name="description"
                             fullWidth
                             multiline
                             rows={4}
                             value={description}
+                            onChange={(e) => SetDescription(e.target.value)}
                           ></TextField>
                         </Grid>
 
@@ -806,19 +979,19 @@ const AssignTaskForm = ({
                           {/* Asset Number */}
                           <div className="flex justify-between py-2 border-b">
                             <h1 className="font-semibold">Project</h1>
-                            <span>{projectData.Title || "N/A"}</span>
+                            <span>{Title || "N/A"}</span>
                           </div>
 
                           {/* Asset Type */}
                           <div className="flex justify-between py-2 border-b">
                             <h1 className="font-semibold">Department</h1>
-                            <span>{projectData.Department || "N/A"}</span>
+                            <span>{department || "N/A"}</span>
                           </div>
 
                           {/* Asset Name */}
                           <div className="flex justify-between py-2 border-b">
                             <h1 className="font-semibold">Description</h1>
-                            <span>{projectData.description || "N/A"}</span>
+                            <span>{description || "N/A"}</span>
                           </div>
 
                           {/* Assignees */}
@@ -837,6 +1010,7 @@ const AssignTaskForm = ({
                           variant="contained"
                           color="primary"
                           type="submit"
+                          onClick={() => handleAddProject(projectData)}
                         >
                           Submit
                         </Button>
@@ -859,7 +1033,7 @@ const AssignTaskForm = ({
                     onChange={hadndleEmployeeChange}
                   />
                 </Grid>
-                
+
                 <Grid item xs={12}>
                   <TextField
                     name="Email"
@@ -930,7 +1104,6 @@ const AssignTaskForm = ({
                 </Button>
               </>
             )}
-            
           </div>
         </form>
       </Box>

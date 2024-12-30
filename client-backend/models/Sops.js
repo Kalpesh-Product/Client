@@ -10,6 +10,10 @@ const sopSchema = new mongoose.Schema(
       type: String,
       default: "",
     },
+    sopDepartment: {
+      type: String,
+      default: "",
+    },
     fileUrl: {
       type: String,
       default: "",
