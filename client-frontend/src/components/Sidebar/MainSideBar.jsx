@@ -9,11 +9,13 @@ import {
   FaPlus,
   FaRegMoneyBill1,
   FaUserClock,
+  FaUsers,
 } from "react-icons/fa6";
 import {
   FaArrowLeft,
   FaCalendarAlt,
   FaHandsHelping,
+  FaProjectDiagram,
   FaRegCalendarAlt,
   FaTasks,
 } from "react-icons/fa";
@@ -35,6 +37,7 @@ import {
   MdOutlineSubdirectoryArrowRight,
   MdOutlineWifiTethering,
   MdPolicy,
+  MdTask,
 } from "react-icons/md";
 import {
   HiColorSwatch,
@@ -85,7 +88,7 @@ const MainSideBar = () => {
       icon: <TbReportSearch />,
       route: "/reports",
     },
-    { name: "Tasks", icon: <FaTasks />, route: "/tasks" },
+
     { name: "Calendar", icon: <FaRegCalendarAlt />, route: "/calendar" },
     { name: "Chat", icon: <HiOutlineChatAlt2 />, route: "/chat" },
     { name: "Access", icon: <SiAuthelia />, route: "/access" },
@@ -98,6 +101,38 @@ const MainSideBar = () => {
   ];
 
   const defaultModules = [
+    {
+      id: 1,
+      icon: <FaTasks />,
+      route: "/tasks",
+      title: "Tasks",
+      submenus: [
+        {
+          id: 2,
+          title: "Projects",
+          icon: <FaProjectDiagram />,
+          route: "/tasks/tasklist",
+        },
+        {
+          id: 3,
+          title: "Task List",
+          icon:<FaTasks />,
+          route: "/tasks/tasklistfirstmenu",
+        },
+        {
+          id: 4,
+          title: "Teams",
+          route: "/tasks/teams",
+          icon : <FaUsers />,
+        },
+        {
+          id: 5,
+          title: "My Tasks",
+          route: "/tasks/mytasks",
+          icon : <MdTask />,
+        },
+      ],
+    },
     {
       id: 1,
       title: "Meetings",
@@ -747,7 +782,7 @@ const MainSideBar = () => {
                               <div
                                 className={`flex items-center ${
                                   isSidebarOpen
-                                    ? "justify-start pl-2"
+                                    ? "justify-start pl-4"
                                     : "justify-center"
                                 }`}
                               >
