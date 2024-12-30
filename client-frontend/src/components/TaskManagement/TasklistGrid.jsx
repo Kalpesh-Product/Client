@@ -29,123 +29,123 @@ import AvatarCellRenderer from "../AvatarCellRenderer";
 import { px } from 'framer-motion';
 
 
-const TasklistGrid = () => {
-    const [allRows, setAllRows] = useState([
-        {
-          id: 1,
-          ticketTitle: "Financial Forcasting And Budgeting",
-          Assignees: [
-            "Saddhya Sawaikar",
-          "Sankalp Kalangutkar",
-          "Supriya Gaonkar",
-          "Neha Tari",
-          ],
-          AssigneeNames: ["Riya", "Piya", "Siya"],
-          DueDate: "10th october 2024",
-          priority: "High",
-          department: "IT",
-          status: "Upcoming",
-          requestDate: "2024-10-01",
-        },
-        {
-          id: 2,
-          ticketTitle: "Annual Co-orporate Network And Networking Events",
-          Assignees: [
-            "Riya Naik", "Parinda Raikar", "Amisha Naik"
-          ],
-          DueDate: "12th october 2024",
-          priority: "Medium",
-          department: "HR",
-          status:"Ongoing",
-          requestDate: "2024-10-03",
-        },
-        {
-          id: 3,
-          ticketTitle: "Website Redesign",
-          Assignees: [
-            "John Doe", "Jane Smith", "Alex Johnson"
-          ],
-          DueDate: "15th october 2024",
-          priority: "High",
-          department: "Tech",
-          status: "Completed",
-          requestDate: "2024-10-05",
-        },
-        {
-          id: 4,
-          ticketTitle: "Bussiness Process optimizations and Automations",
-          Assignees: [
-            "Jayesh Redkar", "Geeta parab", "Ashita Parab"
-          ],
-          DueDate: "30th october 2024",
-          priority: "Low",
-          department: "Admin",
-          status: "Pending",
-          requestDate: "2024-10-06",
-        },
-        {
-          id: 5,
-          ticketTitle: "Data Privacy and GDPR Compliance Initiative",
-          Assignees: [
-            "Govardhan Parab", "Dgymj Lodh", "Dold Peold"
-          ],
-          DueDate: "2th November 2024",
-          priority: "Medium",
-          department: "HR",
-          status: "Ongoing",
-          requestDate: "2024-10-07",
-        },
-        {
-          id: 6,
-          ticketTitle: "Launch a New Digital Marketing Initiative ",
-          Assignees: [
-            "Siya Amonkar", "Chaya Shinde", "Priya Dessai"
-          ],
-          DueDate: "7th November 2024",
-          priority: "High",
-          department: "IT",
-          status:"upcoming",
-          requestDate: "2024-10-08",
-        },
-        {
-          id: 7,
-          ticketTitle: "Data Privacy And GDPR Compliance Initiative",
-          Assignees: [
-            "Mahima Naik", "Angela Vaz", "Urvi Palang"
-          ],
-          DueDate: "9th November 2024",
-          priority: "Low",
-          department: "Tech",
-          status:"Ongoing",
-          requestDate: "2024-10-09",
-        },
-        {
-          id: 8,
-          ticketTitle: "",
-          Assignees: [
-            "https://i.pravatar.cc/150?img=1",
-            "https://i.pravatar.cc/150?img=2",
-            "https://i.pravatar.cc/150?img=3",
-          ],
-          DueDate: "10th November 2024",
-          priority: "Low",
-          department: "Admin",
-          status:"Pending",
-          requestDate: "2024-10-10",
-        },
-        {
-          id: 9,
-          ticketTitle: "Email Access Issue",
-          Assignees: [
-            "Rami Naik", "Krutika Ghadi", "Rajeshwari Maheshwari"
-          ],
-          DueDate: "20th November 2024",
-          priority: "Medium",
-          department: "IT",
-          status:"Ongoing",
-          requestDate: "2024-10-11",
-        },
-      ]);
+const TasklistGrid = ({allRows,setAllRows,filterTasks,filteredRows}) => {
+    // const [allRows, setAllRows] = useState([
+    //     {
+    //       id: 1,
+    //       ticketTitle: "Financial Forcasting And Budgeting",
+    //       Assignees: [
+    //         "Saddhya Sawaikar",
+    //       "Sankalp Kalangutkar",
+    //       "Supriya Gaonkar",
+    //       "Neha Tari",
+    //       ],
+    //       AssigneeNames: ["Riya", "Piya", "Siya"],
+    //       DueDate: "10th october 2024",
+    //       priority: "High",
+    //       department: "IT",
+    //       status: "Upcoming",
+    //       requestDate: "2024-10-01",
+    //     },
+    //     {
+    //       id: 2,
+    //       ticketTitle: "Annual Co-orporate Network And Networking Events",
+    //       Assignees: [
+    //         "Riya Naik", "Parinda Raikar", "Amisha Naik"
+    //       ],
+    //       DueDate: "12th october 2024",
+    //       priority: "Medium",
+    //       department: "HR",
+    //       status:"Ongoing",
+    //       requestDate: "2024-10-03",
+    //     },
+    //     {
+    //       id: 3,
+    //       ticketTitle: "Website Redesign",
+    //       Assignees: [
+    //         "John Doe", "Jane Smith", "Alex Johnson"
+    //       ],
+    //       DueDate: "15th october 2024",
+    //       priority: "High",
+    //       department: "Tech",
+    //       status: "Completed",
+    //       requestDate: "2024-10-05",
+    //     },
+    //     {
+    //       id: 4,
+    //       ticketTitle: "Bussiness Process optimizations and Automations",
+    //       Assignees: [
+    //         "Jayesh Redkar", "Geeta parab", "Ashita Parab"
+    //       ],
+    //       DueDate: "30th october 2024",
+    //       priority: "Low",
+    //       department: "Admin",
+    //       status: "Pending",
+    //       requestDate: "2024-10-06",
+    //     },
+    //     {
+    //       id: 5,
+    //       ticketTitle: "Data Privacy and GDPR Compliance Initiative",
+    //       Assignees: [
+    //         "Govardhan Parab", "Dgymj Lodh", "Dold Peold"
+    //       ],
+    //       DueDate: "2th November 2024",
+    //       priority: "Medium",
+    //       department: "HR",
+    //       status: "Ongoing",
+    //       requestDate: "2024-10-07",
+    //     },
+    //     {
+    //       id: 6,
+    //       ticketTitle: "Launch a New Digital Marketing Initiative ",
+    //       Assignees: [
+    //         "Siya Amonkar", "Chaya Shinde", "Priya Dessai"
+    //       ],
+    //       DueDate: "7th November 2024",
+    //       priority: "High",
+    //       department: "IT",
+    //       status:"upcoming",
+    //       requestDate: "2024-10-08",
+    //     },
+    //     {
+    //       id: 7,
+    //       ticketTitle: "Data Privacy And GDPR Compliance Initiative",
+    //       Assignees: [
+    //         "Mahima Naik", "Angela Vaz", "Urvi Palang"
+    //       ],
+    //       DueDate: "9th November 2024",
+    //       priority: "Low",
+    //       department: "Tech",
+    //       status:"Ongoing",
+    //       requestDate: "2024-10-09",
+    //     },
+    //     {
+    //       id: 8,
+    //       ticketTitle: "",
+    //       Assignees: [
+    //         "https://i.pravatar.cc/150?img=1",
+    //         "https://i.pravatar.cc/150?img=2",
+    //         "https://i.pravatar.cc/150?img=3",
+    //       ],
+    //       DueDate: "10th November 2024",
+    //       priority: "Low",
+    //       department: "Admin",
+    //       status:"Pending",
+    //       requestDate: "2024-10-10",
+    //     },
+    //     {
+    //       id: 9,
+    //       ticketTitle: "Email Access Issue",
+    //       Assignees: [
+    //         "Rami Naik", "Krutika Ghadi", "Rajeshwari Maheshwari"
+    //       ],
+    //       DueDate: "20th November 2024",
+    //       priority: "Medium",
+    //       department: "IT",
+    //       status:"Ongoing",
+    //       requestDate: "2024-10-11",
+    //     },
+    //   ]);
       // const [avatars, setAvatars]= useState(allRows.forEach((rows)=>{rows.Assignes}))
       // console.log(avatars)
 
@@ -335,23 +335,23 @@ const TasklistGrid = () => {
       };
     
       // Filter rows based on selected department
-      const filteredRows =
-        department === ""
-          ? allRows // show all rows if no department is selected
-          : allRows.filter((row) => row.department === department);
+      // const filteredRows =
+      //   department === ""
+      //     ? allRows // show all rows if no department is selected
+      //     : allRows.filter((row) => row.department === department);
     
-      const filteredTasks = filteredRows.filter((task) => {
-        const matchesSearch = task.ticketTitle
-          .toLowerCase()
-          .includes(searchTerm?.toLowerCase());
-        const matchesPriority = priorityFilter
-          ? task.priority === priorityFilter
-          : true;
-        const matchesDepartment = departmentFilter
-          ? task.department === departmentFilter
-          : true;
-        return matchesPriority && matchesSearch && matchesDepartment;
-      });
+      // const filteredTasks = filteredRows.filter((task) => {
+      //   const matchesSearch = task.ticketTitle
+      //     .toLowerCase()
+      //     .includes(searchTerm?.toLowerCase());
+      //   const matchesPriority = priorityFilter
+      //     ? task.priority === priorityFilter
+      //     : true;
+      //   const matchesDepartment = departmentFilter
+      //     ? task.department === departmentFilter
+      //     : true;
+      //   return matchesPriority && matchesSearch && matchesDepartment;
+      // });
     
       const assignTaskbtnClick = () => {
         SetModalOpen(true);
@@ -376,7 +376,7 @@ const TasklistGrid = () => {
           >
             {/* <Paper sx={{ height: 400, width: "100%", alignItems:"center" , display:"flex", justifyContent:"center"}}> */}
             <AgTable
-              data={filteredTasks}
+              data={filteredRows}
               columns={columns}
               paginationPageSize={5}
             />

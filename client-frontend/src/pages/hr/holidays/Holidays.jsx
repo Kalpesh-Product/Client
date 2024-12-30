@@ -33,10 +33,11 @@ const Holidays = () => {
   const [holidayName, setLeaveType] = useState(""); // State to track the selected option
 
   const [holidayList, setHolidayList] = useState({
-    holiday: "",
-    date: null,
-    enddate: null,
+    title: "",
+    start: null,
+    end: null,
     description: "",
+    type:"holiday"
   });
 
   const handleHolidayChange = (field, value) => {
@@ -342,11 +343,11 @@ const Holidays = () => {
 
   const newTicket = {
     id: rows.length + 1,
-    holidayName: "New Holiday",
+    holidayName: holidayList.title,
     priority: "Medium",
     status: "Pending",
     department: "IT",
-    date: new Date().toISOString().split("T")[0], // Today's date
+    date: holidayList.end, // Today's date
   };
 
   // ADD TICKET MODAL START
@@ -365,20 +366,22 @@ const Holidays = () => {
   // };
   const handleAddTicket = async (newTicket, holidayList) => {
     setRows((prevRows) => [newTicket, ...prevRows]); // Update the state
-    toast.success("Added a new holiday.");
+    
     closeModal();
     console.log(holidayList);
     // Optionally close the modal after the alert
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/holidays",
+        "http://localhost:5000/api/events/create-event",
         holidayList
       );
       alert(response.data.message);
       alert("Holiday Added Successfully to database");
+      toast.success("Added a new holiday.");
     } catch (error) {
       console.log("Error Saving holiday", error);
       alert("Failed to save holiday. Please try again");
+      toast.error('Holiday could not be saved');
     }
   };
 
@@ -637,10 +640,10 @@ const Holidays = () => {
                                 <div className="grid grid-cols-1 gap-4">
                                   <TextField
                                     label="Holiday Name"
-                                    value={holidayList.holiday}
+                                    value={holidayList.title}
                                     onChange={(e) =>
                                       handleHolidayChange(
-                                        "holiday",
+                                        "title",
                                         e.target.value
                                       )
                                     }
@@ -656,11 +659,11 @@ const Holidays = () => {
                                       dateAdapter={AdapterDayjs}
                                     >
                                       <DatePicker
-                                        label="Date"
+                                        label="Start Date"
                                         sx={{ width: "100%" }}
                                         value={
-                                          holidayList.date
-                                            ? dayjs(holidayList.date)
+                                          holidayList.start
+                                            ? dayjs(holidayList.start)
                                             : null
                                         } // Convert string to Dayjs
                                         onChange={(newDate) => {
@@ -668,7 +671,7 @@ const Holidays = () => {
                                             const formattedDate =
                                               newDate.format("YYYY-MM-DD"); // Format date
                                             handleHolidayChange(
-                                              "START DATE",
+                                              "start",
                                               formattedDate
                                             ); // Store as string
                                           }
@@ -686,8 +689,8 @@ const Holidays = () => {
                                         label="END DATE"
                                         sx={{ width: "100%" }}
                                         value={
-                                          holidayList.enddate
-                                            ? dayjs(holidayList.enddate)
+                                          holidayList.end
+                                            ? dayjs(holidayList.end)
                                             : null
                                         } // Convert string to Dayjs
                                         onChange={(newDate) => {
@@ -695,7 +698,7 @@ const Holidays = () => {
                                             const formattedDate =
                                               newDate.format("YYYY-MM-DD"); // Format date
                                             handleHolidayChange(
-                                              "enddate",
+                                              "end",
                                               formattedDate
                                             ); // Store as string
                                           }
@@ -803,19 +806,19 @@ const Holidays = () => {
                       <div>
                         <div className="flex justify-between py-2 border-b">
                           <h1 className="font-semibold">Holiday Name</h1>
-                          <span>{holidayList.holiday}</span>
+                          <span>{holidayList.title}</span>
                         </div>
                       </div>
                       <div>
                         <div className="flex justify-between py-2 border-b">
                           <h1 className="font-semibold"> Start Date</h1>
-                          <span>{holidayList.date}</span>
+                          <span>{holidayList.start}</span>
                         </div>
                       </div>
                       <div>
                         <div className="flex justify-between py-2 border-b">
                           <h1 className="font-semibold">End Date</h1>
-                          <span>{holidayList.enddate}</span>
+                          <span>{holidayList.end}</span>
                         </div>
                       </div>
                       <div>

@@ -17,6 +17,126 @@ const Tasklist = () => {
   const [title, SetTitle] = useState("");
   const [description, SetDescription] = useState("");
   const [department, SetDepartment] = useState("");
+  const [priorityFilter, setPriorityFilter] = useState("");
+
+  const [departmentFilter, setDepartmentFilter] = useState("");
+   const [allRows, setAllRows] = useState([
+          {
+            id: 1,
+            ticketTitle: "Financial Forcasting And Budgeting",
+            Assignees: [
+              "Saddhya Sawaikar",
+            "Sankalp Kalangutkar",
+            "Supriya Gaonkar",
+            "Neha Tari",
+            ],
+            AssigneeNames: ["Riya", "Piya", "Siya"],
+            DueDate: "10th october 2024",
+            priority: "High",
+            department: "IT",
+            status: "Upcoming",
+            requestDate: "2024-10-01",
+          },
+          {
+            id: 2,
+            ticketTitle: "Annual Co-orporate Network And Networking Events",
+            Assignees: [
+              "Riya Naik", "Parinda Raikar", "Amisha Naik"
+            ],
+            DueDate: "12th october 2024",
+            priority: "Medium",
+            department: "HR",
+            status:"Ongoing",
+            requestDate: "2024-10-03",
+          },
+          {
+            id: 3,
+            ticketTitle: "Website Redesign",
+            Assignees: [
+              "John Doe", "Jane Smith", "Alex Johnson"
+            ],
+            DueDate: "15th october 2024",
+            priority: "High",
+            department: "Tech",
+            status: "Completed",
+            requestDate: "2024-10-05",
+          },
+          {
+            id: 4,
+            ticketTitle: "Bussiness Process optimizations and Automations",
+            Assignees: [
+              "Jayesh Redkar", "Geeta parab", "Ashita Parab"
+            ],
+            DueDate: "30th october 2024",
+            priority: "Low",
+            department: "Admin",
+            status: "Pending",
+            requestDate: "2024-10-06",
+          },
+          {
+            id: 5,
+            ticketTitle: "Data Privacy and GDPR Compliance Initiative",
+            Assignees: [
+              "Govardhan Parab", "Dgymj Lodh", "Dold Peold"
+            ],
+            DueDate: "2th November 2024",
+            priority: "Medium",
+            department: "HR",
+            status: "Ongoing",
+            requestDate: "2024-10-07",
+          },
+          {
+            id: 6,
+            ticketTitle: "Launch a New Digital Marketing Initiative ",
+            Assignees: [
+              "Siya Amonkar", "Chaya Shinde", "Priya Dessai"
+            ],
+            DueDate: "7th November 2024",
+            priority: "High",
+            department: "IT",
+            status:"upcoming",
+            requestDate: "2024-10-08",
+          },
+          {
+            id: 7,
+            ticketTitle: "Data Privacy And GDPR Compliance Initiative",
+            Assignees: [
+              "Mahima Naik", "Angela Vaz", "Urvi Palang"
+            ],
+            DueDate: "9th November 2024",
+            priority: "Low",
+            department: "Tech",
+            status:"Ongoing",
+            requestDate: "2024-10-09",
+          },
+          {
+            id: 8,
+            ticketTitle: "",
+            Assignees: [
+              "https://i.pravatar.cc/150?img=1",
+              "https://i.pravatar.cc/150?img=2",
+              "https://i.pravatar.cc/150?img=3",
+            ],
+            DueDate: "10th November 2024",
+            priority: "Low",
+            department: "Admin",
+            status:"Pending",
+            requestDate: "2024-10-10",
+          },
+          {
+            id: 9,
+            ticketTitle: "Email Access Issue",
+            Assignees: [
+              "Rami Naik", "Krutika Ghadi", "Rajeshwari Maheshwari"
+            ],
+            DueDate: "20th November 2024",
+            priority: "Medium",
+            department: "IT",
+            status:"Ongoing",
+            requestDate: "2024-10-11",
+          },
+        ]);
+
 
   const [view, SetView] = useState("Grid View");
 
@@ -166,6 +286,10 @@ const Tasklist = () => {
     SetDepartment(department);
     SetDescription(description);
     SetTitle(title);
+    console.log(title);
+    console.log(description);
+    console.log(department);
+    
     console.log("Opening MOdal of Edit");
   };
 
@@ -220,8 +344,8 @@ const Tasklist = () => {
               </MenuItem>
               <MenuItem
                 value="edit"
-                onClick={(value, titlee, descriptions, department) =>
-                  setEditModalOpen("Edit", title, description, department)
+                onClick={(value, value1, value2, value3,value4) =>
+                  setEditModalOpen(value, Title, description, Department,Assignees)
                 }
               >
                 Edit
@@ -290,7 +414,15 @@ const Tasklist = () => {
 
   const closeModal = () => SetModalOpen(false);
 
+  const filteredRows =
+  department === ""
+    ? allRows // show all rows if no department is selected
+    : allRows.filter((row) => row.department === department);
+
+
   const filterTasks = (tasks) => {
+    if(view === "Grid View"){
+    
     if (!searchTerm.trim()) return tasks; // No filtering if search term is empty
     return tasks.filter(
       (task) =>
@@ -298,6 +430,10 @@ const Tasklist = () => {
         task.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
         task.Department.toLowerCase().includes(searchTerm.toLowerCase())
     );
+  }
+  else {
+    return filteredRows
+  }
   };
 
   return (
@@ -377,7 +513,7 @@ const Tasklist = () => {
             </div>
           </>
         ) : (
-          <TasklistGrid />
+          <TasklistGrid  allRows={allRows} setAllRows={setAllRows} filterTasks={filterTasks} filteredRows={filteredRows}/>
         )}
       </div>
       {modalOpen && (
@@ -385,6 +521,10 @@ const Tasklist = () => {
           <AssignTaskForm
             department={department}
             description={description}
+            SetTitle={SetTitle}
+            SetDepartment={SetDepartment}
+            SetDescription={SetDescription}
+
             Title={title}
             EditValue={Editvalue}
             title={
@@ -400,6 +540,7 @@ const Tasklist = () => {
             setProjectData={setProjectData}
             setTasks={setTasks}
             tasks={tasks}
+            
           />
         </NewModal>
       )}

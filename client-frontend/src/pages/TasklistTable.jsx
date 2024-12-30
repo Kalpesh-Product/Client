@@ -182,7 +182,7 @@ const TasklistTable = () => {
                 View Details
               </MenuItem>
               <MenuItem value="edit">Edit</MenuItem>
-              <MenuItem value="delete" onClick={() => handleEditModal()}>
+              <MenuItem value="delete" onClick={handleEditModal}>
                 Delete
               </MenuItem>
             </Select>
@@ -320,6 +320,8 @@ const TasklistTable = () => {
   const handleEditModal = () => {
     SetModalOpen(true);
     SetModalType("Delete_Row");
+    console.log(modalType);
+  
   };
   return (
     <div className="flex min-h-screen">
@@ -327,7 +329,7 @@ const TasklistTable = () => {
         <div className="flex flex-row justify-between">
           <h2 className="text-2xl">{taskTitle}</h2>
           <button
-            className="px-4 py-2 bg-[#0db4ea] text-white font-semibold rounded-md shadow-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="px-4 py-2 bg-[rgb(13,180,234)] text-white font-semibold rounded-md shadow-md focus:outline-none focus:ring-2 focus:ring-blue-400"
             onClick={() => assignTaskbtnClick("task2", taskTitle)}
           >
             + Assign Task

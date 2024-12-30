@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   TextField,
   Button,
@@ -42,6 +42,9 @@ const AssignTaskForm = ({
   EditValue,
   department,
   description,
+  SetTitle,
+  SetDepartment,
+  SetDescription,
   Title,
   projectTitle,
   projectData,
@@ -51,12 +54,20 @@ const AssignTaskForm = ({
 }) => {
   const [selectedOptions, setSelectedOptions] = useState([]);
 
-  const projectTitles = [
-    ...tasks.ongoing.map((task) => task.Title),
+  useEffect(()=>{
+    console.log(department);
+    console.log(description);
+
+  },[])
+
+  const projectTitles =  modalType !== 'Delete_Row' ? [
+   
+     ...tasks.ongoing.map((task) => task.Title),
     ...tasks.upcoming.map((task) => task.Title),
     ...tasks.pending.map((task) =>task.Title),
     ...tasks.completed.map((tasks) =>tasks.Title),
-  ];
+   
+  ] : [];
 
   const [formData, setFormData] = useState({
     taskName: "",
@@ -64,6 +75,7 @@ const AssignTaskForm = ({
     priority: "",
     status: "",
     project: "",
+    description:""
   });
 
   const [membersData, setMembersData] = useState({
@@ -109,6 +121,13 @@ const AssignTaskForm = ({
   const navigate = useNavigate();
 
   const names = extractNames(data);
+
+  const handleEditField = (e) =>{
+    SetDepartment(e.target.value);
+    SetDescription(e.target.value);
+    SetTitle(e.target.value)
+    
+  }
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -301,7 +320,31 @@ const AssignTaskForm = ({
                 </Grid>
               </div>
             </>
-          ) : modalType === "Add Task" ? (
+          ) : modalType === "Delete_Row" ? (
+            <>
+              <div className="container">
+                <div className="main">
+                  <h1>Are You Sure you want to delete ?</h1>
+                </div>
+                <div className="btns">
+                  <Button
+                   variant="contained"
+                   color="red"
+                   fullWidth>
+                     Delete
+                  </Button>
+                  <Button
+                   variant="contained"
+                   color="primary"
+                   fullWidth
+                   onClick={()=>handleClose()}>
+                     Close
+                  </Button>
+                </div>
+              </div>
+            </>
+          ) :
+           modalType === "Add Task" ? (
             <>
               <FormStepper
                 steps={steps2}
@@ -359,6 +402,20 @@ const AssignTaskForm = ({
                             </TextField>
                           </Grid>
 
+                          <Grid item xs={12}>
+                            <TextField
+                              name="description"
+                              label="Tasks Description"
+                              value={formData.description}
+                              fullWidth
+                              onChange={handleChange}
+                              multiline
+                              rows={4}
+                            />
+                          </Grid>
+
+
+
                           {/* Asset Type Dropdown */}
                           <Grid item xs={12}>
                             <TextField
@@ -381,7 +438,23 @@ const AssignTaskForm = ({
                           <Grid item xs={12}>
                             <LocalizationProvider dateAdapter={AdapterDayjs}>
                               <DatePicker
-                                label="Date"
+                                label=" Start Date"
+                                // slotProps={{ textField: { size: "small" } }}
+                                sx={{ width: "-webkit-fill-available" }}
+                                renderInput={(params) => (
+                                  <TextField
+                                    {...params}
+                                    className="w-full md:w-1/4"
+                                  />
+                                )}
+                              />
+                            </LocalizationProvider>
+                          </Grid>
+
+                          <Grid item xs={12}>
+                            <LocalizationProvider dateAdapter={AdapterDayjs}>
+                              <DatePicker
+                                label="End Date"
                                 // slotProps={{ textField: { size: "small" } }}
                                 sx={{ width: "-webkit-fill-available" }}
                                 renderInput={(params) => (
@@ -416,6 +489,7 @@ const AssignTaskForm = ({
                             variant="contained"
                             color="primary"
                             onClick={(e) => handleNextStep(e, handleNext)}
+
                           >
                             Next
                           </Button>
@@ -451,7 +525,7 @@ const AssignTaskForm = ({
                             <span>{formData.status || "N/A"}</span>
                           </div>
                         </div>
-                        <Button variant="contained" color="primary">
+                        <Button variant="contained" color="primary"  onClick={()=>handleClose()}>>
                           Submit
                         </Button>
                       </>
@@ -521,11 +595,11 @@ const AssignTaskForm = ({
                               value={insideAddTask.priority}
                               onChange={handleChange}
                             >
-                              {priorityType.map((type, index) => (
+                              {/* {priorityType.map((type, index) => (
                                 <MenuItem key={index} value={type}>
                                   {type}
                                 </MenuItem>
-                              ))}
+                              ))} */}
                             </TextField>
                           </Grid>
 
@@ -599,7 +673,7 @@ const AssignTaskForm = ({
                           <Grid item xs={12}>
                             <TextField
                               name="Department"
-                              label="Project Category"
+                              label="Department"
                               value={projectData.Department}
                               fullWidth
                               onChange={handleChange}
@@ -646,7 +720,23 @@ const AssignTaskForm = ({
                           <Grid item xs={12}>
                             <LocalizationProvider dateAdapter={AdapterDayjs}>
                               <DatePicker
-                                label="Date"
+                                label=" Start Date"
+                                // slotProps={{ textField: { size: "small" } }}
+                                sx={{ width: "-webkit-fill-available" }}
+                                renderInput={(params) => (
+                                  <TextField
+                                    {...params}
+                                    className="w-full md:w-1/4"
+                                  />
+                                )}
+                              />
+                            </LocalizationProvider>
+                          </Grid>
+
+                          <Grid item xs={12}>
+                            <LocalizationProvider dateAdapter={AdapterDayjs}>
+                              <DatePicker
+                                label="End Date"
                                 // slotProps={{ textField: { size: "small" } }}
                                 sx={{ width: "-webkit-fill-available" }}
                                 renderInput={(params) => (
@@ -728,6 +818,7 @@ const AssignTaskForm = ({
                           variant="contained"
                           color="primary"
                           type="submit"
+                          onClick={()=>handleClose()}
                         >
                           Submit
                         </Button>
@@ -737,29 +828,8 @@ const AssignTaskForm = ({
                 }}
               ></FormStepper>
             </>
-          ) : modalType === "Delete_Row" ? (
-            <>
-              <div className="container">
-                <div className="main">
-                  <h1>Are You Sure you want to delete ?</h1>
-                </div>
-                <div className="btns">
-                  <Button
-                   variant="contained"
-                   color="red"
-                   fullWidth>
-                     Delete
-                  </Button>
-                  <Button
-                   variant="contained"
-                   color="primary"
-                   fullWidth>
-                     Close
-                  </Button>
-                </div>
-              </div>
-            </>
-          ) : EditValue ? (
+          ) 
+          : EditValue ? (
             <>
               <FormStepper
                 steps={editSteps}
@@ -771,21 +841,25 @@ const AssignTaskForm = ({
                         {/* Asset Number */}
                         <Grid item xs={12}>
                           <TextField
-                            label="Department"
+                            name="department"
+                            label="Departments"
                             value={department}
+                            onChange={(e)=>SetDepartment(e.target.value)}
                             fullWidth
                           />
                         </Grid>
                         <Grid item xs={12}>
-                          <TextField label="Title" value={Title} fullWidth />
+                          <TextField label="Title" name="Title" value={Title} fullWidth onChange={(e)=>SetTitle(e.target.value)} />
                         </Grid>
                         <Grid item xs={12}>
                           <TextField
-                            label="description"
+                            label="descriptions"
+                            name="description"
                             fullWidth
                             multiline
                             rows={4}
                             value={description}
+                            onChange={(e)=>SetDescription(e.target.value)}
                           ></TextField>
                         </Grid>
 
@@ -806,19 +880,19 @@ const AssignTaskForm = ({
                           {/* Asset Number */}
                           <div className="flex justify-between py-2 border-b">
                             <h1 className="font-semibold">Project</h1>
-                            <span>{projectData.Title || "N/A"}</span>
+                            <span>{Title || "N/A"}</span>
                           </div>
 
                           {/* Asset Type */}
                           <div className="flex justify-between py-2 border-b">
                             <h1 className="font-semibold">Department</h1>
-                            <span>{projectData.Department || "N/A"}</span>
+                            <span>{department || "N/A"}</span>
                           </div>
 
                           {/* Asset Name */}
                           <div className="flex justify-between py-2 border-b">
                             <h1 className="font-semibold">Description</h1>
-                            <span>{projectData.description || "N/A"}</span>
+                            <span>{description || "N/A"}</span>
                           </div>
 
                           {/* Assignees */}
@@ -837,6 +911,7 @@ const AssignTaskForm = ({
                           variant="contained"
                           color="primary"
                           type="submit"
+                          onClick={()=>handleClose()}
                         >
                           Submit
                         </Button>

@@ -6,6 +6,8 @@ const {
   getHolidays,
 } = require("../controllers/eventsController/eventsController");
 
+
+
 router.post("/create-event", createEvent);
 router.get("/all-events", getAllEvents);
 router.get("/get-events", getNormalEvents);
