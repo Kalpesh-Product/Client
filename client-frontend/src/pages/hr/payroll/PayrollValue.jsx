@@ -122,7 +122,7 @@ const PayrollValue = () => {
       </Typography>
       <TableContainer
         component={Paper}
-        className="p-4 bg-white w-[80vw] md:w-full"
+        className="py-4 w-[80vw] md:w-full"
       >
         <Table>
           <TableHead>

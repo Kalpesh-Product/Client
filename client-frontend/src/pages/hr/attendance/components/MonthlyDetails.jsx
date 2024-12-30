@@ -14,7 +14,7 @@ const WidgetCard = ({ title, value, unit }) => {
 
 const MonthlyDetailsWidget = ({ totalHours, lateCheckIns, avgBreakTime }) => {
   return (
-    <div className="flex flex-1 gap-4 w-full justify-between">
+    <div className="flex flex-1 gapy-4 w-full justify-between">
       {/* Total Hours Worked Widget */}
       <WidgetCard title="Total Hours Worked" value={totalHours} unit="hrs" />
 

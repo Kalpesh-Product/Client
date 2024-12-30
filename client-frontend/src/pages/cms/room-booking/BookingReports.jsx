@@ -139,14 +139,14 @@ export default function BookingReports() {
 
   // Column definitions for AgGrid
   const columns = [
-    { headerName: "ID", field: "id", flex: 1 },
-    { headerName: "Name", field: "name", flex: 1 },
-    { headerName: "Department", field: "department", flex: 1 },
-    { headerName: "Date", field: "date", flex: 1 },
-    { headerName: "Start Time", field: "startTime", flex: 1 },
-    { headerName: "End Time", field: "endTime", flex: 1 },
-    { headerName: "Duration", field: "duration", flex: 1 },
-    { headerName: "Credits Used", field: "credits", flex: 1 },
+    { headerName: "ID", field: "id" },
+    { headerName: "Name", field: "name" },
+    { headerName: "Department", field: "department" },
+    { headerName: "Date", field: "date" },
+    { headerName: "Start Time", field: "startTime" },
+    { headerName: "End Time", field: "endTime" },
+    { headerName: "Duration", field: "duration" },
+    { headerName: "Credits Used", field: "credits" },
     {
       headerName: "Status",
       field: "status",
@@ -182,10 +182,10 @@ export default function BookingReports() {
   ];
 
   return (
-    <section className="p-4 bg-white w-[80vw] md:w-full">
+    <section className="py-4 w-[80vw] md:w-full">
       <h1 className="text-2xl font-bold text-gray-800 mb-6">Booking Reports</h1>
 
-      <div className="bg-white rounded-md">
+      <div className="rounded-md">
         {/* Filters */}
         <div className="flex flex-col h-full md:flex-row md:items-center md:space-x-4 mb-4">
           {/* Department Filter */}
@@ -262,7 +262,7 @@ export default function BookingReports() {
         </div>
 
         {/* AgGrid */}
-        <Box className="w-full" height="100%" sx={{ overflowX: "auto" }}>
+        <Box className="w-full" height="100%" >
           <AgTable
             data={filteredBookings}
             columns={columns}

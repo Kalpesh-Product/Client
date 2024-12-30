@@ -980,17 +980,17 @@ const DepartmentDash = () => {
   };
 
   return (
-    <div className="flex  overflow-y-auto bg-white">
+    <div className="flex  overflow-y-auto">
       {/* <ModuleSidebar /> */}
 
-      <div className="w-full bg-white">
+      <div className="w-full">
         {/* Frontend submodules */}
         {location.pathname.startsWith("/frontend") && (
           <>
             {location.pathname === "/frontend" ||
             location.pathname === "/frontend/dashboard" ? (
               <div>
-                <div className="bg-white p-4 h-screen overflow-auto w-full rounded-md">
+                <div className="py-4 h-screen overflow-auto w-full rounded-md">
                   <h1 className="text-2xl font-bold mb-4">
                     Frontend Dashboard
                   </h1>
@@ -1095,7 +1095,7 @@ const DepartmentDash = () => {
                 </Box>
               </div>
             ) : location.pathname.includes("/frontend/live-theme") ? (
-              <div className="p-4 w-full">
+              <div className="py-4 w-full">
                 <h2 className="text-2xl font-bold mb-6">Edit Live Theme</h2>
                 {/* <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6">
                   {themes.map((theme) => (
@@ -1119,7 +1119,7 @@ const DepartmentDash = () => {
                 <EditTemplate template={themes[0]} />
               </div>
             ) : location.pathname === "/frontend/themes" ? (
-              <div className="w-full p-4">
+              <div className="w-full py-4">
                 <h2 className="text-2xl font-bold mb-6">Themes</h2>
                 {/* <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6">
                   {themes.map((theme) => (
@@ -1162,7 +1162,7 @@ const DepartmentDash = () => {
                     {selectedTheme.name}
                   </h2>
                   <div className="flex flex-col lg:flex-row justify-between gap-[15rem] bg-white p-2 rounded-md">
-                    <div className="h-full flex flex-col gap-4 w-full">
+                    <div className="h-full flex flex-col gapy-4 w-full">
                       <h1 className="text-2xlfont-semibold">INCLUSIONS</h1>
                       <ul className="list-disc pl-5 my-3 text-md">
                         {selectedTheme.features.map((feature, index) => (
@@ -1280,7 +1280,7 @@ const DepartmentDash = () => {
           <>
             {location.pathname === "/hr" ||
             location.pathname === "/hr/dashboard" ? (
-              <div className="bg-white px-4 rounded-lg">
+              <div className="px-0 rounded-lg">
                 {hrWidgets.map((section, index) => (
                   <WidgetSection
                     key={index}
@@ -1292,14 +1292,14 @@ const DepartmentDash = () => {
             ) : location.pathname === "/hr/onboarding" ? (
               <>
                 {/* <LeaveReports /> */}
-                <div className="bg-white p-4 rounded-lg ">
+                <div className="py-4 rounded-lg ">
                   <div className="flex w-full  pl-0 text-lg border-b-0  gap-4"></div>
                   <Onboarding />
                 </div>
               </>
             ) : location.pathname === "/hr/events" ? (
               <>
-                <div className="bg-white p-4 rounded-lg ">
+                <div className="py-4 rounded-lg ">
                   <div className="flex w-full  pl-0 text-lg border-b-0  gap-4">
                     <h2 className="text-2xl font-bold ">Events</h2>
                   </div>
@@ -1308,7 +1308,7 @@ const DepartmentDash = () => {
               </>
             ) : location.pathname === "/hr/cvdump" ? (
               <>
-                <div className="bg-white p-4 rounded-lg">
+                <div className="py-4 rounded-lg">
                   {/* <div className="mb-8 flex justify-between">
                     <h1 className="text-2xl font-bold">CV DUMP</h1>
                   </div> */}
@@ -1317,7 +1317,7 @@ const DepartmentDash = () => {
               </>
             ) : location.pathname === "/hr/cvdump/applicants" ? (
               <>
-                <div className="bg-white p-4 rounded-lg ">
+                <div className="py-4 rounded-lg ">
                   <div className="flex w-full  pl-0 text-lg border-b-0  gap-4">
                     <h2 className="text-2xl  font-bold ">Applicants</h2>
                   </div>
@@ -1327,7 +1327,7 @@ const DepartmentDash = () => {
             ) : location.pathname === "/hr/company-settings" ? (
               <>
                 {/* <LeaveReports /> */}
-                <div className="bg-white p-4 rounded-lg ">
+                <div className="py-4 rounded-lg ">
                   <div className="flex w-full  pl-0 text-lg border-b-0  gap-4"></div>
                   <CompanySettings />
                 </div>
@@ -1345,7 +1345,7 @@ const DepartmentDash = () => {
                 {/* Leave Widgets */}
                 {/* <LeaveWidget1 /> */}
 
-                <div className="bg-white p-4 rounded-lg ">
+                <div className="py-4 rounded-lg ">
                   <div className="mb-4 flex justify-between">
                     <h1 className="text-2xl font-bold">Leave Management</h1>
                   </div>
@@ -1362,7 +1362,7 @@ const DepartmentDash = () => {
                     <MyLeavesButton />
                   </div>
                   <div className=" ">
-                    <div className="flex w-full p-4 pb-4 pl-0 text-lg border-b-0  gap-4">
+                    <div className="flex w-full py-4 pb-4 pl-0 text-lg border-b-0  gap-4">
                       <h2 className="text-2xl  font-bold ">
                         Leaves Pending For Approval
                       </h2>
@@ -1379,7 +1379,7 @@ const DepartmentDash = () => {
             ) : location.pathname === "/hr/leaves/my-leaves" ? (
               <>
                 {/* <MyLeaves /> */}
-                <div className="bg-white p-4 rounded-lg ">
+                <div className="py-4 rounded-lg ">
                   <div className="flex w-full  pl-0 text-lg border-b-0  gap-4">
                     <h2 className="text-2xl  font-bold ">Leave Requests</h2>
                   </div>
@@ -1389,7 +1389,7 @@ const DepartmentDash = () => {
             ) : location.pathname === "/hr/leaves/past-leaves" ? (
               <>
                 {/* <LeaveReports /> */}
-                <div className="bg-white p-4 rounded-lg ">
+                <div className="py-4 rounded-lg ">
                   <div className="flex w-full  pl-0 text-lg border-b-0  gap-4">
                     <h2 className="text-2xl  font-bold ">View Past Leaves</h2>
                   </div>
@@ -1399,7 +1399,7 @@ const DepartmentDash = () => {
             ) : location.pathname === "/hr/leaves/due-approvals" ? (
               <>
                 {/* <LeaveReports /> */}
-                <div className="bg-white p-4 rounded-lg ">
+                <div className="py-4 rounded-lg ">
                   <div className="flex w-full  pl-0 text-lg border-b-0  gap-4">
                     <h2 className="text-2xl  font-bold ">
                       Subordinate Due Approvals
@@ -1411,7 +1411,7 @@ const DepartmentDash = () => {
             ) : location.pathname === "/hr/leaves/manage-leaves" ? (
               <>
                 {/* <LeaveReports /> */}
-                <div className="bg-white p-4 rounded-lg ">
+                <div className="py-4 rounded-lg ">
                   <div className="flex w-full  pl-0 text-lg border-b-0  gap-4">
                     <h2 className="text-2xl  font-bold ">Manage Leaves</h2>
                   </div>
@@ -1421,7 +1421,7 @@ const DepartmentDash = () => {
             ) : location.pathname === "/hr/payslips" ? (
               <>
                 {/* <LeaveReports /> */}
-                <div className="bg-white p-4 rounded-lg ">
+                <div className="py-4 rounded-lg ">
                   <div className="flex w-full  pl-0 text-lg border-b-0  gap-4">
                     <h2 className="text-2xl font-bold ">Payslip</h2>
                   </div>
@@ -1431,7 +1431,7 @@ const DepartmentDash = () => {
             ) : location.pathname === "/hr/sops" ? (
               <>
                 {/* <LeaveReports /> */}
-                <div className="bg-white p-4 rounded-lg ">
+                <div className="py-4 rounded-lg ">
                   <div className="flex w-full  pl-0 text-lg border-b-0  gap-4">
                     <h2 className="text-2xl  font-bold ">SOPs</h2>
                   </div>
@@ -1441,7 +1441,7 @@ const DepartmentDash = () => {
             ) : location.pathname === "/hr/policies" ? (
               <>
                 {/* <LeaveReports /> */}
-                <div className="bg-white p-4 rounded-lg ">
+                <div className="py-4 rounded-lg ">
                   <div className="flex w-full  pl-0 text-lg border-b-0  gap-4">
                     <h2 className="text-2xl  font-bold ">Policies</h2>
                   </div>
@@ -1451,7 +1451,7 @@ const DepartmentDash = () => {
             ) : location.pathname === "/hr/employment-agreement" ? (
               <>
                 {/* <LeaveReports /> */}
-                <div className="bg-white p-4 rounded-lg ">
+                <div className="py-4 rounded-lg ">
                   <div className="flex w-full  pl-0 text-lg border-b-0  gap-4">
                     <h2 className="text-2xl font-bold ">
                       Employment Agreement
@@ -1463,7 +1463,7 @@ const DepartmentDash = () => {
             ) : location.pathname === "/hr/employment-agreement-details" ? (
               <>
                 {/* <LeaveReports /> */}
-                <div className="bg-white p-4 rounded-lg ">
+                <div className="py-4 rounded-lg ">
                   <div className="flex w-full  pl-0 text-lg border-b-0  gap-4">
                     <h2 className="text-2xl  font-bold ">
                       Employment Agreement
@@ -1476,7 +1476,7 @@ const DepartmentDash = () => {
             ) : location.pathname === "/hr/company-handbook" ? (
               <>
                 {/* <LeaveReports /> */}
-                <div className="bg-white p-4 rounded-lg ">
+                <div className="py-4 rounded-lg ">
                   <div className="flex w-full  pl-0 text-lg border-b-0  gap-4">
                     <h2 className="text-2xl font-bold ">Company Handbook</h2>
                   </div>
@@ -1498,7 +1498,7 @@ const DepartmentDash = () => {
             ) : location.pathname === "/hr/company-handbook/sop" ? (
               <>
                 {/* <LeaveReports /> */}
-                <div className="bg-white p-4 rounded-lg ">
+                <div className="py-4 rounded-lg ">
                   <div className="flex w-full  pl-0 text-lg border-b-0  gap-4">
                     <h2 className="text-2xl  font-bold ">SOPs</h2>
                   </div>
@@ -1508,7 +1508,7 @@ const DepartmentDash = () => {
             ) : location.pathname === "/hr/company-handbook/sop-details" ? (
               <>
                 {/* <LeaveReports /> */}
-                <div className="bg-white p-4 rounded-lg ">
+                <div className="py-4 rounded-lg ">
                   <div className="flex w-full  pl-0 text-lg border-b-0  gap-4">
                     <h2 className="text-2xl  font-bold ">SOP Details</h2>
                   </div>
@@ -1518,7 +1518,7 @@ const DepartmentDash = () => {
             ) : location.pathname === "/hr/company-handbook/policies" ? (
               <>
                 {/* <LeaveReports /> */}
-                <div className="bg-white p-4 rounded-lg ">
+                <div className="py-4 rounded-lg ">
                   <div className="flex w-full  pl-0 text-lg border-b-0  gap-4">
                     <h2 className="text-2xl  font-bold ">Policies</h2>
                   </div>
@@ -1528,7 +1528,7 @@ const DepartmentDash = () => {
             ) : location.pathname === "/hr/company-handbook/policy-details" ? (
               <>
                 {/* <LeaveReports /> */}
-                <div className="bg-white p-4 rounded-lg ">
+                <div className="py-4 rounded-lg ">
                   <div className="flex w-full  pl-0 text-lg border-b-0  gap-4">
                     <h2 className="text-2xl  font-bold ">Policy Details</h2>
                   </div>
@@ -1538,7 +1538,7 @@ const DepartmentDash = () => {
             ) : location.pathname === "/hr/holidays" ? (
               <>
                 {/* <LeaveReports /> */}
-                <div className="bg-white p-4 rounded-lg ">
+                <div className="py-4 rounded-lg ">
                   <div className="flex w-full  pl-0 text-lg border-b-0  gap-4">
                     <h2 className="text-2xl font-bold ">Holidays</h2>
                   </div>
@@ -1707,7 +1707,7 @@ const DepartmentDash = () => {
               </>
             ) : location.pathname === "/it/tickets" ? (
               <>
-                <div className="bg-white p-4 rounded-lg">
+                <div className="p-4 rounded-lg">
                   <div className="mb-4 flex justify-between">
                     <h1 className="text-2xl font-bold">Ticket Management</h1>
                   </div>
@@ -1752,7 +1752,7 @@ const DepartmentDash = () => {
                     {/* <div className="flex justify-center">
                       <RaiseTicketButton />
                     </div> */}
-                    <div className="flex w-full p-4 pb-4 pl-0 text-lg border-b-0 gap-4">
+                    <div className="flex w-full py-4 pb-4 pl-0 text-lg border-b-0 gap-4">
                       {/* <h2 className="text-2xl font-bold">My Tickets</h2> */}
                       <h2 className="text-2xl font-bold">
                         {/* Tickets Received Today */}

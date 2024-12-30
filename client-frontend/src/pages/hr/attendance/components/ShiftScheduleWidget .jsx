@@ -4,7 +4,7 @@ const ShiftScheduleWidget = ({ schedule }) => {
   const [selectedDay, setSelectedDay] = useState("Monday");
 
   return (
-    <div className="bg-white shadow-md rounded-lg p-4 w-full">
+    <div className="bg-white shadow-md rounded-lg py-4 w-full">
       <h2 className="text-xl font-semibold">Shift Schedule</h2>
 
       <div className="flex flex-col justify-between gap-8">

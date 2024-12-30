@@ -1,7 +1,7 @@
 import React from "react";
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/styles/ag-grid.css";
-import "ag-grid-community/styles/ag-theme-alpine.css";
+import "ag-grid-community/styles/ag-theme-quartz.css";
 
 const AgTable = React.memo(
   ({
@@ -14,14 +14,13 @@ const AgTable = React.memo(
     const defaultColDef = {
       resizable: true,
       sortable: true,
-      filter: true,
-      flex: 1,
+      // filter: true,
       autoHeight: true,
-      filter: "agTextColumnFilter",
-      floatingFilter: true,
+      // filter: "agTextColumnFilter",
+      // floatingFilter: true,
       cellStyle: {
         display: "flex",
-        justifyContent: "center",
+        justifyContent: "start",
         alignItems: "center",
         padding: "px", // Add padding for spacing
         // width:'100%'
@@ -45,15 +44,15 @@ const AgTable = React.memo(
 
     return (
       <div
-        className="ag-theme-alpine border-none w-full"
-        style={{ width: "100%", fontFamily: "Popins-Regular" }}>
+        className="ag-theme-quartz border-none w-full"
+        style={{ width: "100%",height:500,overflowY:'auto', fontFamily: "Popins-Regular" }}>
         <AgGridReact
           rowData={data}
           columnDefs={columns}
           defaultColDef={defaultColDef}
           pagination={true}
           paginationPageSize={paginationPageSize}
-          domLayout="autoHeight"
+          domLayout="normal"
           rowHeight={50} // Increased row height for better spacing
           getRowStyle={getRowStyle}
           // rowStyle={rowStyle}

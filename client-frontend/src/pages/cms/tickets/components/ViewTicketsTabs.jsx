@@ -30,7 +30,7 @@ const ViewTicketsTabs = () => {
 
   return (
     <div>
-      <div className=" w-full p-4 text-lg">
+      <div className=" w-full py-4 text-lg">
         <h2 className="text-2xl  font-bold">All Tickets</h2>
       </div>
 

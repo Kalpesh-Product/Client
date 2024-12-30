@@ -201,7 +201,7 @@ export const AssetAllocationWidget = () => {
   };
 
   return (
-    <div className="bg-white shadow-lg rounded-lg p-4 w-full cursor-pointer hover:bg-slate-100 transition-all">
+    <div className="bg-white shadow-lg rounded-lg py-4 w-full cursor-pointer hover:bg-slate-100 transition-all">
       <div className="flex items-center justify-between mb-4">
         <h2 className="text-xl font-semibold text-gray-800">
           Asset Allocation

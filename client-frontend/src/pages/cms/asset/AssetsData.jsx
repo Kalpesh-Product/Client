@@ -123,19 +123,18 @@ const filteredAssets = processedData.filter((asset) => {
 });
 
   const columns = [
-    { field: "id", headerName: "ID", flex: 1 },
-    { field: "department", headerName: "Department", flex: 1 },
-    { field: "assigneeName", headerName: "Assignee Name", flex: 1 },
-    { field: "assetNumber", headerName: "Asset Number", flex: 1 },
-    { field: "assetType", headerName: "Asset Type", flex: 1 },
-    { field: "assetName", headerName: "Asset Name", flex: 1 },
-    { field: "location", headerName: "Location", flex: 1 },
-    { field: "status", headerName: "Status", flex: 1 },
-    { field: "assignmentDate", headerName: "Assignment Date", flex: 1 },
+    { field: "id", headerName: "ID",sortable: true,width:100 },
+    { field: "department", headerName: "Department",sortable: true, },
+    { field: "assigneeName", headerName: "Assignee Name",sortable: true, },
+    { field: "assetNumber", headerName: "Asset Number",sortable: true, },
+    { field: "assetType", headerName: "Asset Type",sortable: true, },
+    { field: "assetName", headerName: "Asset Name",sortable: true, },
+    { field: "location", headerName: "Location",sortable: true, },
+    { field: "status", headerName: "Status",sortable: true, },
+    { field: "assignmentDate", headerName: "Assignment Date",sortable: true, },
     {
       field: "actions",
       headerName: "Actions",
-      flex: 1,
       cellRenderer: (params) =>
         params.data.status !== "Revoked" ? (
           <div className="p-2 mb-2 flex gap-2">

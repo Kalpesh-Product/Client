@@ -139,8 +139,8 @@ const Calender = () => {
   return (
     <div className="flex md:w-full">
       
-      <div className="flex-1 p-4 bg-white h-screen overflow-y-auto">
-        <div className="flex justify-between items-center">
+      <div className="flex-1 py-4 h-screen overflow-y-auto">
+        <div className="flex justify-between items-start">
           <h1 className="font-bold text-2xl pb-5">Calendar</h1>
           <FormGroup row>
             {["holiday", "event"].map((type) => (

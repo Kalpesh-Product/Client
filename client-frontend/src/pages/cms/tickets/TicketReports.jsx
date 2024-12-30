@@ -9,7 +9,7 @@ const TicketReports = () => {
       {/*  */}
       {/* <TestLink /> */}
       <div className="w-full">
-        <div className="p-4">
+        <div className="py-4">
           <h2 className="text-2xl  font-bold">Ticket Reports</h2>
         </div>
         <MyTicketsTable />

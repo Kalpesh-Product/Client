@@ -442,7 +442,7 @@ const Holidays = () => {
   };
 
   return (
-    <div className="w-[72vw] md:w-full transition-all duration-200 ease-in-out bg-white p-0 rounded-md">
+    <div className="w-[72vw] md:w-full transition-all duration-200 ease-in-out p-0 rounded-md">
       {/* <div className="bg-green-500">
         <h2>Today's Tickets</h2>
       </div> */}

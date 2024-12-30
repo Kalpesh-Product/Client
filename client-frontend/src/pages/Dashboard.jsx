@@ -54,7 +54,7 @@ export const WidgetSection = ({ heading, widgets }) => (
       {widgets.map((Widget, index) => (
         <div
           key={index}
-          className="bg-white p-0 w-full h-full shadow-md overflow-auto border-2 border-gray-100 rounded-md motion-preset-expand"
+          className="bg-white py-0 w-full h-full shadow-md overflow-auto border-2 border-gray-100 rounded-md motion-preset-expand"
         >
           {Widget}
         </div>
@@ -275,7 +275,7 @@ const Dashboard = () => {
     <div className="flex h-screen">
       {/*  */}
       {/* <MainSideBar /> */}
-      <div className="flex-1 bg-white p-4 overflow-y-auto">
+      <div className="flex-1 py-4 overflow-y-auto">
         {/* Heading 1 */}
         <h1 className="text-3xl motion-preset-slide-right-md font-bold">
           {auth?.user?.name}'s Dashboard
@@ -292,20 +292,20 @@ const Dashboard = () => {
           auth.user.role.roleTitle === "Super-Admin") && (
           <div className="grid grid-cols-1 md:grid-cols-1 gap-0">
             {/* Sales Widget */}
-            <div className="bg-white rounded-lg  ">
+            <div className="rounded-lg">
               <WidgetSection heading="Sales" widgets={allWidgets.Sales} />
             </div>
 
             {/* Finance Widget */}
-            <div className="bg-white   rounded-lg  ">
+            <div className="rounded-lg  ">
               <WidgetSection heading="Finance" widgets={allWidgets.Finance} />
             </div>
 
             {/* Other Widgets */}
-            <div className="bg-white   rounded-lg  ">
+            <div className="rounded-lg  ">
               <WidgetSection heading="Tech" widgets={allWidgets.Tech} />
             </div>
-            <div className="bg-white   rounded-lg  ">
+            <div className="rounded-lg  ">
               <WidgetSection heading="IT" widgets={allWidgets.IT} />
             </div>
           </div>
