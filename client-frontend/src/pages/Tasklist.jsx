@@ -139,7 +139,7 @@ const Tasklist = () => {
         };
 
         projects.forEach((project) => {
-          switch (project?.status.toLowerCase()) {
+          switch (project.status.toLowerCase()) {
             case "ongoing":
               groupedTasks.ongoing.push(project);
               break;
