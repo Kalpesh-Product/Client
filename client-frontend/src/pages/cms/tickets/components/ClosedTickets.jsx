@@ -45,26 +45,6 @@ const ClosedTickets = () => {
   //   return () => clearTimeout(timer);
   // }, [refreshTrigger]); // Depend on refreshTrigger to re-run the effect
 
-  const [hasRefreshed, setHasRefreshed] = useState(false);
-
-  useEffect(() => {
-    // Fetch the user from localStorage and update state
-    const storedUser = JSON.parse(localStorage.getItem("user"));
-    setUser(storedUser);
-    fetchmyTickets();
-
-    // Set a timeout to run the effect one more time after 2 seconds
-    const timer = setTimeout(() => {
-      if (!hasRefreshed) {
-        setHasRefreshed(true); // Mark as refreshed
-        fetchmyTickets(); // Run your fetching logic one more time
-      }
-    }, 1000);
-
-    // Cleanup to clear the timeout
-    return () => clearTimeout(timer);
-  }, [hasRefreshed]);
-
   const selectedDepartmentFilter = authUser.user.department[0].name; // Replace with the desired name or variable
 
   // Ticket With APIs & Local START
