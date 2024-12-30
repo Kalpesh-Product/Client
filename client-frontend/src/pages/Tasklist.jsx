@@ -21,207 +21,181 @@ const Tasklist = () => {
   const [priorityFilter, setPriorityFilter] = useState("");
   const [projects, setProjects] = useState([]);
 
-
   const [departmentFilter, setDepartmentFilter] = useState("");
-   const [allRows, setAllRows] = useState([
-          {
-            id: 1,
-            ticketTitle: "Financial Forcasting And Budgeting",
-            Assignees: [
-              "Saddhya Sawaikar",
-            "Sankalp Kalangutkar",
-            "Supriya Gaonkar",
-            "Neha Tari",
-            ],
-            AssigneeNames: ["Riya", "Piya", "Siya"],
-            DueDate: "10th october 2024",
-            priority: "High",
-            department: "IT",
-            status: "Upcoming",
-            requestDate: "2024-10-01",
-          },
-          {
-            id: 2,
-            ticketTitle: "Annual Co-orporate Network And Networking Events",
-            Assignees: [
-              "Riya Naik", "Parinda Raikar", "Amisha Naik"
-            ],
-            DueDate: "12th october 2024",
-            priority: "Medium",
-            department: "HR",
-            status:"Ongoing",
-            requestDate: "2024-10-03",
-          },
-          {
-            id: 3,
-            ticketTitle: "Website Redesign",
-            Assignees: [
-              "John Doe", "Jane Smith", "Alex Johnson"
-            ],
-            DueDate: "15th october 2024",
-            priority: "High",
-            department: "Tech",
-            status: "Completed",
-            requestDate: "2024-10-05",
-          },
-          {
-            id: 4,
-            ticketTitle: "Bussiness Process optimizations and Automations",
-            Assignees: [
-              "Jayesh Redkar", "Geeta parab", "Ashita Parab"
-            ],
-            DueDate: "30th october 2024",
-            priority: "Low",
-            department: "Admin",
-            status: "Pending",
-            requestDate: "2024-10-06",
-          },
-          {
-            id: 5,
-            ticketTitle: "Data Privacy and GDPR Compliance Initiative",
-            Assignees: [
-              "Govardhan Parab", "Dgymj Lodh", "Dold Peold"
-            ],
-            DueDate: "2th November 2024",
-            priority: "Medium",
-            department: "HR",
-            status: "Ongoing",
-            requestDate: "2024-10-07",
-          },
-          {
-            id: 6,
-            ticketTitle: "Launch a New Digital Marketing Initiative ",
-            Assignees: [
-              "Siya Amonkar", "Chaya Shinde", "Priya Dessai"
-            ],
-            DueDate: "7th November 2024",
-            priority: "High",
-            department: "IT",
-            status:"upcoming",
-            requestDate: "2024-10-08",
-          },
-          {
-            id: 7,
-            ticketTitle: "Data Privacy And GDPR Compliance Initiative",
-            Assignees: [
-              "Mahima Naik", "Angela Vaz", "Urvi Palang"
-            ],
-            DueDate: "9th November 2024",
-            priority: "Low",
-            department: "Tech",
-            status:"Ongoing",
-            requestDate: "2024-10-09",
-          },
-          {
-            id: 8,
-            ticketTitle: "",
-            Assignees: [
-              "https://i.pravatar.cc/150?img=1",
-              "https://i.pravatar.cc/150?img=2",
-              "https://i.pravatar.cc/150?img=3",
-            ],
-            DueDate: "10th November 2024",
-            priority: "Low",
-            department: "Admin",
-            status:"Pending",
-            requestDate: "2024-10-10",
-          },
-          {
-            id: 9,
-            ticketTitle: "Email Access Issue",
-            Assignees: [
-              "Rami Naik", "Krutika Ghadi", "Rajeshwari Maheshwari"
-            ],
-            DueDate: "20th November 2024",
-            priority: "Medium",
-            department: "IT",
-            status:"Ongoing",
-            requestDate: "2024-10-11",
-          },
-        ]);
+  const [allRows, setAllRows] = useState([
+    {
+      id: 1,
+      ticketTitle: "Financial Forcasting And Budgeting",
+      Assignees: [
+        "Saddhya Sawaikar",
+        "Sankalp Kalangutkar",
+        "Supriya Gaonkar",
+        "Neha Tari",
+      ],
+      AssigneeNames: ["Riya", "Piya", "Siya"],
+      DueDate: "10th october 2024",
+      priority: "High",
+      department: "IT",
+      status: "Upcoming",
+      requestDate: "2024-10-01",
+    },
+    {
+      id: 2,
+      ticketTitle: "Annual Co-orporate Network And Networking Events",
+      Assignees: ["Riya Naik", "Parinda Raikar", "Amisha Naik"],
+      DueDate: "12th october 2024",
+      priority: "Medium",
+      department: "HR",
+      status: "Ongoing",
+      requestDate: "2024-10-03",
+    },
+    {
+      id: 3,
+      ticketTitle: "Website Redesign",
+      Assignees: ["John Doe", "Jane Smith", "Alex Johnson"],
+      DueDate: "15th october 2024",
+      priority: "High",
+      department: "Tech",
+      status: "Completed",
+      requestDate: "2024-10-05",
+    },
+    {
+      id: 4,
+      ticketTitle: "Bussiness Process optimizations and Automations",
+      Assignees: ["Jayesh Redkar", "Geeta parab", "Ashita Parab"],
+      DueDate: "30th october 2024",
+      priority: "Low",
+      department: "Admin",
+      status: "Pending",
+      requestDate: "2024-10-06",
+    },
+    {
+      id: 5,
+      ticketTitle: "Data Privacy and GDPR Compliance Initiative",
+      Assignees: ["Govardhan Parab", "Dgymj Lodh", "Dold Peold"],
+      DueDate: "2th November 2024",
+      priority: "Medium",
+      department: "HR",
+      status: "Ongoing",
+      requestDate: "2024-10-07",
+    },
+    {
+      id: 6,
+      ticketTitle: "Launch a New Digital Marketing Initiative ",
+      Assignees: ["Siya Amonkar", "Chaya Shinde", "Priya Dessai"],
+      DueDate: "7th November 2024",
+      priority: "High",
+      department: "IT",
+      status: "upcoming",
+      requestDate: "2024-10-08",
+    },
+    {
+      id: 7,
+      ticketTitle: "Data Privacy And GDPR Compliance Initiative",
+      Assignees: ["Mahima Naik", "Angela Vaz", "Urvi Palang"],
+      DueDate: "9th November 2024",
+      priority: "Low",
+      department: "Tech",
+      status: "Ongoing",
+      requestDate: "2024-10-09",
+    },
+    {
+      id: 8,
+      ticketTitle: "",
+      Assignees: [
+        "https://i.pravatar.cc/150?img=1",
+        "https://i.pravatar.cc/150?img=2",
+        "https://i.pravatar.cc/150?img=3",
+      ],
+      DueDate: "10th November 2024",
+      priority: "Low",
+      department: "Admin",
+      status: "Pending",
+      requestDate: "2024-10-10",
+    },
+    {
+      id: 9,
+      ticketTitle: "Email Access Issue",
+      Assignees: ["Rami Naik", "Krutika Ghadi", "Rajeshwari Maheshwari"],
+      DueDate: "20th November 2024",
+      priority: "Medium",
+      department: "IT",
+      status: "Ongoing",
+      requestDate: "2024-10-11",
+    },
+  ]);
 
-        useEffect(() => {
-          const fetchData = async () => {
-            try{
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await fetchProjects();
 
-            
-            const data = await fetchProjects();
-
-            setProjects(data || []);
-            const groupedTasks = {
-              ongoing: [],
-              upcoming: [],
-              pending: [],
-              completed: [],
-            };
-      
-            projects.forEach((project) => {
-              switch (project.status.toLowerCase()) {
-                case "ongoing":
-                  groupedTasks.ongoing.push(project);
-                  break;
-                case "upcoming":
-                  groupedTasks.upcoming.push(project);
-                  break;
-                case "pending":
-                  groupedTasks.pending.push(project);
-                  break;
-                case "completed":
-                  groupedTasks.completed.push(project);
-                  break;
-                default:
-                  console.warn(`Unknown status: ${project.status}`);
-              }
-            });
-      
-            setTasks(groupedTasks);
-          
-            }catch(error){
-              console.error("Error fetching projects:", error);
-            } // Populate projects state with the fetched data
-          };
-      
-          fetchData(); // Call the async function
-        }, []);
-
-        const fetchProjects = async () => {
-          try {
-            const response = await axios.get("http://localhost:5000/api/tasks/get-projects");
-            console.log("Projects:", response.data.projects);
-            return response.data.projects;
-          } catch (error) {
-            console.error("Error fetching projects:", error);
-            return [];
-          }
+        setProjects(data || []);
+        const groupedTasks = {
+          ongoing: [],
+          upcoming: [],
+          pending: [],
+          completed: [],
         };
 
+        projects.forEach((project) => {
+          switch (project?.status.toLowerCase()) {
+            case "ongoing":
+              groupedTasks.ongoing.push(project);
+              break;
+            case "upcoming":
+              groupedTasks.upcoming.push(project);
+              break;
+            case "pending":
+              groupedTasks.pending.push(project);
+              break;
+            case "completed":
+              groupedTasks.completed.push(project);
+              break;
+            default:
+              console.warn(`Unknown status: ${project.status}`);
+          }
+        });
+
+        setTasks(groupedTasks);
+      } catch (error) {
+        console.error("Error fetching projects:", error);
+      } // Populate projects state with the fetched data
+    };
+
+    fetchData(); // Call the async function
+  }, []);
+
+  const fetchProjects = async () => {
+    try {
+      const response = await axios.get(
+        "http://localhost:5000/api/tasks/get-projects"
+      );
+      console.log("Projects:", response.data.projects);
+      return response.data.projects;
+    } catch (error) {
+      console.error("Error fetching projects:", error);
+      return [];
+    }
+  };
 
   const [view, SetView] = useState("Grid View");
 
   const [projectData, setProjectData] = useState({
-   
     Department: "",
     assignees: [],
     Title: "",
     description: "",
     startdate: null,
-    enddate:null,
+    enddate: null,
     status: "",
   });
 
   const [tasks, setTasks] = useState({
-    ongoing: [
-      
-    ],
-    upcoming: [
-      
-    ],
-    pending: [
-      
-    ],
-    completed: [
-     
-    ],
+    ongoing: [],
+    Upcoming: [],
+    pending: [],
+    completed: [],
   });
 
   const navigate = useNavigate();
@@ -260,11 +234,16 @@ const Tasklist = () => {
     console.log(title);
     console.log(description);
     console.log(department);
-    
+
     console.log("Opening MOdal of Edit");
   };
 
-  const TaskCard = ( { projectName, description, Department, Assignees = [] }) => (
+  const TaskCard = ({
+    projectName,
+    description,
+    Department,
+    Assignees = [],
+  }) => (
     <div className="bg-gray-100 shadow-md bg-white rounded-lg p-3 mb-4">
       <div className="flex justify-between gap-5">
         <div>
@@ -310,13 +289,22 @@ const Tasklist = () => {
                   <circle cx={12} cy={19} r={1} />
                 </svg>
               </MenuItem>
-              <MenuItem value="view" onClick={(value) => handleClick(projectName)}>
+              <MenuItem
+                value="view"
+                onClick={(value) => handleClick(projectName)}
+              >
                 View Details
               </MenuItem>
               <MenuItem
                 value="edit"
-                onClick={(value, value1, value2, value3,value4) =>
-                  setEditModalOpen(value, projectName, description, Department,Assignees)
+                onClick={(value, value1, value2, value3, value4) =>
+                  setEditModalOpen(
+                    value,
+                    projectName,
+                    description,
+                    Department,
+                    Assignees
+                  )
                 }
               >
                 Edit
@@ -332,37 +320,35 @@ const Tasklist = () => {
       <div>
         <p className="text-xs font-bold">Assignees</p>
 
-        
-            <Stack
-              spacing={-1}
-              direction="row"
-              sx={{
-                paddingTop: "5%",
-                width: "100%",
-              }}
-            >
-              {Assignees.map((assignee, index) => {
-                const initials = getInitials(assignee);
-                const backgroundColor = generateColor(assignee);
+        <Stack
+          spacing={-1}
+          direction="row"
+          sx={{
+            paddingTop: "5%",
+            width: "100%",
+          }}
+        >
+          {Assignees.map((assignee, index) => {
+            const initials = getInitials(assignee);
+            const backgroundColor = generateColor(assignee);
 
-                return (
-                  <Avatar
-                    key={index}
-                    sx={{
-                      width: 10,
-                      height: 10,
-                      border: "1px solid white",
-                      padding:2,
-                      fontSize:15,
-                      backgroundColor,
-                    }}
-                  >
-                    {initials}
-                  </Avatar>
-                );
-              })}
-            </Stack>
-          
+            return (
+              <Avatar
+                key={index}
+                sx={{
+                  width: 10,
+                  height: 10,
+                  border: "1px solid white",
+                  padding: 2,
+                  fontSize: 15,
+                  backgroundColor,
+                }}
+              >
+                {initials}
+              </Avatar>
+            );
+          })}
+        </Stack>
       </div>
     </div>
   );
@@ -371,8 +357,8 @@ const Tasklist = () => {
     <div className="w-full lg:w-1/4 px-3">
       <h2 className={`text-xl font-bold ${titleColor} mb-4`}>{title}</h2>
       <div className="space-y-4">
-        {tasks.map((task, index) => (
-          <TaskCard key={index} {...task}/>
+        {tasks?.map((task, index) => (
+          <TaskCard key={index} {...task} />
         ))}
       </div>
     </div>
@@ -386,25 +372,22 @@ const Tasklist = () => {
   const closeModal = () => SetModalOpen(false);
 
   const filteredRows =
-  department === ""
-    ? allRows // show all rows if no department is selected
-    : allRows.filter((row) => row.department === department);
-
+    department === ""
+      ? allRows // show all rows if no department is selected
+      : allRows.filter((row) => row.department === department);
 
   const filterTasks = (tasks) => {
-    if(view === "Grid View"){
-    
-    if (!searchTerm.trim()) return tasks; // No filtering if search term is empty
-    return tasks.filter(
-      (task) =>
-        task.Title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        task.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        task.Department.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-  }
-  else {
-    return filteredRows
-  }
+    if (view === "Grid View") {
+      if (!searchTerm.trim()) return tasks; // No filtering if search term is empty
+      return tasks.filter(
+        (task) =>
+          task.Title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          task.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          task.Department.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    } else {
+      return filteredRows;
+    }
   };
 
   return (
@@ -484,7 +467,12 @@ const Tasklist = () => {
             </div>
           </>
         ) : (
-          <TasklistGrid  allRows={allRows} setAllRows={setAllRows} filterTasks={filterTasks} filteredRows={filteredRows}/>
+          <TasklistGrid
+            allRows={allRows}
+            setAllRows={setAllRows}
+            filterTasks={filterTasks}
+            filteredRows={filteredRows}
+          />
         )}
       </div>
       {modalOpen && (
@@ -495,7 +483,6 @@ const Tasklist = () => {
             SetTitle={SetTitle}
             SetDepartment={SetDepartment}
             SetDescription={SetDescription}
-
             Title={title}
             EditValue={Editvalue}
             title={
@@ -511,7 +498,6 @@ const Tasklist = () => {
             setProjectData={setProjectData}
             setTasks={setTasks}
             tasks={tasks}
-            
           />
         </NewModal>
       )}
