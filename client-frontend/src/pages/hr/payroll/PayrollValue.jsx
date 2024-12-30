@@ -63,8 +63,7 @@ const PayrollValue = () => {
             <IconButton
               aria-label="expand row"
               size="small"
-              onClick={() => setOpen(!open)}
-            >
+              onClick={() => setOpen(!open)}>
               {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
             </IconButton>
           </TableCell>
@@ -81,8 +80,7 @@ const PayrollValue = () => {
               <Table
                 size="medium"
                 aria-label="employees"
-                sx={{ margin: "10px 0", padding: "10px" }}
-              >
+                sx={{ margin: "10px 0", padding: "10px" }}>
                 <TableHead>
                   <TableRow>
                     <TableCell sx={{ padding: "8px" }}>Name</TableCell>
