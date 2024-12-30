@@ -124,14 +124,7 @@ const PayrollValue = () => {
 
   return (
     <main className="p-4">
-      <Typography
-        variant="h4"
-        component="h2"
-        className="mt-4 mb-2"
-        fontWeight={"bold"}
-      >
-        Payroll Table
-      </Typography>
+      <h1 className="text-2xl font-bold">Payroll Value</h1>
       <TableContainer
         sx={{ boxShadow: "none" }}
         component={Paper}
