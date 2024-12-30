@@ -66,7 +66,7 @@ const Calender = () => {
           end: eventDetails.endDate.toISOString(),
         });
       } catch (error) {
-        toast.error(error.message);
+        throw new Error(error.response.data.message);
       }
     },
     onSuccess: function () {
@@ -81,6 +81,9 @@ const Calender = () => {
         endDate: dayjs(),
         type: "event",
       });
+    },
+    onError: function (error) {
+      toast.error(error.message);
     },
   });
   const handleChange = (e) => {
@@ -138,9 +141,8 @@ const Calender = () => {
 
   return (
     <div className="flex md:w-full">
-      
-      <div className="flex-1 py-4 h-screen overflow-y-auto">
-        <div className="flex justify-between items-start">
+      <div className="flex-1 p-4 bg-white h-screen overflow-y-auto">
+        <div className="flex justify-between items-center">
           <h1 className="font-bold text-2xl pb-5">Calendar</h1>
           <FormGroup row>
             {["holiday", "event"].map((type) => (
@@ -168,6 +170,7 @@ const Calender = () => {
 
         <div className="relative w-full pt-2">
           <FullCalendar
+            dayMaxEvents={2}
             eventClick={handleEventClick}
             contentHeight={"auto"}
             displayEventTime={false}
@@ -253,24 +256,6 @@ const Calender = () => {
                             />
                           </LocalizationProvider>
                           <UsersSelect />
-                          <TextField
-                            select
-                            label="Event Type"
-                            name="type"
-                            value={eventDetails.type}
-                            onChange={handleChange}
-                            fullWidth
-                            required
-                          >
-                            {[
-                              { label: "Event", value: "event" },
-                              { label: "Holiday", value: "holiday" },
-                            ].map((option) => (
-                              <MenuItem key={option.value} value={option.value}>
-                                {option.label}
-                              </MenuItem>
-                            ))}
-                          </TextField>
                           <Button
                             fullWidth
                             type="submit"
