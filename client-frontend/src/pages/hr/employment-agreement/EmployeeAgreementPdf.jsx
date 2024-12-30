@@ -21,17 +21,6 @@ function EmployeeAgreementPdf() {
 
   return (
     <>
-      <div className="text-right">
-        {/* <button onClick={downloadPdf} className="download-btn">
-          Download PDF
-        </button> */}
-
-        <button
-          onClick={downloadPdf}
-          className=" px-6 py-2 rounded-lg text-white wono-blue-dark hover:bg-[#3cbce7] transition-shadow shadow-md hover:shadow-lg active:shadow-inner">
-          Download PDF
-        </button>
-      </div>
       <div>
         <Document file={pdf1} onLoadSuccess={onDocumentLoadSuccess}>
           <Page
@@ -43,6 +32,17 @@ function EmployeeAgreementPdf() {
         {/* <p>
         Page {pageNumber} of {numPages}
       </p> */}
+      </div>
+      <div className="text-right">
+        {/* <button onClick={downloadPdf} className="download-btn">
+          Download PDF
+        </button> */}
+
+        <button
+          onClick={downloadPdf}
+          className=" px-6 py-2 rounded-lg text-white wono-blue-dark hover:bg-[#3cbce7] transition-shadow shadow-md hover:shadow-lg active:shadow-inner">
+          Download PDF
+        </button>
       </div>
     </>
   );

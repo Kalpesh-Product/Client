@@ -5,12 +5,14 @@ const createPolicy = async (req, res) => {
     // Get the sent in data off request body
     // const leaveIdFromRequestBody = req.body.leaveId;
     const policyNameFromRequestBody = req.body.policyName;
+    const policyDepartmentFromRequestBody = req.body.policyDepartment;
     // const noOfDaysFromRequestBody = req.body.noOfDays;
 
     // Create a leave with it (take the values from the request body / frontend and insert in the database)
     const ourCreatedPolicy = await Policy.create({
       //   leaveId: leaveIdFromRequestBody,
       policyName: policyNameFromRequestBody,
+      policyDepartment: policyDepartmentFromRequestBody,
       //   noOfDays: noOfDaysFromRequestBody,
 
       // resolvedStatus: req.body.resolvedStatus ?? false,
