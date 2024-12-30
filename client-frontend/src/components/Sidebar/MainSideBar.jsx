@@ -433,7 +433,9 @@ const MainSideBar = () => {
   return (
     <div className={`flex flex-col h-[87vh] bg-gray p-2`}>
       <div
-        className={` ${
+        // onMouseEnter={() => setIsSidebarOpen(true)}
+        // onMouseLeave={() => setIsSidebarOpen(false)}
+        className={`${
           isSidebarOpen ? "w-60 rounded-md" : "w-20 rounded-lg"
         } bg-white border-2  text-black flex flex-shrink-0 h-[87vh] overflow-y-auto transition-all duration-300 z-[1]`}
       >
@@ -497,7 +499,7 @@ const MainSideBar = () => {
                               }`}
                               onClick={() => {
                                 setIsSidebarOpen(true);
-                                
+
                                 navigate(dept.route);
                               }}
                             >
@@ -512,9 +514,12 @@ const MainSideBar = () => {
                                 </div>
                                 <div>
                                   {isSidebarOpen && dept.modules && (
-                                    <span onClick={()=>{
-                                      dept.modules && toggleDepartment(index);
-                                    }} className="ml-auto transition-all">
+                                    <span
+                                      onClick={() => {
+                                        dept.modules && toggleDepartment(index);
+                                      }}
+                                      className="ml-auto transition-all"
+                                    >
                                       {expandedDepartment === index ? (
                                         <FaChevronUp />
                                       ) : (
@@ -546,7 +551,7 @@ const MainSideBar = () => {
                                       onClick={() => {
                                         module.subMenus && toggleModule(idx);
                                         navigate(module.route);
-                                        setIsSidebarOpen(true)
+                                        setIsSidebarOpen(true);
                                       }}
                                     >
                                       <div className="flex w-full items-center justify-between">
