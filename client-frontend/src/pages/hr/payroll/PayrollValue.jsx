@@ -15,16 +15,6 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 
 const PayrollValue = () => {
-  // Table Data
-  const tableData = [
-    { department: "Finance", payroll: 35000 },
-    { department: "HR", payroll: 15000 },
-    { department: "Tech", payroll: 20000 },
-    { department: "IT", payroll: 25000 },
-    { department: "Sales", payroll: 18000 },
-    { department: "Administration", payroll: 45000 },
-  ];
-
   // Dummy Employee Data per Department
   const employeeData = {
     Finance: [
@@ -53,39 +43,56 @@ const PayrollValue = () => {
     ],
   };
 
+  // Calculate payroll dynamically based on employee salaries
+  const tableData = Object.entries(employeeData).map(
+    ([department, employees]) => ({
+      department,
+      payroll: employees.reduce(
+        (total, employee) => total + employee.salary,
+        0
+      ),
+    })
+  );
+
   const Row = ({ department }) => {
     const [open, setOpen] = useState(false);
 
     return (
       <>
-        <TableRow>
-          <TableCell>
-            <IconButton
-              aria-label="expand row"
-              size="small"
-              onClick={() => setOpen(!open)}>
-              {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-            </IconButton>
+        <TableRow onClick={() => setOpen(!open)} sx={{ cursor: "pointer" }}>
+          <TableCell component="th" scope="row" sx={{ fontWeight: "bold" }}>
+            <div style={{ display: "flex", alignItems: "center" }}>
+              {department.department}
+              <IconButton
+                aria-label="expand row"
+                size="small"
+                onClick={(e) => {
+                  e.stopPropagation(); // Prevent table row click event
+                  setOpen(!open);
+                }}
+                sx={{ marginLeft: 1 }}
+              >
+                {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+              </IconButton>
+            </div>
           </TableCell>
-          <TableCell component="th" scope="row">
-            {department.department}
-          </TableCell>
-          <TableCell align="right">
+          <TableCell align="right" sx={{ fontWeight: "bold" }}>
             ₹ {department.payroll.toLocaleString()}
           </TableCell>
         </TableRow>
         <TableRow>
-          <TableCell sx={{ paddingBottom: 0, paddingTop: 0 }} colSpan={3}>
+          <TableCell sx={{ paddingBottom: 0, paddingTop: 0 }} colSpan={2}>
             <Collapse in={open} timeout="auto" unmountOnExit>
               <Table
                 size="medium"
                 aria-label="employees"
-                sx={{ margin: "10px 0", padding: "10px" }}>
+                sx={{ margin: "10px 0", padding: "10px" }}
+              >
                 <TableHead>
                   <TableRow>
-                    <TableCell sx={{ padding: "8px" }}>Name</TableCell>
-                    <TableCell sx={{ padding: "8px" }}>Role</TableCell>
-                    <TableCell align="right" sx={{ padding: "8px" }}>
+                    <TableCell sx={{ padding: "8px",fontWeight:"bold" }}>Name</TableCell>
+                    <TableCell sx={{ padding: "8px",fontWeight:"bold" }}>Role</TableCell>
+                    <TableCell align="right" sx={{ padding: "8px",fontWeight:"bold" }}>
                       Salary (₹)
                     </TableCell>
                   </TableRow>
@@ -117,19 +124,32 @@ const PayrollValue = () => {
 
   return (
     <main className="p-4">
-      <Typography variant="h4" component="h2" className="mt-4 mb-2">
+      <Typography
+        variant="h4"
+        component="h2"
+        className="mt-4 mb-2"
+        fontWeight={"bold"}
+      >
         Payroll Table
       </Typography>
       <TableContainer
+        sx={{ boxShadow: "none" }}
         component={Paper}
         className="p-4 bg-white w-[80vw] md:w-full"
       >
         <Table>
           <TableHead>
             <TableRow>
+              <TableCell sx={{ fontWeight: "bold", fontSize: "1.5rem" }}>
+                Department
+              </TableCell>
+              <TableCell
+                align="right"
+                sx={{ fontWeight: "bold", fontSize: "1.5rem" }}
+              >
+                Total Payroll (₹)
+              </TableCell>
               <TableCell />
-              <TableCell>Department</TableCell>
-              <TableCell align="right">Total Payroll (₹)</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
