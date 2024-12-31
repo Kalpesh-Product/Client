@@ -25,51 +25,6 @@ const RaiseTicketForm = () => {
   const navigate = useNavigate();
   const [user, setUser] = useState("");
 
-  // useEffect(() => {
-  //   const storedUser = JSON.parse(localStorage.getItem("user"));
-  //   setUser(storedUser);
-  //   fetchmyTickets();
-  // }, []);
-
-  // const [refreshTrigger, setRefreshTrigger] = useState(false);
-
-  // useEffect(() => {
-  //   const storedUser = JSON.parse(localStorage.getItem("user"));
-  //   setUser(storedUser);
-  //   fetchmyTickets();
-
-  //   // Set a timeout to update the refreshTrigger state after 2 seconds
-  //   const timer = setTimeout(() => {
-  //     setRefreshTrigger((prev) => !prev); // Toggle the trigger state
-  //   }, 2000);
-
-  //   // Cleanup to clear the timeout
-  //   return () => clearTimeout(timer);
-  // }, [refreshTrigger]); // Depend on refreshTrigger to re-run the effect
-
-  // [[[[[[[]]]]]]]
-
-  // ]]]]]]]]
-  // [[[[[]]]]]
-
-  // useEffect(() => {
-  //   // Fetch the user from localStorage and update state
-  //   const storedUser = JSON.parse(localStorage.getItem("user"));
-  //   setUser(storedUser);
-
-  //   // Fetch tickets immediately
-  //   fetchmyTickets();
-
-  //   // Schedule fetch to run again after 2 seconds
-  //   const timer = setTimeout(() => {
-  //     fetchmyTickets();
-  //   }, 2000); // 2-second delay
-
-  //   // Cleanup timeout to avoid memory leaks
-  //   return () => clearTimeout(timer);
-  // }, []); // Empty dependency array ensures this runs only once
-  // ]]]]]]
-
   const raisedByFilter = authUser.user.name; // Replace with the desired name or variable
 
   // Ticket With APIs & Local START
@@ -101,16 +56,6 @@ const RaiseTicketForm = () => {
     const target = e.target; // We first access the target property of the event object e, which represents the element that triggered the event.
     const name = target.name; // Next, we extract the name and value properties from the target object and assign them to variables.
     const value = target.value;
-    // const triggeredHtmlElement = e.target;
-    // const nameAttributeOfTheTriggeredElement = triggeredHtmlElement.name;
-    // const valueAttributeOfTheTriggeredElement = triggeredHtmlElement.value;
-
-    // now we update the state
-    // setCreateForm({
-    //   ...createForm, // creates a duplicate of the createForm object
-    //   // name: value, // this will update the key of name, but we don't need the key of name, we need whatever the variable is equal to
-    //   [name]: value, // this will find the keys (name attributes) and update its values (value attributes) to whatever is changed by the JS event.
-    // });
 
     setCreateForm((prevForm) => ({
       ...prevForm, // Spread previous form values
@@ -131,15 +76,6 @@ const RaiseTicketForm = () => {
       console.log(createForm);
       e.preventDefault(); // prevents the page from reloading when the form is submitted
 
-      // Create the ticket
-
-      // const responseFromBackend = await axios.post(
-      //   // the 2 arguments are: the link to post the values, the values to be sent for post method
-      //   // "/api/tickets/create-ticket",
-      //   "http://localhost:5000/api/tickets/create-ticket",
-      //   createForm
-      // );
-
       const responseFromBackend = await axios.post(
         "/api/tickets/create-ticket",
         createForm
@@ -149,8 +85,6 @@ const RaiseTicketForm = () => {
 
       // Update state
       setMyTickets([...myTickets, responseFromBackend.data.ticket]); // adds our newly created ticket to the array of tickets. The variable ticket was created in out backend for response
-      // console.log("submit");
-      // console.log(responseFromBackend);
 
       // Clear form state
       setCreateForm({
@@ -195,22 +129,6 @@ const RaiseTicketForm = () => {
     fetchmyTickets(); // this will run the fetchTickets function & fetch the tickets array from backend as our response (in network tab from developer tools)
   }, []); // we leave the array empty since we need it to run only once when the app starts up.
 
-  // Finction to delete a ticket
-
-  // Editing a ticket
-  // edit details before updating
-  // const handleUpdateFieldChange = (e) => {
-  //   // const { value, name } = e.target;
-  //   const { name, value } = e.target;
-
-  //   setUpdateForm({
-  //     ...updateForm,
-  //     [name]: value,
-  //   });
-
-  //   console.log(updateForm);
-  // };
-
   const handleUpdateFieldChange = (e) => {
     const { name, value } = e.target;
     setUpdateForm((prevForm) => ({
@@ -219,34 +137,14 @@ const RaiseTicketForm = () => {
     }));
   };
 
-  // View  details before update
-  const toggleUpdate = (ticketToBeDisplayedBeforeUpdating) => {
-    // this function should preload the state with the values of the ticket we're editing
-    // Get the current ticket
-    // console.log(ticket);
-    // Set state on update form
-    setUpdateForm({
-      raisedBy: authUser.user.name,
-      selectedDepartment: ticketToBeDisplayedBeforeUpdating.selectedDepartment,
-      description: ticketToBeDisplayedBeforeUpdating.description,
-      _id: ticketToBeDisplayedBeforeUpdating._id,
-    });
-  };
-
   // Function to edit the ticket
 
   const updateTicket = async (e) => {
     e.preventDefault();
-    // const { title, body } = updateForm;
-    // Longer version of above line
+
     const newUpdatedTicketDepartment = updateForm.selectedDepartment;
     const newUpdatedTicketDescription = updateForm.description;
-    // Even longer version
-    // const updateFormTitle = updateForm.title;
-    // const updateFormBody = updateForm.body;
-    // const title = updateFormTitle;
-    // const body = updateFormBody;
-    // Send the update request
+
     const responseFromBackend = await axios.put(
       `/api/tickets/edit-ticket/${updateForm._id}`,
       {
@@ -254,9 +152,7 @@ const RaiseTicketForm = () => {
         description: newUpdatedTicketDescription,
       }
     );
-    // console.log(responseFromBackend);
-    // Update state
-    // creating a duplicate of the tickets
+
     const newTickets = [...myTickets];
     const ticketIndex = myTickets.findIndex((myTicket) => {
       return myTicket._id === updateForm._id; // finds the index of the ticket which is updated (ticket whose id was in the button). We find the index so that we can update the ticket at that index
@@ -265,7 +161,6 @@ const RaiseTicketForm = () => {
     setMyTickets(newTickets); // Set the tickets array to our updated array
     // Clear update form state
 
-    // console.log(myTicket);
     console.log(newTickets);
     setUpdateForm({
       _id: null,
@@ -309,7 +204,8 @@ const RaiseTicketForm = () => {
         const statusClass = statusColors[params.value] || "";
         return (
           <span
-            className={`px-3 py-1 rounded-full text-sm font-medium ${statusClass}`}>
+            className={`px-3 py-1 rounded-full text-sm font-medium ${statusClass}`}
+          >
             {params.value}
           </span>
         );
@@ -339,7 +235,8 @@ const RaiseTicketForm = () => {
         const statusClass = statusColors[params.value] || "";
         return (
           <span
-            className={`px-3 py-1 rounded-full text-sm font-medium ${statusClass}`}>
+            className={`px-3 py-1 rounded-full text-sm font-medium ${statusClass}`}
+          >
             {params.value}
           </span>
         );
@@ -352,14 +249,6 @@ const RaiseTicketForm = () => {
       cellRenderer: (params) => {
         const handleActionChange = (event) => {
           const selectedAction = event.target.value;
-
-          // if (selectedAction === "view") {
-          //   handleViewDetails(params.row);
-          // } else if (selectedAction === "edit") {
-          //   handleEdit(params.row);
-          // } else if (selectedAction === "delete") {
-          //   handleDelete(params.row);
-          // }
         };
 
         return (
@@ -383,7 +272,8 @@ const RaiseTicketForm = () => {
                 "& fieldset": {
                   border: "none", // Removes border in outlined variant
                 },
-              }}>
+              }}
+            >
               <MenuItem value="" disabled>
                 <svg
                   className="flex-none size-4 text-gray-600 dark:text-neutral-500"
@@ -395,7 +285,8 @@ const RaiseTicketForm = () => {
                   stroke="currentColor"
                   strokeWidth={2}
                   strokeLinecap="round"
-                  strokeLinejoin="round">
+                  strokeLinejoin="round"
+                >
                   <circle cx={12} cy={12} r={1} />
                   <circle cx={12} cy={5} r={1} />
                   <circle cx={12} cy={19} r={1} />
@@ -417,49 +308,6 @@ const RaiseTicketForm = () => {
     },
   ];
 
-  // Columns with Edit and Delete buttons
-  // const columns2 = [
-  //   { field: "_id", headerName: "ID", width: 100 },
-  //   { field: "description", headerName: "Ticket Title", width: 200 },
-  //   { field: "priority", headerName: "Priority", width: 150 },
-  //   { field: "status", headerName: "Status", width: 150 },
-  //   { field: "department", headerName: "Department", width: 150 },
-  //   { field: "requestDate", headerName: "Request Date", width: 150 },
-  //   {
-  //     field: "actions",
-  //     headerName: "Actions",
-  //     width: 200,
-  //     cellRenderer: (params) => {
-  //       const handleEdit = () => {
-  //         console.log("Editing ticket:", params.data._id);
-  //         // Implement your edit logic here
-  //       };
-
-  //       const handleDelete = () => {
-  //         console.log("Deleting ticket:", params.data._id);
-  //         // Update state to remove the ticket
-  //         setMyTickets((prevTickets) =>
-  //           prevTickets.filter((ticket) => ticket._id !== params.data._id)
-  //         );
-  //       };
-
-  //       return (
-  //         <div className="flex space-x-2">
-  //           <button
-  //             onClick={handleEdit}
-  //             className="bg-blue-500 text-white px-3 py-1 rounded">
-  //             Edit
-  //           </button>
-  //           <button
-  //             onClick={handleDelete}
-  //             className="bg-red-500 text-white px-3 py-1 rounded">
-  //             Delete
-  //           </button>
-  //         </div>
-  //       );
-  //     },
-  //   },
-  // ];
   const columns3 = [
     { field: "ticketId", headerName: "ID", width: 80 },
     { field: "raisedBy", headerName: "Raised By", width: 150 },
@@ -484,7 +332,8 @@ const RaiseTicketForm = () => {
         const statusClass = statusColors[params.value] || "";
         return (
           <span
-            className={`px-3 py-1 rounded-full text-sm font-medium ${statusClass}`}>
+            className={`px-3 py-1 rounded-full text-sm font-medium ${statusClass}`}
+          >
             {params.value}
           </span>
         );
@@ -562,7 +411,8 @@ const RaiseTicketForm = () => {
                       handleEdit();
                       openDetailsModal();
                     }}
-                    className="bg-blue-300 text-white px-3 py-1 rounded">
+                    className="bg-blue-300 text-white px-3 py-1 rounded"
+                  >
                     Details
                   </button>
                   <button
@@ -572,12 +422,14 @@ const RaiseTicketForm = () => {
                       handleEdit();
                       openEditTicket();
                     }}
-                    className="bg-blue-500 text-white px-3 py-1 rounded">
+                    className="bg-blue-500 text-white px-3 py-1 rounded"
+                  >
                     Edit
                   </button>
                   <button
                     onClick={handleDelete}
-                    className="bg-red-500 text-white px-3 py-1 rounded">
+                    className="bg-red-500 text-white px-3 py-1 rounded"
+                  >
                     Delete
                   </button>
                 </div>
@@ -802,37 +654,14 @@ const RaiseTicketForm = () => {
   );
 
   return (
-    <div className=" transition-all duration-200 ease-in-out  rounded-md">
+    <div className=" transition-all duration-200 ease-in-out rounded-md">
       <form onSubmit={createMyTicket}>
-        <div className="w-full rounded-lg z-10 relative overflow-y-auto max-h-[80vh] mx-auto">
-          {/* Modal Content */}
-
-          {/* Modal Header */}
-          <div className="sticky top-0  z-20 flex justify-center">
-            <div className="flex justify-center">
-              <h2 className="text-3xl font-bold text-center">Raise A Ticket</h2>
-            </div>
-            {/* <div>
-                      
-                          <motion.button
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.9 }}
-                            type="button"
-                            onClick={closeModal}
-                            className=" p-2 bg-white text-[red] border border-red-200 hover:border-red-400 text-2xl rounded-md mr-1">
-                            <IoMdClose />
-                          </motion.button>
-                        </div> */}
-          </div>
-
+        <div className="w-full rounded-lg z-10 relative overflow-y-auto max-h-[80vh]">
           {/* Modal Body START */}
           <div className=" w-full">
             {/* <div>AddT icket Form</div> */}
             <div className="">
               <div className=" mx-auto">
-                {/* <h1 className="text-xl text-center my-2 font-bold">
-                                Add Ticket
-                            </h1> */}
                 <Box
                   sx={{
                     Width: "100%",
@@ -840,11 +669,11 @@ const RaiseTicketForm = () => {
                     borderRadius: 2,
                   }}
                   // className="py-4 rounded-lg shadow-md mx-auto">
-                  className="pt-3 rounded-lg w-full">
-                  {/* Personal Information */}
-                  {/* <h2 className="text-lg font-semibold mb-4">Add Ticket</h2> */}
-                  {/* <div className="grid grid-cols-1 gap-4"> */}
-                  <div className="w-full  flex justify-between items-center gap-4">
+                  className="p-2 rounded-lg w-full"
+                >
+                  <h2 className="text-xl font-bold">Raise A Ticket</h2>
+                  <div className="w-full flex justify-between items-center gap-2 mt-2">
+                    
                     {/* Name, Mobile, Email, DOB fields */}
                     <div className="w-full">
                       <FormControl fullWidth>
@@ -857,18 +686,12 @@ const RaiseTicketForm = () => {
                           value={createForm.selectedDepartment}
                           label="Department"
                           name="selectedDepartment"
-                          onChange={updateCreateFormField}>
+                          onChange={updateCreateFormField}
+                        >
                           <MenuItem value="IT">IT</MenuItem>
                           <MenuItem value="HR">HR</MenuItem>
                           <MenuItem value="Tech">Tech</MenuItem>
                           <MenuItem value="Admin">Admin</MenuItem>
-                          {/* <MenuItem value="Finance">
-                                          Finance
-                                        </MenuItem>
-                                        <MenuItem value="Maintenance">
-                                          Maintenance
-                                        </MenuItem>
-                                        <MenuItem value="Sales">Sales</MenuItem> */}
                         </Select>
                       </FormControl>
                     </div>
@@ -887,30 +710,7 @@ const RaiseTicketForm = () => {
                           // onChange={handleChange}
                           name="description"
                           onChange={updateCreateFormField}
-                          // onChange={(e) =>
-                          //   setTicketTitle(e.target.value)
-                          // }
-                          // Update state on selection
                         >
-                          {/* <MenuItem value="Wifi is not working">
-                                          Wifi is not working
-                                        </MenuItem>
-                                        <MenuItem value="Wifi is slow">
-                                          Wifi is slow
-                                        </MenuItem>
-                                        <MenuItem value="Laptop screen malfunctioning">
-                                          Laptop screen malfunctioning
-                                        </MenuItem>
-                                        <MenuItem value="Attendance data is incorrect">
-                                          Attendance data is incorrect
-                                        </MenuItem>
-                                        <MenuItem value="Salary Not received">
-                                          Salary Not received
-                                        </MenuItem>
-                                        <MenuItem value="Discussion of new SOP">
-                                          Discussion of new SOP
-                                        </MenuItem>
-                                        <MenuItem value="ggs">ggs</MenuItem> */}
                           {filteredIssues.map((issue, index) => (
                             <MenuItem key={index} value={issue.message}>
                               {issue.message}
@@ -920,11 +720,11 @@ const RaiseTicketForm = () => {
                         </Select>
                       </FormControl>
                     </div>
-                    <div className="sticky bottom-0 bg-white py-6 z-20 flex justify-center min-w-40">
+                    <div className="sticky bottom-0 bg-white z-20 flex justify-center min-w-40">
                       <div className="flex justify-center items-center w-full">
                         <button
                           type="submit"
-                          className="wono-blue-dark text-white py-2 px-4 rounded-md hover:bg-blue-600 w-full"
+                          className="wono-blue-dark text-white p-4 rounded-md hover:bg-blue-600 w-full"
                           // onClick={handleAddTicket}>
                           //   onClick={() => handleNextStep(handleNext)}
                         >
@@ -932,86 +732,16 @@ const RaiseTicketForm = () => {
                         </button>
                       </div>
                     </div>
-                    {/* {ticketTitle === "Other" && (
-                                    <div className="grid grid-cols-1 gap-4">
-                                      <TextField
-                                        label="Specify"
-                                        // value={newEvent.name}
-                                        // onChange={(e) =>
-                                        //   setnewEvent({ ...newEvent, name: e.target.value })
-                                        // }
-                                        fullWidth
-                                      />
-                                    </div>
-                                  )} */}
-
-                    {/* <div className="grid grid-cols-1 gap-4">
-                                  <TextField
-                                    label="Ticket Title"
-                                    // value={newEvent.name}
-                                    // onChange={(e) =>
-                                    //   setnewEvent({ ...newEvent, name: e.target.value })
-                                    // }
-                                    fullWidth
-                                  />
-                                </div> */}
                   </div>
-
-                  {/* Role & Department fields */}
-
-                  {/* <div className="col-span-2 flex gap-4">
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.9 }}
-                  className="w-full py-2 px-4 bg-blue-600 text-white rounded mt-4"
-                  //   onClick={handleSaveEvent}
-                  onClick={() => navigate("/customer/tickets")}>
-                  Save
-                </motion.button>
-          
-              </div> */}
                 </Box>
               </div>
             </div>
           </div>
-          {/* Modal Body END */}
-
-          {/* Modal Footer */}
-
-          {/* <div className="sticky bottom-0 bg-white py-6 z-20 flex justify-center">
-            <div className="flex justify-center items-center w-full">
-              <button
-                type="submit"
-                className="wono-blue-dark text-white py-2 px-4 rounded-md hover:bg-blue-600 w-full"
-                // onClick={handleAddTicket}>
-                //   onClick={() => handleNextStep(handleNext)}
-              >
-                Raise Ticket
-              </button>
-            </div>
-          </div> */}
-          {/* Close button */}
-          {/* <button
-                className="bg-blue-500 text-white py-2 px-4 my-4 rounded-lg hover:bg-blue-600"
-                onClick={closeModal}>
-                Close
-              </button> */}
         </div>
       </form>
 
       <div className="flex gap-4  justify-between">
         <div className="flex gap-4">
-          {/* <div className="flex">
-            <div className="mb-2 flex justify-between">
-              <h1 className="text-3xl"></h1>
-              <button
-                onClick={openModal}
-                className=" px-6 py-2 rounded-lg text-white wono-blue-dark hover:bg-[#3cbce7] transition-shadow shadow-md hover:shadow-lg active:shadow-inner">
-                Raise Ticket
-              </button>
-            </div>
-          </div> */}
-
           {visiblePaths.includes(location.pathname) && (
             <div className="flex">
               <div className="mb-2 flex justify-between">
@@ -1021,7 +751,8 @@ const RaiseTicketForm = () => {
                   data={myTickets} // Pass the filtered rows for CSV download
                   headers={csvHeaders} // Pass the CSV headers
                   filename="tickets_report.csv" // Set the filename for the CSV file
-                  className="wono-blue-dark hover:bg-blue-700 text-white text-sm font-bold p-2 rounded ">
+                  className="wono-blue-dark hover:bg-blue-700 text-white text-sm font-bold p-2 rounded "
+                >
                   Export
                 </CSVLink>
               </div>
@@ -1029,19 +760,6 @@ const RaiseTicketForm = () => {
           )}
         </div>
       </div>
-
-      {/* Tickets datatable START */}
-
-      {/* <AgTable
-        // data={rows} // Use the state here
-        data={myTickets} // Use the state here
-        columns={columns3}
-      /> */}
-
-      {/* Tickets datatable END */}
-
-      {/* ADD TICKET MODAL START */}
-      {/* Stepper form start */}
 
       <NewModal open={isModalOpen} onClose={closeModal}>
         <>
@@ -1054,28 +772,6 @@ const RaiseTicketForm = () => {
                   return (
                     <>
                       <div className="bg-white  w-[31vw] rounded-lg z-10 relative overflow-y-auto max-h-[80vh]">
-                        {/* Modal Content */}
-
-                        {/* Modal Header */}
-                        {/* <div className="sticky top-0 bg-white pt-6 z-20 flex justify-between">
-                        <div>
-                          <h2 className="text-3xl font-bold mb-4 uppercase">
-                            Raise Ticket
-                          </h2>
-                        </div>
-                        <div>
-                      
-                          <motion.button
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.9 }}
-                            type="button"
-                            onClick={closeModal}
-                            className=" p-2 bg-white text-[red] border border-red-200 hover:border-red-400 text-2xl rounded-md mr-1">
-                            <IoMdClose />
-                          </motion.button>
-                        </div>
-                        </div> */}
-
                         {/* Modal Body START */}
                         <div className=" w-full">
                           {/* <div>AddT icket Form</div> */}
@@ -1092,7 +788,8 @@ const RaiseTicketForm = () => {
                                   borderRadius: 2,
                                 }}
                                 // className="py-4 rounded-lg shadow-md mx-auto">
-                                className="bg-white py-6 rounded-lg">
+                                className="bg-white py-6 rounded-lg"
+                              >
                                 {/* Personal Information */}
                                 {/* <h2 className="text-lg font-semibold mb-4">Add Ticket</h2> */}
                                 <div className="grid grid-cols-1 gap-4">
@@ -1108,18 +805,12 @@ const RaiseTicketForm = () => {
                                         value={createForm.selectedDepartment}
                                         label="Department"
                                         name="selectedDepartment"
-                                        onChange={updateCreateFormField}>
+                                        onChange={updateCreateFormField}
+                                      >
                                         <MenuItem value="IT">IT</MenuItem>
                                         <MenuItem value="HR">HR</MenuItem>
                                         <MenuItem value="Tech">Tech</MenuItem>
                                         <MenuItem value="Admin">Admin</MenuItem>
-                                        {/* <MenuItem value="Finance">
-                                          Finance
-                                        </MenuItem>
-                                        <MenuItem value="Maintenance">
-                                          Maintenance
-                                        </MenuItem>
-                                        <MenuItem value="Sales">Sales</MenuItem> */}
                                       </Select>
                                     </FormControl>
                                   </div>
@@ -1165,7 +856,8 @@ const RaiseTicketForm = () => {
                                         {filteredIssues.map((issue, index) => (
                                           <MenuItem
                                             key={index}
-                                            value={issue.message}>
+                                            value={issue.message}
+                                          >
                                             {issue.message}
                                           </MenuItem>
                                         ))}
@@ -1224,7 +916,8 @@ const RaiseTicketForm = () => {
                             <button
                               className="wono-blue-dark text-white py-2 px-4 rounded-md hover:bg-blue-600 w-full"
                               // onClick={handleAddTicket}>
-                              onClick={() => handleNextStep(handleNext)}>
+                              onClick={() => handleNextStep(handleNext)}
+                            >
                               Next
                             </button>
                           </div>
@@ -1262,7 +955,8 @@ const RaiseTicketForm = () => {
                           <button
                             type="submit"
                             // onClick={console.log("submitted")}
-                            className=" p-2 bg-white wono-blue-dark w-full text-white rounded-md">
+                            className=" p-2 bg-white wono-blue-dark w-full text-white rounded-md"
+                          >
                             Submit
                           </button>
                           {/* <WonoButton
@@ -1305,7 +999,8 @@ const RaiseTicketForm = () => {
                 whileTap={{ scale: 0.9 }}
                 type="button"
                 onClick={closeDetailsModal}
-                className=" p-2 bg-white text-[red] border border-red-200 hover:border-red-400 text-2xl rounded-md mr-1">
+                className=" p-2 bg-white text-[red] border border-red-200 hover:border-red-400 text-2xl rounded-md mr-1"
+              >
                 <IoMdClose />
               </motion.button>
             </div>
@@ -1412,7 +1107,8 @@ const RaiseTicketForm = () => {
                     whileTap={{ scale: 0.9 }}
                     type="button"
                     onClick={closeEditTicket}
-                    className=" p-2 bg-white text-[red] border border-red-200 hover:border-red-400 text-2xl rounded-md mr-1">
+                    className=" p-2 bg-white text-[red] border border-red-200 hover:border-red-400 text-2xl rounded-md mr-1"
+                  >
                     <IoMdClose />
                   </motion.button>
                 </div>
@@ -1434,7 +1130,8 @@ const RaiseTicketForm = () => {
                         borderRadius: 2,
                       }}
                       // className="py-4 rounded-lg shadow-md mx-auto">
-                      className="py-4 rounded-lg mx-auto">
+                      className="py-4 rounded-lg mx-auto"
+                    >
                       {/* Personal Information */}
                       {/* <h2 className="text-lg font-semibold mb-4">Add Ticket</h2> */}
                       <div className="grid grid-cols-1 gap-4">
@@ -1465,7 +1162,8 @@ const RaiseTicketForm = () => {
                               name="selectedDepartment"
                               label="Department"
                               // onChange={handleChange}
-                              value={updateForm.selectedDepartment}>
+                              value={updateForm.selectedDepartment}
+                            >
                               <MenuItem value="IT">IT</MenuItem>
                               <MenuItem value="HR">HR</MenuItem>
                               <MenuItem value="Tech">Tech</MenuItem>
@@ -1597,7 +1295,8 @@ const RaiseTicketForm = () => {
                   whileTap={{ scale: 0.9 }}
                   type="button"
                   onClick={closeDeleteTicket}
-                  className=" p-2 bg-white text-[red] border border-red-200 hover:border-red-400 text-2xl rounded-md mr-1">
+                  className=" p-2 bg-white text-[red] border border-red-200 hover:border-red-400 text-2xl rounded-md mr-1"
+                >
                   <IoMdClose />
                 </motion.button>
                 {/* <button
@@ -1624,7 +1323,8 @@ const RaiseTicketForm = () => {
                       borderRadius: 2,
                     }}
                     // className="py-4 rounded-lg shadow-md mx-auto">
-                    className="py-4 rounded-lg mx-auto">
+                    className="py-4 rounded-lg mx-auto"
+                  >
                     {/* Personal Information */}
                     {/* <h2 className="text-lg font-semibold mb-4">Add Ticket</h2> */}
                     <div className="grid grid-cols-1 gap-4">
@@ -1669,7 +1369,8 @@ const RaiseTicketForm = () => {
                 <button
                   // className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600"
                   className="bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600 w-full"
-                  onClick={handleDeleteTicket}>
+                  onClick={handleDeleteTicket}
+                >
                   Delete
                 </button>
               </div>

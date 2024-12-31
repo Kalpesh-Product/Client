@@ -407,7 +407,6 @@ const AttendanceListing = () => {
         Attendance Listing
       </h1>
 
-      <div className="bg-white rounded-md">
         <div className="flex flex-col h-full md:flex-row md:items-center md:space-x-4 mb-4">
           <FormControl className="w-full md:w-1/4">
             <Select
@@ -453,7 +452,6 @@ const AttendanceListing = () => {
             />
           </div>
         </div>
-      </div>
 
       {isModalOpen && (
         <NewModal onClose={handleCloseModal} open={isModalOpen}>

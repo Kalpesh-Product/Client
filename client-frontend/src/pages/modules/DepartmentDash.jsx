@@ -1452,11 +1452,6 @@ const DepartmentDash = () => {
               <>
                 {/* <LeaveReports /> */}
                 <div className="py-4 rounded-lg ">
-                  <div className="flex w-full  pl-0 text-lg border-b-0  gap-4">
-                    <h2 className="text-2xl font-bold ">
-                      Employment Agreement
-                    </h2>
-                  </div>
                   <EmployeeAgreement />
                 </div>
               </>

@@ -88,12 +88,6 @@ const AttendanceDash = () => {
           Attendance Dashboard
         </h1>
         <ClockInOut />
-        {/* Monthly Details Widget */}
-        {/* <MonthlyDetailsWidget
-          totalHours={monthlyDetails.totalHours}
-          lateCheckIns={monthlyDetails.lateCheckIns}
-          avgBreakTime={monthlyDetails.avgBreakTime}
-        /> */}
         <EmployeeAttandanceSummary />
         <CheckInOutData />
         <ShiftTimeUseage />

@@ -17,13 +17,13 @@ const ClockInOut = () => {
   const breakDuration = "30m";
 
   return (
-    <div className="flex w-full items-center justify-center bg-gray-100 py-0">
-      <div className="w-full  bg-white shadow-xl rounded-lg p-6">
+    <div className="flex w-full items-center justify-center bg-transparent py-0">
+      <div className="w-full rounded-lg">
    
 
         <div className="flex flex-wrap gap-6">
           {/* Clock Section */}
-          <div className="flex-1 border rounded-lg p-6 bg-gray-50">
+          <div className="flex-1 border rounded-lg p-6 bg-white">
             <h2 className="text-xl font-semibold mb-6 text-gray-700">
               Clock
             </h2>
@@ -69,7 +69,7 @@ const ClockInOut = () => {
           </div>
 
           {/* Synopsis Section */}
-          <div className="flex-1 border rounded-lg p-6 bg-gray-50">
+          <div className="flex-1 border rounded-lg p-6 bg-white">
             <h2 className="text-xl font-semibold mb-6 text-gray-700">
               Synopsis
             </h2>

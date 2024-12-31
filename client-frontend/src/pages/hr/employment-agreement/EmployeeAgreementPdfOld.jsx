@@ -53,21 +53,7 @@ const EmployeeAgreementPdf = () => {
     <div className="relative">
       <div className=" pb-10 flex-col flex items-center justify-center">
         <div className="flex items-center justify-end w-full">
-          {/* <FormControl size="small" style={{ minWidth: 220 }}>
-            <TextField
-              label="Select Month"
-              variant="outlined"
-              select
-              size="small"
-              onChange={(e) => setMonth(e.target.value)}
-              sx={{ fontSize: "0.5rem" }}>
-              <MenuItem value="December 2024">December 2024</MenuItem>
-              <MenuItem value="November 2024">November 2024</MenuItem>
-              <MenuItem value="October 2024">October 2024</MenuItem>
-              <MenuItem value="September 2024">September 2024</MenuItem>
-            </TextField>
-          </FormControl> */}
-
+        
           <button
             onClick={downloadPDF}
             className="wono-blue-dark text-white px-6 py-3 rounded shadow">
@@ -77,9 +63,6 @@ const EmployeeAgreementPdf = () => {
         <div
           id="yellowDiv"
           className="max-w-3xl mx-auto mt-10 border border-gray-300 rounded-lg shadow-lg p-8 bg-white">
-          <h1 className="text-3xl font-bold text-center mb-6">
-            Employment Agreement
-          </h1>
 
           <div className="border-t border-gray-300 mb-4"></div>
 

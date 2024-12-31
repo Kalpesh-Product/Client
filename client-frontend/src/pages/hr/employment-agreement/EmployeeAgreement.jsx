@@ -88,6 +88,7 @@ const EmployeeAgreement = () => {
     }
   };
 
+
   const fetchmyLeaves = async () => {
     // Fetch the tickets
     const responseFromBackend = await axios.get(
@@ -154,12 +155,14 @@ const EmployeeAgreement = () => {
                         },
                         padding: "4px 8px",
                         borderRadius: "0.375rem",
-                      }}>
+                      }}
+                    >
                       View Details
                     </Button>
                     <button
                       onClick={handleDelete}
-                      className="bg-red-500 text-white px-3 py-1 rounded">
+                      className="bg-red-500 text-white px-3 py-1 rounded"
+                    >
                       Delete
                     </button>
                   </>
@@ -167,7 +170,8 @@ const EmployeeAgreement = () => {
                 {params.data.deletedStatus === true && (
                   <button
                     // onClick={handleDelete}
-                    className="bg-red-200 text-white px-3 py-1 rounded ">
+                    className="bg-red-200 text-white px-3 py-1 rounded "
+                  >
                     Delete
                   </button>
                 )}
@@ -335,20 +339,27 @@ const EmployeeAgreement = () => {
   });
 
   return (
-    <div className="w-[72vw] md:w-full transition-all duration-200 ease-in-out bg-white p-0 rounded-md">
+    <div className="w-[72vw] md:w-full transition-all duration-200 ease-in-out p-0 rounded-md">
       <div className="flex gap-4 mb-4 justify-between">
         {/* <div className="pt-2">Filter :</div> */}
         <div></div>
 
         {!auth.user.department.find((dept) => dept.name === "Finance") && (
-          <div className="flex">
-            <div className="mb-2 flex justify-between">
-              <h1 className="text-3xl"></h1>
-              <button
-                onClick={openModal}
-                className="px-6 py-2 rounded-lg text-white wono-blue-dark hover:bg-[#3cbce7] transition-shadow shadow-md hover:shadow-lg active:shadow-inner">
-                + Add Agreement
-              </button>
+          <div className="w-full">
+            <div className="mb-2 w-full">
+              <div className="w-full flex justify-between items-center">
+                {location.pathname === "/hr/employment-agreement" && (
+                  <h1 className="text-2xl font-bold">
+                    Employment Agreement
+                  </h1>
+                )}
+                <button
+                  onClick={openModal}
+                  className="px-6 py-2 rounded-lg text-white wono-blue-dark hover:bg-[#3cbce7] transition-shadow shadow-md hover:shadow-lg active:shadow-inner"
+                >
+                  + Add Agreement
+                </button>
+              </div>
             </div>
           </div>
         )}
@@ -359,8 +370,8 @@ const EmployeeAgreement = () => {
       <AgTable
         data={myLeaves} // Use the state here
         columns={columns}
-        // highlightFirstRow={highlightFirstRow} 
-        // highlightEditedRow={highlightEditedRow} 
+        // highlightFirstRow={highlightFirstRow}
+        // highlightEditedRow={highlightEditedRow}
       />
 
       {/* Tickets datatable END */}
@@ -394,7 +405,8 @@ const EmployeeAgreement = () => {
                                   borderRadius: 2,
                                 }}
                                 // className="bg-white p-4 rounded-lg shadow-md mx-auto">
-                                className="bg-white py-6 rounded-lg">
+                                className="bg-white py-6 rounded-lg"
+                              >
                                 {/* Personal Information */}
                                 {/* <h2 className="text-lg font-semibold mb-4">Add Ticket</h2> */}
                                 <div className="grid grid-cols-1 gap-4">
@@ -412,7 +424,8 @@ const EmployeeAgreement = () => {
                                         // onChange={handleChange}
                                         value={createForm.employee}
                                         name="employee"
-                                        onChange={updateCreateFormField}>
+                                        onChange={updateCreateFormField}
+                                      >
                                         <MenuItem value="Kalpesh Naik">
                                           Kalpesh Naik
                                         </MenuItem>
@@ -429,7 +442,8 @@ const EmployeeAgreement = () => {
                                   <div>
                                     <label
                                       htmlFor="room-image"
-                                      className="block text-sm font-medium text-gray-700">
+                                      className="block text-sm font-medium text-gray-700"
+                                    >
                                       Upload Agreement
                                     </label>
                                     <input
@@ -468,7 +482,8 @@ const EmployeeAgreement = () => {
                             <button
                               className="wono-blue-dark text-white py-2 px-4 rounded-md hover:bg-blue-600 w-full"
                               // onClick={handleAddTicket}>
-                              onClick={() => handleNextStep(handleNext)}>
+                              onClick={() => handleNextStep(handleNext)}
+                            >
                               Next
                             </button>
                           </div>
@@ -496,7 +511,8 @@ const EmployeeAgreement = () => {
                           <button
                             type="submit"
                             // onClick={console.log("submitted")}
-                            className=" p-2 bg-white wono-blue-dark w-full text-white rounded-md">
+                            className=" p-2 bg-white wono-blue-dark w-full text-white rounded-md"
+                          >
                             Submit
                           </button>
                         </div>
@@ -533,7 +549,8 @@ const EmployeeAgreement = () => {
                 whileTap={{ scale: 0.9 }}
                 type="button"
                 onClick={closeDetailsModal}
-                className=" p-2 bg-white text-[red] border border-red-200 hover:border-red-400 text-2xl rounded-md mr-1">
+                className=" p-2 bg-white text-[red] border border-red-200 hover:border-red-400 text-2xl rounded-md mr-1"
+              >
                 <IoMdClose />
               </motion.button>
             </div>
@@ -628,7 +645,8 @@ const EmployeeAgreement = () => {
                   whileTap={{ scale: 0.9 }}
                   type="button"
                   onClick={closeEditTicket}
-                  className=" p-2 bg-white text-[red] border border-red-200 hover:border-red-400 text-2xl rounded-md mr-1">
+                  className=" p-2 bg-white text-[red] border border-red-200 hover:border-red-400 text-2xl rounded-md mr-1"
+                >
                   <IoMdClose />
                 </motion.button>
               </div>
@@ -650,7 +668,8 @@ const EmployeeAgreement = () => {
                       borderRadius: 2,
                     }}
                     // className="py-4 rounded-lg shadow-md mx-auto">
-                    className="py-4 rounded-lg mx-auto">
+                    className="py-4 rounded-lg mx-auto"
+                  >
                     {/* Personal Information */}
                     {/* <h2 className="text-lg font-semibold mb-4">Add Ticket</h2> */}
                     <div className="grid grid-cols-1 gap-4">
@@ -704,7 +723,8 @@ const EmployeeAgreement = () => {
               <div className="flex justify-center items-center w-full">
                 <button
                   className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 w-full"
-                  onClick={handleEditTicket}>
+                  onClick={handleEditTicket}
+                >
                   Save
                 </button>
               </div>
@@ -737,7 +757,8 @@ const EmployeeAgreement = () => {
                   whileTap={{ scale: 0.9 }}
                   type="button"
                   onClick={closeDeleteTicket}
-                  className=" p-2 bg-white text-[red] border border-red-200 hover:border-red-400 text-2xl rounded-md mr-1">
+                  className=" p-2 bg-white text-[red] border border-red-200 hover:border-red-400 text-2xl rounded-md mr-1"
+                >
                   <IoMdClose />
                 </motion.button>
               </div>
@@ -759,7 +780,8 @@ const EmployeeAgreement = () => {
                       borderRadius: 2,
                     }}
                     // className="py-4 rounded-lg shadow-md mx-auto">
-                    className="py-4 rounded-lg mx-auto">
+                    className="py-4 rounded-lg mx-auto"
+                  >
                     {/* Personal Information */}
                     {/* <h2 className="text-lg font-semibold mb-4">Add Ticket</h2> */}
                     <div className="grid grid-cols-1 gap-4">
@@ -780,7 +802,8 @@ const EmployeeAgreement = () => {
                 <button
                   // className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600"
                   className="bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600 w-full"
-                  onClick={handleDeleteTicket}>
+                  onClick={handleDeleteTicket}
+                >
                   Delete
                 </button>
               </div>
