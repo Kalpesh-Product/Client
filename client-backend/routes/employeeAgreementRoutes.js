@@ -1,9 +1,11 @@
 const employmentAgreementController = require("../controllers/employeeAgreementControllers/employeeAgreementControllers");
 const router = require("express").Router();
+const upload = require("../config/multerConfig");
 
 // ROUTES FOR LEAVE TYPES START
 router.post(
   "/create-employment-agreement",
+  upload.single("fileUrl"),
   employmentAgreementController.createEmploymentAgreement
 );
 

@@ -91,7 +91,10 @@ const EmployeeAgreement = () => {
 
       const responseFromBackend = await axios.post(
         "/api/employee-agreements/create-employment-agreement",
-        createForm
+        createForm,
+        {
+          headers: { "Content-Type": "multipart/form-data" },
+        }
       );
 
       console.log(responseFromBackend);
@@ -385,8 +388,8 @@ const EmployeeAgreement = () => {
       <AgTable
         data={myLeaves} // Use the state here
         columns={columns}
-        // highlightFirstRow={highlightFirstRow} 
-        // highlightEditedRow={highlightEditedRow} 
+        // highlightFirstRow={highlightFirstRow}
+        // highlightEditedRow={highlightEditedRow}
       />
 
       {/* Tickets datatable END */}
