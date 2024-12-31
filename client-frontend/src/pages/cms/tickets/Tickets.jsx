@@ -28,14 +28,6 @@ const Tickets = () => {
         <TicketWidget />,
         <TicketWidget2 />,
         <TicketWidget3 />,
-        // <TicketWidget4 />,
-        // <AssetsCount count={customerServiceWidgetsData.totalAssets} />,
-        // <MaintenanceRequests
-        //   requests={customerServiceWidgetsData.pendingMaintenance}
-        // />,
-        // <AssetsAssigned assigned={customerServiceWidgetsData.assignedAssets} />,
-        // <AssetsInRepair count={customerServiceWidgetsData.assetsInRepair} />,
-        // <NewAssetsAdded added={customerServiceWidgetsData.newAssetsAdded} />,
       ],
     },
   ];
@@ -51,7 +43,6 @@ const Tickets = () => {
               <h1 className="text-2xl font-bold">Ticket Management</h1>
             </div>
             <div>
-              {/* <h1 className="text-3xl  font-bold">Ticket Management</h1> */}
               <div className="">
                 <RaiseTicketForm />
               </div>
