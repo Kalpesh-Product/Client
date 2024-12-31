@@ -32,29 +32,54 @@ const EmployeeAgreement = () => {
   const [createForm, setCreateForm] = useState({
     employee: "",
     employmentAgreementDepartment: "",
+    fileUrl: "",
   });
 
   const [entryToDelete, setEntryToDelete] = useState("");
 
+  // const updateCreateFormField = (e) => {
+  //   // console.log("hey");
+  //   console.log(createForm);
+
+  //   // const { name, value } = e.target;
+  //   const target = e.target; // We first access the target property of the event object e, which represents the element that triggered the event.
+  //   const name = target.name; // Next, we extract the name and value properties from the target object and assign them to variables.
+  //   const value = target.value;
+
+  //   setCreateForm((prevForm) => ({
+  //     ...prevForm, // Spread previous form values
+  //     [name]: value, // Update the specific field being modified
+  //     // takenBy: authUser.user.name, // Ensure raisedBy is always set to authUser.user.name
+  //   }));
+
+  //   console.log("Updated Form:", createForm);
+  //   console.log("Updated Field:", { name, value });
+
+  //   console.log({ name, value });
+  // };
+
   const updateCreateFormField = (e) => {
-    // console.log("hey");
-    console.log(createForm);
+    const target = e.target;
+    const name = target.name;
 
-    // const { name, value } = e.target;
-    const target = e.target; // We first access the target property of the event object e, which represents the element that triggered the event.
-    const name = target.name; // Next, we extract the name and value properties from the target object and assign them to variables.
-    const value = target.value;
+    // Check if the input type is 'file'
+    if (target.type === "file") {
+      const file = target.files[0]; // Access the selected file (if any)
+      setCreateForm((prevForm) => ({
+        ...prevForm,
+        fileUrl: file, // Update the state with the file object
+      }));
+      console.log("Updated Form with File:", file);
+    } else {
+      const value = target.value; // For other input types, use the value property
+      setCreateForm((prevForm) => ({
+        ...prevForm,
+        [name]: value,
+      }));
+      console.log("Updated Field:", { name, value });
+    }
 
-    setCreateForm((prevForm) => ({
-      ...prevForm, // Spread previous form values
-      [name]: value, // Update the specific field being modified
-      // takenBy: authUser.user.name, // Ensure raisedBy is always set to authUser.user.name
-    }));
-
-    console.log("Updated Form:", createForm);
-    console.log("Updated Field:", { name, value });
-
-    console.log({ name, value });
+    console.log("Updated Form State:", createForm);
   };
 
   // Function to create the ticket
@@ -82,6 +107,7 @@ const EmployeeAgreement = () => {
       setCreateForm({
         employee: "",
         employmentAgreementDepartment: "",
+        fileUrl: "",
       });
     } catch (error) {
       console.log(error);
@@ -430,16 +456,16 @@ const EmployeeAgreement = () => {
 
                                   <div>
                                     <label
-                                      htmlFor="room-image"
+                                      htmlFor="ea-pdf"
                                       className="block text-sm font-medium text-gray-700">
                                       Upload Agreement
                                     </label>
                                     <input
-                                      id="room-image"
+                                      id="ea-pdf"
                                       type="file"
-                                      name="image"
-                                      accept="pdf/*"
-                                      // onChange={handleChange}
+                                      name="fileUrl" // Matches the state key
+                                      accept="application/pdf"
+                                      onChange={updateCreateFormField}
                                       className="border-none mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
                                     />
                                   </div>
