@@ -53,6 +53,27 @@ const createProject = async (req, res, next) => {
     }
   };
 
+  const updateProject = async (req, res) => {
+    try {
+      const { title, description, department, assignees } = req.body;
+  
+      const updatedProject = await Project.findByIdAndUpdate(
+        req.params.id,
+        { title, description, department, assignees },
+        { new: true } // Return the updated document
+      );
+  
+      if (!updatedProject) {
+        return res.status(404).json({ error: "Project not found" });
+      }
+  
+      res.status(200).json(updatedProject);
+    } catch (error) {
+      console.error("Error updating project:", error);
+      res.status(500).json({ error: "Internal server error" });
+    }
+  };
+
 
 
   const createTasks = async (req, res, next) => {
@@ -92,4 +113,4 @@ const createProject = async (req, res, next) => {
 
 
 
-  module.exports = { createProject, createTasks, getProjects };
+  module.exports = { createProject, createTasks, getProjects,updateProject };

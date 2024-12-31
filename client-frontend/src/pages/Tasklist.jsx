@@ -124,6 +124,7 @@ const Tasklist = () => {
       requestDate: "2024-10-11",
     },
   ]);
+  const [isDisabled, setIsDisabled] = React.useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -138,7 +139,7 @@ const Tasklist = () => {
           completed: [],
         };
 
-        projects.forEach((project) => {
+        data.forEach((project) => {
           switch (project?.status.toLowerCase()) {
             case "ongoing":
               groupedTasks.ongoing.push(project);
@@ -223,6 +224,10 @@ const Tasklist = () => {
     navigate("/tasks/tasklisttable", { state: { taskTitle: title } });
   };
 
+  const handleDelete = () => {
+    setIsDisabled(true); // Grey out and disable the card
+  };
+
   const handleActionChange = () => {};
 
   const setEditModalOpen = (value, title, description, department) => {
@@ -244,7 +249,11 @@ const Tasklist = () => {
     Department,
     Assignees = [],
   }) => (
-    <div className="bg-gray-100 shadow-md bg-white rounded-lg p-3 mb-4">
+    <div
+      className={`bg-gray-100 shadow-md rounded-lg p-3 mb-4 ${
+        isDisabled ? "opacity-50 pointer-events-none" : ""
+      }`}
+    >
       <div className="flex justify-between gap-5">
         <div>
           <p className="text-xs  py-2 px-2 bg-white rounded-full  my-2">
@@ -309,7 +318,7 @@ const Tasklist = () => {
               >
                 Edit
               </MenuItem>
-              <MenuItem value="delete">Delete</MenuItem>
+              <MenuItem value="delete" onClick={handleDelete}>Delete</MenuItem>
             </Select>
           </FormControl>
         </div>
