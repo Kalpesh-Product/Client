@@ -45,7 +45,7 @@ const DepartmentPayrollChart = () => {
   };
 
   return (
-    <div className="bg-white p-4 w-full">
+    <div className="bg-white py-4 w-full">
       <h2 className="text-lg font-bold mb-4 text-gray-700">
         Department-wise Payroll Split
       </h2>

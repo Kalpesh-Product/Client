@@ -351,7 +351,7 @@ const ManageAsset = () => {
           (item) => item.department === selectedDepartment
         );
   return (
-    <div className="p-4">
+    <div className="py-4">
       <h1 className="text-2xl font-semibold mb-4 motion-preset-expand">
         Manage Assets
       </h1>

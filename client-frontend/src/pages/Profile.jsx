@@ -107,7 +107,7 @@ const Profile = () => {
       
 
       {/* Main Content */}
-      <div class="flex-1 p-4 h-full overflow-y-auto motion-preset-blur-right-md bg-white">
+      <div class="flex-1 py-4 h-full overflow-y-auto motion-preset-blur-right-md">
         <h1 class="text-2xl font-bold mb-4">Profile</h1>
         <div class="flex items-center p-4 bg-white rounded-lg shadow-md justify-between">
           <div class="flex flex-row gap-3 relative">
@@ -315,7 +315,7 @@ const Profile = () => {
                 </div>
 
                 {/* Data Grid Section */}
-                <div className="bg-white p-4 w-full">
+                <div className="bg-white py-4 w-full">
                   <MyBookings />
                 </div>
               </div>
@@ -325,7 +325,7 @@ const Profile = () => {
                 className="tab-pane motion-preset-slide-up-sm show"
                 id="tab-5"
                 role="tabpanel">
-                <div className="bg-white p-4 w-full">
+                <div className="bg-white py-4 w-full">
                   <h3 className="text-xl font-bold mb-4">My Tickets</h3>
                   <div style={{ height: 400, width: "100%" }}>
                     <MyTickets />

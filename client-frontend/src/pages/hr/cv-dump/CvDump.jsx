@@ -58,7 +58,7 @@ const CvDump = () => {
   };
 
   return (
-    <div className=" bg-white w-[80vw] md:w-full">
+    <div className="w-[80vw] md:w-full">
       <div className="w-full flex justify-between items-center mb-6">
         <div className="text-2xl font-bold">CV DUMP</div>
         <div></div>

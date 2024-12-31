@@ -151,8 +151,8 @@ const ManageLeaves = () => {
   const [holidayName, setLeaveType] = useState(""); // State to track the selected option
 
   const columns = [
-    // { field: "leaveTypeId", headerName: "ID", width: 100 },
-    { field: "leaveType", headerName: "Leave Type", width: 200 },
+    // { field: "leaveTypeId", headerName: "ID", flex: 1},
+    { field: "leaveType", headerName: "Leave Type", flex: 1 },
     // {
     //   field: "priority",
     //   headerName: "Priority",
@@ -183,7 +183,7 @@ const ManageLeaves = () => {
     //   valueOptions: ["IT", "HR", "Tech", "Admin"],
     // },
     // { field: "date", headerName: "Date", width: 150 },
-    { field: "noOfDays", headerName: "No Of Days", width: 150 },
+    { field: "noOfDays", headerName: "No Of Days", flex: 1 },
     // {
     //   field: "status",
     //   headerName: "Status",
@@ -698,7 +698,7 @@ const ManageLeaves = () => {
   });
 
   return (
-    <div className="w-[72vw] md:w-full transition-all duration-200 ease-in-out bg-white p-0 rounded-md">
+    <div className="w-[72vw] md:w-full transition-all duration-200 ease-in-out p-0 rounded-md">
       {/* <div className="bg-green-500">
         <h2>Today's Tickets</h2>
       </div> */}
@@ -1198,7 +1198,7 @@ const ManageLeaves = () => {
                       borderRadius: 2,
                     }}
                     // className="bg-white p-4 rounded-lg shadow-md mx-auto">
-                    className="bg-white p-4 rounded-lg mx-auto">
+                    className="py-4 rounded-lg mx-auto">
                     {/* Personal Information */}
                     {/* <h2 className="text-lg font-semibold mb-4">Add Ticket</h2> */}
                     <div className="grid grid-cols-1 gap-4">

@@ -48,25 +48,6 @@ const MyTickets = () => {
   // }, [refreshTrigger]); // Depend on refreshTrigger to re-run the effect
 
   // [[[[[[[]]]]]]]
-  const [hasRefreshed, setHasRefreshed] = useState(false);
-
-  useEffect(() => {
-    // Fetch the user from localStorage and update state
-    const storedUser = JSON.parse(localStorage.getItem("user"));
-    setUser(storedUser);
-    fetchmyTickets();
-
-    // Set a timeout to run the effect one more time after 2 seconds
-    const timer = setTimeout(() => {
-      if (!hasRefreshed) {
-        setHasRefreshed(true); // Mark as refreshed
-        fetchmyTickets(); // Run your fetching logic one more time
-      }
-    }, 1000);
-
-    // Cleanup to clear the timeout
-    return () => clearTimeout(timer);
-  }, [hasRefreshed]);
 
   // ]]]]]]]]
   // [[[[[]]]]]
@@ -317,8 +298,8 @@ const MyTickets = () => {
   const [ticketTitle, setTicketTitle] = useState(""); // State to track the selected option
 
   const columns = [
-    { field: "id", headerName: "ID", width: 100 },
-    { field: "ticketTitle", headerName: "Ticket Title", width: 200 },
+    { field: "id", headerName: "ID", flex: 1 },
+    { field: "ticketTitle", headerName: "Ticket Title", flex: 1 },
     {
       field: "priority",
       headerName: "Priority",
@@ -348,7 +329,7 @@ const MyTickets = () => {
       type: "singleSelect",
       valueOptions: ["IT", "HR", "Tech", "Admin"],
     },
-    { field: "requestDate", headerName: "Request Date", width: 150 },
+    { field: "requestDate", headerName: "Request Date", flex: 1 },
     {
       field: "status",
       headerName: "Status",
@@ -487,13 +468,13 @@ const MyTickets = () => {
   // ];
   const columns3 = [
     // { field: "ticketId", headerName: "ID", width: 80 },
-    { field: "raisedBy", headerName: "Raised By", width: 150 },
+    { field: "raisedBy", headerName: "Raised By", flex: 1 },
     {
       field: "selectedDepartment",
       headerName: "Selected Department",
       width: 150,
     },
-    { field: "description", headerName: "Ticket Title", width: 200 },
+    { field: "description", headerName: "Ticket Title", flex: 1 },
     {
       field: "ticketPriority",
       headerName: "Priority",
@@ -851,7 +832,7 @@ const MyTickets = () => {
   );
 
   return (
-    <div className="w-[72vw] md:w-full transition-all duration-200 ease-in-out bg-white p-0 rounded-md">
+    <div className="w-[72vw] md:w-full transition-all duration-200 ease-in-out p-0 rounded-md">
       <div className="flex gap-4 mb-4 justify-between">
         {/* <div className="pt-2">Filter :</div> */}
         <div>
@@ -1015,7 +996,7 @@ const MyTickets = () => {
                                   bgcolor: "background.paper",
                                   borderRadius: 2,
                                 }}
-                                // className="bg-white p-4 rounded-lg shadow-md mx-auto">
+                                // className="py-4 rounded-lg shadow-md mx-auto">
                                 className="bg-white py-6 rounded-lg">
                                 {/* Personal Information */}
                                 {/* <h2 className="text-lg font-semibold mb-4">Add Ticket</h2> */}
@@ -1357,8 +1338,8 @@ const MyTickets = () => {
                         bgcolor: "background.paper",
                         borderRadius: 2,
                       }}
-                      // className="bg-white p-4 rounded-lg shadow-md mx-auto">
-                      className="bg-white p-4 rounded-lg mx-auto">
+                      // className="py-4 rounded-lg shadow-md mx-auto">
+                      className="py-4 rounded-lg mx-auto">
                       {/* Personal Information */}
                       {/* <h2 className="text-lg font-semibold mb-4">Add Ticket</h2> */}
                       <div className="grid grid-cols-1 gap-4">
@@ -1547,8 +1528,8 @@ const MyTickets = () => {
                       bgcolor: "background.paper",
                       borderRadius: 2,
                     }}
-                    // className="bg-white p-4 rounded-lg shadow-md mx-auto">
-                    className="bg-white p-4 rounded-lg mx-auto">
+                    // className="py-4 rounded-lg shadow-md mx-auto">
+                    className="py-4 rounded-lg mx-auto">
                     {/* Personal Information */}
                     {/* <h2 className="text-lg font-semibold mb-4">Add Ticket</h2> */}
                     <div className="grid grid-cols-1 gap-4">

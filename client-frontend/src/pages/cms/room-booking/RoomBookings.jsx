@@ -14,7 +14,7 @@ const RoomBookings = () => {
   const location = useLocation();
 
   return (
-    <div className="flex min-h-screen bg-white flex-1 w-full">
+    <div className="flex min-h-screen  flex-1 w-full">
       <div>
         
       </div>

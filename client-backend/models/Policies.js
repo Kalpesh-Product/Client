@@ -10,6 +10,10 @@ const policySchema = new mongoose.Schema(
       type: String,
       default: "",
     },
+    policyDepartment: {
+      type: String,
+      default: "",
+    },
     fileUrl: {
       type: String,
       default: "",

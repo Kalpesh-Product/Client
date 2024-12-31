@@ -9,11 +9,13 @@ import {
   FaPlus,
   FaRegMoneyBill1,
   FaUserClock,
+  FaUsers,
 } from "react-icons/fa6";
 import {
   FaArrowLeft,
   FaCalendarAlt,
   FaHandsHelping,
+  FaProjectDiagram,
   FaRegCalendarAlt,
   FaTasks,
 } from "react-icons/fa";
@@ -35,6 +37,7 @@ import {
   MdOutlineSubdirectoryArrowRight,
   MdOutlineWifiTethering,
   MdPolicy,
+  MdTask,
 } from "react-icons/md";
 import {
   HiColorSwatch,
@@ -85,7 +88,7 @@ const MainSideBar = () => {
       icon: <TbReportSearch />,
       route: "/reports",
     },
-    { name: "Tasks", icon: <FaTasks />, route: "/tasks" },
+
     { name: "Calendar", icon: <FaRegCalendarAlt />, route: "/calendar" },
     { name: "Chat", icon: <HiOutlineChatAlt2 />, route: "/chat" },
     { name: "Access", icon: <SiAuthelia />, route: "/access" },
@@ -98,6 +101,38 @@ const MainSideBar = () => {
   ];
 
   const defaultModules = [
+    {
+      id: 1,
+      icon: <FaTasks />,
+      route: "/tasks",
+      title: "Tasks",
+      submenus: [
+        {
+          id: 2,
+          title: "Projects",
+          icon: <FaProjectDiagram />,
+          route: "/tasks/tasklist",
+        },
+        {
+          id: 3,
+          title: "Task List",
+          icon:<FaTasks />,
+          route: "/tasks/tasklistfirstmenu",
+        },
+        {
+          id: 4,
+          title: "Teams",
+          route: "/tasks/teams",
+          icon : <FaUsers />,
+        },
+        {
+          id: 5,
+          title: "My Tasks",
+          route: "/tasks/mytasks",
+          icon : <MdTask />,
+        },
+      ],
+    },
     {
       id: 1,
       title: "Meetings",
@@ -441,7 +476,7 @@ const MainSideBar = () => {
       >
         <div className="flex relative w-full">
           {/*Dashboard */}
-          <div className="p-3 flex flex-col gap-2 w-full">
+          <div className="p-1 flex flex-col gap-0 w-full">
             <Tooltip title={"Dashboard"} placement="right">
               <div
                 onClick={() => {
@@ -449,13 +484,13 @@ const MainSideBar = () => {
                 }}
                 className={`flex border-b-[1px] ${
                   isSidebarOpen ? "pl-[1rem]" : "justify-center"
-                } items-center cursor-pointer  py-3 hover:wono-blue-dark hover:text-white hover:rounded-md ${
+                } items-center cursor-pointer  py-2 hover:wono-blue-dark hover:text-white hover:rounded-md ${
                   location.pathname === "/dashboard"
                     ? "wono-blue border-r-4 border-[#0DB4EA] rounded-tl-md rounded-bl-md text-[#0DB4EA]"
                     : "bg-white"
                 }`}
               >
-                <div className="flex justify-center w-6 text-2xl">
+                <div className="flex justify-center w-6 text-xl">
                   <RiDashboardLine />
                 </div>
                 {isSidebarOpen && <span className="pl-5">Dashboard</span>}
@@ -468,7 +503,9 @@ const MainSideBar = () => {
                 <>
                   <Tooltip title="Department" placement="right">
                     <div
-                      className={`py-3 px-4 flex justify-between items-center hover:wono-blue-dark hover:text-white cursor-pointer rounded-md`}
+                      className={`py-2 px-4 flex border-b-[1px] border-gray-200 ${
+                        !isSidebarOpen ? "justify-center" : "justify-between"
+                      } items-center hover:wono-blue-dark hover:text-white cursor-pointer rounded-md`}
                       onClick={() => {
                         setDepartmentDrop(!departmentDrop);
                         setIsSidebarOpen(true);
@@ -480,19 +517,19 @@ const MainSideBar = () => {
                         </div>
                         {isSidebarOpen && <span>Departments</span>}
                       </div>
-                      <>{departmentDrop ? <FaChevronUp /> : <FaAngleDown />}</>
+                      <>
+                        {isSidebarOpen &&
+                          (departmentDrop ? <FaChevronUp /> : <FaAngleDown />)}
+                      </>
                     </div>
                   </Tooltip>
                   {departmentDrop ? (
-                    <div className="">
+                    <div className="motion-preset-slide-down-sm">
                       {filteredDepartments.map((dept, index) => (
-                        <li
-                          key={index}
-                          className="border-b motion-preset-slide-down-sm"
-                        >
+                        <li key={index} className="border-b">
                           <Tooltip title={dept.name} placement="right">
                             <div
-                              className={`cursor-pointer flex items-center py-3 px-4  hover:wono-blue-dark hover:text-white hover:rounded-md  ${
+                              className={`cursor-pointer flex items-center py-2 px-4  hover:wono-blue-dark hover:text-white hover:rounded-md  ${
                                 isActive(dept.route)
                                   ? "wono-blue border-r-4 border-[#0DB4EA] rounded-tl-md rounded-bl-md text-[#0DB4EA]"
                                   : "bg-white border-b-[1px] border-gray-200"
@@ -503,7 +540,7 @@ const MainSideBar = () => {
                                 navigate(dept.route);
                               }}
                             >
-                              <div className="flex w-full justify-between items-center">
+                              <div className="flex w-full pl-4 justify-between items-center">
                                 <div className="flex">
                                   <div className="text-xl">{dept.icon}</div>
                                   <div>
@@ -520,7 +557,8 @@ const MainSideBar = () => {
                                       }}
                                       className="ml-auto transition-all"
                                     >
-                                      {expandedDepartment === index ? (
+                                      {expandedDepartment === index &&
+                                      isSidebarOpen ? (
                                         <FaChevronUp />
                                       ) : (
                                         <FaAngleDown />
@@ -543,7 +581,7 @@ const MainSideBar = () => {
                                     placement="right"
                                   >
                                     <div
-                                      className={`cursor-pointer  flex pl-5 pr-2 py-3 justify-between hover:wono-blue-dark hover:text-white hover:rounded-md ${
+                                      className={`cursor-pointer  flex pl-5 pr-2 py-2 justify-between hover:wono-blue-dark hover:text-white hover:rounded-md ${
                                         isActive(module.route)
                                           ? "wono-blue border-r-4 border-[#0DB4EA] rounded-tl-md rounded-bl-md text-[#0DB4EA]"
                                           : "bg-white border-b-[1px] border-gray-200"
@@ -586,79 +624,7 @@ const MainSideBar = () => {
                       ))}
                     </div>
                   ) : (
-                    <>
-                      {/* {filteredDepartments.map((dept, index) => (
-                  <li key={index} className="border-b">
-                    <div
-                      className={`cursor-pointer flex items-center py-3 px-4  hover:wono-blue-dark hover:text-white hover:rounded-md  ${
-                        isActive(dept.route)
-                          ? "wono-blue border-r-4 border-[#0DB4EA] rounded-tl-md rounded-bl-md text-[#0DB4EA]"
-                          : "bg-white border-b-[1px] border-gray-200"
-                      }`}
-                      onClick={() => {
-                        setIsSidebarOpen(true);
-                        dept.modules && toggleDepartment(index);
-                        navigate(dept.route);
-                      }}
-                    >
-                      <div className="flex w-full justify-between items-center">
-                        <div className="flex">
-                          <div className="text-xl">{dept.icon}</div>
-                          <div>
-                            {isSidebarOpen && (
-                              <span className="pl-4">{dept.name}</span>
-                            )}
-                          </div>
-                        </div>
-                        <div>
-                          {isSidebarOpen && dept.modules && (
-                            <span className="ml-auto transition-all">
-                              {expandedDepartment === index ? (
-                                <FaChevronUp />
-                              ) : (
-                                <FaAngleDown />
-                              )}
-                            </span>
-                          )}
-                        </div>
-                      </div>
-                    </div>
-                    {expandedDepartment === index && dept.modules && (
-                      <ul className="pl-1">
-                        {dept.modules.map((module, idx) => (
-                          <li
-                            key={idx}
-                            className="pt-0 motion-preset-slide-down-lg"
-                          >
-                            <div
-                              className={`cursor-pointer  flex pl-5 pr-2 py-3 justify-between hover:wono-blue-dark hover:text-white hover:rounded-md ${
-                                isActive(module.route)
-                                  ? "wono-blue border-r-4 border-[#0DB4EA] rounded-tl-md rounded-bl-md text-[#0DB4EA]"
-                                  : "bg-white border-b-[1px] border-gray-200"
-                              } `}
-                              onClick={() => {
-                                module.subMenus && toggleModule(idx);
-                                navigate(module.route);
-                              }}
-                            >
-                              <div className="flex items-center gap-4">
-                                <span>{module.icon}</span>
-                                <span>{module.title}</span>
-                              </div>
-                              {module.subMenus && (
-                                <span>{expandedModule === idx ? "-" : "+"}</span>
-                              )}
-                            </div>
-                            {expandedModule === idx &&
-                              module.subMenus &&
-                              renderSubMenus(module.subMenus)}
-                          </li>
-                        ))}
-                      </ul>
-                    )}
-                  </li>
-                ))} */}
-                    </>
+                    <></>
                   )}
                 </>
               ) : (
@@ -666,7 +632,7 @@ const MainSideBar = () => {
                   {filteredDepartments.map((dept, index) => (
                     <li key={index} className="border-b">
                       <div
-                        className={`cursor-pointer flex items-center py-3 px-4  hover:wono-blue-dark hover:text-white hover:rounded-md  ${
+                        className={`cursor-pointer flex items-center py-2 px-4  hover:wono-blue-dark hover:text-white hover:rounded-md  ${
                           isActive(dept.route)
                             ? "wono-blue border-r-4 border-[#0DB4EA] rounded-tl-md rounded-bl-md text-[#0DB4EA]"
                             : "bg-white border-b-[1px] border-gray-200"
@@ -756,7 +722,7 @@ const MainSideBar = () => {
                     isSidebarOpen
                       ? "pl-[1rem] hover:wono-blue-dark hover:rounded-md hover:text-white"
                       : "justify-center"
-                  } items-center border-b-[1px] py-3 ${
+                  } items-center border-b-[1px] py-2 ${
                     location.pathname === item.route
                       ? "wono-blue border-r-4 border-b-[0px]  border-[#0DB4EA] rounded-tl-md rounded-bl-md text-[#0DB4EA]"
                       : "bg-white"
@@ -776,7 +742,7 @@ const MainSideBar = () => {
                 <Tooltip title={module.title} placement="right">
                   <div key={index} className="border-b">
                     <div
-                      className={`cursor-pointer flex items-center py-3 px-4 hover:wono-blue-dark hover:text-white hover:rounded-md ${
+                      className={`cursor-pointer flex justify-center items-center py-2 px-4 hover:wono-blue-dark hover:text-white hover:rounded-md ${
                         isActive(module.route)
                           ? "wono-blue border-r-4 border-[#0DB4EA] rounded-tl-md rounded-bl-md text-[#0DB4EA]"
                           : "bg-white border-b-[1px] border-gray-200"
@@ -786,9 +752,9 @@ const MainSideBar = () => {
                         navigate(module.route);
                       }}
                     >
-                      <div className="text-2xl">{module.icon}</div>
+                      <div className="text-xl">{module.icon}</div>
                       {isSidebarOpen && (
-                        <span className="pl-4">{module.title}</span>
+                        <span className="pl-5">{module.title}</span>
                       )}
                       {isSidebarOpen && module.submenus && (
                         <span className="ml-auto">
@@ -806,7 +772,7 @@ const MainSideBar = () => {
                           <Tooltip title={submenu.title} placement="right">
                             <div
                               key={idx}
-                              className={`cursor-pointer py-3 hover:wono-blue-dark hover:text-white hover:rounded-md ${
+                              className={`cursor-pointer py-2 hover:wono-blue-dark hover:text-white hover:rounded-md ${
                                 isActive(submenu.route)
                                   ? "wono-blue border-r-4 border-[#0DB4EA] rounded-tl-md rounded-bl-md text-[#0DB4EA]"
                                   : "bg-white border-b-[1px] border-gray-200"
@@ -814,9 +780,9 @@ const MainSideBar = () => {
                               onClick={() => navigate(submenu.route)}
                             >
                               <div
-                                className={`flex ${
+                                className={`flex items-center ${
                                   isSidebarOpen
-                                    ? "justify-start pl-2"
+                                    ? "justify-start pl-4"
                                     : "justify-center"
                                 }`}
                               >
@@ -848,7 +814,7 @@ const MainSideBar = () => {
                 }}
                 className={`flex border-b-[1px] ${
                   isSidebarOpen ? "pl-[1rem]" : "justify-center"
-                } items-center cursor-pointer  py-3 hover:wono-blue-dark hover:text-white hover:rounded-md ${
+                } items-center cursor-pointer  py-2 hover:wono-blue-dark hover:text-white hover:rounded-md ${
                   location.pathname === "/profile"
                     ? "wono-blue border-r-4 border-[#0DB4EA] rounded-tl-md rounded-bl-md text-[#0DB4EA]"
                     : "bg-white"

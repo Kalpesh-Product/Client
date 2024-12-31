@@ -71,12 +71,12 @@ const SubordinateDueApprovals = () => {
 
   const columns = [
     // { field: "id", headerName: "ID", width: 100 },
-    { field: "fromDate", headerName: "From Date", width: 200 },
-    { field: "toDate", headerName: "To Date", width: 200 },
-    { field: "leaveType", headerName: "Leave Type", width: 200 },
-    { field: "leavePeriod", headerName: "Leave Period", width: 200 },
-    { field: "hours", headerName: "Hours", width: 200 },
-    { field: "takenBy", headerName: "Created By", width: 200 },
+    { field: "fromDate", headerName: "From Date", flex: 1 },
+    { field: "toDate", headerName: "To Date", flex: 1 },
+    { field: "leaveType", headerName: "Leave Type", flex: 1 },
+    { field: "leavePeriod", headerName: "Leave Period", flex: 1 },
+    { field: "hours", headerName: "Hours", flex: 1 },
+    { field: "takenBy", headerName: "Created By", flex: 1 },
     {
       field: "status",
       headerName: "Status",
@@ -624,7 +624,7 @@ const SubordinateDueApprovals = () => {
   };
 
   return (
-    <div className="w-[72vw] md:w-full transition-all duration-200 ease-in-out bg-white p-0 rounded-md">
+    <div className="w-[72vw] md:w-full transition-all duration-200 ease-in-out p-0 rounded-md">
       {/* <div className="bg-green-500">
         <h2>Today's Tickets</h2>
       </div> */}

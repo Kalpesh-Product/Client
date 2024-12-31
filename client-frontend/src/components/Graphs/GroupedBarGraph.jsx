@@ -9,6 +9,7 @@ import {
   Legend,
 } from "chart.js";
 
+
 ChartJS.register(CategoryScale, LinearScale, BarElement, Tooltip, Legend);
 
 export default function GroupedBarGraph({
@@ -138,7 +139,7 @@ export default function GroupedBarGraph({
       </div>
       <div
         className="p-4 pb-8"
-        style={{ width: graphWidth, height: graphHeight }}
+        style={{ width: '100%', height: graphHeight }}
       >
         <Bar data={chartData} options={options} />
       </div>

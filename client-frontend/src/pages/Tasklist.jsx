@@ -138,8 +138,8 @@ const Tasklist = () => {
           completed: [],
         };
 
-        projects.forEach((project) => {
-          switch (project.status.toLowerCase()) {
+        projects?.forEach((project) => {
+          switch (project?.status.toLowerCase()) {
             case "ongoing":
               groupedTasks.ongoing.push(project);
               break;
@@ -169,7 +169,7 @@ const Tasklist = () => {
   const fetchProjects = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:5000/api/tasks/get-projects"
+        "/api/tasks/get-projects"
       );
       console.log("Projects:", response.data.projects);
       return response.data.projects;
@@ -392,7 +392,7 @@ const Tasklist = () => {
 
   return (
     <div className="flex min-h-screen">
-      <div className="w-full p-4 motion-preset-blur-right-md ">
+      <div className="w-full py-4 motion-preset-blur-right-md ">
         <h2 className="text-2xl  ">Projects</h2>
         <div className="flex flex-wrap items-center justify-between mt-5">
           <div>

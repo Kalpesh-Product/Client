@@ -305,7 +305,7 @@ const TestSide = () => {
       } bg-white  border-gray-300 text-black flex flex-shrink-0 h-[90vh] overflow-y-auto transition-all duration-300 z-[1]`}>
       <div className="flex relative w-full">
         {/*Dashboard */}
-        <div className="mt-5 px-3 flex flex-col gap-2 w-full">
+        <div className="mt-5 px-3 flex flex-col gapy-4 w-full">
           <Tooltip title={"Dashboard"} placement="right">
             <div
               onClick={() => {
