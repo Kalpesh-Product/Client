@@ -802,13 +802,13 @@ const RaiseTicketForm = () => {
   );
 
   return (
-    <div className=" transition-all duration-200 ease-in-out bg-white rounded-md">
+    <div className=" transition-all duration-200 ease-in-out  rounded-md">
       <form onSubmit={createMyTicket}>
-        <div className="bg-white  w-full rounded-lg z-10 relative overflow-y-auto max-h-[80vh] mx-auto">
+        <div className="w-full rounded-lg z-10 relative overflow-y-auto max-h-[80vh] mx-auto">
           {/* Modal Content */}
 
           {/* Modal Header */}
-          <div className="sticky top-0 bg-white z-20 flex justify-center">
+          <div className="sticky top-0  z-20 flex justify-center">
             <div className="flex justify-center">
               <h2 className="text-3xl font-bold text-center">Raise A Ticket</h2>
             </div>
@@ -839,8 +839,8 @@ const RaiseTicketForm = () => {
                     bgcolor: "background.paper",
                     borderRadius: 2,
                   }}
-                  // className="bg-white p-4 rounded-lg shadow-md mx-auto">
-                  className="bg-white pt-3 rounded-lg w-full">
+                  // className="py-4 rounded-lg shadow-md mx-auto">
+                  className="pt-3 rounded-lg w-full">
                   {/* Personal Information */}
                   {/* <h2 className="text-lg font-semibold mb-4">Add Ticket</h2> */}
                   {/* <div className="grid grid-cols-1 gap-4"> */}
@@ -1091,7 +1091,7 @@ const RaiseTicketForm = () => {
                                   bgcolor: "background.paper",
                                   borderRadius: 2,
                                 }}
-                                // className="bg-white p-4 rounded-lg shadow-md mx-auto">
+                                // className="py-4 rounded-lg shadow-md mx-auto">
                                 className="bg-white py-6 rounded-lg">
                                 {/* Personal Information */}
                                 {/* <h2 className="text-lg font-semibold mb-4">Add Ticket</h2> */}
@@ -1433,8 +1433,8 @@ const RaiseTicketForm = () => {
                         bgcolor: "background.paper",
                         borderRadius: 2,
                       }}
-                      // className="bg-white p-4 rounded-lg shadow-md mx-auto">
-                      className="bg-white p-4 rounded-lg mx-auto">
+                      // className="py-4 rounded-lg shadow-md mx-auto">
+                      className="py-4 rounded-lg mx-auto">
                       {/* Personal Information */}
                       {/* <h2 className="text-lg font-semibold mb-4">Add Ticket</h2> */}
                       <div className="grid grid-cols-1 gap-4">
@@ -1591,8 +1591,8 @@ const RaiseTicketForm = () => {
                       bgcolor: "background.paper",
                       borderRadius: 2,
                     }}
-                    // className="bg-white p-4 rounded-lg shadow-md mx-auto">
-                    className="bg-white p-4 rounded-lg mx-auto">
+                    // className="py-4 rounded-lg shadow-md mx-auto">
+                    className="py-4 rounded-lg mx-auto">
                     {/* Personal Information */}
                     {/* <h2 className="text-lg font-semibold mb-4">Add Ticket</h2> */}
                     <div className="grid grid-cols-1 gap-4">

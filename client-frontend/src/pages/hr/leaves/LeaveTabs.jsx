@@ -99,7 +99,7 @@ const LeaveTabs = () => {
               <div className="flex justify-center items-center ">
                 <div className=" w-full">
                   <div className=" ">
-                    <div className="flex w-full p-4 pb-4 pl-0 text-lg border-b-0  gap-4">
+                    <div className="flex w-full py-4 pb-4 pl-0 text-lg border-b-0  gap-4">
                       <h2 className="text-2xl  font-bold ">
                         Leaves Pending For Approval
                       </h2>
@@ -129,7 +129,7 @@ const LeaveTabs = () => {
         <NewModal
           open={uploadProfileImage}
           onClose={() => setUploadProfileImage(false)}>
-          <div className="bg-white p-4 rounded-lg w-80">
+          <div className="py-4 rounded-lg w-80">
             <div className="flex justify-between pb-8 items-center">
               <div>
                 <h3 className="text-xl font-semibold mb-4">Upload SOP</h3>

@@ -117,7 +117,7 @@ export default function AddRooms() {
   if (isError) return <p>Error fetching rooms. Please try again later.</p>;
 
   return (
-    <section className="p-4 flex flex-col justify-center gap-4">
+    <section className="py-4  flex flex-col justify-center gap-4">
       <div className="flex justify-between items-center">
         <h1 className="font-bold text-2xl mb-2">Meeting Rooms</h1>
 

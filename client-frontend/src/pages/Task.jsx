@@ -345,7 +345,7 @@ const Task = () => {
 
   return (
     <div className="flex min-h-screen">
-      <div className="w-full p-4 motion-preset-blur-right-md ">
+      <div className="w-full py-4 motion-preset-blur-right-md ">
         <h2 className="text-2xl mb-4">Tasks</h2>
         <div className="grid grid-cols-4 gap-4 my-5">
           {/* Total Tasks */}

@@ -58,7 +58,7 @@ const NotificationsPage = () => {
   ];
 
   return (
-    <main className="w-full h-full p-4 bg-gray-100">
+    <main className="w-full h-full py-4">
       <h1 className="text-2xl font-bold mb-6">All Notifications</h1>
       <Box className="bg-white p-4 rounded-md shadow">
         <Tabs

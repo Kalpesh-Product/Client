@@ -420,7 +420,7 @@ const MyTicketsTable = () => {
   }));
 
   return (
-    <div className="px-2 pb-2 pt-0 bg-white mx-4">
+    <div className="px-2 pb-2 pt-0 bg-white">
       {/* <div className="flex gap-4 h-16 ">
         <div className="pt-2">Filter by :</div>
         <div>

@@ -155,7 +155,7 @@ export default function Listing() {
   };
 
   return (
-    <section className="h-screen overflow-y-auto top-0 p-4">
+    <section className="h-screen overflow-y-auto top-0 py-4">
       <div className="flex justify-between items-center">
         <h1 className="font-bold text-2xl mb-2">Booking Calendar</h1>
         <div className="flex gap-4 mb-4">

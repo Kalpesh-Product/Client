@@ -126,7 +126,7 @@ const SopAccordians = () => {
       </Typography>
       <TableContainer
         component={Paper}
-        className="p-4 bg-gray-100 w-[80vw] md:w-full">
+        className="py-4 w-[80vw] md:w-full">
         <Table>
           <TableHead>
             <TableRow>

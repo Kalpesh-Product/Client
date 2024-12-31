@@ -33,7 +33,7 @@ const SopDetails = () => {
     <div>
       {/* <div>SOPs</div> */}
       <div>
-        <div className="flex bg-white p-4 rounded-lg">
+        <div className="flex py-4 rounded-lg">
           <div className="mb-2 flex justify-between w-full">
             <h1 className="text-3xl"></h1>
             {/* <button
@@ -113,7 +113,7 @@ const SopDetails = () => {
         <NewModal
           open={uploadProfileImage}
           onClose={() => setUploadProfileImage(false)}>
-          <div className="bg-white p-4 rounded-lg w-80">
+          <div className="py-4 rounded-lg w-80">
             <div className="flex justify-between pb-8 items-center">
               <div>
                 <h3 className="text-xl font-semibold mb-4">Upload SOP</h3>

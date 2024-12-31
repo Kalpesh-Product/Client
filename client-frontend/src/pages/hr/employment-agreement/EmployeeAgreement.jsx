@@ -147,13 +147,11 @@ const EmployeeAgreement = () => {
     {
       field: "actions",
       headerName: "Actions",
-      width: 200,
       cellRenderer: (params) => {
         const handleDelete = () => {
           console.log("Deleting leave:", params.data._id);
 
           openDeleteTicket();
-
           setEntryToDelete(params.data._id);
           console.log(entryToDelete);
         };
@@ -387,8 +385,8 @@ const EmployeeAgreement = () => {
       <AgTable
         data={myLeaves} // Use the state here
         columns={columns}
-        highlightFirstRow={highlightFirstRow} // Bind the state here
-        highlightEditedRow={highlightEditedRow} // Bind the state here
+        // highlightFirstRow={highlightFirstRow} 
+        // highlightEditedRow={highlightEditedRow} 
       />
 
       {/* Tickets datatable END */}
@@ -677,8 +675,8 @@ const EmployeeAgreement = () => {
                       bgcolor: "background.paper",
                       borderRadius: 2,
                     }}
-                    // className="bg-white p-4 rounded-lg shadow-md mx-auto">
-                    className="bg-white p-4 rounded-lg mx-auto">
+                    // className="py-4 rounded-lg shadow-md mx-auto">
+                    className="py-4 rounded-lg mx-auto">
                     {/* Personal Information */}
                     {/* <h2 className="text-lg font-semibold mb-4">Add Ticket</h2> */}
                     <div className="grid grid-cols-1 gap-4">
@@ -786,8 +784,8 @@ const EmployeeAgreement = () => {
                       bgcolor: "background.paper",
                       borderRadius: 2,
                     }}
-                    // className="bg-white p-4 rounded-lg shadow-md mx-auto">
-                    className="bg-white p-4 rounded-lg mx-auto">
+                    // className="py-4 rounded-lg shadow-md mx-auto">
+                    className="py-4 rounded-lg mx-auto">
                     {/* Personal Information */}
                     {/* <h2 className="text-lg font-semibold mb-4">Add Ticket</h2> */}
                     <div className="grid grid-cols-1 gap-4">
