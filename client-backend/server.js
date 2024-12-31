@@ -31,6 +31,7 @@ const PORT = process.env.PORT || 5000;
 
 connectDb(process.env.DB_URL);
 
+app.use("/files", express.static("files"));
 app.use(credentials);
 app.use(cors(corsConfig));
 app.use(cookieParser());
@@ -66,8 +67,7 @@ app.use("/api/roles", roleRoutes);
 app.use("/api/modules", moduleRoutes);
 app.use("/api/sub-modules", subModuleRoutes);
 app.use("/api/events", eventRoutes);
-app.use("/api/tasks",taskRoutes);
-
+app.use("/api/tasks", taskRoutes);
 
 app.all("*", (req, res) => {
   if (req.accepts("html")) {

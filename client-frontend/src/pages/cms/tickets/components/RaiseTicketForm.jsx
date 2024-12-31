@@ -1138,15 +1138,7 @@ const RaiseTicketForm = () => {
                         {/* Name, Mobile, Email, DOB fields */}
 
                         <div className="grid grid-cols-1 gap-4">
-                          <TextField
-                            label="Reason For Editing"
-                            // value={newEvent.name}
-                            // value="Wifi is not working" // Hardcoded value for ticket title
-                            // onChange={(e) =>
-                            //   setnewEvent({ ...newEvent, name: e.target.value })
-                            // }
-                            fullWidth
-                          />
+                          <TextField label="Reason For Editing" fullWidth />
                         </div>
                         <div className="grid grid-cols-1 gap-4">
                           <FormControl fullWidth>
@@ -1214,33 +1206,9 @@ const RaiseTicketForm = () => {
                             </Select>
                           </FormControl>
                         </div>
-
-                        {/* <div className="grid grid-cols-1 gap-4">
-                          <TextField
-                            label="Enter Ticket Title"
-                            // value={newEvent.name}
-                            value="Laptop screen malfunctioning" // Hardcoded value for ticket title
-                            // onChange={(e) =>
-                            //   setnewEvent({ ...newEvent, name: e.target.value })
-                            // }
-                            fullWidth
-                          />
-                        </div> */}
                       </div>
 
                       {/* Role & Department fields */}
-
-                      {/* <div className="col-span-2 flex gap-4">
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.9 }}
-                  className="w-full py-2 px-4 bg-blue-600 text-white rounded mt-4"
-                  //   onClick={handleSaveEvent}
-                  onClick={() => navigate("/customer/tickets")}>
-                  Save
-                </motion.button>
-          
-              </div> */}
                     </Box>
                   </div>
                 </div>
