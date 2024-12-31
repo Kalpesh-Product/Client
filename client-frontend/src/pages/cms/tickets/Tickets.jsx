@@ -40,13 +40,13 @@ const Tickets = () => {
     },
   ];
   return (
-    <div className="flex min-h-screen bg-white flex-1 w-full">
+    <div className="flex min-h-screen flex-1 w-full">
       <div>
         
       </div>
       <div className="w-full h-screen overflow-auto">
         {location.pathname === "/tickets" ? (
-          <div className="bg-white p-4 rounded-lg">
+          <div className="py-4 rounded-lg">
             <div className="mb-4 flex justify-between">
               <h1 className="text-2xl font-bold">Ticket Management</h1>
             </div>
@@ -91,7 +91,7 @@ const Tickets = () => {
               {/* <div className="flex justify-center">
                       <RaiseTicketButton />
                     </div> */}
-              <div className="flex w-full p-4 pb-4 pl-0 text-lg border-b-0 gap-4">
+              <div className="flex w-full py-4 pb-4 pl-0 text-lg border-b-0 gap-4">
                 {/* <h2 className="text-2xl font-bold">My Tickets</h2> */}
                 <h2 className="text-2xl font-bold">
                   {/* Tickets Received Today */}

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Table,
   TableBody,
@@ -13,44 +13,47 @@ import {
 } from "@mui/material";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
-const PayrollValue = () => {
-  // Table Data
-  const tableData = [
-    { department: "Finance", payroll: 35000 },
-    { department: "HR", payroll: 15000 },
-    { department: "Tech", payroll: 20000 },
-    { department: "IT", payroll: 25000 },
-    { department: "Sales", payroll: 18000 },
-    { department: "Administration", payroll: 45000 },
-  ];
+const SopAccordians = () => {
+  const navigate = useNavigate();
+  const [sops, setSops] = useState([]);
 
-  // Dummy Employee Data per Department
-  const employeeData = {
-    Finance: [
-      { name: "John Doe", role: "Accountant", salary: 5000 },
-      { name: "Jane Smith", role: "Auditor", salary: 6000 },
-    ],
-    HR: [
-      { name: "Alice Brown", role: "Recruiter", salary: 4000 },
-      { name: "Bob White", role: "HR Manager", salary: 7000 },
-    ],
-    Tech: [
-      { name: "Charlie Green", role: "Developer", salary: 8000 },
-      { name: "Daisy Blue", role: "Tester", salary: 5000 },
-    ],
-    IT: [
-      { name: "Eve Black", role: "SysAdmin", salary: 5500 },
-      { name: "Frank Red", role: "Network Admin", salary: 6000 },
-    ],
-    Sales: [
-      { name: "Grace Pink", role: "Sales Exec", salary: 4500 },
-      { name: "Hank Yellow", role: "Sales Manager", salary: 6500 },
-    ],
-    Administration: [
-      { name: "Ivy Purple", role: "Admin Assistant", salary: 4000 },
-      { name: "Jack Orange", role: "Office Manager", salary: 6000 },
-    ],
+  useEffect(() => {
+    fetchSops();
+  }, []);
+
+  const fetchSops = async () => {
+    const responseFromBackend = await axios.get("/api/sops/view-all-sops");
+    const sops = responseFromBackend.data.sops;
+    setSops(sops);
+  };
+
+  const groupedData = sops.reduce((acc, sop) => {
+    const { sopDepartment, sopName, createdAt, _id } = sop;
+
+    if (!acc[sopDepartment]) {
+      acc[sopDepartment] = {
+        department: sopDepartment,
+        sops: [],
+      };
+    }
+
+    acc[sopDepartment].sops.push({
+      name: sopName,
+      dateAdded: new Date(createdAt).toLocaleDateString(),
+      _id, // Include _id for View Details
+    });
+
+    return acc;
+  }, {});
+
+  const tableData = Object.values(groupedData);
+
+  // Function to handle View Details button click
+  const handleViewDetails = (id) => {
+    console.log(`SOP ID: ${id}`);
   };
 
   const Row = ({ department }) => {
@@ -70,42 +73,43 @@ const PayrollValue = () => {
           <TableCell component="th" scope="row">
             {department.department}
           </TableCell>
-          <TableCell align="right">
-            ₹ {department.payroll.toLocaleString()}
-          </TableCell>
+          <TableCell align="right">{department.sops.length}</TableCell>
         </TableRow>
         <TableRow>
           <TableCell sx={{ paddingBottom: 0, paddingTop: 0 }} colSpan={3}>
             <Collapse in={open} timeout="auto" unmountOnExit>
               <Table
                 size="medium"
-                aria-label="employees"
+                aria-label="sops"
                 sx={{ margin: "10px 0", padding: "10px" }}>
                 <TableHead>
                   <TableRow>
-                    <TableCell sx={{ padding: "8px" }}>Name</TableCell>
-                    <TableCell sx={{ padding: "8px" }}>Role</TableCell>
+                    <TableCell sx={{ padding: "8px" }}>SOP Name</TableCell>
+                    <TableCell sx={{ padding: "8px" }}>Date Added</TableCell>
                     <TableCell align="right" sx={{ padding: "8px" }}>
-                      Salary (₹)
+                      Actions
                     </TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {(employeeData[department.department] || []).map(
-                    (employee) => (
-                      <TableRow key={employee.name}>
-                        <TableCell sx={{ padding: "8px" }}>
-                          {employee.name}
-                        </TableCell>
-                        <TableCell sx={{ padding: "8px" }}>
-                          {employee.role}
-                        </TableCell>
-                        <TableCell align="right" sx={{ padding: "8px" }}>
-                          ₹ {employee.salary.toLocaleString()}
-                        </TableCell>
-                      </TableRow>
-                    )
-                  )}
+                  {department.sops.map((sop) => (
+                    <TableRow key={sop._id}>
+                      <TableCell sx={{ padding: "8px" }}>{sop.name}</TableCell>
+                      <TableCell sx={{ padding: "8px" }}>
+                        {sop.dateAdded}
+                      </TableCell>
+                      <TableCell align="right" sx={{ padding: "8px" }}>
+                        <button
+                          className="px-6 py-2 rounded-lg text-white wono-blue-dark hover:bg-[#3cbce7] transition-shadow shadow-md hover:shadow-lg active:shadow-inner"
+                          // onClick={() => handleViewDetails(sop._id)}>
+                          onClick={() =>
+                            navigate("/hr/company-handbook/sop-details")
+                          }>
+                          View Details
+                        </button>
+                      </TableCell>
+                    </TableRow>
+                  ))}
                 </TableBody>
               </Table>
             </Collapse>
@@ -118,17 +122,17 @@ const PayrollValue = () => {
   return (
     <main className="p-4">
       <Typography variant="h4" component="h2" className="mt-4 mb-2">
-        Payroll Table
+        SOP Table
       </Typography>
       <TableContainer
         component={Paper}
-        className="p-4 bg-gray-100 w-[80vw] md:w-full">
+        className="py-4 w-[80vw] md:w-full">
         <Table>
           <TableHead>
             <TableRow>
               <TableCell />
               <TableCell>Department</TableCell>
-              <TableCell align="right">Total SOPs: 3</TableCell>
+              <TableCell align="right">Total SOPs</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -142,4 +146,4 @@ const PayrollValue = () => {
   );
 };
 
-export default PayrollValue;
+export default SopAccordians;

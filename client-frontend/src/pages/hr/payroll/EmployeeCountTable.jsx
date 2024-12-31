@@ -59,7 +59,7 @@ export default function EmployeeCountTable() {
   const tableData = getTableData(data.users);
 
   return (
-    <div className="p-4 bg-white w-[80vw] md:w-full">
+    <div className="py-4 w-[80vw] md:w-full">
       <h2 className="text-2xl font-bold text-gray-800 mb-6">Employee Details</h2>
       <AgTable
         data={tableData}

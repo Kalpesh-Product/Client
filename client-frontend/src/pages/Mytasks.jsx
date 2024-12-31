@@ -284,7 +284,7 @@ const Mytasks = () => {
       <div className="mx-auto">
         {/* Tab 2 Content */}
 
-        <div className="w-full p-4 motion-preset-blur-right-md ">
+        <div className="w-full py-4 motion-preset-blur-right-md ">
           <h2 className="text-2xl mb-4 ">My Tasks</h2>
 
           <div className="bg-white p-2">
@@ -339,7 +339,7 @@ const Mytasks = () => {
                     >
                       {/* Tab 2 Content */}
 
-                      <div className="w-full p-4 motion-preset-blur-right-md ">
+                      <div className="w-full py-4 motion-preset-blur-right-md ">
                         <div className="bg-white p-2">
                           <div className="flex flex-wrap items-center justify-between  gap-4">
                             {/* Left Side: Search, Priority Dropdown, and Date Filter */}

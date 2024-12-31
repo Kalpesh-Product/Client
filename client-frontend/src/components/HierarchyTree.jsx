@@ -98,7 +98,7 @@ const TreeNode = ({ node }) => {
       </NewModal>
 
       <div
-        className="flex items-center border border-gray-300 rounded-lg p-4 shadow-md w-full cursor-pointer transition-transform duration-300 ease-in-out"
+        className="flex items-center border bg-white border-gray-300 rounded-lg p-4 shadow-md w-full cursor-pointer transition-transform duration-300 ease-in-out"
         onClick={openModal}
       >
         <div
@@ -149,7 +149,7 @@ const TreeNode = ({ node }) => {
 
 export default function OrgTree({ data }) {
   return (
-    <div className="flex flex-col items-start p-4 w-full">
+    <div className="flex flex-col items-start py-4 w-full">
       {data.map((node) => (
         <TreeNode key={node.name} node={node} />
       ))}

@@ -3,14 +3,27 @@ const Event = require("../../models/Events");
 const createEvent = async (req, res, next) => {
   try {
     const { title, type, description, start, end, participants } = req.body;
+
+    const startDate = new Date(start);
+    const endDate = new Date(end);
+
+    if (isNaN(startDate.getTime()) || isNaN(endDate.getTime())) {
+      return res.status(400).json({ message: "Invalid date format" });
+    }
+    
+
+    const validParticipants = Array.isArray(participants) ? participants : [];
+
+    
     const newEvent = new Event({
-      title,
-      type,
-      description,
-      start,
-      end,
-      participants: [...participants],
-    });
+        title,
+        type,
+        description,
+        start: startDate,
+        end: endDate,
+        participants: validParticipants,
+      });
+     
 
     if (!title || !type || !description || !start || !end) {
       return res.status(400).json({ message: "All fields are required" });

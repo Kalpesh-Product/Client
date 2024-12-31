@@ -20,7 +20,7 @@ const MyTicketsTabs = () => {
 
   return (
     <div>
-      <div className=" w-full p-4 pb-0 text-lg border-b-0">
+      <div className=" w-full py-4 pb-0 text-lg border-b-0">
         {/* <h2 className="text-2xl font-bold">My Tickets</h2> */}
         <h2 className="text-2xl  font-bold">My Tickets</h2>
       </div>

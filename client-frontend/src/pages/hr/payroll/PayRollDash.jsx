@@ -42,7 +42,7 @@ export default function PayRollDash() {
     auth.user.role.roleTitle === "Super-Admin";
 
   return (
-    <div className="p-4 bg-white w-[80vw] md:w-full">
+    <div className="py-4 w-[80vw] md:w-full">
       {isAdmin ? (
         <>
           <div className="w-full flex justify-between items-center mb-6">
@@ -79,7 +79,7 @@ export default function PayRollDash() {
               />
             ))}
           </div>
-          <div className="flex flex-col lg:flex-row gap-4 bg-gray-100 w-full">
+          <div className="flex flex-col lg:flex-row gap-4 w-full">
             <DepartmentPayrollChart />
 
             <EmployeeCount />

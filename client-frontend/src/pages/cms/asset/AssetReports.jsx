@@ -105,7 +105,7 @@ const AssetReports = () => {
   //     return matchesSearch && matchesDropdown;
   //   });
   return (
-    <div className="p-4 h-[90vh]">
+    <div className="py-4 h-[90vh]">
       {/* <button
         onClick={() => handleOpenModal("add")}
         className="wono-blue-dark p-2 rounded-md text-white"

@@ -5,12 +5,14 @@ const createSop = async (req, res) => {
     // Get the sent in data off request body
     // const leaveIdFromRequestBody = req.body.leaveId;
     const sopNameFromRequestBody = req.body.sopName;
+    const sopDepartmentFromRequestBody = req.body.sopDepartment;
     // const noOfDaysFromRequestBody = req.body.noOfDays;
 
     // Create a leave with it (take the values from the request body / frontend and insert in the database)
     const ourCreatedSop = await Sop.create({
       //   leaveId: leaveIdFromRequestBody,
       sopName: sopNameFromRequestBody,
+      sopDepartment: sopDepartmentFromRequestBody,
       //   noOfDays: noOfDaysFromRequestBody,
 
       // resolvedStatus: req.body.resolvedStatus ?? false,

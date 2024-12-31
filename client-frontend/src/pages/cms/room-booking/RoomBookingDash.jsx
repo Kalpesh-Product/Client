@@ -77,7 +77,7 @@ export default function RoomBookingDash() {
   ];
 
   return (
-    <div className="p-4 bg-white w-[80vw] md:w-full">
+    <div className="py-4 w-[80vw] md:w-full">
       <div className="w-full flex justify-between items-center mb-6">
         <h1 className="text-2xl font-semibold">Room Booking Management</h1>
         <button

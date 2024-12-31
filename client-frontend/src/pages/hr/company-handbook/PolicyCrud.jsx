@@ -32,8 +32,8 @@ const PolicyCrud = () => {
   const [holidayName, setLeaveType] = useState(""); // State to track the selected option
 
   const columns = [
-    { field: "id", headerName: "ID", width: 100 },
-    { field: "policyName", headerName: "Policy Name", width: 200 },
+    { field: "id", headerName: "ID", flex: 1 },
+    { field: "policyName", headerName: "Policy Name", flex: 1 },
     // { field: "agreement", headerName: "Agreement", width: 200 },
     // {
     //   field: "priority",
@@ -64,7 +64,7 @@ const PolicyCrud = () => {
     //   type: "singleSelect",
     //   valueOptions: ["IT", "HR", "Tech", "Admin"],
     // },
-    { field: "date", headerName: "Date Added", width: 150 },
+    { field: "date", headerName: "Date Added", flex: 1 },
     // {
     //   field: "status",
     //   headerName: "Status",
@@ -463,7 +463,7 @@ const PolicyCrud = () => {
   };
 
   return (
-    <div className="w-[72vw] md:w-full transition-all duration-200 ease-in-out bg-white p-0 rounded-md">
+    <div className="w-[72vw] md:w-full transition-all duration-200 ease-in-out p-0 rounded-md">
       {/* <div className="bg-green-500">
         <h2>Today's Tickets</h2>
       </div> */}
@@ -622,7 +622,7 @@ const PolicyCrud = () => {
                                 bgcolor: "background.paper",
                                 borderRadius: 2,
                               }}
-                              // className="bg-white p-4 rounded-lg shadow-md mx-auto">
+                              // className="py-4 rounded-lg shadow-md mx-auto">
                               className="bg-white py-6 rounded-lg">
                               {/* Personal Information */}
                               {/* <h2 className="text-lg font-semibold mb-4">Add Ticket</h2> */}
@@ -957,8 +957,8 @@ const PolicyCrud = () => {
                       bgcolor: "background.paper",
                       borderRadius: 2,
                     }}
-                    // className="bg-white p-4 rounded-lg shadow-md mx-auto">
-                    className="bg-white p-4 rounded-lg mx-auto">
+                    // className="py-4 rounded-lg shadow-md mx-auto">
+                    className="py-4 rounded-lg mx-auto">
                     {/* Personal Information */}
                     {/* <h2 className="text-lg font-semibold mb-4">Add Ticket</h2> */}
                     <div className="grid grid-cols-1 gap-4">
@@ -1099,8 +1099,8 @@ const PolicyCrud = () => {
                       bgcolor: "background.paper",
                       borderRadius: 2,
                     }}
-                    // className="bg-white p-4 rounded-lg shadow-md mx-auto">
-                    className="bg-white p-4 rounded-lg mx-auto">
+                    // className="py-4 rounded-lg shadow-md mx-auto">
+                    className="py-4 rounded-lg mx-auto">
                     {/* Personal Information */}
                     {/* <h2 className="text-lg font-semibold mb-4">Add Ticket</h2> */}
                     <div className="grid grid-cols-1 gap-4">

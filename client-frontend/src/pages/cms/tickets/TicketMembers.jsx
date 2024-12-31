@@ -16,11 +16,11 @@ import { IoMdClose } from "react-icons/io";
 
 const TicketMembers = () => {
   const columns = [
-    { field: "id", headerName: "ID", width: 100 },
-    { field: "name", headerName: "Name", width: 200 },
-    { field: "email", headerName: "Email", width: 250 },
-    // { field: "role", headerName: "Role", width: 150 },
-    { field: "availability", headerName: "Availability", width: 150 },
+    { field: "id", headerName: "ID", flex: 1 },
+    { field: "name", headerName: "Name", flex: 1 },
+    { field: "email", headerName: "Email", flex: 1 },
+    // { field: "role", headerName: "Role", flex: 1 },
+    { field: "availability", headerName: "Availability", flex: 1 },
     // {
     //   field: "action",
     //   headerName: "Action",
@@ -313,8 +313,8 @@ const TicketMembers = () => {
                       bgcolor: "background.paper",
                       borderRadius: 2,
                     }}
-                    // className="bg-white p-4 rounded-lg shadow-md mx-auto">
-                    className="bg-white p-4 rounded-lg mx-auto">
+                    // className="py-4 rounded-lg shadow-md mx-auto">
+                    className="py-4 rounded-lg mx-auto">
                     {/* Personal Information */}
                     {/* <h2 className="text-lg font-semibold mb-4">Add Ticket</h2> */}
                     <div className="grid grid-cols-1 gap-4">
