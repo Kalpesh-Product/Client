@@ -302,6 +302,34 @@ const AssignTaskForm = ({
       toast.error("Tasks could not be saved");
     }
   };
+
+  const handleEditProject = async(updatedData) => {
+    console.log(projectData);
+
+    if (!projectData?._id) {
+      console.error("Project ID is undefined");
+      return;
+    }
+    try {
+      const response = await fetch(`/api/tasks/create-project/${projectData._id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(updatedData),
+      });
+  
+      if (response.ok) {
+        alert("Project updated successfully!");
+        // Optionally refresh the project list
+        handleClose(); // Close the modal
+      } else {
+        console.error("Failed to update project");
+      }
+    } catch (error) {
+      console.error("Error updating project:", error);
+    }
+  }
   return (
     <div>
       <Box
@@ -932,7 +960,7 @@ const AssignTaskForm = ({
                     return (
                       <div className="grid grid-cols-1 gap-4 top-5">
                         {/* Asset Number */}
-                        <Grid item xs={12}>
+                        {/* <Grid item xs={12}>
                           <TextField
                             name="department"
                             label="Departments"
@@ -940,7 +968,7 @@ const AssignTaskForm = ({
                             onChange={(e) => SetDepartment(e.target.value)}
                             fullWidth
                           />
-                        </Grid>
+                        </Grid> */}
                         <Grid item xs={12}>
                           <TextField
                             label="Title"
@@ -1010,7 +1038,15 @@ const AssignTaskForm = ({
                           variant="contained"
                           color="primary"
                           type="submit"
-                          onClick={() => handleAddProject(projectData)}
+                          // onClick={() =>
+                          //   handleEditProject({
+                          //     title: Title,
+                          //     description: description,
+                          //     department: department,
+                          //     assignees: projectData.assignees, // Include other fields if needed
+                          //   })
+                          // }
+                          onClick={() => handleEditProject(projectData)}
                         >
                           Submit
                         </Button>
