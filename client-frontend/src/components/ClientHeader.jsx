@@ -144,7 +144,7 @@ const ClientHeader = () => {
             onClick={handleNotificationPopoverOpen}
             className="p-4 cursor-pointer"
           >
-            <IoMdNotifications size={30}/>
+            <IoMdNotifications size={30} />
           </span>
 
           <Popover
@@ -222,7 +222,7 @@ const ClientHeader = () => {
 
           {/* Module */}
           <span onClick={handlePopoverOpen} className="p-4 cursor-pointer">
-            <BsFillGridFill size={30}/>
+            <BsFillGridFill size={30} />
           </span>
           <Popover
             sx={{ marginTop: "1rem" }}
@@ -255,7 +255,16 @@ const ClientHeader = () => {
               {/* <Typography variant="h6" sx={{ px: 2, py: "0", color: "white" }}>
                 {authUser.user.name}
               </Typography> */}
-              {isRunning ? <p onClick={()=>navigate('/hr/attendance')} className="text-white text-sm motion-preset-slide-up-lg">{timer}</p> : ""}
+              {isRunning ? (
+                <p
+                  onClick={() => navigate("/hr/attendance")}
+                  className="text-white text-sm motion-preset-slide-up-lg"
+                >
+                  {timer}
+                </p>
+              ) : (
+                ""
+              )}
             </div>
           </IconButton>
 
